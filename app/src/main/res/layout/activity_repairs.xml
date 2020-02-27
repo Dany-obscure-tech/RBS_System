@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:focusableInTouchMode="true"
-    tools:context=".Buy">
+    android:layout_height="match_parent"
+    tools:context=".Repairs">
 
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <ImageButton
-        android:id="@+id/Back_btn"
-        android:layout_marginTop="8dp"
-        android:padding="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:src="@drawable/back_btn" />
+        <ImageButton
+            android:id="@+id/Back_btn"
+            android:layout_marginTop="8dp"
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:src="@drawable/back_btn" />
 
         <TextView
             android:textColor="#2EA4CF"
@@ -28,11 +28,9 @@
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BUY"/>
+            android:text="REPAIRS"/>
 
     </RelativeLayout>
-
-
 
     <ScrollView
         android:layout_width="match_parent"
@@ -70,6 +68,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -127,21 +126,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/segoe_ui_bold"
-                android:text="Suggested Price"
+                android:text="Condition"
                 android:textSize="16sp" />
 
-            <EditText
-                android:inputType="number"
-                android:id="@+id/suggest_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#6E76E3"
-                android:fontFamily="@font/segoe_ui"
-                android:hint="Enter your suggested price"
-                android:maxLength="32"
-                android:textColor="#9F9F9F"
-                android:textColorHint="#9F9F9F"
-                android:textSize="16sp" />
+            <RatingBar
+                android:layout_gravity="center_horizontal"
+                android:stepSize="1.0"
+                android:rating="1"
+                android:numStars="5"
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:inputType="number"
@@ -149,17 +144,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/segoe_ui_bold"
-                android:text="Purchase Price"
+                android:text="Listed Faults"
                 android:textSize="16sp" />
 
             <EditText
-                android:inputType="number"
                 android:id="@+id/purchase_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
                 android:fontFamily="@font/segoe_ui"
-                android:hint="Enter your purchase price"
+                android:hint="Enter listed faults"
                 android:maxLength="32"
                 android:textColor="#9F9F9F"
                 android:textColorHint="#9F9F9F"
@@ -171,17 +165,59 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/segoe_ui_bold"
-                android:text="Quantity"
+                android:text="Notes"
                 android:textSize="16sp" />
 
             <EditText
-                android:inputType="number"
                 android:id="@+id/quantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
                 android:fontFamily="@font/segoe_ui"
-                android:hint="Enter your item quantity"
+                android:hint="Write notes about the product"
+                android:maxLength="32"
+                android:textColor="#9F9F9F"
+                android:textColorHint="#9F9F9F"
+                android:textSize="16sp" />
+            <TextView
+                android:inputType="number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="Listed Price"
+                android:textSize="16sp" />
+
+            <EditText
+                android:inputType="number"
+                android:id="@+id/listed_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#6E76E3"
+                android:fontFamily="@font/segoe_ui"
+                android:hint="Enter listed price"
+                android:maxLength="32"
+                android:textColor="#9F9F9F"
+                android:textColorHint="#9F9F9F"
+                android:textSize="16sp" />
+
+            <TextView
+                android:inputType="number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="Agreed Price"
+                android:textSize="16sp" />
+
+            <EditText
+                android:inputType="number"
+                android:id="@+id/agreed_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#6E76E3"
+                android:fontFamily="@font/segoe_ui"
+                android:hint="Enter agreed price"
                 android:maxLength="32"
                 android:textColor="#9F9F9F"
                 android:textColorHint="#9F9F9F"
@@ -203,7 +239,7 @@
                 <TextView
                     android:id="@+id/date_text"
                     android:inputType="date"
-                    android:layout_weight="1.7"
+                    android:layout_weight="1.9"
                     android:textColor="#9F9F9F"
                     android:fontFamily="@font/segoe_ui"
                     android:backgroundTint="#6E76E3"
@@ -212,13 +248,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <Button
-                    android:textColor="#F1F1F1"
-                    android:background="#00C884"
-                    android:id="@+id/date_btn"
-                    android:fontFamily="@font/segoe_ui"
                     android:textSize="15sp"
+                    android:textColor="#F1F1F1"
+                    android:id="@+id/date_btn"
+                    android:background="#00C884"
+                    android:fontFamily="@font/segoe_ui_bold"
                     android:text="Date"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -230,7 +266,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/segoe_ui_bold"
-                android:text="Cash"
+                android:text="Paid Amount"
                 android:textSize="16sp" />
 
             <EditText
@@ -240,28 +276,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
                 android:fontFamily="@font/segoe_ui"
-                android:hint="Enter your cash"
-                android:maxLength="32"
-                android:textColor="#9F9F9F"
-                android:textColorHint="#9F9F9F"
-                android:textSize="16sp" />
-
-            <TextView
-                android:inputType=""
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="Voucher"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/voucher"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#6E76E3"
-                android:fontFamily="@font/segoe_ui"
-                android:hint="Enter your voucher number"
+                android:hint="Enter paid amount"
                 android:maxLength="32"
                 android:textColor="#9F9F9F"
                 android:textColorHint="#9F9F9F"
@@ -272,27 +287,48 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/segoe_ui_bold"
-                android:text="Paid"
+                android:text="Balance Amount"
                 android:textSize="16sp" />
 
             <EditText
-                android:paddingBottom="30dp"
+                android:paddingBottom="20dp"
                 android:inputType="number"
                 android:id="@+id/paid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
                 android:fontFamily="@font/segoe_ui"
-                android:hint="Enter paid amount here"
+                android:hint="Enter balance amount"
                 android:maxLength="32"
                 android:textColor="#9F9F9F"
                 android:textColorHint="#9F9F9F"
                 android:textSize="16sp" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/segoe_ui_bold"
+                android:text="Special Condition"
+                android:textSize="16sp" />
+
+            <EditText
+                android:paddingBottom="20dp"
+                android:inputType="number"
+                android:id="@+id/special_condition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#6E76E3"
+                android:fontFamily="@font/segoe_ui"
+                android:hint="Enter special conditions"
+                android:maxLength="32"
+                android:textColor="#9F9F9F"
+                android:textColorHint="#9F9F9F"
+                android:textSize="16sp" />
+
+            <TextView
                 android:layout_gravity="center_horizontal"
-                android:textSize="18sp"
+                android:textSize="26sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Do you want to print, email, sms?"
@@ -312,13 +348,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                <ImageButton
-                    android:layout_gravity="center_horizontal"
-                    android:paddingBottom="8dp"
-                    android:background="#00000000"
-                    android:src="@drawable/printer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    <ImageButton
+                        android:layout_gravity="center_horizontal"
+                        android:paddingBottom="8dp"
+                        android:background="#00000000"
+                        android:src="@drawable/printer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
                     <TextView
                         android:textSize="16sp"
                         android:layout_gravity="center"
@@ -385,9 +421,5 @@
         </LinearLayout>
 
     </ScrollView>
-
-
-
-
 
 </RelativeLayout>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     tools:context=".Sale">
 
     <RelativeLayout
@@ -200,21 +201,24 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/date_text"
                     android:inputType="date"
-                    android:layout_weight="1.7"
+                    android:layout_weight="1.9"
                     android:textColor="#9F9F9F"
                     android:fontFamily="@font/segoe_ui"
                     android:backgroundTint="#6E76E3"
                     android:textSize="16sp"
-                    android:text="Monday,Feburary,2020"
+                    android:text="Select date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <Button
+                    android:textSize="15sp"
+                    android:textColor="#F1F1F1"
                     android:id="@+id/date_btn"
-                    android:fontFamily="@font/segoe_ui"
-                    android:textSize="16sp"
+                    android:background="#00C884"
+                    android:fontFamily="@font/segoe_ui_bold"
                     android:text="Date"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -275,7 +279,7 @@
 
             <Button
                 android:textAllCaps="true"
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:layout_marginBottom="20dp"
                 android:textColor="#F1F1F1"
                 android:background="#00C884"

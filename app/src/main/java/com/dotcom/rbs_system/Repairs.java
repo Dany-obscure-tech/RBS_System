@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.util.Calendar;
 
-public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     ImageButton Back_btn;
     Button date_btn;
     TextView date_text;
@@ -22,22 +22,22 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sale);
+        setContentView(R.layout.activity_repairs);
         date_btn=(Button)findViewById(R.id.date_btn);
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
         date_text=(TextView)findViewById(R.id.date_text);
+        Back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         date_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment datepicker=new DatePickerFragment();
                 datepicker.show(getSupportFragmentManager(),"date picker");
 
-            }
-        });
-        Back_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
             }
         });
     }
