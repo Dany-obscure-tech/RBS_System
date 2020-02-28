@@ -109,23 +109,11 @@
                 android:textColor="#9F9F9F"
                 android:textColorHint="#9F9F9F"
                 android:textSize="16sp" />
-
-            <ListView
+            <androidx.appcompat.widget.SearchView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/lv1"
-                android:divider="#ad5"
-                android:dividerHeight="2dp"
-                android:layout_below="@+id/searchView"/>
+                android:layout_height="wrap_content">
 
-            <SearchView
-                android:id="@+id/searchView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:queryHint="Search Here"
-                android:iconifiedByDefault="false"
-                android:layout_alignParentTop="true"
-                />
+            </androidx.appcompat.widget.SearchView>
             <SearchView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
