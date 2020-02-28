@@ -17,7 +17,7 @@ import java.util.Calendar;
 
 public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     ImageButton Back_btn;
-    Button date_btn;
+    Button date_btn,addItem_btn;
     TextView date_text;
 
     @Override
@@ -25,6 +25,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy);
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
+        addItem_btn=(Button) findViewById(R.id.addItem_btn);
         date_btn=(Button)findViewById(R.id.date_btn);
         date_text=(TextView)findViewById(R.id.date_text);
         date_btn.setOnClickListener(new View.OnClickListener() {
@@ -39,6 +40,14 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        addItem_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Buy.this,Customer_details.class);
+                startActivity(intent);
             }
         });
     }

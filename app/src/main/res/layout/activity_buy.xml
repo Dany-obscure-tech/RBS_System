@@ -115,11 +115,32 @@
                 android:layout_height="wrap_content">
 
             </androidx.appcompat.widget.SearchView>
-            <SearchView
+
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            </SearchView>
+                <androidx.appcompat.widget.SearchView
+                    android:layout_weight="3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </androidx.appcompat.widget.SearchView>
+
+                <Button
+                    android:id="@+id/addItem_btn"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight=".5"
+                    android:textColor="#F1F1F1"
+                    android:background="#00C884"
+                    android:fontFamily="@font/segoe_ui"
+                    android:textSize="15sp"
+                    android:text="Add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
 
             <TextView
                 android:inputType="number"

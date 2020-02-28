@@ -8,38 +8,62 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 
-public class Customer_details extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class Customer_details extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
     ImageButton Back_btn;
-    Button date_btn;
+    Button date_btn,submit_btn;
     TextView date_text;
+    DatabaseReference reference;
+    EditText ac_title,ac_phoneno,ac_id,ac_address,ac_email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_details);
-        date_btn=(Button)findViewById(R.id.date_btn);
+
+        reference = FirebaseDatabase.getInstance().getReference();
+        ac_title = (EditText)findViewById(R.id.ac_title);
+        ac_phoneno = (EditText)findViewById(R.id.ac_phoneno);
+        ac_id = (EditText)findViewById(R.id.ac_id);
+        ac_address = (EditText)findViewById(R.id.ac_address);
+        ac_email = (EditText)findViewById(R.id.ac_email);
+
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
-        date_text=(TextView)findViewById(R.id.date_text);
         Back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
+        date_btn=(Button)findViewById(R.id.date_btn);
+        submit_btn=(Button)findViewById(R.id.submit_btn);
+        date_text=(TextView)findViewById(R.id.date_text);
         date_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment datepicker=new DatePickerFragment();
                 datepicker.show(getSupportFragmentManager(),"date picker");
-
             }
         });
+
+        submit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                detailsSubmit();
+            }
+        });
+
     }
 
     @Override
@@ -52,4 +76,15 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
         date_text.setText(currentDateString);
     }
 
+    private void detailsSubmit() {
+        String key = reference.push().getKey();
+        reference.child("Users_databases").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Customer_list").child(key).child("Name").setValue(ac_title.getText().toString());
+        reference.child("Users_databases").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Customer_list").child(key).child("Phone_no").setValue(ac_phoneno.getText().toString());
+        reference.child("Users_databases").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Customer_list").child(key).child("ID").setValue(ac_id.getText().toString());
+        reference.child("Users_databases").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Customer_list").child(key).child("DOB").setValue(date_text.getText().toString());
+        reference.child("Users_databases").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Customer_list").child(key).child("Address").setValue(ac_address.getText().toString());
+        reference.child("Users_databases").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Customer_list").child(key).child("Email").setValue(ac_email.getText().toString());
+
+        finish();
+    }
 }
