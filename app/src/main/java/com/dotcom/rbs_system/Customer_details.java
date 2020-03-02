@@ -136,6 +136,7 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
         reference.child("Users_databases").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Customer_list").child(key).child("DOB").setValue(date_text.getText().toString());
         reference.child("Users_databases").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Customer_list").child(key).child("Address").setValue(ac_address.getText().toString());
         reference.child("Users_databases").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Customer_list").child(key).child("Email").setValue(ac_email.getText().toString());
+        reference.child("Users_databases").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Customer_list").child(key).child("key_id").setValue(key);
 
         finish();
     }

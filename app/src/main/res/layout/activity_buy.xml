@@ -110,6 +110,7 @@
                 android:textColor="#9F9F9F"
                 android:textColorHint="#9F9F9F"
                 android:textSize="16sp" />
+
             <androidx.appcompat.widget.SearchView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -121,23 +122,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.SearchView
-                    android:layout_weight="3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </androidx.appcompat.widget.SearchView>
+                <Button
+                    android:id="@+id/searchForCustomer_btn"
+                    android:layout_weight="1"
+                    android:textColor="#F1F1F1"
+                    android:background="@color/colorPrimaryDark"
+                    android:fontFamily="@font/segoe_ui"
+                    android:textSize="15sp"
+                    android:text="Search for customer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
                 <Button
                     android:id="@+id/addItem_btn"
                     android:layout_marginLeft="20dp"
-                    android:layout_weight=".5"
+                    android:layout_weight="3"
                     android:textColor="#F1F1F1"
                     android:background="#00C884"
                     android:fontFamily="@font/segoe_ui"
                     android:textSize="15sp"
                     android:text="Add"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
             </LinearLayout>
