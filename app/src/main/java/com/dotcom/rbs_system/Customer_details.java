@@ -5,6 +5,7 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -107,6 +108,10 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
         }
         if (ac_email.getText().toString().isEmpty()){
             ac_email.setError("Please enter your email address");
+            valid=false;
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(ac_email.toString()).matches()){
+            ac_email.setError("Please enter a valid email");
             valid=false;
         }
 
