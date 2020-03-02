@@ -11,6 +11,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -20,6 +21,7 @@ import java.text.DateFormat;
 import java.util.Calendar;
 
 public class Customer_details extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+
     ImageButton Back_btn;
     Button date_btn,submit_btn;
     TextView date_text;
@@ -60,10 +62,55 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
         submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                detailsSubmit();
+
+                if (validateFields()==true){
+                    detailsSubmit();
+                }
+
             }
         });
 
+    }
+
+    private boolean validateFields() {
+        boolean valid=true;
+
+        if (ac_title.getText().toString().isEmpty()){
+            ac_title.setError("Please enter your name");
+            valid=false;
+        }
+        if (ac_title.length()>32){
+            ac_title.setError("Name character limit is 32");
+            valid=false;
+        }
+        if (ac_phoneno.getText().toString().isEmpty()){
+            ac_phoneno.setError("Please enter your phone number");
+            valid=false;
+        }
+        if (ac_phoneno.length()<11){
+            ac_phoneno.setError("Please enter valid contact no");
+            valid=false;
+        }
+        if (ac_id.getText().toString().isEmpty()){
+            ac_id.setError("Please enter your id");
+            valid=false;
+        }
+
+        if (date_text.getText().toString().equals("Select date")){
+            Toast.makeText(this, "Select date of birth", Toast.LENGTH_LONG).show();
+            valid=false;
+        }
+
+        if (ac_address.getText().toString().isEmpty()){
+            ac_address.setError("Please enter your date of birth");
+            valid=false;
+        }
+        if (ac_email.getText().toString().isEmpty()){
+            ac_email.setError("Please enter your email address");
+            valid=false;
+        }
+
+        return valid;
     }
 
     @Override
