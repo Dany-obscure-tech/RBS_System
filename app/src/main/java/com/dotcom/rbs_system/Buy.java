@@ -37,13 +37,13 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     Button date_btn,addItem_btn,searchForCustomer_btn;
     TextView date_text;
     String firebaseAuthUID;
-    List<String> exisitngCustomerList;
+    List<String> exisitngCustomerList,exisitngCustomerIDList;
     DatabaseReference existingCustomersRef;
 
     private ArrayList<SampleSearchModel> createSampleData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<exisitngCustomerList.size();i++){
-            items.add(new SampleSearchModel(exisitngCustomerList.get(i)));
+            items.add(new SampleSearchModel(exisitngCustomerList.get(i)+" ("+exisitngCustomerIDList.get(i)+")"));
         }
 
         return items;
@@ -55,6 +55,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         setContentView(R.layout.activity_buy);
 
         exisitngCustomerList = new ArrayList<>();
+        exisitngCustomerIDList = new ArrayList<>();
 
         searchForCustomer_btn = (Button)findViewById(R.id.searchForCustomer_btn);
         searchForCustomer_btn.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +115,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
                 for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                     exisitngCustomerList.add(String.valueOf(String.valueOf(dataSnapshot1.child("Name").getValue())));
+                    exisitngCustomerIDList.add(String.valueOf(String.valueOf(dataSnapshot1.child("ID").getValue())));
                 }
 
             }
