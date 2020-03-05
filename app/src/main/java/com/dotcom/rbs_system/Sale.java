@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +17,7 @@ import java.util.Calendar;
 
 public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     ImageButton Back_btn;
-    Button date_btn;
+    Button date_btn,exchange_btn;
     TextView date_text;
 
     @Override
@@ -24,8 +25,17 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale);
         date_btn=(Button)findViewById(R.id.date_btn);
+        exchange_btn=(Button)findViewById(R.id.exchange_btn);
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
         date_text=(TextView)findViewById(R.id.date_text);
+        exchange_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(Sale.this,Exchange.class);
+                finish();
+                startActivity(intent);
+            }
+        });
         date_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

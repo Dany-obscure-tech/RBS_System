@@ -278,6 +278,7 @@
                 android:text="FOR EXCHANGE"/>
 
             <Button
+                android:id="@+id/exchange_btn"
                 android:textAllCaps="true"
                 android:textSize="15sp"
                 android:layout_marginBottom="20dp"

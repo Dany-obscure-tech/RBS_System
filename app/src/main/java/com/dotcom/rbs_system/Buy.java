@@ -76,8 +76,12 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                         }).show();
             }
         });
+        // Firebase config
+
+
         firebaseAuthUID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
         existingCustomersRef = FirebaseDatabase.getInstance().getReference("Users_databases/"+firebaseAuthUID+"/Customer_list");
+
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
         addItem_btn=(Button) findViewById(R.id.addItem_btn);
         date_btn=(Button)findViewById(R.id.date_btn);
