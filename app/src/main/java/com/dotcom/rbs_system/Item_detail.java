@@ -91,6 +91,7 @@ public class Item_detail extends AppCompatActivity {
                                 dialog.dismiss();
                             }
                         }).show();
+                // hello
             }
         });
     }
