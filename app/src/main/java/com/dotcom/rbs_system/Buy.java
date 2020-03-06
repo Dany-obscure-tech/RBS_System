@@ -32,7 +32,7 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     ImageButton Back_btn;
-    Button date_btn,customer_add_btn,searchForCustomer_btn,addItem2_btn,searchForItem_btn;
+    Button date_btn,customer_add_btn,searchForCustomer_btn, item_add_btn,searchForItem_btn;
     TextView date_text;
     String firebaseAuthUID;
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngItemsList;
@@ -111,7 +111,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
         customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
-        addItem2_btn=(Button) findViewById(R.id.item_add_btn);
+        item_add_btn =(Button) findViewById(R.id.item_add_btn);
         date_btn=(Button)findViewById(R.id.date_btn);
         date_text=(TextView)findViewById(R.id.date_text);
         date_btn.setOnClickListener(new View.OnClickListener() {
@@ -140,7 +140,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
         });
 
-        addItem2_btn.setOnClickListener(new View.OnClickListener() {
+        item_add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Buy.this,Item_detail.class);
