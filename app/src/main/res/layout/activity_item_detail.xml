@@ -46,25 +46,25 @@
             android:layout_marginEnd="20dp"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="Category"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/ac_title"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#6E76E3"
-                android:fontFamily="@font/segoe_ui"
-                android:hint="Enter your name"
-                android:maxLength="32"
-                android:textColor="#9F9F9F"
-                android:textColorHint="#9F9F9F"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/selectCategory_btn"
+                    android:layout_weight="1"
+                    android:textColor="#F1F1F1"
+                    android:background="@color/colorPrimaryDark"
+                    android:fontFamily="@font/segoe_ui"
+                    android:textSize="15sp"
+                    android:text="Select Category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -75,7 +75,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/ac_username"
+                android:id="@+id/itemName_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
@@ -113,7 +113,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/quantity"
+                android:id="@+id/notes_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
@@ -123,6 +123,20 @@
                 android:textColor="#9F9F9F"
                 android:textColorHint="#9F9F9F"
                 android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/submit_btn"
+                android:elevation="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/segoe_ui"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:textSize="15sp"
+                android:textColor="#F1F1F1"
+                android:background="#6E76E3"
+                />
 
         </LinearLayout>
 
