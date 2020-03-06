@@ -1,6 +1,5 @@
 package com.dotcom.rbs_system;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -13,7 +12,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -113,7 +111,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
         customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
-        addItem2_btn=(Button) findViewById(R.id.addItem2_btn);
+        addItem2_btn=(Button) findViewById(R.id.item_add_btn);
         date_btn=(Button)findViewById(R.id.date_btn);
         date_text=(TextView)findViewById(R.id.date_text);
         date_btn.setOnClickListener(new View.OnClickListener() {

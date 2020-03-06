@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"/>
 
                 <Button
-                    android:id="@+id/addItem2_btn"
+                    android:id="@+id/item_add_btn"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="3"
                     android:textColor="#F1F1F1"
