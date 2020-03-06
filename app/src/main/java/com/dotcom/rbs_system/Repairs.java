@@ -6,12 +6,15 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,11 +35,12 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     ImageButton Back_btn;
-    Button date_btn,addItem_btn,searchForCustomer_btn;
+    Button date_btn,customer_add_btn,searchForCustomer_btn;
     TextView date_text;
     List<String> exisitngCustomerList,exisitngCustomerIDList;
     DatabaseReference existingCustomersRef;
     String firebaseAuthUID;
+    LinearLayout gmail_btn;
 
     private ArrayList<SampleSearchModel> createSampleData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
@@ -60,7 +64,8 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         date_btn=(Button)findViewById(R.id.date_btn);
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
         date_text=(TextView)findViewById(R.id.date_text);
-        addItem_btn=(Button) findViewById(R.id.addItem_btn);
+        gmail_btn=(LinearLayout)findViewById(R.id.gmail_btn);
+        customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
         searchForCustomer_btn = (Button)findViewById(R.id.searchForCustomer_btn);
 
         /////Firebase config
@@ -104,7 +109,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
 
             }
         });
-        addItem_btn.setOnClickListener(new View.OnClickListener() {
+        customer_add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Repairs.this,Customer_details.class);
@@ -132,6 +137,14 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        gmail_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(Repairs.this, "yes", Toast.LENGTH_SHORT).show();
             }
         });
     }

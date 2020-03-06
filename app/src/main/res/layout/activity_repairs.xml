@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"/>
 
                 <Button
-                    android:id="@+id/addItem_btn"
+                    android:id="@+id/customer_add_btn"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="3"
                     android:textColor="#F1F1F1"
@@ -418,6 +418,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/gmail_btn"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:padding="20dp"
