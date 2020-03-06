@@ -110,7 +110,7 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             ac_email.setError("Please enter your email address");
             valid=false;
         }
-        if (!Patterns.EMAIL_ADDRESS.matcher(ac_email.toString()).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(String.valueOf(ac_email.getText())).matches()){
             ac_email.setError("Please enter a valid email");
             valid=false;
         }

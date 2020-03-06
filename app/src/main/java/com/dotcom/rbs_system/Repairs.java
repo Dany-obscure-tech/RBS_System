@@ -40,7 +40,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     List<String> exisitngCustomerList,exisitngCustomerIDList;
     DatabaseReference existingCustomersRef;
     String firebaseAuthUID;
-    LinearLayout gmail_btn;
+    ImageButton gmail_btn;
 
     private ArrayList<SampleSearchModel> createSampleData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
@@ -64,7 +64,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         date_btn=(Button)findViewById(R.id.date_btn);
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
         date_text=(TextView)findViewById(R.id.date_text);
-        gmail_btn=(LinearLayout)findViewById(R.id.gmail_btn);
+        gmail_btn=(ImageButton) findViewById(R.id.gmail_btn);
         customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
         searchForCustomer_btn = (Button)findViewById(R.id.searchForCustomer_btn);
 
@@ -145,6 +145,9 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             public void onClick(View v) {
 
                 Toast.makeText(Repairs.this, "yes", Toast.LENGTH_SHORT).show();
+                Intent it = new Intent(Intent.ACTION_SEND);
+                it.setType("message/rfc822");
+                startActivity(Intent.createChooser(it,"Choose Mail App"));
             }
         });
     }
