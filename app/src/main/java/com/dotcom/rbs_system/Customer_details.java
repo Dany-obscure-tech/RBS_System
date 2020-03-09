@@ -130,13 +130,14 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
 
     private void detailsSubmit() {
         String key = reference.push().getKey();
-        reference.child("Users_databases").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Customer_list").child(key).child("Name").setValue(ac_title.getText().toString());
-        reference.child("Users_databases").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Customer_list").child(key).child("Phone_no").setValue(ac_phoneno.getText().toString());
-        reference.child("Users_databases").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Customer_list").child(key).child("ID").setValue(ac_id.getText().toString());
-        reference.child("Users_databases").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Customer_list").child(key).child("DOB").setValue(date_text.getText().toString());
-        reference.child("Users_databases").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Customer_list").child(key).child("Address").setValue(ac_address.getText().toString());
-        reference.child("Users_databases").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Customer_list").child(key).child("Email").setValue(ac_email.getText().toString());
-        reference.child("Users_databases").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Customer_list").child(key).child("key_id").setValue(key);
+        reference.child("Customer_list").child(key).child("Name").setValue(ac_title.getText().toString());
+        reference.child("Customer_list").child(key).child("Phone_no").setValue(ac_phoneno.getText().toString());
+        reference.child("Customer_list").child(key).child("ID").setValue(ac_id.getText().toString());
+        reference.child("Customer_list").child(key).child("DOB").setValue(date_text.getText().toString());
+        reference.child("Customer_list").child(key).child("Address").setValue(ac_address.getText().toString());
+        reference.child("Customer_list").child(key).child("Email").setValue(ac_email.getText().toString());
+        reference.child("Customer_list").child(key).child("key_id").setValue(key);
+        reference.child("Customer_list").child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
 
         finish();
     }

@@ -54,7 +54,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     private ArrayList<SampleSearchModel> createSampleData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<exisitngCustomerList.size();i++){
-//            items.add(new SampleSearchModel(exisitngCustomerList.get(i),exisitngCustomerIDList.get(i)));
+            items.add(new SampleSearchModel(exisitngCustomerList.get(i)+"\n("+exisitngCustomerIDList.get(i)+")",exisitngCustomerIDList.get(i),exisitngCustomerList.get(i),null));
         }
 
         return items;
@@ -91,7 +91,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
 
         /////Firebase config
         firebaseAuthUID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        existingCustomersRef = FirebaseDatabase.getInstance().getReference("Users_databases/"+firebaseAuthUID+"/Customer_list");
+        existingCustomersRef = FirebaseDatabase.getInstance().getReference("Customer_list");
         existingItemsRef = FirebaseDatabase.getInstance().getReference("Items");
         searchForItem_btn = (Button)findViewById(R.id.searchForItem_btn);
     }
@@ -102,8 +102,8 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                    exisitngCustomerList.add(String.valueOf(String.valueOf(dataSnapshot1.child("Name").getValue())));
-                    exisitngCustomerIDList.add(String.valueOf(String.valueOf(dataSnapshot1.child("ID").getValue())));
+                    exisitngCustomerList.add(String.valueOf(dataSnapshot1.child("Name").getValue()));
+                    exisitngCustomerIDList.add(String.valueOf(dataSnapshot1.child("ID").getValue()));
                 }
 
             }
@@ -168,7 +168,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                             @Override
                             public void onSelected(BaseSearchDialogCompat dialog,
                                                    final SampleSearchModel item, int position) {
-                                searchForItem_btn.setText(item.getName());
+                                searchForItem_btn.setText(item.getTitle());
                                 searchForItem_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
                                 searchForItem_btn.setTextColor(getResources().getColor(R.color.textGrey));
 
