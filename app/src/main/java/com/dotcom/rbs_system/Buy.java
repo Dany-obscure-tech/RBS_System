@@ -162,8 +162,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
         });
 
-
-
         Back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
