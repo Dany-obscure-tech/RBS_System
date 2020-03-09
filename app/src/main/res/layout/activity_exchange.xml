@@ -242,6 +242,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageButton
+                        android:id="@id/gmail_btn"
                         android:layout_gravity="center_horizontal"
                         android:paddingBottom="10dp"
                         android:background="#00000000"
@@ -267,6 +268,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageButton
+                        android:id="@+id/sms_btn"
                         android:layout_gravity="center_horizontal"
                         android:paddingBottom="10dp"
                         android:background="#00000000"

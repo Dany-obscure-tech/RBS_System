@@ -6,12 +6,14 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,12 +34,14 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    ImageButton Back_btn;
+    ImageButton Back_btn,sms_btn,gmail_btn;
     Button date_btn,customer_add_btn,searchForCustomer_btn, item_add_btn,searchForItem_btn;
     TextView date_text;
     String firebaseAuthUID;
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngItemsList;
     DatabaseReference existingCustomersRef,existingItemsRef;
+
+    Progreess_dialog pd;
 
 //    list creation for customer search view
     private ArrayList<SampleSearchModel> createSampleData(){
@@ -63,7 +67,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy);
-
         initialize();
 
         fetchingExisitingCustomers();
@@ -86,10 +89,14 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         existingItemsRef = FirebaseDatabase.getInstance().getReference("Items");
 
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
+        sms_btn=(ImageButton)findViewById(R.id.sms_btn);
         customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
         item_add_btn =(Button) findViewById(R.id.item_add_btn);
         date_btn=(Button)findViewById(R.id.date_btn);
         date_text=(TextView)findViewById(R.id.date_text);
+        gmail_btn=(ImageButton) findViewById(R.id.gmail_btn);
+
+        pd=new Progreess_dialog();
     }
 
     private void fetchingExisitingCustomers() {
@@ -145,6 +152,18 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
 
     private void onClickListeners() {
+
+        sms_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + "0323"));
+                intent.putExtra("sms_body", "Hi how are you");
+                startActivity(intent);
+            }
+        });
+
+
+
         Back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -213,6 +232,17 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             public void onClick(View v) {
                 Intent intent = new Intent(Buy.this,Item_detail.class);
                 startActivity(intent);
+            }
+        });
+
+        gmail_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(Buy.this, "yes", Toast.LENGTH_SHORT).show();
+                Intent it = new Intent(Intent.ACTION_SEND);
+                it.setType("message/rfc822");
+                startActivity(Intent.createChooser(it,"Choose Mail App"));
             }
         });
     }

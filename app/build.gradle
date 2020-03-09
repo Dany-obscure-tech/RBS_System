@@ -34,4 +34,6 @@ dependencies {
 //    search view library
     implementation 'com.github.mirrajabi:search-dialog:1.2.4'
 
+    implementation 'cc.cloudist.acplibrary:library:1.2.1'
+
 }

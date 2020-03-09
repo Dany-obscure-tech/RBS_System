@@ -6,12 +6,14 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,7 +33,7 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-    ImageButton Back_btn;
+    ImageButton Back_btn,sms_btn,gmail_btn;
     Button date_btn,exchange_btn,customer_add_btn,searchForCustomer_btn;
     TextView date_text;
     List<String> exisitngCustomerList,exisitngCustomerIDList;
@@ -58,9 +60,10 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         exchange_btn=(Button)findViewById(R.id.exchange_btn);
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
         date_text=(TextView)findViewById(R.id.date_text);
-
         customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
         searchForCustomer_btn = (Button)findViewById(R.id.searchForCustomer_btn);
+        sms_btn=(ImageButton)findViewById(R.id.sms_btn);
+        gmail_btn=(ImageButton) findViewById(R.id.gmail_btn);
 
         exisitngCustomerList = new ArrayList<>();
         exisitngCustomerIDList = new ArrayList<>();
@@ -120,6 +123,26 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Sale.this,Customer_details.class);
+                startActivity(intent);
+            }
+        });
+
+        gmail_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(Sale.this, "yes", Toast.LENGTH_SHORT).show();
+                Intent it = new Intent(Intent.ACTION_SEND);
+                it.setType("message/rfc822");
+                startActivity(Intent.createChooser(it,"Choose Mail App"));
+            }
+        });
+
+        sms_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + "0323"));
+                intent.putExtra("sms_body", "Hi how are you");
                 startActivity(intent);
             }
         });

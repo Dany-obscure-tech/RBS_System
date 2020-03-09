@@ -40,7 +40,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsCategoryList;
     DatabaseReference existingCustomersRef,existingItemsRef,selectedItemRef;
     String firebaseAuthUID;
-    ImageButton gmail_btn;
+    ImageButton gmail_btn,sms_btn;
 
     private ArrayList<SampleSearchModel> createSampleData2(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
@@ -88,6 +88,8 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
         searchForCustomer_btn = (Button)findViewById(R.id.searchForCustomer_btn);
         item_add_btn =(Button) findViewById(R.id.item_add_btn);
+        sms_btn=(ImageButton)findViewById(R.id.sms_btn);
+
 
         /////Firebase config
         firebaseAuthUID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -194,7 +196,6 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             }
         });
 
-
         Back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -232,6 +233,14 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                 Intent it = new Intent(Intent.ACTION_SEND);
                 it.setType("message/rfc822");
                 startActivity(Intent.createChooser(it,"Choose Mail App"));
+            }
+        });
+        sms_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + "0323"));
+                intent.putExtra("sms_body", "Hi how are you");
+                startActivity(intent);
             }
         });
     }
