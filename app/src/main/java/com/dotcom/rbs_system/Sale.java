@@ -42,7 +42,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     private ArrayList<SampleSearchModel> createSampleData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<exisitngCustomerList.size();i++){
-            items.add(new SampleSearchModel(exisitngCustomerList.get(i)+" ("+exisitngCustomerIDList.get(i)+")"));
+//            items.add(new SampleSearchModel(exisitngCustomerList.get(i)+" ("+exisitngCustomerIDList.get(i)+")"));
         }
 
         return items;

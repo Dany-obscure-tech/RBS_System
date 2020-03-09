@@ -34,18 +34,18 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-    ImageButton Back_btn,sms_btn;
+    ImageButton Back_btn;
     Button date_btn,customer_add_btn,searchForCustomer_btn,addItem2_btn,searchForItem_btn,item_add_btn;
     TextView date_text;
-    List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngItemsList;
-    DatabaseReference existingCustomersRef,existingItemsRef;
+    List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsCategoryList;
+    DatabaseReference existingCustomersRef,existingItemsRef,selectedItemRef;
     String firebaseAuthUID;
     ImageButton gmail_btn;
 
     private ArrayList<SampleSearchModel> createSampleData2(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<exisitngItemsList.size();i++){
-            items.add(new SampleSearchModel(exisitngItemsList.get(i)));
+            items.add(new SampleSearchModel(exisitngItemsList.get(i)+"\n("+exisitngItemsIDList.get(i)+")",exisitngItemsIDList.get(i),exisitngItemsList.get(i),exisitngItemsCategoryList.get(i)));
         }
 
         return items;
@@ -54,7 +54,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     private ArrayList<SampleSearchModel> createSampleData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<exisitngCustomerList.size();i++){
-            items.add(new SampleSearchModel(exisitngCustomerList.get(i)+" ("+exisitngCustomerIDList.get(i)+")"));
+//            items.add(new SampleSearchModel(exisitngCustomerList.get(i),exisitngCustomerIDList.get(i)));
         }
 
         return items;
@@ -65,15 +65,24 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repairs);
 
+        initialize();
+
+        fetchingExisitingCustomers();
+        fetchingExisitingItems();
+
+        onClickListeners();
+
+    }
+
+    private void initialize() {
         exisitngCustomerList = new ArrayList<>();
         exisitngCustomerIDList = new ArrayList<>();
         exisitngItemsList = new ArrayList<>();
-
-
+        exisitngItemsIDList = new ArrayList<>();
+        exisitngItemsCategoryList = new ArrayList<>();
 
         date_btn=(Button)findViewById(R.id.date_btn);
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
-        sms_btn=(ImageButton)findViewById(R.id.sms_btn);
         date_text=(TextView)findViewById(R.id.date_text);
         gmail_btn=(ImageButton) findViewById(R.id.gmail_btn);
         customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
@@ -84,100 +93,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         firebaseAuthUID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
         existingCustomersRef = FirebaseDatabase.getInstance().getReference("Users_databases/"+firebaseAuthUID+"/Customer_list");
         existingItemsRef = FirebaseDatabase.getInstance().getReference("Items");
-        ///////
-
-        fetchingExisitingCustomers();
-        fetchingExisitingItems();
-
-        searchForCustomer_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new SimpleSearchDialogCompat(Repairs.this, "Search...",
-                        "What are you looking for...?", null, createSampleData(),
-                        new SearchResultListener<SampleSearchModel>() {
-                            @Override
-                            public void onSelected(BaseSearchDialogCompat dialog,
-                                                   SampleSearchModel item, int position) {
-                                searchForCustomer_btn.setText(item.getTitle());
-                                searchForCustomer_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
-                                searchForCustomer_btn.setTextColor(getResources().getColor(R.color.textGrey));
-
-                                dialog.dismiss();
-                            }
-                        }).show();
-            }
-        });
-
         searchForItem_btn = (Button)findViewById(R.id.searchForItem_btn);
-        searchForItem_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new SimpleSearchDialogCompat(Repairs.this, "Search...",
-                        "What are you looking for...?", null, createSampleData2(),
-                        new SearchResultListener<SampleSearchModel>() {
-                            @Override
-                            public void onSelected(BaseSearchDialogCompat dialog,
-                                                   SampleSearchModel item, int position) {
-                                searchForItem_btn.setText(item.getTitle());
-                                searchForItem_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
-                                searchForItem_btn.setTextColor(getResources().getColor(R.color.textGrey));
-
-                                dialog.dismiss();
-                            }
-                        }).show();
-            }
-        });
-
-
-        Back_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        sms_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + "0323"));
-                intent.putExtra("sms_body", "Hi how are you");
-                startActivity(intent);
-            }
-        });
-        gmail_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(Intent.ACTION_SEND);
-                it.setType("message/rfc822");
-                startActivity(it);
-//                startActivity(Intent.createChooser(it,"Choose Mail App"));
-            }
-        });
-        date_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment datepicker=new DatePickerFragment();
-                datepicker.show(getSupportFragmentManager(),"date picker");
-
-            }
-        });
-        customer_add_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Repairs.this,Customer_details.class);
-                startActivity(intent);
-            }
-        });
-        item_add_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Repairs.this,Item_detail.class);
-                startActivity(intent);
-            }
-        });
-
-
-
-
     }
 
     private void fetchingExisitingCustomers() {
@@ -208,6 +124,8 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                 for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                     for (DataSnapshot dataSnapshot2: dataSnapshot1.getChildren()){
                         exisitngItemsList.add(String.valueOf(dataSnapshot2.child("Item_name").getValue()));
+                        exisitngItemsIDList.add(String.valueOf(dataSnapshot2.child("key_id").getValue()));
+                        exisitngItemsCategoryList.add(String.valueOf(dataSnapshot2.child("Category").getValue()));
                     }
                 }
 
@@ -219,6 +137,103 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             }
         });
 
+    }
+
+    private void onClickListeners() {
+        searchForCustomer_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new SimpleSearchDialogCompat(Repairs.this, "Search...",
+                        "What are you looking for...?", null, createSampleData(),
+                        new SearchResultListener<SampleSearchModel>() {
+                            @Override
+                            public void onSelected(BaseSearchDialogCompat dialog,
+                                                   SampleSearchModel item, int position) {
+                                searchForCustomer_btn.setText(item.getTitle());
+                                searchForCustomer_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
+                                searchForCustomer_btn.setTextColor(getResources().getColor(R.color.textGrey));
+
+                                dialog.dismiss();
+                            }
+                        }).show();
+            }
+        });
+
+        searchForItem_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new SimpleSearchDialogCompat(Repairs.this, "Search...",
+                        "What are you looking for...?", null, createSampleData2(),
+                        new SearchResultListener<SampleSearchModel>() {
+                            @Override
+                            public void onSelected(BaseSearchDialogCompat dialog,
+                                                   final SampleSearchModel item, int position) {
+                                searchForItem_btn.setText(item.getName());
+                                searchForItem_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
+                                searchForItem_btn.setTextColor(getResources().getColor(R.color.textGrey));
+
+                                selectedItemRef = FirebaseDatabase.getInstance().getReference("Items/"+item.getCategory()+"/"+item.getId());
+                                selectedItemRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        Toast.makeText(Repairs.this, String.valueOf(dataSnapshot.child("Condition")), Toast.LENGTH_SHORT).show();
+                                        // todo
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
+                                dialog.dismiss();
+
+                            }
+                        }).show();
+            }
+        });
+
+
+        Back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        date_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment datepicker=new DatePickerFragment();
+                datepicker.show(getSupportFragmentManager(),"date picker");
+
+            }
+        });
+        customer_add_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Repairs.this,Customer_details.class);
+                startActivity(intent);
+            }
+        });
+        item_add_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Repairs.this,Item_detail.class);
+                startActivity(intent);
+            }
+        });
+
+        gmail_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(Repairs.this, "yes", Toast.LENGTH_SHORT).show();
+                Intent it = new Intent(Intent.ACTION_SEND);
+                it.setType("message/rfc822");
+                startActivity(Intent.createChooser(it,"Choose Mail App"));
+            }
+        });
     }
 
     @Override

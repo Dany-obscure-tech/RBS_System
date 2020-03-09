@@ -31,6 +31,7 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+
     ImageButton Back_btn;
     Button date_btn,customer_add_btn,searchForCustomer_btn, item_add_btn,searchForItem_btn;
     TextView date_text;
@@ -38,18 +39,21 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngItemsList;
     DatabaseReference existingCustomersRef,existingItemsRef;
 
+//    list creation for customer search view
     private ArrayList<SampleSearchModel> createSampleData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<exisitngCustomerList.size();i++){
-            items.add(new SampleSearchModel(exisitngCustomerList.get(i)+" ("+exisitngCustomerIDList.get(i)+")"));
+//            items.add(new SampleSearchModel(exisitngCustomerList.get(i)+" ("+exisitngCustomerIDList.get(i)+")"));
         }
 
         return items;
     }
+
+//    list creation for item search view
     private ArrayList<SampleSearchModel> createSampleData2(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<exisitngItemsList.size();i++){
-            items.add(new SampleSearchModel(exisitngItemsList.get(i)));
+//            items.add(new SampleSearchModel(exisitngItemsList.get(i)));
         }
 
         return items;
@@ -60,50 +64,22 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy);
 
+        initialize();
+
+        fetchingExisitingCustomers();
+        fetchingExisitingItems();
+
+        onClickListeners();
+
+    }
+
+    private void initialize() {
         exisitngCustomerList = new ArrayList<>();
         exisitngCustomerIDList = new ArrayList<>();
         exisitngItemsList = new ArrayList<>();
 
         searchForCustomer_btn = (Button)findViewById(R.id.searchForCustomer_btn);
-        searchForCustomer_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new SimpleSearchDialogCompat(Buy.this, "Search...",
-                        "What are you looking for...?", null, createSampleData(),
-                        new SearchResultListener<SampleSearchModel>() {
-                            @Override
-                            public void onSelected(BaseSearchDialogCompat dialog,
-                                                   SampleSearchModel item, int position) {
-                                searchForCustomer_btn.setText(item.getTitle());
-                                searchForCustomer_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
-                                searchForCustomer_btn.setTextColor(getResources().getColor(R.color.textGrey));
-
-                                dialog.dismiss();
-                            }
-                        }).show();
-            }
-        });
         searchForItem_btn = (Button)findViewById(R.id.searchForItem_btn);
-        searchForItem_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new SimpleSearchDialogCompat(Buy.this, "Search...",
-                        "What are you looking for...?", null, createSampleData2(),
-                        new SearchResultListener<SampleSearchModel>() {
-                            @Override
-                            public void onSelected(BaseSearchDialogCompat dialog,
-                                                   SampleSearchModel item, int position) {
-                                searchForItem_btn.setText(item.getTitle());
-                                searchForItem_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
-                                searchForItem_btn.setTextColor(getResources().getColor(R.color.textGrey));
-
-                                dialog.dismiss();
-                            }
-                        }).show();
-            }
-        });
-        // Firebase config
-
 
         firebaseAuthUID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
         existingCustomersRef = FirebaseDatabase.getInstance().getReference("Users_databases/"+firebaseAuthUID+"/Customer_list");
@@ -114,39 +90,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         item_add_btn =(Button) findViewById(R.id.item_add_btn);
         date_btn=(Button)findViewById(R.id.date_btn);
         date_text=(TextView)findViewById(R.id.date_text);
-        date_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment datepicker=new DatePickerFragment();
-                datepicker.show(getSupportFragmentManager(),"date picker");
-
-            }
-        });
-        Back_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        fetchingExisitingCustomers();
-        fetchingExisitingItems();
-
-        customer_add_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Buy.this,Customer_details.class);
-                startActivity(intent);
-            }
-        });
-
-        item_add_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Buy.this,Item_detail.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private void fetchingExisitingCustomers() {
@@ -168,6 +111,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         });
 
     }
+
     private void fetchingExisitingItems() {
         existingItemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -188,7 +132,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         });
 
     }
-
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar calendar=Calendar.getInstance();
@@ -199,6 +142,81 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         date_text.setText(currentDateString);
 
     }
+
+
+    private void onClickListeners() {
+        Back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        searchForCustomer_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new SimpleSearchDialogCompat(Buy.this, "Search...",
+                        "What are you looking for...?", null, createSampleData(),
+                        new SearchResultListener<SampleSearchModel>() {
+                            @Override
+                            public void onSelected(BaseSearchDialogCompat dialog,
+                                                   SampleSearchModel item, int position) {
+                                searchForCustomer_btn.setText(item.getTitle());
+                                searchForCustomer_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
+                                searchForCustomer_btn.setTextColor(getResources().getColor(R.color.textGrey));
+
+                                dialog.dismiss();
+                            }
+                        }).show();
+            }
+        });
+
+        searchForItem_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new SimpleSearchDialogCompat(Buy.this, "Search...",
+                        "What are you looking for...?", null, createSampleData2(),
+                        new SearchResultListener<SampleSearchModel>() {
+                            @Override
+                            public void onSelected(BaseSearchDialogCompat dialog,
+                                                   SampleSearchModel item, int position) {
+                                searchForItem_btn.setText(item.getTitle());
+                                searchForItem_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
+                                searchForItem_btn.setTextColor(getResources().getColor(R.color.textGrey));
+
+                                dialog.dismiss();
+                            }
+                        }).show();
+            }
+        });
+        // Firebase config
+
+        date_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment datepicker=new DatePickerFragment();
+                datepicker.show(getSupportFragmentManager(),"date picker");
+
+            }
+        });
+
+        customer_add_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Buy.this,Customer_details.class);
+                startActivity(intent);
+            }
+        });
+
+        item_add_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Buy.this,Item_detail.class);
+                startActivity(intent);
+            }
+        });
+    }
+
 
     @Override
     protected void onRestart() {

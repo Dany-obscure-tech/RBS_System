@@ -99,7 +99,7 @@ public class Item_detail extends AppCompatActivity {
     private ArrayList<SampleSearchModel> createSampleData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<categoryList.size();i++){
-            items.add(new SampleSearchModel(categoryList.get(i)));
+//            items.add(new SampleSearchModel(categoryList.get(i)));
         }
 
         return items;
@@ -111,6 +111,7 @@ public class Item_detail extends AppCompatActivity {
         reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Item_name").setValue(itemName_editText.getText().toString());
         reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Condition").setValue(ratingBar.getRating());
         reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Notes").setValue(notes_editText.getText().toString());
+        reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("key_id").setValue(key);
 
         finish();
 
