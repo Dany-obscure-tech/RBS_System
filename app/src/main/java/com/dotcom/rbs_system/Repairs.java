@@ -34,7 +34,7 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-    ImageButton Back_btn;
+    ImageButton Back_btn,sms_btn;
     Button date_btn,customer_add_btn,searchForCustomer_btn,addItem2_btn,searchForItem_btn,item_add_btn;
     TextView date_text;
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngItemsList;
@@ -73,6 +73,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
 
         date_btn=(Button)findViewById(R.id.date_btn);
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
+        sms_btn=(ImageButton)findViewById(R.id.sms_btn);
         date_text=(TextView)findViewById(R.id.date_text);
         gmail_btn=(ImageButton) findViewById(R.id.gmail_btn);
         customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
@@ -134,6 +135,23 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                 finish();
             }
         });
+        sms_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + "0323"));
+                intent.putExtra("sms_body", "Hi how are you");
+                startActivity(intent);
+            }
+        });
+        gmail_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(Intent.ACTION_SEND);
+                it.setType("message/rfc822");
+                startActivity(it);
+//                startActivity(Intent.createChooser(it,"Choose Mail App"));
+            }
+        });
         date_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,16 +198,6 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             }
         });
 
-        gmail_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Toast.makeText(Repairs.this, "yes", Toast.LENGTH_SHORT).show();
-                Intent it = new Intent(Intent.ACTION_SEND);
-                it.setType("message/rfc822");
-                startActivity(Intent.createChooser(it,"Choose Mail App"));
-            }
-        });
     }
 
     private void fetchingExisitingItems() {
