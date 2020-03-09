@@ -6,13 +6,20 @@ public class SampleSearchModel implements Searchable {
     private String mTitle;
     private String mID;
     private String mName;
-    private String mCategory;
+    private String mval1;
+    private String mval2;
+    private String mval3;
+    private String mval4;
 
-    public SampleSearchModel(String title, String id,String name, String category) {
+    public SampleSearchModel(String title, String id,String name, String val1, String val2, String val3, String val4) {
         mTitle = title;
         mID = id;
         mName = name;
-        mCategory = category;
+        mval1 = val1;
+        mval2 = val2;
+        mval3 = val3;
+        mval4 = val4;
+
     }
 
     @Override
@@ -28,12 +35,24 @@ public class SampleSearchModel implements Searchable {
         return mName;
     }
 
-    public String getCategory() {
-        return mCategory;
+    public String getVal1() {
+        return mval1;
     }
 
     public SampleSearchModel setTitle(String title) {
         mTitle = title;
         return this;
+    }
+
+    public String getVal2() {
+        return mval2;
+    }
+
+    public String getVal3() {
+        return mval3;
+    }
+
+    public String getVal4() {
+        return mval4;
     }
 }

@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.Toast;
 
 import com.dotcom.rbs_system.Model.SampleSearchModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,7 +27,7 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 public class Item_detail extends AppCompatActivity {
     Button selectCategory_btn,submit_btn;
     DatabaseReference categoryRef,reference;
-    EditText itemName_editText,notes_editText;
+    EditText itemName_editText,notes_editText,itemId_editText;
     List<String> categoryList;
     RatingBar ratingBar;
 
@@ -43,6 +43,7 @@ public class Item_detail extends AppCompatActivity {
 
     private void initialize() {
         itemName_editText = (EditText)findViewById(R.id.itemName_editText);
+        itemId_editText = (EditText)findViewById(R.id.itemId_editText);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         notes_editText = (EditText)findViewById(R.id.notes_editText);
         categoryList = new ArrayList<>();
@@ -79,7 +80,7 @@ public class Item_detail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new SimpleSearchDialogCompat(Item_detail.this, "Search...",
-                        "What are you looking for...?", null, createSampleData(),
+                        "What are you looking for...?", null, createCategoryData(),
                         new SearchResultListener<SampleSearchModel>() {
                             @Override
                             public void onSelected(BaseSearchDialogCompat dialog,
@@ -96,10 +97,10 @@ public class Item_detail extends AppCompatActivity {
         });
     }
 
-    private ArrayList<SampleSearchModel> createSampleData(){
+    private ArrayList<SampleSearchModel> createCategoryData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<categoryList.size();i++){
-//            items.add(new SampleSearchModel(categoryList.get(i)));
+            items.add(new SampleSearchModel(categoryList.get(i),null,null,null,null,null,null));
         }
 
         return items;
@@ -108,6 +109,8 @@ public class Item_detail extends AppCompatActivity {
     private void detailsSubmit() {
         String key = reference.push().getKey();
         reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Category").setValue(selectCategory_btn.getText().toString());
+        reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Item_id").setValue(itemId_editText.getText().toString());
+        reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
         reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Item_name").setValue(itemName_editText.getText().toString());
         reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Condition").setValue(ratingBar.getRating());
         reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Notes").setValue(notes_editText.getText().toString());
