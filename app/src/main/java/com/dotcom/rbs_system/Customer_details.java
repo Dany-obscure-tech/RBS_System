@@ -91,7 +91,7 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
         id_imageView = (ImageView) findViewById(R.id.id_imageView);
         date_text = (TextView) findViewById(R.id.date_text);
 
-        idStorageReference = storageReference.child("Customer_IDs").child("pic");
+        idStorageReference = storageReference.child("Customer_IDs");
     }
 
     private void onClickListeners() {
@@ -195,7 +195,7 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
         reference.child("Customer_list").child(key).child("key_id").setValue(key);
         reference.child("Customer_list").child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
 
-        idStorageReference.putFile(tempUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        idStorageReference.child(ac_id.getText().toString()).child("ID").putFile(tempUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(Customer_details.this, "Uploading finished!", Toast.LENGTH_SHORT).show();
