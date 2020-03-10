@@ -8,6 +8,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:839861380612:android:81560babc7baab47227751",
+        "android_client_info": {
+          "package_name": "com.dotcom.camera_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "839861380612-ggmj678166usi1836aj3ormscpb6lr61.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_3yAknaYv5pQIQxmQJZIe1stTnm84N50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "839861380612-ggmj678166usi1836aj3ormscpb6lr61.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:839861380612:android:db1235e3b6e221a0227751",
         "android_client_info": {
           "package_name": "com.dotcom.rbs_system"

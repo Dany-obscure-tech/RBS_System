@@ -1,47 +1,100 @@
 package com.dotcom.rbs_system;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
-public class Customer_details extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
+
+public class Customer_details extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+
+    StorageReference storageReference;
+
+    Uri tempUri;
+
+    StorageReference idStorageReference;
 
     ImageButton Back_btn;
-    Button date_btn,submit_btn;
+    Button date_btn, submit_btn, uploadId_btn;
+    ImageView id_imageView;
     TextView date_text;
     DatabaseReference reference;
-    EditText ac_title,ac_phoneno,ac_id,ac_address,ac_email;
+    EditText ac_title, ac_phoneno, ac_id, ac_address, ac_email;
+
+    private static final int CAMERA_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_details);
 
-        reference = FirebaseDatabase.getInstance().getReference();
-        ac_title = (EditText)findViewById(R.id.ac_title);
-        ac_phoneno = (EditText)findViewById(R.id.ac_phoneno);
-        ac_id = (EditText)findViewById(R.id.ac_id);
-        ac_address = (EditText)findViewById(R.id.ac_address);
-        ac_email = (EditText)findViewById(R.id.ac_email);
+        initialize();
 
-        Back_btn=(ImageButton)findViewById(R.id.Back_btn);
+        onClickListeners();
+
+    }
+
+    private void initialize() {
+        storageReference = FirebaseStorage.getInstance().getReference();
+
+        reference = FirebaseDatabase.getInstance().getReference();
+        ac_title = (EditText) findViewById(R.id.ac_title);
+        ac_phoneno = (EditText) findViewById(R.id.ac_phoneno);
+        ac_id = (EditText) findViewById(R.id.ac_id);
+        ac_address = (EditText) findViewById(R.id.ac_address);
+        ac_email = (EditText) findViewById(R.id.ac_email);
+
+        Back_btn = (ImageButton) findViewById(R.id.Back_btn);
+
+        date_btn = (Button) findViewById(R.id.date_btn);
+        submit_btn = (Button) findViewById(R.id.submit_btn);
+        uploadId_btn = (Button) findViewById(R.id.uploadId_btn);
+        id_imageView = (ImageView) findViewById(R.id.id_imageView);
+        date_text = (TextView) findViewById(R.id.date_text);
+
+        idStorageReference = storageReference.child("Customer_IDs").child("pic");
+    }
+
+    private void onClickListeners() {
         Back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,70 +102,73 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             }
         });
 
-        date_btn=(Button)findViewById(R.id.date_btn);
-        submit_btn=(Button)findViewById(R.id.submit_btn);
-        date_text=(TextView)findViewById(R.id.date_text);
         date_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datepicker=new DatePickerFragment();
-                datepicker.show(getSupportFragmentManager(),"date picker");
+                DialogFragment datepicker = new DatePickerFragment();
+                datepicker.show(getSupportFragmentManager(), "date picker");
             }
         });
 
         submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (validateFields()==true){
+                if (validateFields() == true) {
                     detailsSubmit();
                 }
-
             }
         });
 
+        uploadId_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent,CAMERA_REQUEST_CODE);
+
+            }
+        });
     }
 
     private boolean validateFields() {
-        boolean valid=true;
+        boolean valid = true;
 
-        if (ac_title.getText().toString().isEmpty()){
+        if (ac_title.getText().toString().isEmpty()) {
             ac_title.setError("Please enter your name");
-            valid=false;
+            valid = false;
         }
-        if (ac_title.length()>32){
+        if (ac_title.length() > 32) {
             ac_title.setError("Name character limit is 32");
-            valid=false;
+            valid = false;
         }
-        if (ac_phoneno.getText().toString().isEmpty()){
+        if (ac_phoneno.getText().toString().isEmpty()) {
             ac_phoneno.setError("Please enter your phone number");
-            valid=false;
+            valid = false;
         }
-        if (ac_phoneno.length()<11){
+        if (ac_phoneno.length() < 11) {
             ac_phoneno.setError("Please enter valid contact no");
-            valid=false;
+            valid = false;
         }
-        if (ac_id.getText().toString().isEmpty()){
+        if (ac_id.getText().toString().isEmpty()) {
             ac_id.setError("Please enter your id");
-            valid=false;
+            valid = false;
         }
 
-        if (date_text.getText().toString().equals("Select date")){
+        if (date_text.getText().toString().equals("Select date")) {
             Toast.makeText(this, "Select date of birth", Toast.LENGTH_LONG).show();
-            valid=false;
+            valid = false;
         }
 
-        if (ac_address.getText().toString().isEmpty()){
+        if (ac_address.getText().toString().isEmpty()) {
             ac_address.setError("Please enter your date of birth");
-            valid=false;
+            valid = false;
         }
-        if (ac_email.getText().toString().isEmpty()){
+        if (ac_email.getText().toString().isEmpty()) {
             ac_email.setError("Please enter your email address");
-            valid=false;
+            valid = false;
         }
-        if (!Patterns.EMAIL_ADDRESS.matcher(String.valueOf(ac_email.getText())).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(String.valueOf(ac_email.getText())).matches()) {
             ac_email.setError("Please enter a valid email");
-            valid=false;
+            valid = false;
         }
 
         return valid;
@@ -120,11 +176,11 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Calendar calendar=Calendar.getInstance();
-        calendar.set(Calendar.YEAR,year);
-        calendar.set(Calendar.MONTH,month);
-        calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-        String currentDateString= DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
         date_text.setText(currentDateString);
     }
 
@@ -139,6 +195,51 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
         reference.child("Customer_list").child(key).child("key_id").setValue(key);
         reference.child("Customer_list").child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
 
+        idStorageReference.putFile(tempUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(Customer_details.this, "Uploading finished!", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(Customer_details.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         finish();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+            id_imageView.setImageBitmap(imageBitmap);
+
+            // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
+            tempUri = getImageUri(getApplicationContext(), imageBitmap);
+
+            // CALL THIS METHOD TO GET THE ACTUAL PATH
+
+        }
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public String getRealPathFromURI(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(idx);
+    }
+
+
 }
