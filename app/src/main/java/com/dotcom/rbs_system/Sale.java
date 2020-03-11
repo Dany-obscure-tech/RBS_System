@@ -34,7 +34,7 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     ImageButton Back_btn,sms_btn,gmail_btn;
-    Button date_btn,exchange_btn,customer_add_btn,searchForCustomer_btn;
+    Button date_btn,exchange_btn,customer_add_btn,searchForCustomer_btn,item_add_btn;
     TextView date_text;
     List<String> exisitngCustomerList,exisitngCustomerIDList;
     DatabaseReference existingCustomersRef;
@@ -61,6 +61,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
         date_text=(TextView)findViewById(R.id.date_text);
         customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
+        item_add_btn=(Button) findViewById(R.id.item_add_btn);
         searchForCustomer_btn = (Button)findViewById(R.id.searchForCustomer_btn);
         sms_btn=(ImageButton)findViewById(R.id.sms_btn);
         gmail_btn=(ImageButton) findViewById(R.id.gmail_btn);
@@ -93,6 +94,14 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                                 dialog.dismiss();
                             }
                         }).show();
+            }
+        });
+
+        item_add_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Sale.this,Item_detail.class);
+                startActivity(intent);
             }
         });
 
