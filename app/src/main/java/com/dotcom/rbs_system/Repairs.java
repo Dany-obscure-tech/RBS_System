@@ -309,10 +309,55 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                detailsSubmit();
+                if (validateFields() == true){
+                    detailsSubmit();
+                }
             }
         });
 
+    }
+
+    private boolean validateFields() {
+        boolean valid = true;
+
+        if (searchForItem_btn.getText().toString().equals("Search for item")) {
+            Toast.makeText(this, "Please select item", Toast.LENGTH_LONG).show();
+            valid = false;
+        }
+        if (searchForCustomer_btn.getText().toString().equals("Search for customer")) {
+            Toast.makeText(this, "Please select customer", Toast.LENGTH_LONG).show();
+            valid = false;
+        }
+        if (listedFaults_editText.getText().toString().isEmpty()) {
+            listedFaults_editText.setError("Please enter listed faults");
+            valid = false;
+        }
+
+        if (listedPrice_editText.getText().toString().isEmpty()) {
+            listedPrice_editText.setError("Please enter listed price");
+            valid = false;
+        }
+        if (agreed_price_editText.getText().toString().isEmpty()) {
+            agreed_price_editText.setError("Please enter agreed price");
+            valid = false;
+        }
+        if (date_textView.getText().toString().equals("Select date")) {
+            Toast.makeText(this, "Select date", Toast.LENGTH_LONG).show();
+            valid = false;
+        }
+        if (paidAmount_editText.getText().toString().isEmpty()) {
+            paidAmount_editText.setError("Please enter paid amount");
+            valid = false;
+        }
+        if (balance_amount_editText.getText().toString().isEmpty()) {
+            balance_amount_editText.setError("Please enter balance amount");
+            valid = false;
+        }
+        if (special_condition_editText.getText().toString().isEmpty()) {
+            special_condition_editText.setError("Please enter special condition");
+            valid = false;
+        }
+        return valid;
     }
 
     private void detailsSubmit() {
