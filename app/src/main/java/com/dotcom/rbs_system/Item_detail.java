@@ -139,7 +139,7 @@ public class Item_detail extends AppCompatActivity {
     }
 
     private void detailsSubmit() {
-        String key = reference.push().getKey();
+        final String key = reference.push().getKey();
         reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Category").setValue(selectCategory_btn.getText().toString());
         reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Item_id").setValue(itemId_editText.getText().toString());
         reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
@@ -152,6 +152,13 @@ public class Item_detail extends AppCompatActivity {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(Item_detail.this, "Uploading finished!", Toast.LENGTH_SHORT).show();
+
+                idStorageReference.child(itemId_editText.getText().toString()).child("image").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("id_image_url").setValue(String.valueOf(uri));
+                    }
+                });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -163,6 +170,7 @@ public class Item_detail extends AppCompatActivity {
         finish();
 
     }
+
 
     private void onClickListeners() {
         Back_btn.setOnClickListener(new View.OnClickListener() {

@@ -185,7 +185,7 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
     }
 
     private void detailsSubmit() {
-        String key = reference.push().getKey();
+        final String key = reference.push().getKey();
         reference.child("Customer_list").child(key).child("Name").setValue(ac_title.getText().toString());
         reference.child("Customer_list").child(key).child("Phone_no").setValue(ac_phoneno.getText().toString());
         reference.child("Customer_list").child(key).child("ID").setValue(ac_id.getText().toString());
@@ -199,6 +199,14 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(Customer_details.this, "Uploading finished!", Toast.LENGTH_SHORT).show();
+
+                idStorageReference.child(ac_id.getText().toString()).child("ID").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        reference.child("Customer_list").child(key).child("id_image_url").setValue(String.valueOf(uri));
+                    }
+                });
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
