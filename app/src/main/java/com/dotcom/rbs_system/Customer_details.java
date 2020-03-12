@@ -49,7 +49,7 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
 
     StorageReference storageReference;
 
-    Uri tempUri;
+    Uri tempUri=null;
 
     StorageReference idStorageReference;
 
@@ -152,7 +152,10 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             ac_id.setError("Please enter your id");
             valid = false;
         }
-
+        if (tempUri==null){
+            Toast.makeText(this, "Please upload a picture", Toast.LENGTH_LONG).show();
+            valid=false;
+        }
         if (date_text.getText().toString().equals("Select date")) {
             Toast.makeText(this, "Select date of birth", Toast.LENGTH_LONG).show();
             valid = false;
@@ -170,6 +173,7 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             ac_email.setError("Please enter a valid email");
             valid = false;
         }
+
 
         return valid;
     }

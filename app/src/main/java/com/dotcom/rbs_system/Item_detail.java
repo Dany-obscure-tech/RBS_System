@@ -59,7 +59,7 @@ public class Item_detail extends AppCompatActivity {
     List<String> categoryList;
     RatingBar ratingBar;
     ImageButton Back_btn;
-    Uri tempUri;
+    Uri tempUri=null;
     StorageReference idStorageReference;
     StorageReference storageReference;
 
@@ -192,9 +192,42 @@ public class Item_detail extends AppCompatActivity {
         submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (validateFields() == true)
                 detailsSubmit();
             }
         });
+    }
+
+    private boolean validateFields() {
+        boolean valid = true;
+
+        if (selectCategory_btn.getText().toString().equals("Select Category")) {
+            Toast.makeText(this, "Please select category", Toast.LENGTH_LONG).show();
+            valid = false;
+        }
+        if (itemName_editText.getText().toString().isEmpty()) {
+            itemName_editText.setError("Please enter item name");
+            valid = false;
+        }
+        if (tempUri==null){
+            Toast.makeText(this, "Please upload a picture", Toast.LENGTH_LONG).show();
+            valid=false;
+        }
+        if (itemId_editText.getText().toString().isEmpty()) {
+            itemId_editText.setError("Please enter item id");
+            valid = false;
+        }
+        if (notes_editText.getText().toString().isEmpty()) {
+            notes_editText.setError("Please enter notes");
+            valid = false;
+        }
+        if (ratingBar.getRating()==0){
+            Toast.makeText(this, "Please select rating", Toast.LENGTH_SHORT).show();
+            valid=false;
+        }
+
+
+        return valid;
     }
 
     @Override

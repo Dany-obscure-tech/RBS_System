@@ -85,10 +85,8 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         setContentView(R.layout.activity_repairs);
 
         initialize();
-
         fetchingExisitingCustomers();
         fetchingExisitingItems();
-
         onClickListeners();
 
     }
@@ -364,24 +362,18 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         String key = reference.push().getKey();
         reference.child("Repairs_list").child(key).child("Customer_keyID").setValue(customerKeyID);
         reference.child("Repairs_list").child(key).child("Item_keyID").setValue(itemKeyID);
-
         reference.child("Repairs_list").child(key).child("Listed_faults").setValue(listedFaults_editText.getText().toString());
         reference.child("Repairs_list").child(key).child("Listed_price").setValue(listedPrice_editText.getText().toString());
         reference.child("Repairs_list").child(key).child("Agreed_price").setValue(agreed_price_editText.getText().toString());
-
         reference.child("Repairs_list").child(key).child("Date").setValue(date_textView.getText().toString());
         reference.child("Repairs_list").child(key).child("Paid_amount").setValue(paidAmount_editText.getText().toString());
         reference.child("Repairs_list").child(key).child("Balance_amount").setValue(balance_amount_editText.getText().toString());
         reference.child("Repairs_list").child(key).child("Special_conditiomn").setValue(special_condition_editText.getText().toString());
         reference.child("Repairs_list").child(key).child("key_id").setValue(key);
         reference.child("Repairs_list").child(key).child("added_by").setValue(firebaseAuthUID);
-
-
         finish();
 
     }
-
-
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
