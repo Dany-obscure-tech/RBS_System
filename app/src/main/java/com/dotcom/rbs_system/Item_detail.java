@@ -1,13 +1,22 @@
 package com.dotcom.rbs_system;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.pdf.PdfDocument;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,6 +26,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +42,16 @@ public class Item_detail extends AppCompatActivity {
     EditText itemName_editText,notes_editText,itemId_editText;
     List<String> categoryList;
     RatingBar ratingBar;
+    ImageButton Back_btn;
+
+    private ArrayList<SampleSearchModel> createCategoryData(){
+        ArrayList<SampleSearchModel> items = new ArrayList<>();
+        for (int i=0;i<categoryList.size();i++){
+            items.add(new SampleSearchModel(categoryList.get(i),null,null,null,null,null,null,null));
+        }
+
+        return items;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +61,11 @@ public class Item_detail extends AppCompatActivity {
         initialize();
         getCategoryList();
         selectCategory();
+        onClickListeners();
     }
 
     private void initialize() {
+        Back_btn = (ImageButton)findViewById(R.id.Back_btn);
         itemName_editText = (EditText)findViewById(R.id.itemName_editText);
         itemId_editText = (EditText)findViewById(R.id.itemId_editText);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
@@ -51,12 +75,6 @@ public class Item_detail extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference();
         selectCategory_btn = (Button)findViewById(R.id.selectCategory_btn);
         submit_btn = (Button)findViewById(R.id.submit_btn);
-        submit_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                detailsSubmit();
-            }
-        });
     }
 
     private void getCategoryList() {
@@ -97,15 +115,6 @@ public class Item_detail extends AppCompatActivity {
         });
     }
 
-    private ArrayList<SampleSearchModel> createCategoryData(){
-        ArrayList<SampleSearchModel> items = new ArrayList<>();
-        for (int i=0;i<categoryList.size();i++){
-            items.add(new SampleSearchModel(categoryList.get(i),null,null,null,null,null,null));
-        }
-
-        return items;
-    }
-
     private void detailsSubmit() {
         String key = reference.push().getKey();
         reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Category").setValue(selectCategory_btn.getText().toString());
@@ -119,4 +128,23 @@ public class Item_detail extends AppCompatActivity {
         finish();
 
     }
+
+    private void onClickListeners() {
+        Back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        submit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                detailsSubmit();
+            }
+        });
+    }
+
+
+
 }

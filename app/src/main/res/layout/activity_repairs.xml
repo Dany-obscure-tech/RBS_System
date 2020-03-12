@@ -294,7 +294,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/purchase_price"
+                android:id="@+id/listedFaults_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
@@ -315,8 +315,8 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/listedPrice_editText"
                 android:inputType="number"
-                android:id="@+id/listed_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
@@ -337,8 +337,8 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/agreed_price_editText"
                 android:inputType="number"
-                android:id="@+id/agreed_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
@@ -363,7 +363,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/date_text"
+                    android:id="@+id/date_textView"
                     android:inputType="date"
                     android:layout_weight="1.9"
                     android:textColor="#9F9F9F"
@@ -396,8 +396,8 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/paidAmount_editText"
                 android:inputType="number"
-                android:id="@+id/cash"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
@@ -417,9 +417,9 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/balance_amount_editText"
                 android:paddingBottom="20dp"
                 android:inputType="number"
-                android:id="@+id/paid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
@@ -439,9 +439,9 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/special_condition_editText"
                 android:paddingBottom="20dp"
                 android:inputType="number"
-                android:id="@+id/special_condition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
@@ -475,6 +475,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageButton
+                        android:id="@+id/print_btn"
                         android:layout_gravity="center_horizontal"
                         android:paddingBottom="8dp"
                         android:background="#00000000"
@@ -543,8 +544,21 @@
 
                 </LinearLayout>
 
-
             </LinearLayout>
+
+            <Button
+                android:id="@+id/submit_btn"
+                android:elevation="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/segoe_ui"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:textSize="15sp"
+                android:textColor="#F1F1F1"
+                android:background="#6E76E3"
+                />
 
         </LinearLayout>
 

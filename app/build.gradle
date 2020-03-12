@@ -38,4 +38,7 @@ dependencies {
     implementation 'cc.cloudist.acplibrary:library:1.2.1'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
+//    pdf file creator
+    implementation 'com.itextpdf:itextg:5.5.10'
+
 }

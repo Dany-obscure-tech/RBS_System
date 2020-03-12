@@ -1,16 +1,25 @@
 package com.dotcom.rbs_system;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,6 +33,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,19 +48,23 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     LinearLayout itemDetails,customerDetails;
     ImageButton Back_btn;
-    Button date_btn,customer_add_btn,searchForCustomer_btn,addItem2_btn,searchForItem_btn,item_add_btn;
+    Button date_btn,customer_add_btn,searchForCustomer_btn,submit_btn,searchForItem_btn,item_add_btn;
     TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView;
     TextView date_text;
-    List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngItemsList,exisitngItemsIDList;
+    List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
     List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
     DatabaseReference existingCustomersRef,existingItemsRef,selectedItemRef;
     String firebaseAuthUID;
-    ImageButton gmail_btn,sms_btn;
+    ImageButton gmail_btn,sms_btn,print_btn;
+    DatabaseReference reference;
+    TextView date_textView;
+    EditText listedFaults_editText,listedPrice_editText,agreed_price_editText,paidAmount_editText,balance_amount_editText,special_condition_editText;
+    String customerKeyID, itemKeyID;
 
     private ArrayList<SampleSearchModel> createItemsData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<exisitngItemsList.size();i++){
-            items.add(new SampleSearchModel(exisitngItemsList.get(i)+"\n("+exisitngItemsIDList.get(i)+")",exisitngItemsIDList.get(i),exisitngItemsList.get(i),exisitngItemsCategoryList.get(i),existingItemsConditionsList.get(i),existingItemsNotesList.get(i),null));
+            items.add(new SampleSearchModel(exisitngItemsList.get(i)+"\n("+exisitngItemsIDList.get(i)+")",exisitngItemsIDList.get(i),exisitngItemsList.get(i),exisitngItemsCategoryList.get(i),existingItemsConditionsList.get(i),existingItemsNotesList.get(i),null,exisitngCustomerKeyIDList.get(i)));
         }
 
         return items;
@@ -57,7 +73,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     private ArrayList<SampleSearchModel> createCustomerData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<exisitngCustomerList.size();i++){
-            items.add(new SampleSearchModel(exisitngCustomerList.get(i)+"\n("+exisitngCustomerIDList.get(i)+")",exisitngCustomerIDList.get(i),exisitngCustomerList.get(i),existingCustomerPhnoList.get(i),existingCustomerDobList.get(i),existingCustomerAddressList.get(i),existingCustomerEmailList.get(i)));
+            items.add(new SampleSearchModel(exisitngCustomerList.get(i)+"\n("+exisitngCustomerIDList.get(i)+")",exisitngCustomerIDList.get(i),exisitngCustomerList.get(i),existingCustomerPhnoList.get(i),existingCustomerDobList.get(i),existingCustomerAddressList.get(i),existingCustomerEmailList.get(i),exisitngCustomerKeyIDList.get(i)));
         }
 
         return items;
@@ -78,13 +94,26 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     }
 
     private void initialize() {
+
+        date_textView = (TextView)findViewById(R.id.date_textView);
+        listedFaults_editText = (EditText)findViewById(R.id.listedFaults_editText);
+        listedPrice_editText = (EditText)findViewById(R.id.listedPrice_editText);
+        agreed_price_editText = (EditText)findViewById(R.id.agreed_price_editText);
+        paidAmount_editText = (EditText)findViewById(R.id.paidAmount_editText);
+        balance_amount_editText = (EditText)findViewById(R.id.balance_amount_editText);
+        special_condition_editText = (EditText)findViewById(R.id.special_condition_editText);
+
+        reference = FirebaseDatabase.getInstance().getReference();
+
         itemDetails = (LinearLayout)findViewById(R.id.itemDetails);
         customerDetails = (LinearLayout)findViewById(R.id.customerDetails);
 
         exisitngCustomerList = new ArrayList<>();
         exisitngCustomerIDList = new ArrayList<>();
+        exisitngCustomerKeyIDList = new ArrayList<>();
         exisitngItemsList = new ArrayList<>();
         exisitngItemsIDList = new ArrayList<>();
+        exisitngItemsKeyIDList = new ArrayList<>();
 
         exisitngItemsCategoryList = new ArrayList<>();
         existingItemsConditionsList= new ArrayList<>();
@@ -94,10 +123,12 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         existingCustomerAddressList= new ArrayList<>();
         existingCustomerEmailList= new ArrayList<>();
 
+        submit_btn=(Button)findViewById(R.id.submit_btn);
         date_btn=(Button)findViewById(R.id.date_btn);
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
         date_text=(TextView)findViewById(R.id.date_text);
         gmail_btn=(ImageButton) findViewById(R.id.gmail_btn);
+        print_btn=(ImageButton) findViewById(R.id.print_btn);
         customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
         searchForCustomer_btn = (Button)findViewById(R.id.searchForCustomer_btn);
         item_add_btn =(Button) findViewById(R.id.item_add_btn);
@@ -130,6 +161,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                     existingCustomerDobList.add(String.valueOf(dataSnapshot1.child("DOB").getValue()));
                     existingCustomerAddressList.add(String.valueOf(dataSnapshot1.child("Address").getValue()));
                     existingCustomerEmailList.add(String.valueOf(dataSnapshot1.child("Email").getValue()));
+                    exisitngCustomerKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
                 }
 
             }
@@ -154,6 +186,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                         exisitngItemsCategoryList.add(String.valueOf(dataSnapshot2.child("Category").getValue()));
                         existingItemsConditionsList.add(String.valueOf(dataSnapshot2.child("Condition").getValue()));
                         existingItemsNotesList.add(String.valueOf(dataSnapshot2.child("Notes").getValue()));
+                        exisitngItemsKeyIDList.add(String.valueOf(dataSnapshot2.child("key_id").getValue()));
                     }
                 }
 
@@ -182,6 +215,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                                 dob_textView.setText(item.getVal2());
                                 address_textView.setText(item.getVal3());
                                 email_textView.setText(item.getVal4());
+                                customerKeyID = item.getVal5();
                                 searchForCustomer_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
                                 searchForCustomer_btn.setTextColor(getResources().getColor(R.color.textGrey));
                                 customerDetails.setVisibility(View.VISIBLE);
@@ -204,6 +238,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                                 category_textView.setText(item.getVal1());
                                 condition_textView.setText(item.getVal2());
                                 notes_textView.setText(item.getVal3());
+                                itemKeyID = item.getVal5();
                                 searchForItem_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
                                 searchForItem_btn.setTextColor(getResources().getColor(R.color.textGrey));
 
@@ -232,6 +267,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                 finish();
             }
         });
+
         date_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -240,6 +276,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
 
             }
         });
+
         customer_add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -247,6 +284,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                 startActivity(intent);
             }
         });
+
         item_add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -273,7 +311,44 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                 startActivity(intent);
             }
         });
+
+        print_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
+        submit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                detailsSubmit();
+            }
+        });
+
     }
+
+    private void detailsSubmit() {
+        String key = reference.push().getKey();
+        reference.child("Repairs_list").child(key).child("Customer_keyID").setValue(customerKeyID);
+        reference.child("Repairs_list").child(key).child("Item_keyID").setValue(itemKeyID);
+
+        reference.child("Repairs_list").child(key).child("Listed_faults").setValue(listedFaults_editText.getText().toString());
+        reference.child("Repairs_list").child(key).child("Listed_price").setValue(listedPrice_editText.getText().toString());
+        reference.child("Repairs_list").child(key).child("Agreed_price").setValue(agreed_price_editText.getText().toString());
+
+        reference.child("Repairs_list").child(key).child("Date").setValue(date_textView.getText().toString());
+        reference.child("Repairs_list").child(key).child("Paid_amount").setValue(paidAmount_editText.getText().toString());
+        reference.child("Repairs_list").child(key).child("Balance_amount").setValue(balance_amount_editText.getText().toString());
+        reference.child("Repairs_list").child(key).child("Special_conditiomn").setValue(special_condition_editText.getText().toString());
+        reference.child("Repairs_list").child(key).child("key_id").setValue(key);
+        reference.child("Repairs_list").child(key).child("added_by").setValue(firebaseAuthUID);
+
+
+        finish();
+
+    }
+
+
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -282,7 +357,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         calendar.set(Calendar.MONTH,month);
         calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
         String currentDateString= DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
-        date_text.setText(currentDateString);
+        date_textView.setText(currentDateString);
     }
 
     @Override

@@ -10,8 +10,9 @@ public class SampleSearchModel implements Searchable {
     private String mval2;
     private String mval3;
     private String mval4;
+    private String mval5;
 
-    public SampleSearchModel(String title, String id,String name, String val1, String val2, String val3, String val4) {
+    public SampleSearchModel(String title, String id,String name, String val1, String val2, String val3, String val4, String val5) {
         mTitle = title;
         mID = id;
         mName = name;
@@ -19,6 +20,7 @@ public class SampleSearchModel implements Searchable {
         mval2 = val2;
         mval3 = val3;
         mval4 = val4;
+        mval5 = val5;
 
     }
 
@@ -54,5 +56,9 @@ public class SampleSearchModel implements Searchable {
 
     public String getVal4() {
         return mval4;
+    }
+
+    public String getVal5() {
+        return mval5;
     }
 }
