@@ -11,8 +11,8 @@ import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    CardView BUY,Sale,repair,Exchange;
-    ImageButton icon1,icon2,icon3,icon5;
+    CardView BUY,Sale,repair,Exchange,Accessories;
+    ImageButton icon1,icon2,icon3,icon5,icon4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,10 +21,22 @@ public class MainActivity extends AppCompatActivity {
         Sale=(CardView)findViewById(R.id.Sale);
         repair=(CardView)findViewById(R.id.repair);
         Exchange=(CardView)findViewById(R.id.Exchange);
+        Accessories=(CardView)findViewById(R.id.Accessories);
+
         icon2=(ImageButton)findViewById(R.id.icon2);
+        icon4=(ImageButton)findViewById(R.id.icon4);
         icon1=(ImageButton)findViewById(R.id.icon1);
         icon3=(ImageButton)findViewById(R.id.icon3);
         icon5=(ImageButton)findViewById(R.id.icon5);
+
+        Accessories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,Accessories.class);
+                startActivity(intent);
+            }
+        });
+
         Sale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -32,6 +44,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        icon4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,Accessories.class);
+                startActivity(intent);
+            }
+        });
+
         icon2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
