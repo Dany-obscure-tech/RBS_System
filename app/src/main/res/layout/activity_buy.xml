@@ -59,13 +59,14 @@
                 <Button
                     android:id="@+id/searchForItem_btn"
                     android:layout_weight="1"
+                    android:maxLines="2"
                     android:textColor="#F1F1F1"
                     android:background="@color/colorPrimaryDark"
                     android:fontFamily="@font/segoe_ui"
                     android:textSize="15sp"
                     android:text="Search for item"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="fill_parent"/>
 
                 <Button
                     android:id="@+id/item_add_btn"
@@ -78,6 +79,82 @@
                     android:text="Add"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/itemDetails"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Category"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/category_textView"
+                        android:text="Category"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Condition"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/condition_textView"
+                        android:text="Condition"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Notes"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/notes_textView"
+                        android:text="asoidhjas das;djasdd asd;ojkasd a;sdljasd as;sdkjasd  as;djas dpo;oajssdd  asd;pjasd  as;lkdkjjasd ;ojasd"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -96,7 +173,7 @@
                     android:textSize="15sp"
                     android:text="Search for customer"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="fill_parent"/>
 
                 <Button
                     android:id="@+id/customer_add_btn"
@@ -112,69 +189,103 @@
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="Name"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/ac_title"
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/customerDetails"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#6E76E3"
-                android:fontFamily="@font/segoe_ui"
-                android:hint="Enter your name"
-                android:maxLength="32"
-                android:textColor="#9F9F9F"
-                android:textColorHint="#9F9F9F"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="Phone.no"
-                android:textSize="16sp" />
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <EditText
-                android:inputType="number"
-                android:id="@+id/ac_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#6E76E3"
-                android:fontFamily="@font/segoe_ui"
-                android:hint="Enter your phone number"
-                android:maxLength="32"
-                android:textColor="#9F9F9F"
-                android:textColorHint="#9F9F9F"
-                android:textSize="16sp" />
-            <TextView
-                android:inputType="number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="ID"
-                android:textSize="16sp" />
+                    <TextView
+                        android:text="Phone no"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"/>
 
-            <EditText
-                android:inputType="number"
-                android:id="@+id/ac_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#6E76E3"
-                android:fontFamily="@font/segoe_ui"
-                android:hint="Enter your id number"
-                android:maxLength="32"
-                android:textColor="#9F9F9F"
-                android:textColorHint="#9F9F9F"
-                android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/phno_textView"
+                        android:text="Category"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="DOB"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/dob_textView"
+                        android:text="Condition"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Address"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/address_textView"
+                        android:text="asoidhjas das;djasdd asd;ojkasd a;sdljasd as;sdkjasd  as;djas dpo;oajssdd  asd;pjasd  as;lkdkjjasd ;ojasd"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Email"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/email_textView"
+                        android:text="asoidhjas das;djasdd asd;ojkasd a;sdljasd as;sdkjasd  as;djas dpo;oajssdd  asd;pjasd  as;lkdkjjasd ;ojasd"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
 
 
+            </LinearLayout>
 
             <TextView
                 android:inputType="number"
@@ -186,8 +297,8 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/suggest_price_editText"
                 android:inputType="number"
-                android:id="@+id/suggest_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
@@ -208,8 +319,8 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/purchase_price_editText"
                 android:inputType="number"
-                android:id="@+id/purchase_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
@@ -230,8 +341,8 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/quantity_editText"
                 android:inputType="number"
-                android:id="@+id/quantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
@@ -256,7 +367,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/date_text"
+                    android:id="@+id/date_textView"
                     android:inputType="date"
                     android:layout_weight="1.7"
                     android:textColor="#9F9F9F"
@@ -289,8 +400,8 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/cash_editText"
                 android:inputType="number"
-                android:id="@+id/cash"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
@@ -311,7 +422,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/voucher"
+                android:id="@+id/voucher_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
@@ -331,9 +442,9 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/paid_editText"
                 android:paddingBottom="30dp"
                 android:inputType="number"
-                android:id="@+id/paid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"

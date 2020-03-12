@@ -220,5 +220,4 @@ public class Item_detail extends AppCompatActivity {
         return cursor.getString(idx);
     }
 
-
 }

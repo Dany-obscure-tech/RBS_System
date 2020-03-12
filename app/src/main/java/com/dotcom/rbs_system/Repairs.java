@@ -53,7 +53,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     TextView date_text;
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
     List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
-    DatabaseReference existingCustomersRef,existingItemsRef,selectedItemRef;
+    DatabaseReference existingCustomersRef,existingItemsRef;
     String firebaseAuthUID;
     ImageButton gmail_btn,sms_btn,print_btn;
     DatabaseReference reference;
@@ -241,18 +241,6 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                                 itemKeyID = item.getVal5();
                                 searchForItem_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
                                 searchForItem_btn.setTextColor(getResources().getColor(R.color.textGrey));
-
-                                selectedItemRef = FirebaseDatabase.getInstance().getReference("Items/"+item.getVal1()+"/"+item.getId());
-                                selectedItemRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                    }
-                                });
                                 itemDetails.setVisibility(View.VISIBLE);
                                 dialog.dismiss();
 
