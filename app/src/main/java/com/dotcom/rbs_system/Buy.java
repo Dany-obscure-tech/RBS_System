@@ -38,8 +38,10 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     LinearLayout itemDetails,customerDetails;
 
+    DatabaseReference reference;
+
     ImageButton Back_btn,sms_btn,gmail_btn;
-    Button date_btn,customer_add_btn,searchForCustomer_btn, item_add_btn,searchForItem_btn;
+    Button date_btn,customer_add_btn,searchForCustomer_btn, item_add_btn,searchForItem_btn,submit_btn;
     TextView date_textView;
     String firebaseAuthUID;
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
@@ -55,7 +57,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     private ArrayList<SampleSearchModel> createItemsData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<exisitngItemsList.size();i++){
-            items.add(new SampleSearchModel(exisitngItemsList.get(i)+"\n("+exisitngItemsIDList.get(i)+")",exisitngItemsIDList.get(i),exisitngItemsList.get(i),exisitngItemsCategoryList.get(i),existingItemsConditionsList.get(i),existingItemsNotesList.get(i),null,exisitngCustomerKeyIDList.get(i)));
+            items.add(new SampleSearchModel(exisitngItemsList.get(i)+"\n("+exisitngItemsIDList.get(i)+")",exisitngItemsIDList.get(i),exisitngItemsList.get(i),exisitngItemsCategoryList.get(i),existingItemsConditionsList.get(i),existingItemsNotesList.get(i),null,exisitngItemsKeyIDList.get(i)));
         }
 
         return items;
@@ -85,6 +87,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     private void initialize() {
 
+        reference = FirebaseDatabase.getInstance().getReference();
+
         itemDetails = (LinearLayout)findViewById(R.id.itemDetails);
         customerDetails = (LinearLayout)findViewById(R.id.customerDetails);
 
@@ -111,8 +115,16 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         address_textView=(TextView)findViewById(R.id.address_textView);
         email_textView=(TextView)findViewById(R.id.email_textView);
 
+        suggest_price_editText = (EditText)findViewById(R.id.suggest_price_editText);
+        purchase_price_editText = (EditText)findViewById(R.id.purchase_price_editText);
+        quantity_editText = (EditText)findViewById(R.id.quantity_editText);
+        cash_editText = (EditText)findViewById(R.id.cash_editText);
+        voucher_editText = (EditText)findViewById(R.id.voucher_editText);
+        paid_editText = (EditText)findViewById(R.id.paid_editText);
+
         searchForCustomer_btn = (Button)findViewById(R.id.searchForCustomer_btn);
         searchForItem_btn = (Button)findViewById(R.id.searchForItem_btn);
+        submit_btn = (Button)findViewById(R.id.submit_btn);
 
         firebaseAuthUID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
         existingCustomersRef = FirebaseDatabase.getInstance().getReference("Customer_list");
@@ -158,6 +170,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                int i = 0;
                 for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                     for (DataSnapshot dataSnapshot2: dataSnapshot1.getChildren()){
                         exisitngItemsList.add(String.valueOf(dataSnapshot2.child("Item_name").getValue()));
@@ -166,6 +179,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                         existingItemsConditionsList.add(String.valueOf(dataSnapshot2.child("Condition").getValue()));
                         existingItemsNotesList.add(String.valueOf(dataSnapshot2.child("Notes").getValue()));
                         exisitngItemsKeyIDList.add(String.valueOf(dataSnapshot2.child("key_id").getValue()));
+                        i++;
                     }
                 }
 
@@ -291,8 +305,36 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 startActivity(Intent.createChooser(it,"Choose Mail App"));
             }
         });
+
+        submit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    detailsSubmit();
+            }
+        });
     }
 
+
+    private void detailsSubmit() {
+        String key = reference.push().getKey();
+        reference.child("Buy_list").child(key).child("Customer_keyID").setValue(customerKeyID);
+        reference.child("Buy_list").child(key).child("Item_keyID").setValue(itemKeyID);
+
+        reference.child("Buy_list").child(key).child("Suggested_price").setValue(suggest_price_editText.getText().toString());
+        reference.child("Buy_list").child(key).child("Purchase_price").setValue(purchase_price_editText.getText().toString());
+        reference.child("Buy_list").child(key).child("Quantity").setValue(quantity_editText.getText().toString());
+        reference.child("Buy_list").child(key).child("Date").setValue(date_textView.getText().toString());
+        reference.child("Buy_list").child(key).child("Cash").setValue(cash_editText.getText().toString());
+        reference.child("Buy_list").child(key).child("Voucher").setValue(voucher_editText.getText().toString());
+        reference.child("Buy_list").child(key).child("Paid").setValue(paid_editText.getText().toString());
+
+
+        reference.child("Buy_list").child(key).child("key_id").setValue(key);
+        reference.child("Buy_list").child(key).child("added_by").setValue(firebaseAuthUID);
+
+
+        finish();
+    }
 
     @Override
     protected void onRestart() {

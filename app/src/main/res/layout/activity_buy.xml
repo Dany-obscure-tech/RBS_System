@@ -550,6 +550,20 @@
 
             </LinearLayout>
 
+            <Button
+                android:id="@+id/submit_btn"
+                android:elevation="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/segoe_ui"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:textSize="15sp"
+                android:textColor="#F1F1F1"
+                android:background="#6E76E3"
+                />
+
         </LinearLayout>
 
     </ScrollView>

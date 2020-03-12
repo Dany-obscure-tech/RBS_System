@@ -64,7 +64,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     private ArrayList<SampleSearchModel> createItemsData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<exisitngItemsList.size();i++){
-            items.add(new SampleSearchModel(exisitngItemsList.get(i)+"\n("+exisitngItemsIDList.get(i)+")",exisitngItemsIDList.get(i),exisitngItemsList.get(i),exisitngItemsCategoryList.get(i),existingItemsConditionsList.get(i),existingItemsNotesList.get(i),null,exisitngCustomerKeyIDList.get(i)));
+            items.add(new SampleSearchModel(exisitngItemsList.get(i)+"\n("+exisitngItemsIDList.get(i)+")",exisitngItemsIDList.get(i),exisitngItemsList.get(i),exisitngItemsCategoryList.get(i),existingItemsConditionsList.get(i),existingItemsNotesList.get(i),null,exisitngItemsKeyIDList.get(i)));
         }
 
         return items;
