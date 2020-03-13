@@ -36,9 +36,9 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    LinearLayout itemDetails,customerDetails;
 
     DatabaseReference reference;
+    DatabaseReference existingCustomersRef,existingItemsRef;
 
     ImageButton Back_btn,sms_btn,gmail_btn;
     Button date_btn,customer_add_btn,searchForCustomer_btn, item_add_btn,searchForItem_btn,submit_btn;
@@ -46,10 +46,11 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     String firebaseAuthUID;
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
     List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
-    DatabaseReference existingCustomersRef,existingItemsRef;
     TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView;
 
+    LinearLayout itemDetails,customerDetails;
     String customerKeyID, itemKeyID;
+
     Progreess_dialog pd;
 
     EditText suggest_price_editText,purchase_price_editText,quantity_editText,cash_editText,voucher_editText,paid_editText;
@@ -192,6 +193,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         });
 
     }
+
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar calendar=Calendar.getInstance();
