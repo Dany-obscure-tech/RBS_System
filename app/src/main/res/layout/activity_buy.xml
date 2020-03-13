@@ -442,7 +442,6 @@
 
             <EditText
                 android:id="@+id/paid_editText"
-                android:paddingBottom="30dp"
                 android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

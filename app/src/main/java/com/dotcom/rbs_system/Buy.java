@@ -311,9 +311,53 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(validateFields() == true)
                     detailsSubmit();
             }
         });
+    }
+
+    private boolean validateFields() {
+        boolean valid = true;
+
+        if (searchForItem_btn.getText().toString().equals("Search for item")) {
+            Toast.makeText(this, "Please select item", Toast.LENGTH_LONG).show();
+            valid = false;
+        }
+        if (searchForCustomer_btn.getText().toString().equals("Search for customer")) {
+            Toast.makeText(this, "Please select customer", Toast.LENGTH_LONG).show();
+            valid = false;
+        }
+        if (suggest_price_editText.getText().toString().isEmpty()) {
+            suggest_price_editText.setError("Please enter suggested price");
+            valid = false;
+        }
+        if (purchase_price_editText.getText().toString().isEmpty()) {
+            purchase_price_editText.setError("Please enter suggested price");
+            valid = false;
+        }
+        if (quantity_editText.getText().toString().isEmpty()) {
+            quantity_editText.setError("Please enter quantity");
+            valid = false;
+        }
+        if (date_textView.getText().toString().equals("Select date")) {
+            Toast.makeText(this, "Select date", Toast.LENGTH_LONG).show();
+            valid = false;
+        }
+        if (cash_editText.getText().toString().isEmpty()) {
+            cash_editText.setError("Please enter cash");
+            valid = false;
+        }
+        if (voucher_editText.getText().toString().isEmpty()) {
+            voucher_editText.setError("Please enter voucher");
+            valid = false;
+        }
+        if (paid_editText.getText().toString().isEmpty()) {
+            paid_editText.setError("Please enter paid amount");
+            valid = false;
+        }
+
+        return valid;
     }
 
 
