@@ -38,7 +38,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/header"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="30dp"
         android:layout_marginEnd="8dp">
 
         <LinearLayout
@@ -562,6 +561,8 @@
                 android:textSize="15sp"
                 android:textColor="#F1F1F1"
                 android:background="#6E76E3"
+                android:layout_marginBottom="15dp"
+
                 />
 
         </LinearLayout>
