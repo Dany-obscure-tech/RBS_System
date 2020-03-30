@@ -66,6 +66,15 @@
 
             </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/upperLayout"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -103,7 +112,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/ac_title"
+                android:id="@+id/itemName_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
@@ -115,6 +124,28 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="Item ID"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/itemId_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#6E76E3"
+                android:fontFamily="@font/segoe_ui"
+                android:hint="Enter item id"
+                android:maxLength="32"
+                android:textColor="#9F9F9F"
+                android:textColorHint="#9F9F9F"
+                android:textSize="16sp" />
+
+
+
+            <TextView
                 android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -124,11 +155,11 @@
                 android:textSize="16sp" />
 
             <RatingBar
+                android:id="@+id/ratingBar"
                 android:layout_gravity="center_horizontal"
                 android:stepSize="1.0"
-                android:rating="1"
+                android:rating="0"
                 android:numStars="5"
-                android:id="@+id/ratingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -142,8 +173,8 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/purchase_price_editText"
                 android:inputType="number"
-                android:id="@+id/cash"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
@@ -153,6 +184,22 @@
                 android:textColor="#9F9F9F"
                 android:textColorHint="#9F9F9F"
                 android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/submit_btn"
+                android:elevation="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/segoe_ui"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:textSize="15sp"
+                android:textColor="#F1F1F1"
+                android:background="#6E76E3"
+                />
+
+        </LinearLayout>
 
             <LinearLayout
                 android:layout_gravity="center_horizontal"
@@ -175,6 +222,12 @@
 
             </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/lowerLayout"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -192,7 +245,7 @@
                 android:layout_height="wrap_content">
 
                 <Button
-                    android:id="@+id/selectCategory_btn1"
+                    android:id="@+id/selectCategory_btn2"
                     android:layout_weight="1"
                     android:textColor="#F1F1F1"
                     android:background="@color/colorPrimaryDark"
@@ -232,6 +285,26 @@
 
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="Suggested Price"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/suggest_price_editText"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#6E76E3"
+                android:fontFamily="@font/segoe_ui"
+                android:hint="Enter your suggested price"
+                android:maxLength="32"
+                android:textColor="#9F9F9F"
+                android:textColorHint="#9F9F9F"
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -242,14 +315,35 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/paid_editText"
                 android:paddingBottom="20dp"
                 android:inputType="number"
-                android:id="@+id/paid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
                 android:fontFamily="@font/segoe_ui"
                 android:hint="Enter paid amount here"
+                android:maxLength="32"
+                android:textColor="#9F9F9F"
+                android:textColorHint="#9F9F9F"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="Balance"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/balance_editText"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#6E76E3"
+                android:fontFamily="@font/segoe_ui"
+                android:hint="Enter your balance"
                 android:maxLength="32"
                 android:textColor="#9F9F9F"
                 android:textColorHint="#9F9F9F"
@@ -344,6 +438,22 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <Button
+                android:id="@+id/submit_btn2"
+                android:elevation="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/segoe_ui"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:textSize="15sp"
+                android:textColor="#F1F1F1"
+                android:background="#6E76E3"
+                />
+
+        </LinearLayout>
 
         </LinearLayout>
 

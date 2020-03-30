@@ -42,21 +42,21 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     String firebaseAuthUID;
 
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
-    List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
+    List<String> exisitngItemsCategoryList,existingItemsPriceList,existingItemsConditionsList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
 
-    TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView;
+    TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView,suggest_price_TextView;
 
     LinearLayout itemDetails,customerDetails;
     String customerKeyID, itemKeyID;
 
-    EditText suggest_price_editText,sale_price_editText,quantity_editText,cash_editText,paid_editText;
+    EditText sale_price_editText,quantity_editText,cash_editText,paid_editText;
 
     DatabaseReference reference;
 
     private ArrayList<SampleSearchModel> createItemsData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<exisitngItemsList.size();i++){
-            items.add(new SampleSearchModel(exisitngItemsList.get(i)+"\n("+exisitngItemsIDList.get(i)+")",exisitngItemsIDList.get(i),exisitngItemsList.get(i),exisitngItemsCategoryList.get(i),existingItemsConditionsList.get(i),existingItemsNotesList.get(i),null,exisitngItemsKeyIDList.get(i)));
+            items.add(new SampleSearchModel(exisitngItemsList.get(i)+"\n("+exisitngItemsIDList.get(i)+")",exisitngItemsIDList.get(i),exisitngItemsList.get(i),exisitngItemsCategoryList.get(i),existingItemsConditionsList.get(i),existingItemsNotesList.get(i),existingItemsPriceList.get(i),exisitngItemsKeyIDList.get(i)));
         }
 
         return items;
@@ -104,17 +104,18 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         exisitngItemsCategoryList = new ArrayList<>();
         existingItemsConditionsList= new ArrayList<>();
         existingItemsNotesList= new ArrayList<>();
+        existingItemsPriceList= new ArrayList<>();
         existingCustomerPhnoList= new ArrayList<>();
         existingCustomerDobList= new ArrayList<>();
         existingCustomerAddressList= new ArrayList<>();
         existingCustomerEmailList= new ArrayList<>();
 
-        suggest_price_editText = (EditText) findViewById(R.id.suggest_price_editText);
         sale_price_editText = (EditText) findViewById(R.id.sale_price_editText);
         quantity_editText = (EditText) findViewById(R.id.quantity_editText);
         cash_editText = (EditText) findViewById(R.id.cash_editText);
         paid_editText = (EditText) findViewById(R.id.paid_editText);
 
+        suggest_price_TextView=(TextView)findViewById(R.id.suggest_price_TextView);
         category_textView=(TextView)findViewById(R.id.category_textView);
         condition_textView=(TextView)findViewById(R.id.condition_textView);
         notes_textView=(TextView)findViewById(R.id.notes_textView);
@@ -183,6 +184,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                         exisitngItemsCategoryList.add(String.valueOf(dataSnapshot2.child("Category").getValue()));
                         existingItemsConditionsList.add(String.valueOf(dataSnapshot2.child("Condition").getValue()));
                         existingItemsNotesList.add(String.valueOf(dataSnapshot2.child("Notes").getValue()));
+                        existingItemsPriceList.add(String.valueOf(dataSnapshot2.child("Price").getValue()));
                         exisitngItemsKeyIDList.add(String.valueOf(dataSnapshot2.child("key_id").getValue()));
                         i++;
                     }
@@ -237,6 +239,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                                 category_textView.setText(item.getVal1());
                                 condition_textView.setText(item.getVal2());
                                 notes_textView.setText(item.getVal3());
+                                suggest_price_TextView.setText(item.getVal4());
                                 itemKeyID = item.getVal5();
                                 searchForItem_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
                                 searchForItem_btn.setTextColor(getResources().getColor(R.color.textGrey));
@@ -328,10 +331,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             Toast.makeText(this, "Please select customer", Toast.LENGTH_LONG).show();
             valid = false;
         }
-        if (suggest_price_editText.getText().toString().isEmpty()) {
-            suggest_price_editText.setError("Please enter suggested price");
-            valid = false;
-        }
+
         if (sale_price_editText.getText().toString().isEmpty()) {
             sale_price_editText.setError("Please enter sale price");
             valid = false;
@@ -359,8 +359,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         String key = reference.push().getKey();
         reference.child("Sale_list").child(key).child("Customer_keyID").setValue(customerKeyID);
         reference.child("Sale_list").child(key).child("Item_keyID").setValue(itemKeyID);
-
-        reference.child("Sale_list").child(key).child("Suggested_price").setValue(suggest_price_editText.getText().toString());
         reference.child("Sale_list").child(key).child("Sale_price").setValue(sale_price_editText.getText().toString());
         reference.child("Sale_list").child(key).child("Quantity").setValue(quantity_editText.getText().toString());
         reference.child("Sale_list").child(key).child("Date").setValue(date_textView.getText().toString());

@@ -45,20 +45,20 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     TextView date_textView;
     String firebaseAuthUID;
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
-    List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
-    TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView;
+    List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsPriceList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
+    TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView,suggest_price_TextView;
 
     LinearLayout itemDetails,customerDetails;
     String customerKeyID, itemKeyID;
 
     Progreess_dialog pd;
 
-    EditText suggest_price_editText,purchase_price_editText,quantity_editText,cash_editText,voucher_editText,paid_editText;
+    EditText purchase_price_editText,quantity_editText,cash_editText,voucher_editText,paid_editText;
 
     private ArrayList<SampleSearchModel> createItemsData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<exisitngItemsList.size();i++){
-            items.add(new SampleSearchModel(exisitngItemsList.get(i)+"\n("+exisitngItemsIDList.get(i)+")",exisitngItemsIDList.get(i),exisitngItemsList.get(i),exisitngItemsCategoryList.get(i),existingItemsConditionsList.get(i),existingItemsNotesList.get(i),null,exisitngItemsKeyIDList.get(i)));
+            items.add(new SampleSearchModel(exisitngItemsList.get(i)+"\n("+exisitngItemsIDList.get(i)+")",exisitngItemsIDList.get(i),exisitngItemsList.get(i),exisitngItemsCategoryList.get(i),existingItemsConditionsList.get(i),existingItemsNotesList.get(i),existingItemsPriceList.get(i),exisitngItemsKeyIDList.get(i)));
         }
 
         return items;
@@ -102,6 +102,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
         exisitngItemsCategoryList = new ArrayList<>();
         existingItemsConditionsList= new ArrayList<>();
+        existingItemsPriceList= new ArrayList<>();
         existingItemsNotesList= new ArrayList<>();
         existingCustomerPhnoList= new ArrayList<>();
         existingCustomerDobList= new ArrayList<>();
@@ -116,7 +117,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         address_textView=(TextView)findViewById(R.id.address_textView);
         email_textView=(TextView)findViewById(R.id.email_textView);
 
-        suggest_price_editText = (EditText)findViewById(R.id.suggest_price_editText);
+        suggest_price_TextView = (TextView) findViewById(R.id.suggest_price_TextView);
         purchase_price_editText = (EditText)findViewById(R.id.purchase_price_editText);
         quantity_editText = (EditText)findViewById(R.id.quantity_editText);
         cash_editText = (EditText)findViewById(R.id.cash_editText);
@@ -178,6 +179,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                         exisitngItemsIDList.add(String.valueOf(dataSnapshot2.child("Item_id").getValue()));
                         exisitngItemsCategoryList.add(String.valueOf(dataSnapshot2.child("Category").getValue()));
                         existingItemsConditionsList.add(String.valueOf(dataSnapshot2.child("Condition").getValue()));
+                        existingItemsPriceList.add(String.valueOf(dataSnapshot2.child("Price").getValue()));
                         existingItemsNotesList.add(String.valueOf(dataSnapshot2.child("Notes").getValue()));
                         exisitngItemsKeyIDList.add(String.valueOf(dataSnapshot2.child("key_id").getValue()));
                         i++;
@@ -261,6 +263,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                                 category_textView.setText(item.getVal1());
                                 condition_textView.setText(item.getVal2());
                                 notes_textView.setText(item.getVal3());
+                                suggest_price_TextView.setText(item.getVal4());
                                 itemKeyID = item.getVal5();
                                 searchForItem_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
                                 searchForItem_btn.setTextColor(getResources().getColor(R.color.textGrey));
@@ -328,10 +331,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             Toast.makeText(this, "Please select customer", Toast.LENGTH_LONG).show();
             valid = false;
         }
-        if (suggest_price_editText.getText().toString().isEmpty()) {
-            suggest_price_editText.setError("Please enter suggested price");
-            valid = false;
-        }
+
         if (purchase_price_editText.getText().toString().isEmpty()) {
             purchase_price_editText.setError("Please enter suggested price");
             valid = false;
@@ -366,7 +366,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         reference.child("Buy_list").child(key).child("Customer_keyID").setValue(customerKeyID);
         reference.child("Buy_list").child(key).child("Item_keyID").setValue(itemKeyID);
 
-        reference.child("Buy_list").child(key).child("Suggested_price").setValue(suggest_price_editText.getText().toString());
         reference.child("Buy_list").child(key).child("Purchase_price").setValue(purchase_price_editText.getText().toString());
         reference.child("Buy_list").child(key).child("Quantity").setValue(quantity_editText.getText().toString());
         reference.child("Buy_list").child(key).child("Date").setValue(date_textView.getText().toString());

@@ -287,7 +287,6 @@
             </LinearLayout>
 
             <TextView
-                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -295,21 +294,17 @@
                 android:text="Suggested Price"
                 android:textSize="16sp" />
 
-            <EditText
-                android:id="@+id/suggest_price_editText"
-                android:inputType="number"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/suggest_price_TextView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#6E76E3"
-                android:fontFamily="@font/segoe_ui"
-                android:hint="Enter your suggested price"
-                android:maxLength="32"
-                android:textColor="#9F9F9F"
-                android:textColorHint="#9F9F9F"
-                android:textSize="16sp" />
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="Suggested Price"
+                android:textSize="20sp" />
 
             <TextView
-                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -331,7 +326,6 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -351,6 +345,7 @@
                 android:textColor="#9F9F9F"
                 android:textColorHint="#9F9F9F"
                 android:textSize="16sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -390,7 +385,6 @@
             </LinearLayout>
 
             <TextView
-                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -412,7 +406,6 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:inputType=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

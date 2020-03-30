@@ -55,7 +55,7 @@ public class Item_detail extends AppCompatActivity {
     Button selectCategory_btn,submit_btn,uploadId_btn;
     DatabaseReference categoryRef,reference;
     ImageView id_imageView;
-    EditText itemName_editText,notes_editText,itemId_editText;
+    EditText itemName_editText,notes_editText,itemId_editText,price_editText;
     List<String> categoryList;
     RatingBar ratingBar;
     ImageButton Back_btn;
@@ -71,6 +71,7 @@ public class Item_detail extends AppCompatActivity {
 
         return items;
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,7 @@ public class Item_detail extends AppCompatActivity {
         Back_btn = (ImageButton)findViewById(R.id.Back_btn);
         itemName_editText = (EditText)findViewById(R.id.itemName_editText);
         itemId_editText = (EditText)findViewById(R.id.itemId_editText);
+        price_editText = (EditText)findViewById(R.id.price_editText);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         notes_editText = (EditText)findViewById(R.id.notes_editText);
         categoryList = new ArrayList<>();
@@ -98,6 +100,7 @@ public class Item_detail extends AppCompatActivity {
         uploadId_btn = (Button) findViewById(R.id.uploadId_btn);
         id_imageView = (ImageView) findViewById(R.id.id_imageView);
         idStorageReference = storageReference.child("Item_Images");
+
     }
 
     private void getCategoryList() {
@@ -146,6 +149,7 @@ public class Item_detail extends AppCompatActivity {
         reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Item_name").setValue(itemName_editText.getText().toString());
         reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Condition").setValue(ratingBar.getRating());
         reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Notes").setValue(notes_editText.getText().toString());
+        reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Price").setValue(price_editText.getText().toString());
         reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("key_id").setValue(key);
 
         idStorageReference.child(itemId_editText.getText().toString()).child("image").putFile(tempUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -219,6 +223,10 @@ public class Item_detail extends AppCompatActivity {
         }
         if (notes_editText.getText().toString().isEmpty()) {
             notes_editText.setError("Please enter notes");
+            valid = false;
+        }
+        if (price_editText.getText().toString().isEmpty()) {
+            price_editText.setError("Please enter price");
             valid = false;
         }
         if (ratingBar.getRating()==0){
