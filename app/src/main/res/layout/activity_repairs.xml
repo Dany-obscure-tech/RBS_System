@@ -32,7 +32,7 @@
 
     </RelativeLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_marginBottom="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -290,42 +290,36 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/segoe_ui_bold"
-                android:text="Listed Faults"
+                android:text="Listed Faults with price"
                 android:textSize="16sp" />
 
-            <EditText
-                android:id="@+id/listedFaults_editText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#6E76E3"
-                android:fontFamily="@font/segoe_ui"
-                android:hint="Enter listed faults"
-                android:maxLength="32"
-                android:textColor="#9F9F9F"
-                android:textColorHint="#9F9F9F"
-                android:textSize="16sp" />
-
-            <TextView
-                android:inputType="number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="Listed Price"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/listedPrice_editText"
-                android:inputType="number"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#6E76E3"
-                android:fontFamily="@font/segoe_ui"
-                android:hint="Enter listed price"
-                android:maxLength="32"
-                android:textColor="#9F9F9F"
-                android:textColorHint="#9F9F9F"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/addFaults_btn"
+                    android:layout_weight="1"
+                    android:textColor="#F1F1F1"
+                    android:background="@color/colorPrimaryDark"
+                    android:fontFamily="@font/segoe_ui"
+                    android:textSize="15sp"
+                    android:text="Add"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:nestedScrollingEnabled="false"
+                android:id="@+id/faultList_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
 
             <TextView
                 android:inputType="number"
@@ -416,19 +410,15 @@
                 android:text="Balance Amount"
                 android:textSize="16sp" />
 
-            <EditText
-                android:id="@+id/balance_amount_editText"
-                android:paddingBottom="20dp"
-                android:inputType="number"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/balanceAmount_TextView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#6E76E3"
-                android:fontFamily="@font/segoe_ui"
-                android:hint="Enter balance amount"
-                android:maxLength="32"
-                android:textColor="#9F9F9F"
-                android:textColorHint="#9F9F9F"
-                android:textSize="16sp" />
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="NA"
+                android:textSize="20sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -563,6 +553,6 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>

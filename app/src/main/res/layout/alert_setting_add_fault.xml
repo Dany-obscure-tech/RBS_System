@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/segoe_ui_bold"
+        android:text="Add Fault"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_below="@+id/title"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:text="Fault Name"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/alertFaultName_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#6E76E3"
+            android:fontFamily="@font/segoe_ui"
+            android:hint="Enter fault name"
+            android:maxLength="32"
+            android:textColor="#9F9F9F"
+            android:textColorHint="#9F9F9F"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:text="Fault Price"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/alertFaultPrice_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#6E76E3"
+            android:fontFamily="@font/segoe_ui"
+            android:hint="Enter fault price"
+            android:maxLength="32"
+            android:textColor="#9F9F9F"
+            android:textColorHint="#9F9F9F"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/layout"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/addFaultAlertenter_btn"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:textColor="#F1F1F1"
+            android:background="@color/colorPrimaryDark"
+            android:fontFamily="@font/segoe_ui"
+            android:textSize="15sp"
+            android:text="Enter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/addFaultsAlertCancel_btn"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/segoe_ui"
+            android:textSize="15sp"
+            android:text="Cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

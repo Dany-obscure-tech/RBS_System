@@ -1,21 +1,17 @@
 package com.dotcom.rbs_system;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -25,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dotcom.rbs_system.Adapter.AdapterRepairsFaultListRecyclerView;
+import com.dotcom.rbs_system.Adapter.AdapterSettingsFaultListRecyclerView;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -33,9 +31,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,7 +45,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     ImageButton Back_btn;
     Button date_btn,customer_add_btn,searchForCustomer_btn,submit_btn,searchForItem_btn,item_add_btn;
     TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView;
-    TextView date_text;
+    TextView date_text,balanceAmount_TextView;
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
     List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
     DatabaseReference existingCustomersRef,existingItemsRef;
@@ -58,13 +53,23 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     ImageButton gmail_btn,sms_btn,print_btn;
     DatabaseReference reference;
     TextView date_textView;
-    EditText listedFaults_editText,listedPrice_editText,agreed_price_editText,paidAmount_editText,balance_amount_editText,special_condition_editText;
+    EditText agreed_price_editText,paidAmount_editText,special_condition_editText;
     String customerKeyID, itemKeyID;
+
+    Button addFaults_btn;
+    RecyclerView faultList_recyclerView;
+    AdapterRepairsFaultListRecyclerView adapterRepairsFaultListRecyclerView;
+
+    DatabaseReference faultListRef;
+
+    List<String> faultNameList, faultPriceList, faultKeyIDList;
+    List<String> tempFaultNameList, tempFaultPriceList, tempFaultKeyIDList;
 
     private ArrayList<SampleSearchModel> createItemsData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<exisitngItemsList.size();i++){
             items.add(new SampleSearchModel(exisitngItemsList.get(i)+"\n("+exisitngItemsIDList.get(i)+")",exisitngItemsIDList.get(i),exisitngItemsList.get(i),exisitngItemsCategoryList.get(i),existingItemsConditionsList.get(i),existingItemsNotesList.get(i),null,exisitngItemsKeyIDList.get(i)));
+
         }
 
         return items;
@@ -79,12 +84,24 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         return items;
     }
 
+    private ArrayList<SampleSearchModel> createFaultListData(){
+        ArrayList<SampleSearchModel> items = new ArrayList<>();
+        for (int i=0;i<faultNameList.size();i++){
+            items.add(new SampleSearchModel(faultNameList.get(i)+"\n("+faultPriceList.get(i)+")",faultKeyIDList.get(i),faultNameList.get(i),faultPriceList.get(i),null,null,null,null));
+
+        }
+
+        return items;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repairs);
 
         initialize();
+        balanceAmount();
+        getFaultsList();
         fetchingExisitingCustomers();
         fetchingExisitingItems();
         onClickListeners();
@@ -92,13 +109,27 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     }
 
     private void initialize() {
+        faultNameList = new ArrayList<>();
+        faultPriceList = new ArrayList<>();
+        faultKeyIDList = new ArrayList<>();
+
+        tempFaultNameList = new ArrayList<>();
+        tempFaultPriceList = new ArrayList<>();
+        tempFaultKeyIDList = new ArrayList<>();
+
+        faultListRef = FirebaseDatabase.getInstance().getReference("Listed_faults");
+
+        addFaults_btn = (Button)findViewById(R.id.addFaults_btn);
+
+        adapterRepairsFaultListRecyclerView = new AdapterRepairsFaultListRecyclerView(Repairs.this,tempFaultNameList,tempFaultPriceList,tempFaultKeyIDList);
+        faultList_recyclerView = (RecyclerView) findViewById(R.id.faultList_recyclerView);
+        faultList_recyclerView.setAdapter(adapterRepairsFaultListRecyclerView);
+        faultList_recyclerView.setLayoutManager(new GridLayoutManager(Repairs.this,1));
 
         date_textView = (TextView)findViewById(R.id.date_textView);
-        listedFaults_editText = (EditText)findViewById(R.id.listedFaults_editText);
-        listedPrice_editText = (EditText)findViewById(R.id.listedPrice_editText);
         agreed_price_editText = (EditText)findViewById(R.id.agreed_price_editText);
         paidAmount_editText = (EditText)findViewById(R.id.paidAmount_editText);
-        balance_amount_editText = (EditText)findViewById(R.id.balance_amount_editText);
+        balanceAmount_TextView = (TextView) findViewById(R.id.balanceAmount_TextView);
         special_condition_editText = (EditText)findViewById(R.id.special_condition_editText);
 
         reference = FirebaseDatabase.getInstance().getReference();
@@ -198,7 +229,47 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
 
     }
 
+    private void getFaultsList() {
+        faultListRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    faultNameList.add(String.valueOf(dataSnapshot1.child("Fault_name").getValue()));
+                    faultPriceList.add(String.valueOf(dataSnapshot1.child("Fault_price").getValue()));
+                    faultKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void onClickListeners() {
+        addFaults_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new SimpleSearchDialogCompat(Repairs.this, "Search...",
+                        "What are you looking for...?", null, createFaultListData(),
+                        new SearchResultListener<SampleSearchModel>() {
+                            @Override
+                            public void onSelected(BaseSearchDialogCompat dialog,
+                                                   SampleSearchModel item, int position) {
+                                tempFaultNameList.add(item.getName());
+                                tempFaultKeyIDList.add(item.getId());
+                                tempFaultPriceList.add(item.getVal1());
+
+                                adapterRepairsFaultListRecyclerView.notifyDataSetChanged();
+
+                                dialog.dismiss();
+                            }
+                        }).show();
+            }
+        });
+
         searchForCustomer_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -326,15 +397,6 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             Toast.makeText(this, "Please select customer", Toast.LENGTH_LONG).show();
             valid = false;
         }
-        if (listedFaults_editText.getText().toString().isEmpty()) {
-            listedFaults_editText.setError("Please enter listed faults");
-            valid = false;
-        }
-
-        if (listedPrice_editText.getText().toString().isEmpty()) {
-            listedPrice_editText.setError("Please enter listed price");
-            valid = false;
-        }
         if (agreed_price_editText.getText().toString().isEmpty()) {
             agreed_price_editText.setError("Please enter agreed price");
             valid = false;
@@ -347,14 +409,15 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             paidAmount_editText.setError("Please enter paid amount");
             valid = false;
         }
-        if (balance_amount_editText.getText().toString().isEmpty()) {
-            balance_amount_editText.setError("Please enter balance amount");
-            valid = false;
-        }
         if (special_condition_editText.getText().toString().isEmpty()) {
             special_condition_editText.setError("Please enter special condition");
             valid = false;
         }
+        if (tempFaultNameList.size()==0){
+            Toast.makeText(this, "Please enter faults", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+
         return valid;
     }
 
@@ -362,17 +425,82 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         String key = reference.push().getKey();
         reference.child("Repairs_list").child(key).child("Customer_keyID").setValue(customerKeyID);
         reference.child("Repairs_list").child(key).child("Item_keyID").setValue(itemKeyID);
-        reference.child("Repairs_list").child(key).child("Listed_faults").setValue(listedFaults_editText.getText().toString());
-        reference.child("Repairs_list").child(key).child("Listed_price").setValue(listedPrice_editText.getText().toString());
         reference.child("Repairs_list").child(key).child("Agreed_price").setValue(agreed_price_editText.getText().toString());
         reference.child("Repairs_list").child(key).child("Date").setValue(date_textView.getText().toString());
         reference.child("Repairs_list").child(key).child("Paid_amount").setValue(paidAmount_editText.getText().toString());
-        reference.child("Repairs_list").child(key).child("Balance_amount").setValue(balance_amount_editText.getText().toString());
+        reference.child("Repairs_list").child(key).child("Balance_amount").setValue(balanceAmount_TextView.getText().toString());
         reference.child("Repairs_list").child(key).child("Special_conditiomn").setValue(special_condition_editText.getText().toString());
         reference.child("Repairs_list").child(key).child("key_id").setValue(key);
         reference.child("Repairs_list").child(key).child("added_by").setValue(firebaseAuthUID);
+
+        for (int i = 0;i<tempFaultNameList.size();i++){
+            reference.child("Repairs_list").child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_name").setValue(tempFaultNameList.get(i));
+            reference.child("Repairs_list").child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_price").setValue(tempFaultPriceList.get(i));
+            reference.child("Repairs_list").child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_key").setValue(tempFaultKeyIDList.get(i));
+        }
         finish();
 
+    }
+
+    private void balanceAmount() {
+        agreed_price_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (agreed_price_editText.getText().toString().isEmpty()){
+                    balanceAmount_TextView.setText("NA");
+                }else {
+                    balanceAmount_TextView.setText(agreed_price_editText.getText().toString());
+                    paidAmount_editText.setText("");
+                }
+
+            }
+        });
+
+        paidAmount_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(balanceAmount_TextView.getText().toString().equals("NA")){
+
+                }else {
+                    if (paidAmount_editText.getText().toString().equals("")){
+
+                    }else {
+                        int agreedprice = Integer.parseInt(agreed_price_editText.getText().toString());
+                        int paidprice = Integer.parseInt(paidAmount_editText.getText().toString());
+
+                        if (paidprice>agreedprice){
+                            String sss = String.valueOf(agreedprice);
+                            paidAmount_editText.setText(sss);
+                            balanceAmount_TextView.setText("0");
+                        }else {
+                            String sss = String.valueOf(agreedprice-paidprice);
+                            balanceAmount_TextView.setText(sss);
+                        }
+                    }
+
+                }
+            }
+        });
     }
 
     @Override
