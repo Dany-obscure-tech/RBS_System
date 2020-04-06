@@ -47,8 +47,8 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
     AdapterAccessoriesPurchaseRecyclerView adapterAccessoriesPurchaseRecyclerView;
 
     DatabaseReference categoryRef,reference,accessoriesCategoryRef;
-    List<String> categoryList;
-    Button selectCategory_btn,submit_btn,purchaseSubmit_btn;
+    List<String> categoryList,accessoriesCategoryList;
+    Button selectCategory_btn,submit_btn,purchaseSubmit_btn,category_search_btn,selectvoucher_no_btn;
     Button selectCategory_btn2,searchForItem_btn,submit_btn2;
     Button purchaseAddItem_btn;
     RatingBar ratingBar;
@@ -65,7 +65,7 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
     Dialog purchaseItemAddAlert;
     Dialog purchaseCategoryAddAlert;
 
-    DatabaseReference existingItemsRef;
+    DatabaseReference existingItemsRef,accesoriesCategories;
     private String itemKeyID;
     private EditText suggest_price_editText, balance_editText,paid_editText;
 
@@ -86,6 +86,15 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<categoryList.size();i++){
             items.add(new SampleSearchModel(categoryList.get(i),null,null,null,null,null,null,null));
+        }
+
+        return items;
+    }
+
+    private ArrayList<SampleSearchModel> createStockCheckData(){
+        ArrayList<SampleSearchModel> items = new ArrayList<>();
+        for (int i=0;i<accessoriesCategoryList.size();i++){
+            items.add(new SampleSearchModel(accessoriesCategoryList.get(i),null,null,null,null,null,null,null));
         }
 
         return items;
@@ -120,8 +129,11 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
 
         getCategoryList();
 
+        getAccessoriesCategoryList();
+
         onClickListeners();
     }
+
 
     private void initialize() {
 
@@ -162,6 +174,7 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
         categoryRef = FirebaseDatabase.getInstance().getReference("Categories");
         accessoriesCategoryRef = FirebaseDatabase.getInstance().getReference("Accessories_categories");
         categoryList = new ArrayList<>();
+        accessoriesCategoryList = new ArrayList<>();
 
         stock_entry_btn = (Button)findViewById(R.id.stock_entry_btn);
         sale_btn = (Button)findViewById(R.id.sale_btn);
@@ -172,6 +185,8 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
         purchaseLayout = (LinearLayout) findViewById(R.id.purchaseLayout);
 
         selectCategory_btn = (Button)findViewById(R.id.selectCategory_btn);
+        category_search_btn = (Button)findViewById(R.id.category_search_btn);
+        selectvoucher_no_btn = (Button)findViewById(R.id.selectvoucher_no_btn);
         selectCategory_btn2 = (Button)findViewById(R.id.selectCategory_btn2);
         searchForItem_btn = (Button)findViewById(R.id.searchForItem_btn);
 
@@ -192,6 +207,7 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
         purchaseAddItem_btn = (Button)findViewById(R.id.purchaseAddItem_btn);
 
         existingItemsRef = FirebaseDatabase.getInstance().getReference("Accessories");
+        accesoriesCategories = FirebaseDatabase.getInstance().getReference("Accessories_categories");
 
         exisitngItemsList = new ArrayList<>();
         exisitngItemsIDList = new ArrayList<>();
@@ -209,6 +225,22 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
         date_btn = (Button) findViewById(R.id.date_btn);
 
 
+    }
+
+    private void getAccessoriesCategoryList() {
+        accessoriesCategoryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    accessoriesCategoryList.add(String.valueOf(dataSnapshot1.getValue()));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void getCategoryList() {
@@ -460,6 +492,51 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
                                 selectCategory_btn2.setText(item.getTitle());
                                 selectCategory_btn2.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
                                 selectCategory_btn2.setTextColor(getResources().getColor(R.color.textGrey));
+
+                                fetchingExisitingItems(item.getTitle());
+
+                                dialog.dismiss();
+                            }
+                        }).show();
+                // hello
+            }
+        });
+
+        category_search_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new SimpleSearchDialogCompat(Accessories.this, "Search...",
+                        "What are you looking for...?", null, createStockCheckData(),
+                        new SearchResultListener<SampleSearchModel>() {
+                            @Override
+                            public void onSelected(BaseSearchDialogCompat dialog,
+                                                   SampleSearchModel item, int position) {
+                                category_search_btn.setText(item.getTitle());
+                                category_search_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
+                                category_search_btn.setTextColor(getResources().getColor(R.color.textGrey));
+
+                                fetchingExisitingItems(item.getTitle());
+
+                                dialog.dismiss();
+                            }
+                        }).show();
+                // hello
+
+            }
+        });
+
+        selectvoucher_no_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new SimpleSearchDialogCompat(Accessories.this, "Search...",
+                        "What are you looking for...?", null, createCategoryData(),
+                        new SearchResultListener<SampleSearchModel>() {
+                            @Override
+                            public void onSelected(BaseSearchDialogCompat dialog,
+                                                   SampleSearchModel item, int position) {
+                                selectvoucher_no_btn.setText(item.getTitle());
+                                selectvoucher_no_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
+                                selectvoucher_no_btn.setTextColor(getResources().getColor(R.color.textGrey));
 
                                 fetchingExisitingItems(item.getTitle());
 
