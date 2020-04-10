@@ -46,7 +46,7 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
     RecyclerView purchase_recyclerView;
     AdapterAccessoriesPurchaseRecyclerView adapterAccessoriesPurchaseRecyclerView;
 
-    DatabaseReference categoryRef,reference,accessoriesCategoryRef;
+    DatabaseReference categoryRef,reference,accessoriesCategoryRef,stock_check_ref;
     List<String> categoryList,accessoriesCategoryList;
     Button selectCategory_btn,submit_btn,purchaseSubmit_btn,category_search_btn,selectvoucher_no_btn;
     Button selectCategory_btn2,searchForItem_btn,submit_btn2;
@@ -57,6 +57,8 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
 
     List<String> exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList,exisitngItemsCategoryList,existingItemsConditionsList;
     List<String> accesoriesCategoriesList;
+
+    List<String> accessoriesCompanyNameList,accessoriesInvoicenoList,accessoriesItemCategoryList,accessoriesItemNameList,accessoriesItemPriceUnitList,accessoriesItemQuantityList;
 
     List<String> purchaseItemNameList,purchaseCategoryList,purchasePriceUnitList,purchaseQuantityList;
 
@@ -131,6 +133,8 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
 
         getAccessoriesCategoryList();
 
+        getting_stock_check();
+
         onClickListeners();
     }
 
@@ -161,6 +165,15 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
         purchaseCategoryList = new ArrayList<>();
         purchasePriceUnitList = new ArrayList<>();
         purchaseQuantityList = new ArrayList<>();
+        accessoriesCompanyNameList = new ArrayList<>();
+        accessoriesInvoicenoList = new ArrayList<>();
+        accessoriesItemCategoryList = new ArrayList<>();
+        accessoriesItemNameList = new ArrayList<>();
+        accessoriesItemPriceUnitList = new ArrayList<>();
+        accessoriesItemQuantityList = new ArrayList<>();
+
+
+
 
         purchase_recyclerView = (RecyclerView)findViewById(R.id.purchase_recyclerView);
         adapterAccessoriesPurchaseRecyclerView = new AdapterAccessoriesPurchaseRecyclerView(Accessories.this,purchaseItemNameList,purchaseCategoryList,purchasePriceUnitList,purchaseQuantityList);
@@ -173,6 +186,7 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
         reference = FirebaseDatabase.getInstance().getReference();
         categoryRef = FirebaseDatabase.getInstance().getReference("Categories");
         accessoriesCategoryRef = FirebaseDatabase.getInstance().getReference("Accessories_categories");
+        stock_check_ref = FirebaseDatabase.getInstance().getReference("Accessories_purchase_list");
         categoryList = new ArrayList<>();
         accessoriesCategoryList = new ArrayList<>();
 
@@ -224,6 +238,34 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
 
         date_btn = (Button) findViewById(R.id.date_btn);
 
+
+    }
+
+    private void getting_stock_check() {
+        stock_check_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot:dataSnapshot.getChildren()){
+                    accessoriesCompanyNameList.add(String.valueOf(snapshot.child("Company_name").getValue()));
+                    accessoriesInvoicenoList.add(String.valueOf(snapshot.child("Invoice_no").getValue()));
+                    Toast.makeText(Accessories.this,String.valueOf(snapshot.child("Invoice_no").getValue()) , Toast.LENGTH_SHORT).show();
+                    DataSnapshot itemsdatasnapshot= snapshot.child("Items");
+//                    Toast.makeText(Accessories.this, String.valueOf(itemsdatasnapshot.getChildrenCount()), Toast.LENGTH_LONG).show();
+                    for (DataSnapshot snapshot1:itemsdatasnapshot.getChildren()){
+                        accessoriesItemCategoryList.add(String.valueOf(snapshot1.child("Item_category").getValue())) ;
+                        accessoriesItemNameList.add(String.valueOf(snapshot1.child("Item_name").getValue())) ;
+                        accessoriesItemPriceUnitList.add(String.valueOf(snapshot1.child("Item_price_unit").getValue())) ;
+                        accessoriesItemQuantityList.add(String.valueOf(snapshot1.child("Item_quantity").getValue())) ;
+//                        Toast.makeText(Accessories.this, String.valueOf(snapshot1.child("Item_category").getValue()), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
