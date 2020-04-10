@@ -31,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
@@ -39,6 +40,8 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
+    String value=null;
+    Boolean check=true;
 
     Button stock_entry_btn,sale_btn,purchase_btn;
     LinearLayout upperLayout,lowerLayout,purchaseLayout;
@@ -178,7 +181,6 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
         purchasePriceUnitList = new ArrayList<>();
         purchaseQuantityList = new ArrayList<>();
         accessoriesCompanyNameList = new ArrayList<>();
-        accessoriesCompanyNameListduplicate = new ArrayList<>();
         accessoriesInvoicenoList = new ArrayList<>();
         accessoriesItemCategoryList = new ArrayList<>();
         accessoriesItemNameList = new ArrayList<>();
@@ -271,35 +273,9 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
                         accessoriesItemQuantityList.add(String.valueOf(snapshot1.child("Item_quantity").getValue())) ;
                     }
                 }
-                String value=null;
-                Boolean check=true;
-                for (int j=0;j<accessoriesCompanyNameList.size();j++){
-//                    check=true;
-                    if (accessoriesCompanyNameListduplicate.size()==0){
-                        value=accessoriesCompanyNameList.get(j);
-                        accessoriesCompanyNameListduplicate.add(value);
-                    }
-                    else {
-                        value=accessoriesCompanyNameList.get(j);
-                        for (int i=0;i<=accessoriesCompanyNameListduplicate.size();i++){
-                            if (i<accessoriesCompanyNameListduplicate.size()){
-                                if (accessoriesCompanyNameListduplicate.get(i).equals(value)){
 
-                                    check=false;
-                                }
-                            }
-                            else  if (i==accessoriesCompanyNameListduplicate.size()){
-                                Toast.makeText(Accessories.this, value, Toast.LENGTH_SHORT).show();
+                accessoriesCompanyNameListduplicate = new ArrayList<String>(new LinkedHashSet<String>(accessoriesCompanyNameList));
 
-                                if (check==true){
-                                    accessoriesCompanyNameListduplicate.add("hi");
-                                }
-                            }
-
-                        }
-
-                    }
-                }
             }
 
             @Override
