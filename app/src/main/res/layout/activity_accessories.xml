@@ -654,6 +654,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:id="@+id/category_search_liner_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
                 <TextView
                     android:inputType="number"
                     android:layout_width="wrap_content"
@@ -682,6 +689,20 @@
                         android:layout_height="wrap_content"/>
 
                 </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/item_Category_recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/voucher_search_liner_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
                 <TextView
                     android:inputType="number"
                     android:layout_width="wrap_content"
@@ -710,11 +731,55 @@
                         android:layout_height="wrap_content"/>
 
                 </LinearLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/item_voucher_no_recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
 
+
+                <LinearLayout
+                    android:id="@+id/company_search_liner_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:inputType="number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:text="Search by Company"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:id="@+id/select_company_name_btn"
+                            android:layout_weight="1"
+                            android:textColor="#F1F1F1"
+                            android:background="@color/colorPrimaryDark"
+                            android:fontFamily="@font/segoe_ui"
+                            android:textSize="15sp"
+                            android:text="Company Name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/item_Company_name_recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
 
             </LinearLayout>
-
-
 
 
         </LinearLayout>
