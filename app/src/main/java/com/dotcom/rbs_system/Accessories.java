@@ -53,12 +53,15 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
     Button purchaseAddItem_btn;
     RatingBar ratingBar;
 
+    Button select_company_name_btn;
+
     ImageButton Back_btn;
 
     List<String> exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList,exisitngItemsCategoryList,existingItemsConditionsList;
     List<String> accesoriesCategoriesList;
 
     List<String> accessoriesCompanyNameList,accessoriesInvoicenoList,accessoriesItemCategoryList,accessoriesItemNameList,accessoriesItemPriceUnitList,accessoriesItemQuantityList;
+    List<String> accessoriesCompanyNameListduplicate;
 
     List<String> purchaseItemNameList,purchaseCategoryList,purchasePriceUnitList,purchaseQuantityList;
 
@@ -86,17 +89,26 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
 
     private ArrayList<SampleSearchModel> createCategoryData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
-        for (int i=0;i<categoryList.size();i++){
-            items.add(new SampleSearchModel(categoryList.get(i),null,null,null,null,null,null,null));
+        for (int i=0;i<accessoriesCategoryList.size();i++){
+            items.add(new SampleSearchModel(accessoriesCategoryList.get(i),null,null,null,null,null,null,null));
         }
 
         return items;
     }
 
-    private ArrayList<SampleSearchModel> createStockCheckData(){
+    private ArrayList<SampleSearchModel> accessoriesItemInvoiceData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
-        for (int i=0;i<accessoriesCategoryList.size();i++){
-            items.add(new SampleSearchModel(accessoriesCategoryList.get(i),null,null,null,null,null,null,null));
+        for (int i=0;i<accessoriesInvoicenoList.size();i++){
+            items.add(new SampleSearchModel(accessoriesInvoicenoList.get(i),null,null,null,null,null,null,null));
+        }
+
+        return items;
+    }
+
+    private ArrayList<SampleSearchModel> accessoriesCompanyData(){
+        ArrayList<SampleSearchModel> items = new ArrayList<>();
+        for (int i=0;i<accessoriesCompanyNameListduplicate.size();i++){
+            items.add(new SampleSearchModel(accessoriesCompanyNameListduplicate.get(i),null,null,null,null,null,null,null));
         }
 
         return items;
@@ -166,6 +178,7 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
         purchasePriceUnitList = new ArrayList<>();
         purchaseQuantityList = new ArrayList<>();
         accessoriesCompanyNameList = new ArrayList<>();
+        accessoriesCompanyNameListduplicate = new ArrayList<>();
         accessoriesInvoicenoList = new ArrayList<>();
         accessoriesItemCategoryList = new ArrayList<>();
         accessoriesItemNameList = new ArrayList<>();
@@ -187,8 +200,9 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
         categoryRef = FirebaseDatabase.getInstance().getReference("Categories");
         accessoriesCategoryRef = FirebaseDatabase.getInstance().getReference("Accessories_categories");
         stock_check_ref = FirebaseDatabase.getInstance().getReference("Accessories_purchase_list");
-        categoryList = new ArrayList<>();
-        accessoriesCategoryList = new ArrayList<>();
+        existingItemsRef = FirebaseDatabase.getInstance().getReference("Accessories");
+        accesoriesCategories = FirebaseDatabase.getInstance().getReference("Accessories_categories");
+
 
         stock_entry_btn = (Button)findViewById(R.id.stock_entry_btn);
         sale_btn = (Button)findViewById(R.id.sale_btn);
@@ -199,6 +213,7 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
         purchaseLayout = (LinearLayout) findViewById(R.id.purchaseLayout);
 
         selectCategory_btn = (Button)findViewById(R.id.selectCategory_btn);
+        select_company_name_btn = (Button)findViewById(R.id.select_company_name_btn);
         category_search_btn = (Button)findViewById(R.id.category_search_btn);
         selectvoucher_no_btn = (Button)findViewById(R.id.selectvoucher_no_btn);
         selectCategory_btn2 = (Button)findViewById(R.id.selectCategory_btn2);
@@ -220,16 +235,16 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
 
         purchaseAddItem_btn = (Button)findViewById(R.id.purchaseAddItem_btn);
 
-        existingItemsRef = FirebaseDatabase.getInstance().getReference("Accessories");
-        accesoriesCategories = FirebaseDatabase.getInstance().getReference("Accessories_categories");
 
+        categoryList = new ArrayList<>();
         exisitngItemsList = new ArrayList<>();
         exisitngItemsIDList = new ArrayList<>();
         exisitngItemsKeyIDList = new ArrayList<>();
         exisitngItemsCategoryList = new ArrayList<>();
         existingItemsConditionsList = new ArrayList<>();
-
+        accessoriesCategoryList = new ArrayList<>();
         accesoriesCategoriesList = new ArrayList<>();
+
 
         companyName_editText  = (EditText)findViewById(R.id.companyName_editText);
         paidAmount_editText = (EditText)findViewById(R.id.paidAmount_editText);
@@ -246,17 +261,43 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot:dataSnapshot.getChildren()){
-                    accessoriesCompanyNameList.add(String.valueOf(snapshot.child("Company_name").getValue()));
-                    accessoriesInvoicenoList.add(String.valueOf(snapshot.child("Invoice_no").getValue()));
-                    Toast.makeText(Accessories.this,String.valueOf(snapshot.child("Invoice_no").getValue()) , Toast.LENGTH_SHORT).show();
                     DataSnapshot itemsdatasnapshot= snapshot.child("Items");
-//                    Toast.makeText(Accessories.this, String.valueOf(itemsdatasnapshot.getChildrenCount()), Toast.LENGTH_LONG).show();
                     for (DataSnapshot snapshot1:itemsdatasnapshot.getChildren()){
+                        accessoriesCompanyNameList.add(String.valueOf(snapshot.child("Company_name").getValue()));
+                        accessoriesInvoicenoList.add(String.valueOf(snapshot.child("Invoice_no").getValue()));
                         accessoriesItemCategoryList.add(String.valueOf(snapshot1.child("Item_category").getValue())) ;
                         accessoriesItemNameList.add(String.valueOf(snapshot1.child("Item_name").getValue())) ;
-                        accessoriesItemPriceUnitList.add(String.valueOf(snapshot1.child("Item_price_unit").getValue())) ;
+                        accessoriesItemPriceUnitList.add(String.valueOf(snapshot1.child("Item_price_unit").getValue()));
                         accessoriesItemQuantityList.add(String.valueOf(snapshot1.child("Item_quantity").getValue())) ;
-//                        Toast.makeText(Accessories.this, String.valueOf(snapshot1.child("Item_category").getValue()), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                String value=null;
+                Boolean check=true;
+                for (int j=0;j<accessoriesCompanyNameList.size();j++){
+//                    check=true;
+                    if (accessoriesCompanyNameListduplicate.size()==0){
+                        value=accessoriesCompanyNameList.get(j);
+                        accessoriesCompanyNameListduplicate.add(value);
+                    }
+                    else {
+                        value=accessoriesCompanyNameList.get(j);
+                        for (int i=0;i<=accessoriesCompanyNameListduplicate.size();i++){
+                            if (i<accessoriesCompanyNameListduplicate.size()){
+                                if (accessoriesCompanyNameListduplicate.get(i).equals(value)){
+
+                                    check=false;
+                                }
+                            }
+                            else  if (i==accessoriesCompanyNameListduplicate.size()){
+                                Toast.makeText(Accessories.this, value, Toast.LENGTH_SHORT).show();
+
+                                if (check==true){
+                                    accessoriesCompanyNameListduplicate.add("hi");
+                                }
+                            }
+
+                        }
+
                     }
                 }
             }
@@ -352,8 +393,6 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
         purchaseCategoryList.add(purchaseAlertCategory_btn.getText().toString());
         purchasePriceUnitList.add(priceUnit_editText.getText().toString());
         purchaseQuantityList.add(quantity_editText.getText().toString());
-
-        //todo
         adapterAccessoriesPurchaseRecyclerView.notifyDataSetChanged();
         purchaseItemAddAlert.dismiss();
 
@@ -543,12 +582,11 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
                 // hello
             }
         });
-
         category_search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new SimpleSearchDialogCompat(Accessories.this, "Search...",
-                        "What are you looking for...?", null, createStockCheckData(),
+                        "What are you looking for...?", null, createCategoryData(),
                         new SearchResultListener<SampleSearchModel>() {
                             @Override
                             public void onSelected(BaseSearchDialogCompat dialog,
@@ -566,12 +604,33 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
 
             }
         });
-
         selectvoucher_no_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new SimpleSearchDialogCompat(Accessories.this, "Search...",
-                        "What are you looking for...?", null, createCategoryData(),
+                        "What are you looking for...?", null, accessoriesItemInvoiceData(),
+                        new SearchResultListener<SampleSearchModel>() {
+                            @Override
+                            public void onSelected(BaseSearchDialogCompat dialog,
+                                                   SampleSearchModel item, int position) {
+                                selectvoucher_no_btn.setText(item.getTitle());
+                                selectvoucher_no_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
+                                selectvoucher_no_btn.setTextColor(getResources().getColor(R.color.textGrey));
+
+                                fetchingExisitingItems(item.getTitle());
+
+                                dialog.dismiss();
+                            }
+                        }).show();
+                // hello
+            }
+        });
+
+        select_company_name_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new SimpleSearchDialogCompat(Accessories.this, "Search...",
+                        "What are you looking for...?", null, accessoriesCompanyData(),
                         new SearchResultListener<SampleSearchModel>() {
                             @Override
                             public void onSelected(BaseSearchDialogCompat dialog,
