@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -655,6 +656,10 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
                                 selectCategory_btn2.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
                                 selectCategory_btn2.setTextColor(getResources().getColor(R.color.textGrey));
 
+                                searchForItem_btn.setText("Search for item");
+                                searchForItem_btn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                                searchForItem_btn.setTextColor(getResources().getColor(R.color.colorGrey));
+
                                 fetchingExisitingItems(item.getTitle());
 
                                 dialog.dismiss();
@@ -813,7 +818,6 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
                 purchaseItemAddAlert.show();
             }
         });
-
 
         purchaseAlertCancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
