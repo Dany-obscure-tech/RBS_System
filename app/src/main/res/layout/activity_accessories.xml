@@ -649,6 +649,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/stock_check_Layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -691,7 +692,7 @@
                 </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/item_Category_recyclerView"
+                        android:id="@+id/item_details_recyclerview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
 
@@ -720,7 +721,7 @@
                     android:layout_height="wrap_content">
 
                     <Button
-                        android:id="@+id/selectvoucher_no_btn"
+                        android:id="@+id/select_Invoice_no_btn"
                         android:layout_weight="1"
                         android:textColor="#F1F1F1"
                         android:background="@color/colorPrimaryDark"
@@ -732,7 +733,7 @@
 
                 </LinearLayout>
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/item_voucher_no_recyclerView"
+                        android:id="@+id/item_details_recyclerview1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -774,7 +775,7 @@
                     </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/item_Company_name_recyclerView"
+                        android:id="@+id/item_details_recyclerview2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>

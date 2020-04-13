@@ -6,6 +6,8 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -35,8 +37,7 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-
-
+    Progress_dialoge pd;
     DatabaseReference reference;
     DatabaseReference existingCustomersRef,existingItemsRef;
 
@@ -51,7 +52,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     LinearLayout itemDetails,customerDetails;
     String customerKeyID, itemKeyID;
 
-    Progreess_dialog pd;
 
     EditText purchase_price_editText,quantity_editText,cash_editText,voucher_editText,paid_editText;
 
@@ -77,6 +77,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy);
+        pd = new Progress_dialoge();
         initialize();
 
         fetchingExisitingCustomers();
@@ -140,7 +141,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         date_textView =(TextView)findViewById(R.id.date_textView);
         gmail_btn=(ImageButton) findViewById(R.id.gmail_btn);
 
-        pd=new Progreess_dialog();
+
     }
 
     private void fetchingExisitingCustomers() {
@@ -362,23 +363,37 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
 
     private void detailsSubmit() {
-        String key = reference.push().getKey();
-        reference.child("Buy_list").child(key).child("Customer_keyID").setValue(customerKeyID);
-        reference.child("Buy_list").child(key).child("Item_keyID").setValue(itemKeyID);
 
-        reference.child("Buy_list").child(key).child("Purchase_price").setValue(purchase_price_editText.getText().toString());
-        reference.child("Buy_list").child(key).child("Quantity").setValue(quantity_editText.getText().toString());
-        reference.child("Buy_list").child(key).child("Date").setValue(date_textView.getText().toString());
-        reference.child("Buy_list").child(key).child("Cash").setValue(cash_editText.getText().toString());
-        reference.child("Buy_list").child(key).child("Voucher").setValue(voucher_editText.getText().toString());
-        reference.child("Buy_list").child(key).child("Paid").setValue(paid_editText.getText().toString());
+        pd.showProgressBar(Buy.this);
+
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Buy.this.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+            String key = reference.push().getKey();
+            reference.child("Buy_list").child(key).child("Customer_keyID").setValue(customerKeyID);
+            reference.child("Buy_list").child(key).child("Item_keyID").setValue(itemKeyID);
+
+            reference.child("Buy_list").child(key).child("Purchase_price").setValue(purchase_price_editText.getText().toString());
+            reference.child("Buy_list").child(key).child("Quantity").setValue(quantity_editText.getText().toString());
+            reference.child("Buy_list").child(key).child("Date").setValue(date_textView.getText().toString());
+            reference.child("Buy_list").child(key).child("Cash").setValue(cash_editText.getText().toString());
+            reference.child("Buy_list").child(key).child("Voucher").setValue(voucher_editText.getText().toString());
+            reference.child("Buy_list").child(key).child("Paid").setValue(paid_editText.getText().toString());
 
 
-        reference.child("Buy_list").child(key).child("key_id").setValue(key);
-        reference.child("Buy_list").child(key).child("added_by").setValue(firebaseAuthUID);
+            reference.child("Buy_list").child(key).child("key_id").setValue(key);
+            reference.child("Buy_list").child(key).child("added_by").setValue(firebaseAuthUID);
+            pd.dismissProgressBar(Buy.this);
+            finish();
+        }
+        else
+            Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
+            connected = false;
 
 
-        finish();
     }
 
     @Override

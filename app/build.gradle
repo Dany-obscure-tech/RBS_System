@@ -41,4 +41,8 @@ dependencies {
 //    pdf file creator
     implementation 'com.itextpdf:itextg:5.5.10'
 
+    //Loader
+    implementation 'cc.cloudist.acplibrary:library:1.2.1'
+
+
 }

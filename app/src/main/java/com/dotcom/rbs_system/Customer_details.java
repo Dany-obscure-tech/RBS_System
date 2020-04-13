@@ -12,6 +12,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -48,6 +50,7 @@ import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
 public class Customer_details extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     StorageReference storageReference;
+    Progress_dialoge pd;
 
     Uri tempUri=null;
 
@@ -66,6 +69,8 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_details);
+        pd = new Progress_dialoge();
+
 
         initialize();
 
@@ -189,37 +194,55 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
     }
 
     private void detailsSubmit() {
-        final String key = reference.push().getKey();
-        reference.child("Customer_list").child(key).child("Name").setValue(ac_title.getText().toString());
-        reference.child("Customer_list").child(key).child("Phone_no").setValue(ac_phoneno.getText().toString());
-        reference.child("Customer_list").child(key).child("ID").setValue(ac_id.getText().toString());
-        reference.child("Customer_list").child(key).child("DOB").setValue(date_text.getText().toString());
-        reference.child("Customer_list").child(key).child("Address").setValue(ac_address.getText().toString());
-        reference.child("Customer_list").child(key).child("Email").setValue(ac_email.getText().toString());
-        reference.child("Customer_list").child(key).child("key_id").setValue(key);
-        reference.child("Customer_list").child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
+        pd.showProgressBar(Customer_details.this);
 
-        idStorageReference.child(ac_id.getText().toString()).child("ID").putFile(tempUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(Customer_details.this, "Uploading finished!", Toast.LENGTH_SHORT).show();
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Customer_details.this.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
 
-                idStorageReference.child(ac_id.getText().toString()).child("ID").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        reference.child("Customer_list").child(key).child("id_image_url").setValue(String.valueOf(uri));
-                    }
-                });
+            final String key = reference.push().getKey();
+            reference.child("Customer_list").child(key).child("Name").setValue(ac_title.getText().toString());
+            reference.child("Customer_list").child(key).child("Phone_no").setValue(ac_phoneno.getText().toString());
+            reference.child("Customer_list").child(key).child("ID").setValue(ac_id.getText().toString());
+            reference.child("Customer_list").child(key).child("DOB").setValue(date_text.getText().toString());
+            reference.child("Customer_list").child(key).child("Address").setValue(ac_address.getText().toString());
+            reference.child("Customer_list").child(key).child("Email").setValue(ac_email.getText().toString());
+            reference.child("Customer_list").child(key).child("key_id").setValue(key);
+            reference.child("Customer_list").child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Customer_details.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
-            }
-        });
+            idStorageReference.child(ac_id.getText().toString()).child("ID").putFile(tempUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(Customer_details.this, "Uploading finished!", Toast.LENGTH_SHORT).show();
 
-        finish();
+                    idStorageReference.child(ac_id.getText().toString()).child("ID").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            reference.child("Customer_list").child(key).child("id_image_url").setValue(String.valueOf(uri));
+                            pd.dismissProgressBar(Customer_details.this);
+                            finish();
+                        }
+                    });
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    pd.dismissProgressBar(Customer_details.this);
+                    Toast.makeText(Customer_details.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Customer_details.this, "Not Submitted", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+        else {
+            Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
+            connected = false;
+        }
+
     }
 
     @Override

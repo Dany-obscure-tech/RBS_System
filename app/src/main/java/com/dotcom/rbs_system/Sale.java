@@ -6,6 +6,8 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -36,6 +38,7 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     ImageButton Back_btn,sms_btn,gmail_btn;
+    Progress_dialoge pd;
     Button date_btn,exchange_btn,customer_add_btn,searchForCustomer_btn,item_add_btn,searchForItem_btn,submit_btn;
     TextView date_textView;
     DatabaseReference existingCustomersRef,existingItemsRef;
@@ -77,10 +80,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale);
-
+        pd = new Progress_dialoge();
         initialize();
-
-
         fetchingExisitingCustomers();
         fetchingExisitingItems();
         onClickListenes();
@@ -356,21 +357,36 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     }
 
     private void detailsSubmit() {
-        String key = reference.push().getKey();
-        reference.child("Sale_list").child(key).child("Customer_keyID").setValue(customerKeyID);
-        reference.child("Sale_list").child(key).child("Item_keyID").setValue(itemKeyID);
-        reference.child("Sale_list").child(key).child("Sale_price").setValue(sale_price_editText.getText().toString());
-        reference.child("Sale_list").child(key).child("Quantity").setValue(quantity_editText.getText().toString());
-        reference.child("Sale_list").child(key).child("Date").setValue(date_textView.getText().toString());
-        reference.child("Sale_list").child(key).child("Cash").setValue(cash_editText.getText().toString());
-        reference.child("Sale_list").child(key).child("Paid").setValue(paid_editText.getText().toString());
+
+        pd.showProgressBar(Sale.this);
+
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Sale.this.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+            String key = reference.push().getKey();
+            reference.child("Sale_list").child(key).child("Customer_keyID").setValue(customerKeyID);
+            reference.child("Sale_list").child(key).child("Item_keyID").setValue(itemKeyID);
+            reference.child("Sale_list").child(key).child("Sale_price").setValue(sale_price_editText.getText().toString());
+            reference.child("Sale_list").child(key).child("Quantity").setValue(quantity_editText.getText().toString());
+            reference.child("Sale_list").child(key).child("Date").setValue(date_textView.getText().toString());
+            reference.child("Sale_list").child(key).child("Cash").setValue(cash_editText.getText().toString());
+            reference.child("Sale_list").child(key).child("Paid").setValue(paid_editText.getText().toString());
 
 
-        reference.child("Sale_list").child(key).child("key_id").setValue(key);
-        reference.child("Sale_list").child(key).child("added_by").setValue(firebaseAuthUID);
+            reference.child("Sale_list").child(key).child("key_id").setValue(key);
+            reference.child("Sale_list").child(key).child("added_by").setValue(firebaseAuthUID);
+            pd.dismissProgressBar(Sale.this);
+            finish();
 
+        }
+        else {
+            Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
+            connected = false;
+        }
 
-        finish();
     }
 
     @Override

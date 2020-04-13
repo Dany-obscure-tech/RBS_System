@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -31,6 +33,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.net.InetAddress;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,6 +44,9 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+
+    Progress_dialoge pd;
+
     LinearLayout itemDetails,customerDetails;
     ImageButton Back_btn;
     Button date_btn,customer_add_btn,searchForCustomer_btn,submit_btn,searchForItem_btn,item_add_btn;
@@ -106,9 +112,15 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         fetchingExisitingItems();
         onClickListeners();
 
+
     }
 
+
+
     private void initialize() {
+
+        pd = new Progress_dialoge();
+
         faultNameList = new ArrayList<>();
         faultPriceList = new ArrayList<>();
         faultKeyIDList = new ArrayList<>();
@@ -179,6 +191,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     }
 
     private void fetchingExisitingCustomers() {
+
         existingCustomersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -193,17 +206,19 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                     exisitngCustomerKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
                 }
 
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+//                pd.dismissProgressBar(Repairs.this);
             }
         });
 
     }
 
     private void fetchingExisitingItems() {
+
         existingItemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -224,6 +239,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+//                pd.dismissProgressBar(Repairs.this);
             }
         });
 
@@ -243,6 +259,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+//                pd.dismissProgressBar(Repairs.this);
 
             }
         });
@@ -354,7 +371,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(Repairs.this, "yes", Toast.LENGTH_SHORT).show();
+
                 Intent it = new Intent(Intent.ACTION_SEND);
                 it.setType("message/rfc822");
                 startActivity(Intent.createChooser(it,"Choose Mail App"));
@@ -422,23 +439,39 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     }
 
     private void detailsSubmit() {
-        String key = reference.push().getKey();
-        reference.child("Repairs_list").child(key).child("Customer_keyID").setValue(customerKeyID);
-        reference.child("Repairs_list").child(key).child("Item_keyID").setValue(itemKeyID);
-        reference.child("Repairs_list").child(key).child("Agreed_price").setValue(agreed_price_editText.getText().toString());
-        reference.child("Repairs_list").child(key).child("Date").setValue(date_textView.getText().toString());
-        reference.child("Repairs_list").child(key).child("Paid_amount").setValue(paidAmount_editText.getText().toString());
-        reference.child("Repairs_list").child(key).child("Balance_amount").setValue(balanceAmount_TextView.getText().toString());
-        reference.child("Repairs_list").child(key).child("Special_conditiomn").setValue(special_condition_editText.getText().toString());
-        reference.child("Repairs_list").child(key).child("key_id").setValue(key);
-        reference.child("Repairs_list").child(key).child("added_by").setValue(firebaseAuthUID);
+        pd.showProgressBar(Repairs.this);
 
-        for (int i = 0;i<tempFaultNameList.size();i++){
-            reference.child("Repairs_list").child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_name").setValue(tempFaultNameList.get(i));
-            reference.child("Repairs_list").child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_price").setValue(tempFaultPriceList.get(i));
-            reference.child("Repairs_list").child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_key").setValue(tempFaultKeyIDList.get(i));
+
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Repairs.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+            String key = reference.push().getKey();
+            reference.child("Repairs_list").child(key).child("Customer_keyID").setValue(customerKeyID);
+            reference.child("Repairs_list").child(key).child("Item_keyID").setValue(itemKeyID);
+            reference.child("Repairs_list").child(key).child("Agreed_price").setValue(agreed_price_editText.getText().toString());
+            reference.child("Repairs_list").child(key).child("Date").setValue(date_textView.getText().toString());
+            reference.child("Repairs_list").child(key).child("Paid_amount").setValue(paidAmount_editText.getText().toString());
+            reference.child("Repairs_list").child(key).child("Balance_amount").setValue(balanceAmount_TextView.getText().toString());
+            reference.child("Repairs_list").child(key).child("Special_conditiomn").setValue(special_condition_editText.getText().toString());
+            reference.child("Repairs_list").child(key).child("key_id").setValue(key);
+            reference.child("Repairs_list").child(key).child("added_by").setValue(firebaseAuthUID);
+
+            for (int i = 0;i<tempFaultNameList.size();i++){
+                reference.child("Repairs_list").child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_name").setValue(tempFaultNameList.get(i));
+                reference.child("Repairs_list").child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_price").setValue(tempFaultPriceList.get(i));
+                reference.child("Repairs_list").child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_key").setValue(tempFaultKeyIDList.get(i));
+            }
+            Toast.makeText(this, "Submit Successfully", Toast.LENGTH_SHORT).show();
+            pd.dismissProgressBar(Repairs.this);
+            finish();
+
         }
-        finish();
+        else
+            Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
+            connected = false;
 
     }
 
@@ -462,23 +495,25 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                     balanceAmount_TextView.setText(agreed_price_editText.getText().toString());
                     paidAmount_editText.setText("");
                 }
-
             }
         });
 
         paidAmount_editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                pd.dismissProgressBar(Repairs.this);
 
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                pd.dismissProgressBar(Repairs.this);
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+//                pd.showProgressBar(Repairs.this);
                 if(balanceAmount_TextView.getText().toString().equals("NA")){
 
                 }else {
@@ -499,6 +534,8 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                     }
 
                 }
+//                pd.dismissProgressBar(Repairs.this);
+
             }
         });
     }

@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +21,9 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dotcom.rbs_system.Adapter.AdapterAccessoriesItemDetailRecyclerView;
+import com.dotcom.rbs_system.Adapter.AdapterAccessoriesItemDetailRecyclerView1;
+import com.dotcom.rbs_system.Adapter.AdapterAccessoriesItemDetailRecyclerView2;
 import com.dotcom.rbs_system.Adapter.AdapterAccessoriesPurchaseRecyclerView;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,15 +44,17 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+// Progress dialog
+    Progress_dialoge pd;
 
-    String value=null;
-    Boolean check=true;
+    Button stock_entry_btn,sale_btn,purchase_btn,Stock_check_btn;
+    LinearLayout upperLayout,lowerLayout,purchaseLayout,stock_check_Layout;
 
-    Button stock_entry_btn,sale_btn,purchase_btn;
-    LinearLayout upperLayout,lowerLayout,purchaseLayout;
-
-    RecyclerView purchase_recyclerView;
+    RecyclerView purchase_recyclerView,item_details_recyclerview,item_details_recyclerview1,item_details_recyclerview2;
     AdapterAccessoriesPurchaseRecyclerView adapterAccessoriesPurchaseRecyclerView;
+    AdapterAccessoriesItemDetailRecyclerView adapterAccessoriesItemDetailRecyclerView;
+    AdapterAccessoriesItemDetailRecyclerView1 adapterAccessoriesItemDetailRecyclerView1;
+    AdapterAccessoriesItemDetailRecyclerView2 adapterAccessoriesItemDetailRecyclerView2;
 
     DatabaseReference categoryRef,reference,accessoriesCategoryRef,stock_check_ref;
     List<String> categoryList,accessoriesCategoryList;
@@ -64,7 +71,11 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
     List<String> accesoriesCategoriesList;
 
     List<String> accessoriesCompanyNameList,accessoriesInvoicenoList,accessoriesItemCategoryList,accessoriesItemNameList,accessoriesItemPriceUnitList,accessoriesItemQuantityList;
-    List<String> accessoriesCompanyNameListduplicate;
+    List<String> accessoriesCompanyNameListfilter,accessoriesInvoicenoListfilter,accessoriesItemCategoryListfilter;
+
+    List<String> accessoriesCompanyNameListsearch,accessoriesInvoicenoListsearch,accessoriesItemCategoryListsearch,accessoriesItemNameListsearch,accessoriesItemPriceUnitListsearch,accessoriesItemQuantityListsearch;
+    List<String> accessoriesCompanyNameListsearch1,accessoriesInvoicenoListsearch1,accessoriesItemCategoryListsearch1,accessoriesItemNameListsearch1,accessoriesItemPriceUnitListsearch1,accessoriesItemQuantityListsearch1;
+    List<String> accessoriesCompanyNameListsearch2,accessoriesInvoicenoListsearch2,accessoriesItemCategoryListsearch2,accessoriesItemNameListsearch2,accessoriesItemPriceUnitListsearch2,accessoriesItemQuantityListsearch2;
 
     List<String> purchaseItemNameList,purchaseCategoryList,purchasePriceUnitList,purchaseQuantityList;
 
@@ -79,7 +90,6 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
 
     String firebaseAuthUID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-
     EditText companyName_editText,paidAmount_editText,invoiceNo_editText;
     TextView purchaseDate_textView;
 
@@ -92,8 +102,8 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
 
     private ArrayList<SampleSearchModel> createCategoryData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
-        for (int i=0;i<accessoriesCategoryList.size();i++){
-            items.add(new SampleSearchModel(accessoriesCategoryList.get(i),null,null,null,null,null,null,null));
+        for (int i=0;i<accessoriesItemCategoryListfilter.size();i++){
+            items.add(new SampleSearchModel(accessoriesItemCategoryListfilter.get(i),null,null,null,null,null,null,null));
         }
 
         return items;
@@ -101,8 +111,8 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
 
     private ArrayList<SampleSearchModel> accessoriesItemInvoiceData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
-        for (int i=0;i<accessoriesInvoicenoList.size();i++){
-            items.add(new SampleSearchModel(accessoriesInvoicenoList.get(i),null,null,null,null,null,null,null));
+        for (int i=0;i<accessoriesInvoicenoListfilter.size();i++){
+            items.add(new SampleSearchModel(accessoriesInvoicenoListfilter.get(i),null,null,null,null,null,null,null));
         }
 
         return items;
@@ -110,8 +120,8 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
 
     private ArrayList<SampleSearchModel> accessoriesCompanyData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
-        for (int i=0;i<accessoriesCompanyNameListduplicate.size();i++){
-            items.add(new SampleSearchModel(accessoriesCompanyNameListduplicate.get(i),null,null,null,null,null,null,null));
+        for (int i = 0; i< accessoriesCompanyNameListfilter.size(); i++){
+            items.add(new SampleSearchModel(accessoriesCompanyNameListfilter.get(i),null,null,null,null,null,null,null));
         }
 
         return items;
@@ -156,6 +166,7 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
 
     private void initialize() {
 
+        pd = new Progress_dialoge();
 
         purchaseItemAddAlert = new Dialog(this);
         purchaseItemAddAlert.setContentView(R.layout.alert_purchase_add_item);
@@ -187,14 +198,45 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
         accessoriesItemPriceUnitList = new ArrayList<>();
         accessoriesItemQuantityList = new ArrayList<>();
 
+        accessoriesCompanyNameListsearch = new ArrayList<>();
+        accessoriesInvoicenoListsearch = new ArrayList<>();
+        accessoriesItemCategoryListsearch = new ArrayList<>();
+        accessoriesItemNameListsearch = new ArrayList<>();
+        accessoriesItemPriceUnitListsearch = new ArrayList<>();
+        accessoriesItemQuantityListsearch = new ArrayList<>();
 
+        accessoriesCompanyNameListsearch1 = new ArrayList<>();
+        accessoriesInvoicenoListsearch1 = new ArrayList<>();
+        accessoriesItemCategoryListsearch1 = new ArrayList<>();
+        accessoriesItemNameListsearch1 = new ArrayList<>();
+        accessoriesItemPriceUnitListsearch1 = new ArrayList<>();
+        accessoriesItemQuantityListsearch1 = new ArrayList<>();
 
+        accessoriesCompanyNameListsearch2 = new ArrayList<>();
+        accessoriesInvoicenoListsearch2 = new ArrayList<>();
+        accessoriesItemCategoryListsearch2 = new ArrayList<>();
+        accessoriesItemNameListsearch2 = new ArrayList<>();
+        accessoriesItemPriceUnitListsearch2 = new ArrayList<>();
+        accessoriesItemQuantityListsearch2 = new ArrayList<>();
 
         purchase_recyclerView = (RecyclerView)findViewById(R.id.purchase_recyclerView);
+        item_details_recyclerview = (RecyclerView)findViewById(R.id.item_details_recyclerview);
+        item_details_recyclerview1 = (RecyclerView)findViewById(R.id.item_details_recyclerview1);
+        item_details_recyclerview2 = (RecyclerView)findViewById(R.id.item_details_recyclerview2);
         adapterAccessoriesPurchaseRecyclerView = new AdapterAccessoriesPurchaseRecyclerView(Accessories.this,purchaseItemNameList,purchaseCategoryList,purchasePriceUnitList,purchaseQuantityList);
-        purchase_recyclerView.setAdapter(adapterAccessoriesPurchaseRecyclerView);
-        purchase_recyclerView.setLayoutManager(new GridLayoutManager(this,1));
+        adapterAccessoriesItemDetailRecyclerView = new AdapterAccessoriesItemDetailRecyclerView(Accessories.this,accessoriesItemCategoryListsearch,accessoriesItemNameListsearch,accessoriesItemPriceUnitListsearch,accessoriesItemQuantityListsearch);
+        adapterAccessoriesItemDetailRecyclerView1 = new AdapterAccessoriesItemDetailRecyclerView1(Accessories.this,accessoriesItemCategoryListsearch1,accessoriesItemNameListsearch1,accessoriesItemPriceUnitListsearch1,accessoriesItemQuantityListsearch1);
+        adapterAccessoriesItemDetailRecyclerView2 = new AdapterAccessoriesItemDetailRecyclerView2(Accessories.this,accessoriesItemCategoryListsearch2,accessoriesItemNameListsearch2,accessoriesItemPriceUnitListsearch2,accessoriesItemQuantityListsearch2);
 
+        purchase_recyclerView.setAdapter(adapterAccessoriesPurchaseRecyclerView);
+        item_details_recyclerview.setAdapter(adapterAccessoriesItemDetailRecyclerView);
+        item_details_recyclerview1.setAdapter(adapterAccessoriesItemDetailRecyclerView1);
+        item_details_recyclerview2.setAdapter(adapterAccessoriesItemDetailRecyclerView2);
+
+        purchase_recyclerView.setLayoutManager(new GridLayoutManager(this,1));
+        item_details_recyclerview.setLayoutManager(new GridLayoutManager(this,1));
+        item_details_recyclerview1.setLayoutManager(new GridLayoutManager(this,1));
+        item_details_recyclerview2.setLayoutManager(new GridLayoutManager(this,1));
 
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
 
@@ -209,15 +251,17 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
         stock_entry_btn = (Button)findViewById(R.id.stock_entry_btn);
         sale_btn = (Button)findViewById(R.id.sale_btn);
         purchase_btn = (Button)findViewById(R.id.purchase_btn);
+        Stock_check_btn = (Button)findViewById(R.id.Stock_check_btn);
 
         upperLayout = (LinearLayout) findViewById(R.id.upperLayout);
         lowerLayout = (LinearLayout) findViewById(R.id.lowerLayout);
         purchaseLayout = (LinearLayout) findViewById(R.id.purchaseLayout);
+        stock_check_Layout = (LinearLayout) findViewById(R.id.stock_check_Layout);
 
         selectCategory_btn = (Button)findViewById(R.id.selectCategory_btn);
         select_company_name_btn = (Button)findViewById(R.id.select_company_name_btn);
         category_search_btn = (Button)findViewById(R.id.category_search_btn);
-        selectvoucher_no_btn = (Button)findViewById(R.id.selectvoucher_no_btn);
+        selectvoucher_no_btn = (Button)findViewById(R.id.select_Invoice_no_btn);
         selectCategory_btn2 = (Button)findViewById(R.id.selectCategory_btn2);
         searchForItem_btn = (Button)findViewById(R.id.searchForItem_btn);
 
@@ -237,7 +281,6 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
 
         purchaseAddItem_btn = (Button)findViewById(R.id.purchaseAddItem_btn);
 
-
         categoryList = new ArrayList<>();
         exisitngItemsList = new ArrayList<>();
         exisitngItemsIDList = new ArrayList<>();
@@ -247,7 +290,6 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
         accessoriesCategoryList = new ArrayList<>();
         accesoriesCategoriesList = new ArrayList<>();
 
-
         companyName_editText  = (EditText)findViewById(R.id.companyName_editText);
         paidAmount_editText = (EditText)findViewById(R.id.paidAmount_editText);
         invoiceNo_editText = (EditText)findViewById(R.id.invoiceNo_editText);
@@ -255,13 +297,21 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
 
         date_btn = (Button) findViewById(R.id.date_btn);
 
-
     }
 
     private void getting_stock_check() {
+        pd.showProgressBar(Accessories.this);
         stock_check_ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                accessoriesCompanyNameList.clear();
+                accessoriesInvoicenoList.clear();
+                accessoriesItemCategoryList.clear();
+                accessoriesItemNameList.clear();
+                accessoriesItemPriceUnitList.clear();
+                accessoriesItemQuantityList.clear();
+
                 for (DataSnapshot snapshot:dataSnapshot.getChildren()){
                     DataSnapshot itemsdatasnapshot= snapshot.child("Items");
                     for (DataSnapshot snapshot1:itemsdatasnapshot.getChildren()){
@@ -273,8 +323,10 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
                         accessoriesItemQuantityList.add(String.valueOf(snapshot1.child("Item_quantity").getValue())) ;
                     }
                 }
-
-                accessoriesCompanyNameListduplicate = new ArrayList<String>(new LinkedHashSet<String>(accessoriesCompanyNameList));
+                accessoriesItemCategoryListfilter = new ArrayList<String>(new LinkedHashSet<String>(accessoriesItemCategoryList));
+                accessoriesInvoicenoListfilter = new ArrayList<String>(new LinkedHashSet<String>(accessoriesInvoicenoList));
+                accessoriesCompanyNameListfilter = new ArrayList<String>(new LinkedHashSet<String>(accessoriesCompanyNameList));
+                pd.dismissProgressBar(Accessories.this);
 
             }
 
@@ -334,33 +386,59 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
     }
 
     private void detailsSubmit() {
-        final String key = reference.push().getKey();
-        reference.child("Accessories").child(selectCategory_btn.getText().toString()).child(key).child("Category").setValue(selectCategory_btn.getText().toString());
-        reference.child("Accessories").child(selectCategory_btn.getText().toString()).child(key).child("Item_id").setValue(itemId_editText.getText().toString());
-        reference.child("Accessories").child(selectCategory_btn.getText().toString()).child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
-        reference.child("Accessories").child(selectCategory_btn.getText().toString()).child(key).child("Item_name").setValue(itemName_editText.getText().toString());
-        reference.child("Accessories").child(selectCategory_btn.getText().toString()).child(key).child("Condition").setValue(ratingBar.getRating());
-        reference.child("Accessories").child(selectCategory_btn.getText().toString()).child(key).child("key_id").setValue(key);
+        pd.showProgressBar(Accessories.this);
 
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Accessories.this.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+            final String key = reference.push().getKey();
+            reference.child("Accessories").child(selectCategory_btn.getText().toString()).child(key).child("Category").setValue(selectCategory_btn.getText().toString());
+            reference.child("Accessories").child(selectCategory_btn.getText().toString()).child(key).child("Item_id").setValue(itemId_editText.getText().toString());
+            reference.child("Accessories").child(selectCategory_btn.getText().toString()).child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
+            reference.child("Accessories").child(selectCategory_btn.getText().toString()).child(key).child("Item_name").setValue(itemName_editText.getText().toString());
+            reference.child("Accessories").child(selectCategory_btn.getText().toString()).child(key).child("Condition").setValue(ratingBar.getRating());
+            reference.child("Accessories").child(selectCategory_btn.getText().toString()).child(key).child("key_id").setValue(key);
 
+            pd.dismissProgressBar(Accessories.this);
+            finish();
+        }
+        else {
+            Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
+            connected = false;
+        }
 
-        finish();
 
     }
 
     private void detailsSubmit2() {
+        pd.showProgressBar(Accessories.this);
 
-        String key = reference.push().getKey();
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Accessories.this.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+            String key = reference.push().getKey();
 
-        reference.child("Accessories_sale").child(key).child("Item_keyID").setValue(itemKeyID);
-        reference.child("Accessories_sale").child(key).child("Suggested_price").setValue(suggest_price_editText.getText().toString());
-        reference.child("Accessories_sale").child(key).child("Balance").setValue(balance_editText.getText().toString());
-        reference.child("Accessories_sale").child(key).child("Paid").setValue(paid_editText.getText().toString());
-        reference.child("Accessories_sale").child(key).child("key_id").setValue(key);
-        reference.child("Accessories_sale").child(key).child("added_by").setValue(firebaseAuthUID);
+            reference.child("Accessories_sale").child(key).child("Item_keyID").setValue(itemKeyID);
+            reference.child("Accessories_sale").child(key).child("Suggested_price").setValue(suggest_price_editText.getText().toString());
+            reference.child("Accessories_sale").child(key).child("Balance").setValue(balance_editText.getText().toString());
+            reference.child("Accessories_sale").child(key).child("Paid").setValue(paid_editText.getText().toString());
+            reference.child("Accessories_sale").child(key).child("key_id").setValue(key);
+            reference.child("Accessories_sale").child(key).child("added_by").setValue(firebaseAuthUID);
+            pd.dismissProgressBar(Accessories.this);
+            finish();
+        }
+        else {
+            Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
+            connected = false;
+        }
 
 
-        finish();
     }
 
     private void detailsSubmitPurchaseAlert() {
@@ -376,22 +454,37 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
 
     private void detailsSubmitPurchase() {
 
-        String key = reference.push().getKey();
-        reference.child("Accessories_purchase_list").child(key).child("Company_name").setValue(companyName_editText.getText().toString());
-        reference.child("Accessories_purchase_list").child(key).child("Invoice_date").setValue(purchaseDate_textView.getText().toString());
-        reference.child("Accessories_purchase_list").child(key).child("Paid_amount").setValue(paidAmount_editText.getText().toString());
-        reference.child("Accessories_purchase_list").child(key).child("Invoice_no").setValue(invoiceNo_editText.getText().toString());
+        pd.showProgressBar(Accessories.this);
 
-        for (int i = 0;i<purchaseItemNameList.size();i++){
-            reference.child("Accessories_purchase_list").child(key).child("Items").child("Item_"+String.valueOf(i+1)).child("Item_name").setValue(purchaseItemNameList.get(i));
-            reference.child("Accessories_purchase_list").child(key).child("Items").child("Item_"+String.valueOf(i+1)).child("Item_category").setValue(purchaseCategoryList.get(i));
-            reference.child("Accessories_purchase_list").child(key).child("Items").child("Item_"+String.valueOf(i+1)).child("Item_price_unit").setValue(purchasePriceUnitList.get(i));
-            reference.child("Accessories_purchase_list").child(key).child("Items").child("Item_"+String.valueOf(i+1)).child("Item_quantity").setValue(purchaseQuantityList.get(i));
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Accessories.this.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+            String key = reference.push().getKey();
+            reference.child("Accessories_purchase_list").child(key).child("Company_name").setValue(companyName_editText.getText().toString());
+            reference.child("Accessories_purchase_list").child(key).child("Invoice_date").setValue(purchaseDate_textView.getText().toString());
+            reference.child("Accessories_purchase_list").child(key).child("Paid_amount").setValue(paidAmount_editText.getText().toString());
+            reference.child("Accessories_purchase_list").child(key).child("Invoice_no").setValue(invoiceNo_editText.getText().toString());
+
+            for (int i = 0;i<purchaseItemNameList.size();i++){
+                reference.child("Accessories_purchase_list").child(key).child("Items").child("Item_"+String.valueOf(i+1)).child("Item_name").setValue(purchaseItemNameList.get(i));
+                reference.child("Accessories_purchase_list").child(key).child("Items").child("Item_"+String.valueOf(i+1)).child("Item_category").setValue(purchaseCategoryList.get(i));
+                reference.child("Accessories_purchase_list").child(key).child("Items").child("Item_"+String.valueOf(i+1)).child("Item_price_unit").setValue(purchasePriceUnitList.get(i));
+                reference.child("Accessories_purchase_list").child(key).child("Items").child("Item_"+String.valueOf(i+1)).child("Item_quantity").setValue(purchaseQuantityList.get(i));
+            }
+
+            reference.child("Accessories_purchase_list").child(key).child("added_by").setValue(firebaseAuthUID);
+            pd.dismissProgressBar(Accessories.this);
+            finish();
+        }
+        else {
+            Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
+            connected = false;
         }
 
-        reference.child("Accessories_purchase_list").child(key).child("added_by").setValue(firebaseAuthUID);
 
-        finish();
 
     }
 
@@ -402,6 +495,7 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
                 purchaseLayout.setVisibility(View.GONE);
                 upperLayout.setVisibility(View.VISIBLE);
                 lowerLayout.setVisibility(View.GONE);
+                stock_check_Layout.setVisibility(View.GONE);
 
             }
         });
@@ -412,6 +506,7 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
                 purchaseLayout.setVisibility(View.GONE);
                 upperLayout.setVisibility(View.GONE);
                 lowerLayout.setVisibility(View.VISIBLE);
+                stock_check_Layout.setVisibility(View.GONE);
 
             }
         });
@@ -420,6 +515,17 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
             @Override
             public void onClick(View v) {
                 purchaseLayout.setVisibility(View.VISIBLE);
+                upperLayout.setVisibility(View.GONE);
+                lowerLayout.setVisibility(View.GONE);
+                stock_check_Layout.setVisibility(View.GONE);
+            }
+        });
+//todo
+        Stock_check_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stock_check_Layout.setVisibility(View.VISIBLE);
+                purchaseLayout.setVisibility(View.GONE);
                 upperLayout.setVisibility(View.GONE);
                 lowerLayout.setVisibility(View.GONE);
             }
@@ -438,7 +544,6 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
         existingItemsRef.child(category).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
 
                 for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                         exisitngItemsList.add(String.valueOf(dataSnapshot1.child("Item_name").getValue()));
@@ -561,6 +666,9 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
         category_search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                item_details_recyclerview.setVisibility(View.VISIBLE);
+                item_details_recyclerview1.setVisibility(View.GONE);
+                item_details_recyclerview2.setVisibility(View.GONE);
                 new SimpleSearchDialogCompat(Accessories.this, "Search...",
                         "What are you looking for...?", null, createCategoryData(),
                         new SearchResultListener<SampleSearchModel>() {
@@ -570,19 +678,40 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
                                 category_search_btn.setText(item.getTitle());
                                 category_search_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
                                 category_search_btn.setTextColor(getResources().getColor(R.color.textGrey));
+                                accessoriesItemCategoryListsearch.clear();
+                                accessoriesInvoicenoListsearch.clear();
+                                accessoriesCompanyNameListsearch.clear();
+                                accessoriesItemNameListsearch.clear();
+                                accessoriesItemPriceUnitListsearch.clear();
+                                accessoriesItemQuantityListsearch.clear();
 
                                 fetchingExisitingItems(item.getTitle());
-
                                 dialog.dismiss();
+                                for (int k=0;k<accessoriesItemCategoryList.size();k++){
+                                    if (item.getTitle().equals(accessoriesItemCategoryList.get(k))){
+                                        accessoriesItemCategoryListsearch.add(accessoriesItemCategoryList.get(k));
+                                        accessoriesInvoicenoListsearch.add(accessoriesInvoicenoList.get(k));
+                                        accessoriesCompanyNameListsearch.add(accessoriesCompanyNameList.get(k));
+                                        accessoriesItemNameListsearch.add(accessoriesItemNameList.get(k));
+                                        accessoriesItemPriceUnitListsearch.add(accessoriesItemPriceUnitList.get(k));
+                                        accessoriesItemQuantityListsearch.add(accessoriesItemQuantityList.get(k));
+                                        adapterAccessoriesItemDetailRecyclerView.notifyDataSetChanged();
+//                                        Toast.makeText(Accessories.this, String.valueOf(accessoriesItemCategoryListsearch.size()), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
                             }
                         }).show();
-                // hello
+
 
             }
         });
         selectvoucher_no_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                item_details_recyclerview.setVisibility(View.GONE);
+                item_details_recyclerview1.setVisibility(View.VISIBLE);
+                item_details_recyclerview2.setVisibility(View.GONE);
                 new SimpleSearchDialogCompat(Accessories.this, "Search...",
                         "What are you looking for...?", null, accessoriesItemInvoiceData(),
                         new SearchResultListener<SampleSearchModel>() {
@@ -594,8 +723,24 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
                                 selectvoucher_no_btn.setTextColor(getResources().getColor(R.color.textGrey));
 
                                 fetchingExisitingItems(item.getTitle());
-
                                 dialog.dismiss();
+                                accessoriesItemCategoryListsearch1.clear();
+                                accessoriesInvoicenoListsearch1.clear();
+                                accessoriesCompanyNameListsearch1.clear();
+
+                                for (int k=0;k<accessoriesInvoicenoList.size();k++){
+                                    if (item.getTitle().equals(accessoriesInvoicenoList.get(k))){
+                                        accessoriesItemCategoryListsearch1.add(accessoriesItemCategoryList.get(k));
+                                        accessoriesInvoicenoListsearch1.add(accessoriesInvoicenoList.get(k));
+                                        accessoriesCompanyNameListsearch1.add(accessoriesCompanyNameList.get(k));
+                                        accessoriesItemNameListsearch1.add(accessoriesItemNameList.get(k));
+                                        accessoriesItemPriceUnitListsearch1.add(accessoriesItemPriceUnitList.get(k));
+                                        accessoriesItemQuantityListsearch1.add(accessoriesItemQuantityList.get(k));
+                                        adapterAccessoriesItemDetailRecyclerView1.notifyDataSetChanged();
+//                                        Toast.makeText(Accessories.this, String.valueOf(accessoriesItemCategoryListsearch.size()), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
                             }
                         }).show();
                 // hello
@@ -605,19 +750,37 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
         select_company_name_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                item_details_recyclerview.setVisibility(View.GONE);
+                item_details_recyclerview1.setVisibility(View.GONE);
+                item_details_recyclerview2.setVisibility(View.VISIBLE);
                 new SimpleSearchDialogCompat(Accessories.this, "Search...",
                         "What are you looking for...?", null, accessoriesCompanyData(),
                         new SearchResultListener<SampleSearchModel>() {
                             @Override
                             public void onSelected(BaseSearchDialogCompat dialog,
                                                    SampleSearchModel item, int position) {
-                                selectvoucher_no_btn.setText(item.getTitle());
-                                selectvoucher_no_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
-                                selectvoucher_no_btn.setTextColor(getResources().getColor(R.color.textGrey));
+                                select_company_name_btn.setText(item.getTitle());
+                                select_company_name_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
+                                select_company_name_btn.setTextColor(getResources().getColor(R.color.textGrey));
 
                                 fetchingExisitingItems(item.getTitle());
 
                                 dialog.dismiss();
+                                accessoriesItemCategoryListsearch2.clear();
+                                accessoriesInvoicenoListsearch2.clear();
+                                accessoriesCompanyNameListsearch2.clear();
+                                for (int k=0;k<accessoriesCompanyNameList.size();k++){
+                                    if (item.getTitle().equals(accessoriesCompanyNameList.get(k))){
+                                        accessoriesItemCategoryListsearch2.add(accessoriesItemCategoryList.get(k));
+                                        accessoriesInvoicenoListsearch2.add(accessoriesInvoicenoList.get(k));
+                                        accessoriesCompanyNameListsearch2.add(accessoriesCompanyNameList.get(k));
+                                        accessoriesItemNameListsearch2.add(accessoriesItemNameList.get(k));
+                                        accessoriesItemPriceUnitListsearch2.add(accessoriesItemPriceUnitList.get(k));
+                                        accessoriesItemQuantityListsearch2.add(accessoriesItemQuantityList.get(k));
+                                        adapterAccessoriesItemDetailRecyclerView2.notifyDataSetChanged();
+//                                        Toast.makeText(Accessories.this, String.valueOf(accessoriesItemCategoryListsearch.size()), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
                             }
                         }).show();
                 // hello

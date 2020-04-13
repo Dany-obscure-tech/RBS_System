@@ -12,6 +12,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -51,6 +53,9 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Item_detail extends AppCompatActivity {
 
+    // Progress dialog
+    Progress_dialoge pd;
+
     private static final int CAMERA_REQUEST_CODE = 1;
     Button selectCategory_btn,submit_btn,uploadId_btn;
     DatabaseReference categoryRef,reference;
@@ -64,6 +69,7 @@ public class Item_detail extends AppCompatActivity {
     StorageReference storageReference;
 
     private ArrayList<SampleSearchModel> createCategoryData(){
+
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<categoryList.size();i++){
             items.add(new SampleSearchModel(categoryList.get(i),null,null,null,null,null,null,null));
@@ -85,6 +91,8 @@ public class Item_detail extends AppCompatActivity {
     }
 
     private void initialize() {
+        pd = new Progress_dialoge();
+
         storageReference = FirebaseStorage.getInstance().getReference();
         Back_btn = (ImageButton)findViewById(R.id.Back_btn);
         itemName_editText = (EditText)findViewById(R.id.itemName_editText);
@@ -104,17 +112,20 @@ public class Item_detail extends AppCompatActivity {
     }
 
     private void getCategoryList() {
+        pd.showProgressBar(Item_detail.this);
+
         categoryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                     categoryList.add(String.valueOf(dataSnapshot1.getValue()));
                 }
+                pd.dismissProgressBar(Item_detail.this);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                pd.dismissProgressBar(Item_detail.this);
             }
         });
     }
@@ -137,41 +148,61 @@ public class Item_detail extends AppCompatActivity {
                             }
                         }).show();
                 // hello
+
             }
         });
     }
 
     private void detailsSubmit() {
-        final String key = reference.push().getKey();
-        reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Category").setValue(selectCategory_btn.getText().toString());
-        reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Item_id").setValue(itemId_editText.getText().toString());
-        reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
-        reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Item_name").setValue(itemName_editText.getText().toString());
-        reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Condition").setValue(ratingBar.getRating());
-        reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Notes").setValue(notes_editText.getText().toString());
-        reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Price").setValue(price_editText.getText().toString());
-        reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("key_id").setValue(key);
 
-        idStorageReference.child(itemId_editText.getText().toString()).child("image").putFile(tempUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(Item_detail.this, "Uploading finished!", Toast.LENGTH_SHORT).show();
+        pd.showProgressBar(Item_detail.this);
 
-                idStorageReference.child(itemId_editText.getText().toString()).child("image").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("id_image_url").setValue(String.valueOf(uri));
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Item_detail.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
-            }
-        });
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Item_detail.this.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+            final String key = reference.push().getKey();
+            reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Category").setValue(selectCategory_btn.getText().toString());
+            reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Item_id").setValue(itemId_editText.getText().toString());
+            reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
+            reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Item_name").setValue(itemName_editText.getText().toString());
+            reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Condition").setValue(ratingBar.getRating());
+            reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Notes").setValue(notes_editText.getText().toString());
+            reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Price").setValue(price_editText.getText().toString());
+            reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("key_id").setValue(key);
 
-        finish();
+            idStorageReference.child(itemId_editText.getText().toString()).child("image").putFile(tempUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    idStorageReference.child(itemId_editText.getText().toString()).child("image").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("id_image_url").setValue(String.valueOf(uri));
+
+                            pd.dismissProgressBar(Item_detail.this);
+                            finish();
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    pd.dismissProgressBar(Item_detail.this);
+                    Toast.makeText(Item_detail.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+        }
+        else
+            Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
+            connected = false;
+
+
+
 
     }
 
