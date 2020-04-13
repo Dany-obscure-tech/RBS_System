@@ -45,7 +45,12 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
-// Progress dialog
+    ImageButton stockEntrysms_btn,stockEntrygmail_btn,stockEntryprint_btn;
+    ImageButton salePrint_btn,saleEmail_btn,saleSms_btn;
+    ImageButton purchasePrint_btn,purchaseEmail_btn,purchaseSms_btn;
+    ImageButton stockCheckPrint_btn,stockCheckEmail_btn,stockCheckSms_btn;
+
+    // Progress dialog
     Progress_dialoge pd;
 
     Button stock_entry_btn,sale_btn,purchase_btn,Stock_check_btn;

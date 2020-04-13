@@ -186,6 +186,93 @@
                 android:textColorHint="#9F9F9F"
                 android:textSize="16sp" />
 
+            <LinearLayout
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:padding="20dp"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/stockEntryprint_btn"
+                        android:layout_gravity="center_horizontal"
+                        android:paddingBottom="8dp"
+                        android:background="#00000000"
+                        android:src="@drawable/printer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:textSize="16sp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Print"
+                        android:paddingBottom="10dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:padding="20dp"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/stockEntrygmail_btn"
+                        android:layout_gravity="center_horizontal"
+                        android:paddingBottom="10dp"
+                        android:background="#00000000"
+                        android:src="@drawable/gmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:textSize="16sp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email"
+                        android:paddingBottom="10dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:padding="20dp"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:id="@+id/stockEntrysms_btn"
+                        android:layout_gravity="center_horizontal"
+                        android:paddingBottom="10dp"
+                        android:background="#00000000"
+                        android:src="@drawable/mail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:textSize="16sp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SMS"
+                        android:paddingBottom="10dp"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
             <Button
                 android:id="@+id/submit_btn"
                 android:elevation="10dp"
@@ -199,6 +286,8 @@
                 android:textColor="#F1F1F1"
                 android:background="#6E76E3"
                 />
+
+
 
         </LinearLayout>
 
@@ -371,6 +460,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageButton
+                        android:id="@+id/salePrint_btn"
                         android:layout_gravity="center_horizontal"
                         android:paddingBottom="8dp"
                         android:background="#00000000"
@@ -396,7 +486,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageButton
-                        android:id="@id/gmail_btn"
+                        android:id="@+id/saleEmail_btn"
                         android:layout_gravity="center_horizontal"
                         android:paddingBottom="10dp"
                         android:background="#00000000"
@@ -422,7 +512,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageButton
-                        android:id="@+id/sms_btn1"
+                        android:id="@+id/saleSms_btn"
                         android:layout_gravity="center_horizontal"
                         android:paddingBottom="10dp"
                         android:background="#00000000"
@@ -479,153 +569,243 @@
 
             </LinearLayout>
 
-        <LinearLayout
+            <LinearLayout
                 android:id="@+id/purchaseLayout"
-            android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:text="Company Name"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/companyName_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#6E76E3"
+                        android:fontFamily="@font/segoe_ui"
+                        android:hint="Enter company name"
+                        android:maxLength="32"
+                        android:textColor="#9F9F9F"
+                        android:textColorHint="#9F9F9F"
+                        android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Company Name"
+                    android:text="Invoice Date"
                     android:textSize="16sp" />
 
-                <EditText
-                    android:id="@+id/companyName_editText"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#6E76E3"
-                    android:fontFamily="@font/segoe_ui"
-                    android:hint="Enter company name"
-                    android:maxLength="32"
-                    android:textColor="#9F9F9F"
-                    android:textColorHint="#9F9F9F"
-                    android:textSize="16sp" />
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="Invoice Date"
-                android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/purchaseDate_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.7"
+                        android:backgroundTint="#6E76E3"
+                        android:fontFamily="@font/segoe_ui"
+                        android:inputType="date"
+                        android:text="Select date"
+                        android:textColor="#9F9F9F"
+                        android:textSize="16sp" />
 
-            <LinearLayout
-                android:weightSum="2"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                    <Button
+                        android:id="@+id/date_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3"
+                        android:background="#00C884"
+                        android:fontFamily="@font/segoe_ui"
+                        android:text="Date"
+                        android:textColor="#F1F1F1"
+                        android:textSize="15sp" />
 
-                <TextView
-                    android:id="@+id/purchaseDate_textView"
-                    android:inputType="date"
-                    android:layout_weight="1.7"
-                    android:textColor="#9F9F9F"
-                    android:fontFamily="@font/segoe_ui"
-                    android:backgroundTint="#6E76E3"
-                    android:textSize="16sp"
-                    android:text="Select date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:text="Paid Amount"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/paidAmount_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#6E76E3"
+                        android:fontFamily="@font/segoe_ui"
+                        android:hint="Enter paid amount"
+                        android:maxLength="32"
+                        android:textColor="#9F9F9F"
+                        android:textColorHint="#9F9F9F"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:inputType="number"
+                        android:text="Invoice No"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/invoiceNo_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#6E76E3"
+                        android:fontFamily="@font/segoe_ui"
+                        android:hint="Enter invoice no"
+                        android:inputType="number"
+                        android:maxLength="32"
+                        android:textColor="#9F9F9F"
+                        android:textColorHint="#9F9F9F"
+                        android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/purchaseAddItem_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimaryDark"
+                        android:fontFamily="@font/segoe_ui"
+                        android:text="Add Item"
+                        android:textColor="#F1F1F1"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/purchase_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <ImageButton
+                            android:id="@+id/purchasePrint_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:background="#00000000"
+                            android:paddingBottom="8dp"
+                            android:src="@drawable/printer" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingBottom="10dp"
+                            android:text="Print"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <ImageButton
+                            android:id="@+id/purchaseEmail_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:background="#00000000"
+                            android:paddingBottom="10dp"
+                            android:src="@drawable/gmail" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingBottom="10dp"
+                            android:text="Email"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <ImageButton
+                            android:id="@+id/purchaseSms_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:background="#00000000"
+                            android:paddingBottom="10dp"
+                            android:src="@drawable/mail" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingBottom="10dp"
+                            android:text="SMS"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
                 <Button
-                    android:textColor="#F1F1F1"
-                    android:background="#00C884"
-                    android:id="@+id/date_btn"
-                    android:fontFamily="@font/segoe_ui"
-                    android:textSize="15sp"
-                    android:text="Date"
-                    android:layout_weight="0.3"
+                    android:id="@+id/purchaseSubmit_btn"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:elevation="10dp"
+                    android:fontFamily="@font/segoe_ui"
+                    android:text="Submit"
+                    android:textSize="15sp"
+                    android:textColor="#F1F1F1"
+                    android:background="#6E76E3" />
 
             </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Paid Amount"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/paidAmount_editText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#6E76E3"
-                    android:fontFamily="@font/segoe_ui"
-                    android:hint="Enter paid amount"
-                    android:maxLength="32"
-                    android:textColor="#9F9F9F"
-                    android:textColorHint="#9F9F9F"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:inputType="number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Invoice No"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/invoiceNo_editText"
-                    android:inputType="number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#6E76E3"
-                    android:fontFamily="@font/segoe_ui"
-                    android:hint="Enter invoice no"
-                    android:maxLength="32"
-                    android:textColor="#9F9F9F"
-                    android:textColorHint="#9F9F9F"
-                    android:textSize="16sp" />
-
-            <LinearLayout
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <Button
-                    android:id="@+id/purchaseAddItem_btn"
-                    android:layout_weight="1"
-                    android:textColor="#F1F1F1"
-                    android:background="@color/colorPrimaryDark"
-                    android:fontFamily="@font/segoe_ui"
-                    android:textSize="15sp"
-                    android:text="Add Item"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/purchase_recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <Button
-                android:id="@+id/purchaseSubmit_btn"
-                android:elevation="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center_horizontal"
-                android:fontFamily="@font/segoe_ui"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Submit"
-                android:textSize="15sp"
-                android:textColor="#F1F1F1"
-                android:background="#6E76E3"
-                />
-
-        </LinearLayout>
 
             <LinearLayout
                 android:layout_gravity="center_horizontal"
@@ -778,6 +958,93 @@
                         android:id="@+id/item_details_recyclerview2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:weightSum="3"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:padding="20dp"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/stockCheckPrint_btn"
+                            android:layout_gravity="center_horizontal"
+                            android:paddingBottom="8dp"
+                            android:background="#00000000"
+                            android:src="@drawable/printer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:textSize="16sp"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Print"
+                            android:paddingBottom="10dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:padding="20dp"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/stockCheckEmail_btn"
+                            android:layout_gravity="center_horizontal"
+                            android:paddingBottom="10dp"
+                            android:background="#00000000"
+                            android:src="@drawable/gmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:textSize="16sp"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Email"
+                            android:paddingBottom="10dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:padding="20dp"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageButton
+                            android:id="@+id/stockCheckSms_btn"
+                            android:layout_gravity="center_horizontal"
+                            android:paddingBottom="10dp"
+                            android:background="#00000000"
+                            android:src="@drawable/mail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:textSize="16sp"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="SMS"
+                            android:paddingBottom="10dp"/>
+
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
             </LinearLayout>
