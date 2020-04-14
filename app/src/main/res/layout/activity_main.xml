@@ -55,6 +55,7 @@
                 android:id="@+id/repair"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/main_button"
                 app:cardBackgroundColor="#F1F1F1"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="4dp"
@@ -93,6 +94,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_weight="1"
                 android:id="@+id/BUY"
+                android:background="@drawable/main_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="44dp"
@@ -146,6 +148,7 @@
                 android:layout_weight="1"
                 android:id="@+id/Sale"
                 android:layout_width="wrap_content"
+                android:background="@drawable/main_button"
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="#F1F1F1"
                 app:cardCornerRadius="10dp"
@@ -192,6 +195,7 @@
                 app:cardBackgroundColor="#F1F1F1"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="4dp"
+                android:background="@drawable/main_button"
                 app:cardUseCompatPadding="true">
 
                 <RelativeLayout
@@ -237,6 +241,7 @@
                 android:id="@+id/Exchange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/main_button"
                 app:cardBackgroundColor="#F1F1F1"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="4dp"
@@ -282,6 +287,7 @@
                 app:cardBackgroundColor="#F1F1F1"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="4dp"
+                android:background="@drawable/main_button"
                 app:cardUseCompatPadding="true">
 
                 <RelativeLayout

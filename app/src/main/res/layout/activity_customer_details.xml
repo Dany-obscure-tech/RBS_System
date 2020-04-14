@@ -7,6 +7,7 @@
     tools:context=".Customer_details">
 
     <RelativeLayout
+        android:background="#0075B5"
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -21,7 +22,7 @@
             android:src="@drawable/back_btn" />
 
         <TextView
-            android:textColor="#2EA4CF"
+            android:textColor="#ffffffff"
             android:textSize="24sp"
             android:fontFamily="@font/kameron_bold"
             android:layout_centerInParent="true"
@@ -230,8 +231,8 @@
                 android:layout_height="wrap_content"
                 android:text="Submit"
                 android:textSize="15sp"
-                android:textColor="#F1F1F1"
-                android:background="#6E76E3"
+                android:background="@drawable/main_button"
+                android:textColor="#0075B5"
                 />
 
         </LinearLayout>
