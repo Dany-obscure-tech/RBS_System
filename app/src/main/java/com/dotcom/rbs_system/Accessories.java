@@ -737,6 +737,9 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
                                 accessoriesItemCategoryListsearch1.clear();
                                 accessoriesInvoicenoListsearch1.clear();
                                 accessoriesCompanyNameListsearch1.clear();
+                                accessoriesItemNameListsearch1.clear();
+                                accessoriesItemPriceUnitListsearch1.clear();
+                                accessoriesItemQuantityListsearch1.clear();
 
                                 for (int k=0;k<accessoriesInvoicenoList.size();k++){
                                     if (item.getTitle().equals(accessoriesInvoicenoList.get(k))){
@@ -779,6 +782,10 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
                                 accessoriesItemCategoryListsearch2.clear();
                                 accessoriesInvoicenoListsearch2.clear();
                                 accessoriesCompanyNameListsearch2.clear();
+                                accessoriesItemNameListsearch2.clear();
+                                accessoriesItemPriceUnitListsearch2.clear();
+                                accessoriesItemQuantityListsearch2.clear();
+
                                 for (int k=0;k<accessoriesCompanyNameList.size();k++){
                                     if (item.getTitle().equals(accessoriesCompanyNameList.get(k))){
                                         accessoriesItemCategoryListsearch2.add(accessoriesItemCategoryList.get(k));

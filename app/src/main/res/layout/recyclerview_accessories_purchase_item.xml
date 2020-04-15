@@ -79,8 +79,8 @@
         android:id="@+id/remove_btn"
         android:layout_alignParentRight="true"
         android:layout_marginTop="20dp"
-        android:background="@color/colorAccent"
-        android:textColor="@color/colorGrey"
+        android:textColor = "@color/textBlue"
+        android:background="@drawable/main_button"
         android:text="REmove"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
