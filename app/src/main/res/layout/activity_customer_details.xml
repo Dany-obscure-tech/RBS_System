@@ -132,8 +132,8 @@
                 <Button
                     android:id="@+id/uploadId_btn"
                     android:textSize="15sp"
-                    android:textColor="#F1F1F1"
-                    android:background="#00C884"
+                    android:background="@drawable/main_button"
+                    android:textColor="#0075B5"
                     android:fontFamily="@font/segoe_ui_bold"
                     android:text="Upload ID"
                     android:layout_weight="0.1"
@@ -169,9 +169,9 @@
                     android:layout_height="wrap_content"/>
                 <Button
                     android:textSize="15sp"
-                    android:textColor="#F1F1F1"
+                    android:background="@drawable/main_button"
+                    android:textColor="#0075B5"
                     android:id="@+id/date_btn"
-                    android:background="#00C884"
                     android:fontFamily="@font/segoe_ui_bold"
                     android:text="Date"
                     android:layout_weight="0.1"
@@ -229,7 +229,7 @@
                 android:fontFamily="@font/segoe_ui"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Submit"
+                android:text="Save"
                 android:textSize="15sp"
                 android:background="@drawable/main_button"
                 android:textColor="#0075B5"

@@ -55,7 +55,7 @@
                 android:id="@+id/repair"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/main_button"
+                android:background="@drawable/ripple_effect_cardview"
                 app:cardBackgroundColor="#F1F1F1"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="4dp"

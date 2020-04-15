@@ -7,6 +7,7 @@
     tools:context=".Accessories">
 
     <RelativeLayout
+        android:background="#0075B5"
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -21,7 +22,8 @@
             android:src="@drawable/back_btn" />
 
         <TextView
-            android:textColor="#2EA4CF"
+
+            android:textColor="#ffffffff"
             android:textSize="24sp"
             android:fontFamily="@font/kameron_bold"
             android:layout_centerInParent="true"
@@ -57,8 +59,8 @@
                 <Button
                     android:id="@+id/stock_entry_btn"
                     android:layout_weight="1"
-                    android:textColor="#F1F1F1"
-                    android:background="#00C884"
+                    android:textColor="#0075B5"
+                    android:background="@drawable/main_button"
                     android:fontFamily="@font/segoe_ui"
                     android:textSize="15sp"
                     android:text="Stock Entry"
@@ -94,8 +96,8 @@
                 <Button
                     android:id="@+id/selectCategory_btn"
                     android:layout_weight="1"
-                    android:textColor="#F1F1F1"
-                    android:background="@color/colorPrimaryDark"
+                    android:background="@drawable/main_button"
+                    android:textColor="#0075B5"
                     android:fontFamily="@font/segoe_ui"
                     android:textSize="15sp"
                     android:text="Select Category"
@@ -281,10 +283,10 @@
                 android:fontFamily="@font/segoe_ui"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Submit"
+                android:text="Save"
                 android:textSize="15sp"
-                android:textColor="#F1F1F1"
-                android:background="#6E76E3"
+                android:background="@drawable/main_button"
+                android:textColor="#0075B5"
                 />
 
 
@@ -303,8 +305,8 @@
                 <Button
                     android:id="@+id/sale_btn"
                     android:layout_weight="1"
-                    android:textColor="#F1F1F1"
-                    android:background="#00C884"
+                    android:background="@drawable/main_button"
+                    android:textColor="#0075B5"
                     android:fontFamily="@font/segoe_ui"
                     android:textSize="15sp"
                     android:text="SALE"
@@ -338,8 +340,8 @@
                 <Button
                     android:id="@+id/selectCategory_btn2"
                     android:layout_weight="1"
-                    android:textColor="#F1F1F1"
-                    android:background="@color/colorPrimaryDark"
+                    android:background="@drawable/main_button"
+                    android:textColor="#0075B5"
                     android:fontFamily="@font/segoe_ui"
                     android:textSize="15sp"
                     android:text="Select Category"
@@ -366,8 +368,8 @@
                     android:id="@+id/searchForItem_btn"
                     android:layout_weight="1"
                     android:maxLines="2"
-                    android:textColor="#F1F1F1"
-                    android:background="@color/colorPrimaryDark"
+                    android:background="@drawable/main_button"
+                    android:textColor="#0075B5"
                     android:fontFamily="@font/segoe_ui"
                     android:textSize="15sp"
                     android:text="Search for item"
@@ -539,10 +541,10 @@
                 android:fontFamily="@font/segoe_ui"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Submit"
+                android:text="Save"
                 android:textSize="15sp"
-                android:textColor="#F1F1F1"
-                android:background="#6E76E3"
+                android:background="@drawable/main_button"
+                android:textColor="#0075B5"
                 />
 
         </LinearLayout>
@@ -559,8 +561,8 @@
                 <Button
                     android:id="@+id/purchase_btn"
                     android:layout_weight="1"
-                    android:textColor="#F1F1F1"
-                    android:background="#00C884"
+                    android:background="@drawable/main_button"
+                    android:textColor="#0075B5"
                     android:fontFamily="@font/segoe_ui"
                     android:textSize="15sp"
                     android:text="Purchase"
@@ -627,10 +629,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
-                        android:background="#00C884"
                         android:fontFamily="@font/segoe_ui"
                         android:text="Date"
-                        android:textColor="#F1F1F1"
+                        android:background="@drawable/main_button"
+                        android:textColor="#0075B5"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -689,10 +691,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@color/colorPrimaryDark"
                         android:fontFamily="@font/segoe_ui"
                         android:text="Add Item"
-                        android:textColor="#F1F1F1"
+                        android:background="@drawable/main_button"
+                        android:textColor="#0075B5"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -800,10 +802,10 @@
                     android:layout_marginTop="20dp"
                     android:elevation="10dp"
                     android:fontFamily="@font/segoe_ui"
-                    android:text="Submit"
+                    android:text="Save"
                     android:textSize="15sp"
-                    android:textColor="#F1F1F1"
-                    android:background="#6E76E3" />
+                    android:background="@drawable/main_button"
+                    android:textColor="#0075B5"/>
 
             </LinearLayout>
 
@@ -818,8 +820,8 @@
                 <Button
                     android:id="@+id/Stock_check_btn"
                     android:layout_weight="1"
-                    android:textColor="#F1F1F1"
-                    android:background="#00C884"
+                    android:background="@drawable/main_button"
+                    android:textColor="#0075B5"
                     android:fontFamily="@font/segoe_ui"
                     android:textSize="15sp"
                     android:text="STOCK CHECK"
@@ -861,8 +863,8 @@
                     <Button
                         android:id="@+id/category_search_btn"
                         android:layout_weight="1"
-                        android:textColor="#F1F1F1"
-                        android:background="@color/colorPrimaryDark"
+                        android:background="@drawable/main_button"
+                        android:textColor="#0075B5"
                         android:fontFamily="@font/segoe_ui"
                         android:textSize="15sp"
                         android:text="Category"
@@ -903,8 +905,8 @@
                     <Button
                         android:id="@+id/select_Invoice_no_btn"
                         android:layout_weight="1"
-                        android:textColor="#F1F1F1"
-                        android:background="@color/colorPrimaryDark"
+                        android:background="@drawable/main_button"
+                        android:textColor="#0075B5"
                         android:fontFamily="@font/segoe_ui"
                         android:textSize="15sp"
                         android:text="Voucher No"
@@ -944,8 +946,8 @@
                         <Button
                             android:id="@+id/select_company_name_btn"
                             android:layout_weight="1"
-                            android:textColor="#F1F1F1"
-                            android:background="@color/colorPrimaryDark"
+                            android:background="@drawable/main_button"
+                            android:textColor="#0075B5"
                             android:fontFamily="@font/segoe_ui"
                             android:textSize="15sp"
                             android:text="Company Name"
