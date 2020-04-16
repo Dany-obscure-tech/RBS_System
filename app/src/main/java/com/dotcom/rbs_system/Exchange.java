@@ -35,9 +35,6 @@ public class Exchange extends AppCompatActivity {
         setContentView(R.layout.activity_exchange);
 
         initialize();
-
-
-
         getItemsKeyIDList();
         onClickListeners();
 
