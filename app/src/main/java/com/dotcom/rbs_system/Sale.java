@@ -1,6 +1,7 @@
 package com.dotcom.rbs_system;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -19,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dotcom.rbs_system.Classes.Exchanged_itemdata;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -37,24 +39,32 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-    ImageButton Back_btn,sms_btn,gmail_btn;
-    Progress_dialoge pd;
-    Button date_btn,exchange_btn,customer_add_btn,searchForCustomer_btn,item_add_btn,searchForItem_btn,submit_btn;
-    TextView date_textView;
+    Exchanged_itemdata exchangeObj = Exchanged_itemdata.getInstance();
+
+    DatabaseReference reference;
     DatabaseReference existingCustomersRef,existingItemsRef;
+
+    ImageButton Back_btn,sms_btn,gmail_btn;
+    Button date_btn,exchange_btn,customer_add_btn,searchForCustomer_btn,item_add_btn,searchForItem_btn,submit_btn;
+    Button exchangeItemRemove_btn;
+
+    Progress_dialoge pd;
+
+    TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView,suggest_price_TextView;
+    TextView date_textView;
+    TextView exchangeItemName_textView,exchangeItemCategory_textView,exchangeItemCondition_textView,exchangeItemAgreedPrice_textView,exchangeItemNotes_textView;
+
     String firebaseAuthUID;
+    String customerKeyID, itemKeyID;
 
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
     List<String> exisitngItemsCategoryList,existingItemsPriceList,existingItemsConditionsList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
 
-    TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView,suggest_price_TextView;
 
-    LinearLayout itemDetails,customerDetails;
-    String customerKeyID, itemKeyID;
+    LinearLayout itemDetails,customerDetails,exchangeItemDetails;
 
     EditText sale_price_editText,quantity_editText,cash_editText,paid_editText;
 
-    DatabaseReference reference;
 
     private ArrayList<SampleSearchModel> createItemsData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
@@ -94,6 +104,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
         itemDetails = (LinearLayout)findViewById(R.id.itemDetails);
         customerDetails = (LinearLayout)findViewById(R.id.customerDetails);
+        exchangeItemDetails = (LinearLayout)findViewById(R.id.exchangeItemDetails);
 
         exisitngCustomerList = new ArrayList<>();
         exisitngCustomerIDList = new ArrayList<>();
@@ -124,18 +135,24 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         dob_textView=(TextView)findViewById(R.id.dob_textView);
         address_textView=(TextView)findViewById(R.id.address_textView);
         email_textView=(TextView)findViewById(R.id.email_textView);
+        exchangeItemName_textView=(TextView)findViewById(R.id.exchangeItemName_textView);
+        exchangeItemCategory_textView=(TextView)findViewById(R.id.exchangeItemCategory_textView);
+        exchangeItemCondition_textView=(TextView)findViewById(R.id.exchangeItemCondition_textView);
+        exchangeItemAgreedPrice_textView=(TextView)findViewById(R.id.exchangeItemAgreedPrice_textView);
+        exchangeItemNotes_textView=(TextView)findViewById(R.id.exchangeItemNotes_textView);
 
+        sms_btn=(ImageButton)findViewById(R.id.sms_btn);
+        gmail_btn=(ImageButton) findViewById(R.id.gmail_btn);
+        Back_btn=(ImageButton)findViewById(R.id.Back_btn);
         submit_btn = (Button)findViewById(R.id.submit_btn);
         searchForItem_btn = (Button)findViewById(R.id.searchForItem_btn);
         date_btn=(Button)findViewById(R.id.date_btn);
         exchange_btn=(Button)findViewById(R.id.exchange_btn);
-        Back_btn=(ImageButton)findViewById(R.id.Back_btn);
         date_textView =(TextView)findViewById(R.id.date_textView);
         customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
         item_add_btn=(Button) findViewById(R.id.item_add_btn);
         searchForCustomer_btn = (Button)findViewById(R.id.searchForCustomer_btn);
-        sms_btn=(ImageButton)findViewById(R.id.sms_btn);
-        gmail_btn=(ImageButton) findViewById(R.id.gmail_btn);
+        exchangeItemRemove_btn = (Button)findViewById(R.id.exchangeItemRemove_btn);
 
         exisitngCustomerList = new ArrayList<>();
         exisitngCustomerIDList = new ArrayList<>();
@@ -262,9 +279,9 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         exchange_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(Sale.this,Exchange.class);
-                finish();
-                startActivity(intent);
+                Intent intent=new Intent(Sale.this,Buy.class);
+                exchangeObj.setExchangeCheck(true);
+                startActivityForResult(intent,1);
             }
         });
         date_btn.setOnClickListener(new View.OnClickListener() {
@@ -316,6 +333,14 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                 if (validateFields() == true)
                     detailsSubmit();
 
+            }
+        });
+
+        exchangeItemRemove_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exchangeItemDetails.setVisibility(View.GONE);
+                exchangeObj.setExchangeCheck(false);
             }
         });
 
@@ -397,5 +422,22 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
         String currentDateString= DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
         date_textView.setText(currentDateString);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (data.getIntExtra("result",-1)==1){
+            exchangeItemName_textView.setText(exchangeObj.getName());
+            exchangeItemCategory_textView.setText(exchangeObj.getCategory());
+            exchangeItemCondition_textView.setText(exchangeObj.getCondition());
+            exchangeItemAgreedPrice_textView.setText(exchangeObj.getPurchase_price());
+            exchangeItemNotes_textView.setText(exchangeObj.getNotes());
+
+            exchangeItemDetails.setVisibility(View.VISIBLE);
+        }else {
+
+        }
     }
 }

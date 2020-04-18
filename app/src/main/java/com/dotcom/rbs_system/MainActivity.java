@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
+import com.dotcom.rbs_system.Classes.Exchanged_itemdata;
+
 public class MainActivity extends AppCompatActivity {
 
     CardView BUY,Sale,repair,Exchange,Accessories,Settings;
@@ -87,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this,Buy.class);
+                Exchanged_itemdata.getInstance().setExchangeCheck(false);
                 startActivity(intent);
             }
         });
@@ -94,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this,Sale.class);
+                Exchanged_itemdata.getInstance().setExchangeCheck(false);
                 startActivity(intent);
             }
         });

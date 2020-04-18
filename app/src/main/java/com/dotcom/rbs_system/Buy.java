@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dotcom.rbs_system.Classes.Exchanged_itemdata;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -37,6 +38,9 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+
+    Exchanged_itemdata exchanged_itemdata = Exchanged_itemdata.getInstance();
+
     Progress_dialoge pd;
     DatabaseReference reference;
     DatabaseReference existingCustomersRef,existingItemsRef;
@@ -51,6 +55,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     LinearLayout itemDetails,customerDetails;
     String customerKeyID, itemKeyID;
+    private String itemName;
 
 
     EditText purchase_price_editText,quantity_editText,cash_editText,voucher_editText,paid_editText;
@@ -77,7 +82,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy);
-        pd = new Progress_dialoge();
+
         initialize();
 
         fetchingExisitingCustomers();
@@ -88,6 +93,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     }
 
     private void initialize() {
+
+        pd = new Progress_dialoge();
 
         reference = FirebaseDatabase.getInstance().getReference();
 
@@ -223,7 +230,16 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         Back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                if (exchanged_itemdata.getExchangeCheck()){
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("result",0);
+
+                    setResult(RESULT_OK,resultIntent);
+                    exchanged_itemdata.setExchangeCheck(false);
+                    finish();
+                }else {
+                    finish();
+                }
             }
         });
 
@@ -261,6 +277,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                             public void onSelected(BaseSearchDialogCompat dialog,
                                                    SampleSearchModel item, int position) {
                                 searchForItem_btn.setText(item.getTitle());
+                                itemName = item.getName();
                                 category_textView.setText(item.getVal1());
                                 condition_textView.setText(item.getVal2());
                                 notes_textView.setText(item.getVal3());
@@ -364,35 +381,60 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     private void detailsSubmit() {
 
-        pd.showProgressBar(Buy.this);
+        if (exchanged_itemdata.getExchangeCheck()){
 
-        boolean connected = false;
-        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Buy.this.CONNECTIVITY_SERVICE);
-        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-            //we are connected to a network
-            connected = true;
-            String key = reference.push().getKey();
-            reference.child("Buy_list").child(key).child("Customer_keyID").setValue(customerKeyID);
-            reference.child("Buy_list").child(key).child("Item_keyID").setValue(itemKeyID);
+            exchanged_itemdata.setCustomer_keyID(customerKeyID);
+            exchanged_itemdata.setItem_keyID(itemKeyID);
+            exchanged_itemdata.setPurchase_price(purchase_price_editText.getText().toString());
+            exchanged_itemdata.setQuantity(quantity_editText.getText().toString());
+            exchanged_itemdata.setDate(date_textView.getText().toString());
+            exchanged_itemdata.setCash(cash_editText.getText().toString());
+            exchanged_itemdata.setVoucher(voucher_editText.getText().toString());
+            exchanged_itemdata.setPaid(paid_editText.getText().toString());
 
-            reference.child("Buy_list").child(key).child("Purchase_price").setValue(purchase_price_editText.getText().toString());
-            reference.child("Buy_list").child(key).child("Quantity").setValue(quantity_editText.getText().toString());
-            reference.child("Buy_list").child(key).child("Date").setValue(date_textView.getText().toString());
-            reference.child("Buy_list").child(key).child("Cash").setValue(cash_editText.getText().toString());
-            reference.child("Buy_list").child(key).child("Voucher").setValue(voucher_editText.getText().toString());
-            reference.child("Buy_list").child(key).child("Paid").setValue(paid_editText.getText().toString());
+            exchanged_itemdata.setName(itemName);
+            exchanged_itemdata.setCondition(condition_textView.getText().toString());
+            exchanged_itemdata.setCategory(category_textView.getText().toString());
+            exchanged_itemdata.setNotes(notes_textView.getText().toString());
 
 
-            reference.child("Buy_list").child(key).child("key_id").setValue(key);
-            reference.child("Buy_list").child(key).child("added_by").setValue(firebaseAuthUID);
-            pd.dismissProgressBar(Buy.this);
+
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("result",1);
+
+            setResult(RESULT_OK,resultIntent);
             finish();
-        }
-        else
-            Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
-            connected = false;
 
+        }else {
+            pd.showProgressBar(Buy.this);
+
+            boolean connected = false;
+            ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Buy.this.CONNECTIVITY_SERVICE);
+            if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                    connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+                //we are connected to a network
+                connected = true;
+                String key = reference.push().getKey();
+                reference.child("Buy_list").child(key).child("Customer_keyID").setValue(customerKeyID);
+                reference.child("Buy_list").child(key).child("Item_keyID").setValue(itemKeyID);
+
+                reference.child("Buy_list").child(key).child("Purchase_price").setValue(purchase_price_editText.getText().toString());
+                reference.child("Buy_list").child(key).child("Quantity").setValue(quantity_editText.getText().toString());
+                reference.child("Buy_list").child(key).child("Date").setValue(date_textView.getText().toString());
+                reference.child("Buy_list").child(key).child("Cash").setValue(cash_editText.getText().toString());
+                reference.child("Buy_list").child(key).child("Voucher").setValue(voucher_editText.getText().toString());
+                reference.child("Buy_list").child(key).child("Paid").setValue(paid_editText.getText().toString());
+
+
+                reference.child("Buy_list").child(key).child("key_id").setValue(key);
+                reference.child("Buy_list").child(key).child("added_by").setValue(firebaseAuthUID);
+                pd.dismissProgressBar(Buy.this);
+                finish();
+            }
+            else
+                Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
+            connected = false;
+        }
 
     }
 
@@ -400,5 +442,19 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     protected void onRestart() {
         super.onRestart();
         recreate();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (exchanged_itemdata.getExchangeCheck()){
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("result",0);
+
+            setResult(RESULT_OK,resultIntent);
+            exchanged_itemdata.setExchangeCheck(false);
+            finish();
+        }else {
+            finish();
+        }
     }
 }
