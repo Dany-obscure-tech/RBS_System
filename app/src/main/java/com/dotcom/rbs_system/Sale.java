@@ -90,8 +90,9 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale);
-        pd = new Progress_dialoge();
+
         initialize();
+        exchangeFromBuyCheck();
         fetchingExisitingCustomers();
         fetchingExisitingItems();
         onClickListenes();
@@ -99,6 +100,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     }
 
     private void initialize() {
+
+        pd = new Progress_dialoge();
 
         reference = FirebaseDatabase.getInstance().getReference();
 
@@ -163,6 +166,28 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         existingCustomersRef = FirebaseDatabase.getInstance().getReference("Customer_list");
         existingItemsRef = FirebaseDatabase.getInstance().getReference("Items");
         ///////
+    }
+
+    private void exchangeFromBuyCheck() {
+        if (exchangeObj.getExchangeFromBuyCheck()){
+            searchForCustomer_btn.setText(exchangeObj.getCustomerButtonText());
+            phno_textView.setText(exchangeObj.getPhNo());
+            dob_textView.setText(exchangeObj.getDob());
+            address_textView.setText(exchangeObj.getAddress());
+            email_textView.setText(exchangeObj.getEmail());
+            customerKeyID = exchangeObj.getCustomer_keyID();
+            searchForCustomer_btn.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+            searchForCustomer_btn.setTextColor(getResources().getColor(R.color.textGrey));
+            customerDetails.setVisibility(View.VISIBLE);
+
+            exchangeItemName_textView.setText(exchangeObj.getName());
+            exchangeItemCategory_textView.setText(exchangeObj.getCategory());
+            exchangeItemCondition_textView.setText(exchangeObj.getCondition());
+            exchangeItemAgreedPrice_textView.setText(exchangeObj.getPurchase_price());
+            exchangeItemNotes_textView.setText(exchangeObj.getNotes());
+
+            exchangeItemDetails.setVisibility(View.VISIBLE);
+        }
     }
 
     private void fetchingExisitingCustomers() {
@@ -235,7 +260,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                                 address_textView.setText(item.getVal3());
                                 email_textView.setText(item.getVal4());
                                 customerKeyID = item.getVal5();
-                                searchForCustomer_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
+                                searchForCustomer_btn.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
                                 searchForCustomer_btn.setTextColor(getResources().getColor(R.color.textGrey));
                                 customerDetails.setVisibility(View.VISIBLE);
                                 dialog.dismiss();
@@ -259,7 +284,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                                 notes_textView.setText(item.getVal3());
                                 suggest_price_TextView.setText(item.getVal4());
                                 itemKeyID = item.getVal5();
-                                searchForItem_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
+                                searchForItem_btn.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
                                 searchForItem_btn.setTextColor(getResources().getColor(R.color.textGrey));
                                 itemDetails.setVisibility(View.VISIBLE);
                                 dialog.dismiss();
@@ -279,6 +304,14 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         exchange_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!searchForCustomer_btn.getText().toString().equals("Search for customer")) {
+                    exchangeObj.setCustomer_keyID(customerKeyID);
+                    exchangeObj.setCustomerButtonText(searchForCustomer_btn.getText().toString());
+                    exchangeObj.setPhNo(phno_textView.getText().toString());
+                    exchangeObj.setDob(dob_textView.getText().toString());
+                    exchangeObj.setAddress(address_textView.getText().toString());
+                    exchangeObj.setEmail(email_textView.getText().toString());
+                }
                 Intent intent=new Intent(Sale.this,Buy.class);
                 exchangeObj.setExchangeCheck(true);
                 startActivityForResult(intent,1);

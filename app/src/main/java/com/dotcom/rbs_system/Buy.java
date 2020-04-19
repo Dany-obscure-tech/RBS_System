@@ -42,20 +42,25 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     Exchanged_itemdata exchanged_itemdata = Exchanged_itemdata.getInstance();
 
     Progress_dialoge pd;
+
     DatabaseReference reference;
     DatabaseReference existingCustomersRef,existingItemsRef;
 
     ImageButton Back_btn,sms_btn,gmail_btn;
     Button date_btn,customer_add_btn,searchForCustomer_btn, item_add_btn,searchForItem_btn,submit_btn;
-    TextView date_textView;
-    String firebaseAuthUID;
-    List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
-    List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsPriceList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
+    Button exchange_btn;
+
+    TextView date_textView,forExchange_textView;
     TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView,suggest_price_TextView;
 
-    LinearLayout itemDetails,customerDetails;
-    String customerKeyID, itemKeyID;
     private String itemName;
+    String firebaseAuthUID;
+    String customerKeyID, itemKeyID;
+
+    List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
+    List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsPriceList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
+
+    LinearLayout itemDetails,customerDetails;
 
 
     EditText purchase_price_editText,quantity_editText,cash_editText,voucher_editText,paid_editText;
@@ -84,7 +89,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         setContentView(R.layout.activity_buy);
 
         initialize();
-
+        exchangeCustomerCheck();
         fetchingExisitingCustomers();
         fetchingExisitingItems();
 
@@ -124,6 +129,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         dob_textView=(TextView)findViewById(R.id.dob_textView);
         address_textView=(TextView)findViewById(R.id.address_textView);
         email_textView=(TextView)findViewById(R.id.email_textView);
+        date_textView =(TextView)findViewById(R.id.date_textView);
+        forExchange_textView =(TextView)findViewById(R.id.forExchange_textView);
 
         suggest_price_TextView = (TextView) findViewById(R.id.suggest_price_TextView);
         purchase_price_editText = (EditText)findViewById(R.id.purchase_price_editText);
@@ -142,13 +149,31 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
         sms_btn=(ImageButton)findViewById(R.id.sms_btn);
+        gmail_btn=(ImageButton) findViewById(R.id.gmail_btn);
         customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
         item_add_btn =(Button) findViewById(R.id.item_add_btn);
         date_btn=(Button)findViewById(R.id.date_btn);
-        date_textView =(TextView)findViewById(R.id.date_textView);
-        gmail_btn=(ImageButton) findViewById(R.id.gmail_btn);
+        exchange_btn=(Button)findViewById(R.id.exchange_btn);
 
 
+    }
+
+    private void exchangeCustomerCheck() {
+        if (!exchanged_itemdata.getCustomerButtonText().equals("Search for customer")&&!exchanged_itemdata.getCustomerButtonText().isEmpty()) {
+            searchForCustomer_btn.setText(exchanged_itemdata.getCustomerButtonText());
+            phno_textView.setText(exchanged_itemdata.getPhNo());
+            dob_textView.setText(exchanged_itemdata.getDob());
+            address_textView.setText(exchanged_itemdata.getAddress());
+            email_textView.setText(exchanged_itemdata.getEmail());
+            customerKeyID = exchanged_itemdata.getCustomer_keyID();
+            searchForCustomer_btn.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+            searchForCustomer_btn.setTextColor(getResources().getColor(R.color.textGrey));
+            customerDetails.setVisibility(View.VISIBLE);
+        }
+        if (exchanged_itemdata.getExchangeCheck()){
+            exchange_btn.setVisibility(View.GONE);
+            forExchange_textView.setVisibility(View.GONE);
+        }
     }
 
     private void fetchingExisitingCustomers() {
@@ -258,7 +283,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                                 address_textView.setText(item.getVal3());
                                 email_textView.setText(item.getVal4());
                                 customerKeyID = item.getVal5();
-                                searchForCustomer_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
+                                searchForCustomer_btn.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
                                 searchForCustomer_btn.setTextColor(getResources().getColor(R.color.textGrey));
                                 customerDetails.setVisibility(View.VISIBLE);
                                 dialog.dismiss();
@@ -283,7 +308,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                                 notes_textView.setText(item.getVal3());
                                 suggest_price_TextView.setText(item.getVal4());
                                 itemKeyID = item.getVal5();
-                                searchForItem_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
+                                searchForItem_btn.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
                                 searchForItem_btn.setTextColor(getResources().getColor(R.color.textGrey));
                                 itemDetails.setVisibility(View.VISIBLE);
                                 dialog.dismiss();
@@ -332,8 +357,19 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validateFields() == true)
+                if(validateFields() == true){
                     detailsSubmit();
+                }
+            }
+        });
+
+        exchange_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validateFields()==true){
+                    exchanged_itemdata.setExchangeFromBuyCheck(true);
+                    detailsSubmit();
+                }
             }
         });
     }
@@ -381,9 +417,15 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     private void detailsSubmit() {
 
-        if (exchanged_itemdata.getExchangeCheck()){
+        if (exchanged_itemdata.getExchangeCheck()||exchanged_itemdata.getExchangeFromBuyCheck()){
 
             exchanged_itemdata.setCustomer_keyID(customerKeyID);
+            exchanged_itemdata.setCustomerButtonText(searchForCustomer_btn.getText().toString());
+            exchanged_itemdata.setPhNo(phno_textView.getText().toString());
+            exchanged_itemdata.setDob(dob_textView.getText().toString());
+            exchanged_itemdata.setAddress(address_textView.getText().toString());
+            exchanged_itemdata.setEmail(email_textView.getText().toString());
+
             exchanged_itemdata.setItem_keyID(itemKeyID);
             exchanged_itemdata.setPurchase_price(purchase_price_editText.getText().toString());
             exchanged_itemdata.setQuantity(quantity_editText.getText().toString());
@@ -398,12 +440,18 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             exchanged_itemdata.setNotes(notes_textView.getText().toString());
 
 
+            if (exchanged_itemdata.getExchangeFromBuyCheck()){
+                Intent intent = new Intent(Buy.this,Sale.class);
+                startActivity(intent);
+                finish();
+            }else {
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("result",1);
 
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra("result",1);
+                setResult(RESULT_OK,resultIntent);
+                finish();
+            }
 
-            setResult(RESULT_OK,resultIntent);
-            finish();
 
         }else {
             pd.showProgressBar(Buy.this);

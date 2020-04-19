@@ -583,8 +583,8 @@
                     android:id="@+id/exchangeItemRemove_btn"
                     android:layout_gravity="right"
                     android:layout_marginTop="20dp"
-                    android:textColor = "@color/textBlue"
-                    android:background="@drawable/main_button"
+                    android:textColor = "@color/textGrey"
+                    android:background="@drawable/main_button_grey"
                     android:text="Remove"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>

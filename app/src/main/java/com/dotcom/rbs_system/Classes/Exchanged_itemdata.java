@@ -5,24 +5,52 @@ import android.net.Uri;
 public class Exchanged_itemdata {
     static Exchanged_itemdata obj = new Exchanged_itemdata();
     private Boolean exchangeCheck = false;
+    private Boolean exchangeFromBuyCheck = false;
 
-    String Customer_keyID;
-    String Item_keyID;
-    String Purchase_price;
-    String Quantity;
-    String Date;
-    String Cash;
-    String Voucher;
-    String Paid;
-    String Name;
-    String Condition;
-    String Category;
-    String Notes;
+    String Customer_keyID = "";
+    String CustomerButtonText = "";
+    String phNo = "";
+    String dob = "";
+    String address = "";
+    String email = "";
+
+    String Item_keyID = "";
+    String Purchase_price = "";
+    String Quantity = "";
+    String Date = "";
+    String Cash = "";
+    String Voucher = "";
+    String Paid = "";
+    String Name = "";
+    String Condition = "";
+    String Category = "";
+    String Notes = "";
 
 
 
 
     private Exchanged_itemdata(){}
+
+    public void clearData(){
+        Customer_keyID = "";
+        CustomerButtonText = "";
+        phNo = "";
+        dob = "";
+        address = "";
+        email = "";
+
+        Item_keyID = "";
+        Purchase_price = "";
+        Quantity = "";
+        Date = "";
+        Cash = "";
+        Voucher = "";
+        Paid = "";
+        Name = "";
+        Condition = "";
+        Category = "";
+        Notes = "";
+    }
 
     public Boolean getExchangeCheck() {
         return exchangeCheck;
@@ -34,6 +62,46 @@ public class Exchanged_itemdata {
 
     public String getCustomer_keyID() {
         return Customer_keyID;
+    }
+
+    public String getCustomerButtonText() {
+        return CustomerButtonText;
+    }
+
+    public void setCustomerButtonText(String customerButtonText) {
+        CustomerButtonText = customerButtonText;
+    }
+
+    public String getPhNo() {
+        return phNo;
+    }
+
+    public void setPhNo(String phNo) {
+        this.phNo = phNo;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setCustomer_keyID(String customer_keyID) {
@@ -126,6 +194,14 @@ public class Exchanged_itemdata {
 
     public void setNotes(String notes) {
         Notes = notes;
+    }
+
+    public Boolean getExchangeFromBuyCheck() {
+        return exchangeFromBuyCheck;
+    }
+
+    public void setExchangeFromBuyCheck(Boolean exchangeFromBuyCheck) {
+        this.exchangeFromBuyCheck = exchangeFromBuyCheck;
     }
 
     public static Exchanged_itemdata getInstance(){

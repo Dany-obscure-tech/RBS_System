@@ -110,24 +110,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        icon2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Buy.class);
-                startActivity(intent);
-            }
-        });
         icon1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this,Repairs.class);
-                startActivity(intent);
-            }
-        });
-        icon3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Sale.class);
                 startActivity(intent);
             }
         });
@@ -143,6 +129,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this,Buy.class);
                 Exchanged_itemdata.getInstance().setExchangeCheck(false);
+                Exchanged_itemdata.getInstance().setExchangeFromBuyCheck(false);
+                Exchanged_itemdata.getInstance().clearData();
+
+                startActivity(intent);
+            }
+        });
+        icon2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,Buy.class);
+                Exchanged_itemdata.getInstance().setExchangeCheck(false);
+                Exchanged_itemdata.getInstance().setExchangeFromBuyCheck(false);
+                Exchanged_itemdata.getInstance().clearData();
                 startActivity(intent);
             }
         });
@@ -151,6 +150,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this,Sale.class);
                 Exchanged_itemdata.getInstance().setExchangeCheck(false);
+                Exchanged_itemdata.getInstance().setExchangeFromBuyCheck(false);
+                Exchanged_itemdata.getInstance().clearData();
+                startActivity(intent);
+            }
+        });
+        icon3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,Sale.class);
+                Exchanged_itemdata.getInstance().setExchangeCheck(false);
+                Exchanged_itemdata.getInstance().setExchangeFromBuyCheck(false);
+                Exchanged_itemdata.getInstance().clearData();
                 startActivity(intent);
             }
         });
