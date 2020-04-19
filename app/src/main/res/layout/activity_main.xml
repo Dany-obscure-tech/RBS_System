@@ -10,6 +10,9 @@
     android:orientation="vertical"
     >
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -48,13 +51,10 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
 
 
     <LinearLayout
+        android:layout_below="@+id/text"
         android:layout_centerInParent="true"
         android:layout_marginTop="30dp"
         android:orientation="vertical"
@@ -340,6 +340,7 @@
         >
 
 </RelativeLayout>
+    </ScrollView>
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

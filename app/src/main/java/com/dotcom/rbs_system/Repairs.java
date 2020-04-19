@@ -1,12 +1,14 @@
 package com.dotcom.rbs_system;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -61,8 +64,10 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     TextView date_textView;
     EditText agreed_price_editText,paidAmount_editText,special_condition_editText;
     String customerKeyID, itemKeyID;
-
     Button addFaults_btn;
+
+    Button btn_done;
+
     RecyclerView faultList_recyclerView;
     AdapterRepairsFaultListRecyclerView adapterRepairsFaultListRecyclerView;
 
@@ -167,7 +172,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         submit_btn=(Button)findViewById(R.id.submit_btn);
         date_btn=(Button)findViewById(R.id.date_btn);
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
-        date_text=(TextView)findViewById(R.id.date_text);
+        date_text=(TextView)findViewById(R.id.date_of_birth_text);
         gmail_btn=(ImageButton) findViewById(R.id.gmail_btn);
         print_btn=(ImageButton) findViewById(R.id.print_btn);
         customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
@@ -464,14 +469,17 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                 reference.child("Repairs_list").child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_price").setValue(tempFaultPriceList.get(i));
                 reference.child("Repairs_list").child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_key").setValue(tempFaultKeyIDList.get(i));
             }
+            //TODO
+            Done_btnMethod();
             Toast.makeText(this, "Submit Successfully", Toast.LENGTH_SHORT).show();
             pd.dismissProgressBar(Repairs.this);
-            finish();
+
 
         }
         else
-            Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
+        {Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
             connected = false;
+         }
 
     }
 
@@ -554,5 +562,24 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     protected void onRestart() {
         super.onRestart();
         recreate();
+    }
+
+    public void Done_btnMethod() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(Repairs.this);
+        View myview= LayoutInflater.from(getApplicationContext()).inflate(R.layout.dialoge_items,null);
+        btn_done=myview.findViewById(R.id.btn_done);
+
+        builder.setView(myview);
+        final AlertDialog alertDialog=builder.create();
+        alertDialog.show();
+
+        btn_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                alertDialog.cancel();
+                finish();
+            }
+        });
     }
 }

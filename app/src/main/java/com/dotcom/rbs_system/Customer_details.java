@@ -12,6 +12,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -59,7 +61,8 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
     ImageButton Back_btn;
     Button date_btn, submit_btn, uploadId_btn;
     ImageView id_imageView;
-    TextView date_text;
+    TextView date_of_birth_text;
+    DatePickerDialog.OnDateSetListener onDateSetListener;
     DatabaseReference reference;
     EditText ac_title, ac_phoneno, ac_id, ac_address, ac_email;
 
@@ -94,12 +97,15 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
         submit_btn = (Button) findViewById(R.id.submit_btn);
         uploadId_btn = (Button) findViewById(R.id.uploadId_btn);
         id_imageView = (ImageView) findViewById(R.id.id_imageView);
-        date_text = (TextView) findViewById(R.id.date_text);
+        date_of_birth_text = (TextView) findViewById(R.id.date_of_birth_text);
+
 
         idStorageReference = storageReference.child("Customer_IDs");
     }
 
     private void onClickListeners() {
+
+
         Back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,13 +113,38 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             }
         });
 
+//        date_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                DialogFragment datepicker = new DatePickerFragment();
+//                datepicker.show(getSupportFragmentManager(), "date picker");
+//            }
+//        });
         date_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment datepicker = new DatePickerFragment();
-                datepicker.show(getSupportFragmentManager(), "date picker");
+              Calendar calendar=Calendar.getInstance();
+              int year= calendar.get(Calendar.YEAR);
+              int month= calendar.get(Calendar.MONTH);
+              int day= calendar.get(Calendar.DAY_OF_MONTH);
+              DatePickerDialog dialog= new DatePickerDialog(
+                      Customer_details.this,
+                      android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                      onDateSetListener,
+                      year,month,day);
+              dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+              dialog.show();
             }
         });
+        onDateSetListener=new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month=month+1;
+                String date=month+ "/"+dayOfMonth+"/"+ year;
+                date_of_birth_text.setText(date);
+            }
+        };
+
 
         submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,7 +192,7 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             Toast.makeText(this, "Please upload a picture", Toast.LENGTH_LONG).show();
             valid=false;
         }
-        if (date_text.getText().toString().equals("Select date")) {
+        if (date_of_birth_text.getText().toString().equals("Select date")) {
             Toast.makeText(this, "Select date of birth", Toast.LENGTH_LONG).show();
             valid = false;
         }
@@ -190,7 +221,7 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
-        date_text.setText(currentDateString);
+        date_of_birth_text.setText(currentDateString);
     }
 
     private void detailsSubmit() {
@@ -207,7 +238,7 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             reference.child("Customer_list").child(key).child("Name").setValue(ac_title.getText().toString());
             reference.child("Customer_list").child(key).child("Phone_no").setValue(ac_phoneno.getText().toString());
             reference.child("Customer_list").child(key).child("ID").setValue(ac_id.getText().toString());
-            reference.child("Customer_list").child(key).child("DOB").setValue(date_text.getText().toString());
+            reference.child("Customer_list").child(key).child("DOB").setValue(date_of_birth_text.getText().toString());
             reference.child("Customer_list").child(key).child("Address").setValue(ac_address.getText().toString());
             reference.child("Customer_list").child(key).child("Email").setValue(ac_email.getText().toString());
             reference.child("Customer_list").child(key).child("key_id").setValue(key);
