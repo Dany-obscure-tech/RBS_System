@@ -51,6 +51,8 @@ import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
 
 public class Customer_details extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
+    String currentDateString;
+
     StorageReference storageReference;
     Progress_dialoge pd;
 
@@ -132,6 +134,7 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
                       android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                       onDateSetListener,
                       year,month,day);
+                currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
               dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
               dialog.show();
             }
@@ -141,7 +144,7 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month=month+1;
                 String date=month+ "/"+dayOfMonth+"/"+ year;
-                date_of_birth_text.setText(date);
+                date_of_birth_text.setText(currentDateString);
             }
         };
 
