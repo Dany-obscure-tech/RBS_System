@@ -110,32 +110,82 @@
                 android:textSize="16sp" />
 
             <LinearLayout
+                android:layout_margin="10dp"
                 android:weightSum="2"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:visibility="gone"
-                    android:id="@+id/id_recyclerView"
-                    android:layout_weight="1.9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
 
                 <ImageView
-                    android:id="@+id/id_imageView"
+                    android:id="@+id/id_front"
                     android:layout_weight="1.9"
                     android:adjustViewBounds="true"
                     android:layout_width="80dp"
                     android:layout_height="80dp"/>
 
                 <Button
-                    android:id="@+id/uploadId_btn"
+                    android:id="@+id/uploadId_id_front"
                     android:textSize="15sp"
                     android:background="@drawable/main_button"
                     android:textColor="#0075B5"
                     android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Upload ID"
+                    android:text="Upload Front side of ID "
+                    android:layout_weight="0.1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_margin="10dp"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:id="@+id/id_back"
+                    android:layout_weight="1.9"
+                    android:adjustViewBounds="true"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"/>
+
+                <Button
+                    android:id="@+id/uploadId_id_back"
+                    android:textSize="15sp"
+                    android:background="@drawable/main_button"
+                    android:textColor="#0075B5"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:text="Upload back side of ID "
+                    android:layout_weight="0.1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_margin="10dp"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:id="@+id/profile_pic"
+                    android:layout_weight="1.9"
+                    android:adjustViewBounds="true"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"/>
+
+                <Button
+                    android:id="@+id/profile_pic_upload"
+                    android:textSize="15sp"
+                    android:background="@drawable/main_button"
+                    android:textColor="#0075B5"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:text="Upload Profile picture "
                     android:layout_weight="0.1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>

@@ -57,18 +57,22 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
     Progress_dialoge pd;
 
     Uri tempUri=null;
+    Uri tempUri2=null;
+    Uri tempUri3=null;
 
     StorageReference idStorageReference;
 
     ImageButton Back_btn;
-    Button date_btn, submit_btn, uploadId_btn;
-    ImageView id_imageView;
+    Button date_btn, submit_btn, uploadId_id_front,uploadId_id_back,profile_pic_upload;
+    ImageView id_front,id_back,profile_pic;
     TextView date_of_birth_text;
     DatePickerDialog.OnDateSetListener onDateSetListener;
     DatabaseReference reference;
     EditText ac_title, ac_phoneno, ac_id, ac_address, ac_email;
 
     private static final int CAMERA_REQUEST_CODE = 1;
+    private static final int CAMERA_REQUEST_CODE2 = 2;
+    private static final int CAMERA_REQUEST_CODE3 = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,8 +101,12 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
 
         date_btn = (Button) findViewById(R.id.date_btn);
         submit_btn = (Button) findViewById(R.id.submit_btn);
-        uploadId_btn = (Button) findViewById(R.id.uploadId_btn);
-        id_imageView = (ImageView) findViewById(R.id.id_imageView);
+        uploadId_id_front = (Button) findViewById(R.id.uploadId_id_front);
+        uploadId_id_back = (Button) findViewById(R.id.uploadId_id_back);
+        profile_pic_upload = (Button) findViewById(R.id.profile_pic_upload);
+        id_front = (ImageView) findViewById(R.id.id_front);
+        id_back = (ImageView) findViewById(R.id.id_back);
+        profile_pic = (ImageView) findViewById(R.id.profile_pic);
         date_of_birth_text = (TextView) findViewById(R.id.date_of_birth_text);
 
 
@@ -158,11 +166,27 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             }
         });
 
-        uploadId_btn.setOnClickListener(new View.OnClickListener() {
+        uploadId_id_front.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent,CAMERA_REQUEST_CODE);
+
+            }
+        });
+        uploadId_id_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent,CAMERA_REQUEST_CODE2);
+
+            }
+        });
+        profile_pic_upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent,CAMERA_REQUEST_CODE3);
 
             }
         });
@@ -192,7 +216,13 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             valid = false;
         }
         if (tempUri==null){
-            Toast.makeText(this, "Please upload a picture", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Please upload front side of id", Toast.LENGTH_LONG).show();
+            valid=false;
+        }if (tempUri2==null){
+            Toast.makeText(this, "Please upload back side of id", Toast.LENGTH_LONG).show();
+            valid=false;
+        }if (tempUri3==null){
+            Toast.makeText(this, "Please upload a profile picture", Toast.LENGTH_LONG).show();
             valid=false;
         }
         if (date_of_birth_text.getText().toString().equals("Select date")) {
@@ -286,7 +316,7 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-            id_imageView.setImageBitmap(imageBitmap);
+            id_front.setImageBitmap(imageBitmap);
 
             // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
             tempUri = getImageUri(getApplicationContext(), imageBitmap);
@@ -294,6 +324,33 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             // CALL THIS METHOD TO GET THE ACTUAL PATH
 
         }
+        if (requestCode == CAMERA_REQUEST_CODE2 && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+            id_back.setImageBitmap(imageBitmap);
+
+            // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
+            tempUri2 = getImageUri(getApplicationContext(), imageBitmap);
+
+            // CALL THIS METHOD TO GET THE ACTUAL PATH
+
+        }
+        if (requestCode == CAMERA_REQUEST_CODE3 && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+            profile_pic.setImageBitmap(imageBitmap);
+
+            // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
+            tempUri3 = getImageUri(getApplicationContext(), imageBitmap);
+
+            // CALL THIS METHOD TO GET THE ACTUAL PATH
+
+        }
+
+
+
     }
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
