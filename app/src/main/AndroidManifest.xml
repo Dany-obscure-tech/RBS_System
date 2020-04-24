@@ -17,27 +17,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Settings" />
-        <activity android:name=".Accessories" />
-        <activity android:name=".Customer_details" />
-        <activity android:name=".Item_detail" />
-        <activity android:name=".Exchange" />
-        <activity android:name=".Repairs" />
-        <activity android:name=".Sale" />
-        <!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        <activity android:name=".SplashActivity">
+        <activity android:name=".Settings" android:theme="@style/AppTheme.no"/>
+        <activity android:name=".Accessories" android:theme="@style/AppTheme.no"/>
+        <activity android:name=".Customer_details" android:theme="@style/AppTheme.no"/>
+        <activity android:name=".Item_detail" android:theme="@style/AppTheme.no"/>
+        <activity android:name=".Exchange" android:theme="@style/AppTheme.no"/>
+        <activity android:name=".Repairs" android:theme="@style/AppTheme.no"/>
+        <activity android:name=".Sale" android:theme="@style/AppTheme.no"/>
+        <activity android:name=".SplashActivity" android:theme="@style/AppTheme.no">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignInActivity" />
-        <activity android:name=".Buy" />
+        <activity android:name=".SignInActivity" android:theme="@style/AppTheme.no"/>
+        <activity android:name=".Buy" android:theme="@style/AppTheme.no"/>
         <activity android:name=".MainActivity" />
     </application>
 
