@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -44,11 +45,14 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     DatabaseReference reference;
     DatabaseReference existingCustomersRef,existingItemsRef;
 
-    ImageButton Back_btn,sms_btn,gmail_btn;
+    ImageButton Back_btn,sms_btn,gmail_btn,print_btn;
     Button date_btn,exchange_btn,customer_add_btn,searchForCustomer_btn,item_add_btn,searchForItem_btn,submit_btn;
-    Button exchangeItemRemove_btn;
+    Button exchangeItemRemove_btn,btn_done;
 
     Progress_dialoge pd;
+    Dialog sendingdialog;
+    LinearLayout toggling_linear;
+    Boolean item_btn,customer;
 
     TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView,suggest_price_TextView;
     TextView date_textView;
@@ -96,6 +100,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         fetchingExisitingCustomers();
         fetchingExisitingItems();
         onClickListenes();
+        item_btn=false;
+        customer=false;
 
     }
 
@@ -108,6 +114,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         itemDetails = (LinearLayout)findViewById(R.id.itemDetails);
         customerDetails = (LinearLayout)findViewById(R.id.customerDetails);
         exchangeItemDetails = (LinearLayout)findViewById(R.id.exchangeItemDetails);
+        toggling_linear = (LinearLayout)findViewById(R.id.toggling_linear);
 
         exisitngCustomerList = new ArrayList<>();
         exisitngCustomerIDList = new ArrayList<>();
@@ -144,8 +151,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         exchangeItemAgreedPrice_textView=(TextView)findViewById(R.id.exchangeItemAgreedPrice_textView);
         exchangeItemNotes_textView=(TextView)findViewById(R.id.exchangeItemNotes_textView);
 
-        sms_btn=(ImageButton)findViewById(R.id.sms_btn);
-        gmail_btn=(ImageButton) findViewById(R.id.gmail_btn);
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
         submit_btn = (Button)findViewById(R.id.submit_btn);
         searchForItem_btn = (Button)findViewById(R.id.searchForItem_btn);
@@ -156,6 +161,14 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         item_add_btn=(Button) findViewById(R.id.item_add_btn);
         searchForCustomer_btn = (Button)findViewById(R.id.searchForCustomer_btn);
         exchangeItemRemove_btn = (Button)findViewById(R.id.exchangeItemRemove_btn);
+
+        sendingdialog = new Dialog(this);
+        sendingdialog.setContentView(R.layout.dialoge_items);
+        //TODo
+        gmail_btn = (ImageButton) sendingdialog.findViewById(R.id.gmail_btn);
+        print_btn = (ImageButton) sendingdialog.findViewById(R.id.print_btn);
+        sms_btn = (ImageButton) sendingdialog.findViewById(R.id.sms_btn);
+        btn_done = (Button) sendingdialog.findViewById(R.id.btn_done);
 
         exisitngCustomerList = new ArrayList<>();
         exisitngCustomerIDList = new ArrayList<>();
@@ -263,6 +276,10 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                                 searchForCustomer_btn.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
                                 searchForCustomer_btn.setTextColor(getResources().getColor(R.color.textGrey));
                                 customerDetails.setVisibility(View.VISIBLE);
+                                customer=true;
+                                if (item_btn==true&&customer==true){
+                                    toggling_linear.setVisibility(View.VISIBLE);
+                                }
                                 dialog.dismiss();
                             }
                         }).show();
@@ -287,6 +304,10 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                                 searchForItem_btn.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
                                 searchForItem_btn.setTextColor(getResources().getColor(R.color.textGrey));
                                 itemDetails.setVisibility(View.VISIBLE);
+                                item_btn=true;
+                                if (item_btn==true&&customer==true){
+                                    toggling_linear.setVisibility(View.VISIBLE);
+                                }
                                 dialog.dismiss();
                             }
                         }).show();
@@ -340,23 +361,35 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             }
         });
 
+        print_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Sale.this, "YEs working", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         gmail_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Toast.makeText(Sale.this, "yes", Toast.LENGTH_SHORT).show();
                 Intent it = new Intent(Intent.ACTION_SEND);
                 it.setType("message/rfc822");
                 startActivity(Intent.createChooser(it,"Choose Mail App"));
             }
         });
-
         sms_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + "0323"));
                 intent.putExtra("sms_body", "Hi how are you");
                 startActivity(intent);
+            }
+        });
+        btn_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                sendingdialog.dismiss();
+                finish();
             }
         });
 
@@ -437,7 +470,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             reference.child("Sale_list").child(key).child("key_id").setValue(key);
             reference.child("Sale_list").child(key).child("added_by").setValue(firebaseAuthUID);
             pd.dismissProgressBar(Sale.this);
-            finish();
+            sendingdialog.show();
 
         }
         else {

@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -44,14 +46,18 @@ import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
-public class Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+public class
+Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
     ImageButton stockEntrysms_btn,stockEntrygmail_btn,stockEntryprint_btn;
     ImageButton salePrint_btn,saleEmail_btn,saleSms_btn;
     ImageButton purchasePrint_btn,purchaseEmail_btn,purchaseSms_btn;
     ImageButton stockCheckPrint_btn,stockCheckEmail_btn,stockCheckSms_btn;
+    ImageButton gmail_btn,sms_btn,print_btn;
+    Button btn_done;
 
     // Progress dialog
     Progress_dialoge pd;
+    Dialog sendingdialog;
 
     Button stock_entry_btn,sale_btn,purchase_btn,Stock_check_btn;
     LinearLayout upperLayout,lowerLayout,purchaseLayout,stock_check_Layout;
@@ -173,6 +179,13 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
     private void initialize() {
 
         pd = new Progress_dialoge();
+        sendingdialog = new Dialog(this);
+        sendingdialog.setContentView(R.layout.dialoge_items);
+        gmail_btn = (ImageButton) sendingdialog.findViewById(R.id.gmail_btn);
+        print_btn = (ImageButton) sendingdialog.findViewById(R.id.print_btn);
+        sms_btn = (ImageButton) sendingdialog.findViewById(R.id.sms_btn);
+        btn_done = (Button) sendingdialog.findViewById(R.id.btn_done);
+
 
         purchaseItemAddAlert = new Dialog(this);
         purchaseItemAddAlert.setContentView(R.layout.alert_purchase_add_item);
@@ -409,7 +422,7 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
             reference.child("Accessories").child(selectCategory_btn.getText().toString()).child(key).child("key_id").setValue(key);
 
             pd.dismissProgressBar(Accessories.this);
-            finish();
+            sendingdialog.show();
         }
         else {
             Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
@@ -437,7 +450,8 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
             reference.child("Accessories_sale").child(key).child("key_id").setValue(key);
             reference.child("Accessories_sale").child(key).child("added_by").setValue(firebaseAuthUID);
             pd.dismissProgressBar(Accessories.this);
-            finish();
+            sendingdialog.show();
+
         }
         else {
             Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
@@ -483,7 +497,7 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
 
             reference.child("Accessories_purchase_list").child(key).child("added_by").setValue(firebaseAuthUID);
             pd.dismissProgressBar(Accessories.this);
-            finish();
+            sendingdialog.show();
         }
         else {
             Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
@@ -526,7 +540,6 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
                 stock_check_Layout.setVisibility(View.GONE);
             }
         });
-//todo
         Stock_check_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -825,7 +838,6 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
             @Override
             public void onClick(View v) {
 
-
                 purchaseItemAddAlert.setCancelable(false);
                 purchaseItemAddAlert.show();
             }
@@ -889,6 +901,39 @@ public class Accessories extends AppCompatActivity implements DatePickerDialog.O
                 purchaseCategoryAddAlert.dismiss();
             }
         });
+
+        print_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Accessories.this, "YEs working", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        gmail_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(Intent.ACTION_SEND);
+                it.setType("message/rfc822");
+                startActivity(Intent.createChooser(it,"Choose Mail App"));
+            }
+        });
+        sms_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + "0323"));
+                intent.putExtra("sms_body", "Hi how are you");
+                startActivity(intent);
+            }
+        });
+        btn_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                sendingdialog.dismiss();
+                finish();
+            }
+        });
+
 
 
     }

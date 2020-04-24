@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -49,8 +50,9 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     Progress_dialoge pd;
+    Boolean item_btn,customer;
 
-    LinearLayout itemDetails,customerDetails;
+    LinearLayout itemDetails,customerDetails,toggling_linear;
     ImageButton Back_btn;
     Button date_btn,customer_add_btn,searchForCustomer_btn,submit_btn,searchForItem_btn,item_add_btn;
     TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView;
@@ -65,8 +67,9 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     EditText agreed_price_editText,paidAmount_editText,special_condition_editText;
     String customerKeyID, itemKeyID;
     Button addFaults_btn;
-
     Button btn_done;
+
+    Dialog sendingdialog;
 
     RecyclerView faultList_recyclerView;
     AdapterRepairsFaultListRecyclerView adapterRepairsFaultListRecyclerView;
@@ -116,6 +119,8 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         fetchingExisitingCustomers();
         fetchingExisitingItems();
         onClickListeners();
+        item_btn=false;
+        customer=false;
 
 
     }
@@ -125,6 +130,14 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     private void initialize() {
 
         pd = new Progress_dialoge();
+        sendingdialog = new Dialog(this);
+        sendingdialog.setContentView(R.layout.dialoge_items);
+        //TODo
+        gmail_btn = (ImageButton) sendingdialog.findViewById(R.id.gmail_btn);
+        print_btn = (ImageButton) sendingdialog.findViewById(R.id.print_btn);
+        sms_btn = (ImageButton) sendingdialog.findViewById(R.id.sms_btn);
+        btn_done = (Button) sendingdialog.findViewById(R.id.btn_done);
+
 
         faultNameList = new ArrayList<>();
         faultPriceList = new ArrayList<>();
@@ -153,6 +166,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
 
         itemDetails = (LinearLayout)findViewById(R.id.itemDetails);
         customerDetails = (LinearLayout)findViewById(R.id.customerDetails);
+        toggling_linear = (LinearLayout)findViewById(R.id.toggling_linear);
 
         exisitngCustomerList = new ArrayList<>();
         exisitngCustomerIDList = new ArrayList<>();
@@ -173,12 +187,11 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         date_btn=(Button)findViewById(R.id.date_btn);
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
         date_text=(TextView)findViewById(R.id.date_of_birth_text);
-        gmail_btn=(ImageButton) findViewById(R.id.gmail_btn);
-        print_btn=(ImageButton) findViewById(R.id.print_btn);
+
         customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
         searchForCustomer_btn = (Button)findViewById(R.id.searchForCustomer_btn);
         item_add_btn =(Button) findViewById(R.id.item_add_btn);
-        sms_btn=(ImageButton)findViewById(R.id.sms_btn);
+
 
         category_textView=(TextView)findViewById(R.id.category_textView);
         condition_textView=(TextView)findViewById(R.id.condition_textView);
@@ -310,6 +323,10 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                                 searchForCustomer_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
                                 searchForCustomer_btn.setTextColor(getResources().getColor(R.color.textGrey));
                                 customerDetails.setVisibility(View.VISIBLE);
+                                customer=true;
+                                if (item_btn==true&&customer==true){
+                                    toggling_linear.setVisibility(View.VISIBLE);
+                                }
                                 dialog.dismiss();
                             }
                         }).show();
@@ -333,6 +350,10 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                                 searchForItem_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
                                 searchForItem_btn.setTextColor(getResources().getColor(R.color.textGrey));
                                 itemDetails.setVisibility(View.VISIBLE);
+                                item_btn=true;
+                                if (item_btn==true&&customer==true){
+                                    toggling_linear.setVisibility(View.VISIBLE);
+                                }
                                 dialog.dismiss();
 
                             }
@@ -371,12 +392,16 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                 startActivity(intent);
             }
         });
+        print_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Repairs.this, "YEs working", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         gmail_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 Intent it = new Intent(Intent.ACTION_SEND);
                 it.setType("message/rfc822");
                 startActivity(Intent.createChooser(it,"Choose Mail App"));
@@ -390,12 +415,15 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                 startActivity(intent);
             }
         });
-
-        print_btn.setOnClickListener(new View.OnClickListener() {
+        btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                sendingdialog.dismiss();
+                finish();
             }
         });
+
 
         submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -446,7 +474,6 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     private void detailsSubmit() {
         pd.showProgressBar(Repairs.this);
 
-
         boolean connected = false;
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Repairs.CONNECTIVITY_SERVICE);
         if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
@@ -470,10 +497,10 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                 reference.child("Repairs_list").child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_key").setValue(tempFaultKeyIDList.get(i));
             }
             //TODO
-            Done_btnMethod();
+
             Toast.makeText(this, "Submit Successfully", Toast.LENGTH_SHORT).show();
             pd.dismissProgressBar(Repairs.this);
-
+            sendingdialog.show();
 
         }
         else
@@ -558,28 +585,10 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         date_textView.setText(currentDateString);
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        recreate();
-    }
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        recreate();
+//    }
 
-    public void Done_btnMethod() {
-        AlertDialog.Builder builder=new AlertDialog.Builder(Repairs.this);
-        View myview= LayoutInflater.from(getApplicationContext()).inflate(R.layout.dialoge_items,null);
-        btn_done=myview.findViewById(R.id.btn_done);
-
-        builder.setView(myview);
-        final AlertDialog alertDialog=builder.create();
-        alertDialog.show();
-
-        btn_done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                alertDialog.cancel();
-                finish();
-            }
-        });
-    }
 }

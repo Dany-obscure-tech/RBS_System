@@ -287,6 +287,13 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/toggling_linear"
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -469,101 +476,6 @@
                 android:layout_height="wrap_content"
                 android:text="EXCHANGE"/>
 
-            <TextView
-                android:fontFamily="@font/segoe_ui_bold"
-                android:layout_gravity="center_horizontal"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Do you want to print, email, sms?"
-                />
-
-            <LinearLayout
-                android:weightSum="3"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:padding="20dp"
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                <ImageButton
-                    android:layout_gravity="center_horizontal"
-                    android:paddingBottom="8dp"
-                    android:background="#00000000"
-                    android:src="@drawable/printer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                    <TextView
-                        android:textSize="16sp"
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Print"
-                        android:paddingBottom="10dp"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:padding="20dp"
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageButton
-                        android:id="@+id/gmail_btn"
-                        android:layout_gravity="center_horizontal"
-                        android:paddingBottom="10dp"
-                        android:background="#00000000"
-                        android:src="@drawable/gmail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:textSize="16sp"
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Email"
-                        android:paddingBottom="10dp"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:padding="20dp"
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageButton
-                        android:id="@+id/sms_btn"
-                        android:layout_gravity="center_horizontal"
-                        android:paddingBottom="10dp"
-                        android:background="#00000000"
-                        android:src="@drawable/mail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:textSize="16sp"
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="SMS"
-                        android:paddingBottom="10dp"/>
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
             <Button
                 android:id="@+id/submit_btn"
                 android:elevation="10dp"
@@ -578,6 +490,8 @@
                 android:textColor="#0075B5"
                 android:layout_marginBottom="15dp"
                 />
+
+            </LinearLayout>
 
         </LinearLayout>
 

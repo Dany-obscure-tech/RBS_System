@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -42,13 +43,15 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     Exchanged_itemdata exchanged_itemdata = Exchanged_itemdata.getInstance();
 
     Progress_dialoge pd;
+    LinearLayout toggling_linear;
+    Boolean item_btn,customer;
 
     DatabaseReference reference;
     DatabaseReference existingCustomersRef,existingItemsRef;
 
-    ImageButton Back_btn,sms_btn,gmail_btn;
+    ImageButton Back_btn,sms_btn,gmail_btn,print_btn;
     Button date_btn,customer_add_btn,searchForCustomer_btn, item_add_btn,searchForItem_btn,submit_btn;
-    Button exchange_btn;
+    Button exchange_btn, btn_done;
 
     TextView date_textView,forExchange_textView;
     TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView,suggest_price_TextView;
@@ -64,6 +67,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
 
     EditText purchase_price_editText,quantity_editText,cash_editText,voucher_editText,paid_editText;
+    Dialog sendingdialog;
 
     private ArrayList<SampleSearchModel> createItemsData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
@@ -94,12 +98,16 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         fetchingExisitingItems();
 
         onClickListeners();
+        item_btn=false;
+        customer=false;
 
     }
 
     private void initialize() {
 
         pd = new Progress_dialoge();
+        sendingdialog = new Dialog(this);
+        sendingdialog.setContentView(R.layout.dialoge_items);
 
         reference = FirebaseDatabase.getInstance().getReference();
 
@@ -142,18 +150,21 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         searchForCustomer_btn = (Button)findViewById(R.id.searchForCustomer_btn);
         searchForItem_btn = (Button)findViewById(R.id.searchForItem_btn);
         submit_btn = (Button)findViewById(R.id.submit_btn);
+        toggling_linear = (LinearLayout)findViewById(R.id.toggling_linear);
 
         firebaseAuthUID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
         existingCustomersRef = FirebaseDatabase.getInstance().getReference("Customer_list");
         existingItemsRef = FirebaseDatabase.getInstance().getReference("Items");
 
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
-        sms_btn=(ImageButton)findViewById(R.id.sms_btn);
-        gmail_btn=(ImageButton) findViewById(R.id.gmail_btn);
         customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
         item_add_btn =(Button) findViewById(R.id.item_add_btn);
         date_btn=(Button)findViewById(R.id.date_btn);
         exchange_btn=(Button)findViewById(R.id.exchange_btn);
+        gmail_btn = (ImageButton) sendingdialog.findViewById(R.id.gmail_btn);
+        print_btn = (ImageButton) sendingdialog.findViewById(R.id.print_btn);
+        sms_btn = (ImageButton) sendingdialog.findViewById(R.id.sms_btn);
+        btn_done = (Button) sendingdialog.findViewById(R.id.btn_done);
 
 
     }
@@ -243,15 +254,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     private void onClickListeners() {
 
-        sms_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + "0323"));
-                intent.putExtra("sms_body", "Hi how are you");
-                startActivity(intent);
-            }
-        });
-
         Back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -279,6 +281,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                                                    SampleSearchModel item, int position) {
                                 searchForCustomer_btn.setText(item.getTitle());
                                 phno_textView.setText(item.getVal1());
+                                //TODO
                                 dob_textView.setText(item.getVal2());
                                 address_textView.setText(item.getVal3());
                                 email_textView.setText(item.getVal4());
@@ -286,6 +289,10 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                                 searchForCustomer_btn.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
                                 searchForCustomer_btn.setTextColor(getResources().getColor(R.color.textGrey));
                                 customerDetails.setVisibility(View.VISIBLE);
+                                customer=true;
+                                if (item_btn==true&&customer==true){
+                                    toggling_linear.setVisibility(View.VISIBLE);
+                                }
                                 dialog.dismiss();
                             }
                         }).show();
@@ -303,6 +310,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                                                    SampleSearchModel item, int position) {
                                 searchForItem_btn.setText(item.getTitle());
                                 itemName = item.getName();
+                                //TODO
                                 category_textView.setText(item.getVal1());
                                 condition_textView.setText(item.getVal2());
                                 notes_textView.setText(item.getVal3());
@@ -311,6 +319,10 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                                 searchForItem_btn.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
                                 searchForItem_btn.setTextColor(getResources().getColor(R.color.textGrey));
                                 itemDetails.setVisibility(View.VISIBLE);
+                                item_btn=true;
+                                if (item_btn==true&&customer==true){
+                                    toggling_linear.setVisibility(View.VISIBLE);
+                                }
                                 dialog.dismiss();
                             }
                         }).show();
@@ -343,14 +355,34 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
         });
 
+        print_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Buy.this, "YEs working", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         gmail_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Toast.makeText(Buy.this, "yes", Toast.LENGTH_SHORT).show();
                 Intent it = new Intent(Intent.ACTION_SEND);
                 it.setType("message/rfc822");
                 startActivity(Intent.createChooser(it,"Choose Mail App"));
+            }
+        });
+        sms_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + "0323"));
+                intent.putExtra("sms_body", "Hi how are you");
+                startActivity(intent);
+            }
+        });
+        btn_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendingdialog.dismiss();
+                finish();
             }
         });
 
@@ -415,7 +447,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     }
 
 
-    private void detailsSubmit() {
+    private void   detailsSubmit() {
 
         if (exchanged_itemdata.getExchangeCheck()||exchanged_itemdata.getExchangeFromBuyCheck()){
 
@@ -477,7 +509,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 reference.child("Buy_list").child(key).child("key_id").setValue(key);
                 reference.child("Buy_list").child(key).child("added_by").setValue(firebaseAuthUID);
                 pd.dismissProgressBar(Buy.this);
-                finish();
+                sendingdialog.show();
             }
             else
                 Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
@@ -486,11 +518,11 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        recreate();
-    }
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        recreate();
+//    }
 
     @Override
     public void onBackPressed() {
