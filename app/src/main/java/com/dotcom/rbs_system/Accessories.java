@@ -53,7 +53,15 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
     ImageButton purchasePrint_btn,purchaseEmail_btn,purchaseSms_btn;
     ImageButton stockCheckPrint_btn,stockCheckEmail_btn,stockCheckSms_btn;
     ImageButton gmail_btn,sms_btn,print_btn;
+    //switch of sending dialog
+    int switch_container=0;
+
+    //switch of sending dialog
+
+
     Button btn_done;
+    Button category_search_btn_submit_btn,select_Invoice_no_btn_submit_btn,select_company_name_btn_submit_btn;
+    //TODO
 
     // Progress dialog
     Progress_dialoge pd;
@@ -186,6 +194,9 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
         sms_btn = (ImageButton) sendingdialog.findViewById(R.id.sms_btn);
         btn_done = (Button) sendingdialog.findViewById(R.id.btn_done);
 
+        category_search_btn_submit_btn=(Button)findViewById(R.id.category_search_btn_submit_btn);
+        select_Invoice_no_btn_submit_btn=(Button)findViewById(R.id.select_Invoice_no_btn_submit_btn);
+        select_company_name_btn_submit_btn=(Button)findViewById(R.id.select_company_name_btn_submit_btn);
 
         purchaseItemAddAlert = new Dialog(this);
         purchaseItemAddAlert.setContentView(R.layout.alert_purchase_add_item);
@@ -405,6 +416,7 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
     }
 
     private void detailsSubmit() {
+        switch_container=1;
         pd.showProgressBar(Accessories.this);
 
         boolean connected = false;
@@ -433,6 +445,7 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
     }
 
     private void detailsSubmit2() {
+        switch_container=2;
         pd.showProgressBar(Accessories.this);
 
         boolean connected = false;
@@ -473,6 +486,7 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
     }
 
     private void detailsSubmitPurchase() {
+        switch_container=3;
 
         pd.showProgressBar(Accessories.this);
 
@@ -605,6 +619,28 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
 
     private void onClickListeners() {
 
+        category_search_btn_submit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch_container=4;
+            }
+        });
+
+        select_Invoice_no_btn_submit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch_container=4;
+            }
+        });
+
+        select_company_name_btn_submit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch_container=4;
+            }
+        });
+
+
         date_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -719,7 +755,6 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
                                         accessoriesItemPriceUnitListsearch.add(accessoriesItemPriceUnitList.get(k));
                                         accessoriesItemQuantityListsearch.add(accessoriesItemQuantityList.get(k));
                                         adapterAccessoriesItemDetailRecyclerView.notifyDataSetChanged();
-//                                        Toast.makeText(Accessories.this, String.valueOf(accessoriesItemCategoryListsearch.size()), Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
@@ -822,6 +857,7 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
             @Override
             public void onClick(View v) {
                 if (validateFields() == true)
+                    //TODo
                     detailsSubmit();
             }
         });
@@ -921,8 +957,29 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + "0323"));
-                intent.putExtra("sms_body", "Hi how are you");
-                startActivity(intent);
+                if (switch_container==1){
+                    //Stock Entry
+                    intent.putExtra("sms_body", "Category : "+selectCategory_btn.getText().toString()+"\n"+"Item name : "+itemName_editText.getText().toString()+"\n"+"Item Serial-NO/IMEI-NO : "+itemId_editText.getText().toString()+"\n"+"Condition : "+ratingBar.getRating()+"\n"+"Purchased Price : "+purchase_price_editText.getText().toString());
+                    startActivity(intent);
+
+                }
+                else if (switch_container==2){
+                    //Sale
+                    intent.putExtra("sms_body", "Category : "+selectCategory_btn2.getText().toString()+"\n"+"Item name : "+searchForItem_btn.getText().toString()+"\n"+"Suggested price : "+suggest_price_editText.getText().toString()+"\n"+"Paid : "+paid_editText.getText().toString()+"\n"+"Balance : "+balance_editText.getText().toString());
+                    startActivity(intent);
+                }
+                else if (switch_container==3){
+                    //Purchase
+                    intent.putExtra("sms_body", "Company name : "+companyName_editText.getText().toString()+"\n"+"Invoice Date : "+purchaseDate_textView.getText().toString()+"\n"+"Paid Amount : "+paidAmount_editText.getText().toString()+"\n"+"Invoice No : "+invoiceNo_editText.getText().toString()+"\n"+"Purchase Item details"+"\n"+"---------------"+"\n"+"Item name : "+alertItemName_editText.getText().toString()+"\n"+"Item Category : "+alertItemName_editText.getText().toString()+"\n"+"Price unit : "+priceUnit_editText.getText().toString()+"\n"+"Quantity : "+quantity_editText.getText().toString()+"\n"+"---------------");
+                    startActivity(intent);
+                }
+                else{
+                    //Stock check
+                    intent.putExtra("sms_body", "Hi how are you");
+                    startActivity(intent);
+
+                }
+
             }
         });
         btn_done.setOnClickListener(new View.OnClickListener() {

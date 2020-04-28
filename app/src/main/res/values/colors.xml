@@ -7,5 +7,6 @@
     <color name="colorLightGrey">#EDEDED</color>
     <color name="textGrey">#9F9F9F</color>
     <color name="textBlue">#0075B5</color>
+    <color name="divider_line_color">#3F51B5</color>
 
 </resources>
