@@ -13,13 +13,23 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.dotcom.rbs_system.Classes.Exchanged_itemdata;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
+
+    DatabaseReference bannerRef;
+
 //Navigation drawer
     private DrawerLayout dl;
     private ActionBarDrawerToggle t;
@@ -27,11 +37,17 @@ public class MainActivity extends AppCompatActivity {
     //Navigation drawer
 
     CardView BUY,Sale,repair,Exchange,Accessories,Settings;
+
     ImageButton icon1,icon2,icon3,icon5,icon4,icon6;
+
+    ImageView mainBanner_imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         //Nav drawer
         dl = (DrawerLayout)findViewById(R.id.activity_main);
         t = new ActionBarDrawerToggle(this, dl,R.string.Open, R.string.Close);
@@ -71,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        bannerRef = FirebaseDatabase.getInstance().getReference("Admin/banner");
 
         BUY=(CardView)findViewById(R.id.BUY);
         Sale=(CardView)findViewById(R.id.Sale);
@@ -85,6 +102,9 @@ public class MainActivity extends AppCompatActivity {
         icon3=(ImageButton)findViewById(R.id.icon3);
         icon5=(ImageButton)findViewById(R.id.icon5);
         icon6=(ImageButton)findViewById(R.id.icon6);
+
+        mainBanner_imageView = (ImageView)findViewById(R.id.mainBanner_imageView);
+        getBannerImage();
 
         Accessories.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,5 +222,21 @@ public class MainActivity extends AppCompatActivity {
         if(t.onOptionsItemSelected(item))
             return true;
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getBannerImage() {
+        bannerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    Picasso.get().load(dataSnapshot.getValue().toString()).into(mainBanner_imageView);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

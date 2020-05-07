@@ -37,6 +37,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
 
+//    picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 //    search view library
     implementation 'com.github.mirrajabi:search-dialog:1.2.4'
 
