@@ -49,33 +49,40 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
+    DatabaseReference existingCustomersRef,existingItemsRef;
+    DatabaseReference reference;
+    DatabaseReference faultListRef;
+
     Progress_dialoge pd;
-    Boolean item_btn,customer;
+    Dialog sendingdialog;
+
 
     LinearLayout itemDetails,customerDetails,toggling_linear;
-    ImageButton Back_btn;
-    Button date_btn,customer_add_btn,searchForCustomer_btn,submit_btn,searchForItem_btn,item_add_btn;
-    TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView;
-    TextView date_text,balanceAmount_TextView;
-    List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
-    List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
-    DatabaseReference existingCustomersRef,existingItemsRef;
-    String firebaseAuthUID;
+
     ImageButton gmail_btn,sms_btn,print_btn;
-    DatabaseReference reference;
-    TextView date_textView;
-    EditText agreed_price_editText,paidAmount_editText,special_condition_editText;
-    String customerKeyID, itemKeyID;
+    ImageButton Back_btn;
     Button addFaults_btn;
     Button btn_done;
+    Button date_btn,customer_add_btn,searchForCustomer_btn,submit_btn,searchForItem_btn,item_add_btn;
 
-    Dialog sendingdialog;
+    TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView;
+    TextView date_text,balanceAmount_TextView;
+    TextView date_textView;
+
+    EditText agreed_price_editText,paidAmount_editText,special_condition_editText;
+    EditText ticket_number_editText;
 
     RecyclerView faultList_recyclerView;
     AdapterRepairsFaultListRecyclerView adapterRepairsFaultListRecyclerView;
 
-    DatabaseReference faultListRef;
+    Boolean item_btn,customer;
 
+    String firebaseAuthUID;
+    String customerKeyID, itemKeyID;
+    String customerName, itemName,customerID,itemID;
+
+    List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
+    List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
     List<String> faultNameList, faultPriceList, faultKeyIDList;
     List<String> tempFaultNameList, tempFaultPriceList, tempFaultKeyIDList;
 
@@ -157,10 +164,12 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         faultList_recyclerView.setLayoutManager(new GridLayoutManager(Repairs.this,1));
 
         date_textView = (TextView)findViewById(R.id.date_textView);
+        balanceAmount_TextView = (TextView) findViewById(R.id.balanceAmount_TextView);
+
         agreed_price_editText = (EditText)findViewById(R.id.agreed_price_editText);
         paidAmount_editText = (EditText)findViewById(R.id.paidAmount_editText);
-        balanceAmount_TextView = (TextView) findViewById(R.id.balanceAmount_TextView);
         special_condition_editText = (EditText)findViewById(R.id.special_condition_editText);
+        ticket_number_editText = (EditText)findViewById(R.id.ticket_number_editText);
 
         reference = FirebaseDatabase.getInstance().getReference();
 
@@ -314,6 +323,8 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                             @Override
                             public void onSelected(BaseSearchDialogCompat dialog,
                                                    SampleSearchModel item, int position) {
+                                customerName = item.getName();
+                                customerID = item.getId();
                                 searchForCustomer_btn.setText(item.getTitle());
                                 phno_textView.setText(item.getVal1());
                                 dob_textView.setText(item.getVal2());
@@ -342,6 +353,8 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                             @Override
                             public void onSelected(BaseSearchDialogCompat dialog,
                                                    final SampleSearchModel item, int position) {
+                                itemName = item.getName();
+                                itemID = item.getId();
                                 searchForItem_btn.setText(item.getTitle());
                                 category_textView.setText(item.getVal1());
                                 condition_textView.setText(item.getVal2());
@@ -463,6 +476,10 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             special_condition_editText.setError("Please enter special condition");
             valid = false;
         }
+        if (ticket_number_editText.getText().toString().isEmpty()) {
+            ticket_number_editText.setError("Please enter ticket number");
+            valid = false;
+        }
         if (tempFaultNameList.size()==0){
             Toast.makeText(this, "Please enter faults", Toast.LENGTH_SHORT).show();
             valid = false;
@@ -481,20 +498,31 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             //we are connected to a network
             connected = true;
             String key = reference.push().getKey();
-            reference.child("Repairs_list").child(key).child("Customer_keyID").setValue(customerKeyID);
-            reference.child("Repairs_list").child(key).child("Item_keyID").setValue(itemKeyID);
-            reference.child("Repairs_list").child(key).child("Agreed_price").setValue(agreed_price_editText.getText().toString());
-            reference.child("Repairs_list").child(key).child("Date").setValue(date_textView.getText().toString());
-            reference.child("Repairs_list").child(key).child("Paid_amount").setValue(paidAmount_editText.getText().toString());
-            reference.child("Repairs_list").child(key).child("Balance_amount").setValue(balanceAmount_TextView.getText().toString());
-            reference.child("Repairs_list").child(key).child("Special_conditiomn").setValue(special_condition_editText.getText().toString());
-            reference.child("Repairs_list").child(key).child("key_id").setValue(key);
-            reference.child("Repairs_list").child(key).child("added_by").setValue(firebaseAuthUID);
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Customer_keyID").setValue(customerKeyID);
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Item_keyID").setValue(itemKeyID);
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Customer_name").setValue(customerName);
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Item_name").setValue(itemName);
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Customer_id").setValue(customerID);
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Item_id").setValue(itemID);
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Ticket_no").setValue(ticket_number_editText.getText().toString());
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Agreed_price").setValue(agreed_price_editText.getText().toString());
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Date").setValue(date_textView.getText().toString());
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Paid_amount").setValue(paidAmount_editText.getText().toString());
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Balance_amount").setValue(balanceAmount_TextView.getText().toString());
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Special_conditiomn").setValue(special_condition_editText.getText().toString());
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("key_id").setValue(key);
+
+            reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Customer_keyID").setValue(customerKeyID);
+            reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Item_keyID").setValue(itemKeyID);
+            reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Customer_name").setValue(customerName);
+            reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Item_name").setValue(itemName);
+            reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Repair_key_id").setValue(key);
+            reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Ticket_no").setValue(ticket_number_editText.getText().toString());
 
             for (int i = 0;i<tempFaultNameList.size();i++){
-                reference.child("Repairs_list").child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_name").setValue(tempFaultNameList.get(i));
-                reference.child("Repairs_list").child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_price").setValue(tempFaultPriceList.get(i));
-                reference.child("Repairs_list").child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_key").setValue(tempFaultKeyIDList.get(i));
+                reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_name").setValue(tempFaultNameList.get(i));
+                reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_price").setValue(tempFaultPriceList.get(i));
+                reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_key").setValue(tempFaultKeyIDList.get(i));
             }
             //TODO
 

@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         icon1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Repairs.class);
+                Intent intent=new Intent(MainActivity.this,Repair_Ticket.class);
                 startActivity(intent);
             }
         });
@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
         repair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Repairs.class);
+                Intent intent=new Intent(MainActivity.this,Repair_Ticket.class);
                 startActivity(intent);
             }
         });
