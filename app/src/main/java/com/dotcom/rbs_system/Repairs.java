@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -139,6 +140,12 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         pd = new Progress_dialoge();
         sendingdialog = new Dialog(this);
         sendingdialog.setContentView(R.layout.dialoge_items);
+        sendingdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                finish();
+            }
+        });
         //TODo
         gmail_btn = (ImageButton) sendingdialog.findViewById(R.id.gmail_btn);
         print_btn = (ImageButton) sendingdialog.findViewById(R.id.print_btn);
@@ -504,6 +511,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Item_name").setValue(itemName);
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Customer_id").setValue(customerID);
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Item_id").setValue(itemID);
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Item_category").setValue(category_textView.getText().toString());
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Ticket_no").setValue(ticket_number_editText.getText().toString());
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Agreed_price").setValue(agreed_price_editText.getText().toString());
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Date").setValue(date_textView.getText().toString());

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,20 +39,24 @@ public class AdapterRepairsFaultListRecyclerView extends RecyclerView.Adapter<Ad
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterRepairsFaultListRecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final AdapterRepairsFaultListRecyclerView.ViewHolder holder, final int position) {
         holder.faultName_textView.setText(faultNameList.get(position));
         holder.faultPrice_textView.setText(faultPriceList.get(position));
+        if (faultKeyIDList==null){
+            holder.remove_btn.setVisibility(View.GONE);
+        }
+        if (faultKeyIDList!=null){
+            holder.remove_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    faultNameList.remove(position);
+                    faultPriceList.remove(position);
+                    faultKeyIDList.remove(position);
 
-        holder.remove_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                faultNameList.remove(position);
-                faultPriceList.remove(position);
-                faultKeyIDList.remove(position);
-
-                notifyDataSetChanged();
-            }
-        });
+                    notifyDataSetChanged();
+                }
+            });
+        }
 
     }
 

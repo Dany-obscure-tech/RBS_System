@@ -50,6 +50,7 @@ public class Repair_Ticket extends AppCompatActivity {
 
     private ArrayList<SampleSearchModel> createTicketNoData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
+        Collections.reverse(ticketNoList);
         for (int i=0;i<ticketNoList.size();i++){
             items.add(new SampleSearchModel(ticketNoList.get(i),repairKeyIDList.get(i),null,null,null,null,null,null));
         }
