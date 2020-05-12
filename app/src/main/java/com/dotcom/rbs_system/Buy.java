@@ -27,11 +27,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
@@ -39,6 +44,7 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+    long test = 1586631600000L;
 
     Exchanged_itemdata exchanged_itemdata = Exchanged_itemdata.getInstance();
 
@@ -58,7 +64,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     private String itemName;
     String firebaseAuthUID;
-    String customerKeyID, itemKeyID;
+    String customerKeyID, itemKeyID,customerName;
 
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
     List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsPriceList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
@@ -68,6 +74,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     EditText purchase_price_editText,quantity_editText,cash_editText,voucher_editText,paid_editText;
     Dialog sendingdialog;
+
+    Date date;
 
     private ArrayList<SampleSearchModel> createItemsData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
@@ -100,6 +108,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         onClickListeners();
         item_btn=false;
         customer=false;
+
+        historyActivity();
 
     }
 
@@ -247,6 +257,16 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         calendar.set(Calendar.MONTH,month);
         calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
         String currentDateString= DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            date = (Date)formatter.parse(dayOfMonth+"-"+month+"-"+year);
+            Toast.makeText(this, String.valueOf(date.getTime()), Toast.LENGTH_SHORT).show();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
         date_textView.setText(currentDateString);
 
     }
@@ -281,7 +301,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                                                    SampleSearchModel item, int position) {
                                 searchForCustomer_btn.setText(item.getTitle());
                                 phno_textView.setText(item.getVal1());
-                                //TODO
+                                customerName = item.getName();
                                 dob_textView.setText(item.getVal2());
                                 address_textView.setText(item.getVal3());
                                 email_textView.setText(item.getVal4());
@@ -505,9 +525,15 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 reference.child("Buy_list").child(key).child("Voucher").setValue(voucher_editText.getText().toString());
                 reference.child("Buy_list").child(key).child("Paid").setValue(paid_editText.getText().toString());
 
-
                 reference.child("Buy_list").child(key).child("key_id").setValue(key);
                 reference.child("Buy_list").child(key).child("added_by").setValue(firebaseAuthUID);
+
+                reference.child("Item_history").child(itemKeyID).child(key).child("Item").setValue(itemKeyID);
+                reference.child("Item_history").child(itemKeyID).child(key).child("Customer_name").setValue(customerName);
+                reference.child("Item_history").child(itemKeyID).child(key).child("RBS").setValue("Buy");
+                reference.child("Item_history").child(itemKeyID).child(key).child("Timestamp").setValue(date.getTime());
+                reference.child("Item_history").child(itemKeyID).child(key).child("Date").setValue(date_textView.getText().toString());
+
                 pd.dismissProgressBar(Buy.this);
                 sendingdialog.show();
             }
@@ -516,6 +542,17 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             connected = false;
         }
 
+    }
+
+    private void historyActivity() {
+        itemDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Buy.this,Item_history.class);
+                intent.putExtra("ITEM_ID",itemKeyID);
+                startActivity(intent);
+            }
+        });
     }
 
 //    @Override

@@ -83,8 +83,8 @@
             </LinearLayout>
 
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/itemDetails"
+                android:visibility="gone"
                 android:layout_marginBottom="20dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
