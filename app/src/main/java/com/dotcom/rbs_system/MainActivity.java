@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.dotcom.rbs_system.Classes.Exchanged_itemdata;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -72,7 +73,10 @@ public class MainActivity extends AppCompatActivity {
                         closeDrawer();
                         return true;
                     case R.id.nav_logout:
-                        Toast.makeText(MainActivity.this, "My Cart",Toast.LENGTH_SHORT).show();break;
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intent1 = new Intent(MainActivity.this,SignInActivity.class);
+                        finish();
+                        startActivity(intent1);
                     default:
                         return true;
                 }
