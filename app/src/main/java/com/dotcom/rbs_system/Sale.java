@@ -7,6 +7,7 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -31,8 +32,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
@@ -49,7 +53,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     Button date_btn,exchange_btn,customer_add_btn,searchForCustomer_btn,item_add_btn,searchForItem_btn,submit_btn;
     Button exchangeItemRemove_btn,btn_done;
 
-    Progress_dialoge pd;
     Dialog sendingdialog;
     LinearLayout toggling_linear;
     Boolean item_btn,customer;
@@ -59,7 +62,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     TextView exchangeItemName_textView,exchangeItemCategory_textView,exchangeItemCondition_textView,exchangeItemAgreedPrice_textView,exchangeItemNotes_textView;
 
     String firebaseAuthUID;
-    String customerKeyID, itemKeyID;
+    String customerKeyID, itemKeyID,customerName,itemCategory,itemName;
 
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
     List<String> exisitngItemsCategoryList,existingItemsPriceList,existingItemsConditionsList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
@@ -69,6 +72,9 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     EditText sale_price_editText,quantity_editText,cash_editText,paid_editText;
 
+    Date date;
+
+    Progress_dialoge pd1,pd2,pd3;
 
     private ArrayList<SampleSearchModel> createItemsData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
@@ -100,14 +106,16 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         fetchingExisitingCustomers();
         fetchingExisitingItems();
         onClickListenes();
-        item_btn=false;
-        customer=false;
-
+        historyActivity();
     }
 
     private void initialize() {
+        item_btn=false;
+        customer=false;
 
-        pd = new Progress_dialoge();
+        pd1 = new Progress_dialoge();
+        pd2 = new Progress_dialoge();
+        pd3 = new Progress_dialoge();
 
         reference = FirebaseDatabase.getInstance().getReference();
 
@@ -164,7 +172,13 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
         sendingdialog = new Dialog(this);
         sendingdialog.setContentView(R.layout.dialoge_items);
-        //TODo
+        sendingdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                finish();
+            }
+        });
+
         gmail_btn = (ImageButton) sendingdialog.findViewById(R.id.gmail_btn);
         print_btn = (ImageButton) sendingdialog.findViewById(R.id.print_btn);
         sms_btn = (ImageButton) sendingdialog.findViewById(R.id.sms_btn);
@@ -200,6 +214,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             exchangeItemNotes_textView.setText(exchangeObj.getNotes());
 
             exchangeItemDetails.setVisibility(View.VISIBLE);
+            customerName = exchangeObj.getName();
+            customer=true;
         }
     }
 
@@ -207,15 +223,23 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         existingCustomersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                    exisitngCustomerList.add(String.valueOf(dataSnapshot1.child("Name").getValue()));
-                    exisitngCustomerIDList.add(String.valueOf(dataSnapshot1.child("ID").getValue()));
-                    existingCustomerPhnoList.add(String.valueOf(dataSnapshot1.child("Phone_no").getValue()));
-                    existingCustomerDobList.add(String.valueOf(dataSnapshot1.child("DOB").getValue()));
-                    existingCustomerAddressList.add(String.valueOf(dataSnapshot1.child("Address").getValue()));
-                    existingCustomerEmailList.add(String.valueOf(dataSnapshot1.child("Email").getValue()));
-                    exisitngCustomerKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
+                pd3.showProgressBar(Sale.this);
+                if (dataSnapshot.exists()){
+                    for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                        exisitngCustomerList.add(String.valueOf(dataSnapshot1.child("Name").getValue()));
+                        exisitngCustomerIDList.add(String.valueOf(dataSnapshot1.child("ID").getValue()));
+                        existingCustomerPhnoList.add(String.valueOf(dataSnapshot1.child("Phone_no").getValue()));
+                        existingCustomerDobList.add(String.valueOf(dataSnapshot1.child("DOB").getValue()));
+                        existingCustomerAddressList.add(String.valueOf(dataSnapshot1.child("Address").getValue()));
+                        existingCustomerEmailList.add(String.valueOf(dataSnapshot1.child("Email").getValue()));
+                        exisitngCustomerKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
+
+                        pd3.dismissProgressBar(Sale.this);
+                    }
+                }else {
+                    pd3.dismissProgressBar(Sale.this);
                 }
+
 
             }
 
@@ -231,20 +255,27 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         existingItemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                int i = 0;
-                for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                    for (DataSnapshot dataSnapshot2: dataSnapshot1.getChildren()){
-                        exisitngItemsList.add(String.valueOf(dataSnapshot2.child("Item_name").getValue()));
-                        exisitngItemsIDList.add(String.valueOf(dataSnapshot2.child("Item_id").getValue()));
-                        exisitngItemsCategoryList.add(String.valueOf(dataSnapshot2.child("Category").getValue()));
-                        existingItemsConditionsList.add(String.valueOf(dataSnapshot2.child("Condition").getValue()));
-                        existingItemsNotesList.add(String.valueOf(dataSnapshot2.child("Notes").getValue()));
-                        existingItemsPriceList.add(String.valueOf(dataSnapshot2.child("Price").getValue()));
-                        exisitngItemsKeyIDList.add(String.valueOf(dataSnapshot2.child("key_id").getValue()));
-                        i++;
+                pd2.showProgressBar(Sale.this);
+                if (dataSnapshot.exists()){
+                    int i = 0;
+                    for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                        for (DataSnapshot dataSnapshot2: dataSnapshot1.getChildren()){
+                            exisitngItemsList.add(String.valueOf(dataSnapshot2.child("Item_name").getValue()));
+                            exisitngItemsIDList.add(String.valueOf(dataSnapshot2.child("Item_id").getValue()));
+                            exisitngItemsCategoryList.add(String.valueOf(dataSnapshot2.child("Category").getValue()));
+                            existingItemsConditionsList.add(String.valueOf(dataSnapshot2.child("Condition").getValue()));
+                            existingItemsNotesList.add(String.valueOf(dataSnapshot2.child("Notes").getValue()));
+                            existingItemsPriceList.add(String.valueOf(dataSnapshot2.child("Price").getValue()));
+                            exisitngItemsKeyIDList.add(String.valueOf(dataSnapshot2.child("key_id").getValue()));
+                            i++;
+                        }
                     }
+                    pd2.dismissProgressBar(Sale.this);
+                }else {
+                    pd2.dismissProgressBar(Sale.this);
                 }
+
+
 
             }
 
@@ -269,6 +300,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                                                    SampleSearchModel item, int position) {
                                 searchForCustomer_btn.setText(item.getTitle());
                                 phno_textView.setText(item.getVal1());
+                                customerName = item.getName();
                                 dob_textView.setText(item.getVal2());
                                 address_textView.setText(item.getVal3());
                                 email_textView.setText(item.getVal4());
@@ -296,6 +328,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                             public void onSelected(BaseSearchDialogCompat dialog,
                                                    SampleSearchModel item, int position) {
                                 searchForItem_btn.setText(item.getTitle());
+                                itemCategory = item.getVal1();
+                                itemName = item.getName();
                                 category_textView.setText(item.getVal1());
                                 condition_textView.setText(item.getVal2());
                                 notes_textView.setText(item.getVal3());
@@ -387,7 +421,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 sendingdialog.dismiss();
                 finish();
             }
@@ -407,6 +440,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             public void onClick(View v) {
                 exchangeItemDetails.setVisibility(View.GONE);
                 exchangeObj.setExchangeCheck(false);
+                exchangeItemName_textView.setText("Item name");
+                exchangeObj.setExchangeFromBuyCheck(false);
             }
         });
 
@@ -449,7 +484,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     private void detailsSubmit() {
 
-        pd.showProgressBar(Sale.this);
+        pd1.showProgressBar(Sale.this);
 
         boolean connected = false;
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Sale.this.CONNECTIVITY_SERVICE);
@@ -469,15 +504,82 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
             reference.child("Sale_list").child(key).child("key_id").setValue(key);
             reference.child("Sale_list").child(key).child("added_by").setValue(firebaseAuthUID);
-            pd.dismissProgressBar(Sale.this);
+
+            reference.child("Item_history").child(itemKeyID).child(key).child("Item").setValue(itemKeyID);
+            reference.child("Item_history").child(itemKeyID).child(key).child("Customer_name").setValue(customerName);
+            reference.child("Item_history").child(itemKeyID).child(key).child("RBS").setValue("Sale");
+            reference.child("Item_history").child(itemKeyID).child(key).child("Timestamp").setValue(date.getTime());
+            reference.child("Item_history").child(itemKeyID).child(key).child("Date").setValue(date_textView.getText().toString());
+
+            reference.child("Customer_history").child(customerKeyID).child(key).child("Item_name").setValue(itemName);
+            reference.child("Customer_history").child(customerKeyID).child(key).child("Customer").setValue(customerKeyID);
+            reference.child("Customer_history").child(customerKeyID).child(key).child("RBS").setValue("Sale");
+            reference.child("Customer_history").child(customerKeyID).child(key).child("Timestamp").setValue(date.getTime());
+            reference.child("Customer_history").child(customerKeyID).child(key).child("Date").setValue(date_textView.getText().toString());
+
+            String check = exchangeItemName_textView.getText().toString();
+
+            if (!exchangeItemName_textView.getText().toString().equals("Item name")){
+                Toast.makeText(this, "called", Toast.LENGTH_SHORT).show();
+                    String key2 = reference.push().getKey();
+                    reference.child("Buy_list").child(key2).child("Customer_keyID").setValue(exchangeObj.getCustomer_keyID());
+                    reference.child("Buy_list").child(key2).child("Item_keyID").setValue(exchangeObj.getItem_keyID());
+
+                    reference.child("Buy_list").child(key2).child("Purchase_price").setValue(exchangeObj.getPurchase_price());
+                    reference.child("Buy_list").child(key2).child("Quantity").setValue(exchangeObj.getQuantity());
+                    reference.child("Buy_list").child(key2).child("Date").setValue(exchangeObj.getDate());
+                    reference.child("Buy_list").child(key2).child("Cash").setValue(exchangeObj.getCash());
+                    reference.child("Buy_list").child(key2).child("Voucher").setValue(exchangeObj.getVoucher());
+                    reference.child("Buy_list").child(key2).child("Paid").setValue(exchangeObj.getPaid());
+
+                    reference.child("Buy_list").child(key2).child("key_id").setValue(key2);
+                    reference.child("Buy_list").child(key2).child("added_by").setValue(firebaseAuthUID);
+
+                    reference.child("Item_history").child(exchangeObj.getItem_keyID()).child(key2).child("Item").setValue(exchangeObj.getItem_keyID());
+                    reference.child("Item_history").child(exchangeObj.getItem_keyID()).child(key2).child("Customer_name").setValue(customerName);
+                    reference.child("Item_history").child(exchangeObj.getItem_keyID()).child(key2).child("RBS").setValue("Buy");
+                    reference.child("Item_history").child(exchangeObj.getItem_keyID()).child(key2).child("Timestamp").setValue(exchangeObj.getTimestamp());
+                    reference.child("Item_history").child(exchangeObj.getItem_keyID()).child(key2).child("Date").setValue(exchangeObj.getDate());
+
+                    reference.child("Customer_history").child(customerKeyID).child(key2).child("Item_name").setValue(exchangeObj.getName());
+                    reference.child("Customer_history").child(customerKeyID).child(key2).child("Customer").setValue(customerKeyID);
+                    reference.child("Customer_history").child(customerKeyID).child(key2).child("RBS").setValue("Buy");
+                    reference.child("Customer_history").child(customerKeyID).child(key2).child("Timestamp").setValue(exchangeObj.getTimestamp());
+                    reference.child("Customer_history").child(customerKeyID).child(key2).child("Date").setValue(exchangeObj.getDate());
+
+            }
+
+            pd1.dismissProgressBar(Sale.this);
             sendingdialog.show();
 
         }
         else {
             Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
             connected = false;
+            pd1.dismissProgressBar(Sale.this);
         }
 
+    }
+
+    private void historyActivity() {
+        itemDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Sale.this,Item_history.class);
+                intent.putExtra("ITEM_ID",itemKeyID);
+                intent.putExtra("ITEM_CATEGORY",itemCategory);
+                startActivity(intent);
+            }
+        });
+
+        customerDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Sale.this,Customer_history.class);
+                intent.putExtra("CUSTOMER_ID",customerKeyID);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -487,6 +589,14 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         calendar.set(Calendar.MONTH,month);
         calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
         String currentDateString= DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            date = (Date)formatter.parse(dayOfMonth+"-"+month+"-"+year);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         date_textView.setText(currentDateString);
     }
 
@@ -505,5 +615,13 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         }else {
 
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchingExisitingCustomers();
+        fetchingExisitingItems();
+
     }
 }

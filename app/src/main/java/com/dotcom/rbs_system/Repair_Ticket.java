@@ -116,14 +116,18 @@ public class Repair_Ticket extends AppCompatActivity {
 
                     adapterRepairTicketListRecyclerView = new AdapterRepairTicketListRecyclerView(Repair_Ticket.this,customerNameList,itemNameList,ticketNoList);
                     repairTicketList_recyclerView.setAdapter(adapterRepairTicketListRecyclerView);
+                    pd.dismissProgressBar(Repair_Ticket.this);
+                }else {
+                    pd.dismissProgressBar(Repair_Ticket.this);
                 }
-                pd.dismissProgressBar(Repair_Ticket.this);
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 pd.dismissProgressBar(Repair_Ticket.this);
             }
+
         });
     }
 

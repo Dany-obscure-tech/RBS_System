@@ -81,6 +81,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     String firebaseAuthUID;
     String customerKeyID, itemKeyID;
     String customerName, itemName,customerID,itemID;
+    String itemCategory;
 
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
     List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
@@ -364,6 +365,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                                 itemID = item.getId();
                                 searchForItem_btn.setText(item.getTitle());
                                 category_textView.setText(item.getVal1());
+                                itemCategory = item.getVal1();
                                 condition_textView.setText(item.getVal2());
                                 notes_textView.setText(item.getVal3());
                                 itemKeyID = item.getVal5();
@@ -611,6 +613,27 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         });
     }
 
+    private void historyActivity() {
+        itemDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Repairs.this,Item_history.class);
+                intent.putExtra("ITEM_ID",itemKeyID);
+                intent.putExtra("ITEM_CATEGORY",itemCategory);
+                startActivity(intent);
+            }
+        });
+
+        customerDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Repairs.this,Customer_history.class);
+                intent.putExtra("CUSTOMER_ID",customerKeyID);
+                startActivity(intent);
+            }
+        });
+    }
+
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar calendar=Calendar.getInstance();
@@ -621,10 +644,12 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         date_textView.setText(currentDateString);
     }
 
-//    @Override
-//    protected void onRestart() {
-//        super.onRestart();
-//        recreate();
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchingExisitingCustomers();
+        fetchingExisitingItems();
+
+    }
 
 }

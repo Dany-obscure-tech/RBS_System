@@ -18,6 +18,7 @@ public class Exchanged_itemdata {
     String Purchase_price = "";
     String Quantity = "";
     String Date = "";
+    long Timestamp = 0L;
     String Cash = "";
     String Voucher = "";
     String Paid = "";
@@ -194,6 +195,14 @@ public class Exchanged_itemdata {
 
     public void setNotes(String notes) {
         Notes = notes;
+    }
+
+    public long getTimestamp() {
+        return Timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        Timestamp = timestamp;
     }
 
     public Boolean getExchangeFromBuyCheck() {

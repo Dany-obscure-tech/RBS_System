@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Item_history"></activity>
+        <activity android:name=".Customer_history"></activity>
+        <activity android:name=".Item_history" />
         <activity android:name=".Repair_details" />
         <activity android:name=".Repair_Ticket" />
         <activity

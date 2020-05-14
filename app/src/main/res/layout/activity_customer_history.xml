@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Item_history">
+    tools:context=".Customer_history">
 
     <RelativeLayout
         android:background="#0075B5"
@@ -29,12 +30,12 @@
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ITEM HISTORY"/>
+            android:text="CUSTOMER HISTORY"/>
 
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/itemDetails"
+        android:id="@+id/customerDetails"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_below="@+id/header"
@@ -44,7 +45,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="Item Details"
+            android:text="Customer Details"
             android:textColor="@color/colorPrimaryDark"
             android:fontFamily="@font/segoe_ui_bold"
             android:textSize="20sp"
@@ -58,14 +59,14 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="Item"
+                android:text="Customer"
                 android:fontFamily="@font/segoe_ui_bold"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/itemName_textView"
-                android:text="Item name"
+                android:id="@+id/customerName_textView"
+                android:text="Customer name"
                 android:textColor="@color/colorPrimaryDark"
                 android:fontFamily="@font/segoe_ui_bold"
                 android:layout_width="wrap_content"
@@ -80,13 +81,13 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="Serial no / IMEI"
+                android:text="Cstomer ID"
                 android:fontFamily="@font/segoe_ui_bold"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/serialNo_textView"
+                android:id="@+id/customerID_textView"
                 android:layout_gravity="center"
                 android:text="---"
                 android:textColor="@color/colorPrimaryDark"
@@ -103,14 +104,14 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="Category"
+                android:text="Ph no"
                 android:fontFamily="@font/segoe_ui_bold"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/category_textView"
-                android:text="Category"
+                android:id="@+id/phno_textView"
+                android:text="-----"
                 android:textColor="@color/colorPrimaryDark"
                 android:fontFamily="@font/segoe_ui_bold"
                 android:layout_width="wrap_content"
@@ -125,13 +126,13 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="Condition"
+                android:text="Address"
                 android:fontFamily="@font/segoe_ui_bold"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/condition_textView"
+                android:id="@+id/address_textView"
                 android:text="0"
                 android:textColor="@color/colorPrimaryDark"
                 android:fontFamily="@font/segoe_ui_bold"
@@ -146,16 +147,16 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="Notes"
+                android:text="Email"
                 android:fontFamily="@font/segoe_ui_bold"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/notes_textView"
-                android:text="asoidhjas das;djasdd asd;ojkasd a;sdljasd as;sdkjasd  as;djas dpo;oajssdd  asd;pjasd  as;lkdkjjasd ;ojasd"
+                android:id="@+id/email_textView"
+                android:text="email"
                 android:textColor="@color/colorPrimaryDark"
-                android:fontFamily="@font/segoe_ui"
+                android:fontFamily="@font/segoe_ui_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -164,8 +165,8 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/itemDetailsToggle_textView"
-        android:layout_below="@+id/itemDetails"
+        android:id="@+id/customerDetailsToggle_textView"
+        android:layout_below="@+id/customerDetails"
         android:layout_marginRight="8dp"
         android:layout_alignParentRight="true"
         android:text="Hide details"
@@ -182,13 +183,12 @@
         android:layout_height="wrap_content"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:id="@+id/itemHistoryRecyclerView"
-        android:layout_below="@+id/itemDetailsToggle_textView"
+        android:id="@+id/customerHistoryRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"/>
-
-
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/customerDetailsToggle_textView"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginRight="8dp" />
 
 </RelativeLayout>
