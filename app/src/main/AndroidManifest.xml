@@ -9,8 +9,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -19,10 +17,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Customer_history"></activity>
-        <activity android:name=".Item_history" />
-        <activity android:name=".Repair_details" />
-        <activity android:name=".Repair_Ticket" />
+        <activity
+            android:name=".Customer_history"
+            android:theme="@style/AppTheme.no"/>
+        <activity
+            android:name=".Item_history"
+            android:theme="@style/AppTheme.no"/>
+        <activity
+            android:name=".Repair_details"
+            android:theme="@style/AppTheme.no" />
+        <activity
+            android:name=".Repair_Ticket"
+            android:theme="@style/AppTheme.no" />
         <activity
             android:name=".Settings"
             android:theme="@style/AppTheme.no" />

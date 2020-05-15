@@ -53,9 +53,10 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
     ImageButton purchasePrint_btn,purchaseEmail_btn,purchaseSms_btn;
     ImageButton stockCheckPrint_btn,stockCheckEmail_btn,stockCheckSms_btn;
     ImageButton gmail_btn,sms_btn,print_btn;
+
     //switch of sending dialog
     int switch_container=0;
-
+    int switch_container_second=0;
     //switch of sending dialog
 
 
@@ -623,6 +624,9 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
             @Override
             public void onClick(View v) {
                 switch_container=4;
+                switch_container_second=1;
+                sendingdialog.show();
+
             }
         });
 
@@ -630,6 +634,7 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
             @Override
             public void onClick(View v) {
                 switch_container=4;
+                switch_container_second=2;
             }
         });
 
@@ -637,6 +642,7 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
             @Override
             public void onClick(View v) {
                 switch_container=4;
+                switch_container_second=3;
             }
         });
 

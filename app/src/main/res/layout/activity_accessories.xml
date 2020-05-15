@@ -622,7 +622,7 @@
 
             <LinearLayout
                 android:id="@+id/stock_check_Layout"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">

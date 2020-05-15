@@ -106,12 +106,14 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
         onClickListeners();
 
-
         historyActivity();
 
     }
 
     private void initialize() {
+
+
+
         item_btn=false;
         customer=false;
 
@@ -184,6 +186,19 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         print_btn = (ImageButton) sendingdialog.findViewById(R.id.print_btn);
         sms_btn = (ImageButton) sendingdialog.findViewById(R.id.sms_btn);
         btn_done = (Button) sendingdialog.findViewById(R.id.btn_done);
+
+        date=Calendar.getInstance().getTime();
+        String currentDateString= DateFormat.getDateInstance(DateFormat.FULL).format(date);
+        date_textView.setText(currentDateString);
+
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            date = (Date)formatter.parse(date.getDay()+"-"+date.getMonth()+"-"+date.getYear());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
 
 
     }

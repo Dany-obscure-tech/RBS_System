@@ -19,7 +19,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.itextpdf.text.pdf.parser.Line;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
