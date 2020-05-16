@@ -37,8 +37,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -59,6 +62,7 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
     int switch_container_second=0;
     //switch of sending dialog
 
+    Date date;
 
     Button btn_done;
     Button category_search_btn_submit_btn,select_Invoice_no_btn_submit_btn,select_company_name_btn_submit_btn;
@@ -327,6 +331,18 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
         purchaseDate_textView = (TextView) findViewById(R.id.purchaseDate_textView);
 
         date_btn = (Button) findViewById(R.id.date_btn);
+
+        date=Calendar.getInstance().getTime();
+        String currentDateString= DateFormat.getDateInstance(DateFormat.FULL).format(date);
+        purchaseDate_textView.setText(currentDateString);
+
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            date = (Date)formatter.parse(date.getDay()+"-"+date.getMonth()+"-"+date.getYear());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

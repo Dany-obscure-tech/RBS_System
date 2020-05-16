@@ -193,6 +193,18 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         existingCustomersRef = FirebaseDatabase.getInstance().getReference("Customer_list");
         existingItemsRef = FirebaseDatabase.getInstance().getReference("Items");
         ///////
+
+        date=Calendar.getInstance().getTime();
+        String currentDateString= DateFormat.getDateInstance(DateFormat.FULL).format(date);
+        date_textView.setText(currentDateString);
+
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            date = (Date)formatter.parse(date.getDay()+"-"+date.getMonth()+"-"+date.getYear());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void exchangeFromBuyCheck() {
