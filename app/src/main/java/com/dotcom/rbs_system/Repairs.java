@@ -1,7 +1,6 @@
 package com.dotcom.rbs_system;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -18,7 +16,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -29,7 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterRepairsFaultListRecyclerView;
-import com.dotcom.rbs_system.Adapter.AdapterSettingsFaultListRecyclerView;
+import com.dotcom.rbs_system.Classes.Repair_details_edit;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -38,10 +35,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.net.InetAddress;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
@@ -49,12 +48,15 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+    long timestamp;
+
+    Repair_details_edit repair_details_edit_obj;
 
     DatabaseReference existingCustomersRef,existingItemsRef;
     DatabaseReference reference;
     DatabaseReference faultListRef;
 
-    Progress_dialoge pd;
+    Progress_dialoge pd1,pd2,pd3,pd4;
     Dialog sendingdialog;
 
 
@@ -64,14 +66,15 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     ImageButton Back_btn;
     Button addFaults_btn;
     Button btn_done;
-    Button date_btn,customer_add_btn,searchForCustomer_btn,submit_btn,searchForItem_btn,item_add_btn;
+    Button date_btn,customer_add_btn,submit_btn,item_add_btn;
 
     TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView;
     TextView date_text,balanceAmount_TextView;
     TextView date_textView;
+    TextView ticketNo_TextView;
+    TextView searchForItem_textView,searchForCustomer_textView;
 
     EditText agreed_price_editText,paidAmount_editText,special_condition_editText;
-    EditText ticket_number_editText;
 
     RecyclerView faultList_recyclerView;
     AdapterRepairsFaultListRecyclerView adapterRepairsFaultListRecyclerView;
@@ -82,11 +85,14 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     String customerKeyID, itemKeyID;
     String customerName, itemName,customerID,itemID;
     String itemCategory;
+    String key;
 
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
     List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
     List<String> faultNameList, faultPriceList, faultKeyIDList;
     List<String> tempFaultNameList, tempFaultPriceList, tempFaultKeyIDList;
+
+    Date date;
 
     private ArrayList<SampleSearchModel> createItemsData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
@@ -128,6 +134,8 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         fetchingExisitingCustomers();
         fetchingExisitingItems();
         onClickListeners();
+        historyActivity();
+        editCheckAndProcess();
         item_btn=false;
         customer=false;
 
@@ -135,10 +143,16 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     }
 
 
-
     private void initialize() {
+        repair_details_edit_obj = Repair_details_edit.getInstance();
 
-        pd = new Progress_dialoge();
+        reference = FirebaseDatabase.getInstance().getReference();
+        key = reference.push().getKey().toString();
+
+        pd1 = new Progress_dialoge();
+        pd2 = new Progress_dialoge();
+        pd3 = new Progress_dialoge();
+        pd4 = new Progress_dialoge();
         sendingdialog = new Dialog(this);
         sendingdialog.setContentView(R.layout.dialoge_items);
         sendingdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -177,9 +191,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         agreed_price_editText = (EditText)findViewById(R.id.agreed_price_editText);
         paidAmount_editText = (EditText)findViewById(R.id.paidAmount_editText);
         special_condition_editText = (EditText)findViewById(R.id.special_condition_editText);
-        ticket_number_editText = (EditText)findViewById(R.id.ticket_number_editText);
 
-        reference = FirebaseDatabase.getInstance().getReference();
 
         itemDetails = (LinearLayout)findViewById(R.id.itemDetails);
         customerDetails = (LinearLayout)findViewById(R.id.customerDetails);
@@ -204,12 +216,12 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         date_btn=(Button)findViewById(R.id.date_btn);
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
         date_text=(TextView)findViewById(R.id.date_of_birth_text);
-
         customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
-        searchForCustomer_btn = (Button)findViewById(R.id.searchForCustomer_btn);
         item_add_btn =(Button) findViewById(R.id.item_add_btn);
 
 
+        searchForCustomer_textView = (TextView) findViewById(R.id.searchForCustomer_textView);
+        searchForItem_textView = (TextView)findViewById(R.id.searchForItem_textView);
         category_textView=(TextView)findViewById(R.id.category_textView);
         condition_textView=(TextView)findViewById(R.id.condition_textView);
         notes_textView=(TextView)findViewById(R.id.notes_textView);
@@ -217,15 +229,37 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         dob_textView=(TextView)findViewById(R.id.dob_textView);
         address_textView=(TextView)findViewById(R.id.address_textView);
         email_textView=(TextView)findViewById(R.id.email_textView);
+        ticketNo_TextView = (TextView)findViewById(R.id.ticketNo_TextView);
+        ticketNo_TextView.setText(key);
 
         /////Firebase config
         firebaseAuthUID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
         existingCustomersRef = FirebaseDatabase.getInstance().getReference("Customer_list");
         existingItemsRef = FirebaseDatabase.getInstance().getReference("Items");
-        searchForItem_btn = (Button)findViewById(R.id.searchForItem_btn);
+
+        date=Calendar.getInstance().getTime();
+        String currentDateString= DateFormat.getDateInstance(DateFormat.FULL).format(date);
+        date_textView.setText(currentDateString);
+
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            date = (Date)formatter.parse(Calendar.getInstance().get(Calendar.DATE)+"-"+Calendar.getInstance().get(Calendar.MONTH)+"-"+Calendar.getInstance().get(Calendar.YEAR));
+            timestamp = date.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void fetchingExisitingCustomers() {
+        pd2.showProgressBar(Repairs.this);
+        exisitngCustomerList.clear();
+        exisitngCustomerIDList.clear();
+        existingCustomerPhnoList.clear();
+        existingCustomerDobList.clear();
+        existingCustomerAddressList.clear();
+        existingCustomerEmailList.clear();
+        exisitngCustomerKeyIDList.clear();
 
         existingCustomersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -241,18 +275,27 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                     exisitngCustomerKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
                 }
 
+                pd2.dismissProgressBar(Repairs.this);
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-//                pd.dismissProgressBar(Repairs.this);
+                pd2.dismissProgressBar(Repairs.this);
             }
         });
 
     }
 
     private void fetchingExisitingItems() {
+        pd3.showProgressBar(Repairs.this);
+
+        exisitngItemsList.clear();
+        exisitngItemsIDList.clear();
+        exisitngItemsCategoryList.clear();
+        existingItemsConditionsList.clear();
+        existingItemsNotesList.clear();
+        exisitngItemsKeyIDList.clear();
 
         existingItemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -268,19 +311,21 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                         exisitngItemsKeyIDList.add(String.valueOf(dataSnapshot2.child("key_id").getValue()));
                     }
                 }
+                pd3.dismissProgressBar(Repairs.this);
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-//                pd.dismissProgressBar(Repairs.this);
+                pd3.dismissProgressBar(Repairs.this);
             }
         });
 
     }
 
     private void getFaultsList() {
+        pd4.showProgressBar(Repairs.this);
         faultListRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -290,12 +335,12 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                     faultKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
 
                 }
+                pd4.dismissProgressBar(Repairs.this);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-//                pd.dismissProgressBar(Repairs.this);
-
+                pd4.dismissProgressBar(Repairs.this);
             }
         });
     }
@@ -322,7 +367,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             }
         });
 
-        searchForCustomer_btn.setOnClickListener(new View.OnClickListener() {
+        searchForCustomer_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new SimpleSearchDialogCompat(Repairs.this, "Search...",
@@ -333,14 +378,14 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                                                    SampleSearchModel item, int position) {
                                 customerName = item.getName();
                                 customerID = item.getId();
-                                searchForCustomer_btn.setText(item.getTitle());
+                                searchForCustomer_textView.setText(item.getTitle());
                                 phno_textView.setText(item.getVal1());
                                 dob_textView.setText(item.getVal2());
                                 address_textView.setText(item.getVal3());
                                 email_textView.setText(item.getVal4());
                                 customerKeyID = item.getVal5();
-                                searchForCustomer_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
-                                searchForCustomer_btn.setTextColor(getResources().getColor(R.color.textGrey));
+                                searchForCustomer_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+                                searchForCustomer_textView.setTextColor(getResources().getColor(R.color.textGrey));
                                 customerDetails.setVisibility(View.VISIBLE);
                                 customer=true;
                                 if (item_btn==true&&customer==true){
@@ -352,7 +397,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             }
         });
 
-        searchForItem_btn.setOnClickListener(new View.OnClickListener() {
+        searchForItem_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new SimpleSearchDialogCompat(Repairs.this, "Search...",
@@ -363,14 +408,14 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                                                    final SampleSearchModel item, int position) {
                                 itemName = item.getName();
                                 itemID = item.getId();
-                                searchForItem_btn.setText(item.getTitle());
+                                searchForItem_textView.setText(item.getTitle());
                                 category_textView.setText(item.getVal1());
                                 itemCategory = item.getVal1();
                                 condition_textView.setText(item.getVal2());
                                 notes_textView.setText(item.getVal3());
                                 itemKeyID = item.getVal5();
-                                searchForItem_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
-                                searchForItem_btn.setTextColor(getResources().getColor(R.color.textGrey));
+                                searchForItem_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+                                searchForItem_textView.setTextColor(getResources().getColor(R.color.textGrey));
                                 itemDetails.setVisibility(View.VISIBLE);
                                 item_btn=true;
                                 if (item_btn==true&&customer==true){
@@ -461,11 +506,11 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     private boolean validateFields() {
         boolean valid = true;
 
-        if (searchForItem_btn.getText().toString().equals("Search for item")) {
+        if (searchForItem_textView.getText().toString().equals("Search for item")) {
             Toast.makeText(this, "Please select item", Toast.LENGTH_LONG).show();
             valid = false;
         }
-        if (searchForCustomer_btn.getText().toString().equals("Search for customer")) {
+        if (searchForCustomer_textView.getText().toString().equals("Search for customer")) {
             Toast.makeText(this, "Please select customer", Toast.LENGTH_LONG).show();
             valid = false;
         }
@@ -485,10 +530,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             special_condition_editText.setError("Please enter special condition");
             valid = false;
         }
-        if (ticket_number_editText.getText().toString().isEmpty()) {
-            ticket_number_editText.setError("Please enter ticket number");
-            valid = false;
-        }
+
         if (tempFaultNameList.size()==0){
             Toast.makeText(this, "Please enter faults", Toast.LENGTH_SHORT).show();
             valid = false;
@@ -498,7 +540,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     }
 
     private void detailsSubmit() {
-        pd.showProgressBar(Repairs.this);
+        pd1.showProgressBar(Repairs.this);
 
         boolean connected = false;
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Repairs.CONNECTIVITY_SERVICE);
@@ -506,7 +548,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
             //we are connected to a network
             connected = true;
-            String key = reference.push().getKey();
+
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Customer_keyID").setValue(customerKeyID);
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Item_keyID").setValue(itemKeyID);
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Customer_name").setValue(customerName);
@@ -514,12 +556,13 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Customer_id").setValue(customerID);
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Item_id").setValue(itemID);
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Item_category").setValue(category_textView.getText().toString());
-            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Ticket_no").setValue(ticket_number_editText.getText().toString());
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Ticket_no").setValue(ticketNo_TextView.getText().toString());
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Agreed_price").setValue(agreed_price_editText.getText().toString());
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Date").setValue(date_textView.getText().toString());
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Paid_amount").setValue(paidAmount_editText.getText().toString());
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Balance_amount").setValue(balanceAmount_TextView.getText().toString());
-            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Special_conditiomn").setValue(special_condition_editText.getText().toString());
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Special_condition").setValue(special_condition_editText.getText().toString());
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Timestamp").setValue(timestamp);
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("key_id").setValue(key);
 
             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Customer_keyID").setValue(customerKeyID);
@@ -527,23 +570,37 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Customer_name").setValue(customerName);
             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Item_name").setValue(itemName);
             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Repair_key_id").setValue(key);
-            reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Ticket_no").setValue(ticket_number_editText.getText().toString());
+            reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Ticket_no").setValue(ticketNo_TextView.getText().toString());
 
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Faults").removeValue();
             for (int i = 0;i<tempFaultNameList.size();i++){
                 reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_name").setValue(tempFaultNameList.get(i));
                 reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_price").setValue(tempFaultPriceList.get(i));
                 reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Faults").child("Fault_"+String.valueOf(i+1)).child("Fault_key").setValue(tempFaultKeyIDList.get(i));
             }
-            //TODO
+
+            reference.child("Item_history").child(itemKeyID).child(key).child("Item").setValue(itemKeyID);
+            reference.child("Item_history").child(itemKeyID).child(key).child("Customer_name").setValue(customerName);
+            reference.child("Item_history").child(itemKeyID).child(key).child("RBS").setValue("Repair");
+            reference.child("Item_history").child(itemKeyID).child(key).child("Timestamp").setValue(timestamp);
+            reference.child("Item_history").child(itemKeyID).child(key).child("Date").setValue(date_textView.getText().toString());
+
+            reference.child("Customer_history").child(customerKeyID).child(key).child("Item_name").setValue(itemName);
+            reference.child("Customer_history").child(customerKeyID).child(key).child("Customer").setValue(customerKeyID);
+            reference.child("Customer_history").child(customerKeyID).child(key).child("RBS").setValue("Repair");
+            reference.child("Customer_history").child(customerKeyID).child(key).child("Timestamp").setValue(timestamp);
+            reference.child("Customer_history").child(customerKeyID).child(key).child("Date").setValue(date_textView.getText().toString());
+
 
             Toast.makeText(this, "Submit Successfully", Toast.LENGTH_SHORT).show();
-            pd.dismissProgressBar(Repairs.this);
+            pd1.dismissProgressBar(Repairs.this);
             sendingdialog.show();
 
         }
-        else
-        {Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
+        else {
+            Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
             connected = false;
+            pd1.dismissProgressBar(Repairs.this);
          }
 
     }
@@ -613,6 +670,61 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         });
     }
 
+    private void editCheckAndProcess() {
+        if (getIntent().getBooleanExtra("EDIT_CHECK",false)){
+            itemKeyID = repair_details_edit_obj.getItemKeyID();
+            itemCategory=repair_details_edit_obj.getCategory_textView();
+
+            searchForItem_textView.setText(repair_details_edit_obj.getItemName_textView()+"\n("+repair_details_edit_obj.getSerialNo_textView()+")");
+            searchForItem_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+            searchForItem_textView.setTextColor(getResources().getColor(R.color.textGrey));
+
+            itemName = repair_details_edit_obj.getItemName_textView();
+            itemID = repair_details_edit_obj.getSerialNo_textView();
+            category_textView.setText(repair_details_edit_obj.getCategory_textView());
+            condition_textView.setText(repair_details_edit_obj.getCondition_textView());
+            notes_textView.setText(repair_details_edit_obj.getNotes_textView());
+            itemDetails.setVisibility(View.VISIBLE);
+
+
+            customerKeyID=repair_details_edit_obj.getCustomerKeyID();
+
+            searchForCustomer_textView.setText(repair_details_edit_obj.getCustomerName_textView()+"\n("+repair_details_edit_obj.getId_textView()+")");
+            searchForCustomer_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+            searchForCustomer_textView.setTextColor(getResources().getColor(R.color.textGrey));
+
+            customerName = repair_details_edit_obj.getCustomerName_textView();
+            customerID = repair_details_edit_obj.getId_textView();
+            phno_textView.setText(repair_details_edit_obj.getPhno_textView());
+            dob_textView.setText(repair_details_edit_obj.getDob_textView());
+            address_textView.setText(repair_details_edit_obj.getAddress_textView());
+            email_textView.setText(repair_details_edit_obj.getEmail_textView());
+            customerDetails.setVisibility(View.VISIBLE);
+
+            key = repair_details_edit_obj.getTicketNo_TextView();
+            ticketNo_TextView.setText(repair_details_edit_obj.getTicketNo_TextView());
+            agreed_price_editText.setText(repair_details_edit_obj.getAgreedPrice_TextView());
+            date_textView.setText(repair_details_edit_obj.getDate_TextView());
+            paidAmount_editText.setText(repair_details_edit_obj.getPaidAmount_TextView());
+            balanceAmount_TextView.setText(repair_details_edit_obj.getBalanceAmount_TextView());
+            special_condition_editText.setText(repair_details_edit_obj.getSpecialConditions_TextView());
+
+            tempFaultNameList = repair_details_edit_obj.getFaultNameList();
+            tempFaultPriceList = repair_details_edit_obj.getFaultPriceList();
+            tempFaultKeyIDList = repair_details_edit_obj.getFaultKeyIDList();
+
+
+            adapterRepairsFaultListRecyclerView = new AdapterRepairsFaultListRecyclerView(this,tempFaultNameList,tempFaultPriceList,tempFaultKeyIDList);
+            faultList_recyclerView.setAdapter(adapterRepairsFaultListRecyclerView);
+
+            timestamp = repair_details_edit_obj.getTimestamp();
+
+
+            toggling_linear.setVisibility(View.VISIBLE);
+
+        }
+    }
+
     private void historyActivity() {
         itemDetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -641,15 +753,22 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         calendar.set(Calendar.MONTH,month);
         calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
         String currentDateString= DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            date = (Date)formatter.parse(dayOfMonth+"-"+month+"-"+year);
+            timestamp = date.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         date_textView.setText(currentDateString);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onRestart() {
+        super.onRestart();
         fetchingExisitingCustomers();
         fetchingExisitingItems();
-
     }
-
 }

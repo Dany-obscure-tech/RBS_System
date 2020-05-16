@@ -174,6 +174,7 @@ public class Repair_Ticket extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Repair_Ticket.this,Repairs.class);
+                intent.putExtra("EDIT_CHECK",false);
                 startActivity(intent);
             }
         });

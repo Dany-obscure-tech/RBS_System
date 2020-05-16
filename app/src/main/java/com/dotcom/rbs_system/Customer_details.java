@@ -111,6 +111,8 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
 
 
         idStorageReference = storageReference.child("Customer_IDs");
+
+
     }
 
     private void onClickListeners() {
@@ -134,9 +136,9 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             @Override
             public void onClick(View v) {
               Calendar calendar=Calendar.getInstance();
-              int year= calendar.get(Calendar.YEAR);
-              int month= calendar.get(Calendar.MONTH);
-              int day= calendar.get(Calendar.DAY_OF_MONTH);
+              int year= (calendar.get(Calendar.YEAR))-18;
+              int month= 1;
+              int day= 1;
               DatePickerDialog dialog= new DatePickerDialog(
                       Customer_details.this,
                       android.R.style.Theme_Holo_Light_Dialog_MinWidth,

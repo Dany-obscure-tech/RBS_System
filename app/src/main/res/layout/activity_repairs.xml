@@ -47,24 +47,27 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/searchForItem_btn"
+                <TextView
+                    android:id="@+id/searchForItem_textView"
                     android:layout_weight="1"
-                    android:maxLines="2"
+                    android:gravity="center"
                     android:textColor="#0075B5"
                     android:background="@drawable/main_button"
                     android:fontFamily="@font/segoe_ui"
                     android:textSize="15sp"
-                    android:text="Search for item"
+                    android:padding="13dp"
+                    android:text="SEARCH FOR ITEM"
                     android:layout_width="match_parent"
-                    android:layout_height="fill_parent"/>
+                    android:layout_height="wrap_content"/>
 
                 <Button
                     android:id="@+id/item_add_btn"
@@ -76,7 +79,7 @@
                     android:textSize="15sp"
                     android:text="Add"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="fill_parent"/>
 
             </LinearLayout>
 
@@ -158,20 +161,24 @@
 
             <LinearLayout
                 android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/searchForCustomer_btn"
+                <TextView
+                    android:id="@+id/searchForCustomer_textView"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:textColor="#0075B5"
                     android:background="@drawable/main_button"
                     android:fontFamily="@font/segoe_ui"
                     android:textSize="15sp"
-                    android:text="Search for customer"
+                    android:padding="13dp"
+                    android:text="SEARCH FOR CUSTOMER"
                     android:layout_width="match_parent"
-                    android:layout_height="fill_parent"/>
+                    android:layout_height="wrap_content"/>
 
                 <Button
                     android:id="@+id/customer_add_btn"
@@ -183,7 +190,7 @@
                     android:textSize="15sp"
                     android:text="Add"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="fill_parent"/>
 
             </LinearLayout>
 
@@ -287,7 +294,7 @@
 
             <LinearLayout
                 android:id="@+id/toggling_linear"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -300,20 +307,17 @@
                 android:text="Ticket Number"
                 android:textSize="16sp" />
 
-            <EditText
-                android:id="@+id/ticket_number_editText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#6E76E3"
-                android:fontFamily="@font/segoe_ui"
-                android:hint="Enter ticket number"
-                android:maxLength="32"
-                android:textColor="#9F9F9F"
-                android:textColorHint="#9F9F9F"
-                android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/ticketNo_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:text="NA"
+                    android:textSize="20sp" />
 
             <TextView
-                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -351,7 +355,6 @@
 
 
             <TextView
-                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -387,7 +390,6 @@
 
                 <TextView
                     android:id="@+id/date_textView"
-                    android:inputType="date"
                     android:layout_weight="1.9"
                     android:textColor="#9F9F9F"
                     android:fontFamily="@font/segoe_ui"
@@ -410,7 +412,6 @@
             </LinearLayout>
 
             <TextView
-                android:inputType="number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -465,7 +466,6 @@
                 android:backgroundTint="#6E76E3"
                 android:fontFamily="@font/segoe_ui"
                 android:hint="Enter special conditions"
-                android:maxLength="32"
                 android:textColor="#9F9F9F"
                 android:textColorHint="#9F9F9F"
                 android:textSize="16sp" />

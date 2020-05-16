@@ -2,10 +2,12 @@ package com.dotcom.rbs_system.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.R;
+import com.dotcom.rbs_system.Repair_Ticket;
+import com.dotcom.rbs_system.Repair_details;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -48,6 +52,15 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
         holder.itemName_textView.setText(itemNameList.get(position));
         holder.ticketNo_textView.setText(ticketNoList.get(position));
 
+        holder.leftLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, Repair_details.class);
+                intent.putExtra("REPAIR_ID",ticketNoList.get(position));
+                context.startActivity(intent);
+            }
+        });
+
 
     }
 
@@ -59,6 +72,7 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView ticketNo_textView,customerName_textView,itemName_textView;
+        LinearLayout leftLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +80,8 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
             ticketNo_textView = (TextView)itemView.findViewById(R.id.ticketNo_textView);
             customerName_textView = (TextView)itemView.findViewById(R.id.customerName_textView);
             itemName_textView = (TextView)itemView.findViewById(R.id.itemName_textView);
+
+            leftLayout = (LinearLayout) itemView.findViewById(R.id.leftLayout);
 
         }
     }
