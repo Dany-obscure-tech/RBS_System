@@ -63,6 +63,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     String firebaseAuthUID;
     String customerKeyID, itemKeyID,customerName,itemCategory,itemName;
+    String voucherNo;
 
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
     List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsPriceList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
@@ -130,6 +131,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         });
 
         reference = FirebaseDatabase.getInstance().getReference();
+        voucherNo = reference.push().getKey();
 
         itemDetails = (LinearLayout)findViewById(R.id.itemDetails);
         customerDetails = (LinearLayout)findViewById(R.id.customerDetails);
@@ -548,6 +550,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                     connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
                 //we are connected to a network
                 connected = true;
+
                 String key = reference.push().getKey();
                 reference.child("Buy_list").child(key).child("Customer_keyID").setValue(customerKeyID);
                 reference.child("Buy_list").child(key).child("Item_keyID").setValue(itemKeyID);
@@ -555,6 +558,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 reference.child("Buy_list").child(key).child("Purchase_price").setValue(purchase_price_editText.getText().toString());
                 reference.child("Buy_list").child(key).child("Date").setValue(date_textView.getText().toString());
                 reference.child("Buy_list").child(key).child("Cash").setValue(cash_editText.getText().toString());
+
+                //todo ////////////////////////////
                 reference.child("Buy_list").child(key).child("Voucher").setValue(voucher_editText.getText().toString());
                 reference.child("Buy_list").child(key).child("Paid").setValue(paid_editText.getText().toString());
 
