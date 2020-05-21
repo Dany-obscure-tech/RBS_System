@@ -25,11 +25,11 @@ import java.util.List;
 
 public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<AdapterRepairTicketListRecyclerView.ViewHolder> {
     Context context;
-    List<String> customerNameList, itemNameList, ticketNoList;
+    List<String> customerNameList, itemNameList, ticketNoList,pendingStatusList;
     Activity activity;
     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Listed_faults");
 
-    public AdapterRepairTicketListRecyclerView(Context context, List<String> customerNameList, List<String> itemNameList, List<String> ticketNoList) {
+    public AdapterRepairTicketListRecyclerView(Context context, List<String> customerNameList, List<String> itemNameList, List<String> ticketNoList,List<String> pendingStatusList) {
         this.context = context;
         this.customerNameList = customerNameList;
         Collections.reverse(this.customerNameList);
@@ -37,6 +37,8 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
         Collections.reverse(this.itemNameList);
         this.ticketNoList = ticketNoList;
         Collections.reverse(this.ticketNoList);
+        this.pendingStatusList = pendingStatusList;
+        Collections.reverse(this.pendingStatusList);
         activity = (Activity)context;
     }
 
@@ -50,7 +52,16 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
     public void onBindViewHolder(@NonNull AdapterRepairTicketListRecyclerView.ViewHolder holder, final int position) {
         holder.customerName_textView.setText(customerNameList.get(position));
         holder.itemName_textView.setText(itemNameList.get(position));
-        holder.ticketNo_textView.setText(ticketNoList.get(position));
+        if (pendingStatusList!=null){
+            if (pendingStatusList.get(position).equals("pending")){
+                holder.ticketNo_textView.setText(ticketNoList.get(position)+"\n(Pending)");
+            }else {
+                holder.ticketNo_textView.setText(ticketNoList.get(position));
+            }
+        }else {
+            holder.ticketNo_textView.setText(ticketNoList.get(position));
+        }
+
 
         holder.leftLayout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -28,10 +28,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -56,9 +54,10 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     DatabaseReference existingCustomersRef,existingItemsRef;
 
     ImageButton Back_btn,sms_btn,gmail_btn,print_btn;
-    Button date_btn,customer_add_btn,searchForCustomer_btn, item_add_btn,searchForItem_btn,submit_btn;
+    Button date_btn,customer_add_btn,item_add_btn,submit_btn;
     Button exchange_btn, btn_done;
 
+    TextView searchForItem_textView,searchForCustomer_textView;
     TextView date_textView,forExchange_textView;
     TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView,suggest_price_TextView;
 
@@ -71,7 +70,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     LinearLayout itemDetails,customerDetails;
 
 
-    EditText purchase_price_editText,quantity_editText,cash_editText,voucher_editText,paid_editText;
+    EditText purchase_price_editText,cash_editText,voucher_editText,paid_editText;
     Dialog sendingdialog;
 
     Date date;
@@ -163,13 +162,12 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
         suggest_price_TextView = (TextView) findViewById(R.id.suggest_price_TextView);
         purchase_price_editText = (EditText)findViewById(R.id.purchase_price_editText);
-        quantity_editText = (EditText)findViewById(R.id.quantity_editText);
         cash_editText = (EditText)findViewById(R.id.cash_editText);
         voucher_editText = (EditText)findViewById(R.id.voucher_editText);
         paid_editText = (EditText)findViewById(R.id.paid_editText);
 
-        searchForCustomer_btn = (Button)findViewById(R.id.searchForCustomer_btn);
-        searchForItem_btn = (Button)findViewById(R.id.searchForItem_btn);
+        searchForCustomer_textView = (TextView) findViewById(R.id.searchForCustomer_textView);
+        searchForItem_textView = (TextView) findViewById(R.id.searchForItem_textView);
         submit_btn = (Button)findViewById(R.id.submit_btn);
         toggling_linear = (LinearLayout)findViewById(R.id.toggling_linear);
 
@@ -205,14 +203,14 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     private void exchangeCustomerCheck() {
         if (!exchanged_itemdata.getCustomerButtonText().equals("Search for customer")&&!exchanged_itemdata.getCustomerButtonText().isEmpty()) {
-            searchForCustomer_btn.setText(exchanged_itemdata.getCustomerButtonText());
+            searchForCustomer_textView.setText(exchanged_itemdata.getCustomerButtonText());
             phno_textView.setText(exchanged_itemdata.getPhNo());
             dob_textView.setText(exchanged_itemdata.getDob());
             address_textView.setText(exchanged_itemdata.getAddress());
             email_textView.setText(exchanged_itemdata.getEmail());
             customerKeyID = exchanged_itemdata.getCustomer_keyID();
-            searchForCustomer_btn.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-            searchForCustomer_btn.setTextColor(getResources().getColor(R.color.textGrey));
+            searchForCustomer_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+            searchForCustomer_textView.setTextColor(getResources().getColor(R.color.textGrey));
             customerDetails.setVisibility(View.VISIBLE);
             customer=true;
         }
@@ -223,10 +221,11 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     }
 
     private void fetchingExisitingCustomers() {
+        pd2.showProgressBar(Buy.this);
         existingCustomersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                pd2.showProgressBar(Buy.this);
+
                 if (dataSnapshot.exists()){
                     for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                         exisitngCustomerList.add(String.valueOf(dataSnapshot1.child("Name").getValue()));
@@ -248,17 +247,17 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                pd2.dismissProgressBar(Buy.this);
             }
         });
 
     }
 
     private void fetchingExisitingItems() {
+        pd3.showProgressBar(Buy.this);
         existingItemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                pd3.showProgressBar(Buy.this);
                 if(dataSnapshot.exists()){
 
                     for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
@@ -283,7 +282,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                pd3.dismissProgressBar(Buy.this);
             }
         });
 
@@ -328,7 +327,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
         });
 
-        searchForCustomer_btn.setOnClickListener(new View.OnClickListener() {
+        searchForCustomer_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new SimpleSearchDialogCompat(Buy.this, "Search...",
@@ -337,15 +336,15 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                             @Override
                             public void onSelected(BaseSearchDialogCompat dialog,
                                                    SampleSearchModel item, int position) {
-                                searchForCustomer_btn.setText(item.getTitle());
+                                searchForCustomer_textView.setText(item.getTitle());
                                 phno_textView.setText(item.getVal1());
                                 customerName = item.getName();
                                 dob_textView.setText(item.getVal2());
                                 address_textView.setText(item.getVal3());
                                 email_textView.setText(item.getVal4());
                                 customerKeyID = item.getVal5();
-                                searchForCustomer_btn.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-                                searchForCustomer_btn.setTextColor(getResources().getColor(R.color.textGrey));
+                                searchForCustomer_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+                                searchForCustomer_textView.setTextColor(getResources().getColor(R.color.textGrey));
                                 customerDetails.setVisibility(View.VISIBLE);
                                 customer=true;
                                 if (item_btn==true&&customer==true){
@@ -357,7 +356,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
         });
 
-        searchForItem_btn.setOnClickListener(new View.OnClickListener() {
+        searchForItem_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new SimpleSearchDialogCompat(Buy.this, "Search...",
@@ -366,7 +365,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                             @Override
                             public void onSelected(BaseSearchDialogCompat dialog,
                                                    SampleSearchModel item, int position) {
-                                searchForItem_btn.setText(item.getTitle());
+                                searchForItem_textView.setText(item.getTitle());
                                 itemCategory = item.getVal1();
                                 itemName = item.getName();
                                 category_textView.setText(item.getVal1());
@@ -374,8 +373,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                                 notes_textView.setText(item.getVal3());
                                 suggest_price_TextView.setText(item.getVal4());
                                 itemKeyID = item.getVal5();
-                                searchForItem_btn.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-                                searchForItem_btn.setTextColor(getResources().getColor(R.color.textGrey));
+                                searchForItem_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+                                searchForItem_textView.setTextColor(getResources().getColor(R.color.textGrey));
                                 itemDetails.setVisibility(View.VISIBLE);
                                 item_btn=true;
                                 if (item_btn==true&&customer==true){
@@ -467,11 +466,11 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     private boolean validateFields() {
         boolean valid = true;
 
-        if (searchForItem_btn.getText().toString().equals("Search for item")) {
+        if (searchForItem_textView.getText().toString().equals("Search for item")) {
             Toast.makeText(this, "Please select item", Toast.LENGTH_LONG).show();
             valid = false;
         }
-        if (searchForCustomer_btn.getText().toString().equals("Search for customer")) {
+        if (searchForCustomer_textView.getText().toString().equals("Search for customer")) {
             Toast.makeText(this, "Please select customer", Toast.LENGTH_LONG).show();
             valid = false;
         }
@@ -480,10 +479,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             purchase_price_editText.setError("Please enter suggested price");
             valid = false;
         }
-        if (quantity_editText.getText().toString().isEmpty()) {
-            quantity_editText.setError("Please enter quantity");
-            valid = false;
-        }
+
         if (date_textView.getText().toString().equals("Select date")) {
             Toast.makeText(this, "Select date", Toast.LENGTH_LONG).show();
             valid = false;
@@ -510,7 +506,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         if (exchanged_itemdata.getExchangeCheck()||exchanged_itemdata.getExchangeFromBuyCheck()){
 
             exchanged_itemdata.setCustomer_keyID(customerKeyID);
-            exchanged_itemdata.setCustomerButtonText(searchForCustomer_btn.getText().toString());
+            exchanged_itemdata.setCustomerButtonText(searchForCustomer_textView.getText().toString());
             exchanged_itemdata.setPhNo(phno_textView.getText().toString());
             exchanged_itemdata.setDob(dob_textView.getText().toString());
             exchanged_itemdata.setAddress(address_textView.getText().toString());
@@ -518,7 +514,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
             exchanged_itemdata.setItem_keyID(itemKeyID);
             exchanged_itemdata.setPurchase_price(purchase_price_editText.getText().toString());
-            exchanged_itemdata.setQuantity(quantity_editText.getText().toString());
             exchanged_itemdata.setDate(date_textView.getText().toString());
             exchanged_itemdata.setCash(cash_editText.getText().toString());
             exchanged_itemdata.setVoucher(voucher_editText.getText().toString());
@@ -558,7 +553,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 reference.child("Buy_list").child(key).child("Item_keyID").setValue(itemKeyID);
 
                 reference.child("Buy_list").child(key).child("Purchase_price").setValue(purchase_price_editText.getText().toString());
-                reference.child("Buy_list").child(key).child("Quantity").setValue(quantity_editText.getText().toString());
                 reference.child("Buy_list").child(key).child("Date").setValue(date_textView.getText().toString());
                 reference.child("Buy_list").child(key).child("Cash").setValue(cash_editText.getText().toString());
                 reference.child("Buy_list").child(key).child("Voucher").setValue(voucher_editText.getText().toString());
@@ -630,10 +624,9 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onRestart() {
+        super.onRestart();
         fetchingExisitingCustomers();
         fetchingExisitingItems();
-
     }
 }

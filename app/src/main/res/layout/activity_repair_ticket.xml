@@ -52,7 +52,7 @@
                     android:id="@+id/searchForTicket_textView"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:textColor="#0075B5"
+                    android:textColor="@color/textBlue"
                     android:background="@drawable/main_button"
                     android:fontFamily="@font/segoe_ui"
                     android:textSize="15sp"
@@ -61,15 +61,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
-                <Button
-                    android:id="@+id/repairTicketAdd_btn"
-                    android:layout_marginLeft="20dp"
+                <TextView
+                    android:id="@+id/repairTicketAdd_textView"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="3"
                     android:textColor = "@color/textBlue"
                     android:background="@drawable/main_button"
                     android:fontFamily="@font/segoe_ui"
                     android:textSize="15sp"
-                    android:text="Add"
+                    android:gravity="center"
+                    android:text="ADD"
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"/>
 

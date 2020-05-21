@@ -50,13 +50,14 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     DatabaseReference existingCustomersRef,existingItemsRef;
 
     ImageButton Back_btn,sms_btn,gmail_btn,print_btn;
-    Button date_btn,exchange_btn,customer_add_btn,searchForCustomer_btn,item_add_btn,searchForItem_btn,submit_btn;
+    Button date_btn,exchange_btn,customer_add_btn,item_add_btn,submit_btn;
     Button exchangeItemRemove_btn,btn_done;
 
     Dialog sendingdialog;
     LinearLayout toggling_linear;
     Boolean item_btn,customer;
 
+    TextView searchForItem_textView,searchForCustomer_textView;
     TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView,suggest_price_TextView;
     TextView date_textView;
     TextView exchangeItemName_textView,exchangeItemCategory_textView,exchangeItemCondition_textView,exchangeItemAgreedPrice_textView,exchangeItemNotes_textView;
@@ -70,7 +71,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     LinearLayout itemDetails,customerDetails,exchangeItemDetails;
 
-    EditText sale_price_editText,quantity_editText,cash_editText,paid_editText;
+    EditText sale_price_editText,cash_editText,paid_editText;
 
     Date date;
 
@@ -141,7 +142,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         existingCustomerEmailList= new ArrayList<>();
 
         sale_price_editText = (EditText) findViewById(R.id.sale_price_editText);
-        quantity_editText = (EditText) findViewById(R.id.quantity_editText);
         cash_editText = (EditText) findViewById(R.id.cash_editText);
         paid_editText = (EditText) findViewById(R.id.paid_editText);
 
@@ -158,16 +158,16 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         exchangeItemCondition_textView=(TextView)findViewById(R.id.exchangeItemCondition_textView);
         exchangeItemAgreedPrice_textView=(TextView)findViewById(R.id.exchangeItemAgreedPrice_textView);
         exchangeItemNotes_textView=(TextView)findViewById(R.id.exchangeItemNotes_textView);
+        searchForCustomer_textView = (TextView) findViewById(R.id.searchForCustomer_textView);
+        searchForItem_textView = (TextView) findViewById(R.id.searchForItem_textView);
 
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
         submit_btn = (Button)findViewById(R.id.submit_btn);
-        searchForItem_btn = (Button)findViewById(R.id.searchForItem_btn);
         date_btn=(Button)findViewById(R.id.date_btn);
         exchange_btn=(Button)findViewById(R.id.exchange_btn);
         date_textView =(TextView)findViewById(R.id.date_textView);
         customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
         item_add_btn=(Button) findViewById(R.id.item_add_btn);
-        searchForCustomer_btn = (Button)findViewById(R.id.searchForCustomer_btn);
         exchangeItemRemove_btn = (Button)findViewById(R.id.exchangeItemRemove_btn);
 
         sendingdialog = new Dialog(this);
@@ -209,14 +209,14 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     private void exchangeFromBuyCheck() {
         if (exchangeObj.getExchangeFromBuyCheck()){
-            searchForCustomer_btn.setText(exchangeObj.getCustomerButtonText());
+            searchForCustomer_textView.setText(exchangeObj.getCustomerButtonText());
             phno_textView.setText(exchangeObj.getPhNo());
             dob_textView.setText(exchangeObj.getDob());
             address_textView.setText(exchangeObj.getAddress());
             email_textView.setText(exchangeObj.getEmail());
             customerKeyID = exchangeObj.getCustomer_keyID();
-            searchForCustomer_btn.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-            searchForCustomer_btn.setTextColor(getResources().getColor(R.color.textGrey));
+            searchForCustomer_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+            searchForCustomer_textView.setTextColor(getResources().getColor(R.color.textGrey));
             customerDetails.setVisibility(View.VISIBLE);
 
             exchangeItemName_textView.setText(exchangeObj.getName());
@@ -232,10 +232,10 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     }
 
     private void fetchingExisitingCustomers() {
+        pd3.showProgressBar(Sale.this);
         existingCustomersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                pd3.showProgressBar(Sale.this);
                 if (dataSnapshot.exists()){
                     for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                         exisitngCustomerList.add(String.valueOf(dataSnapshot1.child("Name").getValue()));
@@ -257,17 +257,17 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                pd3.dismissProgressBar(Sale.this);
             }
         });
 
     }
 
     private void fetchingExisitingItems() {
+        pd2.showProgressBar(Sale.this);
         existingItemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                pd2.showProgressBar(Sale.this);
                 if (dataSnapshot.exists()){
                     int i = 0;
                     for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
@@ -293,6 +293,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                pd2.dismissProgressBar(Sale.this);
 
             }
         });
@@ -301,7 +302,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     private void onClickListenes() {
 
-        searchForCustomer_btn.setOnClickListener(new View.OnClickListener() {
+        searchForCustomer_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new SimpleSearchDialogCompat(Sale.this, "Search...",
@@ -310,15 +311,15 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                             @Override
                             public void onSelected(BaseSearchDialogCompat dialog,
                                                    SampleSearchModel item, int position) {
-                                searchForCustomer_btn.setText(item.getTitle());
+                                searchForCustomer_textView.setText(item.getTitle());
                                 phno_textView.setText(item.getVal1());
                                 customerName = item.getName();
                                 dob_textView.setText(item.getVal2());
                                 address_textView.setText(item.getVal3());
                                 email_textView.setText(item.getVal4());
                                 customerKeyID = item.getVal5();
-                                searchForCustomer_btn.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-                                searchForCustomer_btn.setTextColor(getResources().getColor(R.color.textGrey));
+                                searchForCustomer_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+                                searchForCustomer_textView.setTextColor(getResources().getColor(R.color.textGrey));
                                 customerDetails.setVisibility(View.VISIBLE);
                                 customer=true;
                                 if (item_btn==true&&customer==true){
@@ -330,7 +331,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             }
         });
 
-        searchForItem_btn.setOnClickListener(new View.OnClickListener() {
+        searchForItem_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new SimpleSearchDialogCompat(Sale.this, "Search...",
@@ -339,7 +340,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                             @Override
                             public void onSelected(BaseSearchDialogCompat dialog,
                                                    SampleSearchModel item, int position) {
-                                searchForItem_btn.setText(item.getTitle());
+                                searchForItem_textView.setText(item.getTitle());
                                 itemCategory = item.getVal1();
                                 itemName = item.getName();
                                 category_textView.setText(item.getVal1());
@@ -347,8 +348,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                                 notes_textView.setText(item.getVal3());
                                 suggest_price_TextView.setText(item.getVal4());
                                 itemKeyID = item.getVal5();
-                                searchForItem_btn.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-                                searchForItem_btn.setTextColor(getResources().getColor(R.color.textGrey));
+                                searchForItem_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+                                searchForItem_textView.setTextColor(getResources().getColor(R.color.textGrey));
                                 itemDetails.setVisibility(View.VISIBLE);
                                 item_btn=true;
                                 if (item_btn==true&&customer==true){
@@ -371,9 +372,9 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         exchange_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!searchForCustomer_btn.getText().toString().equals("Search for customer")) {
+                if (!searchForCustomer_textView.getText().toString().equals("Search for customer")) {
                     exchangeObj.setCustomer_keyID(customerKeyID);
-                    exchangeObj.setCustomerButtonText(searchForCustomer_btn.getText().toString());
+                    exchangeObj.setCustomerButtonText(searchForCustomer_textView.getText().toString());
                     exchangeObj.setPhNo(phno_textView.getText().toString());
                     exchangeObj.setDob(dob_textView.getText().toString());
                     exchangeObj.setAddress(address_textView.getText().toString());
@@ -462,11 +463,11 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     private boolean validateFields() {
         boolean valid = true;
 
-        if (searchForItem_btn.getText().toString().equals("Search for item")) {
+        if (searchForItem_textView.getText().toString().equals("Search for item")) {
             Toast.makeText(this, "Please select item", Toast.LENGTH_LONG).show();
             valid = false;
         }
-        if (searchForCustomer_btn.getText().toString().equals("Search for customer")) {
+        if (searchForCustomer_textView.getText().toString().equals("Search for customer")) {
             Toast.makeText(this, "Please select customer", Toast.LENGTH_LONG).show();
             valid = false;
         }
@@ -475,10 +476,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             sale_price_editText.setError("Please enter sale price");
             valid = false;
         }
-        if (quantity_editText.getText().toString().isEmpty()) {
-            quantity_editText.setError("Please enter quantity");
-            valid = false;
-        }
+
         if (date_textView.getText().toString().equals("Select date")) {
             Toast.makeText(this, "Select date", Toast.LENGTH_LONG).show();
             valid = false;
@@ -508,7 +506,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             reference.child("Sale_list").child(key).child("Customer_keyID").setValue(customerKeyID);
             reference.child("Sale_list").child(key).child("Item_keyID").setValue(itemKeyID);
             reference.child("Sale_list").child(key).child("Sale_price").setValue(sale_price_editText.getText().toString());
-            reference.child("Sale_list").child(key).child("Quantity").setValue(quantity_editText.getText().toString());
             reference.child("Sale_list").child(key).child("Date").setValue(date_textView.getText().toString());
             reference.child("Sale_list").child(key).child("Cash").setValue(cash_editText.getText().toString());
             reference.child("Sale_list").child(key).child("Paid").setValue(paid_editText.getText().toString());
@@ -630,10 +627,9 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onRestart() {
+        super.onRestart();
         fetchingExisitingCustomers();
         fetchingExisitingItems();
-
     }
 }

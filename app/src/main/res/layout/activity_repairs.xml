@@ -364,7 +364,7 @@
 
             <EditText
                 android:id="@+id/agreed_price_editText"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"
@@ -374,6 +374,32 @@
                 android:textColor="#9F9F9F"
                 android:textColorHint="#9F9F9F"
                 android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/pendingAgreed_price_textView"
+                android:visibility="gone"
+                android:textColor="@color/textBlue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="Pending Agreed Price"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/pendingAgreed_price_editText"
+                android:visibility="gone"
+                android:inputType="numberDecimal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#6E76E3"
+                android:fontFamily="@font/segoe_ui"
+                android:hint="Enter pending agreed price"
+                android:maxLength="32"
+                android:textColor="#9F9F9F"
+                android:textColorHint="#9F9F9F"
+                android:textSize="16sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -421,7 +447,7 @@
 
             <EditText
                 android:id="@+id/paidAmount_editText"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#6E76E3"

@@ -28,9 +28,15 @@ public class Repair_details_edit {
     String balanceAmount_TextView;
     String specialConditions_TextView;
 
+    String pendingPrice;
+
     List<String> faultNameList;
     List<String> faultPriceList;
     List<String> faultKeyIDList;
+
+    List<String> pendingFaultNameList;
+    List<String> pendingFaultPriceList;
+    List<String> pendingFaultKeyIDList;
 
     long timestamp;
 
@@ -191,6 +197,14 @@ public class Repair_details_edit {
         return faultNameList;
     }
 
+    public String getPendingPrice() {
+        return pendingPrice;
+    }
+
+    public void setPendingPrice(String pendingPrice) {
+        this.pendingPrice = pendingPrice;
+    }
+
     public void setFaultNameList(List<String> faultNameList) {
         this.faultNameList = faultNameList;
     }
@@ -218,6 +232,63 @@ public class Repair_details_edit {
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
+
+    public List<String> getPendingFaultNameList() {
+        return pendingFaultNameList;
+    }
+
+    public void setPendingFaultNameList(List<String> pendingFaultNameList) {
+        this.pendingFaultNameList = pendingFaultNameList;
+    }
+
+    public List<String> getPendingFaultPriceList() {
+        return pendingFaultPriceList;
+    }
+
+    public void setPendingFaultPriceList(List<String> pendingFaultPriceList) {
+        this.pendingFaultPriceList = pendingFaultPriceList;
+    }
+
+    public List<String> getPendingFaultKeyIDList() {
+        return pendingFaultKeyIDList;
+    }
+
+    public void setPendingFaultKeyIDList(List<String> pendingFaultKeyIDList) {
+        this.pendingFaultKeyIDList = pendingFaultKeyIDList;
+    }
+
+    public void clear(){
+        this.itemKeyID = null;
+        this.serialNo_textView = null;
+        this.category_textView = null;
+        this.condition_textView = null;
+        this.notes_textView = null;
+
+        this.customerKeyID = null;
+        this.customerName_textView = null;
+        this.id_textView = null;
+        this.phno_textView = null;
+        this.dob_textView = null;
+        this.address_textView = null;
+        this.email_textView = null;
+
+        this.ticketNo_TextView = null;
+        this.agreedPrice_TextView = null;
+        this.date_TextView = null;
+        this.paidAmount_TextView = null;
+        this.balanceAmount_TextView = null;
+        this.specialConditions_TextView = null;
+
+        this.faultNameList = null;
+        this.faultPriceList = null;
+        this.faultKeyIDList = null;
+
+        this.pendingFaultNameList = null;
+        this.pendingFaultPriceList = null;
+        this.pendingFaultKeyIDList = null;
+        this.pendingPrice = null;
+    }
+
 
     private Repair_details_edit() {
     }

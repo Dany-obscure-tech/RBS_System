@@ -5,56 +5,73 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:id="@+id/leftLayout"
-        android:layout_toLeftOf="@+id/remove_btn"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
         <TextView
-            android:id="@+id/faultName_textView"
+            android:text="- "
+            android:textSize="30sp"
+            android:gravity="center"
+            android:textColor="@color/textBlue"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:text="Fault Name"
-            android:textSize="18sp" />
+            android:layout_height="fill_parent"/>
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:id="@+id/leftLayout"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/faultName_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/segoe_ui"
-                android:text="Fault Price:"
-                android:textSize="16sp" />
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="Fault Name"
+                android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/faultPrice_textView"
-                android:layout_marginLeft="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/segoe_ui"
-                android:text="30"
-                android:textSize="16sp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/segoe_ui"
+                    android:text="Price:"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/faultPrice_textView"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/segoe_ui"
+                    android:text="30"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/remove_textView"
+            android:layout_marginLeft="10dp"
+            android:padding="12dp"
+            android:layout_gravity="center"
+            android:textColor = "@color/textBlue"
+            android:background="@drawable/main_button"
+            android:text="REMOVE"
+            android:textSize="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/remove_btn"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="20dp"
-        android:textColor = "@color/textBlue"
-        android:background="@drawable/main_button"
-        android:text="REmove"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
 
 </RelativeLayout>
