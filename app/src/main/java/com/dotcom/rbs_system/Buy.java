@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -45,6 +46,11 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     Exchanged_itemdata exchanged_itemdata = Exchanged_itemdata.getInstance();
+
+    CheckBox cash_checkbox,voucher_checkbox;
+    TextView voucher_number,voucher_number_textview;
+
+    String voucher_key;
 
     Progress_dialoge pd,pd2,pd3;
     LinearLayout toggling_linear;
@@ -112,7 +118,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     private void initialize() {
 
-
+        reference = FirebaseDatabase.getInstance().getReference();
+        voucher_key = reference.push().getKey().toString();
 
         item_btn=false;
         customer=false;
@@ -135,6 +142,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
         itemDetails = (LinearLayout)findViewById(R.id.itemDetails);
         customerDetails = (LinearLayout)findViewById(R.id.customerDetails);
+        cash_checkbox=(CheckBox)findViewById(R.id.cash_checkbox);
+        voucher_checkbox=(CheckBox)findViewById(R.id.voucher_checkbox);
 
         exisitngCustomerList = new ArrayList<>();
         exisitngCustomerIDList = new ArrayList<>();
@@ -153,6 +162,9 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         existingCustomerEmailList= new ArrayList<>();
 
         category_textView=(TextView)findViewById(R.id.category_textView);
+        voucher_number=(TextView)findViewById(R.id.voucher_number);
+        voucher_number_textview=(TextView)findViewById(R.id.voucher_number_textview);
+        voucher_number.setText(voucher_key.toString());
         condition_textView=(TextView)findViewById(R.id.condition_textView);
         notes_textView=(TextView)findViewById(R.id.notes_textView);
         phno_textView=(TextView)findViewById(R.id.phno_textView);
@@ -329,6 +341,38 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
         });
 
+        cash_checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cash_checkbox.isChecked()){
+                    cash_editText.setVisibility(View.VISIBLE);
+
+                }
+                if (!cash_checkbox.isChecked()){
+                    cash_editText.setVisibility(View.INVISIBLE);
+
+                }
+            }
+        });
+
+        voucher_checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (voucher_checkbox.isChecked()){
+                    voucher_number.setVisibility(View.VISIBLE);
+                    voucher_number_textview.setVisibility(View.VISIBLE);
+                    voucher_editText.setVisibility(View.VISIBLE);
+
+                }
+                if (!voucher_checkbox.isChecked()){
+                    voucher_number.setVisibility(View.INVISIBLE);
+                    voucher_number_textview.setVisibility(View.INVISIBLE);
+                    voucher_editText.setVisibility(View.INVISIBLE);
+
+                }
+            }
+        });
+
         searchForCustomer_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -460,6 +504,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 if (validateFields()==true){
                     exchanged_itemdata.setExchangeFromBuyCheck(true);
                     detailsSubmit();
+//                    Toast.makeText(Buy.this, "Yes working", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -504,6 +549,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
 
     private void   detailsSubmit() {
+        Toast.makeText(Buy.this, "Yes working", Toast.LENGTH_SHORT).show();
 
         if (exchanged_itemdata.getExchangeCheck()||exchanged_itemdata.getExchangeFromBuyCheck()){
 
@@ -577,6 +623,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 reference.child("Customer_history").child(customerKeyID).child(key).child("RBS").setValue("Buy");
                 reference.child("Customer_history").child(customerKeyID).child(key).child("Timestamp").setValue(date.getTime());
                 reference.child("Customer_history").child(customerKeyID).child(key).child("Date").setValue(date_textView.getText().toString());
+
+                reference.child("Voucher_List").child(voucher_key).child("Voucher_ID").child("Voucher_amount").setValue(paid_editText.getText().toString());
 
                 pd.dismissProgressBar(Buy.this);
                 sendingdialog.show();

@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -22,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dotcom.rbs_system.Adapter.AdapterRepairTicketListRecyclerView;
 import com.dotcom.rbs_system.Classes.Exchanged_itemdata;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,6 +38,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -46,8 +49,12 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     Exchanged_itemdata exchangeObj = Exchanged_itemdata.getInstance();
 
+    TextView searchForVoucher_textView;
+    Progress_dialoge pd;
+
     DatabaseReference reference;
     DatabaseReference existingCustomersRef,existingItemsRef;
+    CheckBox cash_checkbox,voucher_checkbox;
 
     ImageButton Back_btn,sms_btn,gmail_btn,print_btn;
     Button date_btn,exchange_btn,customer_add_btn,item_add_btn,submit_btn;
@@ -76,6 +83,22 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     Date date;
 
     Progress_dialoge pd1,pd2,pd3;
+
+    //TODO
+
+//    private ArrayList<SampleSearchModel> createTicketNoData(){
+//        ArrayList<SampleSearchModel> items = new ArrayList<>();
+////        Collections.reverse(ticketNoList);
+//        for (int i=0;i<ticketNoList.size();i++){
+//            if (pendingStatusList.get(i).equals("pending")){
+//                items.add(new SampleSearchModel(ticketNoList.get(i)+"\n(Pending)",repairKeyIDList.get(i),null,null,null,null,null,null));
+//            }else {
+//                items.add(new SampleSearchModel(ticketNoList.get(i),repairKeyIDList.get(i),null,null,null,null,null,null));
+//            }
+//
+//        }
+//        return items;
+//    }
 
     private ArrayList<SampleSearchModel> createItemsData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
@@ -111,6 +134,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     }
 
     private void initialize() {
+        pd = new Progress_dialoge();
         item_btn=false;
         customer=false;
 
@@ -124,6 +148,9 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         customerDetails = (LinearLayout)findViewById(R.id.customerDetails);
         exchangeItemDetails = (LinearLayout)findViewById(R.id.exchangeItemDetails);
         toggling_linear = (LinearLayout)findViewById(R.id.toggling_linear);
+
+        cash_checkbox=(CheckBox)findViewById(R.id.cash_checkbox);
+        voucher_checkbox=(CheckBox)findViewById(R.id.voucher_checkbox);
 
         exisitngCustomerList = new ArrayList<>();
         exisitngCustomerIDList = new ArrayList<>();
@@ -146,6 +173,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         paid_editText = (EditText) findViewById(R.id.paid_editText);
 
         suggest_price_TextView=(TextView)findViewById(R.id.suggest_price_TextView);
+        searchForVoucher_textView=(TextView)findViewById(R.id.searchForVoucher_textView);
         category_textView=(TextView)findViewById(R.id.category_textView);
         condition_textView=(TextView)findViewById(R.id.condition_textView);
         notes_textView=(TextView)findViewById(R.id.notes_textView);
@@ -300,7 +328,97 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     }
 
+    //TODo
+
+//    private void gettingRepairTicketList() {
+//        pd.showProgressBar(Sale.this);
+//        repairTicketRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()){
+//                    for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+//
+//                        customerNameList.add(dataSnapshot1.child("Customer_name").getValue().toString());
+//                        itemNameList.add(dataSnapshot1.child("Item_name").getValue().toString());
+//                        ticketNoList.add(dataSnapshot1.child("Ticket_no").getValue().toString());
+//                        pendingStatusList.add(dataSnapshot1.child("Status").getValue().toString());
+//
+//                        customerKeyIDList.add(dataSnapshot1.child("Customer_keyID").getValue().toString());
+//                        itemKeyIDList.add(dataSnapshot1.child("Item_keyID").getValue().toString());
+//                        repairKeyIDList.add(dataSnapshot1.child("Repair_key_id").getValue().toString());
+//                    }
+//
+//                    adapterRepairTicketListRecyclerView = new AdapterRepairTicketListRecyclerView(Repair_Ticket.this,customerNameList,itemNameList,ticketNoList,pendingStatusList);
+//                    repairTicketList_recyclerView.setAdapter(adapterRepairTicketListRecyclerView);
+//                    pd.dismissProgressBar(Repair_Ticket.this);
+//                }else {
+//                    pd.dismissProgressBar(Repair_Ticket.this);
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                pd.dismissProgressBar(Repair_Ticket.this);
+//            }
+//
+//        });
+//    }
+
     private void onClickListenes() {
+
+        cash_checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cash_checkbox.isChecked()){
+                    cash_editText.setVisibility(View.VISIBLE);
+
+                }
+                if (!cash_checkbox.isChecked()){
+                    cash_editText.setVisibility(View.INVISIBLE);
+
+                }
+            }
+        });
+
+        voucher_checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (voucher_checkbox.isChecked()){
+//                    voucher_number.setVisibility(View.VISIBLE);
+//                    voucher_number_textview.setVisibility(View.VISIBLE);
+//                    voucher_editText.setVisibility(View.VISIBLE);
+
+                }
+                if (!voucher_checkbox.isChecked()){
+//                    voucher_number.setVisibility(View.INVISIBLE);
+//                    voucher_number_textview.setVisibility(View.INVISIBLE);
+//                    voucher_editText.setVisibility(View.INVISIBLE);
+
+                }
+            }
+        });
+
+        //TODO
+
+//        searchForVoucher_textView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                new SimpleSearchDialogCompat(Sale.this, "Search results...",
+//                        "Search for ticket number.", null, createTicketNoData(),
+//                        new SearchResultListener<SampleSearchModel>() {
+//                            @Override
+//                            public void onSelected(BaseSearchDialogCompat dialog,
+//                                                   SampleSearchModel item, int position) {
+//                                dialog.dismiss();
+//                                Intent intent = new Intent(Sale.this,Repair_details.class);
+//                                intent.putExtra("REPAIR_ID",item.getId());
+//                                startActivity(intent);
+//                            }
+//                        }).show();
+//            }
+//        });
+
 
         searchForCustomer_textView.setOnClickListener(new View.OnClickListener() {
             @Override
