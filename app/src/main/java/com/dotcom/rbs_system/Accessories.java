@@ -879,7 +879,6 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
             @Override
             public void onClick(View v) {
                 if (validateFields() == true)
-                    //TODo
                     detailsSubmit();
             }
         });

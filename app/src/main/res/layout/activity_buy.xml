@@ -483,6 +483,7 @@
 
             <TextView
                 android:id="@+id/forExchange_textView"
+                android:visibility="gone"
                 android:layout_marginBottom="20dp"
                 android:textSize="22sp"
                 android:fontFamily="@font/segoe_ui_bold"
@@ -493,6 +494,7 @@
 
             <Button
                 android:id="@+id/exchange_btn"
+                android:visibility="gone"
                 android:textSize="15sp"
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="@font/segoe_ui"

@@ -166,7 +166,6 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                 finish();
             }
         });
-        //TODo
         gmail_btn = (ImageButton) sendingdialog.findViewById(R.id.gmail_btn);
         print_btn = (ImageButton) sendingdialog.findViewById(R.id.print_btn);
         sms_btn = (ImageButton) sendingdialog.findViewById(R.id.sms_btn);

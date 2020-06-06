@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -46,6 +47,8 @@ public class Customer_history extends AppCompatActivity {
 
     Boolean toggleCheck = true;
 
+    ImageButton Back_btn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +66,7 @@ public class Customer_history extends AppCompatActivity {
         phno_textView = (TextView)findViewById(R.id.phno_textView);
         address_textView = (TextView)findViewById(R.id.address_textView);
         email_textView = (TextView)findViewById(R.id.email_textView);
+        Back_btn=(ImageButton)findViewById(R.id.Back_btn);
 
         customerKeyID = getIntent().getStringExtra("CUSTOMER_ID");
 
@@ -159,6 +163,7 @@ public class Customer_history extends AppCompatActivity {
 
     private void ClickListeners() {
         customerDetailsToggle();
+        backbtn();
     }
 
     private void customerDetailsToggle() {
@@ -179,6 +184,15 @@ public class Customer_history extends AppCompatActivity {
                     customerDetailsToggle_textView.setBackground(getResources().getDrawable(R.drawable.main_button));
                     toggleCheck = false;
                 }
+            }
+        });
+    }
+
+    private void backbtn() {
+        Back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +48,8 @@ public class Item_history extends AppCompatActivity {
 
     Boolean toggleCheck = true;
 
+    ImageButton Back_btn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,8 @@ public class Item_history extends AppCompatActivity {
         category_textView = (TextView)findViewById(R.id.category_textView);
         condition_textView = (TextView)findViewById(R.id.condition_textView);
         notes_textView = (TextView)findViewById(R.id.notes_textView);
+        Back_btn = (ImageButton)findViewById(R.id.Back_btn);
+
 
         itemID = getIntent().getStringExtra("ITEM_ID");
         itemCategory = getIntent().getStringExtra("ITEM_CATEGORY");
@@ -163,6 +168,16 @@ public class Item_history extends AppCompatActivity {
 
     private void ClickListeners() {
         itemDetailsToggle();
+        backbtn();
+    }
+
+    private void backbtn() {
+        Back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void itemDetailsToggle() {

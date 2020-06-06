@@ -1,9 +1,7 @@
 package com.dotcom.rbs_system;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -21,7 +19,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.dotcom.rbs_system.Classes.Exchanged_itemdata;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,7 +27,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,7 +34,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
@@ -48,7 +43,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     Exchanged_itemdata exchanged_itemdata = Exchanged_itemdata.getInstance();
 
     CheckBox cash_checkbox,voucher_checkbox;
-    TextView voucher_number,voucher_number_textview;
+    TextView voucher_number,voucher_number_textview,Transaction_textview;
 
     String voucher_key;
 
@@ -109,9 +104,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         exchangeCustomerCheck();
         fetchingExisitingCustomers();
         fetchingExisitingItems();
-
         onClickListeners();
-
         historyActivity();
 
     }
@@ -163,6 +156,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
         category_textView=(TextView)findViewById(R.id.category_textView);
         voucher_number=(TextView)findViewById(R.id.voucher_number);
+        Transaction_textview=(TextView)findViewById(R.id.Transaction_textview);
         voucher_number_textview=(TextView)findViewById(R.id.voucher_number_textview);
         voucher_number.setText(voucher_key.toString());
         condition_textView=(TextView)findViewById(R.id.condition_textView);
@@ -349,7 +343,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
                 }
                 if (!cash_checkbox.isChecked()){
-                    cash_editText.setVisibility(View.INVISIBLE);
+                    cash_editText.setVisibility(View.GONE);
 
                 }
             }
@@ -365,9 +359,9 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
                 }
                 if (!voucher_checkbox.isChecked()){
-                    voucher_number.setVisibility(View.INVISIBLE);
-                    voucher_number_textview.setVisibility(View.INVISIBLE);
-                    voucher_editText.setVisibility(View.INVISIBLE);
+                    voucher_number.setVisibility(View.GONE);
+                    voucher_number_textview.setVisibility(View.GONE);
+                    voucher_editText.setVisibility(View.GONE);
 
                 }
             }
@@ -513,11 +507,11 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     private boolean validateFields() {
         boolean valid = true;
 
-        if (searchForItem_textView.getText().toString().equals("Search for item")) {
+        if (searchForItem_textView.getText().toString().equals("SEARCH FOR ITEM")) {
             Toast.makeText(this, "Please select item", Toast.LENGTH_LONG).show();
             valid = false;
         }
-        if (searchForCustomer_textView.getText().toString().equals("Search for customer")) {
+        if (searchForCustomer_textView.getText().toString().equals("SEARCH FOR CUSTOMER")) {
             Toast.makeText(this, "Please select customer", Toast.LENGTH_LONG).show();
             valid = false;
         }
@@ -531,14 +525,25 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             Toast.makeText(this, "Select date", Toast.LENGTH_LONG).show();
             valid = false;
         }
-        if (cash_editText.getText().toString().isEmpty()) {
-            cash_editText.setError("Please enter cash");
-            valid = false;
+        if (cash_checkbox.isChecked()) {
+            if (cash_editText.getText().toString().isEmpty()) {
+                cash_editText.setError("Please enter cash");
+                valid = false;
+            }
         }
-        if (voucher_editText.getText().toString().isEmpty()) {
-            voucher_editText.setError("Please enter voucher");
-            valid = false;
+        if (voucher_checkbox.isChecked()){
+            if (voucher_editText.getText().toString().isEmpty()) {
+                voucher_editText.setError("Please enter voucher");
+                valid = false;
+            }
         }
+
+        if (!cash_checkbox.isChecked()&&!voucher_checkbox.isChecked()){
+            Transaction_textview.setError("Select atleast one Transaction Method");
+            Toast.makeText(this, "Select atleast one Transaction Method", Toast.LENGTH_SHORT).show();
+            valid=false;
+        }
+
         if (paid_editText.getText().toString().isEmpty()) {
             paid_editText.setError("Please enter paid amount");
             valid = false;
@@ -549,7 +554,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
 
     private void   detailsSubmit() {
-        Toast.makeText(Buy.this, "Yes working", Toast.LENGTH_SHORT).show();
 
         if (exchanged_itemdata.getExchangeCheck()||exchanged_itemdata.getExchangeFromBuyCheck()){
 
@@ -603,10 +607,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
                 reference.child("Buy_list").child(key).child("Purchase_price").setValue(purchase_price_editText.getText().toString());
                 reference.child("Buy_list").child(key).child("Date").setValue(date_textView.getText().toString());
-                reference.child("Buy_list").child(key).child("Cash").setValue(cash_editText.getText().toString());
 
-                //todo ////////////////////////////
-                reference.child("Buy_list").child(key).child("Voucher").setValue(voucher_editText.getText().toString());
                 reference.child("Buy_list").child(key).child("Paid").setValue(paid_editText.getText().toString());
 
                 reference.child("Buy_list").child(key).child("key_id").setValue(key);
@@ -624,8 +625,18 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 reference.child("Customer_history").child(customerKeyID).child(key).child("Timestamp").setValue(date.getTime());
                 reference.child("Customer_history").child(customerKeyID).child(key).child("Date").setValue(date_textView.getText().toString());
 
-                reference.child("Voucher_List").child(voucher_key).child("Voucher_ID").child("Voucher_amount").setValue(paid_editText.getText().toString());
+                if (cash_checkbox.isChecked()) {
+                    if (!cash_editText.getText().toString().isEmpty()) {
+                        reference.child("Buy_list").child(key).child("Cash").setValue(cash_editText.getText().toString());
+                    }
+                }
 
+                if (voucher_checkbox.isChecked()) {
+                    if (!voucher_editText.getText().toString().isEmpty()) {
+                        reference.child("Voucher_List").child(firebaseAuthUID).child(voucher_number.getText().toString()).child("Voucher_number").setValue(voucher_number.getText().toString());
+                        reference.child("Voucher_List").child(firebaseAuthUID).child(voucher_number.getText().toString()).child("Voucher_amount").setValue(voucher_editText.getText().toString());
+                    }
+                }
                 pd.dismissProgressBar(Buy.this);
                 sendingdialog.show();
             }else{

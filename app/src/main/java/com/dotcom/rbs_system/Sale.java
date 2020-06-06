@@ -49,11 +49,11 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     Exchanged_itemdata exchangeObj = Exchanged_itemdata.getInstance();
 
-    TextView searchForVoucher_textView;
+    TextView searchForVoucher_textView,Transaction_textview;
     Progress_dialoge pd;
 
     DatabaseReference reference;
-    DatabaseReference existingCustomersRef,existingItemsRef;
+    DatabaseReference existingCustomersRef,existingItemsRef,existingVoucherRef;
     CheckBox cash_checkbox,voucher_checkbox;
 
     ImageButton Back_btn,sms_btn,gmail_btn,print_btn;
@@ -63,6 +63,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     Dialog sendingdialog;
     LinearLayout toggling_linear;
     Boolean item_btn,customer;
+
 
     TextView searchForItem_textView,searchForCustomer_textView;
     TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView,suggest_price_TextView;
@@ -74,7 +75,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
     List<String> exisitngItemsCategoryList,existingItemsPriceList,existingItemsConditionsList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
-
+    List<String> voucher_number_list,Voucher_amount_list;
 
     LinearLayout itemDetails,customerDetails,exchangeItemDetails;
 
@@ -83,22 +84,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     Date date;
 
     Progress_dialoge pd1,pd2,pd3;
-
-    //TODO
-
-//    private ArrayList<SampleSearchModel> createTicketNoData(){
-//        ArrayList<SampleSearchModel> items = new ArrayList<>();
-////        Collections.reverse(ticketNoList);
-//        for (int i=0;i<ticketNoList.size();i++){
-//            if (pendingStatusList.get(i).equals("pending")){
-//                items.add(new SampleSearchModel(ticketNoList.get(i)+"\n(Pending)",repairKeyIDList.get(i),null,null,null,null,null,null));
-//            }else {
-//                items.add(new SampleSearchModel(ticketNoList.get(i),repairKeyIDList.get(i),null,null,null,null,null,null));
-//            }
-//
-//        }
-//        return items;
-//    }
 
     private ArrayList<SampleSearchModel> createItemsData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
@@ -118,6 +103,14 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         return items;
     }
 
+    private ArrayList<SampleSearchModel> getting_voucher_data(){
+        ArrayList<SampleSearchModel> items = new ArrayList<>();
+        for (int i=0;i<Voucher_amount_list.size();i++){
+            items.add(new SampleSearchModel(voucher_number_list.get(i)+"\n("+Voucher_amount_list.get(i)+")",null,null,null,null,null,null,null));
+        }
+
+        return items;
+    }
 
 
     @Override
@@ -129,6 +122,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         exchangeFromBuyCheck();
         fetchingExisitingCustomers();
         fetchingExisitingItems();
+        gettingVoucherList();
         onClickListenes();
         historyActivity();
     }
@@ -150,6 +144,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         toggling_linear = (LinearLayout)findViewById(R.id.toggling_linear);
 
         cash_checkbox=(CheckBox)findViewById(R.id.cash_checkbox);
+        Transaction_textview=(TextView) findViewById(R.id.Transaction_textview);
         voucher_checkbox=(CheckBox)findViewById(R.id.voucher_checkbox);
 
         exisitngCustomerList = new ArrayList<>();
@@ -167,6 +162,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         existingCustomerDobList= new ArrayList<>();
         existingCustomerAddressList= new ArrayList<>();
         existingCustomerEmailList= new ArrayList<>();
+        voucher_number_list= new ArrayList<>();
+        Voucher_amount_list= new ArrayList<>();
 
         sale_price_editText = (EditText) findViewById(R.id.sale_price_editText);
         cash_editText = (EditText) findViewById(R.id.cash_editText);
@@ -220,6 +217,9 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         firebaseAuthUID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
         existingCustomersRef = FirebaseDatabase.getInstance().getReference("Customer_list");
         existingItemsRef = FirebaseDatabase.getInstance().getReference("Items");
+        existingVoucherRef = FirebaseDatabase.getInstance().getReference("Voucher_List");
+        existingVoucherRef = FirebaseDatabase.getInstance().getReference("Voucher_List/"+FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+
         ///////
 
         date=Calendar.getInstance().getTime();
@@ -328,42 +328,31 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     }
 
-    //TODo
+    private void gettingVoucherList() {
+        pd.showProgressBar(Sale.this);
+        existingVoucherRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                        voucher_number_list.add(dataSnapshot1.child("Voucher_number").getValue().toString());
+                        Voucher_amount_list.add(dataSnapshot1.child("Voucher_amount").getValue().toString());
 
-//    private void gettingRepairTicketList() {
-//        pd.showProgressBar(Sale.this);
-//        repairTicketRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()){
-//                    for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-//
-//                        customerNameList.add(dataSnapshot1.child("Customer_name").getValue().toString());
-//                        itemNameList.add(dataSnapshot1.child("Item_name").getValue().toString());
-//                        ticketNoList.add(dataSnapshot1.child("Ticket_no").getValue().toString());
-//                        pendingStatusList.add(dataSnapshot1.child("Status").getValue().toString());
-//
-//                        customerKeyIDList.add(dataSnapshot1.child("Customer_keyID").getValue().toString());
-//                        itemKeyIDList.add(dataSnapshot1.child("Item_keyID").getValue().toString());
-//                        repairKeyIDList.add(dataSnapshot1.child("Repair_key_id").getValue().toString());
-//                    }
-//
-//                    adapterRepairTicketListRecyclerView = new AdapterRepairTicketListRecyclerView(Repair_Ticket.this,customerNameList,itemNameList,ticketNoList,pendingStatusList);
-//                    repairTicketList_recyclerView.setAdapter(adapterRepairTicketListRecyclerView);
-//                    pd.dismissProgressBar(Repair_Ticket.this);
-//                }else {
-//                    pd.dismissProgressBar(Repair_Ticket.this);
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                pd.dismissProgressBar(Repair_Ticket.this);
-//            }
-//
-//        });
-//    }
+                    }
+                    pd.dismissProgressBar(Sale.this);
+                }else {
+                    pd.dismissProgressBar(Sale.this);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                pd.dismissProgressBar(Sale.this);
+            }
+
+        });
+    }
 
     private void onClickListenes() {
 
@@ -375,7 +364,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
                 }
                 if (!cash_checkbox.isChecked()){
-                    cash_editText.setVisibility(View.INVISIBLE);
+                    cash_editText.setVisibility(View.GONE);
 
                 }
             }
@@ -385,39 +374,33 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             @Override
             public void onClick(View v) {
                 if (voucher_checkbox.isChecked()){
-//                    voucher_number.setVisibility(View.VISIBLE);
-//                    voucher_number_textview.setVisibility(View.VISIBLE);
-//                    voucher_editText.setVisibility(View.VISIBLE);
+                    searchForVoucher_textView.setVisibility(View.VISIBLE);
 
                 }
                 if (!voucher_checkbox.isChecked()){
-//                    voucher_number.setVisibility(View.INVISIBLE);
-//                    voucher_number_textview.setVisibility(View.INVISIBLE);
-//                    voucher_editText.setVisibility(View.INVISIBLE);
-
+                    searchForVoucher_textView.setVisibility(View.GONE);
                 }
             }
         });
 
-        //TODO
 
-//        searchForVoucher_textView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                new SimpleSearchDialogCompat(Sale.this, "Search results...",
-//                        "Search for ticket number.", null, createTicketNoData(),
-//                        new SearchResultListener<SampleSearchModel>() {
-//                            @Override
-//                            public void onSelected(BaseSearchDialogCompat dialog,
-//                                                   SampleSearchModel item, int position) {
-//                                dialog.dismiss();
-//                                Intent intent = new Intent(Sale.this,Repair_details.class);
-//                                intent.putExtra("REPAIR_ID",item.getId());
-//                                startActivity(intent);
-//                            }
-//                        }).show();
-//            }
-//        });
+        searchForVoucher_textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new SimpleSearchDialogCompat(Sale.this, "Search results...",
+                        "Search for voucher number.", null, getting_voucher_data(),
+                        new SearchResultListener<SampleSearchModel>() {
+                            @Override
+                            public void onSelected(BaseSearchDialogCompat dialog,
+                                                   SampleSearchModel item, int position) {
+                                searchForVoucher_textView.setText(item.getTitle());
+                                searchForVoucher_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+                                searchForVoucher_textView.setTextColor(getResources().getColor(R.color.textGrey));
+                                dialog.dismiss();
+                            }
+                        }).show();
+            }
+        });
 
 
         searchForCustomer_textView.setOnClickListener(new View.OnClickListener() {
@@ -581,11 +564,11 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     private boolean validateFields() {
         boolean valid = true;
 
-        if (searchForItem_textView.getText().toString().equals("Search for item")) {
+        if (searchForItem_textView.getText().toString().equals("SEARCH FOR ITEM")) {
             Toast.makeText(this, "Please select item", Toast.LENGTH_LONG).show();
             valid = false;
         }
-        if (searchForCustomer_textView.getText().toString().equals("Search for customer")) {
+        if (searchForCustomer_textView.getText().toString().equals("SEARCH FOR CUSTOMER")) {
             Toast.makeText(this, "Please select customer", Toast.LENGTH_LONG).show();
             valid = false;
         }
@@ -599,14 +582,31 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             Toast.makeText(this, "Select date", Toast.LENGTH_LONG).show();
             valid = false;
         }
-        if (cash_editText.getText().toString().isEmpty()) {
-            cash_editText.setError("Please enter cash");
-            valid = false;
+        if (cash_checkbox.isChecked()) {
+            if (cash_editText.getText().toString().isEmpty()) {
+                cash_editText.setError("Please enter cash");
+                valid = false;
+            }
         }
+
+        if (voucher_checkbox.isChecked()){
+            if (searchForVoucher_textView.getText().toString().equals("SEARCH FOR VOUCHER")) {
+                Toast.makeText(this, "Select voucher number", Toast.LENGTH_SHORT).show();
+                valid = false;
+            }
+        }
+
+        if (!cash_checkbox.isChecked()&&!voucher_checkbox.isChecked()){
+            Transaction_textview.setError("Select atleast one Transaction Method");
+            Toast.makeText(this, "Select atleast one Transaction Method", Toast.LENGTH_SHORT).show();
+            valid=false;
+        }
+
         if (paid_editText.getText().toString().isEmpty()) {
             paid_editText.setError("Please enter paid amount");
             valid = false;
         }
+
         return valid;
     }
 
@@ -621,16 +621,33 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             //we are connected to a network
             connected = true;
             String key = reference.push().getKey();
+
+
             reference.child("Sale_list").child(key).child("Customer_keyID").setValue(customerKeyID);
             reference.child("Sale_list").child(key).child("Item_keyID").setValue(itemKeyID);
             reference.child("Sale_list").child(key).child("Sale_price").setValue(sale_price_editText.getText().toString());
             reference.child("Sale_list").child(key).child("Date").setValue(date_textView.getText().toString());
-            reference.child("Sale_list").child(key).child("Cash").setValue(cash_editText.getText().toString());
+
             reference.child("Sale_list").child(key).child("Paid").setValue(paid_editText.getText().toString());
 
 
             reference.child("Sale_list").child(key).child("key_id").setValue(key);
             reference.child("Sale_list").child(key).child("added_by").setValue(firebaseAuthUID);
+
+            if (cash_checkbox.isChecked()) {
+                if (!cash_editText.getText().toString().isEmpty()) {
+                    reference.child("Sale_list").child(key).child("Cash").setValue(cash_editText.getText().toString());
+                }
+            }
+
+            //TODO
+            //Problem is here of sending \n in the database with text
+
+            if (voucher_checkbox.isChecked()) {
+                if (!searchForVoucher_textView.getText().toString().equals("SEARCH FOR VOUCHER")) {
+                    reference.child("Sale_list").child(key).child("Voucher_number").setValue(searchForVoucher_textView.getText().toString());
+                }
+            }
 
             reference.child("Item_history").child(itemKeyID).child(key).child("Item").setValue(itemKeyID);
             reference.child("Item_history").child(itemKeyID).child(key).child("Customer_name").setValue(customerName);
@@ -673,6 +690,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                     reference.child("Customer_history").child(customerKeyID).child(key2).child("RBS").setValue("Buy");
                     reference.child("Customer_history").child(customerKeyID).child(key2).child("Timestamp").setValue(exchangeObj.getTimestamp());
                     reference.child("Customer_history").child(customerKeyID).child(key2).child("Date").setValue(exchangeObj.getDate());
+
+
 
             }
 
