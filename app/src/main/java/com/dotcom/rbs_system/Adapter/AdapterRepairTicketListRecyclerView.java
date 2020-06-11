@@ -14,9 +14,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dotcom.rbs_system.Progreess_dialog;
 import com.dotcom.rbs_system.R;
 import com.dotcom.rbs_system.Repair_Ticket;
 import com.dotcom.rbs_system.Repair_details;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -27,7 +29,7 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
     Context context;
     List<String> customerNameList, itemNameList, ticketNoList,pendingStatusList;
     Activity activity;
-    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Listed_faults");
+    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Repairs_ticket_list/"+ FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
 
     public AdapterRepairTicketListRecyclerView(Context context, List<String> customerNameList, List<String> itemNameList, List<String> ticketNoList,List<String> pendingStatusList) {
         this.context = context;
@@ -72,6 +74,14 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
             }
         });
 
+        holder.remove_textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reference.child(ticketNoList.get(position)).removeValue();
+                activity.recreate();
+            }
+        });
+
 
     }
 
@@ -82,15 +92,21 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        Progreess_dialog pd;
+
         TextView ticketNo_textView,customerName_textView,itemName_textView;
+        TextView remove_textView;
         LinearLayout leftLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            pd = new Progreess_dialog();
+
             ticketNo_textView = (TextView)itemView.findViewById(R.id.ticketNo_textView);
             customerName_textView = (TextView)itemView.findViewById(R.id.customerName_textView);
             itemName_textView = (TextView)itemView.findViewById(R.id.itemName_textView);
+            remove_textView = (TextView)itemView.findViewById(R.id.remove_textView);
 
             leftLayout = (LinearLayout) itemView.findViewById(R.id.leftLayout);
 

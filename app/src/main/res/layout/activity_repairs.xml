@@ -333,8 +333,8 @@
                 android:layout_height="wrap_content">
 
                 <Button
-                    android:elevation="5dp"
                     android:id="@+id/addFaults_btn"
+                    android:elevation="5dp"
                     android:layout_weight="1"
                     android:textColor="#0075B5"
                     android:background="@drawable/main_button"
@@ -513,7 +513,48 @@
                 />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/changesConfirmation_linearLayout"
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/confirmChanges_textView"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/textBlue"
+                    android:background="@drawable/main_button"
+                    android:fontFamily="@font/segoe_ui"
+                    android:textSize="15sp"
+                    android:padding="13dp"
+                    android:layout_marginRight="5dp"
+                    android:text="AGREE CHANGES"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"/>
+
+
+                <TextView
+                    android:id="@+id/cancleChanges_textView"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/textGrey"
+                    android:background="@drawable/main_button_grey"
+                    android:fontFamily="@font/segoe_ui"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="5dp"
+                    android:padding="13dp"
+                    android:text="CANCLE CHANGES"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
         </LinearLayout>
+
 
     </androidx.core.widget.NestedScrollView>
 

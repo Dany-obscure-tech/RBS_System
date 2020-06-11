@@ -5,37 +5,59 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:id="@+id/leftLayout"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/ticketNo_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:textColor="@color/textBlue"
-            android:text="Ticket No"
-            android:textSize="18sp" />
+        <LinearLayout
+            android:id="@+id/leftLayout"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/ticketNo_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:textColor="@color/textBlue"
+                android:text="Ticket No"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/customerName_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/segoe_ui"
+                android:text="Customer name"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/itemName_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/segoe_ui"
+                android:text="Item name"
+                android:textSize="16sp" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/customerName_textView"
+            android:id="@+id/remove_textView"
+            android:layout_marginLeft="10dp"
+            android:padding="12dp"
+            android:layout_gravity="center"
+            android:textColor = "@color/textBlue"
+            android:background="@drawable/main_button"
+            android:text="REMOVE"
+            android:textSize="10sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/segoe_ui"
-            android:text="Customer name"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/itemName_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/segoe_ui"
-            android:text="Item name"
-            android:textSize="16sp" />
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
+
+
 
 </RelativeLayout>

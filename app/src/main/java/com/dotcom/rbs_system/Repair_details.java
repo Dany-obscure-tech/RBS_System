@@ -166,11 +166,11 @@ public class Repair_details extends AppCompatActivity {
                     faultPriceList.add(dataSnapshot1.child("Fault_price").getValue().toString());
                     faultKeyIDList.add(dataSnapshot1.child("Fault_key").getValue().toString());
                 }
-                adapterRepairsFaultListRecyclerView = new AdapterRepairsFaultListRecyclerView(Repair_details.this,faultNameList,faultPriceList,null,null,null,null,null);
+                adapterRepairsFaultListRecyclerView = new AdapterRepairsFaultListRecyclerView(Repair_details.this,faultNameList,faultPriceList,null,null,null,null,null,null,false);
                 faultList_recyclerView.setAdapter(adapterRepairsFaultListRecyclerView);
 
                 if (dataSnapshot.child("Pending_Faults").exists()){
-                    changesConfirmation_linearLayout.setVisibility(View.VISIBLE);
+//                    changesConfirmation_linearLayout.setVisibility(View.VISIBLE);
                     pendingFaults_textView.setVisibility(View.VISIBLE);
                     pendingFaultList_recyclerView.setVisibility(View.VISIBLE);
 
@@ -179,7 +179,7 @@ public class Repair_details extends AppCompatActivity {
                         pendingFaultPriceList.add(dataSnapshot1.child("Fault_price").getValue().toString());
                         pendingFaultKeyIDList.add(dataSnapshot1.child("Fault_key").getValue().toString());
                     }
-                    adapterRepairsPendingFaultListRecyclerView = new AdapterRepairsFaultListRecyclerView(Repair_details.this,pendingFaultNameList,pendingFaultPriceList,null,null,null,null,null);
+                    adapterRepairsPendingFaultListRecyclerView = new AdapterRepairsFaultListRecyclerView(Repair_details.this,pendingFaultNameList,pendingFaultPriceList,null,null,null,null,null,null,false);
                     pendingFaultList_recyclerView.setAdapter(adapterRepairsPendingFaultListRecyclerView);
                 }
 

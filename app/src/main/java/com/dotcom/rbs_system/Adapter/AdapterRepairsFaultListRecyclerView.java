@@ -6,13 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.Classes.Currency;
+import com.dotcom.rbs_system.Classes.Repair_details_edit;
 import com.dotcom.rbs_system.R;
+import com.dotcom.rbs_system.Repair_details;
+import com.dotcom.rbs_system.Repairs;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -23,12 +28,19 @@ public class AdapterRepairsFaultListRecyclerView extends RecyclerView.Adapter<Ad
     Currency currencyObj;
     List<String> faultNameList, faultPriceList, faultKeyIDList;
     List<Boolean> faultRemoveCheckList;
-    List<String> deletedPendingFaults;
     List<String> pendingFaultNameList, pendingFaultPriceList, pendingFaultKeyIDList;
     Activity activity;
     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Listed_faults");
 
-    public AdapterRepairsFaultListRecyclerView(Context context, List<String> faultNameList, List<String> faultPriceList, List<String> faultKeyIDList, List<Boolean> faultRemoveCheckList, List<String> pendingFaultNameList,List<String> pendingFaultPriceList,List<String> pendingFaultKeyIDList) {
+    Repairs repairs;
+
+    boolean pendingCheck;
+
+
+    double incremantalAmount;
+    double incremantalPendingAmount;
+
+    public AdapterRepairsFaultListRecyclerView(Context context, List<String> faultNameList, List<String> faultPriceList, List<String> faultKeyIDList, List<Boolean> faultRemoveCheckList, List<String> pendingFaultNameList,List<String> pendingFaultPriceList,List<String> pendingFaultKeyIDList, Repairs repairs, boolean pendingCheck) {
         currencyObj = Currency.getInstance();
 
         this.context = context;
@@ -43,6 +55,10 @@ public class AdapterRepairsFaultListRecyclerView extends RecyclerView.Adapter<Ad
 
 
         activity = (Activity)context;
+        this.repairs = repairs;
+
+        this.pendingCheck=pendingCheck;
+
     }
 
     @NonNull
@@ -68,23 +84,55 @@ public class AdapterRepairsFaultListRecyclerView extends RecyclerView.Adapter<Ad
 
         }
         if (faultKeyIDList!=null){
+
+            if (position==faultNameList.size()-1){
+                incremantalAmount = 0.0;
+                if (!pendingCheck){
+                    for (int i = 0;i<=position;i++){
+                        incremantalAmount = incremantalAmount+(Double.parseDouble(faultPriceList.get(i)));
+                    }
+                }else {
+                    incremantalAmount = Double.parseDouble(Repair_details_edit.getInstance().getAgreedPrice_TextView());
+                }
+                repairs.getIncremantalAmount(incremantalAmount);
+
+            }
+            if (position==faultNameList.size()-1){
+                incremantalPendingAmount = 0.0;
+                for (int i = 0;i<faultNameList.size();i++){
+                    incremantalPendingAmount = incremantalPendingAmount+(Double.parseDouble(faultPriceList.get(i)));
+                }
+
+                repairs.getPendingIncremantalAmount(incremantalPendingAmount);
+            }
+
             holder.remove_textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (!pendingCheck){
+                        incremantalAmount = incremantalAmount-(Double.parseDouble(faultPriceList.get(position)));
+                    }
+
+
+                    incremantalPendingAmount = incremantalPendingAmount-(Double.parseDouble(faultPriceList.get(position)));
+
+
                     faultNameList.remove(position);
                     faultPriceList.remove(position);
                     faultKeyIDList.remove(position);
-
 
                     pendingFaultNameList.remove(faultNameList.size()-position);
                     pendingFaultPriceList.remove(faultNameList.size()-position);
                     pendingFaultKeyIDList.remove(faultNameList.size()-position);
 
+
+                    repairs.getIncremantalAmount(incremantalAmount);
+                    repairs.getPendingIncremantalAmount(incremantalPendingAmount);
+
                     notifyDataSetChanged();
                 }
             });
         }
-
     }
 
     @Override
@@ -106,5 +154,7 @@ public class AdapterRepairsFaultListRecyclerView extends RecyclerView.Adapter<Ad
             remove_textView = (TextView) itemView.findViewById(R.id.remove_textView);
         }
     }
+
+
 
 }
