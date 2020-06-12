@@ -384,7 +384,6 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                 }else {
                     lastActiveDatelist.add("NA");
                 }
-                Toast.makeText(Repairs.this, String.valueOf(lastActiveDatelist.size()), Toast.LENGTH_SHORT).show();
             }
 
             @Override
