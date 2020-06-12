@@ -12,6 +12,7 @@ public class Repair_details_edit {
     String category_textView;
     String condition_textView;
     String notes_textView;
+    String lastActive_textView;
 
     String customerKeyID;
     String customerName_textView;
@@ -87,6 +88,14 @@ public class Repair_details_edit {
 
     public void setNotes_textView(String notes_textView) {
         this.notes_textView = notes_textView;
+    }
+
+    public String getLastActive_textView() {
+        return lastActive_textView;
+    }
+
+    public void setLastActive_textView(String lastActive_textView) {
+        this.lastActive_textView = lastActive_textView;
     }
 
     public String getCustomerKeyID() {

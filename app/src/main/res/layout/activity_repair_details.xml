@@ -127,6 +127,30 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:text="Last Active"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/lastActive_textView"
+                        android:layout_gravity="center"
+                        android:text=""
+                        android:textColor="@color/colorPrimaryDark"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
                         android:text="Category"
                         android:fontFamily="@font/segoe_ui_bold"
                         android:layout_width="100dp"
@@ -145,6 +169,7 @@
                 <LinearLayout
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -166,6 +191,7 @@
                 <LinearLayout
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -268,6 +294,7 @@
                 <LinearLayout
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -288,6 +315,7 @@
                 <LinearLayout
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 

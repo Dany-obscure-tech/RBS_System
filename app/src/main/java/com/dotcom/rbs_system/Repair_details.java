@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dotcom.rbs_system.Adapter.AdapterItemHistoryListRecyclerView;
 import com.dotcom.rbs_system.Adapter.AdapterRepairsFaultListRecyclerView;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Classes.Repair_details_edit;
@@ -22,9 +26,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,8 +47,9 @@ public class Repair_details extends AppCompatActivity {
     TextView edit_textView;
     TextView confirmChanges_textView,cancleChanges_textView;
     TextView confirmTicket_textView,cancleTicket_textView;
+    TextView lastActive_textView;
 
-    DatabaseReference repairRef,repairTicketRef,customerRef,itemRef,reference;
+    DatabaseReference repairRef,repairTicketRef,customerRef,itemRef,reference,itemHistoryRef;
 
     String repairID,itemKeyID,customerKeyID;
     String firebaseUserID;
@@ -50,12 +57,19 @@ public class Repair_details extends AppCompatActivity {
 
     List<String> faultNameList,faultPriceList,faultKeyIDList;
     List<String> pendingFaultNameList,pendingFaultPriceList,pendingFaultKeyIDList;
+    List<String> dateList;
 
+    ImageButton gmail_btn,sms_btn,print_btn;
+    Button btn_done;
+
+    Query orderQuery;
 
 
     long timestamp;
 
-    Progreess_dialog pd1,pd2,pd3;
+    Progreess_dialog pd1,pd2,pd3,pd4;
+    Dialog sendingdialog;
+
 
     RecyclerView faultList_recyclerView,pendingFaultList_recyclerView;
     AdapterRepairsFaultListRecyclerView adapterRepairsFaultListRecyclerView,adapterRepairsPendingFaultListRecyclerView;
@@ -112,6 +126,7 @@ public class Repair_details extends AppCompatActivity {
 
         confirmTicket_textView = (TextView) findViewById(R.id.confirmTicket_textView);
         cancleTicket_textView = (TextView) findViewById(R.id.cancleTicket_textView);
+        lastActive_textView = (TextView) findViewById(R.id.lastActive_textView);
 
         faultList_recyclerView = (RecyclerView) findViewById(R.id.faultList_recyclerView);
         faultList_recyclerView.setLayoutManager(new GridLayoutManager(Repair_details.this,1));
@@ -121,6 +136,21 @@ public class Repair_details extends AppCompatActivity {
         pd1 = new Progreess_dialog();
         pd2 = new Progreess_dialog();
         pd3 = new Progreess_dialog();
+        pd4 = new Progreess_dialog();
+
+        sendingdialog = new Dialog(this);
+        sendingdialog.setContentView(R.layout.dialoge_items);
+        sendingdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                finish();
+            }
+        });
+
+        gmail_btn = (ImageButton) sendingdialog.findViewById(R.id.gmail_btn);
+        print_btn = (ImageButton) sendingdialog.findViewById(R.id.print_btn);
+        sms_btn = (ImageButton) sendingdialog.findViewById(R.id.sms_btn);
+        btn_done = (Button) sendingdialog.findViewById(R.id.btn_done);
 
         repairID = getIntent().getStringExtra("REPAIR_ID");
         firebaseUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -131,12 +161,14 @@ public class Repair_details extends AppCompatActivity {
         pendingFaultNameList = new ArrayList<>();
         pendingFaultPriceList = new ArrayList<>();
         pendingFaultKeyIDList = new ArrayList<>();
+        dateList = new ArrayList<>();
 
         repairRef = FirebaseDatabase.getInstance().getReference("Repairs_list/"+firebaseUserID+"/"+repairID);
         repairTicketRef = FirebaseDatabase.getInstance().getReference("Repairs_ticket_list/"+firebaseUserID+"/"+repairID);
         customerRef = FirebaseDatabase.getInstance().getReference("Customer_list");
         itemRef = FirebaseDatabase.getInstance().getReference("Items");
         reference = FirebaseDatabase.getInstance().getReference();
+
 
     }
 
@@ -248,12 +280,44 @@ public class Repair_details extends AppCompatActivity {
                         pd3.dismissProgressBar(Repair_details.this);
                     }
                 });
+
+                gettingHistoryList(item_keyID);
             }
 
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 pd1.dismissProgressBar(Repair_details.this);
+            }
+        });
+    }
+
+    private void gettingHistoryList(String itemID) {
+        itemHistoryRef = FirebaseDatabase.getInstance().getReference("Item_history/"+itemID);
+
+        orderQuery = itemHistoryRef.orderByChild("Timestamp");
+        orderQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                pd4.showProgressBar(Repair_details.this);
+                if (dataSnapshot.exists()){
+                    for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                        dateList.add(dataSnapshot1.child("Date").getValue().toString());
+
+                    }
+                    Collections.reverse(dateList);
+                    lastActive_textView.setText(dateList.get(0));
+                    repair_details_edit_obj.setLastActive_textView(dateList.get(0));
+
+                    pd4.dismissProgressBar(Repair_details.this);
+                }else {
+                    pd4.dismissProgressBar(Repair_details.this);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                pd4.dismissProgressBar(Repair_details.this);
             }
         });
     }
@@ -269,7 +333,42 @@ public class Repair_details extends AppCompatActivity {
         cancleTicket();
 
         historyActivity();
+        sending_dialog();
         backButton();
+    }
+
+    private void sending_dialog() {
+        print_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Repair_details.this, "YEs working", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        gmail_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(Intent.ACTION_SEND);
+                it.setType("message/rfc822");
+                startActivity(Intent.createChooser(it,"Choose Mail App"));
+            }
+        });
+        sms_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + "0323"));
+                intent.putExtra("sms_body", "Hi how are you");
+                startActivity(intent);
+            }
+        });
+        btn_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                sendingdialog.dismiss();
+                finish();
+            }
+        });
     }
 
     private void editRepairDetails() {
@@ -383,7 +482,8 @@ public class Repair_details extends AppCompatActivity {
 
                     repairTicketRef.removeValue();
                     repairRef.removeValue();
-                    finish();
+                    sendingdialog.show();
+
                 }else {
                     Toast.makeText(Repair_details.this, "Changes pending!", Toast.LENGTH_SHORT).show();
                 }

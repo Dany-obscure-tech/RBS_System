@@ -33,6 +33,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
@@ -40,6 +41,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -58,7 +60,9 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     DatabaseReference existingCustomersRef,existingItemsRef;
     DatabaseReference reference;
     DatabaseReference faultListRef;
+    DatabaseReference itemHistoryRef;
     DatabaseReference repairRef,repairTicketRef;
+    Query orderQuery;
 
     Progress_dialoge pd1,pd2,pd3,pd4;
     Dialog sendingdialog;
@@ -80,6 +84,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     TextView searchForItem_textView,searchForCustomer_textView;
     TextView pendingAgreed_price_textView;
     TextView confirmChanges_textView,cancleChanges_textView;
+    TextView last_active_textView;
 
     EditText agreed_price_editText,paidAmount_editText,special_condition_editText;
     EditText pendingAgreed_price_editText;
@@ -102,6 +107,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     List<String> tempFaultNameList;
     List<String> tempFaultPriceList;
     List<String> tempFaultKeyIDList;
+    List<String> dateList,lastActiveDatelist;
     List<String> pendingFaultNameList, pendingFaultPriceList, pendingFaultKeyIDList;
     List<Boolean> tempFaultRemoveCheckList;
 
@@ -110,7 +116,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     private ArrayList<SampleSearchModel> createItemsData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<exisitngItemsList.size();i++){
-            items.add(new SampleSearchModel(exisitngItemsList.get(i)+"\n("+exisitngItemsIDList.get(i)+")",exisitngItemsIDList.get(i),exisitngItemsList.get(i),exisitngItemsCategoryList.get(i),existingItemsConditionsList.get(i),existingItemsNotesList.get(i),null,exisitngItemsKeyIDList.get(i)));
+            items.add(new SampleSearchModel(exisitngItemsList.get(i)+"\n("+exisitngItemsIDList.get(i)+")",exisitngItemsIDList.get(i),exisitngItemsList.get(i),exisitngItemsCategoryList.get(i),existingItemsConditionsList.get(i),existingItemsNotesList.get(i),lastActiveDatelist.get(i),exisitngItemsKeyIDList.get(i)));
 
         }
 
@@ -193,6 +199,9 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         pendingFaultPriceList = new ArrayList<>();
         pendingFaultKeyIDList = new ArrayList<>();
 
+        dateList = new ArrayList<>();
+        lastActiveDatelist = new ArrayList<>();
+
         faultListRef = FirebaseDatabase.getInstance().getReference("Listed_faults");
 
         addFaults_btn = (Button)findViewById(R.id.addFaults_btn);
@@ -254,6 +263,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         pendingAgreed_price_textView = (TextView)findViewById(R.id.pendingAgreed_price_textView);
         confirmChanges_textView = (TextView)findViewById(R.id.confirmChanges_textView);
         cancleChanges_textView = (TextView)findViewById(R.id.cancleChanges_textView);
+        last_active_textView = (TextView)findViewById(R.id.last_active_textView);
 
         /////Firebase config
         firebaseAuthUID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -323,6 +333,8 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         existingItemsConditionsList.clear();
         existingItemsNotesList.clear();
         exisitngItemsKeyIDList.clear();
+        lastActiveDatelist.clear();
+        dateList.clear();
 
         existingItemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -336,6 +348,9 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                         existingItemsConditionsList.add(String.valueOf(dataSnapshot2.child("Condition").getValue()));
                         existingItemsNotesList.add(String.valueOf(dataSnapshot2.child("Notes").getValue()));
                         exisitngItemsKeyIDList.add(String.valueOf(dataSnapshot2.child("key_id").getValue()));
+                        gettingHistoryList(String.valueOf(dataSnapshot2.child("key_id").getValue()));
+
+
                     }
                 }
                 pd3.dismissProgressBar(Repairs.this);
@@ -348,7 +363,34 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                 pd3.dismissProgressBar(Repairs.this);
             }
         });
+    }
+    private void gettingHistoryList(String itemID) {
+        itemHistoryRef = FirebaseDatabase.getInstance().getReference("Item_history/"+itemID);
 
+        orderQuery = itemHistoryRef.orderByChild("Timestamp");
+        orderQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    dateList.clear();
+                    for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                        dateList.add(dataSnapshot1.child("Date").getValue().toString());
+
+                    }
+                    Collections.reverse(dateList);
+                    lastActiveDatelist.add(dateList.get(0));
+
+
+                }else {
+                    lastActiveDatelist.add("NA");
+                }
+                Toast.makeText(Repairs.this, String.valueOf(lastActiveDatelist.size()), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     private void getFaultsList() {
@@ -450,6 +492,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                                 itemCategory = item.getVal1();
                                 condition_textView.setText(item.getVal2());
                                 notes_textView.setText(item.getVal3());
+                                last_active_textView.setText(item.getVal4());
                                 itemKeyID = item.getVal5();
                                 searchForItem_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
                                 searchForItem_textView.setTextColor(getResources().getColor(R.color.textGrey));
@@ -524,6 +567,9 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             public void onClick(View v) {
 
                 sendingdialog.dismiss();
+                Intent intent = new Intent(Repairs.this,Repair_details.class);
+                intent.putExtra("REPAIR_ID",repair_details_edit_obj.getTicketNo_TextView());
+                startActivity(intent);
                 finish();
             }
         });
@@ -559,10 +605,10 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                             }
                             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Status").setValue("pending");
 
-                            Toast.makeText(Repairs.this, "Submit Successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Repairs.this, "Submit Successfully123", Toast.LENGTH_SHORT).show();
+                            sendingdialog.show();
                             pd1.dismissProgressBar(Repairs.this);
                             repair_details_edit_obj.clear();
-                            finish();
 
                         }
                         else {
@@ -601,10 +647,8 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
 
                     repairTicketRef.child("Status").setValue("clear");
 
-                    Intent intent = new Intent(Repairs.this,Repair_details.class);
-                    intent.putExtra("REPAIR_ID",repair_details_edit_obj.getTicketNo_TextView());
-                    finish();
-                    startActivity(intent);
+                    sendingdialog.show();
+
                 }else {
                     Toast.makeText(Repairs.this, "No changes", Toast.LENGTH_SHORT).show();
                 }
@@ -809,6 +853,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             itemID = repair_details_edit_obj.getSerialNo_textView();
             category_textView.setText(repair_details_edit_obj.getCategory_textView());
             condition_textView.setText(repair_details_edit_obj.getCondition_textView());
+            last_active_textView.setText(repair_details_edit_obj.getLastActive_textView());
             notes_textView.setText(repair_details_edit_obj.getNotes_textView());
             itemDetails.setVisibility(View.VISIBLE);
 
