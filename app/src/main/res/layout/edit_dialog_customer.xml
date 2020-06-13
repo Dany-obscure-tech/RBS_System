@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tv_confirmbuy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textBlue"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:fontFamily="@font/segoe_ui_bold"
+        android:text="Edit Item Details"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:background="#0075B5"
+        android:layout_height="1dp"/>
+
+    <TextView
+        android:id="@+id/phone_no_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/segoe_ui_bold"
+        android:text="Phone.no"
+        android:textSize="16sp" />
+
+    <EditText
+        android:inputType="number"
+        android:id="@+id/ac_phoneno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/phone_no_textview"
+        android:backgroundTint="#6E76E3"
+        android:fontFamily="@font/segoe_ui"
+        android:hint="Enter your phone number"
+        android:maxLength="11"
+        android:textColor="#9F9F9F"
+        android:textColorHint="#9F9F9F"
+        android:padding="5dp"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/address_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ac_phoneno"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/segoe_ui_bold"
+        android:padding="5dp"
+        android:text="Address"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/ac_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/address_textview"
+        android:backgroundTint="#6E76E3"
+        android:fontFamily="@font/segoe_ui"
+        android:hint="Enter your address"
+        android:padding="5dp"
+        android:maxLength="32"
+        android:textColor="#9F9F9F"
+        android:textColorHint="#9F9F9F"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/email_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ac_address"
+        android:padding="5dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/segoe_ui_bold"
+        android:text="Email"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/ac_email"
+        android:inputType="textEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/email_textview"
+        android:backgroundTint="#6E76E3"
+        android:fontFamily="@font/segoe_ui"
+        android:padding="5dp"
+        android:hint="Enter your email"
+        android:maxLength="32"
+        android:textColor="#9F9F9F"
+        android:textColorHint="#9F9F9F"
+        android:textSize="16sp" />
+
+
+    <LinearLayout
+        android:layout_below="@+id/ac_email"
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/save_btn"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:textColor = "@color/textBlue"
+            android:background="@drawable/main_button"
+            android:fontFamily="@font/segoe_ui"
+            android:textSize="15sp"
+            android:text="Save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/cancel_btn"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:textColor = "@color/textGrey"
+            android:background="@drawable/main_button_grey"
+            android:fontFamily="@font/segoe_ui"
+            android:textSize="15sp"
+            android:text="Cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -135,6 +135,7 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
         date_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO
               Calendar calendar=Calendar.getInstance();
               int year= (calendar.get(Calendar.YEAR))-18;
               int month= 1;
@@ -288,7 +289,9 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
                         @Override
                         public void onSuccess(Uri uri) {
                             reference.child("Customer_list").child(key).child("id_image_url").setValue(String.valueOf(uri));
+                            pass_back_data();
                             pd.dismissProgressBar(Customer_details.this);
+
                             finish();
                         }
                     });
@@ -309,6 +312,34 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             connected = false;
         }
 
+    }
+
+    private void pass_back_data() {
+//        Intent getting_intent = getIntent();
+//        String get_intent = getting_intent.getStringExtra("BUY");
+//        if (get_intent.equals("ON")){
+//            String category=selectCategory_btn.getText().toString() ;
+//            Float condition= ratingBar.getRating() ;
+//            String notes=notes_editText.getText().toString() ;
+//            Intent intent= new Intent();
+//            intent.putExtra("Category", category);
+//            intent.putExtra("Condition", condition);
+//            intent.putExtra("Notes", notes);
+//            setResult(RESULT_OK, intent);
+//
+//        }
+
+
+
+        // get the text from the EditText
+        String ac_phone_no = ac_phoneno.getText().toString();
+        String ac_email_ = ac_email.getText().toString();
+
+        // put the String to pass back into an Intent and close this activity
+        Intent intent = new Intent();
+        intent.putExtra("AC_phone_no", ac_phone_no);
+        intent.putExtra("AC_email", ac_email_);
+        setResult(RESULT_FIRST_USER, intent);
     }
 
     @Override

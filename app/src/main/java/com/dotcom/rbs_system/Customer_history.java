@@ -5,11 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterCustomerHistoryListRecyclerView;
 import com.google.firebase.database.DataSnapshot;
@@ -49,6 +54,12 @@ public class Customer_history extends AppCompatActivity {
 
     ImageButton Back_btn;
 
+    EditText ac_phoneno,ac_address,ac_email;
+
+    Button edit_btn,cancel_btn,save_btn;
+
+    Dialog edit_dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +78,16 @@ public class Customer_history extends AppCompatActivity {
         address_textView = (TextView)findViewById(R.id.address_textView);
         email_textView = (TextView)findViewById(R.id.email_textView);
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
+        edit_btn=(Button)findViewById(R.id.edit_btn);
+
+        edit_dialog = new Dialog(this);
+        edit_dialog.setContentView(R.layout.edit_dialog_customer);
+
+        ac_phoneno = (EditText) edit_dialog.findViewById(R.id.ac_phoneno);
+        ac_address = (EditText) edit_dialog.findViewById(R.id.ac_address);
+        ac_email = (EditText) edit_dialog.findViewById(R.id.ac_email);
+        cancel_btn = (Button) edit_dialog.findViewById(R.id.cancel_btn);
+        save_btn = (Button) edit_dialog.findViewById(R.id.save_btn);
 
         customerKeyID = getIntent().getStringExtra("CUSTOMER_ID");
 
@@ -163,7 +184,53 @@ public class Customer_history extends AppCompatActivity {
 
     private void ClickListeners() {
         customerDetailsToggle();
+        editbtn();
+        cancelbtn();
+        savebtn();
         backbtn();
+    }
+
+    private void editbtn() {
+        edit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edit_dialog.show();
+            }
+        });
+    }
+
+    private void savebtn() {
+        save_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                edit_data();
+            }
+        });
+    }
+
+    private void edit_data() {
+        if (!ac_phoneno.getText().toString().equals("")){
+            customerRef.child(customerKeyID).child("Phone_no").setValue(ac_phoneno.getText().toString());
+        }
+        if (!ac_address.getText().toString().equals("")){
+            customerRef.child(customerKeyID).child("Address").setValue(ac_address.getText().toString());
+        }
+        if (!ac_email.getText().toString().equals("")){
+            customerRef.child(customerKeyID).child("Email").setValue(ac_email.getText().toString());
+        }
+        Toast.makeText(this, "Data save Successfully", Toast.LENGTH_SHORT).show();
+        edit_dialog.dismiss();
+
+    }
+
+    private void cancelbtn(){
+        cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edit_dialog.dismiss();
+            }
+        });
     }
 
     private void customerDetailsToggle() {

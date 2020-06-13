@@ -1,6 +1,7 @@
 package com.dotcom.rbs_system;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -51,6 +52,9 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     long timestamp;
+
+    private static final int ITEM_ACTIVITY_REQUEST_CODE = 0;
+    private static final int CUSTOMER_ACTIVITY_REQUEST_CODE = 0;
 
     double incremantalAmount;
     double incremantalPendingAmount;
@@ -527,7 +531,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Repairs.this,Customer_details.class);
-                startActivity(intent);
+                startActivityForResult(intent,CUSTOMER_ACTIVITY_REQUEST_CODE);
             }
         });
 
@@ -535,7 +539,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Repairs.this,Item_detail.class);
-                startActivity(intent);
+                startActivityForResult(intent,ITEM_ACTIVITY_REQUEST_CODE);
             }
         });
         print_btn.setOnClickListener(new View.OnClickListener() {
@@ -1011,6 +1015,33 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         super.onRestart();
         fetchingExisitingCustomers();
         fetchingExisitingItems();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ITEM_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) { // Activity.RESULT_OK
+
+                // get String data from Intent
+                String returnString = data.getStringExtra("Last_Active");
+                // set text view with string
+                last_active_textView.setText(returnString);
+                itemDetails.setVisibility(View.VISIBLE);
+            }
+        }
+        if (requestCode == CUSTOMER_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_FIRST_USER) { // Activity.RESULT_OK
+                // get String data from Intent
+                String phone_no_returnString = data.getStringExtra("AC_phone_no");
+                String email_returnString = data.getStringExtra("AC_email");
+                // set text view with string
+                //TODO
+                phno_textView.setText(phone_no_returnString);
+                email_textView.setText(email_returnString);
+                customerDetails.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     public void getIncremantalAmount(double incremantalAmount){

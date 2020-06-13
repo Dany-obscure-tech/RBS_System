@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +54,15 @@ public class Item_history extends AppCompatActivity {
 
     ImageButton Back_btn;
 
+    Button edit_btn,save_btn,cancel_btn;
+
+    Dialog edit_dialog;
+
+    RatingBar ratingBar;
+
+    EditText notes_editText;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +85,16 @@ public class Item_history extends AppCompatActivity {
         condition_textView = (TextView)findViewById(R.id.condition_textView);
         notes_textView = (TextView)findViewById(R.id.notes_textView);
         Back_btn = (ImageButton)findViewById(R.id.Back_btn);
+        edit_btn = (Button)findViewById(R.id.edit_btn);
+
+        edit_dialog = new Dialog(this);
+        edit_dialog.setContentView(R.layout.edit_dialog_item);
+
+        ratingBar = (RatingBar) edit_dialog.findViewById(R.id.ratingBar);
+        notes_editText = (EditText) edit_dialog.findViewById(R.id.notes_editText);
+        save_btn = (Button) edit_dialog.findViewById(R.id.save_btn);
+        cancel_btn = (Button) edit_dialog.findViewById(R.id.cancel_btn);
+
 
 
         itemID = getIntent().getStringExtra("ITEM_ID");
@@ -168,7 +191,50 @@ public class Item_history extends AppCompatActivity {
 
     private void ClickListeners() {
         itemDetailsToggle();
+        editbtn();
+        cancelbtn();
+        savebtn();
         backbtn();
+    }
+
+    private void savebtn() {
+        save_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                edit_data(itemCategory,itemID);
+            }
+        });
+    }
+
+    private void edit_data(String item_category, String item_keyID) {
+        if (!ratingBar.equals("0")){
+            itemRef.child(item_category).child(item_keyID).child("Condition").setValue(ratingBar.getRating());
+        }
+        if (!notes_editText.getText().toString().equals("")){
+            itemRef.child(item_category).child(item_keyID).child("Notes").setValue(notes_editText.getText().toString());
+        }
+        Toast.makeText(this, "Data save Successfully", Toast.LENGTH_SHORT).show();
+        edit_dialog.dismiss();
+    }
+
+    private void cancelbtn(){
+        cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edit_dialog.dismiss();
+            }
+        });
+    }
+
+    private void editbtn() {
+        edit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edit_dialog.show();
+
+            }
+        });
     }
 
     private void backbtn() {

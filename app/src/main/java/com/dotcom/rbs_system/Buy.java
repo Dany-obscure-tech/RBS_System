@@ -1,5 +1,6 @@
 package com.dotcom.rbs_system;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import android.app.DatePickerDialog;
@@ -39,6 +40,9 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+
+    private static final int ITEM_ACTIVITY_REQUEST_CODE = 0;
+    private static final int CUSTOMER_ACTIVITY_REQUEST_CODE = 0;
 
     Exchanged_itemdata exchanged_itemdata = Exchanged_itemdata.getInstance();
 
@@ -448,7 +452,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Buy.this,Item_detail.class);
-                startActivity(intent);
+                intent.putExtra("BUY", "ON");
+                startActivityForResult(intent,ITEM_ACTIVITY_REQUEST_CODE);
             }
         });
 
@@ -692,5 +697,36 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         super.onRestart();
         fetchingExisitingCustomers();
         fetchingExisitingItems();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ITEM_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) { // Activity.RESULT_OK
+
+                // get String data from Intent
+                String returnCategory = data.getStringExtra("Category");
+                String returnCondition = data.getStringExtra("Condition");
+                String returnNotes = data.getStringExtra("Notes");
+                // set text view with string
+                category_textView.setText(returnCategory);
+                condition_textView.setText(returnCondition);
+                category_textView.setText(returnNotes);
+                itemDetails.setVisibility(View.VISIBLE);
+            }
+        }
+        if (requestCode == CUSTOMER_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_FIRST_USER) { // Activity.RESULT_OK
+                // get String data from Intent
+                String phone_no_returnString = data.getStringExtra("AC_phone_no");
+                String email_returnString = data.getStringExtra("AC_email");
+                // set text view with string
+                //TODO
+                phno_textView.setText(phone_no_returnString);
+                email_textView.setText(email_returnString);
+                customerDetails.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }

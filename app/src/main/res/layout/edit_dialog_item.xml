@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tv_confirmbuy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textBlue"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:fontFamily="@font/segoe_ui_bold"
+        android:text="Edit Item Details"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:background="#0075B5"
+        android:layout_height="1dp"/>
+
+    <TextView
+        android:id="@+id/condition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:padding="5dp"
+        android:fontFamily="@font/segoe_ui_bold"
+        android:text="Condition"
+        android:textSize="16sp" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_below="@+id/condition"
+        android:layout_centerHorizontal="true"
+        android:stepSize="1.0"
+        android:rating="1"
+        android:numStars="5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/notes_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ratingBar"
+        android:padding="5dp"
+        android:fontFamily="@font/segoe_ui_bold"
+        android:text="Notes"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/notes_editText"
+        android:layout_below="@+id/notes_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:backgroundTint="#6E76E3"
+        android:fontFamily="@font/segoe_ui"
+        android:hint="Write notes about the item"
+        android:textColor="#9F9F9F"
+        android:textColorHint="#9F9F9F"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_below="@+id/notes_editText"
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/save_btn"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:textColor = "@color/textBlue"
+            android:background="@drawable/main_button"
+            android:fontFamily="@font/segoe_ui"
+            android:textSize="15sp"
+            android:text="Save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/cancel_btn"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:textColor = "@color/textGrey"
+            android:background="@drawable/main_button_grey"
+            android:fontFamily="@font/segoe_ui"
+            android:textSize="15sp"
+            android:text="Cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
