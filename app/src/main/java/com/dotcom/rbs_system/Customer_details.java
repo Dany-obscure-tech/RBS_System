@@ -43,6 +43,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -52,6 +53,7 @@ import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
 public class Customer_details extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     String currentDateString;
+    String key;
 
     StorageReference storageReference;
     Progress_dialoge pd;
@@ -138,14 +140,11 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
                 //TODO
               Calendar calendar=Calendar.getInstance();
               int year= (calendar.get(Calendar.YEAR))-18;
-              int month= 1;
+              int month= 0;
               int day= 1;
-              DatePickerDialog dialog= new DatePickerDialog(
-                      Customer_details.this,
-                      android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                      onDateSetListener,
-                      year,month,day);
-                currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+
+              DatePickerDialog dialog = new DatePickerDialog(Customer_details.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,onDateSetListener,year,month,day);
+              currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
               dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
               dialog.show();
             }
@@ -154,8 +153,16 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month=month+1;
-                String date=month+ "/"+dayOfMonth+"/"+ year;
-                date_of_birth_text.setText(currentDateString);
+                String date = dayOfMonth+"/"+ month + "/"+ year;
+
+                SimpleDateFormat input = new SimpleDateFormat("d/M/yyyy");
+                SimpleDateFormat output = new SimpleDateFormat("EEEE, d MMMM yyyy");
+
+                try {
+                    date_of_birth_text.setText(output.format(input.parse(date)));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         };
 
@@ -270,7 +277,7 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             //we are connected to a network
             connected = true;
 
-            final String key = reference.push().getKey();
+            key = reference.push().getKey();
             reference.child("Customer_list").child(key).child("Name").setValue(ac_title.getText().toString());
             reference.child("Customer_list").child(key).child("Phone_no").setValue(ac_phoneno.getText().toString());
             reference.child("Customer_list").child(key).child("ID").setValue(ac_id.getText().toString());
@@ -332,11 +339,16 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
 
 
         // get the text from the EditText
+        String ac_title_ = ac_title.getText().toString();
+        String ac_id_ = ac_id.getText().toString();
         String ac_phone_no = ac_phoneno.getText().toString();
         String ac_email_ = ac_email.getText().toString();
 
         // put the String to pass back into an Intent and close this activity
         Intent intent = new Intent();
+        intent.putExtra("AC_title", ac_title_);
+        intent.putExtra("AC_id", ac_id_);
+        intent.putExtra("AC_key_id", key);
         intent.putExtra("AC_phone_no", ac_phone_no);
         intent.putExtra("AC_email", ac_email_);
         setResult(RESULT_FIRST_USER, intent);

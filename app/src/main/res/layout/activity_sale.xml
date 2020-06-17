@@ -94,6 +94,7 @@
                 <LinearLayout
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -116,6 +117,7 @@
                 <LinearLayout
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -137,6 +139,7 @@
                 <LinearLayout
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -149,6 +152,29 @@
                     <TextView
                         android:id="@+id/notes_textView"
                         android:text="asoidhjas das;djasdd asd;ojkasd a;sdljasd as;sdkjasd  as;djas dpo;oajssdd  asd;pjasd  as;lkdkjjasd ;ojasd"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Last Active"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/last_active_textView"
+                        android:text="Last active time"
                         android:textColor="@color/colorPrimaryDark"
                         android:fontFamily="@font/segoe_ui_bold"
                         android:layout_width="wrap_content"
@@ -205,6 +231,7 @@
                 <LinearLayout
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -227,6 +254,7 @@
                 <LinearLayout
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -248,6 +276,7 @@
                 <LinearLayout
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -291,8 +320,9 @@
 
 
             </LinearLayout>
+
             <LinearLayout
-                android:visibility="visible"
+                android:visibility="gone"
                 android:id="@+id/toggling_linear"
                 android:orientation="vertical"
                 android:layout_width="match_parent"

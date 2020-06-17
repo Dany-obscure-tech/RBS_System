@@ -214,8 +214,9 @@ public class Item_history extends AppCompatActivity {
         if (!notes_editText.getText().toString().equals("")){
             itemRef.child(item_category).child(item_keyID).child("Notes").setValue(notes_editText.getText().toString());
         }
-        Toast.makeText(this, "Data save Successfully", Toast.LENGTH_SHORT).show();
         edit_dialog.dismiss();
+        recreate();
+
     }
 
     private void cancelbtn(){

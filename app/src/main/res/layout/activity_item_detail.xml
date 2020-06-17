@@ -54,14 +54,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/selectCategory_btn"
+                <TextView
+                    android:id="@+id/selectCategory_textView"
                     android:layout_weight="1"
-                    android:background="@drawable/main_button"
+                    android:gravity="center"
                     android:textColor="#0075B5"
+                    android:background="@drawable/main_button"
                     android:fontFamily="@font/segoe_ui"
                     android:textSize="15sp"
-                    android:text="Select Category"
+                    android:padding="13dp"
+                    android:text="CATEGORY"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 

@@ -221,6 +221,7 @@ public class Customer_history extends AppCompatActivity {
         }
         Toast.makeText(this, "Data save Successfully", Toast.LENGTH_SHORT).show();
         edit_dialog.dismiss();
+        recreate();
 
     }
 

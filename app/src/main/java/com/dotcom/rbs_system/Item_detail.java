@@ -1,23 +1,16 @@
 package com.dotcom.rbs_system;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.pdf.PdfDocument;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dotcom.rbs_system.Model.SampleSearchModel;
@@ -41,9 +35,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +48,8 @@ public class Item_detail extends AppCompatActivity {
     Progress_dialoge pd;
 
     private static final int CAMERA_REQUEST_CODE = 1;
-    Button selectCategory_btn,submit_btn,uploadId_btn;
+    Button submit_btn,uploadId_btn;
+    TextView selectCategory_textView;
     DatabaseReference categoryRef,reference;
     ImageView id_imageView;
     EditText itemName_editText,notes_editText,itemId_editText,price_editText;
@@ -67,6 +59,8 @@ public class Item_detail extends AppCompatActivity {
     Uri tempUri=null;
     StorageReference idStorageReference;
     StorageReference storageReference;
+
+    String key;
 
     private ArrayList<SampleSearchModel> createCategoryData(){
 
@@ -103,10 +97,10 @@ public class Item_detail extends AppCompatActivity {
         categoryList = new ArrayList<>();
         categoryRef = FirebaseDatabase.getInstance().getReference("Categories");
         reference = FirebaseDatabase.getInstance().getReference();
-        selectCategory_btn = (Button)findViewById(R.id.selectCategory_btn);
         submit_btn = (Button)findViewById(R.id.submit_btn);
         uploadId_btn = (Button) findViewById(R.id.uploadId_btn);
         id_imageView = (ImageView) findViewById(R.id.id_imageView);
+        selectCategory_textView = (TextView) findViewById(R.id.selectCategory_textView);
         idStorageReference = storageReference.child("Item_Images");
 
     }
@@ -131,7 +125,7 @@ public class Item_detail extends AppCompatActivity {
     }
 
     private void selectCategory() {
-        selectCategory_btn.setOnClickListener(new View.OnClickListener() {
+        selectCategory_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new SimpleSearchDialogCompat(Item_detail.this, "Search...",
@@ -140,9 +134,9 @@ public class Item_detail extends AppCompatActivity {
                             @Override
                             public void onSelected(BaseSearchDialogCompat dialog,
                                                    SampleSearchModel item, int position) {
-                                selectCategory_btn.setText(item.getTitle());
-                                selectCategory_btn.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
-                                selectCategory_btn.setTextColor(getResources().getColor(R.color.textGrey));
+                                selectCategory_textView.setText(item.getTitle());
+                                selectCategory_textView.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
+                                selectCategory_textView.setTextColor(getResources().getColor(R.color.textGrey));
 
                                 dialog.dismiss();
                             }
@@ -163,15 +157,15 @@ public class Item_detail extends AppCompatActivity {
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
             //we are connected to a network
             connected = true;
-            final String key = reference.push().getKey();
-            reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Category").setValue(selectCategory_btn.getText().toString());
-            reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Item_id").setValue(itemId_editText.getText().toString());
-            reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
-            reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Item_name").setValue(itemName_editText.getText().toString());
-            reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Condition").setValue(ratingBar.getRating());
-            reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Notes").setValue(notes_editText.getText().toString());
-            reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("Price").setValue(price_editText.getText().toString());
-            reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("key_id").setValue(key);
+            key = reference.push().getKey();
+            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Category").setValue(selectCategory_textView.getText().toString());
+            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Item_id").setValue(itemId_editText.getText().toString());
+            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
+            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Item_name").setValue(itemName_editText.getText().toString());
+            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Condition").setValue(ratingBar.getRating());
+            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Notes").setValue(notes_editText.getText().toString());
+            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Price").setValue(price_editText.getText().toString());
+            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("key_id").setValue(key);
 
             idStorageReference.child(itemId_editText.getText().toString()).child("image").putFile(tempUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -180,7 +174,7 @@ public class Item_detail extends AppCompatActivity {
                     idStorageReference.child(itemId_editText.getText().toString()).child("image").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            reference.child("Items").child(selectCategory_btn.getText().toString()).child(key).child("id_image_url").setValue(String.valueOf(uri));
+                            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("id_image_url").setValue(String.valueOf(uri));
 
                             pd.dismissProgressBar(Item_detail.this);
                             pass_back_data();
@@ -227,7 +221,12 @@ public class Item_detail extends AppCompatActivity {
         String last_active = "NA";
         // put the String to pass back into an Intent and close this activity
         Intent intent = new Intent();
+        intent.putExtra("Item_name", itemName_editText.getText().toString());
+        intent.putExtra("Item_id", itemId_editText.getText().toString());
+        intent.putExtra("Item_category", selectCategory_textView.getText().toString());
+        intent.putExtra("Item_keyid", key);
         intent.putExtra("Last_Active", last_active);
+
         setResult(RESULT_OK, intent);
     }
 
@@ -261,7 +260,7 @@ public class Item_detail extends AppCompatActivity {
     private boolean validateFields() {
         boolean valid = true;
 
-        if (selectCategory_btn.getText().toString().equals("Select Category")) {
+        if (selectCategory_textView.getText().toString().equals("Select Category")) {
             Toast.makeText(this, "Please select category", Toast.LENGTH_LONG).show();
             valid = false;
         }

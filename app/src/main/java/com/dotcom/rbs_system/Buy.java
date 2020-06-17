@@ -27,12 +27,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
@@ -49,14 +51,15 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     CheckBox cash_checkbox,voucher_checkbox;
     TextView voucher_number,voucher_number_textview,Transaction_textview;
 
-    String voucher_key;
+    String voucher_key,itemID;
 
     Progress_dialoge pd,pd2,pd3;
     LinearLayout toggling_linear;
     Boolean item_btn,customer;
 
-    DatabaseReference reference;
+    DatabaseReference reference,itemHistoryRef;
     DatabaseReference existingCustomersRef,existingItemsRef;
+    Query orderQuery;
 
     ImageButton Back_btn,sms_btn,gmail_btn,print_btn;
     Button date_btn,customer_add_btn,item_add_btn,submit_btn;
@@ -65,6 +68,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     TextView searchForItem_textView,searchForCustomer_textView;
     TextView date_textView,forExchange_textView;
     TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView,suggest_price_TextView;
+    TextView last_active_textView;
 
     String firebaseAuthUID;
     String customerKeyID, itemKeyID,customerName,itemCategory,itemName;
@@ -72,6 +76,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
     List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsPriceList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
+    List<String> dateList,lastActiveDatelist;
 
     LinearLayout itemDetails,customerDetails;
 
@@ -84,7 +89,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     private ArrayList<SampleSearchModel> createItemsData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i=0;i<exisitngItemsList.size();i++){
-            items.add(new SampleSearchModel(exisitngItemsList.get(i)+"\n("+exisitngItemsIDList.get(i)+")",exisitngItemsIDList.get(i),exisitngItemsList.get(i),exisitngItemsCategoryList.get(i),existingItemsConditionsList.get(i),existingItemsNotesList.get(i),existingItemsPriceList.get(i),exisitngItemsKeyIDList.get(i)));
+            items.add(new SampleSearchModel(exisitngItemsList.get(i)+"\n("+exisitngItemsIDList.get(i)+")",exisitngItemsIDList.get(i),exisitngItemsList.get(i),exisitngItemsCategoryList.get(i),existingItemsConditionsList.get(i),existingItemsNotesList.get(i),lastActiveDatelist.get(i),exisitngItemsKeyIDList.get(i)));
+
         }
 
         return items;
@@ -158,6 +164,9 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         existingCustomerAddressList= new ArrayList<>();
         existingCustomerEmailList= new ArrayList<>();
 
+        dateList = new ArrayList<>();
+        lastActiveDatelist = new ArrayList<>();
+
         category_textView=(TextView)findViewById(R.id.category_textView);
         voucher_number=(TextView)findViewById(R.id.voucher_number);
         Transaction_textview=(TextView)findViewById(R.id.Transaction_textview);
@@ -171,6 +180,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         email_textView=(TextView)findViewById(R.id.email_textView);
         date_textView =(TextView)findViewById(R.id.date_textView);
         forExchange_textView =(TextView)findViewById(R.id.forExchange_textView);
+        last_active_textView =(TextView)findViewById(R.id.last_active_textView);
 
         suggest_price_TextView = (TextView) findViewById(R.id.suggest_price_TextView);
         purchase_price_editText = (EditText)findViewById(R.id.purchase_price_editText);
@@ -281,6 +291,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                             existingItemsPriceList.add(String.valueOf(dataSnapshot2.child("Price").getValue()));
                             existingItemsNotesList.add(String.valueOf(dataSnapshot2.child("Notes").getValue()));
                             exisitngItemsKeyIDList.add(String.valueOf(dataSnapshot2.child("key_id").getValue()));
+                            gettingHistoryList(String.valueOf(dataSnapshot2.child("key_id").getValue()));
                         }
                     }
                     pd3.dismissProgressBar(Buy.this);
@@ -298,6 +309,34 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
         });
 
+    }
+
+    private void gettingHistoryList(String itemID) {
+        itemHistoryRef = FirebaseDatabase.getInstance().getReference("Item_history/"+itemID);
+
+        orderQuery = itemHistoryRef.orderByChild("Timestamp");
+        orderQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    dateList.clear();
+                    for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                        dateList.add(dataSnapshot1.child("Date").getValue().toString());
+
+                    }
+                    Collections.reverse(dateList);
+                    lastActiveDatelist.add(dateList.get(0));
+
+
+                }else {
+                    lastActiveDatelist.add("NA");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     @Override
@@ -408,14 +447,15 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                         new SearchResultListener<SampleSearchModel>() {
                             @Override
                             public void onSelected(BaseSearchDialogCompat dialog,
-                                                   SampleSearchModel item, int position) {
-                                searchForItem_textView.setText(item.getTitle());
-                                itemCategory = item.getVal1();
+                                                   final SampleSearchModel item, int position) {
                                 itemName = item.getName();
+                                itemID = item.getId();
+                                searchForItem_textView.setText(item.getTitle());
                                 category_textView.setText(item.getVal1());
+                                itemCategory = item.getVal1();
                                 condition_textView.setText(item.getVal2());
                                 notes_textView.setText(item.getVal3());
-                                suggest_price_TextView.setText(item.getVal4());
+                                last_active_textView.setText(item.getVal4());
                                 itemKeyID = item.getVal5();
                                 searchForItem_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
                                 searchForItem_textView.setTextColor(getResources().getColor(R.color.textGrey));
@@ -425,6 +465,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                                     toggling_linear.setVisibility(View.VISIBLE);
                                 }
                                 dialog.dismiss();
+
                             }
                         }).show();
             }
