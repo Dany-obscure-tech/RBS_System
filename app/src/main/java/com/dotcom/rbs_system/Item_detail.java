@@ -202,20 +202,6 @@ public class Item_detail extends AppCompatActivity {
     }
 
     private void pass_back_data() {
-//        Intent getting_intent = getIntent();
-//        String get_intent = getting_intent.getStringExtra("BUY");
-//        if (get_intent.equals("ON")){
-//            String category=selectCategory_btn.getText().toString() ;
-//            Float condition= ratingBar.getRating() ;
-//            String notes=notes_editText.getText().toString() ;
-//            Intent intent= new Intent();
-//            intent.putExtra("Category", category);
-//            intent.putExtra("Condition", condition);
-//            intent.putExtra("Notes", notes);
-//            setResult(RESULT_OK, intent);
-//
-//        }
-
 
       //   get the text from the EditText
         String last_active = "NA";
@@ -226,7 +212,6 @@ public class Item_detail extends AppCompatActivity {
         intent.putExtra("Item_category", selectCategory_textView.getText().toString());
         intent.putExtra("Item_keyid", key);
         intent.putExtra("Last_Active", last_active);
-
         setResult(RESULT_OK, intent);
     }
 

@@ -137,7 +137,6 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
         date_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
               Calendar calendar=Calendar.getInstance();
               int year= (calendar.get(Calendar.YEAR))-18;
               int month= 0;
@@ -322,21 +321,6 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
     }
 
     private void pass_back_data() {
-//        Intent getting_intent = getIntent();
-//        String get_intent = getting_intent.getStringExtra("BUY");
-//        if (get_intent.equals("ON")){
-//            String category=selectCategory_btn.getText().toString() ;
-//            Float condition= ratingBar.getRating() ;
-//            String notes=notes_editText.getText().toString() ;
-//            Intent intent= new Intent();
-//            intent.putExtra("Category", category);
-//            intent.putExtra("Condition", condition);
-//            intent.putExtra("Notes", notes);
-//            setResult(RESULT_OK, intent);
-//
-//        }
-
-
 
         // get the text from the EditText
         String ac_title_ = ac_title.getText().toString();

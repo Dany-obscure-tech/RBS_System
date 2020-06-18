@@ -50,6 +50,9 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     Exchanged_itemdata exchangeObj = Exchanged_itemdata.getInstance();
 
+    private static final int ITEM_ACTIVITY_REQUEST_CODE = 0;
+    private static final int CUSTOMER_ACTIVITY_REQUEST_CODE = 0;
+
     TextView searchForVoucher_textView,Transaction_textview;
     Progress_dialoge pd;
 
@@ -504,7 +507,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Sale.this,Item_detail.class);
-                startActivity(intent);
+                startActivityForResult(intent,ITEM_ACTIVITY_REQUEST_CODE);
             }
         });
 
@@ -543,7 +546,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Sale.this,Customer_details.class);
-                startActivity(intent);
+                startActivityForResult(intent,CUSTOMER_ACTIVITY_REQUEST_CODE);
             }
         });
 
@@ -788,16 +791,46 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (data.getIntExtra("result",-1)==1){
-            exchangeItemName_textView.setText(exchangeObj.getName());
-            exchangeItemCategory_textView.setText(exchangeObj.getCategory());
-            exchangeItemCondition_textView.setText(exchangeObj.getCondition());
-            exchangeItemAgreedPrice_textView.setText(exchangeObj.getPurchase_price());
-            exchangeItemNotes_textView.setText(exchangeObj.getNotes());
+        if (requestCode == ITEM_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) { // Activity.RESULT_OK
 
-            exchangeItemDetails.setVisibility(View.VISIBLE);
-        }else {
+                // get String data from Intent
+                String itemname_returnString = data.getStringExtra("Item_name");
+                String itemid_returnString = data.getStringExtra("Item_id");
+                String itemcategory_returnString = data.getStringExtra("Item_category");
+                String itemkeyid_returnString = data.getStringExtra("Item_keyid");
+                String returnString = data.getStringExtra("Last_Active");
+                // set text view with string
+                last_active_textView.setText(returnString);
+                itemDetails.setVisibility(View.VISIBLE);
 
+                itemKeyID = itemkeyid_returnString;
+                itemCategory = itemcategory_returnString;
+
+                searchForItem_textView.setText(itemname_returnString+"\n"+itemid_returnString);
+                searchForItem_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+                searchForItem_textView.setTextColor(getResources().getColor(R.color.textGrey));
+            }
+        }
+        if (requestCode == CUSTOMER_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_FIRST_USER) { // Activity.RESULT_OK
+                // get String data from Intent
+                String title_returnString = data.getStringExtra("AC_title");
+                String id_returnString = data.getStringExtra("AC_id");
+                String key_id_returnString = data.getStringExtra("AC_key_id");
+                String phone_no_returnString = data.getStringExtra("AC_phone_no");
+                String email_returnString = data.getStringExtra("AC_email");
+                // set text view with string
+
+                customerKeyID = key_id_returnString;
+                phno_textView.setText(phone_no_returnString);
+                email_textView.setText(email_returnString);
+                customerDetails.setVisibility(View.VISIBLE);
+
+                searchForCustomer_textView.setText(title_returnString+"\n"+id_returnString);
+                searchForCustomer_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+                searchForCustomer_textView.setTextColor(getResources().getColor(R.color.textGrey));
+            }
         }
     }
 

@@ -485,7 +485,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Buy.this,Customer_details.class);
-                startActivity(intent);
+                startActivityForResult(intent,CUSTOMER_ACTIVITY_REQUEST_CODE);
             }
         });
 
@@ -493,7 +493,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Buy.this,Item_detail.class);
-                intent.putExtra("BUY", "ON");
                 startActivityForResult(intent,ITEM_ACTIVITY_REQUEST_CODE);
             }
         });
@@ -743,30 +742,45 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == ITEM_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
-
                 // get String data from Intent
-                String returnCategory = data.getStringExtra("Category");
-                String returnCondition = data.getStringExtra("Condition");
-                String returnNotes = data.getStringExtra("Notes");
+                String itemname_returnString = data.getStringExtra("Item_name");
+                String itemid_returnString = data.getStringExtra("Item_id");
+                String itemcategory_returnString = data.getStringExtra("Item_category");
+                String itemkeyid_returnString = data.getStringExtra("Item_keyid");
+                String returnString = data.getStringExtra("Last_Active");
                 // set text view with string
-                category_textView.setText(returnCategory);
-                condition_textView.setText(returnCondition);
-                category_textView.setText(returnNotes);
+                last_active_textView.setText(returnString);
                 itemDetails.setVisibility(View.VISIBLE);
+
+                itemKeyID = itemkeyid_returnString;
+                itemCategory = itemcategory_returnString;
+
+                searchForItem_textView.setText(itemname_returnString+"\n"+itemid_returnString);
+                searchForItem_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+                searchForItem_textView.setTextColor(getResources().getColor(R.color.textGrey));
             }
         }
         if (requestCode == CUSTOMER_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_FIRST_USER) { // Activity.RESULT_OK
                 // get String data from Intent
+                String title_returnString = data.getStringExtra("AC_title");
+                String id_returnString = data.getStringExtra("AC_id");
+                String key_id_returnString = data.getStringExtra("AC_key_id");
                 String phone_no_returnString = data.getStringExtra("AC_phone_no");
                 String email_returnString = data.getStringExtra("AC_email");
                 // set text view with string
-                //TODO
+
+                customerKeyID = key_id_returnString;
                 phno_textView.setText(phone_no_returnString);
                 email_textView.setText(email_returnString);
                 customerDetails.setVisibility(View.VISIBLE);
+
+                searchForCustomer_textView.setText(title_returnString+"\n"+id_returnString);
+                searchForCustomer_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+                searchForCustomer_textView.setTextColor(getResources().getColor(R.color.textGrey));
             }
         }
     }
