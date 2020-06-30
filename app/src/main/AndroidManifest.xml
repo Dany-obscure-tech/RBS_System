@@ -18,11 +18,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Customer_history"
+            android:name=".Vendor_detail"
             android:theme="@style/AppTheme.no"/>
+
+        <activity
+            android:name=".Accessory_add"
+            android:theme="@style/AppTheme.no" />
+        <activity
+            android:name=".Customer_history"
+            android:theme="@style/AppTheme.no" />
         <activity
             android:name=".Item_history"
-            android:theme="@style/AppTheme.no"/>
+            android:theme="@style/AppTheme.no" />
         <activity
             android:name=".Repair_details"
             android:theme="@style/AppTheme.no" />

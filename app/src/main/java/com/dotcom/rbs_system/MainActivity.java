@@ -8,10 +8,12 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.accounts.Account;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -40,13 +42,20 @@ public class MainActivity extends AppCompatActivity {
     CardView BUY,Sale,repair,Exchange,Accessories,Settings;
 
     ImageButton icon1,icon2,icon3,icon5,icon4,icon6;
+    Button alert_addAccessory_btn,alert_saleAccessory_btn;
 
     ImageView mainBanner_imageView;
+
+    Dialog selectAccessory_dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
 
 
         //Nav drawer
@@ -93,6 +102,12 @@ public class MainActivity extends AppCompatActivity {
 
         bannerRef = FirebaseDatabase.getInstance().getReference("Admin/banner");
 
+        selectAccessory_dialog = new Dialog(this);
+        selectAccessory_dialog.setContentView(R.layout.alert_select_accessory_screen);
+
+        alert_addAccessory_btn = (Button) selectAccessory_dialog.findViewById(R.id.alert_addAccessory_btn);
+        alert_saleAccessory_btn = (Button) selectAccessory_dialog.findViewById(R.id.alert_saleAccessory_btn);
+
         BUY=(CardView)findViewById(R.id.BUY);
         Sale=(CardView)findViewById(R.id.Sale);
         repair=(CardView)findViewById(R.id.repair);
@@ -113,8 +128,7 @@ public class MainActivity extends AppCompatActivity {
         Accessories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Accessories.class);
-                startActivity(intent);
+                selectAccessory_dialog.show();
             }
         });
 
@@ -129,8 +143,7 @@ public class MainActivity extends AppCompatActivity {
         icon4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Accessories.class);
-                startActivity(intent);
+                selectAccessory_dialog.show();
             }
         });
 
@@ -216,6 +229,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this,Settings.class);
+                startActivity(intent);
+            }
+        });
+
+        alert_addAccessory_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,Accessory_add.class);
                 startActivity(intent);
             }
         });
