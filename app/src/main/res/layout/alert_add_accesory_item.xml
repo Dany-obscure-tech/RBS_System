@@ -12,10 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/segoe_ui_bold"
-        android:text="Add Item"
+        android:text="Add Accessory"
         android:textSize="20sp" />
 
     <LinearLayout
+        android:id="@+id/midLayout"
         android:layout_below="@+id/title"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -26,71 +27,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/segoe_ui_bold"
-            android:text="Item Name"
+            android:text="Accessory Name"
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/alertItemName_editText"
+            android:id="@+id/alertAccessoryName_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#6E76E3"
             android:fontFamily="@font/segoe_ui"
-            android:hint="Enter item name"
-            android:maxLength="32"
-            android:textColor="#9F9F9F"
-            android:textColorHint="#9F9F9F"
-            android:textSize="16sp" />
-
-        <LinearLayout
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/alertCategory_btn"
-                android:layout_weight="1"
-                android:maxLines="2"
-                android:textColor = "@color/textBlue"
-                android:background="@drawable/main_button"
-                android:fontFamily="@font/segoe_ui"
-                android:textSize="15sp"
-                android:text="Select Category"
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"/>
-
-            <Button
-                android:id="@+id/alertCategoryAdd_btn"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="3"
-                android:textColor = "@color/textBlue"
-                android:background="@drawable/main_button"
-                android:fontFamily="@font/segoe_ui"
-                android:textSize="15sp"
-                android:text="Add"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:text="Price Unit (Rate)"
-            android:textSize="16sp" />
-
-        <EditText
-            android:inputType="number"
-            android:id="@+id/priceUnit_editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#6E76E3"
-            android:fontFamily="@font/segoe_ui"
-            android:hint="Enter price per unit"
-            android:maxLength="32"
+            android:hint="Enter accessory name"
             android:textColor="#9F9F9F"
             android:textColorHint="#9F9F9F"
             android:textSize="16sp" />
@@ -104,30 +50,72 @@
             android:textSize="16sp" />
 
         <EditText
-            android:inputType="number"
-            android:id="@+id/quantity_editText"
+            android:id="@+id/alertAccessoryQuantity_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#6E76E3"
             android:fontFamily="@font/segoe_ui"
+            android:inputType="number"
             android:hint="Enter quantity"
-            android:maxLength="32"
+            android:text="1"
+            android:textColor="#9F9F9F"
+            android:textColorHint="#9F9F9F"
+            android:textSize="16sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:text="Unit Price"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/alertAccessoryUnitPrice_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#6E76E3"
+            android:fontFamily="@font/segoe_ui"
+            android:hint="Enter unit price"
+            android:text=""
+            android:inputType="numberDecimal"
             android:textColor="#9F9F9F"
             android:textColorHint="#9F9F9F"
             android:textSize="16sp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:text="Total Price"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/alertAccessoryTotalPrice_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/textBlue"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:text="NA"
+            android:textSize="18sp" />
+
+
+
     </LinearLayout>
 
+
+
     <LinearLayout
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/midLayout"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/purchaseAlertenter_btn"
+            android:id="@+id/alertAddAccessoryEnter_btn"
             android:layout_weight="1"
             android:layout_marginRight="5dp"
             android:textColor = "@color/textBlue"
@@ -139,12 +127,12 @@
             android:layout_height="wrap_content"/>
 
         <Button
-            android:id="@+id/purchaseAlertCancel_btn"
+            android:id="@+id/alertAddAccessoryCancel_btn"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
+            android:fontFamily="@font/segoe_ui"
             android:textColor = "@color/textGrey"
             android:background="@drawable/main_button_grey"
-            android:fontFamily="@font/segoe_ui"
             android:textSize="15sp"
             android:text="Cancel"
             android:layout_width="match_parent"

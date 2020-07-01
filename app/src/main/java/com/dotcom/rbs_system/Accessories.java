@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -207,14 +206,14 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
         purchaseItemAddAlert.setContentView(R.layout.alert_purchase_add_item);
 
         purchaseCategoryAddAlert = new Dialog(this);
-        purchaseCategoryAddAlert.setContentView(R.layout.alert_purchase_add_category);
+        purchaseCategoryAddAlert.setContentView(R.layout.alert_add_category);
 
-        purchaseAlertCategoryAdd_btn = (Button)purchaseItemAddAlert.findViewById(R.id.purchaseAlertCategoryAdd_btn);
+        purchaseAlertCategoryAdd_btn = (Button)purchaseItemAddAlert.findViewById(R.id.alertCategoryAdd_btn);
         purchaseAlertCancel_btn = (Button)purchaseItemAddAlert.findViewById(R.id.purchaseAlertCancel_btn);
         purchaseAlertenter_btn = (Button)purchaseItemAddAlert.findViewById(R.id.purchaseAlertenter_btn);
 
         alertItemName_editText = (EditText) purchaseItemAddAlert.findViewById(R.id.alertItemName_editText);
-        purchaseAlertCategory_btn = (Button)purchaseItemAddAlert.findViewById(R.id.purchaseAlertCategory_btn);
+        purchaseAlertCategory_btn = (Button)purchaseItemAddAlert.findViewById(R.id.alertCategory_btn);
         quantity_editText = (EditText) purchaseItemAddAlert.findViewById(R.id.quantity_editText);
         priceUnit_editText = (EditText) purchaseItemAddAlert.findViewById(R.id.priceUnit_editText);
 
@@ -328,7 +327,7 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
         companyName_editText  = (EditText)findViewById(R.id.companyName_editText);
         paidAmount_editText = (EditText)findViewById(R.id.paidAmount_editText);
         invoiceNo_editText = (EditText)findViewById(R.id.invoiceNo_editText);
-        purchaseDate_textView = (TextView) findViewById(R.id.purchaseDate_textView);
+        purchaseDate_textView = (TextView) findViewById(R.id.date_textView);
 
         date_btn = (Button) findViewById(R.id.date_btn);
 
