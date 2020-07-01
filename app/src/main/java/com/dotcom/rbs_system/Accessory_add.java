@@ -58,8 +58,7 @@ public class Accessory_add extends AppCompatActivity {
         if (requestCode == VENDOR_ACTIVITY_REQUEST_CODE) {
 
             if (resultCode == 1) { // Activity.RESULT_OK
-
-
+                
                 // get String data from Intent
                 String title_returnString = data.getStringExtra("AC_title");
                 String key_id_returnString = data.getStringExtra("AC_key_id");
