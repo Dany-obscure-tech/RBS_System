@@ -18,17 +18,21 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterAccessoriesItemsRecyclerView;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -40,19 +44,19 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Accessory_add extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
-    String currency;
+    String currency,invoiceNo,vendorName,vendorPhno;
 
     Date date;
 
-    Button vendor_add_btn, alertCategoryAdd_btn,alertAddCategoryEnter_btn,alertAddCategoryCancel_btn, alertCategory_btn,date_btn,alertAddAccessoryEnter_btn,alertAddAccessoryCancel_btn,addAccessory_btn;
+    Button vendor_add_btn, alertCategoryAdd_btn,alertAddCategoryEnter_btn,alertAddCategoryCancel_btn,date_btn,alertAddAccessoryEnter_btn,alertAddAccessoryCancel_btn,addAccessory_btn,submit_btn;
 
-    TextView searchForVendor_textView, date_textView,alertAccessoryTotalPrice_textView;
+    TextView searchForVendor_textView, date_textView,alertAccessoryTotalPrice_textView,invoiceNo_TextView,alertCategory_textView;
 
-    EditText alertAddCategoryName_editText,alertAccessoryName_editText,alertAccessoryQuantity_editText,alertAccessoryUnitPrice_editText;
+    EditText alertAddCategoryName_editText,alertAccessoryName_editText,alertAccessoryQuantity_editText,alertAccessoryUnitPrice_editText,vendorInvoiceRef_editText;
 
     List<String> exisitngVendorNameList,exisitngVendorPhNoList,accesoriesCategoriesList,accessorySrNoList,accessoryNameList,accessoryQtyList,accessoryUnitPriceList,accessoryTotalPriceList;
 
-    DatabaseReference existingCustomersRef,existingAccessoryCategories,accessoriesCategoryRef;
+    DatabaseReference existingCustomersRef,existingAccessoryCategories,accessoriesCategoryRef,AccessoryInvoicesRef;
 
     Dialog categoryAddAlert,accessoryAddAlet;
 
@@ -107,24 +111,28 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         existingCustomersRef = FirebaseDatabase.getInstance().getReference("Vendor_list");
         existingAccessoryCategories = FirebaseDatabase.getInstance().getReference("Vendor_list");
         accessoriesCategoryRef = FirebaseDatabase.getInstance().getReference("Accessories_categories");
+        AccessoryInvoicesRef = FirebaseDatabase.getInstance().getReference("Accessories_invoices/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         vendor_add_btn = (Button)findViewById(R.id.vendor_add_btn);
         alertCategoryAdd_btn = (Button)findViewById(R.id.alertCategoryAdd_btn);
         alertAddCategoryEnter_btn  = (Button) categoryAddAlert.findViewById(R.id.alertAddCategoryEnter_btn);
         alertAddCategoryCancel_btn = (Button) categoryAddAlert.findViewById(R.id.alertAddCategoryCancel_btn);
-        alertCategory_btn = (Button)findViewById(R.id.alertCategory_btn);
         date_btn = (Button) findViewById(R.id.date_btn);
         alertAddAccessoryEnter_btn = (Button) accessoryAddAlet.findViewById(R.id.alertAddAccessoryEnter_btn);
         alertAddAccessoryCancel_btn = (Button) accessoryAddAlet.findViewById(R.id.alertAddAccessoryCancel_btn);
         addAccessory_btn = (Button)findViewById(R.id.addAccessory_btn);
+        submit_btn = (Button)findViewById(R.id.submit_btn);
 
         alertAddCategoryName_editText = (EditText) categoryAddAlert.findViewById(R.id.alertAddCategoryName_editText);
         alertAccessoryName_editText = (EditText) accessoryAddAlet.findViewById(R.id.alertAccessoryName_editText);
         alertAccessoryQuantity_editText = (EditText) accessoryAddAlet.findViewById(R.id.alertAccessoryQuantity_editText);
         alertAccessoryUnitPrice_editText = (EditText) accessoryAddAlet.findViewById(R.id.alertAccessoryUnitPrice_editText);
+        vendorInvoiceRef_editText = (EditText)findViewById(R.id.vendorInvoiceRef_editText);
 
+        alertCategory_textView = (TextView) findViewById(R.id.alertCategory_textView);
         searchForVendor_textView = (TextView)findViewById(R.id.searchForVendor_textView);
         date_textView = (TextView) findViewById(R.id.date_textView);
+        invoiceNo_TextView = (TextView) findViewById(R.id.invoiceNo_TextView);
         alertAccessoryTotalPrice_textView = (TextView) accessoryAddAlet.findViewById(R.id.alertAccessoryTotalPrice_textView);
 
         date=Calendar.getInstance().getTime();
@@ -152,8 +160,14 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void InitialProcess() {
+        generatingInvoiceNo();
         fetchingExistingAccessoryCategories();
         fetchingExistingVendors();
+    }
+
+    private void generatingInvoiceNo() {
+        invoiceNo = AccessoryInvoicesRef.push().getKey();
+        invoiceNo_TextView.setText(invoiceNo);
     }
 
     private void fetchingExistingAccessoryCategories() {
@@ -222,7 +236,9 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
                     if (!alertAccessoryUnitPrice_editText.getText().toString().equals("")){
                         float quantity = Float.parseFloat(alertAccessoryQuantity_editText.getText().toString());
                         float unitPrice = Float.parseFloat(alertAccessoryUnitPrice_editText.getText().toString());
-                        alertAccessoryTotalPrice_textView.setText(String.valueOf(quantity*unitPrice));
+
+                        DecimalFormat twoDForm = new DecimalFormat("#.##");
+                        alertAccessoryTotalPrice_textView.setText(currency+String.valueOf(Double.valueOf(twoDForm.format(quantity*unitPrice))));
                     }
 
                 }
@@ -250,7 +266,9 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
                     if (!alertAccessoryQuantity_editText.getText().toString().equals("")){
                         float quantity = Float.parseFloat(alertAccessoryQuantity_editText.getText().toString());
                         float unitPrice = Float.parseFloat(alertAccessoryUnitPrice_editText.getText().toString());
-                        alertAccessoryTotalPrice_textView.setText(String.valueOf(quantity*unitPrice));
+
+                        DecimalFormat twoDForm = new DecimalFormat("#.##");
+                        alertAccessoryTotalPrice_textView.setText(currency+String.valueOf(Double.valueOf(twoDForm.format(quantity*unitPrice))));
                     }
 
                 }
@@ -264,7 +282,7 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         });
     }
 
-    private boolean validate() {
+    private boolean validateAccessoryAlertFields() {
         boolean valid = true;
         if (alertAccessoryName_editText.getText().toString().isEmpty()){
             alertAccessoryName_editText.setError("Enter Name");
@@ -284,9 +302,32 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         return valid;
     }
 
+    private boolean validate() {
+        boolean valid = true;
+
+        if (searchForVendor_textView.getText().toString().equals("SEARCH FOR VENDOR")){
+            Toast.makeText(this, "Select Vendor!", Toast.LENGTH_SHORT).show();
+        }
+
+        if (alertCategory_textView.getText().toString().equals("Select Category")){
+            Toast.makeText(this, "Select Category!", Toast.LENGTH_SHORT).show();
+        }
+
+        if (vendorInvoiceRef_editText.getText().toString().isEmpty()){
+            vendorInvoiceRef_editText.setError("Enter Invoice Ref");
+        }
+
+        if (accessoryNameList.size()==0){
+            Toast.makeText(this, "Enter Accessories!", Toast.LENGTH_SHORT).show();
+        }
+
+        return valid;
+    }
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void ClickListeners() {
+        detailsSubmit();
         closeAddAccessoryAlert();
         addAccessoryToList();
         selectDate();
@@ -297,6 +338,30 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         selectVendor();
         addVendor();
         alertAddAccessory();
+    }
+
+    private void detailsSubmit() {
+        submit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validate()){
+                    AccessoryInvoicesRef.child(invoiceNo).child("Invoice_no").setValue(invoiceNo);
+                    AccessoryInvoicesRef.child(invoiceNo).child("Invoice_date").setValue(date_textView.getText().toString());
+                    AccessoryInvoicesRef.child(invoiceNo).child("Vendor_name").setValue(vendorName);
+                    AccessoryInvoicesRef.child(invoiceNo).child("Vendor_phNo").setValue(vendorPhno);
+                    AccessoryInvoicesRef.child(invoiceNo).child("catagory").setValue(alertCategory_textView.getText().toString());
+
+                    for (int i = 0;i<accessoryNameList.size();i++){
+                        AccessoryInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_"+(i+1)).child("name").setValue(accessoryNameList.get(i));
+                        AccessoryInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_"+(i+1)).child("quantity").setValue(accessoryQtyList.get(i));
+                        AccessoryInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_"+(i+1)).child("unit_price").setValue(accessoryUnitPriceList.get(i).replace("£",""));
+                        AccessoryInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_"+(i+1)).child("total_price").setValue(accessoryTotalPriceList.get(i).replace("£",""));
+                    }
+
+                    finish();
+                }
+            }
+        });
     }
 
     private void closeAddAccessoryAlert() {
@@ -312,7 +377,7 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         alertAddAccessoryEnter_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validate()){
+                if (validateAccessoryAlertFields()){
                     accessorySrNoList.add(String.valueOf(accessorySrNoList.size()+1));
                     accessoryNameList.add(alertAccessoryName_editText.getText().toString());
                     accessoryQtyList.add(alertAccessoryQuantity_editText.getText().toString());
@@ -349,7 +414,7 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
     }
 
     private void searchCategory() {
-        alertCategory_btn.setOnClickListener(new View.OnClickListener() {
+        alertCategory_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new SimpleSearchDialogCompat(Accessory_add.this, "Search...",
@@ -358,9 +423,9 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
                             @Override
                             public void onSelected(BaseSearchDialogCompat dialog,
                                                    SampleSearchModel item, int position) {
-                                alertCategory_btn.setText(item.getTitle());
-                                alertCategory_btn.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-                                alertCategory_btn.setTextColor(getResources().getColor(R.color.textGrey));
+                                alertCategory_textView.setText(item.getTitle());
+                                alertCategory_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+                                alertCategory_textView.setTextColor(getResources().getColor(R.color.textGrey));
 
                                 dialog.dismiss();
                             }
@@ -387,11 +452,11 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
                     String key = accessoriesCategoryRef.push().getKey();
                     accessoriesCategoryRef.child(key).setValue(s);
 
-                    alertCategory_btn.setText(s);
+                    alertCategory_textView.setText(s);
                     accesoriesCategoriesList.add(s);
 
-                    alertCategory_btn.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-                    alertCategory_btn.setTextColor(getResources().getColor(R.color.textGrey));
+                    alertCategory_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+                    alertCategory_textView.setTextColor(getResources().getColor(R.color.textGrey));
                     categoryAddAlert.dismiss();
                 }
             }
@@ -428,6 +493,8 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
                             public void onSelected(BaseSearchDialogCompat dialog,
                                                    SampleSearchModel item, int position) {
                                 searchForVendor_textView.setText(item.getTitle());
+                                vendorName = item.getName();
+                                vendorPhno = item.getId();
                                 searchForVendor_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
                                 searchForVendor_textView.setTextColor(getResources().getColor(R.color.textGrey));
                                 dialog.dismiss();

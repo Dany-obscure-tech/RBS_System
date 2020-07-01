@@ -323,7 +323,7 @@
 
             <LinearLayout
                 android:id="@+id/toggling_linear"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

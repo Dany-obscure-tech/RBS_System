@@ -118,17 +118,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/alertCategory_btn"
+                <TextView
+                    android:id="@+id/alertCategory_textView"
                     android:layout_weight="1"
-                    android:maxLines="2"
-                    android:textColor = "@color/textBlue"
+                    android:gravity="center"
+                    android:textColor="#0075B5"
                     android:background="@drawable/main_button"
                     android:fontFamily="@font/segoe_ui"
                     android:textSize="15sp"
-                    android:text="Select Category"
+                    android:padding="13dp"
+                    android:text="SELECT CATEGORY"
                     android:layout_width="match_parent"
-                    android:layout_height="fill_parent"/>
+                    android:layout_height="wrap_content"/>
+
 
                 <Button
                     android:id="@+id/alertCategoryAdd_btn"
@@ -184,6 +186,24 @@
             </LinearLayout>
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="Invoice Number"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/invoiceNo_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="NA"
+                android:textSize="20sp" />
+
+            <TextView
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
@@ -226,6 +246,22 @@
                 android:nestedScrollingEnabled="false"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"/>
+
+            <Button
+                android:id="@+id/submit_btn"
+                android:elevation="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/segoe_ui"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:textSize="15sp"
+                android:background="@drawable/main_button"
+                android:textColor="#0075B5"
+                android:layout_marginBottom="15dp"
+
+                />
 
         </LinearLayout>
 

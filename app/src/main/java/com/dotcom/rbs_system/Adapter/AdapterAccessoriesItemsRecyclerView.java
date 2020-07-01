@@ -11,11 +11,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.R;
 
 import java.util.List;
 
 public class AdapterAccessoriesItemsRecyclerView extends RecyclerView.Adapter<AdapterAccessoriesItemsRecyclerView.ViewHolder> {
+    String currency = Currency.getInstance().getCurrency();
     Context context;
     List<String> accessorySrNoList,accessoryNameList, accessoryQtyList, accessoryUnitPriceList, accessoryTotalPriceList;
 
@@ -37,9 +39,9 @@ public class AdapterAccessoriesItemsRecyclerView extends RecyclerView.Adapter<Ad
     @Override
     public void onBindViewHolder(@NonNull AdapterAccessoriesItemsRecyclerView.ViewHolder holder, final int position) {
         holder.accessoryName_textView.setText(accessoryNameList.get(position));
-        holder.unitPrice_textView.setText(accessoryQtyList.get(position));
-        holder.totalPrice_textView.setText(accessoryUnitPriceList.get(position));
-        holder.quantity_textView.setText(accessoryTotalPriceList.get(position));
+        holder.unitPrice_textView.setText(currency+accessoryUnitPriceList.get(position));
+        holder.totalPrice_textView.setText(accessoryTotalPriceList.get(position));
+        holder.quantity_textView.setText(accessoryQtyList.get(position));
         holder.serialNo_textView.setText(accessorySrNoList.get(position));
 
         holder.remove_textView.setOnClickListener(new View.OnClickListener() {
