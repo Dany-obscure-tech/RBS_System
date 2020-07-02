@@ -289,15 +289,28 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
             valid = false;
         }
 
-        if (Integer.parseInt(alertAccessoryQuantity_editText.getText().toString())==0){
+        if (alertAccessoryQuantity_editText.getText().toString().equals("")){
             alertAccessoryQuantity_editText.setError("Enter valid quantity");
             valid = false;
+
+        }else {
+            if (Integer.parseInt(alertAccessoryQuantity_editText.getText().toString())==0){
+                alertAccessoryQuantity_editText.setError("Enter valid quantity");
+                valid = false;
+            }
         }
 
-        if (Float.parseFloat(alertAccessoryUnitPrice_editText.getText().toString())==0){
-            alertAccessoryUnitPrice_editText.setError("Enter valid unit price");
+        if (alertAccessoryUnitPrice_editText.getText().toString().equals("")){
+            alertAccessoryUnitPrice_editText.setError("Enter valid quantity");
             valid = false;
+        }else {
+            if (Float.parseFloat(alertAccessoryUnitPrice_editText.getText().toString())==0){
+                alertAccessoryUnitPrice_editText.setError("Enter valid unit price");
+                valid = false;
+            }
         }
+
+
 
         return valid;
     }
@@ -307,18 +320,22 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
 
         if (searchForVendor_textView.getText().toString().equals("SEARCH FOR VENDOR")){
             Toast.makeText(this, "Select Vendor!", Toast.LENGTH_SHORT).show();
+            valid = false;
         }
 
-        if (alertCategory_textView.getText().toString().equals("Select Category")){
+        if (alertCategory_textView.getText().toString().equals("SELECT CATEGORY")){
             Toast.makeText(this, "Select Category!", Toast.LENGTH_SHORT).show();
+            valid = false;
         }
 
         if (vendorInvoiceRef_editText.getText().toString().isEmpty()){
             vendorInvoiceRef_editText.setError("Enter Invoice Ref");
+            valid = false;
         }
 
         if (accessoryNameList.size()==0){
             Toast.makeText(this, "Enter Accessories!", Toast.LENGTH_SHORT).show();
+            valid = false;
         }
 
         return valid;
