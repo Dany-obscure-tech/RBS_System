@@ -56,7 +56,7 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
 
     List<String> exisitngVendorNameList,exisitngVendorPhNoList,accesoriesCategoriesList,accessorySrNoList,accessoryNameList,accessoryQtyList,accessoryUnitPriceList,accessoryTotalPriceList;
 
-    DatabaseReference existingCustomersRef,existingAccessoryCategories,accessoriesCategoryRef,AccessoryInvoicesRef;
+    DatabaseReference existingCustomersRef,existingAccessoryCategories,accessoriesCategoryRef,AccessoryInvoicesRef,AccessoryItemsRef;
 
     Dialog categoryAddAlert,accessoryAddAlet;
 
@@ -112,6 +112,7 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         existingAccessoryCategories = FirebaseDatabase.getInstance().getReference("Vendor_list");
         accessoriesCategoryRef = FirebaseDatabase.getInstance().getReference("Accessories_categories");
         AccessoryInvoicesRef = FirebaseDatabase.getInstance().getReference("Accessories_invoices/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
+        AccessoryItemsRef = FirebaseDatabase.getInstance().getReference("Accessories_items");
 
         vendor_add_btn = (Button)findViewById(R.id.vendor_add_btn);
         alertCategoryAdd_btn = (Button)findViewById(R.id.alertCategoryAdd_btn);
@@ -362,18 +363,31 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
             @Override
             public void onClick(View v) {
                 if (validate()){
+
+                    String s = alertAddCategoryName_editText.getText().toString();
+                    String key = accessoriesCategoryRef.push().getKey();
+                    accessoriesCategoryRef.child(key).setValue(s);
+
                     AccessoryInvoicesRef.child(invoiceNo).child("Invoice_no").setValue(invoiceNo);
                     AccessoryInvoicesRef.child(invoiceNo).child("Invoice_date").setValue(date_textView.getText().toString());
                     AccessoryInvoicesRef.child(invoiceNo).child("Vendor_name").setValue(vendorName);
                     AccessoryInvoicesRef.child(invoiceNo).child("Vendor_phNo").setValue(vendorPhno);
                     AccessoryInvoicesRef.child(invoiceNo).child("catagory").setValue(alertCategory_textView.getText().toString());
 
+
+
                     for (int i = 0;i<accessoryNameList.size();i++){
+                        String key2 = AccessoryItemsRef.push().getKey();
+
                         AccessoryInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_"+(i+1)).child("name").setValue(accessoryNameList.get(i));
                         AccessoryInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_"+(i+1)).child("quantity").setValue(accessoryQtyList.get(i));
                         AccessoryInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_"+(i+1)).child("unit_price").setValue(accessoryUnitPriceList.get(i).replace("£",""));
                         AccessoryInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_"+(i+1)).child("total_price").setValue(accessoryTotalPriceList.get(i).replace("£",""));
+
+                        AccessoryItemsRef.child(alertCategory_textView.getText().toString()).child(key2).setValue(accessoryNameList.get(i));
                     }
+
+
 
                     finish();
                 }
@@ -455,20 +469,14 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         alertAddCategoryEnter_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String s = alertAddCategoryName_editText.getText().toString();
-                Boolean valid = true;
-                for (int i = 0;i<accesoriesCategoriesList.size();i++){
 
-                    if (s.equals(accesoriesCategoriesList.get(i))){
-                        alertAddCategoryName_editText.setError("Category already exists");
-                        valid = false;
-                    }
+                Boolean valid = true;
+                if (accesoriesCategoriesList.contains(s)){
+                    alertAddCategoryName_editText.setError("Category already exists");
+                    valid = false;
                 }
                 if (valid==true){
-                    String key = accessoriesCategoryRef.push().getKey();
-                    accessoriesCategoryRef.child(key).setValue(s);
-
                     alertCategory_textView.setText(s);
                     accesoriesCategoriesList.add(s);
 
