@@ -233,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this,Accessory_add.class);
                 startActivity(intent);
+                selectAccessory_dialog.dismiss();
             }
         });
         alert_saleAccessory_btn.setOnClickListener(new View.OnClickListener() {
@@ -240,6 +241,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent=new Intent(MainActivity.this,Accessory_sale.class);
                 startActivity(intent);
+                selectAccessory_dialog.dismiss();
             }
         });
     }

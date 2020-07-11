@@ -65,7 +65,6 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
 
     Button btn_done;
     Button category_search_btn_submit_btn,select_Invoice_no_btn_submit_btn,select_company_name_btn_submit_btn;
-    //TODO
 
     // Progress dialog
     Progress_dialoge pd;

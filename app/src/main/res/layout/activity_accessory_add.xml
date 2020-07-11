@@ -260,7 +260,6 @@
                 android:background="@drawable/main_button"
                 android:textColor="#0075B5"
                 android:layout_marginBottom="15dp"
-
                 />
 
         </LinearLayout>
