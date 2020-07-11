@@ -193,10 +193,10 @@ public class Accessory_sale extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                    Toast.makeText(Accessory_sale.this, String.valueOf(dataSnapshot.getChildrenCount()), Toast.LENGTH_SHORT).show();
                     for (DataSnapshot dataSnapshot2:dataSnapshot1.child("Accessory_items").getChildren()){
                         accessories_item_name_list.add(String.valueOf(dataSnapshot2.child("name").getValue()));
-                        accessories_category_list.add(String.valueOf(dataSnapshot1.child("category").getValue()));
+                        Toast.makeText(Accessory_sale.this,String.valueOf(dataSnapshot1.child("catagory").getValue()), Toast.LENGTH_SHORT).show();
+                        accessories_category_list.add(String.valueOf(dataSnapshot1.child("catagory").getValue()));
                     }
 
                 }
