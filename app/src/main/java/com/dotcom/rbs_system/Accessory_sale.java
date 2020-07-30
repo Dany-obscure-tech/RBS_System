@@ -33,7 +33,7 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Accessory_sale extends AppCompatActivity {
-
+    String category_name;
     Button saleAccessory_btn,date_btn,alertSaleAccessoryCancel_btn;
     ImageButton Back_btn;
     EditText customer_name_editText,customer_phone_no_editText;
@@ -41,15 +41,25 @@ public class Accessory_sale extends AppCompatActivity {
     TextView date_textView,select_category_textView,select_itemname_textView;
     Dialog accessorySaleAlert;
     RecyclerView accessoryItemList_recyclerView;
-    DatabaseReference existing_categories,existing_items;
+    DatabaseReference existing_categories;
     List<String> accessories_categories_raw_list,accessories_categories_filter_list;
     List<String> accessories_item_name_list,category_data,accessories_item_quantity_list,accessories_item_total_price_list,accessories_item_unit_price_list;
     List<String> accessories_category_list;
+    List<String> new_item_name_list;
 
     private ArrayList<SampleSearchModel> selectCategoryData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i = 0; i< accessories_categories_filter_list.size(); i++){
             items.add(new SampleSearchModel(accessories_categories_filter_list.get(i), null,null,null,null,null,null,null));
+        }
+
+        return items;
+    }
+
+    private ArrayList<SampleSearchModel> selectItemNameData(){
+        ArrayList<SampleSearchModel> items = new ArrayList<>();
+        for (int i = 0; i< new_item_name_list.size(); i++){
+            items.add(new SampleSearchModel(new_item_name_list.get(i), null,null,null,null,null,null,null));
         }
 
         return items;
@@ -81,6 +91,7 @@ public class Accessory_sale extends AppCompatActivity {
         accessories_item_total_price_list = new ArrayList<>();
         accessories_item_unit_price_list = new ArrayList<>();
         accessories_category_list = new ArrayList<>();
+        new_item_name_list = new ArrayList<>();
 
         Back_btn = (ImageButton) findViewById(R.id.Back_btn);
         customer_name_editText = (EditText) findViewById(R.id.customer_name_editText);
@@ -108,6 +119,7 @@ public class Accessory_sale extends AppCompatActivity {
     private void ClickListeners() {
 
 //        selectdate();
+
         backbtn();
         alertSaleAccessory();
         alertCancel();
@@ -121,7 +133,20 @@ public class Accessory_sale extends AppCompatActivity {
         select_itemname_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                new SimpleSearchDialogCompat(Accessory_sale.this, "Search...",
+                        "What are you looking for...?", null, selectItemNameData(),
+                        new SearchResultListener<SampleSearchModel>() {
+                            @Override
+                            public void onSelected(BaseSearchDialogCompat dialog,
+                                                   SampleSearchModel item, int position) {
+                                select_itemname_textView.setText(item.getTitle());
+//                                vendorName = item.getName();
+//                                vendorPhno = item.getId();
+                                select_itemname_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+                                select_itemname_textView.setTextColor(getResources().getColor(R.color.textGrey));
+                                dialog.dismiss();
+                            }
+                        }).show();
             }
         });
     }
@@ -142,10 +167,23 @@ public class Accessory_sale extends AppCompatActivity {
                                 select_category_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
                                 select_category_textView.setTextColor(getResources().getColor(R.color.textGrey));
                                 dialog.dismiss();
+                                category_name= item.getTitle();
+                                new_item_name_list.clear();
+                                set_item_name();
                             }
                         }).show();
+
             }
         });
+    }
+
+    private void set_item_name() {
+
+        for (int i=0;i<accessories_category_list.size();i++){
+            if (String.valueOf(accessories_category_list.get(i)).equals(category_name)){
+                new_item_name_list.add(accessories_item_name_list.get(i));
+            }
+        }
     }
 
     private void alertCancel() {
@@ -194,9 +232,8 @@ public class Accessory_sale extends AppCompatActivity {
 
                 for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                     for (DataSnapshot dataSnapshot2:dataSnapshot1.child("Accessory_items").getChildren()){
-                        accessories_item_name_list.add(String.valueOf(dataSnapshot2.child("name").getValue()));
-                        Toast.makeText(Accessory_sale.this,String.valueOf(dataSnapshot1.child("catagory").getValue()), Toast.LENGTH_SHORT).show();
                         accessories_category_list.add(String.valueOf(dataSnapshot1.child("catagory").getValue()));
+                        accessories_item_name_list.add(String.valueOf(dataSnapshot2.child("name").getValue()));
                     }
 
                 }
