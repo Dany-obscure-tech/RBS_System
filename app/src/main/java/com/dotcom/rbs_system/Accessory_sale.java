@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -33,12 +37,12 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Accessory_sale extends AppCompatActivity {
-    String category_name;
+    String category_name,currency;
     Button saleAccessory_btn,date_btn,alertSaleAccessoryCancel_btn;
     ImageButton Back_btn;
-    EditText customer_name_editText,customer_phone_no_editText;
+    EditText customer_name_editText,customer_phone_no_editText,alertAccessoryQuantity_editText,alertAccessoryUnitPrice_editText;
     //    Date date;
-    TextView date_textView,select_category_textView,select_itemname_textView;
+    TextView date_textView,select_category_textView,select_itemname_textView,alertAccessoryTotalPrice_textView;
     Dialog accessorySaleAlert;
     RecyclerView accessoryItemList_recyclerView;
     DatabaseReference existing_categories;
@@ -81,7 +85,7 @@ public class Accessory_sale extends AppCompatActivity {
 
     ////////////////////////////ON CREATE/////////////////////////
     private void Initialization() {
-
+        currency = Currency.getInstance().getCurrency();
         existing_categories = FirebaseDatabase.getInstance().getReference("Accessories_invoices/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
         accessories_categories_raw_list = new ArrayList<>();
         accessories_categories_filter_list = new ArrayList<>();
@@ -96,6 +100,8 @@ public class Accessory_sale extends AppCompatActivity {
         Back_btn = (ImageButton) findViewById(R.id.Back_btn);
         customer_name_editText = (EditText) findViewById(R.id.customer_name_editText);
         customer_phone_no_editText = (EditText) findViewById(R.id.customer_phone_no_editText);
+        alertAccessoryQuantity_editText=(EditText)accessorySaleAlert.findViewById(R.id.alertAccessoryQuantity_editText);
+        alertAccessoryUnitPrice_editText=(EditText)accessorySaleAlert.findViewById(R.id.alertAccessoryUnitPrice_editText);
         date_btn = (Button) findViewById(R.id.date_btn);
         accessoryItemList_recyclerView = (RecyclerView)findViewById(R.id.accessoryItemList_recyclerView);
         accessoryItemList_recyclerView.setLayoutManager(new GridLayoutManager(Accessory_sale.this,1));
@@ -107,6 +113,7 @@ public class Accessory_sale extends AppCompatActivity {
         alertSaleAccessoryCancel_btn = (Button) accessorySaleAlert.findViewById(R.id.alertSaleAccessoryCancel_btn);
         select_category_textView = (TextView) accessorySaleAlert.findViewById(R.id.select_category_textView);
         select_itemname_textView = (TextView) accessorySaleAlert.findViewById(R.id.select_itemname_textView);
+        alertAccessoryTotalPrice_textView=(TextView)accessorySaleAlert.findViewById(R.id.alertAccessoryTotalPrice_textView);
 
 
 
@@ -125,8 +132,73 @@ public class Accessory_sale extends AppCompatActivity {
         alertCancel();
         select_sale_category();
         select_item_name();
+        AccessoryTotalPriceCalculation();
 
 
+
+    }
+
+    private void AccessoryTotalPriceCalculation() {
+
+        alertAccessoryQuantity_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (alertAccessoryQuantity_editText.getText().toString().equals("")){
+                    alertAccessoryTotalPrice_textView.setText("NA");
+                }else {
+                    if (!alertAccessoryUnitPrice_editText.getText().toString().equals("")){
+                        float quantity = Float.parseFloat(alertAccessoryQuantity_editText.getText().toString());
+                        float unitPrice = Float.parseFloat(alertAccessoryUnitPrice_editText.getText().toString());
+
+                        DecimalFormat twoDForm = new DecimalFormat("#.##");
+                        alertAccessoryTotalPrice_textView.setText(currency+String.valueOf(Double.valueOf(twoDForm.format(quantity*unitPrice))));
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        alertAccessoryUnitPrice_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (alertAccessoryUnitPrice_editText.getText().toString().equals("")){
+                    alertAccessoryTotalPrice_textView.setText("NA");
+                }else {
+                    if (!alertAccessoryQuantity_editText.getText().toString().equals("")){
+                        float quantity = Float.parseFloat(alertAccessoryQuantity_editText.getText().toString());
+                        float unitPrice = Float.parseFloat(alertAccessoryUnitPrice_editText.getText().toString());
+
+                        DecimalFormat twoDForm = new DecimalFormat("#.##");
+                        alertAccessoryTotalPrice_textView.setText(currency+String.valueOf(Double.valueOf(twoDForm.format(quantity*unitPrice))));
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void select_item_name() {
