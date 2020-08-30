@@ -17,12 +17,13 @@ import java.util.List;
 public class AdapterAccessoriesSaleItemsRecyclerView extends RecyclerView.Adapter<AdapterAccessoriesSaleItemsRecyclerView.ViewHolder> {
     String currency = Currency.getInstance().getCurrency();
     Context context;
-    List<String> accessorySrNoList,accessoryNameList, accessoryQtyList, accessoryUnitPriceList, accessoryTotalPriceList;
+    List<String> accessorySrNoList,accessoryCategoryList,accessoryItemNameList, accessoryQtyList, accessoryUnitPriceList, accessoryTotalPriceList;
 
-    public AdapterAccessoriesSaleItemsRecyclerView(Context context, List<String>accessorySrNoList, List<String> accessoryNameList, List<String> accessoryQtyList, List<String> accessoryUnitPriceList, List<String> accessoryTotalPriceList) {
+    public AdapterAccessoriesSaleItemsRecyclerView(Context context, List<String>accessorySrNoList, List<String> accessoryCategoryList,List<String> accessoryItemNameList, List<String> accessoryQtyList, List<String> accessoryUnitPriceList, List<String> accessoryTotalPriceList) {
         this.context = context;
         this.accessorySrNoList = accessorySrNoList;
-        this.accessoryNameList = accessoryNameList;
+        this.accessoryCategoryList = accessoryCategoryList;
+        this.accessoryItemNameList = accessoryItemNameList;
         this.accessoryQtyList = accessoryQtyList;
         this.accessoryUnitPriceList = accessoryUnitPriceList;
         this.accessoryTotalPriceList = accessoryTotalPriceList;
@@ -31,12 +32,13 @@ public class AdapterAccessoriesSaleItemsRecyclerView extends RecyclerView.Adapte
     @NonNull
     @Override
     public AdapterAccessoriesSaleItemsRecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_accessory_item,parent,false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_accessory_sale_item,parent,false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull AdapterAccessoriesSaleItemsRecyclerView.ViewHolder holder, final int position) {
-        holder.accessoryName_textView.setText(accessoryNameList.get(position));
+        holder.category_textView.setText(accessoryCategoryList.get(position));
+        holder.item_name_textView.setText(accessoryItemNameList.get(position));
         holder.unitPrice_textView.setText(currency+accessoryUnitPriceList.get(position));
         holder.totalPrice_textView.setText(accessoryTotalPriceList.get(position));
         holder.quantity_textView.setText(accessoryQtyList.get(position));
@@ -45,7 +47,8 @@ public class AdapterAccessoriesSaleItemsRecyclerView extends RecyclerView.Adapte
         holder.remove_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                accessoryNameList.remove(position);
+                accessoryCategoryList.remove(position);
+                accessoryItemNameList.remove(position);
                 accessoryQtyList.remove(position);
                 accessoryUnitPriceList.remove(position);
                 accessoryTotalPriceList.remove(position);
@@ -58,17 +61,18 @@ public class AdapterAccessoriesSaleItemsRecyclerView extends RecyclerView.Adapte
 
     @Override
     public int getItemCount() {
-        return accessoryNameList.size();
+        return accessoryItemNameList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView accessoryName_textView, unitPrice_textView, totalPrice_textView,quantity_textView,remove_textView,serialNo_textView;
+        TextView category_textView,item_name_textView, unitPrice_textView, totalPrice_textView,quantity_textView,remove_textView,serialNo_textView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            accessoryName_textView = (TextView)itemView.findViewById(R.id.accessoryName_textView);
+            category_textView = (TextView)itemView.findViewById(R.id.category_textView);
+            item_name_textView = (TextView)itemView.findViewById(R.id.item_name_textView);
             unitPrice_textView = (TextView)itemView.findViewById(R.id.unitPrice_textView);
             totalPrice_textView = (TextView)itemView.findViewById(R.id.totalPrice_textView);
             quantity_textView = (TextView)itemView.findViewById(R.id.quantity_textView);

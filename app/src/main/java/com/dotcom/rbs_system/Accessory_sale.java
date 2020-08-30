@@ -18,6 +18,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dotcom.rbs_system.Adapter.AdapterAccessoriesItemsRecyclerView;
+import com.dotcom.rbs_system.Adapter.AdapterAccessoriesSaleItemsRecyclerView;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,18 +40,20 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Accessory_sale extends AppCompatActivity {
     String category_name,currency;
-    Button saleAccessory_btn,date_btn,alertSaleAccessoryCancel_btn;
+    Button saleAccessory_btn,date_btn,alertSaleAccessoryCancel_btn,alertAddAccessoryEnter_btn;
     ImageButton Back_btn;
     EditText customer_name_editText,customer_phone_no_editText,alertAccessoryQuantity_editText,alertAccessoryUnitPrice_editText;
     //    Date date;
-    TextView date_textView,select_category_textView,select_itemname_textView,alertAccessoryTotalPrice_textView;
+    TextView date_textView,select_category_textView,select_itemname_textView,alertAccessoryTotalPrice_textView,category_textView,item_name_textView;
     Dialog accessorySaleAlert;
-    RecyclerView accessoryItemList_recyclerView;
+    RecyclerView accessoryItemList_recyclerView1;
     DatabaseReference existing_categories;
     List<String> accessories_categories_raw_list,accessories_categories_filter_list;
     List<String> accessories_item_name_list,category_data,accessories_item_quantity_list,accessories_item_total_price_list,accessories_item_unit_price_list;
     List<String> accessories_category_list;
+    List<String> accessorySrNoList,accessoryCategoryList,accessoryItemNameList,accessoryQtyList,accessoryUnitPriceList,accessoryTotalPriceList;
     List<String> new_item_name_list;
+    AdapterAccessoriesSaleItemsRecyclerView adapterAccessoriesSaleItemsRecyclerView;
 
     private ArrayList<SampleSearchModel> selectCategoryData(){
         ArrayList<SampleSearchModel> items = new ArrayList<>();
@@ -96,24 +100,33 @@ public class Accessory_sale extends AppCompatActivity {
         accessories_item_unit_price_list = new ArrayList<>();
         accessories_category_list = new ArrayList<>();
         new_item_name_list = new ArrayList<>();
+        accessorySrNoList = new ArrayList<>();
+        accessoryCategoryList = new ArrayList<>();
+        accessoryItemNameList = new ArrayList<>();
+        accessoryQtyList = new ArrayList<>();
+        accessoryUnitPriceList = new ArrayList<>();
+        accessoryTotalPriceList = new ArrayList<>();
+        accessorySaleAlert = new Dialog(this);
+        accessorySaleAlert.setContentView(R.layout.alert_sale_accesory_item);
 
         Back_btn = (ImageButton) findViewById(R.id.Back_btn);
         customer_name_editText = (EditText) findViewById(R.id.customer_name_editText);
         customer_phone_no_editText = (EditText) findViewById(R.id.customer_phone_no_editText);
+        date_btn = (Button) findViewById(R.id.date_btn);
         alertAccessoryQuantity_editText=(EditText)accessorySaleAlert.findViewById(R.id.alertAccessoryQuantity_editText);
         alertAccessoryUnitPrice_editText=(EditText)accessorySaleAlert.findViewById(R.id.alertAccessoryUnitPrice_editText);
-        date_btn = (Button) findViewById(R.id.date_btn);
-        accessoryItemList_recyclerView = (RecyclerView)findViewById(R.id.accessoryItemList_recyclerView);
-        accessoryItemList_recyclerView.setLayoutManager(new GridLayoutManager(Accessory_sale.this,1));
-        //TODO
-//        accessoryItemList_recyclerView.setAdapter(adapterAccessoriesItemsRecyclerView);
-        accessorySaleAlert = new Dialog(this);
-        accessorySaleAlert.setContentView(R.layout.alert_sale_accesory_item);
         saleAccessory_btn = (Button) findViewById(R.id.saleAccessory_btn);
         alertSaleAccessoryCancel_btn = (Button) accessorySaleAlert.findViewById(R.id.alertSaleAccessoryCancel_btn);
+        alertAddAccessoryEnter_btn = (Button) accessorySaleAlert.findViewById(R.id.alertAddAccessoryEnter_btn);
         select_category_textView = (TextView) accessorySaleAlert.findViewById(R.id.select_category_textView);
         select_itemname_textView = (TextView) accessorySaleAlert.findViewById(R.id.select_itemname_textView);
         alertAccessoryTotalPrice_textView=(TextView)accessorySaleAlert.findViewById(R.id.alertAccessoryTotalPrice_textView);
+        category_textView=(TextView)accessorySaleAlert.findViewById(R.id.category_textView);
+        item_name_textView=(TextView)accessorySaleAlert.findViewById(R.id.item_name_textView);
+        adapterAccessoriesSaleItemsRecyclerView = new AdapterAccessoriesSaleItemsRecyclerView(Accessory_sale.this,accessorySrNoList,accessoryCategoryList,accessoryItemNameList,accessoryQtyList,accessoryUnitPriceList,accessoryTotalPriceList);
+        accessoryItemList_recyclerView1 = (RecyclerView)findViewById(R.id.accessoryItemList_recyclerView1);
+        accessoryItemList_recyclerView1.setLayoutManager(new GridLayoutManager(Accessory_sale.this,1));
+        accessoryItemList_recyclerView1.setAdapter(adapterAccessoriesSaleItemsRecyclerView);
 
 
 
@@ -128,14 +141,70 @@ public class Accessory_sale extends AppCompatActivity {
 //        selectdate();
 
         backbtn();
+        enterbtn();
         alertSaleAccessory();
         alertCancel();
         select_sale_category();
         select_item_name();
         AccessoryTotalPriceCalculation();
+        addAccessoryToList();
+        validateSaleAlertFields();
 
 
 
+    }
+
+    private void addAccessoryToList() {
+        alertAddAccessoryEnter_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validateSaleAlertFields()) {
+                    accessorySrNoList.add(String.valueOf(accessorySrNoList.size() + 1));
+                    accessoryCategoryList.add(category_textView.getText().toString());
+                    accessoryItemNameList.add(item_name_textView.getText().toString());
+                    accessoryQtyList.add(alertAccessoryQuantity_editText.getText().toString());
+                    accessoryUnitPriceList.add(alertAccessoryUnitPrice_editText.getText().toString());
+                    accessoryTotalPriceList.add(alertAccessoryTotalPrice_textView.getText().toString());
+                    adapterAccessoriesSaleItemsRecyclerView.notifyDataSetChanged();
+                    accessorySaleAlert.dismiss();
+                }
+            }
+        });
+    }
+
+    private void enterbtn() {
+        alertAddAccessoryEnter_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    accessorySaleAlert.dismiss();
+            }
+        });
+    }
+
+    private boolean validateSaleAlertFields() {
+        boolean valid=true;
+        if (alertAccessoryQuantity_editText.getText().toString().equals("")){
+            alertAccessoryQuantity_editText.setError("Enter valid quantity");
+            valid = false;
+
+        }else {
+            if (Integer.parseInt(alertAccessoryQuantity_editText.getText().toString())==0){
+                alertAccessoryQuantity_editText.setError("Enter valid quantity");
+                valid = false;
+            }
+        }
+
+        if (alertAccessoryUnitPrice_editText.getText().toString().equals("")){
+            alertAccessoryUnitPrice_editText.setError("Enter valid quantity");
+            valid = false;
+        }else {
+            if (Float.parseFloat(alertAccessoryUnitPrice_editText.getText().toString())==0){
+                alertAccessoryUnitPrice_editText.setError("Enter valid unit price");
+                valid = false;
+            }
+        }
+
+        return valid;
     }
 
     private void AccessoryTotalPriceCalculation() {

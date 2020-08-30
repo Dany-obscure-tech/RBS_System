@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +51,7 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
     Date date;
 
     Button vendor_add_btn, alertCategoryAdd_btn,alertAddCategoryEnter_btn,alertAddCategoryCancel_btn,date_btn,alertAddAccessoryEnter_btn,alertAddAccessoryCancel_btn,addAccessory_btn,submit_btn;
+    ImageButton Back_btn;
 
     TextView searchForVendor_textView, date_textView,alertAccessoryTotalPrice_textView,invoiceNo_TextView,alertCategory_textView;
 
@@ -123,6 +126,7 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         alertAddAccessoryCancel_btn = (Button) accessoryAddAlet.findViewById(R.id.alertAddAccessoryCancel_btn);
         addAccessory_btn = (Button)findViewById(R.id.addAccessory_btn);
         submit_btn = (Button)findViewById(R.id.submit_btn);
+        Back_btn = (ImageButton)findViewById(R.id.Back_btn);
 
         alertAddCategoryName_editText = (EditText) categoryAddAlert.findViewById(R.id.alertAddCategoryName_editText);
         alertAccessoryName_editText = (EditText) accessoryAddAlet.findViewById(R.id.alertAccessoryName_editText);
@@ -345,6 +349,7 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void ClickListeners() {
+        backbtn();
         detailsSubmit();
         closeAddAccessoryAlert();
         addAccessoryToList();
@@ -356,6 +361,15 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         selectVendor();
         addVendor();
         alertAddAccessory();
+    }
+
+    private void backbtn() {
+        Back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void detailsSubmit() {
