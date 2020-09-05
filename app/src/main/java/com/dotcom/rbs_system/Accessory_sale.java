@@ -40,11 +40,12 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Accessory_sale extends AppCompatActivity {
     String category_name,currency;
+    int container=100;
     Button saleAccessory_btn,date_btn,alertSaleAccessoryCancel_btn,alertAddAccessoryEnter_btn;
     ImageButton Back_btn;
-    EditText customer_name_editText,customer_phone_no_editText,alertAccessoryQuantity_editText,alertAccessoryUnitPrice_editText;
+    EditText customer_name_editText,customer_phone_no_editText,alertAccessoryQuantity_editText,alertAccessoryUnitPrice_editText,paid_editText;
     //    Date date;
-    TextView date_textView,select_category_textView,select_itemname_textView,alertAccessoryTotalPrice_textView,category_textView,item_name_textView;
+    TextView date_textView,select_category_textView,select_itemname_textView,alertAccessoryTotalPrice_textView,category_textView,item_name_textView,balance_TextView;
     Dialog accessorySaleAlert;
     RecyclerView accessoryItemList_recyclerView1;
     DatabaseReference existing_categories;
@@ -115,6 +116,7 @@ public class Accessory_sale extends AppCompatActivity {
         date_btn = (Button) findViewById(R.id.date_btn);
         alertAccessoryQuantity_editText=(EditText)accessorySaleAlert.findViewById(R.id.alertAccessoryQuantity_editText);
         alertAccessoryUnitPrice_editText=(EditText)accessorySaleAlert.findViewById(R.id.alertAccessoryUnitPrice_editText);
+        paid_editText=(EditText)findViewById(R.id.paid_editText);
         saleAccessory_btn = (Button) findViewById(R.id.saleAccessory_btn);
         alertSaleAccessoryCancel_btn = (Button) accessorySaleAlert.findViewById(R.id.alertSaleAccessoryCancel_btn);
         alertAddAccessoryEnter_btn = (Button) accessorySaleAlert.findViewById(R.id.alertAddAccessoryEnter_btn);
@@ -123,6 +125,7 @@ public class Accessory_sale extends AppCompatActivity {
         alertAccessoryTotalPrice_textView=(TextView)accessorySaleAlert.findViewById(R.id.alertAccessoryTotalPrice_textView);
         category_textView=(TextView)accessorySaleAlert.findViewById(R.id.category_textView);
         item_name_textView=(TextView)accessorySaleAlert.findViewById(R.id.item_name_textView);
+        balance_TextView=(TextView)findViewById(R.id.balance_TextView);
         adapterAccessoriesSaleItemsRecyclerView = new AdapterAccessoriesSaleItemsRecyclerView(Accessory_sale.this,accessorySrNoList,accessoryCategoryList,accessoryItemNameList,accessoryQtyList,accessoryUnitPriceList,accessoryTotalPriceList);
         accessoryItemList_recyclerView1 = (RecyclerView)findViewById(R.id.accessoryItemList_recyclerView1);
         accessoryItemList_recyclerView1.setLayoutManager(new GridLayoutManager(Accessory_sale.this,1));
@@ -147,6 +150,7 @@ public class Accessory_sale extends AppCompatActivity {
         select_sale_category();
         select_item_name();
         AccessoryTotalPriceCalculation();
+        balancewatcher();
         addAccessoryToList();
         validateSaleAlertFields();
 
@@ -160,12 +164,13 @@ public class Accessory_sale extends AppCompatActivity {
             public void onClick(View v) {
                 if (validateSaleAlertFields()) {
                     accessorySrNoList.add(String.valueOf(accessorySrNoList.size() + 1));
-                    accessoryCategoryList.add(category_textView.getText().toString());
-                    accessoryItemNameList.add(item_name_textView.getText().toString());
+                    accessoryCategoryList.add(select_category_textView.getText().toString());
+                    accessoryItemNameList.add(select_itemname_textView.getText().toString());
                     accessoryQtyList.add(alertAccessoryQuantity_editText.getText().toString());
                     accessoryUnitPriceList.add(alertAccessoryUnitPrice_editText.getText().toString());
                     accessoryTotalPriceList.add(alertAccessoryTotalPrice_textView.getText().toString());
                     adapterAccessoriesSaleItemsRecyclerView.notifyDataSetChanged();
+
                     accessorySaleAlert.dismiss();
                 }
             }
@@ -205,6 +210,46 @@ public class Accessory_sale extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    private void balancewatcher() {
+        paid_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (paid_editText.getText().toString().equals("Enter paid amount")){
+                    balance_TextView.setText("NA");
+                }
+                else {
+                    if (!paid_editText.getText().toString().equals("Enter paid amount")){
+                        //TODO
+                        for (int i=0;i<accessoryTotalPriceList.size();i++){
+                            Toast.makeText(Accessory_sale.this, "YEs", Toast.LENGTH_SHORT).show();
+//                            container= container+(Integer.parseInt(accessoryTotalPriceList.get(i)));
+                        }
+                        float container1 = container;
+                        float paid = Float.parseFloat(paid_editText.getText().toString());
+
+                        DecimalFormat twoDForm = new DecimalFormat("#.##");
+                        balance_TextView.setText(currency+String.valueOf(Double.valueOf(twoDForm.format(paid-container1))));
+
+                    }
+                    if (paid_editText.getText().toString().equals("")){
+                        
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
     private void AccessoryTotalPriceCalculation() {
