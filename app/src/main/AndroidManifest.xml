@@ -17,9 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".BuyLocal_main"></activity>
         <activity
             android:name=".Accessory_sale"
-            android:theme="@style/AppTheme.no"/>
+            android:theme="@style/AppTheme.no" />
         <activity
             android:name=".Vendor_detail"
             android:theme="@style/AppTheme.no" />
