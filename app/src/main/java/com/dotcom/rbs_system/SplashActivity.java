@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 public class SplashActivity extends AppCompatActivity {
     DatabaseReference currencyRef;
     Currency currencyObj;
+    DatabaseReference userRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,8 @@ public class SplashActivity extends AppCompatActivity {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Initialization() {
+        userRef = FirebaseDatabase.getInstance().getReference("Users_data");
+
         currencyRef = FirebaseDatabase.getInstance().getReference("Admin/currency");
         currencyObj = Currency.getInstance();
     }
@@ -53,15 +56,7 @@ public class SplashActivity extends AppCompatActivity {
     private void checkExistingUser() {
         if (FirebaseAuth.getInstance().getCurrentUser() !=null){
             InitialDataFetch();
-
-            Intent i = new Intent(SplashActivity.this, MainActivity.class);
-
-            startActivity(i);
-
-            // close this activity
-
-            finish();
-
+            userTypeCheck(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
         }else {
             Intent i = new Intent(SplashActivity.this, SignInActivity.class);
 
@@ -80,6 +75,36 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 currencyObj.setCurrency(dataSnapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void userTypeCheck(final String uid) {
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child(uid).child("type").exists()){
+                    String type = dataSnapshot.child(uid).child("type").getValue().toString();
+                    if (type.equals("customer")){
+                        Intent intent = new Intent(SplashActivity.this,BuyLocal_main.class);
+                        startActivity(intent);
+                        finish();
+                    }else {
+                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }else {
+
+                }
             }
 
             @Override

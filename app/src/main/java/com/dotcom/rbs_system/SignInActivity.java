@@ -15,11 +15,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class SignInActivity extends AppCompatActivity {
     EditText editText_email,editText_password;
     Button button_signin;
     FirebaseAuth mAuth;
+    DatabaseReference userRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +48,13 @@ public class SignInActivity extends AppCompatActivity {
         });
         mAuth = FirebaseAuth.getInstance();
 
+        userRef = FirebaseDatabase.getInstance().getReference("Users_data");
+
 
     }
 
 
     private void signin() {
-
-
-
         String email, password;
         email = editText_email.getText().toString();
         password = editText_password.getText().toString();
@@ -69,9 +74,7 @@ public class SignInActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_LONG).show();
-
-                            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                            startActivity(intent);
+                            userTypeCheck(String.valueOf(mAuth.getCurrentUser().getUid()));
                         }
                         else {
                             Toast.makeText(getApplicationContext(), "Login failed! Please try again later", Toast.LENGTH_LONG).show();
@@ -80,5 +83,34 @@ public class SignInActivity extends AppCompatActivity {
                 });
         
     }
+
+    private void userTypeCheck(final String uid) {
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child(uid).child("type").exists()){
+                    String type = dataSnapshot.child(uid).child("type").getValue().toString();
+                    if (type.equals("customer")){
+                        Intent intent = new Intent(SignInActivity.this,BuyLocal_main.class);
+                        startActivity(intent);
+                        finish();
+                    }else {
+                        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }else {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 
 }
