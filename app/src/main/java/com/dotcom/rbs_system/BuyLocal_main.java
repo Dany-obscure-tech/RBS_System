@@ -30,6 +30,8 @@ public class BuyLocal_main extends AppCompatActivity {
         bottomNavigationView.setItemIconTintList(null);
         // Fragment home already selected
         bottomNavigationView.setSelectedItemId(R.id.home);
+
+        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,fragment_home).commit();
         // Bottom navigation menu fragments connected
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
