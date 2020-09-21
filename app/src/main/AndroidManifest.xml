@@ -19,14 +19,10 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Registration"
-            android:theme="@style/AppTheme.no"></activity>
-        <activity android:name=".BuyLocal_main" >
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
+            android:theme="@style/AppTheme.no"/>
+        <activity android:name=".BuyLocal_main"
+            android:theme="@style/AppTheme.no"
+            />
         <activity
             android:name=".Accessory_sale"
             android:theme="@style/AppTheme.no" />
