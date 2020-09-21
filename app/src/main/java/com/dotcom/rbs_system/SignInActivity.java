@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SignInActivity extends AppCompatActivity {
     EditText editText_email,editText_password;
-    Button button_signin;
+    Button button_signin,button_register;
     FirebaseAuth mAuth;
     DatabaseReference userRef;
 
@@ -40,10 +40,17 @@ public class SignInActivity extends AppCompatActivity {
         editText_email = (EditText)findViewById(R.id.editText_email);
         editText_password = (EditText)findViewById(R.id.editText_password);
         button_signin = (Button)findViewById(R.id.button_signin);
+        button_register = (Button)findViewById(R.id.button_register);
         button_signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signin();
+            }
+        });
+        button_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                register();
             }
         });
         mAuth = FirebaseAuth.getInstance();
@@ -81,7 +88,12 @@ public class SignInActivity extends AppCompatActivity {
                         }
                     }
                 });
-        
+
+    }
+
+    private void register() {
+        Intent intent = new Intent(SignInActivity.this,Registration.class);
+        startActivity(intent);
     }
 
     private void userTypeCheck(final String uid) {
