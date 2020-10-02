@@ -87,6 +87,9 @@ public class Home extends Fragment {
         ads_slider = view.findViewById(R.id.ads_slider);
         slider_link_list=new ArrayList<>();
 
+        slider_link_list.add("http://pakdoodhwala.com/pakistan/uploads/slider/IMG-20191003-WA00031.jpg");
+        slider_link_list.add("http://pakdoodhwala.com/pakistan/uploads/slider/IMG-20191003-WA00031.jpg");
+
 
         ads_slider();
 //        list= new String[]{"Mobile","Laptop","PC"};
@@ -112,20 +115,17 @@ public class Home extends Fragment {
     }
 
     private void ads_slider() {
-        slider_link_list.clear();
-        slider_link_list.add("https://images.app.goo.gl/89ZpdayMsTmwGgzg7");
-        slider_link_list.add("https://images.app.goo.gl/MseFpaFozRZZSE8r6");
+
         adapter = new SliderAdapter(getActivity(), slider_link_list);
+
         ads_slider.setSliderAdapter(adapter);
         ads_slider.setIndicatorAnimation(IndicatorAnimations.WORM);
         ads_slider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         ads_slider.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
         ads_slider.setIndicatorSelectedColor(Color.WHITE);
         ads_slider.setIndicatorUnselectedColor(Color.GRAY);
-
         ads_slider.setScrollTimeInSec(4);
         ads_slider.startAutoCycle();
-
     }
 
     @Override
@@ -134,7 +134,6 @@ public class Home extends Fragment {
         inflater.inflate(R.menu.search_menu,menu);
         MenuItem menuItem=menu.findItem(R.id.search);
         materialSearchView.setMenuItem(menuItem);
-
 
     }
     //    @Override

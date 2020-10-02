@@ -9,6 +9,7 @@
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
+        android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="2"
@@ -47,6 +48,7 @@
     </LinearLayout>
 
     <ScrollView
+        android:layout_below="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
