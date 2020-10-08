@@ -8,7 +8,6 @@
 
     <LinearLayout
         android:layout_centerInParent="true"
-        android:gravity="center"
         android:orientation="vertical"
         android:padding="30dp"
         android:layout_width="match_parent"
@@ -29,6 +28,50 @@
             android:ems="10"
             android:hint="Enter contact no"
             android:inputType="phone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:text="DOB"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/date_of_birth_text"
+                android:layout_weight="1.9"
+                android:textColor="#9F9F9F"
+                android:fontFamily="@font/segoe_ui"
+                android:backgroundTint="#6E76E3"
+                android:textSize="16sp"
+                android:text="Select date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:textSize="15sp"
+                android:background="@drawable/main_button"
+                android:textColor="#0075B5"
+                android:id="@+id/date_btn"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="Date"
+                android:layout_weight="0.1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editText_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter address" />
 
         <EditText
             android:id="@+id/editText_email"
@@ -54,10 +97,39 @@
             android:hint="Confirm Password"
             android:inputType="textPassword" />
 
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/id_front"
+                android:layout_weight="1.9"
+                android:adjustViewBounds="true"
+                android:layout_width="80dp"
+                android:layout_height="80dp"/>
+
+            <Button
+                android:id="@+id/uploadId_profile_image"
+                android:textSize="15sp"
+                android:background="@drawable/main_button"
+                android:textColor="#0075B5"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="Upload Profile image "
+                android:layout_weight="0.1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
         <Button
             android:layout_centerHorizontal="true"
             android:background="@drawable/main_button"
             android:textColor="#0075B5"
+            android:layout_gravity="center"
             android:id="@+id/button_register"
             android:layout_alignParentBottom="true"
             android:layout_width="wrap_content"

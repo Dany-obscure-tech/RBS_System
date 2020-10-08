@@ -9,7 +9,7 @@
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
-        android:id="@+id/top_bar"
+        android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="2"
@@ -48,7 +48,7 @@
     </LinearLayout>
 
     <ScrollView
-        android:layout_below="@+id/top_bar"
+        android:layout_below="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -56,24 +56,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.smarteist.autoimageslider.SliderView
-                android:id="@+id/ads_slider"
+<!--            <com.smarteist.autoimageslider.SliderView-->
+<!--                android:id="@+id/ads_slider"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="180dp"-->
+<!--                app:sliderAnimationDuration="600"-->
+<!--                app:sliderAutoCycleDirection="right"-->
+<!--                app:sliderAutoCycleEnabled="true"-->
+<!--                app:sliderCircularHandlerEnabled="true"-->
+<!--                app:sliderIndicatorAnimationDuration="600"-->
+<!--                app:sliderIndicatorGravity="center_horizontal|bottom"-->
+<!--                app:sliderIndicatorMargin="15dp"-->
+<!--                app:sliderIndicatorOrientation="horizontal"-->
+<!--                app:sliderIndicatorPadding="3dp"-->
+<!--                app:sliderIndicatorRadius="1dp"-->
+<!--                app:sliderIndicatorSelectedColor="#5A5A5A"-->
+<!--                app:sliderIndicatorUnselectedColor="#FFF"-->
+<!--                app:sliderScrollTimeInSec="1"-->
+<!--                app:sliderStartAutoCycle="true" />-->
+
+            <ImageView
+                android:id="@+id/slider"
+                android:src="@drawable/slider"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
-                app:sliderAnimationDuration="600"
-                app:sliderAutoCycleDirection="right"
-                app:sliderAutoCycleEnabled="true"
-                app:sliderCircularHandlerEnabled="true"
-                app:sliderIndicatorAnimationDuration="600"
-                app:sliderIndicatorGravity="center_horizontal|bottom"
-                app:sliderIndicatorMargin="15dp"
-                app:sliderIndicatorOrientation="horizontal"
-                app:sliderIndicatorPadding="3dp"
-                app:sliderIndicatorRadius="1dp"
-                app:sliderIndicatorSelectedColor="#5A5A5A"
-                app:sliderIndicatorUnselectedColor="#FFF"
-                app:sliderScrollTimeInSec="1"
-                app:sliderStartAutoCycle="true" />
+                android:adjustViewBounds="true"
+                android:layout_height="match_parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/spotlightRecyclerView"
+                android:layout_below="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </RelativeLayout>
 

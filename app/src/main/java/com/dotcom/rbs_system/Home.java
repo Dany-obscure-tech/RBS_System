@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.dotcom.rbs_system.Adapter.AdapterItemHistoryListRecyclerView;
+import com.dotcom.rbs_system.Adapter.AdapterSpotlightItemListRecyclerView;
 import com.dotcom.rbs_system.Adapter.SliderAdapter;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
@@ -34,9 +38,13 @@ public class Home extends Fragment {
 
     MaterialSearchView materialSearchView;
     String[] list;
-    private SliderAdapter adapter;
-    private SliderView ads_slider;
-    List<String> slider_link_list;
+
+    RecyclerView spotlightRecyclerView;
+    AdapterSpotlightItemListRecyclerView adapterSpotlightItemListRecyclerView;
+
+//    private SliderAdapter adapter;
+//    private SliderView ads_slider;
+    List<String> slider_link_list,itemname,price;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,6 +80,7 @@ public class Home extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -84,14 +93,24 @@ public class Home extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 //        materialSearchView=view.findViewById(R.id.search_view);
-        ads_slider = view.findViewById(R.id.ads_slider);
+//        ads_slider = view.findViewById(R.id.ads_slider);
         slider_link_list=new ArrayList<>();
+        itemname=new ArrayList<>();
+        price=new ArrayList<>();
 
-        slider_link_list.add("http://pakdoodhwala.com/pakistan/uploads/slider/IMG-20191003-WA00031.jpg");
-        slider_link_list.add("http://pakdoodhwala.com/pakistan/uploads/slider/IMG-20191003-WA00031.jpg");
+        spotlightRecyclerView = (RecyclerView)view.findViewById(R.id.spotlightRecyclerView);
+        spotlightRecyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(),1));
 
+        itemname.add("shirt");
+        itemname.add("Shirt");
 
-        ads_slider();
+        price.add("1000");
+        price.add("1000");
+
+        adapterSpotlightItemListRecyclerView = new AdapterSpotlightItemListRecyclerView(getActivity(),itemname,price);
+        spotlightRecyclerView.setAdapter(adapterSpotlightItemListRecyclerView);
+
+//        ads_slider();
 //        list= new String[]{"Mobile","Laptop","PC"};
 //        materialSearchView.closeSearch();
 //        materialSearchView.setSuggestions(list);
@@ -115,17 +134,20 @@ public class Home extends Fragment {
     }
 
     private void ads_slider() {
+        slider_link_list.clear();
+        slider_link_list.add("https://images.app.goo.gl/89ZpdayMsTmwGgzg7");
+        slider_link_list.add("https://images.app.goo.gl/MseFpaFozRZZSE8r6");
+//        adapter = new SliderAdapter(getActivity(), slider_link_list);
+//        ads_slider.setSliderAdapter(adapter);
+//        ads_slider.setIndicatorAnimation(IndicatorAnimations.WORM);
+//        ads_slider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+//        ads_slider.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+//        ads_slider.setIndicatorSelectedColor(Color.WHITE);
+//        ads_slider.setIndicatorUnselectedColor(Color.GRAY);
+//
+//        ads_slider.setScrollTimeInSec(4);
+//        ads_slider.startAutoCycle();
 
-        adapter = new SliderAdapter(getActivity(), slider_link_list);
-
-        ads_slider.setSliderAdapter(adapter);
-        ads_slider.setIndicatorAnimation(IndicatorAnimations.WORM);
-        ads_slider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-        ads_slider.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
-        ads_slider.setIndicatorSelectedColor(Color.WHITE);
-        ads_slider.setIndicatorUnselectedColor(Color.GRAY);
-        ads_slider.setScrollTimeInSec(4);
-        ads_slider.startAutoCycle();
     }
 
     @Override
