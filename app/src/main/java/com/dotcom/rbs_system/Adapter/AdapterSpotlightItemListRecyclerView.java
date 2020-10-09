@@ -54,6 +54,8 @@ public class AdapterSpotlightItemListRecyclerView extends RecyclerView.Adapter<A
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+
+
         }
     }
 }
