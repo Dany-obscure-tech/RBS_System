@@ -2,60 +2,65 @@ package com.dotcom.rbs_system.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterSpotlightItemListRecyclerView extends RecyclerView.Adapter<AdapterSpotlightItemListRecyclerView.ViewHolder> {
+public class AdapterSpotlightItemListRecyclerView extends RecyclerView.Adapter<AdapterSpotlightItemListRecyclerView.MyViewHolder> {
     Context context;
-    List<String> item_name, item_price;
+    List<String> itemname,price;
 
-    public AdapterSpotlightItemListRecyclerView(Context context,List<String> item_name,List<String> item_price) {
-        this.context=context;
-        this.item_name=item_name;
-        this.item_price=item_price;
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
+        public TextView textView;
+        public MyViewHolder(TextView v) {
+            super(v);
+            textView = v;
+        }
     }
 
-    @NonNull
+    // Provide a suitable constructor (depends on the kind of dataset)
+    public AdapterSpotlightItemListRecyclerView(Context context, List<String> itemname, List<String> price) {
+        this.context = context;
+        this.itemname = itemname;
+        this.price = price;
+    }
+
+    // Create new views (invoked by the layout manager)
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_spotlight_items,parent,false);
-        AdapterSpotlightItemListRecyclerView.ViewHolder viewHolder = new AdapterSpotlightItemListRecyclerView.ViewHolder(view);
-//        statement_recyclerView = (RecyclerView) view.findViewById(R.id.statement_recyclerView);
-        return viewHolder;
+    public AdapterSpotlightItemListRecyclerView.MyViewHolder onCreateViewHolder(ViewGroup parent,
+                                                                                int viewType) {
+
+
+        // create a new view
+        TextView v = (TextView) LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.recyclerview_spotlight_items, parent, false);
+
+        MyViewHolder vh = new MyViewHolder(v);
+        return vh;
     }
 
+    // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Toast.makeText(context, "called", Toast.LENGTH_SHORT).show();
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+
+        // - get element from your dataset at this position
+        // - replace the contents of the view with that element
 
     }
 
+    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return item_name.size();
-    }
+        Toast.makeText(context, "called", Toast.LENGTH_SHORT).show();
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView transaction,statement_description,statement_balance,statement_date;
-        ImageView statement_status;
-
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-
-
-        }
+        return itemname.size();
     }
 }
