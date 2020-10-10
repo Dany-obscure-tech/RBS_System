@@ -8,11 +8,14 @@
     tools:context=".Home">
 
     <!-- TODO: Update blank fragment layout -->
+
+
     <LinearLayout
         android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="2"
+        android:padding="5dp"
         android:orientation="horizontal"
         >
 
@@ -21,20 +24,21 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5">
 
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/grey_search"
-            android:adjustViewBounds="true"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:paddingLeft="15dp"
-            />
+            <SearchView
+                android:id="@+id/simpleSearchView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:iconifiedByDefault="false"
+                android:layout_marginLeft="8dp"
+                android:background="#F1F1F1"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:queryHint="Search here"/>
 
         </RelativeLayout>
 
         <ImageView
+            android:id="@+id/menu_btn"
             android:padding="20dp"
             android:layout_weight="1.5"
             android:layout_gravity="center"
@@ -42,6 +46,7 @@
             android:layout_height="fill_parent"
             android:src="@drawable/menu_btns"
             android:adjustViewBounds="true"
+            android:scaleType="center"
             android:background="#ffffff"
             />
 
@@ -52,9 +57,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="#F3F3F3"
+            >
 
 <!--            <com.smarteist.autoimageslider.SliderView-->
 <!--                android:id="@+id/ads_slider"-->
@@ -82,9 +91,22 @@
                 android:adjustViewBounds="true"
                 android:layout_height="match_parent"/>
 
+            <TextView
+                android:layout_below="@+id/slider"
+                android:id="@+id/spot_light_text"
+                android:layout_margin="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Spotlight"
+                android:textColor="#707070"
+                android:textSize="26sp"
+                android:fontFamily="@font/segoe_ui_bold"
+                />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/spotlightRecyclerView"
-                android:layout_below="@+id/slider"
+                android:layout_margin="12dp"
+                android:layout_below="@+id/spot_light_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -92,5 +114,26 @@
 
 
     </ScrollView>
+    <RelativeLayout
+        android:id="@+id/side_option_menu"
+        android:layout_width="wrap_content"
+        android:background="#FF0000"
+        android:layout_marginRight="8dp"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        android:layout_below="@+id/topbar"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_margin="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LogOut"
+            android:textColor="#ffff"
+            android:textSize="16sp"
+            android:fontFamily="@font/segoe_ui_bold"
+            />
+
+    </RelativeLayout>
 
 </RelativeLayout>

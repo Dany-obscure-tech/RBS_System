@@ -18,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterItemHistoryListRecyclerView;
@@ -51,6 +53,9 @@ public class Home extends Fragment {
     RecyclerView recyclerView;
 
     List<String> slider_link_list, itemname, price, itemImage;
+
+    ImageView menu_btn;
+    RelativeLayout side_option_menu;
 
 
     private static final String ARG_PARAM1 = "param1";
@@ -104,9 +109,26 @@ public class Home extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.spotlightRecyclerView);
 
-
+        menu_btn=(ImageView)view.findViewById(R.id.menu_btn);
+        side_option_menu=(RelativeLayout)view.findViewById(R.id.side_option_menu);
+        Onclick_listners();
 
         return view;
+    }
+
+    private void Onclick_listners() {
+        menu_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String store_user_status;
+                if (side_option_menu.getVisibility()==View.VISIBLE){
+                    side_option_menu.setVisibility(View.GONE);
+                }
+                else {
+                    side_option_menu.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     private void datafetch() {
