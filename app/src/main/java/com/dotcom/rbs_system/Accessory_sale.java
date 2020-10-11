@@ -6,19 +6,19 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dotcom.rbs_system.Adapter.AdapterAccessoriesItemsRecyclerView;
 import com.dotcom.rbs_system.Adapter.AdapterAccessoriesSaleItemsRecyclerView;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
@@ -29,8 +29,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -38,10 +41,15 @@ import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
-public class Accessory_sale extends AppCompatActivity {
+public class Accessory_sale extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+    TextView invoiceNo_TextView;
+
+    String invoiceNo;
+
+    DatabaseReference AccessorySaleInvoicesRef;
     String category_name,currency;
     int container=100;
-    Button saleAccessory_btn,date_btn,alertSaleAccessoryCancel_btn,alertAddAccessoryEnter_btn;
+    Button saleAccessory_btn,date_btn,alertSaleAccessoryCancel_btn,alertAddAccessoryEnter_btn,submit_btn;
     ImageButton Back_btn;
     EditText customer_name_editText,customer_phone_no_editText,alertAccessoryQuantity_editText,alertAccessoryUnitPrice_editText,paid_editText;
     //    Date date;
@@ -88,8 +96,17 @@ public class Accessory_sale extends AppCompatActivity {
     }
 
 
-    ////////////////////////////ON CREATE/////////////////////////
+/////////////////////////////////////////////////////
     private void Initialization() {
+
+        invoiceNo_TextView = (TextView) findViewById(R.id.invoiceNo_TextView);
+
+        AccessorySaleInvoicesRef = FirebaseDatabase.getInstance().getReference("Accessories_Sale_invoices/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        Date date;
+
+        date_textView = (TextView) findViewById(R.id.date_textView);
+
         currency = Currency.getInstance().getCurrency();
         existing_categories = FirebaseDatabase.getInstance().getReference("Accessories_invoices/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
         accessories_categories_raw_list = new ArrayList<>();
@@ -114,6 +131,7 @@ public class Accessory_sale extends AppCompatActivity {
         customer_name_editText = (EditText) findViewById(R.id.customer_name_editText);
         customer_phone_no_editText = (EditText) findViewById(R.id.customer_phone_no_editText);
         date_btn = (Button) findViewById(R.id.date_btn);
+        submit_btn = (Button) findViewById(R.id.submit_btn);
         alertAccessoryQuantity_editText=(EditText)accessorySaleAlert.findViewById(R.id.alertAccessoryQuantity_editText);
         alertAccessoryUnitPrice_editText=(EditText)accessorySaleAlert.findViewById(R.id.alertAccessoryUnitPrice_editText);
         paid_editText=(EditText)findViewById(R.id.paid_editText);
@@ -131,13 +149,31 @@ public class Accessory_sale extends AppCompatActivity {
         accessoryItemList_recyclerView1.setLayoutManager(new GridLayoutManager(Accessory_sale.this,1));
         accessoryItemList_recyclerView1.setAdapter(adapterAccessoriesSaleItemsRecyclerView);
 
+        date=Calendar.getInstance().getTime();
+        String currentDateString= DateFormat.getDateInstance(DateFormat.FULL).format(date);
+        date_textView.setText(currentDateString);
+        date_textView.setText(currentDateString);
 
 
-//        date= Calendar.getInstance().getTime();
-//        String currentDateString= DateFormat.getDateInstance(DateFormat.FULL).format(date);
-//        date_textView.setText(currentDateString);
-//        date_textView.setText(currentDateString);
+
+        generatingInvoiceNo();
     }
+
+/////////////////////////////////////////////////////
+
+    private boolean validate() {
+        boolean valid = true;
+
+
+        return valid;
+    }
+
+    private void generatingInvoiceNo() {
+        invoiceNo = AccessorySaleInvoicesRef.push().getKey();
+        invoiceNo_TextView.setText(invoiceNo);
+    }
+
+/////////////////////////////////////////////////////
 
     private void ClickListeners() {
 
@@ -153,9 +189,52 @@ public class Accessory_sale extends AppCompatActivity {
         balancewatcher();
         addAccessoryToList();
         validateSaleAlertFields();
+        selectDate();
+        detailsSubmit();
 
 
 
+    }
+
+    private void detailsSubmit() {
+        submit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validate()){
+
+                    AccessorySaleInvoicesRef.child(invoiceNo).child("Invoice_no").setValue(invoiceNo);
+                    AccessorySaleInvoicesRef.child(invoiceNo).child("Invoice_date").setValue(date_textView.getText().toString());
+                    AccessorySaleInvoicesRef.child(invoiceNo).child("Customer_name").setValue(customer_name_editText.getText().toString());
+                    AccessorySaleInvoicesRef.child(invoiceNo).child("Customer_phNo").setValue(customer_phone_no_editText.getText().toString());
+                    AccessorySaleInvoicesRef.child(invoiceNo).child("Paid").setValue(paid_editText.getText().toString());
+                    AccessorySaleInvoicesRef.child(invoiceNo).child("Balance").setValue(balance_TextView.getText().toString());
+
+                    for (int i = 0;i<accessoryItemNameList.size();i++){
+                        AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_"+(i+1)).child("name").setValue(accessoryItemNameList.get(i));
+                        AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_"+(i+1)).child("category").setValue(accessoryCategoryList.get(i));
+                        AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_"+(i+1)).child("quantity").setValue(accessoryQtyList.get(i));
+                        AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_"+(i+1)).child("unit_price").setValue(accessoryUnitPriceList.get(i).replace("£",""));
+                        AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_"+(i+1)).child("total_price").setValue(accessoryTotalPriceList.get(i).replace("£",""));
+
+                    }
+
+
+
+                    finish();
+                }
+            }
+        });
+    }
+
+    private void selectDate() {
+        date_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment datepicker=new DatePickerFragment();
+                datepicker.show(getSupportFragmentManager(),"date picker");
+
+            }
+        });
     }
 
     private void addAccessoryToList() {
@@ -441,15 +520,14 @@ public class Accessory_sale extends AppCompatActivity {
         });
     }
 
-    private void selectdate() {
-        date_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment datepicker=new DatePickerFragment();
-                datepicker.show(getSupportFragmentManager(),"date picker");
-            }
-        });
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar calendar=Calendar.getInstance();
+        calendar.set(Calendar.YEAR,year);
+        calendar.set(Calendar.MONTH,month);
+        calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+        String currentDateString= DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+        date_textView.setText(currentDateString);
     }
-
 
 }

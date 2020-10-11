@@ -51,6 +51,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/segoe_ui_bold"
+                android:text="Invoice Number"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/invoiceNo_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="NA"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/segoe_ui_bold"
                 android:text="Vendor"
                 android:textSize="16sp" />
 
@@ -185,41 +203,25 @@
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="Invoice Number"
-                android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/invoiceNo_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="NA"
-                android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="Total Price"
-                android:textSize="16sp" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:fontFamily="@font/segoe_ui_bold"-->
+<!--                android:text="Total Price"-->
+<!--                android:textSize="16sp" />-->
 
-            <TextView
-                android:id="@+id/totalPrice_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="NA"
-                android:textSize="20sp" />
+<!--            <TextView-->
+<!--                android:id="@+id/totalPrice_TextView"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:textColor="@color/colorPrimaryDark"-->
+<!--                android:fontFamily="@font/segoe_ui_bold"-->
+<!--                android:text="NA"-->
+<!--                android:textSize="20sp" />-->
 
             <TextView
                 style="?android:attr/listSeparatorTextViewStyle"

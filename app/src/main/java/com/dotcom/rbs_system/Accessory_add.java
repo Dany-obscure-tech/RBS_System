@@ -51,9 +51,10 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
     Date date;
 
     Button vendor_add_btn, alertCategoryAdd_btn,alertAddCategoryEnter_btn,alertAddCategoryCancel_btn,date_btn,alertAddAccessoryEnter_btn,alertAddAccessoryCancel_btn,addAccessory_btn,submit_btn;
+
     ImageButton Back_btn;
 
-    TextView searchForVendor_textView, date_textView,alertAccessoryTotalPrice_textView,invoiceNo_TextView,alertCategory_textView;
+    TextView searchForVendor_textView, date_textView,alertAccessoryTotalPrice_textView,invoiceNo_TextView,alertCategory_textView,totalPrice_TextView;
 
     EditText alertAddCategoryName_editText,alertAccessoryName_editText,alertAccessoryQuantity_editText,alertAccessoryUnitPrice_editText,vendorInvoiceRef_editText;
 
@@ -135,6 +136,7 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         vendorInvoiceRef_editText = (EditText)findViewById(R.id.vendorInvoiceRef_editText);
 
         alertCategory_textView = (TextView) findViewById(R.id.alertCategory_textView);
+        totalPrice_TextView = (TextView) findViewById(R.id.alertCategory_textView);
         searchForVendor_textView = (TextView)findViewById(R.id.searchForVendor_textView);
         date_textView = (TextView) findViewById(R.id.date_textView);
         invoiceNo_TextView = (TextView) findViewById(R.id.invoiceNo_TextView);
@@ -225,6 +227,7 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
     }
 
     private void AccessoryTotalPriceCalculation() {
+        currency = Currency.getInstance().getCurrency();
 
         alertAccessoryQuantity_editText.addTextChangedListener(new TextWatcher() {
             @Override

@@ -117,19 +117,20 @@
     <RelativeLayout
         android:id="@+id/side_option_menu"
         android:layout_width="wrap_content"
-        android:background="#FF0000"
-        android:layout_marginRight="8dp"
+        android:background="#FFFF"
+
         android:layout_alignParentEnd="true"
         android:visibility="gone"
         android:layout_below="@+id/topbar"
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_margin="20dp"
+            android:id="@+id/logout"
+            android:padding="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="LogOut"
-            android:textColor="#ffff"
+            android:textColor="@color/textGrey"
             android:textSize="16sp"
             android:fontFamily="@font/segoe_ui_bold"
             />
