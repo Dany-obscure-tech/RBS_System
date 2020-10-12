@@ -290,31 +290,38 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
     private boolean validateSaleAlertFields() {
         boolean valid=true;
 
-//        if (select_category_textView.getText().toString().equals("SELECT CATEGORY")){
-//            select_category_textView.setError("Please select categories");
-//            valid=false;
-//        }
-//        if (select_itemname_textView.getText().toString().equals("SELECT ITEM NAME")){
-//            select_itemname_textView.setError("Please select item name");
-//            valid=false;
-//        }
+        if (select_category_textView.getText().toString().equals("SELECT CATEGORY")){
+            Toast.makeText(this, "Select category", Toast.LENGTH_SHORT).show();
+            valid=false;
+        }
+        if (select_itemname_textView.getText().toString().equals("SELECT ITEM NAME")){
+            Toast.makeText(this, "Select item", Toast.LENGTH_SHORT).show();
+            valid=false;
+        }
+
         if (alertAccessoryQuantity_editText.getText().toString().equals("")){
             alertAccessoryQuantity_editText.setError("Enter valid quantity");
             valid = false;
 
-        }
-        if (Integer.parseInt(alertAccessoryQuantity_editText.getText().toString())==0){
+        }else {
+            if (Integer.parseInt(alertAccessoryQuantity_editText.getText().toString())==0){
                 alertAccessoryQuantity_editText.setError("Enter valid quantity");
                 valid = false;
+            }
         }
+
         if (alertAccessoryUnitPrice_editText.getText().toString().equals("")){
             alertAccessoryUnitPrice_editText.setError("Enter valid quantity");
             valid = false;
-        }
-        if (Float.parseFloat(alertAccessoryUnitPrice_editText.getText().toString())==0){
+        }else {
+            if (Float.parseFloat(alertAccessoryUnitPrice_editText.getText().toString())==0){
                 alertAccessoryUnitPrice_editText.setError("Enter valid unit price");
                 valid = false;
+            }
         }
+
+
+
         return valid;
     }
 
