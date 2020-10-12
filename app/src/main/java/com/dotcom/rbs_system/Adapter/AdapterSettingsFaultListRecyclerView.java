@@ -43,7 +43,7 @@ public class AdapterSettingsFaultListRecyclerView extends RecyclerView.Adapter<A
         holder.faultName_textView.setText(faultNameList.get(position));
         holder.faultPrice_textView.setText(faultPriceList.get(position));
 
-        holder.remove_btn.setOnClickListener(new View.OnClickListener() {
+        holder.remove_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 reference.child(faultKeyIDList.get(position)).removeValue();
@@ -65,15 +65,14 @@ public class AdapterSettingsFaultListRecyclerView extends RecyclerView.Adapter<A
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView faultName_textView,faultPrice_textView;
-        Button remove_btn;
+        TextView remove_textView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             faultName_textView = (TextView)itemView.findViewById(R.id.faultName_textView);
             faultPrice_textView = (TextView)itemView.findViewById(R.id.faultPrice_textView);
-
-            remove_btn = (Button) itemView.findViewById(R.id.remove_btn);
+            remove_textView = (TextView) itemView.findViewById(R.id.remove_textView);
         }
     }
 }
