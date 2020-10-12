@@ -188,39 +188,59 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
         AccessoryTotalPriceCalculation();
         balancewatcher();
         addAccessoryToList();
-        validateSaleAlertFields();
         selectDate();
         detailsSubmit();
 
 
+    }
 
+    private boolean validate_fields() {
+        boolean valid = true;
+        if (customer_name_editText.getText().toString().isEmpty()){
+            customer_name_editText.setError("Please enter name");
+            valid = false;
+        }
+        if (customer_phone_no_editText.getText().toString().isEmpty()){
+            customer_phone_no_editText.setError("Please enter password");
+            valid=false;
+        }
+        if (date_textView.getText().toString().equals("Select date")){
+            date_textView.setError("Please enter date");
+            valid=false;
+        }
+        if (paid_editText.getText().toString().isEmpty()){
+            paid_editText.setError("Please enter paid amount");
+            valid=false;
+        }
+
+        return valid;
     }
 
     private void detailsSubmit() {
         submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validate()){
+                if (validate_fields()) {
+                    if (validate()) {
 
-                    AccessorySaleInvoicesRef.child(invoiceNo).child("Invoice_no").setValue(invoiceNo);
-                    AccessorySaleInvoicesRef.child(invoiceNo).child("Invoice_date").setValue(date_textView.getText().toString());
-                    AccessorySaleInvoicesRef.child(invoiceNo).child("Customer_name").setValue(customer_name_editText.getText().toString());
-                    AccessorySaleInvoicesRef.child(invoiceNo).child("Customer_phNo").setValue(customer_phone_no_editText.getText().toString());
-                    AccessorySaleInvoicesRef.child(invoiceNo).child("Paid").setValue(paid_editText.getText().toString());
-                    AccessorySaleInvoicesRef.child(invoiceNo).child("Balance").setValue(balance_TextView.getText().toString());
+                        AccessorySaleInvoicesRef.child(invoiceNo).child("Invoice_no").setValue(invoiceNo);
+                        AccessorySaleInvoicesRef.child(invoiceNo).child("Invoice_date").setValue(date_textView.getText().toString());
+                        AccessorySaleInvoicesRef.child(invoiceNo).child("Customer_name").setValue(customer_name_editText.getText().toString());
+                        AccessorySaleInvoicesRef.child(invoiceNo).child("Customer_phNo").setValue(customer_phone_no_editText.getText().toString());
+                        AccessorySaleInvoicesRef.child(invoiceNo).child("Paid").setValue(paid_editText.getText().toString());
+                        AccessorySaleInvoicesRef.child(invoiceNo).child("Balance").setValue(balance_TextView.getText().toString());
 
-                    for (int i = 0;i<accessoryItemNameList.size();i++){
-                        AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_"+(i+1)).child("name").setValue(accessoryItemNameList.get(i));
-                        AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_"+(i+1)).child("category").setValue(accessoryCategoryList.get(i));
-                        AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_"+(i+1)).child("quantity").setValue(accessoryQtyList.get(i));
-                        AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_"+(i+1)).child("unit_price").setValue(accessoryUnitPriceList.get(i).replace("£",""));
-                        AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_"+(i+1)).child("total_price").setValue(accessoryTotalPriceList.get(i).replace("£",""));
+                        for (int i = 0; i < accessoryItemNameList.size(); i++) {
+                            AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_" + (i + 1)).child("name").setValue(accessoryItemNameList.get(i));
+                            AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_" + (i + 1)).child("category").setValue(accessoryCategoryList.get(i));
+                            AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_" + (i + 1)).child("quantity").setValue(accessoryQtyList.get(i));
+                            AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_" + (i + 1)).child("unit_price").setValue(accessoryUnitPriceList.get(i).replace("£", ""));
+                            AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_" + (i + 1)).child("total_price").setValue(accessoryTotalPriceList.get(i).replace("£", ""));
 
+                        }
+
+                        finish();
                     }
-
-
-
-                    finish();
                 }
             }
         });
@@ -260,34 +280,41 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
         alertAddAccessoryEnter_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (validateSaleAlertFields()){
                     accessorySaleAlert.dismiss();
+            }
             }
         });
     }
 
     private boolean validateSaleAlertFields() {
         boolean valid=true;
+
+//        if (select_category_textView.getText().toString().equals("SELECT CATEGORY")){
+//            select_category_textView.setError("Please select categories");
+//            valid=false;
+//        }
+//        if (select_itemname_textView.getText().toString().equals("SELECT ITEM NAME")){
+//            select_itemname_textView.setError("Please select item name");
+//            valid=false;
+//        }
         if (alertAccessoryQuantity_editText.getText().toString().equals("")){
             alertAccessoryQuantity_editText.setError("Enter valid quantity");
             valid = false;
 
-        }else {
-            if (Integer.parseInt(alertAccessoryQuantity_editText.getText().toString())==0){
+        }
+        if (Integer.parseInt(alertAccessoryQuantity_editText.getText().toString())==0){
                 alertAccessoryQuantity_editText.setError("Enter valid quantity");
                 valid = false;
-            }
         }
-
         if (alertAccessoryUnitPrice_editText.getText().toString().equals("")){
             alertAccessoryUnitPrice_editText.setError("Enter valid quantity");
             valid = false;
-        }else {
-            if (Float.parseFloat(alertAccessoryUnitPrice_editText.getText().toString())==0){
+        }
+        if (Float.parseFloat(alertAccessoryUnitPrice_editText.getText().toString())==0){
                 alertAccessoryUnitPrice_editText.setError("Enter valid unit price");
                 valid = false;
-            }
         }
-
         return valid;
     }
 

@@ -45,6 +45,10 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signin();
+//                validateFields();
+//                if (validateFields()== true){
+//
+//                }
             }
         });
         button_register.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +62,21 @@ public class SignInActivity extends AppCompatActivity {
         userRef = FirebaseDatabase.getInstance().getReference("Users_data");
 
 
+
     }
+
+//    private boolean validateFields() {
+//        boolean valid = true;
+//        if (editText_email.getText().toString().isEmpty()){
+//            Toast.makeText(this, "Please select email", Toast.LENGTH_LONG).show();
+//            valid = false;
+//        }
+//        if (editText_password.getText().toString().isEmpty()){
+//            Toast.makeText(this, "Please enter password", Toast.LENGTH_LONG).show();
+//            valid=false;
+//        }
+//        return valid;
+//    }
 
 
     private void signin() {

@@ -102,7 +102,7 @@
                 android:backgroundTint="#6E76E3"
                 android:fontFamily="@font/segoe_ui"
                 android:hint="Enter customer phone number"
-                android:maxLength="32"
+                android:maxLength="11"
                 android:textColor="#9F9F9F"
                 android:textColorHint="#9F9F9F"
                 android:textSize="16sp" />

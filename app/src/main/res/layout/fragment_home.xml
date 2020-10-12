@@ -107,6 +107,7 @@
                 android:id="@+id/spotlightRecyclerView"
                 android:layout_margin="12dp"
                 android:layout_below="@+id/spot_light_text"
+                android:paddingBottom="40dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
