@@ -6,7 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".Registration">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/buy_local"
+        android:layout_above="@+id/registration_fields"
+        android:layout_centerHorizontal="true"
+        />
+
     <LinearLayout
+        android:id="@+id/registration_fields"
         android:layout_centerInParent="true"
         android:orientation="vertical"
         android:padding="30dp"
@@ -119,6 +128,7 @@
                 android:textColor="#0075B5"
                 android:fontFamily="@font/segoe_ui_bold"
                 android:text="Upload Profile image "
+                android:padding="4dp"
                 android:layout_weight="0.1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -126,15 +136,16 @@
         </LinearLayout>
 
         <Button
+            android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/main_button"
-            android:textColor="#0075B5"
-            android:layout_gravity="center"
+            android:background="@drawable/profile_screen_header"
+            android:textColor="#ffff"
             android:id="@+id/button_register"
+            android:fontFamily="@font/segoe_ui_bold"
             android:layout_alignParentBottom="true"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Register" />
+            android:text="REGISTER" />
 
 
     </LinearLayout>

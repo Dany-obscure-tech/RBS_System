@@ -186,7 +186,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
         select_sale_category();
         select_item_name();
         AccessoryTotalPriceCalculation();
-        balancewatcher();
+//        balancewatcher();
         addAccessoryToList();
         selectDate();
         detailsSubmit();
@@ -228,7 +228,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
                         AccessorySaleInvoicesRef.child(invoiceNo).child("Customer_name").setValue(customer_name_editText.getText().toString());
                         AccessorySaleInvoicesRef.child(invoiceNo).child("Customer_phNo").setValue(customer_phone_no_editText.getText().toString());
                         AccessorySaleInvoicesRef.child(invoiceNo).child("Paid").setValue(paid_editText.getText().toString());
-                        AccessorySaleInvoicesRef.child(invoiceNo).child("Balance").setValue(balance_TextView.getText().toString());
+//                        AccessorySaleInvoicesRef.child(invoiceNo).child("Balance").setValue(balance_TextView.getText().toString());
 
                         for (int i = 0; i < accessoryItemNameList.size(); i++) {
                             AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_" + (i + 1)).child("name").setValue(accessoryItemNameList.get(i));
