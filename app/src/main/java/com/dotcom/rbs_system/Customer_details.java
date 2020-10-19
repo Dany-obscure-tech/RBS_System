@@ -70,7 +70,7 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
     TextView date_of_birth_text;
     DatePickerDialog.OnDateSetListener onDateSetListener;
     DatabaseReference reference;
-    EditText ac_title, ac_phoneno, ac_id, ac_address, ac_email;
+    EditText ac_title, ac_phoneno, ac_id, ac_address, ac_email,ac_postalcode;
 
     private static final int CAMERA_REQUEST_CODE = 1;
     private static final int CAMERA_REQUEST_CODE2 = 2;
@@ -98,6 +98,7 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
         ac_id = (EditText) findViewById(R.id.ac_id);
         ac_address = (EditText) findViewById(R.id.ac_address);
         ac_email = (EditText) findViewById(R.id.ac_email);
+        ac_postalcode = (EditText) findViewById(R.id.ac_postalcode);
 
         Back_btn = (ImageButton) findViewById(R.id.Back_btn);
 
@@ -247,6 +248,10 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             ac_email.setError("Please enter your email address");
             valid = false;
         }
+        if (ac_postalcode.getText().toString().isEmpty()) {
+            ac_postalcode.setError("Please enter your postal code");
+            valid = false;
+        }
         if (!Patterns.EMAIL_ADDRESS.matcher(String.valueOf(ac_email.getText())).matches()) {
             ac_email.setError("Please enter a valid email");
             valid = false;
@@ -283,6 +288,7 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             reference.child("Customer_list").child(key).child("DOB").setValue(date_of_birth_text.getText().toString());
             reference.child("Customer_list").child(key).child("Address").setValue(ac_address.getText().toString());
             reference.child("Customer_list").child(key).child("Email").setValue(ac_email.getText().toString());
+            reference.child("Customer_list").child(key).child("Postal_code").setValue(ac_postalcode.getText().toString());
             reference.child("Customer_list").child(key).child("key_id").setValue(key);
             reference.child("Customer_list").child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
 
