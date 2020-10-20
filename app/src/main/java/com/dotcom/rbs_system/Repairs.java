@@ -570,9 +570,9 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             public void onClick(View v) {
 
                 sendingdialog.dismiss();
-                Intent intent = new Intent(Repairs.this,Repair_details.class);
-                intent.putExtra("REPAIR_ID",repair_details_edit_obj.getTicketNo_TextView());
-                startActivity(intent);
+//                Intent intent = new Intent(Repairs.this,Repair_details.class);
+//                intent.putExtra("REPAIR_ID",repair_details_edit_obj.getTicketNo_TextView());
+//                startActivity(intent);
                 finish();
             }
         });
