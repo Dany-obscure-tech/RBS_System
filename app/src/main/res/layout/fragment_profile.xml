@@ -16,13 +16,14 @@
        android:background="@drawable/profile_screen_header"
        >
 
-       <ImageView
+       <de.hdodenhof.circleimageview.CircleImageView
            android:id="@+id/profileImage"
            android:layout_width="120dp"
            android:layout_height="120dp"
-           android:src="@drawable/profile_icon"
            android:layout_gravity="center"
            android:layout_marginLeft="20dp"
+           app:civ_border_width="7dp"
+           app:civ_border_color="#4A4A4A"
 
            />
        <LinearLayout
@@ -90,6 +91,7 @@
                    android:fontFamily="@font/segoe_ui_bold"
                    />
                <TextView
+                   android:id="@+id/creationDate_textView"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text=""
@@ -107,28 +109,32 @@
 
     <LinearLayout
         android:id="@+id/id_card_area"
+        android:paddingTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2"
+        android:gravity="center"
         android:layout_below="@+id/header_profile">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="Your ID"
             android:layout_gravity="center"
             android:fontFamily="@font/segoe_ui_bold"
             android:textColor="#19ACE2"
             android:textSize="26sp"
+            android:layout_marginRight="20dp"
             android:textAlignment="center"
             />
-        <ImageButton
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/idcard"
+
+        <ImageView
+            android:id="@+id/idImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:layout_marginLeft="20dp"
             android:background="#ffffff"
             />
 

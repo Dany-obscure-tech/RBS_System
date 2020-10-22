@@ -40,14 +40,16 @@ import java.util.Calendar;
 public class Registration extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
     DatePickerDialog.OnDateSetListener onDateSetListener;
 
-    StorageReference idStorageReference;
-    Uri fileUri;
-    ImageView id_front;
+    int profileImagOrCnic = 0;
+
+    StorageReference profileImageStorageReference;
+    Uri fileUri,idUri;
+    ImageView id_front,id_imageView;
     String currentDateString;
     TextView date_of_birth_text;
     FirebaseAuth fAuth;
     DatabaseReference userRef;
-    Button button_register,date_btn,uploadId_profile_image;
+    Button button_register,date_btn,uploadId_profile_image,uploadId_id_image;
     EditText editText_fullName,editText_contactNo,editText_address,editText_email,editText_password,editText_confirmPassword;
 
     @Override
@@ -64,9 +66,10 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Initialization() {
-        idStorageReference = FirebaseStorage.getInstance().getReference().child("Customer_Profile_image");
+        profileImageStorageReference = FirebaseStorage.getInstance().getReference();
 
         id_front = (ImageView) findViewById(R.id.id_front);
+        id_imageView = (ImageView) findViewById(R.id.id_imageView);
 
         date_of_birth_text = (TextView) findViewById(R.id.date_of_birth_text);
 
@@ -75,6 +78,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         fAuth = FirebaseAuth.getInstance();
 
         uploadId_profile_image = (Button) findViewById(R.id.uploadId_profile_image);
+        uploadId_id_image = (Button) findViewById(R.id.uploadId_id_image);
         date_btn = (Button) findViewById(R.id.date_btn);
         button_register = (Button) findViewById(R.id.button_register);
 
@@ -92,12 +96,27 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         registerButtonClick();
         date_btnClisckListner();
         takeProfileImage();
+        takeIdImage();
     }
 
     private void takeProfileImage() {
         uploadId_profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                profileImagOrCnic = 1;
+                ImagePicker.Companion.with(Registration.this)
+                        .crop()	    			//Crop image(Optional), Check Customization for more option
+                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                        .start();
+            }
+        });
+    }
+    private void takeIdImage() {
+        uploadId_id_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                profileImagOrCnic = 2;
                 ImagePicker.Companion.with(Registration.this)
                         .crop()	    			//Crop image(Optional), Check Customization for more option
                         .compress(1024)			//Final image size will be less than 1 MB(Optional)
@@ -125,7 +144,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            String userID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            final String userID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
                             Toast.makeText(Registration.this, "Registered!", Toast.LENGTH_SHORT).show();
                             userRef.child(userID).child("type").setValue("customer");
                             userRef.child(userID).child("fullname").setValue(fullname);
@@ -134,15 +153,37 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                             userRef.child(userID).child("address").setValue(address);
                             userRef.child(userID).child("email").setValue(email);
 
-                            idStorageReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("ID").putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            profileImageStorageReference.child("BuyLocal_Customer_Profile_image").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Profile_image").putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    Toast.makeText(Registration.this, "Uploading finished!", Toast.LENGTH_SHORT).show();
 
-                                    idStorageReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("ID").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    profileImageStorageReference.child("BuyLocal_Customer_Profile_image").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Profile_image").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
                                         public void onSuccess(Uri uri) {
-                                            finish();
+                                            userRef.child(userID).child("profile_image_url").setValue(String.valueOf(uri));
+                                            profileImageStorageReference.child("BuyLocal_Customer_Id_image").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("ID").putFile(idUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                                @Override
+                                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                    Toast.makeText(Registration.this, "Uploading finished!", Toast.LENGTH_SHORT).show();
+
+                                                    profileImageStorageReference.child("BuyLocal_Customer_Id_image").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("ID").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                        @Override
+                                                        public void onSuccess(Uri uri) {
+                                                            userRef.child(userID).child("id_image_url").setValue(String.valueOf(uri));
+                                                            Intent intent = new Intent(Registration.this, BuyLocal_main.class);
+                                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                            finish();
+                                                            startActivity(intent);
+                                                        }
+                                                    });
+
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(Registration.this, "Not Submitted", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
                                         }
                                     });
 
@@ -154,9 +195,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                                 }
                             });
 
-                            Intent intent = new Intent(Registration.this, BuyLocal_main.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
+
                         }
                     }
                 });
@@ -234,8 +273,18 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             //Image Uri will not be null for RESULT_OK
-            fileUri = data.getData();
-            id_front.setImageURI(fileUri);
+            if(profileImagOrCnic == 1){
+                fileUri = data.getData();
+                id_front.setImageURI(fileUri);
+                fileUri = data.getData();
+                profileImagOrCnic = 0;
+            }else {
+                idUri = data.getData();
+                id_imageView.setImageURI(idUri);
+                idUri = data.getData();
+                profileImagOrCnic = 0;
+            }
+
 
             //You can get File object from intent
 //            val file:File = ImagePicker.getFile(data)!!

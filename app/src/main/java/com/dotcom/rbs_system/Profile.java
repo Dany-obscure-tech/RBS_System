@@ -17,14 +17,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Profile extends Fragment {
 
     DatabaseReference customerdataRef;
 
-    TextView name,dob,phno,email,address;
+    TextView name,dob,phno,email,address,creationDate_textView;
 
-    ImageView profileImage;
+    ImageView profileImage,idImage;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -64,10 +68,12 @@ public class Profile extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        profileImage=(ImageView)view.findViewById(R.id.menu_btn);
+        profileImage=(ImageView)view.findViewById(R.id.profileImage);
+        idImage=(ImageView)view.findViewById(R.id.idImage);
         name=(TextView)view.findViewById(R.id.name);
         phno=(TextView)view.findViewById(R.id.phno);
         address=(TextView)view.findViewById(R.id.address);
+        creationDate_textView=(TextView)view.findViewById(R.id.creationDate_textView);
         dob=(TextView)view.findViewById(R.id.dob);
         email=(TextView)view.findViewById(R.id.email);
 
@@ -86,6 +92,13 @@ public class Profile extends Fragment {
                     phno.setText(dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("contactno").getValue().toString());
                     dob.setText(dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("dob").getValue().toString());
                     email.setText(dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("email").getValue().toString());
+
+                    SimpleDateFormat sfd = new SimpleDateFormat("dd-MMMM-yyyy ");
+                    creationDate_textView.setText(String.valueOf(sfd.format(new Date(FirebaseAuth.getInstance().getCurrentUser().getMetadata().getCreationTimestamp()))));
+
+                    Picasso.get().load(String.valueOf(dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("profile_image_url").getValue().toString())).into(profileImage);
+                    Picasso.get().load(String.valueOf(dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("id_image_url").getValue().toString())).into(idImage);
+
                 }
             }
 
