@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dotcom.rbs_system.Adapter.AdapterSpotlightItemListRecyclerView;
+import com.dotcom.rbs_system.Adapter.SliderAdapterExample;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,8 @@ import java.util.List;
  */
 public class Home extends Fragment {
 
+    SliderView sliderView;
+
     DatabaseReference itemsRef;
 
     MaterialSearchView materialSearchView;
@@ -44,6 +48,7 @@ public class Home extends Fragment {
     RecyclerView recyclerView;
 
     List<String> slider_link_list, itemname, price, itemImage;
+    List<String> imageUrl;
 
     ImageView menu_btn;
 
@@ -78,6 +83,11 @@ public class Home extends Fragment {
         super.onCreate(savedInstanceState);
 
         itemsRef = FirebaseDatabase.getInstance().getReference("Spotlight");
+        imageUrl = new ArrayList<>();
+
+        imageUrl.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2Fvsbxb%2Fshirt.png?alt=media&token=80d16e81-0650-412e-95f3-ca3a748392e5");
+        imageUrl.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2Fvsbxb%2Fshirt.png?alt=media&token=80d16e81-0650-412e-95f3-ca3a748392e5");
+        imageUrl.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2Fvsbxb%2Fshirt.png?alt=media&token=80d16e81-0650-412e-95f3-ca3a748392e5");
 
         itemname = new ArrayList<String>();
         price = new ArrayList<String>();
@@ -95,6 +105,7 @@ public class Home extends Fragment {
                              Bundle savedInstanceState) {
 
 
+        SliderAdapterExample sliderAdapterExample = new SliderAdapterExample(getActivity(),imageUrl);
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         slider_link_list=new ArrayList<>();
@@ -109,6 +120,9 @@ public class Home extends Fragment {
 
         side_option_menu=(RelativeLayout)view.findViewById(R.id.side_option_menu);
         Onclick_listners();
+
+        sliderView = view.findViewById(R.id.imageSlider);
+        sliderView.setSliderAdapter(sliderAdapterExample);
 
         return view;
     }

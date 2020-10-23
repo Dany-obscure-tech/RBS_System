@@ -49,7 +49,7 @@ dependencies {
     //Loader
     implementation 'cc.cloudist.acplibrary:library:1.2.1'
     //Slider
-    implementation 'com.github.smarteist:autoimageslider:1.3.2'
+    implementation 'com.github.smarteist:autoimageslider:1.4.0'
     //SearchView
     implementation'com.miguelcatalan:materialsearchview:1.4.0'
 
