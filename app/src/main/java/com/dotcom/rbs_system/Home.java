@@ -1,13 +1,16 @@
 package com.dotcom.rbs_system;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
@@ -46,6 +51,8 @@ public class Home extends Fragment {
     MaterialSearchView materialSearchView;
 
     RecyclerView recyclerView;
+
+    CardView imageSlider;
 
     List<String> slider_link_list, itemname, price, itemImage;
     List<String> imageUrl;
@@ -115,14 +122,22 @@ public class Home extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.spotlightRecyclerView);
 
         menu_btn=(ImageView)view.findViewById(R.id.menu_btn);
+        imageSlider=(CardView)view.findViewById(R.id.imageSlider);
 
         logout=(TextView) view.findViewById(R.id.logout);
 
         side_option_menu=(RelativeLayout)view.findViewById(R.id.side_option_menu);
         Onclick_listners();
 
-        sliderView = view.findViewById(R.id.imageSlider);
+        sliderView = view.findViewById(R.id.imageSliders);
         sliderView.setSliderAdapter(sliderAdapterExample);
+        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using IndicatorAnimationType. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+        sliderView.setIndicatorSelectedColor(Color.parseColor("#01A0DA"));
+        sliderView.setIndicatorUnselectedColor(Color.parseColor("#F1F1F1"));
+        sliderView.setScrollTimeInSec(4); //set scroll delay in seconds :
+        sliderView.startAutoCycle();
 
         return view;
     }
@@ -174,12 +189,6 @@ public class Home extends Fragment {
 
             }
         });
-    }
-
-    private void ads_slider() {
-        slider_link_list.clear();
-        slider_link_list.add("https://images.app.goo.gl/89ZpdayMsTmwGgzg7");
-        slider_link_list.add("https://images.app.goo.gl/MseFpaFozRZZSE8r6");
     }
 
     @Override

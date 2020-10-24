@@ -40,7 +40,7 @@ public class SliderAdapterExample extends
     viewHolder.textViewDescription.setTextSize(16);
     viewHolder.textViewDescription.setTextColor(Color.WHITE);
 
-    Picasso.get().load(imageUrl.get(position)).into(viewHolder.imageGifContainer);
+    Picasso.get().load(imageUrl.get(position)).into(viewHolder.iv_auto_image_slider);
 
     viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -59,13 +59,13 @@ public class SliderAdapterExample extends
   class SliderAdapterVH extends SliderViewAdapter.ViewHolder {
 
     View itemView;
-    ImageView imageViewBackground;
+    ImageView iv_auto_image_slider;
     ImageView imageGifContainer;
     TextView textViewDescription;
 
     public SliderAdapterVH(View itemView) {
       super(itemView);
-      imageViewBackground = itemView.findViewById(R.id.iv_auto_image_slider);
+      iv_auto_image_slider = itemView.findViewById(R.id.iv_auto_image_slider);
       imageGifContainer = itemView.findViewById(R.id.iv_gif_container);
       textViewDescription = itemView.findViewById(R.id.tv_auto_image_slider);
       this.itemView = itemView;

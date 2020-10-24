@@ -65,34 +65,37 @@
             android:background="#F3F3F3"
             >
 
-            <com.smarteist.autoimageslider.SliderView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/imageSlider"
+                app:cardCornerRadius="6dp"
+                android:layout_margin="16dp"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                app:sliderAnimationDuration="600"
-                app:sliderAutoCycleDirection="back_and_forth"
-                app:sliderAutoCycleEnabled="true"
-                app:sliderIndicatorAnimationDuration="600"
-                app:sliderIndicatorGravity="center_horizontal|bottom"
-                app:sliderIndicatorMargin="15dp"
-                app:sliderIndicatorOrientation="horizontal"
-                app:sliderIndicatorPadding="3dp"
-                app:sliderIndicatorRadius="2dp"
-                app:sliderIndicatorSelectedColor="#5A5A5A"
-                app:sliderIndicatorUnselectedColor="#FFF"
-                app:sliderScrollTimeInSec="1"
-                app:sliderStartAutoCycle="true" />
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/slider"
-                android:layout_below="@+id/imageSlider"
-                android:src="@drawable/slider"
-                android:layout_width="match_parent"
-                android:adjustViewBounds="true"
-                android:layout_height="match_parent"/>
+                <com.smarteist.autoimageslider.SliderView
+                    android:id="@+id/imageSliders"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    app:sliderAnimationDuration="600"
+                    app:sliderAutoCycleDirection="back_and_forth"
+                    app:sliderAutoCycleEnabled="true"
+                    app:sliderIndicatorAnimationDuration="600"
+                    app:sliderIndicatorGravity="center_horizontal|bottom"
+                    app:sliderIndicatorMargin="15dp"
+                    app:sliderIndicatorOrientation="horizontal"
+                    app:sliderIndicatorPadding="3dp"
+                    app:sliderIndicatorRadius="2dp"
+                    app:sliderIndicatorSelectedColor="#5A5A5A"
+                    app:sliderIndicatorUnselectedColor="#FFF"
+                    app:sliderScrollTimeInSec="1"
+                    app:sliderStartAutoCycle="true" />
+
+            </androidx.cardview.widget.CardView>
+
+
 
             <TextView
-                android:layout_below="@+id/slider"
+                android:layout_below="@+id/imageSlider"
                 android:id="@+id/spot_light_text"
                 android:layout_margin="15dp"
                 android:layout_width="wrap_content"
