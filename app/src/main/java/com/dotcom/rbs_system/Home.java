@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.CalendarContract;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.dotcom.rbs_system.Adapter.AdapterCategoryRecyclerView;
 import com.dotcom.rbs_system.Adapter.AdapterSpotlightItemListRecyclerView;
 import com.dotcom.rbs_system.Adapter.SliderAdapterExample;
 import com.dotcom.rbs_system.Classes.BuylocalSlider;
@@ -53,12 +55,13 @@ public class Home extends Fragment {
 
     MaterialSearchView materialSearchView;
 
-    RecyclerView recyclerView;
+    RecyclerView recyclerView,category_recyclerview;
 
     CardView imageSlider;
 
     List<String> slider_link_list, itemname, price, itemImage;
     List<String> imageUrl;
+    List<String> category_text;
 
     ImageView menu_btn;
 
@@ -78,7 +81,6 @@ public class Home extends Fragment {
     }
 
 
-
     public static Home newInstance(String param1, String param2) {
         Home fragment = new Home();
         Bundle args = new Bundle();
@@ -96,6 +98,16 @@ public class Home extends Fragment {
 
         itemsRef = FirebaseDatabase.getInstance().getReference("Spotlight");
         imageUrl = new ArrayList<>();
+        category_text = new ArrayList<>();
+        category_text.add("PC");
+        category_text.add("Laptop");
+        category_text.add("Mobile");
+        category_text.add("Tablet");
+        category_text.add("PC");
+        category_text.add("Laptop");
+        category_text.add("Mobile");
+        category_text.add("Tablet");
+
 
         imageUrl = buylocalSliderlistObj.getBuylocalSliderList();
 
@@ -121,8 +133,17 @@ public class Home extends Fragment {
         slider_link_list=new ArrayList<>();
 
         datafetch();
+        categoryfetch();
 
         recyclerView = (RecyclerView) view.findViewById(R.id.spotlightRecyclerView);
+        category_recyclerview = (RecyclerView) view.findViewById(R.id.category_recyclerview);
+
+        AdapterCategoryRecyclerView adapterCategoryRecyclerView=new AdapterCategoryRecyclerView(getActivity(),null,category_text);
+
+        category_recyclerview.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,true));
+        category_recyclerview.setAdapter(adapterCategoryRecyclerView);
+//Todo
+
 
         menu_btn=(ImageView)view.findViewById(R.id.menu_btn);
         imageSlider=(CardView)view.findViewById(R.id.imageSlider);
@@ -143,6 +164,11 @@ public class Home extends Fragment {
         sliderView.startAutoCycle();
 
         return view;
+    }
+
+    private void categoryfetch() {
+
+
     }
 
     private void Onclick_listners() {

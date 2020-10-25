@@ -68,14 +68,13 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/imageSlider"
                 app:cardCornerRadius="6dp"
-                android:layout_margin="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.smarteist.autoimageslider.SliderView
                     android:id="@+id/imageSliders"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="250dp"
                     app:sliderAnimationDuration="600"
                     app:sliderAutoCycleDirection="back_and_forth"
                     app:sliderAutoCycleEnabled="true"
@@ -114,8 +113,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-        </RelativeLayout>
 
+            <RelativeLayout
+                android:background="#ffffffff"
+                android:layout_below="@+id/spotlightRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/Category"
+                android:layout_margin="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:textColor="#707070"
+                android:textSize="26sp"
+                android:fontFamily="@font/segoe_ui_bold"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/category_recyclerview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Category"
+                android:orientation="horizontal"
+                android:layout_margin="12dp"
+                android:paddingBottom="40dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+                />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
 
     </ScrollView>
     <RelativeLayout
