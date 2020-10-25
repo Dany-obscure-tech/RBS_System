@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
 
+import com.dotcom.rbs_system.Classes.BuylocalSlider;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -16,9 +17,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SplashActivity extends AppCompatActivity {
-    DatabaseReference currencyRef;
+    DatabaseReference currencyRef,buylocalSliderRef;
     Currency currencyObj;
+    List<String> buylocalsliderlist;
+    BuylocalSlider buylocalSlider;
     DatabaseReference userRef;
 
     @Override
@@ -45,10 +51,14 @@ public class SplashActivity extends AppCompatActivity {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Initialization() {
+        buylocalsliderlist = new ArrayList<>();
+
         userRef = FirebaseDatabase.getInstance().getReference("Users_data");
 
         currencyRef = FirebaseDatabase.getInstance().getReference("Admin/currency");
+        buylocalSliderRef = FirebaseDatabase.getInstance().getReference("Admin/buylocal_slider");
         currencyObj = Currency.getInstance();
+        buylocalSlider = BuylocalSlider.getInstance();
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,6 +85,23 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 currencyObj.setCurrency(dataSnapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        buylocalSliderRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                        buylocalsliderlist.add(String.valueOf(dataSnapshot1.getValue()));
+                    }
+                    buylocalSlider.setBuylocalSliderList(buylocalsliderlist);
+                }
             }
 
             @Override

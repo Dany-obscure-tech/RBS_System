@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.dotcom.rbs_system.Adapter.AdapterSpotlightItemListRecyclerView;
 import com.dotcom.rbs_system.Adapter.SliderAdapterExample;
+import com.dotcom.rbs_system.Classes.BuylocalSlider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,6 +44,8 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class Home extends Fragment {
+
+    BuylocalSlider buylocalSliderlistObj;
 
     SliderView sliderView;
 
@@ -89,12 +92,12 @@ public class Home extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        buylocalSliderlistObj = BuylocalSlider.getInstance();
+
         itemsRef = FirebaseDatabase.getInstance().getReference("Spotlight");
         imageUrl = new ArrayList<>();
 
-        imageUrl.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2Fvsbxb%2Fshirt.png?alt=media&token=80d16e81-0650-412e-95f3-ca3a748392e5");
-        imageUrl.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2Fvsbxb%2Fshirt.png?alt=media&token=80d16e81-0650-412e-95f3-ca3a748392e5");
-        imageUrl.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2Fvsbxb%2Fshirt.png?alt=media&token=80d16e81-0650-412e-95f3-ca3a748392e5");
+        imageUrl = buylocalSliderlistObj.getBuylocalSliderList();
 
         itemname = new ArrayList<String>();
         price = new ArrayList<String>();
