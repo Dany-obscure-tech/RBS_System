@@ -1,6 +1,7 @@
 package com.dotcom.rbs_system.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dotcom.rbs_system.BuyLocal_productdetails;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.R;
 import com.squareup.picasso.Picasso;
@@ -47,6 +49,14 @@ public class AdapterSpotlightItemListRecyclerView extends  RecyclerView.Adapter<
         holder.name.setText(itemname.get(position));
         holder.priceTV.setText(Currency.getInstance().getCurrency() + " " + price.get(position));
         Picasso.get().load(itemImage.get(position)).into(holder.image);
+
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, BuyLocal_productdetails.class);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
