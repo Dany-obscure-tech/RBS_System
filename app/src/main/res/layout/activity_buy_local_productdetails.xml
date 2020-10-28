@@ -207,6 +207,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:weightSum="3"
                 android:layout_below="@+id/distance_textview">
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -217,12 +218,14 @@
                     android:layout_marginLeft="5dp"
                     app:civ_border_width="7dp"
                     app:civ_border_color="#4A4A4A"
+                    android:layout_weight="0.5"
 
                     />
                 <LinearLayout
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
                     android:orientation="vertical">
 
                     <TextView
@@ -237,22 +240,22 @@
                         android:fontFamily="@font/segoe_ui_bold"
                         />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content">-->
 
-                        <RatingBar
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:numStars="5"
-                            android:stepSize="1"
-                            android:theme="@style/RatingBar"
-                            style="?android:attr/ratingBarStyleIndicator"
-                            android:isIndicator="true"
+<!--                        <RatingBar-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:numStars="5"-->
+<!--                            android:stepSize="1"-->
+<!--                            android:theme="@style/RatingBar"-->
+<!--                            style="?android:attr/ratingBarStyleIndicator"-->
+<!--                            android:isIndicator="true"-->
 
-                            />
+<!--                            />-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
                 </LinearLayout>
 
@@ -263,6 +266,7 @@
                     android:layout_gravity="center"
                     android:background="#00000000"
                     android:layout_margin="5dp"
+                    android:layout_weight="0.5"
                     />
 
             </LinearLayout>
@@ -273,11 +277,13 @@
                 android:layout_below="@+id/shop_status"
                 android:orientation="horizontal"
                 android:gravity="center"
+                android:weightSum="2"
                 android:layout_marginTop="10dp"
                 >
 
                 <Button
                     android:layout_marginTop="20dp"
+                    android:layout_weight="1"
                     android:background="@drawable/profile_screen_header"
                     android:textColor="#ffff"
                     android:layout_gravity="center_horizontal"
@@ -294,6 +300,7 @@
 
                 <Button
                     android:layout_marginTop="20dp"
+                    android:layout_weight="1"
                     android:background="@drawable/profile_screen_header"
                     android:textColor="#ffff"
                     android:layout_marginLeft="15dp"
@@ -312,10 +319,6 @@
             </LinearLayout>
 
         </RelativeLayout>
-
-
-
-
 
     </RelativeLayout>
 
