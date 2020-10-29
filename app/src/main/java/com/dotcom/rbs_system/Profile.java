@@ -1,5 +1,6 @@
 package com.dotcom.rbs_system;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,6 +31,8 @@ public class Profile extends Fragment {
     TextView name,dob,phno,email,address,creationDate_textView;
 
     ImageView profileImage,idImage;
+
+    Button edit_btn;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -76,10 +80,27 @@ public class Profile extends Fragment {
         creationDate_textView=(TextView)view.findViewById(R.id.creationDate_textView);
         dob=(TextView)view.findViewById(R.id.dob);
         email=(TextView)view.findViewById(R.id.email);
+        edit_btn=(Button)view.findViewById(R.id.edit_btn);
+
+        onclicklistners();
 
         datafetch();
 
         return view;
+    }
+
+    private void onclicklistners() {
+        edit_btn_listner();
+    }
+
+    private void edit_btn_listner() {
+        edit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),BuyLocal_profile_edit.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void datafetch() {

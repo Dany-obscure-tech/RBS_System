@@ -18,9 +18,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".BuyLocal_profile_edit"
+            android:theme="@style/AppTheme.no">
+
+        </activity>
+        <activity
             android:name=".Buylocal_category_products"
-            android:theme="@style/AppTheme.no"
-            ></activity>
+            android:theme="@style/AppTheme.no" />
         <activity
             android:name=".BuyLocal_productdetails"
             android:theme="@style/AppTheme.no" />

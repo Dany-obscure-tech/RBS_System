@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BuyLocal_profile_edit">
+
+    <RelativeLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/profile_screen_header">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PROFILE EDIT"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:textColor="#ffffff"
+            android:layout_centerInParent="true"
+            android:textSize="22sp"/>
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:padding="15dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/back_arrow" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/action_bar"
+        android:paddingTop="10dp"
+        android:layout_margin="20dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/edit_option_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/change_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Change Name"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:textColor="@color/textBlue"
+                android:textSize="20sp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:weightSum="3"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:scaleType="center"
+                    android:src="@drawable/user_icon"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Shahzaib Mehfooz"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:textColor="@color/textGrey"
+                        android:textSize="20sp"
+                        />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter new name.."
+                        android:fontFamily="@font/segoe_ui"
+                        android:textColor="@color/textBlue"
+                        android:textSize="18sp"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Change Phone no"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:textColor="@color/textBlue"
+                android:textSize="20sp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:weightSum="3"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:scaleType="center"
+                    android:src="@drawable/phone_call"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+923238910757"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:textColor="@color/textGrey"
+                        android:textSize="20sp"
+                        />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:hint="Enter new phone number.."
+                        android:fontFamily="@font/segoe_ui"
+                        android:textColor="@color/textBlue"
+                        android:textSize="18sp"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Change Email"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:textColor="@color/textBlue"
+                    android:textSize="20sp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:weightSum="3"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:scaleType="center"
+                        android:src="@drawable/email_icon"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Shahzaib.Mehfooz@gmail.com"
+                            android:fontFamily="@font/segoe_ui_bold"
+                            android:textColor="@color/textGrey"
+                            android:textSize="20sp"
+                            />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Enter new email"
+                            android:inputType="textEmailAddress"
+                            android:fontFamily="@font/segoe_ui"
+                            android:textColor="@color/textBlue"
+                            android:textSize="18sp"
+                            />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Change Address"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:textColor="@color/textBlue"
+                    android:textSize="20sp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:weightSum="3"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:scaleType="center"
+                        android:src="@drawable/location_icon"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Peshawar City"
+                            android:fontFamily="@font/segoe_ui_bold"
+                            android:textColor="@color/textGrey"
+                            android:textSize="20sp"
+                            />
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Enter new address.."
+                            android:fontFamily="@font/segoe_ui"
+                            android:textColor="@color/textBlue"
+                            android:textSize="18sp"
+                            />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/edit_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_option_area"
+            android:layout_margin="10dp"
+            android:background="@drawable/buylocal_green_button"
+            android:text="SAVE"
+            android:textColor="#ffff"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:layout_alignParentEnd="true"
+            android:fontFamily="@font/segoe_ui_bold"
+            />
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>
