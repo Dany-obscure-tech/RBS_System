@@ -283,6 +283,7 @@
                 >
 
                 <Button
+                    android:id="@+id/make_offer_btn"
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:background="@drawable/profile_screen_header"
@@ -337,7 +338,7 @@
         android:src="@drawable/top_black_rectangle" />
 
     <ImageButton
-        android:id="@+id/btn_menu"
+        android:id="@+id/back_btn"
         android:layout_alignParentLeft="true"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
