@@ -5,6 +5,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +16,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dotcom.rbs_system.Adapter.AdapterCategoryRecyclerView;
+import com.dotcom.rbs_system.Adapter.AdapterOffersItemListRecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,7 +27,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Profile extends Fragment {
 
@@ -32,7 +39,11 @@ public class Profile extends Fragment {
 
     ImageView profileImage,idImage;
 
+    RecyclerView offers;
+
     Button edit_btn;
+
+    List<String> itemname, price, itemImage;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -81,7 +92,20 @@ public class Profile extends Fragment {
         dob=(TextView)view.findViewById(R.id.dob);
         email=(TextView)view.findViewById(R.id.email);
         edit_btn=(Button)view.findViewById(R.id.edit_btn);
+        offers = (RecyclerView) view.findViewById(R.id.offers);
+        itemname = new ArrayList<String>();
+        price = new ArrayList<String>();
+        itemImage = new ArrayList<String>();
+        itemname.add("Shirt");
+        itemname.add("Dress shirt");
+        itemname.add("Tea Shirt");
 
+        AdapterOffersItemListRecyclerView adapterOffersItemListRecyclerView=new AdapterOffersItemListRecyclerView(getActivity(),itemname,null,null,null,null,null);
+
+//        offers.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,true));
+//        offers.setAdapter(adapterOffersItemListRecyclerView);
+        offers.setLayoutManager(new GridLayoutManager(getActivity(),1));
+        offers.setAdapter(adapterOffersItemListRecyclerView);
         onclicklistners();
 
         datafetch();

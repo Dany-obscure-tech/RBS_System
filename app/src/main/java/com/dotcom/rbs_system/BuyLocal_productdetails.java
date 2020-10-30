@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dotcom.rbs_system.Adapter.SliderAdapterExample;
@@ -28,7 +30,8 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     Dialog report_alert_dialog;
     Dialog make_offer_alert_dialog;
     Button alertReportCancel_btn,make_offer_btn,alertMakeOfferCancel_btn;
-    ImageButton back_btn;
+    ImageButton back_btn,whatsapp_icon;
+    ImageView profileImage;
 
 
     @Override
@@ -42,6 +45,8 @@ public class BuyLocal_productdetails extends AppCompatActivity {
 
         imageSlider=(CardView)findViewById(R.id.imageSlider);
         back_btn=(ImageButton)findViewById(R.id.back_btn);
+        profileImage=(ImageView)findViewById(R.id.profileImage);
+        whatsapp_icon=(ImageButton)findViewById(R.id.whatsapp_icon);
         report_btn=(TextView) findViewById(R.id.report_btn);
         report_alert_dialog = new Dialog(this);
         report_alert_dialog.setContentView(R.layout.alert_report);
@@ -71,6 +76,33 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         make_offer_btn_listner();
         alertMakeOfferCancel_btn_listner();
         back_btn_listner();
+        whatsapp_icon_listner();
+        profileImage_listner();
+    }
+
+    private void profileImage_listner() {
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(BuyLocal_productdetails.this,BuyLocal_shopkeeper_shop.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void whatsapp_icon_listner() {
+        whatsapp_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(Intent.ACTION_SEND);
+                myIntent.setType("text/plain");
+                String shareBody = "Your body is here";
+                String shareSub = "Your subject";
+                myIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
+                myIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(myIntent, "Share using"));
+            }
+        });
     }
 
     private void back_btn_listner() {

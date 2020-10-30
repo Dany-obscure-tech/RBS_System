@@ -268,6 +268,7 @@
                 android:layout_height="wrap_content"
                 android:text="Your Offers"
                 android:fontFamily="@font/segoe_ui_bold"
+                android:background="#ffffff"
                 android:textColor="#19ACE2"
                 android:textSize="26sp"
                 android:layout_marginRight="20dp"
@@ -279,6 +280,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="40dp"
                     android:orientation="vertical"/>
 
             </LinearLayout>

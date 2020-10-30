@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     CardView BUY,Sale,repair,Exchange,Accessories,Settings;
 
-    ImageButton icon1,icon2,icon3,icon5,icon4,icon6;
+    ImageButton icon1,icon2,icon3,icon5,icon4,icon6,icon8,icon9;
     Button alert_addAccessory_btn,alert_saleAccessory_btn;
 
     ImageView mainBanner_imageView;
@@ -116,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
         icon3=(ImageButton)findViewById(R.id.icon3);
         icon5=(ImageButton)findViewById(R.id.icon5);
         icon6=(ImageButton)findViewById(R.id.icon6);
+        icon8=(ImageButton)findViewById(R.id.icon8);
+        icon9=(ImageButton)findViewById(R.id.icon9);
 
         mainBanner_imageView = (ImageView)findViewById(R.id.mainBanner_imageView);
         getBannerImage();
@@ -242,6 +244,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent=new Intent(MainActivity.this,Accessory_sale.class);
                 startActivity(intent);
                 selectAccessory_dialog.dismiss();
+            }
+        });
+
+        icon8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,Shop_on_BuyLocal.class);
+                startActivity(intent);
             }
         });
     }

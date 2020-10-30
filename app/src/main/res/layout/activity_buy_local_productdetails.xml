@@ -73,21 +73,36 @@
                 android:textColor="@color/textGreen"
                 />
 
-            <TextView
+            <Button
                 android:id="@+id/report_btn"
-                android:layout_below="@+id/category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/report_background"
-                android:text="Report"
+                android:layout_below="@+id/category"
+                android:layout_margin="10dp"
+                android:background="@drawable/buylocal_red_button"
+                android:text="REPORT"
                 android:textColor="#FFFFFF"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:layout_centerInParent="true"
                 android:textAlignment="center"
+                android:textSize="16sp"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="@font/segoe_ui_bold"
                 />
+
+<!--            <TextView-->
+<!--                android:id="@+id/report_btn"-->
+<!--                android:layout_below="@+id/category"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:background="@drawable/report_background"-->
+<!--                android:text="Report"-->
+<!--                android:textColor="#FFFFFF"-->
+<!--                android:fontFamily="@font/segoe_ui_bold"-->
+<!--                android:gravity="center"-->
+<!--                android:textSize="18sp"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                android:textAlignment="center"-->
+<!--                />-->
 
             <TextView
                 android:id="@+id/item_description_textview"
@@ -151,6 +166,7 @@
                     />
 
                 <ImageButton
+                    android:id="@+id/whatsapp_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"

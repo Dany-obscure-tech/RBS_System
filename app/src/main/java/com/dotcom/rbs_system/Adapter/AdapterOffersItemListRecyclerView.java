@@ -27,12 +27,18 @@ public class AdapterOffersItemListRecyclerView extends  RecyclerView.Adapter<Ada
     List<String> itemname;
     List<String> price;
     List<String> itemImage;
+    List<String> offer_status;
+    List<String> offer_product_price;
+    List<String> product_offer_msg;
 
-    public AdapterOffersItemListRecyclerView(Context context, List<String> itemname, List<String> price, List<String> itemImage) {
+    public AdapterOffersItemListRecyclerView(Context context, List<String> itemname, List<String> price, List<String> itemImage,List<String> offer_status, List<String> offer_product_price, List<String> product_offer_msg) {
         this.context = context;
         this.itemname = itemname;
         this.price = price;
         this.itemImage = itemImage;
+        this.offer_status = offer_status;
+        this.offer_product_price = offer_product_price;
+        this.product_offer_msg = product_offer_msg;
     }
 
     @Override
@@ -47,16 +53,16 @@ public class AdapterOffersItemListRecyclerView extends  RecyclerView.Adapter<Ada
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         holder.name.setText(itemname.get(position));
-        holder.priceTV.setText(Currency.getInstance().getCurrency() + " " + price.get(position));
-        Picasso.get().load(itemImage.get(position)).into(holder.image);
-
-        holder.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, BuyLocal_productdetails.class);
-                context.startActivity(intent);
-            }
-        });
+//        holder.priceTV.setText(Currency.getInstance().getCurrency() + " " + price.get(position));
+//        Picasso.get().load(itemImage.get(position)).into(holder.image);
+//
+//        holder.image.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(context, BuyLocal_productdetails.class);
+//                context.startActivity(intent);
+//            }
+//        });
     }
 
     @Override
@@ -69,6 +75,9 @@ public class AdapterOffersItemListRecyclerView extends  RecyclerView.Adapter<Ada
         TextView name;
         TextView priceTV;
         ImageView image;
+        TextView offer_status;
+        TextView offer_product_price;
+        TextView product_offer_msg;
 
 
         public MyViewHolder(View itemView) {
@@ -76,6 +85,9 @@ public class AdapterOffersItemListRecyclerView extends  RecyclerView.Adapter<Ada
 
             name = (TextView) itemView.findViewById(R.id.name_contact);
             priceTV = (TextView) itemView.findViewById(R.id.ph_number);
+            offer_status = (TextView) itemView.findViewById(R.id.offer_status);
+            offer_product_price = (TextView) itemView.findViewById(R.id.offer_product_price);
+            product_offer_msg = (TextView) itemView.findViewById(R.id.product_offer_msg);
             image = (ImageView) itemView.findViewById(R.id.image);
         }
     }

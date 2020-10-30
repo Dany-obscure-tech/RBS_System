@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/linear_layout_border"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -64,6 +65,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/offer_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Offer Pending"
@@ -92,6 +94,7 @@
                     android:textSize="22sp"
                     />
                 <TextView
+                    android:id="@+id/offer_product_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
@@ -106,6 +109,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/product_offer_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="15dp"
@@ -129,7 +133,7 @@
             <Button
                 android:id="@+id/alertEditConditionEnter_btn"
                 android:textColor = "#ffffff"
-                android:background="@drawable/buylocal_main_button"
+                android:background="@drawable/buylocal_red_button"
                 android:fontFamily="@font/segoe_ui_bold"
                 android:textSize="15sp"
                 android:text="Cancel"

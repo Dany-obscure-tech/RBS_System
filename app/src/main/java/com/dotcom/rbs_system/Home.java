@@ -142,7 +142,6 @@ public class Home extends Fragment {
 
         category_recyclerview.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,true));
         category_recyclerview.setAdapter(adapterCategoryRecyclerView);
-//Todo
 
 
         menu_btn=(ImageView)view.findViewById(R.id.menu_btn);

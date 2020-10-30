@@ -17,11 +17,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".BuyLocal_shopkeeper_shop"></activity>
+        <activity android:name=".Shop_on_BuyLocal" />
         <activity
             android:name=".BuyLocal_profile_edit"
-            android:theme="@style/AppTheme.no">
-
-        </activity>
+            android:theme="@style/AppTheme.no" />
         <activity
             android:name=".Buylocal_category_products"
             android:theme="@style/AppTheme.no" />
