@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class Shop_on_BuyLocal extends AppCompatActivity {
+public class Shopkeeper_Products_offers_list extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shop_on__buy_local);
+        setContentView(R.layout.activity_shopkeeper__products_offers_list);
     }
 }

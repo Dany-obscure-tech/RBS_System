@@ -58,19 +58,26 @@
                 android:orientation="vertical"
                 >
 
-                <TextView
-                    android:id="@+id/products_textview"
-                    android:layout_margin="15dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Products"
-                    android:textColor="#707070"
-                    android:textSize="26sp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:id="@+id/products_textview"
+                        android:layout_margin="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Your Products"
+                        android:textColor="#707070"
+                        android:textSize="26sp"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        />
+
+                </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/shop_products_RecyclerView"
+                    android:id="@+id/your_products_RecyclerView"
                     android:layout_margin="12dp"
                     android:layout_below="@+id/products_textview"
                     android:paddingBottom="40dp"
@@ -87,6 +94,7 @@
     </ScrollView>
 
     <RelativeLayout
+        android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
@@ -111,6 +119,55 @@
             android:scaleType="fitXY"
             android:src="@drawable/back_arrow" />
 
+        <ImageView
+            android:id="@+id/menu_btn"
+            android:padding="12dp"
+            android:layout_weight="1.5"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/menu_btn_white"
+            android:adjustViewBounds="true"
+            android:scaleType="center"
+            />
+
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/side_option_menu"
+        android:layout_width="wrap_content"
+        android:background="#FFFF"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        android:layout_below="@+id/action_bar"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/offers_option"
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Offers"
+            android:textColor="@color/textGrey"
+            android:textSize="16sp"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:layout_centerHorizontal="true"
+            />
+
+        <TextView
+            android:id="@+id/communication_option"
+            android:layout_below="@+id/offers_option"
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Communication"
+            android:textColor="@color/textGrey"
+            android:layout_centerHorizontal="true"
+            android:textSize="16sp"
+            android:fontFamily="@font/segoe_ui_bold"
+            />
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

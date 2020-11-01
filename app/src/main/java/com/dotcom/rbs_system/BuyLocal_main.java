@@ -9,8 +9,10 @@ import androidx.navigation.NavHostController;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -18,6 +20,10 @@ public class BuyLocal_main extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     final Home fragment_home = new Home();
     final Profile fragment_profile = new Profile();
+
+    private long lastPressedTime;
+
+    private static final int PERIOD = 2000;
 
 
     @Override
@@ -96,5 +102,23 @@ public class BuyLocal_main extends AppCompatActivity {
 
         bottomNavigationView.setItemTextColor(navMenuTextList);
         bottomNavigationView.setItemIconTintList(navMenuIconList);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            switch (event.getAction()) {
+                case KeyEvent.ACTION_DOWN:
+                    if (event.getDownTime() - lastPressedTime < PERIOD) {
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Press again to exit.",
+                                Toast.LENGTH_SHORT).show();
+                        lastPressedTime = event.getEventTime();
+                    }
+                    return true;
+            }
+        }
+        return false;
     }
 }

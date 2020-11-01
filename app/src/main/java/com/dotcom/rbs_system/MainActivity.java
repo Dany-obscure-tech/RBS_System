@@ -7,7 +7,6 @@ import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.accounts.Account;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.dotcom.rbs_system.Classes.Exchanged_itemdata;
@@ -250,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
         icon8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Shop_on_BuyLocal.class);
+                Intent intent=new Intent(MainActivity.this, Shopkeeper_shop_showcase.class);
                 startActivity(intent);
             }
         });

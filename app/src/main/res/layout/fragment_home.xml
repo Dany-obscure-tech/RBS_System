@@ -152,19 +152,58 @@
         android:id="@+id/side_option_menu"
         android:layout_width="wrap_content"
         android:background="#FFFF"
-
         android:layout_alignParentEnd="true"
         android:visibility="gone"
         android:layout_below="@+id/topbar"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/logout"
+            android:id="@+id/category_option"
             android:padding="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="LogOut"
+            android:text="Category"
             android:textColor="@color/textGrey"
+            android:textSize="16sp"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:layout_centerHorizontal="true"
+            />
+
+        <TextView
+            android:id="@+id/price_option"
+            android:layout_below="@+id/category_option"
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Price"
+            android:textColor="@color/textGrey"
+            android:layout_centerHorizontal="true"
+            android:textSize="16sp"
+            android:fontFamily="@font/segoe_ui_bold"
+            />
+
+        <TextView
+            android:id="@+id/communication_option"
+            android:layout_below="@+id/price_option"
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Communication"
+            android:textColor="@color/textGrey"
+            android:layout_centerHorizontal="true"
+            android:textSize="16sp"
+            android:fontFamily="@font/segoe_ui_bold"
+            />
+
+        <TextView
+            android:id="@+id/logout"
+            android:layout_below="@+id/communication_option"
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:textColor="@color/textGrey"
+            android:layout_centerHorizontal="true"
             android:textSize="16sp"
             android:fontFamily="@font/segoe_ui_bold"
             />
