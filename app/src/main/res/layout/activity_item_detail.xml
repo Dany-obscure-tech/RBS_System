@@ -32,7 +32,7 @@
 
     </RelativeLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/header"
@@ -96,13 +96,15 @@
                 android:layout_height="wrap_content">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:visibility="gone"
-                    android:id="@+id/id_recyclerView"
+                    android:id="@+id/itemImage_recyclerView"
                     android:layout_weight="1.9"
+                    android:nestedScrollingEnabled="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
+
                 <ImageView
+                    android:visibility="gone"
                     android:id="@+id/id_imageView"
                     android:layout_weight="1.9"
                     android:adjustViewBounds="true"
@@ -111,14 +113,14 @@
 
                 <Button
                     android:id="@+id/uploadId_btn"
-                    android:textSize="15sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_weight="0.1"
                     android:background="@drawable/main_button"
-                    android:textColor="#0075B5"
                     android:fontFamily="@font/segoe_ui_bold"
                     android:text="Upload Image"
-                    android:layout_weight="0.1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="#0075B5"
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
@@ -221,7 +223,7 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 
