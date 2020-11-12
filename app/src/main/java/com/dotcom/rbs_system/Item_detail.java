@@ -61,7 +61,7 @@ public class Item_detail extends AppCompatActivity {
     TextView selectCategory_textView;
     DatabaseReference categoryRef,reference;
     ImageView id_imageView;
-    EditText itemName_editText,notes_editText,itemId_editText,price_editText;
+    EditText itemName_editText,notes_editText,itemId_editText,price_editText,description_editText;
     List<String> categoryList;
     RatingBar ratingBar;
     ImageButton Back_btn;
@@ -112,6 +112,7 @@ public class Item_detail extends AppCompatActivity {
         itemName_editText = (EditText)findViewById(R.id.itemName_editText);
         itemId_editText = (EditText)findViewById(R.id.itemId_editText);
         price_editText = (EditText)findViewById(R.id.price_editText);
+        description_editText = (EditText)findViewById(R.id.description_editText);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         notes_editText = (EditText)findViewById(R.id.notes_editText);
         categoryList = new ArrayList<>();
@@ -185,13 +186,15 @@ public class Item_detail extends AppCompatActivity {
             reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Condition").setValue(ratingBar.getRating());
             reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Notes").setValue(notes_editText.getText().toString());
             reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Price").setValue(price_editText.getText().toString());
+            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Description").setValue(description_editText.getText().toString());
             reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("key_id").setValue(key);
+            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("No_of_images").setValue(String.valueOf(imageUrlList.size()));
 
 
             for (i = 0; i<imageUrlList.size();i++) {
 
                 key2 = reference.push().getKey();
-                idStorageReference.child(key).child(key2).putFile(imageUrlList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                idStorageReference.child(key).child("image_"+String.valueOf(i+1)).putFile(imageUrlList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         pd.dismissProgressBar(Item_detail.this);
@@ -227,8 +230,6 @@ public class Item_detail extends AppCompatActivity {
 
     }
 
-
-
     private void pass_back_data() {
 
       //   get the text from the EditText
@@ -242,7 +243,6 @@ public class Item_detail extends AppCompatActivity {
         intent.putExtra("Last_Active", last_active);
         setResult(RESULT_OK, intent);
     }
-
 
     private void onClickListeners() {
         Back_btn.setOnClickListener(new View.OnClickListener() {
@@ -287,6 +287,10 @@ public class Item_detail extends AppCompatActivity {
         }
         if (itemName_editText.getText().toString().isEmpty()) {
             itemName_editText.setError("Please enter item name");
+            valid = false;
+        }
+        if (description_editText.getText().toString().isEmpty()) {
+            description_editText.setError("Please enter item description");
             valid = false;
         }
         if (imageUrlList.size()==0){

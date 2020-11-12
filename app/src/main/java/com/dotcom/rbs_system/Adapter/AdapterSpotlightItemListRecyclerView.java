@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,12 +28,16 @@ public class AdapterSpotlightItemListRecyclerView extends  RecyclerView.Adapter<
     List<String> itemname;
     List<String> price;
     List<String> itemImage;
+    List<String> key_idList;
+    List<String> categoryList;
 
-    public AdapterSpotlightItemListRecyclerView(Context context, List<String> itemname, List<String> price, List<String> itemImage) {
+    public AdapterSpotlightItemListRecyclerView(Context context, List<String> itemname, List<String> price, List<String> itemImage,List<String> key_idList,List<String> categoryList) {
         this.context = context;
         this.itemname = itemname;
         this.price = price;
         this.itemImage = itemImage;
+        this.key_idList = key_idList;
+        this.categoryList = categoryList;
     }
 
     @Override
@@ -44,7 +49,7 @@ public class AdapterSpotlightItemListRecyclerView extends  RecyclerView.Adapter<
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         holder.name.setText(itemname.get(position));
         holder.priceTV.setText(Currency.getInstance().getCurrency() + " " + price.get(position));
@@ -54,6 +59,8 @@ public class AdapterSpotlightItemListRecyclerView extends  RecyclerView.Adapter<
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, BuyLocal_productdetails.class);
+                intent.putExtra("PRODUCT_ID",key_idList.get(position));
+                intent.putExtra("CATEGORY",categoryList.get(position));
                 context.startActivity(intent);
             }
         });

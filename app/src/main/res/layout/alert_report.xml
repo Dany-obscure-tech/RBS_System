@@ -32,7 +32,7 @@
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/alertAddCategoryName_editText"
+            android:id="@+id/alertReportDescription_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#6E76E3"
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/alertEditConditionEnter_btn"
+            android:id="@+id/alertReportSubmit_btn"
             android:layout_weight="1"
             android:layout_marginRight="5dp"
             android:textColor = "#ffffff"

@@ -64,7 +64,7 @@ public class Home extends Fragment {
 
     List<String> slider_link_list, itemname, price, itemImage;
     List<String> imageUrl;
-    List<String> category_text;
+    List<String> category_text,key_idList,categoryList;
 
     ImageView menu_btn;
 
@@ -101,7 +101,10 @@ public class Home extends Fragment {
 
         itemsRef = FirebaseDatabase.getInstance().getReference("Spotlight");
         imageUrl = new ArrayList<>();
+        key_idList = new ArrayList<>();
+        categoryList = new ArrayList<>();
         category_text = new ArrayList<>();
+
         category_text.add("PC");
         category_text.add("Laptop");
         category_text.add("Mobile");
@@ -207,9 +210,11 @@ public class Home extends Fragment {
                         itemname.add(String.valueOf(dataSnapshot1.child("Item_name").getValue()));
                         price.add(String.valueOf(dataSnapshot1.child("Price").getValue()));
                         itemImage.add(String.valueOf(dataSnapshot1.child("id_image_url").getValue()));
+                        key_idList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
+                        categoryList.add(String.valueOf(dataSnapshot1.child("Category").getValue()));
                     }
 
-                    AdapterSpotlightItemListRecyclerView viewAdapter = new AdapterSpotlightItemListRecyclerView(getActivity(), itemname, price, itemImage);
+                    AdapterSpotlightItemListRecyclerView viewAdapter = new AdapterSpotlightItemListRecyclerView(getActivity(), itemname, price, itemImage,key_idList,categoryList);
                     recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
                     recyclerView.setAdapter(viewAdapter);
                 }
