@@ -19,7 +19,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Shopkeeper_Products_offers_list"></activity>
+        <activity
+            android:name=".Shopkeeper_Products_offers_list"
+            android:theme="@style/AppTheme.no"/>
         <activity
             android:name=".BuyLocal_shopkeeper_shop"
             android:theme="@style/AppTheme.no" />

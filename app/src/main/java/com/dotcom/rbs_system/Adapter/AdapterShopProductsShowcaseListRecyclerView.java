@@ -13,10 +13,6 @@ import com.dotcom.rbs_system.R;
 
 import java.util.List;
 
-/**
- * Created by Mahadi on 3/11/2018.
- */
-
 public class AdapterShopProductsShowcaseListRecyclerView extends  RecyclerView.Adapter<AdapterShopProductsShowcaseListRecyclerView.MyViewHolder> {
 
     Context context;

@@ -180,7 +180,6 @@ public class Home extends Fragment {
         menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String store_user_status;
                 if (side_option_menu.getVisibility()==View.VISIBLE){
                     side_option_menu.setVisibility(View.GONE);
                 }
@@ -194,6 +193,7 @@ public class Home extends Fragment {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
+                side_option_menu.setVisibility(View.GONE);
                 Intent intent = new Intent(getActivity(),SignInActivity.class);
                 getActivity().finish();
                 startActivity(intent);
