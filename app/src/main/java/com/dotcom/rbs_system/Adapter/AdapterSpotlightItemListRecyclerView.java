@@ -30,14 +30,16 @@ public class AdapterSpotlightItemListRecyclerView extends  RecyclerView.Adapter<
     List<String> itemImage;
     List<String> key_idList;
     List<String> categoryList;
+    List<String> shopkeeperList;
 
-    public AdapterSpotlightItemListRecyclerView(Context context, List<String> itemname, List<String> price, List<String> itemImage,List<String> key_idList,List<String> categoryList) {
+    public AdapterSpotlightItemListRecyclerView(Context context, List<String> itemname, List<String> price, List<String> itemImage,List<String> key_idList,List<String> categoryList,List<String> shopkeeperList) {
         this.context = context;
         this.itemname = itemname;
         this.price = price;
         this.itemImage = itemImage;
         this.key_idList = key_idList;
         this.categoryList = categoryList;
+        this.shopkeeperList = shopkeeperList;
     }
 
     @Override
@@ -61,6 +63,7 @@ public class AdapterSpotlightItemListRecyclerView extends  RecyclerView.Adapter<
                 Intent intent = new Intent(context, BuyLocal_productdetails.class);
                 intent.putExtra("PRODUCT_ID",key_idList.get(position));
                 intent.putExtra("CATEGORY",categoryList.get(position));
+                intent.putExtra("SHOPKEEPER_ID",shopkeeperList.get(position));
                 context.startActivity(intent);
             }
         });

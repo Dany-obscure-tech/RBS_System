@@ -64,7 +64,7 @@ public class Home extends Fragment {
 
     List<String> slider_link_list, itemname, price, itemImage;
     List<String> imageUrl;
-    List<String> category_text,key_idList,categoryList;
+    List<String> category_text,key_idList,categoryList,shopkeeperList;
 
     ImageView menu_btn;
 
@@ -103,6 +103,7 @@ public class Home extends Fragment {
         imageUrl = new ArrayList<>();
         key_idList = new ArrayList<>();
         categoryList = new ArrayList<>();
+        shopkeeperList = new ArrayList<>();
         category_text = new ArrayList<>();
 
         category_text.add("PC");
@@ -212,9 +213,10 @@ public class Home extends Fragment {
                         itemImage.add(String.valueOf(dataSnapshot1.child("id_image_url").getValue()));
                         key_idList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
                         categoryList.add(String.valueOf(dataSnapshot1.child("Category").getValue()));
+                        shopkeeperList.add(String.valueOf(dataSnapshot1.child("shopkeeper").getValue()));
                     }
 
-                    AdapterSpotlightItemListRecyclerView viewAdapter = new AdapterSpotlightItemListRecyclerView(getActivity(), itemname, price, itemImage,key_idList,categoryList);
+                    AdapterSpotlightItemListRecyclerView viewAdapter = new AdapterSpotlightItemListRecyclerView(getActivity(), itemname, price, itemImage,key_idList,categoryList,shopkeeperList);
                     recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
                     recyclerView.setAdapter(viewAdapter);
                 }

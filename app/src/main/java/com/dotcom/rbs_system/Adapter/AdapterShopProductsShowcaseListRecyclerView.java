@@ -1,14 +1,17 @@
 package com.dotcom.rbs_system.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dotcom.rbs_system.BuyLocal_shopkeeperProductDetails;
 import com.dotcom.rbs_system.R;
 
 import java.util.List;
@@ -43,6 +46,13 @@ public class AdapterShopProductsShowcaseListRecyclerView extends  RecyclerView.A
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         holder.product_name.setText(product_name.get(position));
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, BuyLocal_shopkeeperProductDetails.class);
+                context.startActivity(intent);
+            }
+        });
 //        holder.priceTV.setText(Currency.getInstance().getCurrency() + " " + price.get(position));
 //        Picasso.get().load(itemImage.get(position)).into(holder.image);
 //
@@ -67,6 +77,7 @@ public class AdapterShopProductsShowcaseListRecyclerView extends  RecyclerView.A
         TextView product_price;
         TextView product_no_of_offers;
         ImageView image;
+        LinearLayout linearLayout;
 
 
         public MyViewHolder(View itemView) {
@@ -77,6 +88,7 @@ public class AdapterShopProductsShowcaseListRecyclerView extends  RecyclerView.A
             product_price = (TextView) itemView.findViewById(R.id.product_price);
             product_no_of_offers = (TextView) itemView.findViewById(R.id.product_no_of_offers);
             image = (ImageView) itemView.findViewById(R.id.image);
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
         }
     }
 }

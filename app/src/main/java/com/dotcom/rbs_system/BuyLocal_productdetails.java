@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,20 +52,22 @@ import java.util.Locale;
 public class BuyLocal_productdetails extends AppCompatActivity {
 
     FusedLocationProviderClient fusedLocationProviderClient;
+    RelativeLayout offer_relativeLayout;
     String currency;
     CardView imageSlider;
     SliderView sliderView;
     List<String> imageUrl;
-    EditText alertReportDescription_editText;
+    EditText alertReportDescription_editText,alertMakeOfferAmount_editText,alertMakeOfferMessage_editText;
     TextView report_btn,distance_textView;
     TextView product_name_textview, category_textView, item_description_textview, itemPrice_textView, currency_textView;
+    TextView offerStatus_textView,offerAmountCurrency_textView,offerAmount_textView,offerMessage_textView;
     Dialog report_alert_dialog;
     Dialog make_offer_alert_dialog;
-    Button alertReportCancel_btn, make_offer_btn, alertMakeOfferCancel_btn, alertReportSubmit_btn;
+    Button alertReportCancel_btn, make_offer_btn, alertMakeOfferCancel_btn, alertMakeOfferSubmit_btn,alertReportSubmit_btn;
     ImageButton back_btn, whatsapp_icon;
     ImageView profileImage;
     String productID, category,shopkeeperID;
-    DatabaseReference itemRef, reportRef,userRef;
+    DatabaseReference itemRef, reportRef,userRef,stockRef,customerOfferRef;
     StorageReference itemImageStorageRef;
     int i, noOfimages;
 
@@ -78,13 +81,17 @@ public class BuyLocal_productdetails extends AppCompatActivity {
 
         productID = getIntent().getStringExtra("PRODUCT_ID");
         category = getIntent().getStringExtra("CATEGORY");
+        shopkeeperID = getIntent().getStringExtra("SHOPKEEPER_ID");
 
         imageUrl = new ArrayList<>();
 
-
         itemRef = FirebaseDatabase.getInstance().getReference("Items/" + category + "/" + productID);
+        stockRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/"+shopkeeperID+"/"+ category + "/" + productID);
         reportRef = FirebaseDatabase.getInstance().getReference();
+        customerOfferRef = FirebaseDatabase.getInstance().getReference();
         itemImageStorageRef = FirebaseStorage.getInstance().getReference().child("Item_Images/" + productID);
+
+        offer_relativeLayout = (RelativeLayout) findViewById(R.id.offer_relativeLayout);
 
         imageSlider = (CardView) findViewById(R.id.imageSlider);
         back_btn = (ImageButton) findViewById(R.id.back_btn);
@@ -99,6 +106,11 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         itemPrice_textView = (TextView) findViewById(R.id.itemPrice_textView);
         currency_textView = (TextView) findViewById(R.id.currency_textView);
 
+        offerStatus_textView = (TextView) findViewById(R.id.offerStatus_textView);
+        offerAmountCurrency_textView = (TextView) findViewById(R.id.offerAmountCurrency_textView);
+        offerAmount_textView = (TextView) findViewById(R.id.offerAmount_textView);
+        offerMessage_textView = (TextView) findViewById(R.id.offerMessage_textView);
+
         report_alert_dialog = new Dialog(this);
         report_alert_dialog.setContentView(R.layout.alert_report);
         make_offer_alert_dialog = new Dialog(this);
@@ -109,6 +121,9 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         alertReportDescription_editText = report_alert_dialog.findViewById(R.id.alertReportDescription_editText);
         alertReportSubmit_btn = report_alert_dialog.findViewById(R.id.alertReportSubmit_btn);
         alertMakeOfferCancel_btn = make_offer_alert_dialog.findViewById(R.id.alertMakeOfferCancel_btn);
+        alertMakeOfferSubmit_btn = make_offer_alert_dialog.findViewById(R.id.alertMakeOfferSubmit_btn);
+        alertMakeOfferAmount_editText = make_offer_alert_dialog.findViewById(R.id.alertMakeOfferAmount_editText);
+        alertMakeOfferMessage_editText = make_offer_alert_dialog.findViewById(R.id.alertMakeOfferMessage_editText);
         make_offer_btn = (Button) findViewById(R.id.make_offer_btn);
 
         sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using IndicatorAnimationType. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
@@ -123,6 +138,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
 
         InitialProcess();
         onclicklistners();
+        midProcesses();
 
 
     }
@@ -135,6 +151,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         alertReportCancel_btn_listner();
         make_offer_btn_listner();
         alertMakeOfferCancel_btn_listner();
+        alertMakeOfferSubmit_btn_listner();
         back_btn_listner();
         whatsapp_icon_listner();
         profileImage_listner();
@@ -197,13 +214,42 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         });
     }
 
-    private void make_offer_btn_listner() {
-        make_offer_btn.setOnClickListener(new View.OnClickListener() {
+    private void alertMakeOfferSubmit_btn_listner() {
+        alertMakeOfferSubmit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                make_offer_alert_dialog.show();
+            public void onClick(View view) {
+                if (offerSubmitValidation()){
+                    stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("message").setValue(alertMakeOfferMessage_editText.getText().toString());
+                    stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("amount").setValue(alertMakeOfferAmount_editText.getText().toString());
+                    stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("customer").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                    customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(productID).child("message").setValue(alertMakeOfferMessage_editText.getText().toString());
+                    customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(productID).child("amount").setValue(alertMakeOfferAmount_editText.getText().toString());
+                    customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(productID).child("shopkeeper").setValue(shopkeeperID);
+                    customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(productID).child("offer_status").setValue("offer pending");
+
+                    make_offer_alert_dialog.dismiss();
+                    recreate();
+                }
             }
         });
+    }
+
+    private void make_offer_btn_listner() {
+
+            make_offer_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (make_offer_btn.getText().toString().equals("CANCLE OFFER")){
+                        customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(productID).removeValue();
+                        recreate();
+                    }else {
+                        make_offer_alert_dialog.show();
+                    }
+                }
+            });
+
+
     }
 
     private void alertReportCancel_btn_listner() {
@@ -227,7 +273,29 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     //////////////////////////////////////////////////////////////////////////////////
 
     private void InitialProcess() {
+        checkingOffer();
         fetchingItemDetails();
+    }
+
+    private void checkingOffer() {
+        customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(productID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    offer_relativeLayout.setVisibility(View.VISIBLE);
+                    offerAmountCurrency_textView.setText(Currency.getInstance().getCurrency());
+                    offerStatus_textView.setText(snapshot.child("offer_status").getValue().toString());
+                    offerAmount_textView.setText(snapshot.child("amount").getValue().toString());
+                    offerMessage_textView.setText(snapshot.child("message").getValue().toString());
+                    make_offer_btn.setText("CANCLE OFFER");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void fetchingItemDetails() {
@@ -239,7 +307,6 @@ public class BuyLocal_productdetails extends AppCompatActivity {
                 category_textView.setText(snapshot.child("Category").getValue().toString());
                 item_description_textview.setText(snapshot.child("Description").getValue().toString());
                 itemPrice_textView.setText(snapshot.child("Price").getValue().toString());
-                shopkeeperID = snapshot.child("added_by").getValue().toString();
                 currency_textView.setText(currency);
                 fetchingItemImages();
                 fetchingShopkeeperLocation();
@@ -346,5 +413,23 @@ public class BuyLocal_productdetails extends AppCompatActivity {
 
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////
+
+    private void midProcesses(){
+
+    }
+
+    private boolean offerSubmitValidation() {
+        boolean valid = true;
+        if (alertMakeOfferMessage_editText.getText().toString().isEmpty()){
+            alertMakeOfferMessage_editText.setError("Please enter message");
+            valid = false;
+        }
+        if (alertMakeOfferAmount_editText.getText().toString().isEmpty()){
+            alertMakeOfferAmount_editText.setError("Please enter amount");
+            valid = false;
+        }
+        return valid;
+    }
 
 }

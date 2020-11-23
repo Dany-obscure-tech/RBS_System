@@ -43,12 +43,58 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageSlider"
-            android:layout_margin="20dp"
-            >
+            android:layout_below="@+id/imageSlider">
+
+            <RelativeLayout
+                android:id="@+id/offer_relativeLayout"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/profile_screen_header"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:paddingBottom="20dp"
+                android:paddingTop="20dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/offerStatus_textView"
+                    android:text="Offer Status"
+                    android:textColor="#FFFF"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/offerAmountCurrency_textView"
+                    android:layout_below="@+id/offerStatus_textView"
+                    android:text="$"
+                    android:textColor="#FFFF"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/offerAmount_textView"
+                    android:layout_below="@+id/offerStatus_textView"
+                    android:layout_toRightOf="@+id/offerAmountCurrency_textView"
+                    android:text="00.00"
+                    android:textColor="#FFFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/offerMessage_textView"
+                    android:text="This is a message"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="#FFFF"
+                    android:layout_below="@+id/offerAmount_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/product_name_textview"
+                android:layout_below="@+id/offer_relativeLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/segoe_ui_bold"

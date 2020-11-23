@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:padding="10dp"
-    android:background="#55000000"
+    android:background="#373737"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -22,7 +22,7 @@
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/alertAddCategoryName_editText"
+            android:id="@+id/alertMakeOfferAmount_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#6E76E3"
@@ -50,7 +50,7 @@
             android:textSize="16sp" />
 
         <EditText
-
+            android:id="@+id/alertMakeOfferMessage_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#6E76E3"
@@ -70,14 +70,14 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/alertEditConditionEnter_btn"
+            android:id="@+id/alertMakeOfferSubmit_btn"
             android:layout_weight="1"
             android:layout_marginRight="5dp"
             android:textColor = "#ffffff"
             android:background="@drawable/buylocal_main_button"
             android:fontFamily="@font/segoe_ui_bold"
             android:textSize="15sp"
-            android:text="Report"
+            android:text="Send offer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
