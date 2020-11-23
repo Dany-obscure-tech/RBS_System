@@ -1,9 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BuyLocal_shopkeeperProductDetails">
+    tools:context=".BuyLocal_productdetails">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/imageSlider"
+                app:cardCornerRadius="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.smarteist.autoimageslider.SliderView
+                    android:id="@+id/imageSliders"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    app:sliderAnimationDuration="600"
+                    app:sliderAutoCycleDirection="back_and_forth"
+                    app:sliderAutoCycleEnabled="true"
+                    app:sliderIndicatorAnimationDuration="600"
+                    app:sliderIndicatorGravity="center_horizontal|bottom"
+                    app:sliderIndicatorMargin="15dp"
+                    app:sliderIndicatorOrientation="horizontal"
+                    app:sliderIndicatorPadding="3dp"
+                    app:sliderIndicatorRadius="2dp"
+                    app:sliderIndicatorSelectedColor="#5A5A5A"
+                    app:sliderIndicatorUnselectedColor="#FFF"
+                    app:sliderScrollTimeInSec="1"
+                    app:sliderStartAutoCycle="true" />
+
+            </androidx.cardview.widget.CardView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageSlider">
+
+                <RelativeLayout
+                    android:id="@+id/offer_relativeLayout"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/profile_screen_header"
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:paddingBottom="20dp"
+                    android:paddingTop="20dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/offerStatus_textView"
+                        android:text="Offer Status"
+                        android:textColor="#FFFF"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/offerAmountCurrency_textView"
+                        android:layout_below="@+id/offerStatus_textView"
+                        android:text="$"
+                        android:textColor="#FFFF"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/offerAmount_textView"
+                        android:layout_below="@+id/offerStatus_textView"
+                        android:layout_toRightOf="@+id/offerAmountCurrency_textView"
+                        android:text="00.00"
+                        android:textColor="#FFFF"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/offerMessage_textView"
+                        android:text="This is a message"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="#FFFF"
+                        android:layout_below="@+id/offerAmount_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/product_name_textview"
+                    android:layout_below="@+id/offer_relativeLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:textColor="@color/textBlue"
+                    android:textSize="26sp"
+                    android:text="Hp omen Laptop"
+                    />
+                <TextView
+                    android:id="@+id/category_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/product_name_textview"
+                    android:text="Laptop"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:background="@drawable/green_btn"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:padding="5dp"
+                    android:textColor="@color/textGreen"
+                    />
+
+                <Button
+                    android:id="@+id/report_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/category_textView"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/buylocal_green_button"
+                    android:text="EDIT post"
+                    android:textColor="#FFFFFF"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    />
+
+                <TextView
+                    android:id="@+id/item_description_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/segoe_ui"
+                    android:layout_below="@+id/report_btn"
+                    android:textColor="@color/textGrey"
+                    android:textSize="22sp"
+                    android:text="this is the First line of the text,second line of the text,third line of the description"
+                    />
+                <LinearLayout
+                    android:id="@+id/price_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_alignParentRight="true"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/item_description_textview">
+
+                    <TextView
+                        android:id="@+id/currency_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_below="@+id/report_btn"
+                        android:textColor="@color/textGreen"
+                        android:textSize="30sp"
+                        android:text="PKR"
+                        />
+                    <TextView
+                        android:id="@+id/itemPrice_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_below="@+id/report_btn"
+                        android:textColor="@color/textGreen"
+                        android:textSize="30sp"
+                        android:text="1000"
+                        />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/offersTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:layout_below="@+id/price_textview"
+                    android:textColor="@color/textGreen"
+                    android:textSize="30sp"
+                    android:text="Offers"
+                    />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/offers_received"
+                    android:layout_below="@+id/offersTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    />
+
+
+
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitXY"
+            android:background="#00000000"
+            android:src="@drawable/top_black_rectangle" />
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:padding="15dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/back_arrow" />
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

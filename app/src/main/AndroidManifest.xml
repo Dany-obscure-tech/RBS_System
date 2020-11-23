@@ -19,7 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".BuyLocal_shopkeeperProductDetails"></activity>
+        <activity
+            android:name=".BuyLocal_shopkeeperProductDetails"
+            android:theme="@style/AppTheme.no"/>
         <activity
             android:name=".Shopkeeper_Products_offers_list"
             android:theme="@style/AppTheme.no" />
