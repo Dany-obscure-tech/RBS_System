@@ -21,16 +21,16 @@ public class AdapterProductsOffersReceivedListRecyclerView extends  RecyclerView
     List<String> currency;
     List<String> offered_price;
     List<String> product_offer_msg;
-    List<String> customerImage;
+    List<String> profileImage;
     List<String> date_textView;
 
-    public AdapterProductsOffersReceivedListRecyclerView(Context context, List<String> customer_name, List<String> currency, List<String> product_offer_msg, List<String> offered_price, List<String> customerImage,List<String> date_textView) {
+    public AdapterProductsOffersReceivedListRecyclerView(Context context, List<String> customer_name, List<String> currency, List<String> product_offer_msg, List<String> offered_price, List<String> profileImage,List<String> date_textView) {
         this.context = context;
         this.customer_name = customer_name;
         this.currency = currency;
         this.offered_price = offered_price;
         this.product_offer_msg = product_offer_msg;
-        this.customerImage = customerImage;
+        this.profileImage = profileImage;
         this.date_textView = date_textView;
     }
 
@@ -71,7 +71,7 @@ public class AdapterProductsOffersReceivedListRecyclerView extends  RecyclerView
         TextView product_offer_msg;
         Button accept_offer_btn;
         TextView date_textView;
-        ImageView customerImage;
+        ImageView profileImage;
 
 
         public MyViewHolder(View itemView) {
@@ -83,7 +83,7 @@ public class AdapterProductsOffersReceivedListRecyclerView extends  RecyclerView
             accept_offer_btn = (Button) itemView.findViewById(R.id.accept_offer_btn);
             date_textView = (TextView) itemView.findViewById(R.id.date_textView);
             product_offer_msg = (TextView) itemView.findViewById(R.id.product_offer_msg);
-            customerImage = (ImageView) itemView.findViewById(R.id.customerImage);
+            profileImage = (ImageView) itemView.findViewById(R.id.profileImage);
         }
     }
 }

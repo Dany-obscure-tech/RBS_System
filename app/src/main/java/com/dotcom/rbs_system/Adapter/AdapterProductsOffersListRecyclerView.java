@@ -22,9 +22,9 @@ public class AdapterProductsOffersListRecyclerView extends  RecyclerView.Adapter
     List<String> product_orignal_price;
     List<String> product_offer_msg;
     List<String> product_image;
-    List<String> customerImage;
+    List<String> profileImage;
 
-    public AdapterProductsOffersListRecyclerView(Context context, List<String> product_name, List<String> currency, List<String> product_offer_msg, List<String> offered_price, List<String> product_orignal_price,List<String> product_image,List<String> customerImage) {
+    public AdapterProductsOffersListRecyclerView(Context context, List<String> product_name, List<String> currency, List<String> product_offer_msg, List<String> offered_price, List<String> product_orignal_price,List<String> product_image,List<String> profileImage) {
         this.context = context;
         this.product_name = product_name;
         this.currency = currency;
@@ -32,7 +32,7 @@ public class AdapterProductsOffersListRecyclerView extends  RecyclerView.Adapter
         this.product_orignal_price = product_orignal_price;
         this.product_offer_msg = product_offer_msg;
         this.product_image = product_image;
-        this.customerImage = customerImage;
+        this.profileImage = profileImage;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class AdapterProductsOffersListRecyclerView extends  RecyclerView.Adapter
         TextView product_orignal_price;
         TextView product_offer_msg;
         ImageView product_image;
-        ImageView customerImage;
+        ImageView profileImage;
 
 
         public MyViewHolder(View itemView) {
@@ -84,7 +84,7 @@ public class AdapterProductsOffersListRecyclerView extends  RecyclerView.Adapter
             product_orignal_price = (TextView) itemView.findViewById(R.id.product_orignal_price);
             product_offer_msg = (TextView) itemView.findViewById(R.id.product_offer_msg);
             product_image = (ImageView) itemView.findViewById(R.id.product_image);
-            customerImage = (ImageView) itemView.findViewById(R.id.customerImage);
+            profileImage = (ImageView) itemView.findViewById(R.id.profileImage);
         }
     }
 }

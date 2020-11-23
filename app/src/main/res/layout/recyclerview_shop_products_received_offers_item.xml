@@ -24,18 +24,21 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             >
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/customerImage"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:id="@+id/profileImage"
+                android:layout_below="@+id/store_banner"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                app:civ_border_width="7dp"
+                app:civ_border_width="0dp"
+                android:src="@drawable/profile_icon"
+                android:layout_centerHorizontal="true"
                 app:civ_border_color="#4A4A4A"
+                android:layout_weight="0.5"
                 />
             <TextView
                 android:id="@+id/date_textView"
@@ -45,6 +48,7 @@
                 android:layout_below="@+id/product_name_textview"
                 android:text="13/04/2019"
                 android:textSize="16sp"
+                android:layout_gravity="bottom"
                 android:fontFamily="@font/segoe_ui_bold"
                 android:layout_margin="10dp"
                 android:textColor="@color/textGrey"
