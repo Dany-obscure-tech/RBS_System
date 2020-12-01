@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Smart_Share">
+
+    <RelativeLayout
+        android:background="#0075B5"
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/Back_btn"
+            android:layout_marginTop="8dp"
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:src="@drawable/back_btn" />
+
+        <TextView
+            android:textColor="#ffffffff"
+            android:textSize="24sp"
+            android:fontFamily="@font/kameron_bold"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Smart Share"/>
+
+        <ImageView
+            android:id="@+id/menu_btn"
+            android:padding="12dp"
+            android:layout_weight="1.5"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/menu_btn_white"
+            android:adjustViewBounds="true"
+            android:scaleType="center"
+            />
+
+
+    </RelativeLayout>
+
+    <SearchView
+        android:id="@+id/simpleSearchView"
+        android:layout_below="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
+        android:layout_marginLeft="8dp"
+        android:background="#F1F1F1"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:queryHint="Search here"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/simpleSearchView">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/Category"
+                android:layout_margin="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:textColor="#707070"
+                android:textSize="26sp"
+                android:fontFamily="@font/segoe_ui_bold"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/category_recyclerview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Category"
+                android:orientation="horizontal"
+                android:layout_margin="12dp"
+                android:paddingBottom="40dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+                />
+
+            <TextView
+                android:layout_below="@+id/category_recyclerview"
+                android:id="@+id/category_text"
+                android:layout_margin="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gallery"
+                android:textColor="#707070"
+                android:textSize="26sp"
+                android:fontFamily="@font/segoe_ui_bold"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/galleryRecyclerView"
+                android:layout_margin="12dp"
+                android:layout_below="@+id/category_text"
+                android:paddingBottom="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
+</RelativeLayout>

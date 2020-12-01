@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RBS_Smart_Share_Categories_Details">
+
+    <LinearLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        >
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:padding="15dp"
+            android:scaleType="fitXY"
+            android:layout_weight="0.2"
+            android:src="@drawable/black_back_arrow" />
+
+        <SearchView
+            android:id="@+id/simpleSearchView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.8"
+            android:iconifiedByDefault="false"
+            android:layout_marginLeft="8dp"
+            android:background="#F1F1F1"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:queryHint="Search here"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/products_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top_bar"
+        android:background="#F3F3F3"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/products_textview"
+            android:layout_margin="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Products"
+            android:textColor="#707070"
+            android:textSize="26sp"
+            android:fontFamily="@font/segoe_ui_bold"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/categoryRecyclerView"
+            android:layout_margin="12dp"
+            android:layout_below="@+id/products_textview"
+            android:paddingBottom="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

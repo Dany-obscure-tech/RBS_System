@@ -20,8 +20,14 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".BuyLocal_shopkeeperProductDetails"
+            android:name=".RBS_Smart_Share_Categories_Details"
             android:theme="@style/AppTheme.no"/>
+        <activity
+            android:name=".Smart_Share"
+            android:theme="@style/AppTheme.no"/>
+        <activity
+            android:name=".BuyLocal_shopkeeperProductDetails"
+            android:theme="@style/AppTheme.no" />
         <activity
             android:name=".Shopkeeper_Products_offers_list"
             android:theme="@style/AppTheme.no" />
