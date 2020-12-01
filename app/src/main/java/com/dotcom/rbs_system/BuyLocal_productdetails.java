@@ -45,7 +45,10 @@ import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -53,7 +56,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
 
     FusedLocationProviderClient fusedLocationProviderClient;
     RelativeLayout offer_relativeLayout;
-    String currency;
+    String currency,profileImageUrl,customerName;
     CardView imageSlider;
     SliderView sliderView;
     List<String> imageUrl;
@@ -116,7 +119,6 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         make_offer_alert_dialog = new Dialog(this);
         make_offer_alert_dialog.setContentView(R.layout.alert_make_offer);
 
-        sliderView = findViewById(R.id.imageSliders);
         alertReportCancel_btn = report_alert_dialog.findViewById(R.id.alertReportCancel_btn);
         alertReportDescription_editText = report_alert_dialog.findViewById(R.id.alertReportDescription_editText);
         alertReportSubmit_btn = report_alert_dialog.findViewById(R.id.alertReportSubmit_btn);
@@ -126,6 +128,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         alertMakeOfferMessage_editText = make_offer_alert_dialog.findViewById(R.id.alertMakeOfferMessage_editText);
         make_offer_btn = (Button) findViewById(R.id.make_offer_btn);
 
+        sliderView = findViewById(R.id.imageSliders);
         sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using IndicatorAnimationType. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
@@ -219,14 +222,19 @@ public class BuyLocal_productdetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (offerSubmitValidation()){
+                    long timestamp = Calendar.getInstance().getTime().getTime();
                     stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("message").setValue(alertMakeOfferMessage_editText.getText().toString());
                     stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("amount").setValue(alertMakeOfferAmount_editText.getText().toString());
                     stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("customer").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("customer_image").setValue(profileImageUrl);
+                    stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("customer_name").setValue(customerName);
+                    stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("timestamp").setValue(timestamp);
 
                     customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(productID).child("message").setValue(alertMakeOfferMessage_editText.getText().toString());
                     customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(productID).child("amount").setValue(alertMakeOfferAmount_editText.getText().toString());
                     customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(productID).child("shopkeeper").setValue(shopkeeperID);
                     customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(productID).child("offer_status").setValue("offer pending");
+                    customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(productID).child("timestamp").setValue(timestamp);
 
                     make_offer_alert_dialog.dismiss();
                     recreate();
@@ -241,6 +249,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (make_offer_btn.getText().toString().equals("CANCLE OFFER")){
+                        stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
                         customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(productID).removeValue();
                         recreate();
                     }else {
@@ -273,8 +282,10 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     //////////////////////////////////////////////////////////////////////////////////
 
     private void InitialProcess() {
+        fetchingImageUrl();
         checkingOffer();
         fetchingItemDetails();
+
     }
 
     private void checkingOffer() {
@@ -282,12 +293,34 @@ public class BuyLocal_productdetails extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
-                    offer_relativeLayout.setVisibility(View.VISIBLE);
-                    offerAmountCurrency_textView.setText(Currency.getInstance().getCurrency());
-                    offerStatus_textView.setText(snapshot.child("offer_status").getValue().toString());
-                    offerAmount_textView.setText(snapshot.child("amount").getValue().toString());
-                    offerMessage_textView.setText(snapshot.child("message").getValue().toString());
-                    make_offer_btn.setText("CANCLE OFFER");
+                    if (snapshot.child("offer_status").getValue().toString().equals("offer pending")){
+                        offer_relativeLayout.setVisibility(View.VISIBLE);
+                        offer_relativeLayout.setBackground(getResources().getDrawable(R.drawable.profile_screen_header));
+                        offerAmountCurrency_textView.setText(Currency.getInstance().getCurrency());
+                        offerStatus_textView.setText(snapshot.child("offer_status").getValue().toString());
+                        offerAmount_textView.setText(snapshot.child("amount").getValue().toString());
+                        offerMessage_textView.setText(snapshot.child("message").getValue().toString());
+                        make_offer_btn.setText("CANCLE OFFER");
+
+                    }else if (snapshot.child("offer_status").getValue().toString().equals("offer accepted")){
+                        offer_relativeLayout.setVisibility(View.VISIBLE);
+                        offer_relativeLayout.setBackgroundColor(getResources().getColor(R.color.textGreen));
+                        offerAmountCurrency_textView.setText(Currency.getInstance().getCurrency());
+                        offerStatus_textView.setText(snapshot.child("offer_status").getValue().toString());
+                        offerAmount_textView.setText(snapshot.child("amount").getValue().toString());
+                        offerMessage_textView.setText(snapshot.child("message").getValue().toString());
+                        make_offer_btn.setText("CANCLE OFFER");
+
+                    }else if (snapshot.child("offer_status").getValue().toString().equals("bought")){
+                        offer_relativeLayout.setVisibility(View.VISIBLE);
+                        offer_relativeLayout.setBackground(getResources().getDrawable(R.drawable.profile_screen_header));
+                        offerAmountCurrency_textView.setText(Currency.getInstance().getCurrency());
+                        offerStatus_textView.setText(snapshot.child("offer_status").getValue().toString());
+                        offerAmount_textView.setText(snapshot.child("amount").getValue().toString());
+                        offerMessage_textView.setText(snapshot.child("message").getValue().toString());
+                        make_offer_btn.setVisibility(View.GONE);
+                    }
+
                 }
             }
 
@@ -310,6 +343,23 @@ public class BuyLocal_productdetails extends AppCompatActivity {
                 currency_textView.setText(currency);
                 fetchingItemImages();
                 fetchingShopkeeperLocation();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void fetchingImageUrl() {
+        userRef = FirebaseDatabase.getInstance().getReference("Users_data/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                profileImageUrl = snapshot.child("profile_image_url").getValue().toString();
+                customerName = snapshot.child("fullname").getValue().toString();
+                Toast.makeText(BuyLocal_productdetails.this, customerName, Toast.LENGTH_SHORT).show();
             }
 
             @Override

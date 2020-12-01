@@ -20,12 +20,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -40,16 +48,21 @@ import java.util.Calendar;
 public class Registration extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
     DatePickerDialog.OnDateSetListener onDateSetListener;
 
+    private FirebaseAuth mAuth;
+
     int profileImagOrCnic = 0;
 
+    private static final int RC_SIGN_IN = 9001;
+
     StorageReference profileImageStorageReference;
+    private GoogleSignInClient mGoogleSignInClient;
     Uri fileUri,idUri;
     ImageView id_front,id_imageView;
     String currentDateString;
     TextView date_of_birth_text;
     FirebaseAuth fAuth;
     DatabaseReference userRef;
-    Button button_register,date_btn,uploadId_profile_image,uploadId_id_image;
+    Button button_register,date_btn,uploadId_profile_image,uploadId_id_image,button_google;
     EditText editText_fullName,editText_contactNo,editText_address,editText_email,editText_password,editText_confirmPassword;
 
     @Override
@@ -66,6 +79,8 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Initialization() {
+        mAuth = FirebaseAuth.getInstance();
+
         profileImageStorageReference = FirebaseStorage.getInstance().getReference();
 
         id_front = (ImageView) findViewById(R.id.id_front);
@@ -79,6 +94,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
 
         uploadId_profile_image = (Button) findViewById(R.id.uploadId_profile_image);
         uploadId_id_image = (Button) findViewById(R.id.uploadId_id_image);
+        button_google = (Button) findViewById(R.id.button_google);
         date_btn = (Button) findViewById(R.id.date_btn);
         button_register = (Button) findViewById(R.id.button_register);
 
@@ -90,13 +106,24 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         editText_confirmPassword = (EditText)findViewById(R.id.editText_confirmPassword);
     }
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void ClickListeners() {
+        googleSign_in_button_listner();
         registerButtonClick();
         date_btnClisckListner();
         takeProfileImage();
         takeIdImage();
+    }
+
+    private void googleSign_in_button_listner() {
+        button_google.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+
+            }
+        });
     }
 
     private void takeProfileImage() {
@@ -112,6 +139,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
             }
         });
     }
+
     private void takeIdImage() {
         uploadId_id_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,7 +258,19 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Processes() {
+        createRequest();
         onDatesetListner();
+    }
+
+    private void createRequest() {
+        //Sign In scope
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        //
+        //Google Api Client
+        mGoogleSignInClient= GoogleSignIn.getClient(this,gso);
     }
 
     private void onDatesetListner() {
@@ -252,9 +292,16 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         };
     }
 
+    private boolean validate(){
+        boolean valid = true;
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        return valid;
+    }
+    private boolean validateGoogleSigninFields(){
+        boolean valid = true;
 
+        return valid;
+    }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -271,7 +318,23 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
+
+        if (requestCode == RC_SIGN_IN) {
+            System.out.println("called here if");
+
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account.getIdToken());
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                // ...
+            }
+        }
+        else if (resultCode == Activity.RESULT_OK) {
             //Image Uri will not be null for RESULT_OK
             if(profileImagOrCnic == 1){
                 fileUri = data.getData();
@@ -291,10 +354,85 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
 
                     //You can also get File Path from intent
 //                    val filePath:String = ImagePicker.getFilePath(data)!!
-        } else if (resultCode == ImagePicker.RESULT_ERROR) {
-//            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show();
         }
+
     }
+
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            GoogleSignInAccount signInAccount= GoogleSignIn.getLastSignedInAccount(Registration.this);
+
+                            final String fullname = signInAccount.getDisplayName();
+                            final String contactno = editText_contactNo.getText().toString();
+                            final String dob = date_of_birth_text.getText().toString();
+                            final String address = editText_address.getText().toString();
+                            final String email = signInAccount.getEmail();
+
+                            final String userID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            Toast.makeText(Registration.this, "Registered!", Toast.LENGTH_SHORT).show();
+                            userRef.child(userID).child("type").setValue("customer");
+                            userRef.child(userID).child("fullname").setValue(fullname);
+                            userRef.child(userID).child("contactno").setValue(contactno);
+                            userRef.child(userID).child("dob").setValue(dob);
+                            userRef.child(userID).child("address").setValue(address);
+                            userRef.child(userID).child("email").setValue(email);
+
+                            profileImageStorageReference.child("BuyLocal_Customer_Profile_image").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Profile_image").putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                                    profileImageStorageReference.child("BuyLocal_Customer_Profile_image").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Profile_image").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            userRef.child(userID).child("profile_image_url").setValue(String.valueOf(uri));
+                                            profileImageStorageReference.child("BuyLocal_Customer_Id_image").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("ID").putFile(idUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                                @Override
+                                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                    Toast.makeText(Registration.this, "Uploading finished!", Toast.LENGTH_SHORT).show();
+
+                                                    profileImageStorageReference.child("BuyLocal_Customer_Id_image").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("ID").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                        @Override
+                                                        public void onSuccess(Uri uri) {
+                                                            userRef.child(userID).child("id_image_url").setValue(String.valueOf(uri));
+                                                            Intent intent = new Intent(Registration.this, BuyLocal_main.class);
+                                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                            finish();
+                                                            startActivity(intent);
+                                                        }
+                                                    });
+
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(Registration.this, "Not Submitted", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                        }
+                                    });
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(Registration.this, "Not Submitted", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(Registration.this, "Sorry authentication failed", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
+    }
+
 }

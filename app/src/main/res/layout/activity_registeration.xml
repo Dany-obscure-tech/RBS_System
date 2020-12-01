@@ -6,13 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".Registration">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/buy_local"
-        android:layout_above="@+id/registration_fields"
-        android:layout_centerHorizontal="true"
-        />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
 
     <LinearLayout
         android:id="@+id/registration_fields"
@@ -21,6 +20,15 @@
         android:padding="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/buy_local"
+            android:layout_above="@+id/registration_fields"
+            android:layout_centerHorizontal="true"
+            />
 
         <EditText
             android:id="@+id/editText_fullName"
@@ -176,7 +184,20 @@
             android:layout_height="wrap_content"
             android:text="REGISTER" />
 
+        <Button
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/profile_screen_header"
+            android:textColor="#ffff"
+            android:id="@+id/button_google"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CONTINUE WITH GOOGLE" />
+
 
     </LinearLayout>
 
+    </ScrollView>
 </RelativeLayout>

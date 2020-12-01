@@ -1,37 +1,56 @@
 package com.dotcom.rbs_system.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class AdapterProductsOffersReceivedListRecyclerView extends  RecyclerView.Adapter<AdapterProductsOffersReceivedListRecyclerView.MyViewHolder> {
 
+    DatabaseReference offerlistRef,customerOfferStatusRef;
+    String category;
     Context context;
+    String item_keyid;
+    List<String> customer_keyid;
     List<String> customer_name;
-    List<String> currency;
     List<String> offered_price;
     List<String> product_offer_msg;
     List<String> profileImage;
-    List<String> date_textView;
+    List<String> date_list;
 
-    public AdapterProductsOffersReceivedListRecyclerView(Context context, List<String> customer_name, List<String> currency, List<String> product_offer_msg, List<String> offered_price, List<String> profileImage,List<String> date_textView) {
+    Activity activity;
+
+    public AdapterProductsOffersReceivedListRecyclerView(Context context,String category,String item_keyid, List<String> customer_keyid, List<String> customer_name, List<String> product_offer_msg, List<String> offered_price, List<String> profileImage,List<String> date_list) {
+
         this.context = context;
+        this.category = category;
         this.customer_name = customer_name;
-        this.currency = currency;
         this.offered_price = offered_price;
         this.product_offer_msg = product_offer_msg;
         this.profileImage = profileImage;
-        this.date_textView = date_textView;
+        this.date_list = date_list;
+        this.item_keyid = item_keyid;
+        this.customer_keyid = customer_keyid;
+
+        activity = (Activity)context;
+
     }
 
     @Override
@@ -43,19 +62,26 @@ public class AdapterProductsOffersReceivedListRecyclerView extends  RecyclerView
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         holder.customer_name.setText(customer_name.get(position));
-//        holder.priceTV.setText(Currency.getInstance().getCurrency() + " " + price.get(position));
-//        Picasso.get().load(itemImage.get(position)).into(holder.image);
-//
-//        holder.image.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(context, BuyLocal_productdetails.class);
-//                context.startActivity(intent);
-//            }
-//        });
+        holder.offered_price.setText(offered_price.get(position));
+        holder.product_offer_msg.setText(product_offer_msg.get(position));
+        holder.date_textView.setText(date_list.get(position));
+        holder.currency.setText(Currency.getInstance().getCurrency());
+
+        Picasso.get().load(profileImage.get(position)).into(holder.profileImage);
+
+        holder.accept_offer_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                offerlistRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/"+ FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+ category + "/" + item_keyid+"/");
+                offerlistRef.child("Accepted_Offer").setValue(customer_keyid.get(position));
+                customerOfferStatusRef = FirebaseDatabase.getInstance().getReference("Customer_offers/"+ customer_keyid.get(position)+"/"+ item_keyid+"/offer_status");
+                customerOfferStatusRef.setValue("offer accepted");
+                activity.recreate();
+            }
+        });
     }
 
     @Override

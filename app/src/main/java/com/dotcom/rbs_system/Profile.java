@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterCategoryRecyclerView;
 import com.dotcom.rbs_system.Adapter.AdapterOffersItemListRecyclerView;
@@ -33,7 +34,7 @@ import java.util.List;
 
 public class Profile extends Fragment {
 
-    DatabaseReference customerdataRef;
+    DatabaseReference customerdataRef,customer_offerRef;
 
     TextView name,dob,phno,email,address,creationDate_textView;
 
@@ -44,6 +45,9 @@ public class Profile extends Fragment {
     Button edit_btn;
 
     List<String> itemname, price, itemImage;
+    List<String> offer_status;
+    List<String> offer_product_price;
+    List<String> product_offer_msg;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -70,6 +74,7 @@ public class Profile extends Fragment {
         super.onCreate(savedInstanceState);
 
         customerdataRef = FirebaseDatabase.getInstance().getReference("Users_data");
+        customer_offerRef = FirebaseDatabase.getInstance().getReference("Customer_offers");
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -96,9 +101,10 @@ public class Profile extends Fragment {
         itemname = new ArrayList<String>();
         price = new ArrayList<String>();
         itemImage = new ArrayList<String>();
-        itemname.add("Shirt");
-        itemname.add("Dress shirt");
-        itemname.add("Tea Shirt");
+        offer_status = new ArrayList<String>();
+        offer_product_price = new ArrayList<String>();
+        product_offer_msg = new ArrayList<String>();
+
 
         AdapterOffersItemListRecyclerView adapterOffersItemListRecyclerView=new AdapterOffersItemListRecyclerView(getActivity(),itemname,null,null,null,null,null);
 
@@ -106,8 +112,10 @@ public class Profile extends Fragment {
 //        offers.setAdapter(adapterOffersItemListRecyclerView);
         offers.setLayoutManager(new GridLayoutManager(getActivity(),1));
         offers.setAdapter(adapterOffersItemListRecyclerView);
+
         onclicklistners();
 
+        offerListFetch();
         datafetch();
 
         return view;
@@ -128,21 +136,21 @@ public class Profile extends Fragment {
     }
 
     private void datafetch() {
-        customerdataRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        customerdataRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
-                    name.setText(dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("fullname").getValue().toString());
-                    address.setText(dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("address").getValue().toString());
-                    phno.setText(dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("contactno").getValue().toString());
-                    dob.setText(dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("dob").getValue().toString());
-                    email.setText(dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("email").getValue().toString());
+                    name.setText(dataSnapshot.child("fullname").getValue().toString());
+                    address.setText(dataSnapshot.child("address").getValue().toString());
+                    phno.setText(dataSnapshot.child("contactno").getValue().toString());
+                    dob.setText(dataSnapshot.child("dob").getValue().toString());
+                    email.setText(dataSnapshot.child("email").getValue().toString());
 
                     SimpleDateFormat sfd = new SimpleDateFormat("dd-MMMM-yyyy ");
                     creationDate_textView.setText(String.valueOf(sfd.format(new Date(FirebaseAuth.getInstance().getCurrentUser().getMetadata().getCreationTimestamp()))));
 
-                    Picasso.get().load(String.valueOf(dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("profile_image_url").getValue().toString())).into(profileImage);
-                    Picasso.get().load(String.valueOf(dataSnapshot.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("id_image_url").getValue().toString())).into(idImage);
+                    Picasso.get().load(String.valueOf(dataSnapshot.child("profile_image_url").getValue().toString())).into(profileImage);
+                    Picasso.get().load(String.valueOf(dataSnapshot.child("id_image_url").getValue().toString())).into(idImage);
 
                 }
             }
@@ -153,4 +161,21 @@ public class Profile extends Fragment {
             }
         });
     }
+
+    private void offerListFetch() {
+        customer_offerRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshot1:snapshot.getChildren()){
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 }
