@@ -10,9 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
-
-
     <LinearLayout
         android:id="@+id/registration_fields"
         android:layout_centerInParent="true"
@@ -35,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Enter full name"
+            android:hint="Full name"
             android:inputType="textPersonName" />
 
         <EditText
@@ -84,19 +81,19 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/editText_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Enter address" />
-
-        <EditText
             android:id="@+id/editText_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Enter email"
-            android:inputType="textPersonName" />
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/editText_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter address" />
 
         <EditText
             android:id="@+id/editText_password"

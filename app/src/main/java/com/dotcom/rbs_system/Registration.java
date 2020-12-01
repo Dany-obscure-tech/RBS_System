@@ -11,6 +11,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -158,7 +160,9 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         button_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                register();
+                if (validate()) {
+                    register();
+                }
             }
 
             private void register() {
@@ -294,6 +298,46 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
 
     private boolean validate(){
         boolean valid = true;
+        if (editText_fullName.getText().toString().isEmpty()) {
+            editText_fullName.setError("Please enter name");
+            valid = false;
+        }
+        if (editText_contactNo.getText().toString().isEmpty()) {
+            editText_contactNo.setError("Please enter contact number");
+            valid = false;
+        }
+        if (date_of_birth_text.getText().toString().equals("Select date")) {
+            Toast.makeText(this, "Select date", Toast.LENGTH_LONG).show();
+            valid = false;
+        }
+        if (editText_address.getText().toString().isEmpty()) {
+            editText_address.setError("Please enter address");
+            valid = false;
+        }
+        if (editText_email.getText().toString().isEmpty()) {
+            editText_email.setError("Please enter correct email");
+            valid= false;
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(String.valueOf(editText_email.getText())).matches()) {
+            editText_email.setError("Please enter a valid email");
+            valid = false;
+        }
+        if (editText_password.getText().toString().isEmpty()) {
+            editText_password.setError("Please enter password");
+            valid=false;
+        }
+        if (!editText_confirmPassword.getText().toString().equals(editText_password.getText().toString())) {
+            editText_confirmPassword.setError("confirm password not match");
+            valid = false;
+        }
+        if (fileUri==null) {
+            Toast.makeText(this, "Select profile picture", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        if (idUri==null) {
+            Toast.makeText(this, "Select id card picture", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
 
         return valid;
     }
