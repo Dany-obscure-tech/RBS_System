@@ -70,9 +70,10 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     ImageButton back_btn, whatsapp_icon;
     ImageView profileImage;
     String productID, category,shopkeeperID;
-    DatabaseReference itemRef, reportRef,userRef,stockRef,customerOfferRef;
+    DatabaseReference itemRef, reportRef,userRef,stockRef,customerOfferRef,agreedOfferRef,boughtOfferRef;
     StorageReference itemImageStorageRef;
     int i, noOfimages;
+    boolean agreedBoughtCheck = false;
 
 
     @Override
@@ -90,6 +91,8 @@ public class BuyLocal_productdetails extends AppCompatActivity {
 
         itemRef = FirebaseDatabase.getInstance().getReference("Items/" + category + "/" + productID);
         stockRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/"+shopkeeperID+"/"+ category + "/" + productID);
+        agreedOfferRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/"+shopkeeperID+"/"+ category + "/" + productID+"/Accepted_Offer");
+        boughtOfferRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/"+shopkeeperID+"/"+ category + "/" + productID+"/Bought_Offer");
         reportRef = FirebaseDatabase.getInstance().getReference();
         customerOfferRef = FirebaseDatabase.getInstance().getReference();
         itemImageStorageRef = FirebaseStorage.getInstance().getReference().child("Item_Images/" + productID);
@@ -213,6 +216,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 make_offer_alert_dialog.dismiss();
+
             }
         });
     }
@@ -249,6 +253,9 @@ public class BuyLocal_productdetails extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (make_offer_btn.getText().toString().equals("CANCLE OFFER")){
+                        if (agreedBoughtCheck){
+                            agreedOfferRef.removeValue();
+                        }
                         stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
                         customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(productID).removeValue();
                         recreate();
@@ -310,6 +317,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
                         offerAmount_textView.setText(snapshot.child("amount").getValue().toString());
                         offerMessage_textView.setText(snapshot.child("message").getValue().toString());
                         make_offer_btn.setText("CANCLE OFFER");
+                        agreedBoughtCheck = true;
 
                     }else if (snapshot.child("offer_status").getValue().toString().equals("bought")){
                         offer_relativeLayout.setVisibility(View.VISIBLE);

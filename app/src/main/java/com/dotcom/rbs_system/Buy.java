@@ -1,8 +1,12 @@
 package com.dotcom.rbs_system;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -11,6 +15,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -20,8 +25,16 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.dantsu.escposprinter.connection.DeviceConnection;
+import com.dantsu.escposprinter.connection.tcp.TcpConnection;
+import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
 import com.dotcom.rbs_system.Classes.Exchanged_itemdata;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
+//import com.dotcom.rbs_system.asynch.AsyncTcpEscPosPrint;
+//import com.dotcom.rbs_system.asynch.AsyncEscPosPrinter;
+import com.dotcom.rbs_system.async.AsyncEscPosPrinter;
+import com.dotcom.rbs_system.async.AsyncTcpEscPosPrint;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,44 +57,61 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private static final int ITEM_ACTIVITY_REQUEST_CODE = 0;
+
     private static final int CUSTOMER_ACTIVITY_REQUEST_CODE = 0;
 
     Exchanged_itemdata exchanged_itemdata = Exchanged_itemdata.getInstance();
 
     CheckBox cash_checkbox,voucher_checkbox;
+
     TextView voucher_number,voucher_number_textview,Transaction_textview;
 
     String voucher_key,itemID;
 
     Progress_dialoge pd,pd2,pd3;
+
     LinearLayout toggling_linear;
+
     Boolean item_btn,customer;
 
     DatabaseReference reference,itemHistoryRef;
+
     DatabaseReference existingCustomersRef,existingItemsRef;
+
     Query orderQuery;
 
     ImageButton Back_btn,sms_btn,gmail_btn,print_btn;
+
     Button date_btn,customer_add_btn,item_add_btn,submit_btn;
+
     Button exchange_btn, btn_done;
 
     TextView searchForItem_textView,searchForCustomer_textView;
+
     TextView date_textView,forExchange_textView;
+
     TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView,suggest_price_TextView;
+
     TextView last_active_textView;
 
     String firebaseAuthUID;
+
     String customerKeyID, itemKeyID,customerName,itemCategory,itemName;
+
     String voucherNo;
 
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
     List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsPriceList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
     List<String> dateList,lastActiveDatelist;
 
-    LinearLayout itemDetails,customerDetails;
-
+    LinearLayout itemDetails,customerDetails,print_linearLayout;
 
     EditText purchase_price_editText,cash_editText,voucher_editText,paid_editText;
+
+    EditText ipAddress;
+
+    EditText portAddress;
+
     Dialog sendingdialog;
 
     Date date;
@@ -202,6 +232,11 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         item_add_btn =(Button) findViewById(R.id.item_add_btn);
         date_btn=(Button)findViewById(R.id.date_btn);
         exchange_btn=(Button)findViewById(R.id.exchange_btn);
+        print_linearLayout = (LinearLayout) sendingdialog.findViewById(R.id.print_linearLayout);
+
+        ipAddress = (EditText) sendingdialog.findViewById(R.id.edittext_tcp_ip);
+        portAddress = (EditText) sendingdialog.findViewById(R.id.edittext_tcp_port);
+
         gmail_btn = (ImageButton) sendingdialog.findViewById(R.id.gmail_btn);
         print_btn = (ImageButton) sendingdialog.findViewById(R.id.print_btn);
         sms_btn = (ImageButton) sendingdialog.findViewById(R.id.sms_btn);
@@ -359,7 +394,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     }
 
-
     private void onClickListeners() {
 
         Back_btn.setOnClickListener(new View.OnClickListener() {
@@ -512,6 +546,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 startActivity(Intent.createChooser(it,"Choose Mail App"));
             }
         });
+
+
         sms_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -545,6 +581,13 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                     detailsSubmit();
 //                    Toast.makeText(Buy.this, "Yes working", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        print_linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                printTcp();
             }
         });
     }
@@ -596,7 +639,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
         return valid;
     }
-
 
     private void   detailsSubmit() {
 
@@ -715,7 +757,114 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         });
     }
 
+//    public void printTcp() {
+//
+//        try {
+//            // this.printIt(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString())));
+//            new AsyncTcpEscPosPrint(this)
+//                    .execute(this.getAsyncEscPosPrinter(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString()))));
+//        } catch (NumberFormatException e) {
+//            new AlertDialog.Builder(this)
+//                    .setTitle("Invalid TCP port address")
+//                    .setMessage("Port field must be a number.")
+//                    .show();
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    /**
+//     * Asynchronous printing
+//     */
+//    @SuppressLint("SimpleDateFormat")
+//    public AsyncEscPosPrinter getAsyncEscPosPrinter(DeviceConnection printerConnection) {
+//        SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
+//        AsyncEscPosPrinter printer = new AsyncEscPosPrinter(printerConnection, 203, 48f, 32);
+//        return printer.setTextToPrint(
+//                "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, this.getApplicationContext().getResources().getDrawableForDensity(R.drawable.logo, DisplayMetrics.DENSITY_MEDIUM)) + "</img>\n" +
+//                        "[L]\n" +
+//                        "[C]<u><font size='big'>ORDER N°045</font></u>\n" +
+//                        "[L]\n" +
+//                        "[C]<u type='double'>" + format.format(new Date()) + "</u>\n" +
+//                        "[C]\n" +
+//                        "[C]================================\n" +
+//                        "[L]\n" +
+//                        "[L]<b>BEAUTIFUL SHIRT</b>[R]9.99e\n" +
+//                        "[L]  + Size : S\n" +
+//                        "[L]\n" +
+//                        "[L]<b>AWESOME HAT</b>[R]24.99e\n" +
+//                        "[L]  + Size : 57/58\n" +
+//                        "[L]\n" +
+//                        "[C]--------------------------------\n" +
+//                        "[R]TOTAL PRICE :[R]34.98e\n" +
+//                        "[R]TAX :[R]4.23e\n" +
+//                        "[L]\n" +
+//                        "[C]================================\n" +
+//                        "[L]\n" +
+//                        "[L]<u><font color='bg-black' size='tall'>Customer :</font></u>\n" +
+//                        "[L]Raymond DUPONT\n" +
+//                        "[L]5 rue des girafes\n" +
+//                        "[L]31547 PERPETES\n" +
+//                        "[L]Tel : +33801201456\n" +
+//                        "\n" +
+//                        "[C]<barcode type='ean13' height='10'>831254784551</barcode>\n" +
+//                        "[L]\n" +
+//                        "[C]<qrcode size='20'>http://www.developpeur-web.dantsu.com/</qrcode>\n"
+//        );
+//    }
 
+    public void printTcp() {
+        try {
+            // this.printIt(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString())));
+            new AsyncTcpEscPosPrint(this)
+                    .execute(this.getAsyncEscPosPrinter(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString()))));
+        } catch (NumberFormatException e) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Invalid TCP port address")
+                    .setMessage("Port field must be a number.")
+                    .show();
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Asynchronous printing
+     */
+    @SuppressLint("SimpleDateFormat")
+    public AsyncEscPosPrinter getAsyncEscPosPrinter(DeviceConnection printerConnection) {
+        SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
+        AsyncEscPosPrinter printer = new AsyncEscPosPrinter(printerConnection, 203, 48f, 32);
+        return printer.setTextToPrint(
+                "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, this.getApplicationContext().getResources().getDrawableForDensity(R.drawable.logo, DisplayMetrics.DENSITY_MEDIUM)) + "</img>\n" +
+                        "[L]\n" +
+                        "[C]<u><font size='big'>ORDER N°045</font></u>\n" +
+                        "[L]\n" +
+                        "[C]<u type='double'>" + format.format(new Date()) + "</u>\n" +
+                        "[C]\n" +
+                        "[C]================================\n" +
+                        "[L]\n" +
+                        "[L]<b>BEAUTIFUL SHIRT</b>[R]9.99e\n" +
+                        "[L]  + Size : S\n" +
+                        "[L]\n" +
+                        "[L]<b>AWESOME HAT</b>[R]24.99e\n" +
+                        "[L]  + Size : 57/58\n" +
+                        "[L]\n" +
+                        "[C]--------------------------------\n" +
+                        "[R]TOTAL PRICE :[R]34.98e\n" +
+                        "[R]TAX :[R]4.23e\n" +
+                        "[L]\n" +
+                        "[C]================================\n" +
+                        "[L]\n" +
+                        "[L]<u><font color='bg-black' size='tall'>Customer :</font></u>\n" +
+                        "[L]Raymond DUPONT\n" +
+                        "[L]5 rue des girafes\n" +
+                        "[L]31547 PERPETES\n" +
+                        "[L]Tel : +33801201456\n" +
+                        "\n" +
+                        "[C]<barcode type='ean13' height='10'>831254784551</barcode>\n" +
+                        "[L]\n" +
+                        "[C]<qrcode size='20'>http://www.developpeur-web.dantsu.com/</qrcode>\n"
+        );
+    }
 
     @Override
     public void onBackPressed() {

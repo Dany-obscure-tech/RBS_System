@@ -29,7 +29,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-
+            android:id="@+id/print_linearLayout"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:padding="20dp"
@@ -122,8 +122,44 @@
 
     </LinearLayout>
 
-    <Button
+    <LinearLayout
+        android:id="@+id/portandIp"
         android:layout_below="@+id/Linear_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text="IP :" />
+
+        <EditText
+            android:id="@+id/edittext_tcp_ip"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:digits="0123456789."
+            android:inputType="number" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="5dp"
+            android:text="Port :" />
+
+        <EditText
+            android:id="@+id/edittext_tcp_port"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+    </LinearLayout>
+
+    <Button
+        android:layout_below="@+id/portandIp"
         android:id="@+id/btn_done"
         android:layout_width="match_parent"
         android:layout_height="40dp"
