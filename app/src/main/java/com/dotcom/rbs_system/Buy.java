@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -29,6 +30,7 @@ import android.widget.Toast;
 import com.dantsu.escposprinter.connection.DeviceConnection;
 import com.dantsu.escposprinter.connection.tcp.TcpConnection;
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
+import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Classes.Exchanged_itemdata;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 //import com.dotcom.rbs_system.asynch.AsyncTcpEscPosPrint;
@@ -57,6 +59,9 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private static final int ITEM_ACTIVITY_REQUEST_CODE = 0;
+
+    AsyncTask asyncTask = null;
+    AsyncEscPosPrinter printer;
 
     private static final int CUSTOMER_ACTIVITY_REQUEST_CODE = 0;
 
@@ -627,7 +632,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         }
 
         if (!cash_checkbox.isChecked()&&!voucher_checkbox.isChecked()){
-            Transaction_textview.setError("Select atleast one Transaction Method");
             Toast.makeText(this, "Select atleast one Transaction Method", Toast.LENGTH_SHORT).show();
             valid=false;
         }
@@ -813,17 +817,33 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 //    }
 
     public void printTcp() {
-        try {
-            // this.printIt(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString())));
-            new AsyncTcpEscPosPrint(this)
-                    .execute(this.getAsyncEscPosPrinter(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString()))));
-        } catch (NumberFormatException e) {
-            new AlertDialog.Builder(this)
-                    .setTitle("Invalid TCP port address")
-                    .setMessage("Port field must be a number.")
-                    .show();
-            e.printStackTrace();
+        if (asyncTask==null){
+            try {
+                // this.printIt(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString())));
+                asyncTask = new AsyncTcpEscPosPrint(this).execute(this.getAsyncEscPosPrinter(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString()))));
+            } catch (NumberFormatException e) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Invalid TCP port address")
+                        .setMessage("Port field must be a number.")
+                        .show();
+                e.printStackTrace();
+            }
+        }else {
+            Toast.makeText(this, "called", Toast.LENGTH_SHORT).show();
+            asyncTask = null;
+
+            try {
+                // this.printIt(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString())));
+                asyncTask = new AsyncTcpEscPosPrint(this).execute(this.getAsyncEscPosPrinter2(printer));
+            } catch (NumberFormatException e) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Invalid TCP port address")
+                        .setMessage("Port field must be a number.")
+                        .show();
+                e.printStackTrace();
+            }
         }
+
     }
 
     /**
@@ -832,39 +852,45 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     @SuppressLint("SimpleDateFormat")
     public AsyncEscPosPrinter getAsyncEscPosPrinter(DeviceConnection printerConnection) {
         SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
-        AsyncEscPosPrinter printer = new AsyncEscPosPrinter(printerConnection, 203, 48f, 32);
+        printer = new AsyncEscPosPrinter(printerConnection, 203, 48f, 32);
         return printer.setTextToPrint(
-                "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, this.getApplicationContext().getResources().getDrawableForDensity(R.drawable.logo, DisplayMetrics.DENSITY_MEDIUM)) + "</img>\n" +
-                        "[L]\n" +
-                        "[C]<u><font size='big'>ORDER N°045</font></u>\n" +
-                        "[L]\n" +
-                        "[C]<u type='double'>" + format.format(new Date()) + "</u>\n" +
-                        "[C]\n" +
-                        "[C]================================\n" +
-                        "[L]\n" +
-                        "[L]<b>BEAUTIFUL SHIRT</b>[R]9.99e\n" +
-                        "[L]  + Size : S\n" +
-                        "[L]\n" +
-                        "[L]<b>AWESOME HAT</b>[R]24.99e\n" +
-                        "[L]  + Size : 57/58\n" +
-                        "[L]\n" +
-                        "[C]--------------------------------\n" +
-                        "[R]TOTAL PRICE :[R]34.98e\n" +
-                        "[R]TAX :[R]4.23e\n" +
-                        "[L]\n" +
-                        "[C]================================\n" +
-                        "[L]\n" +
-                        "[L]<u><font color='bg-black' size='tall'>Customer :</font></u>\n" +
-                        "[L]Raymond DUPONT\n" +
-                        "[L]5 rue des girafes\n" +
-                        "[L]31547 PERPETES\n" +
-                        "[L]Tel : +33801201456\n" +
-                        "\n" +
-                        "[C]<barcode type='ean13' height='10'>831254784551</barcode>\n" +
-                        "[L]\n" +
-                        "[C]<qrcode size='20'>http://www.developpeur-web.dantsu.com/</qrcode>\n"
+                printingData()
         );
     }
+
+
+    /**
+     * Asynchronous printing
+     */
+    @SuppressLint("SimpleDateFormat")
+    public AsyncEscPosPrinter getAsyncEscPosPrinter2(AsyncEscPosPrinter printer) {
+        SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
+        return printer.setTextToPrint(
+                printingData()
+        );
+    }
+
+    public String printingData() {
+        SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
+        return "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, this.getApplicationContext().getResources().getDrawableForDensity(R.drawable.logo, DisplayMetrics.DENSITY_MEDIUM)) + "</img>\n" +
+                "[L]\n" +
+                "[C]<u type='double'>" + format.format(new Date()) + "</u>\n" +
+                "[C]\n" +
+                "[C]================================\n" +
+                "[L]\n" +
+                "[L]<b>"+searchForItem_textView.getText().toString()+"</b>\n" +
+                "[C]--------------------------------\n" +
+                "[R]TOTAL PRICE :[R]"+purchase_price_editText.getText().toString()+Currency.getInstance().getCurrency()+ "\n" +
+                "[L]\n" +
+                "[C]================================\n" +
+                "[L]\n" +
+                "[L]<u><font color='bg-black' size='tall'>Customer :</font></u>\n" +
+                "[L]"+searchForCustomer_textView.getText().toString()+"\n" +
+                "[L]Phno : "+phno_textView.getText().toString()+"\n" +
+                "\n" +
+                "[L]\n";
+    }
+
 
     @Override
     public void onBackPressed() {
