@@ -25,7 +25,6 @@ public class BuyLocal_main extends AppCompatActivity {
 
     private static final int PERIOD = 2000;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

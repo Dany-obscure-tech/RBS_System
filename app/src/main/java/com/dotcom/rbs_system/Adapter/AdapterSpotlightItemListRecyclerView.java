@@ -40,6 +40,7 @@ public class AdapterSpotlightItemListRecyclerView extends  RecyclerView.Adapter<
         this.key_idList = key_idList;
         this.categoryList = categoryList;
         this.shopkeeperList = shopkeeperList;
+//        Toast.makeText(context, String.valueOf(itemname.size()), Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -19,6 +19,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,6 +50,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class Home extends Fragment {
+    EditText search_editText;
 
     BuylocalSlider buylocalSliderlistObj;
 
@@ -56,7 +59,6 @@ public class Home extends Fragment {
     DatabaseReference itemsRef;
 
     MaterialSearchView materialSearchView;
-
 
     RecyclerView recyclerView,category_recyclerview;
 
@@ -68,10 +70,11 @@ public class Home extends Fragment {
 
     ImageView menu_btn;
 
-    TextView logout;
+    TextView logout,communication_option;
 
-    RelativeLayout side_option_menu;
+    RelativeLayout side_option_menu,side_option_menu_bg_relativeLayout;
 
+    ImageButton search_imageBtn;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -150,13 +153,19 @@ public class Home extends Fragment {
         category_recyclerview.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,true));
         category_recyclerview.setAdapter(adapterCategoryRecyclerView);
 
+        search_imageBtn=(ImageButton) view.findViewById(R.id.search_imageBtn);
+
+        search_editText=(EditText) view.findViewById(R.id.search_editText);
 
         menu_btn=(ImageView)view.findViewById(R.id.menu_btn);
+
         imageSlider=(CardView)view.findViewById(R.id.imageSlider);
 
         logout=(TextView) view.findViewById(R.id.logout);
+        communication_option=(TextView) view.findViewById(R.id.communication_option);
 
         side_option_menu=(RelativeLayout)view.findViewById(R.id.side_option_menu);
+        side_option_menu_bg_relativeLayout=(RelativeLayout)view.findViewById(R.id.side_option_menu_bg_relativeLayout);
         Onclick_listners();
 
         sliderView = view.findViewById(R.id.imageSliders);
@@ -178,14 +187,45 @@ public class Home extends Fragment {
     }
 
     private void Onclick_listners() {
+        communication_option.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), BuyLocal_conversations.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        search_imageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!search_editText.getText().toString().isEmpty()){
+                    Intent intent = new Intent(getActivity(),SearchResult.class);
+                    intent.putExtra("SEARCHED",search_editText.getText().toString());
+                    getActivity().startActivity(intent);
+                }else {
+                    search_editText.setError("Please search valid item");
+                }
+            }
+        });
+
+        side_option_menu_bg_relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                side_option_menu_bg_relativeLayout.setVisibility(View.GONE);
+                side_option_menu.setVisibility(View.GONE);
+            }
+        });
+
         menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (side_option_menu.getVisibility()==View.VISIBLE){
                     side_option_menu.setVisibility(View.GONE);
+                    side_option_menu_bg_relativeLayout.setVisibility(View.GONE);
                 }
                 else {
                     side_option_menu.setVisibility(View.VISIBLE);
+                    side_option_menu_bg_relativeLayout.setVisibility(View.VISIBLE);
                 }
             }
         });

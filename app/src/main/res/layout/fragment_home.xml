@@ -3,57 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#FFFFFF"
     android:layout_height="match_parent"
     tools:context=".Home">
 
     <!-- TODO: Update blank fragment layout -->
 
-
-    <LinearLayout
-        android:id="@+id/topbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:padding="5dp"
-        android:orientation="horizontal"
-        >
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5">
-
-            <SearchView
-                android:id="@+id/simpleSearchView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:iconifiedByDefault="false"
-                android:layout_marginLeft="8dp"
-                android:background="#F1F1F1"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:queryHint="Search here"/>
-
-        </RelativeLayout>
-
-        <ImageView
-            android:id="@+id/menu_btn"
-            android:padding="20dp"
-            android:layout_weight="1.5"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:src="@drawable/menu_btns"
-            android:adjustViewBounds="true"
-            android:scaleType="center"
-            android:background="#ffffff"
-            />
-
-    </LinearLayout>
-
     <ScrollView
-        android:layout_below="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -75,6 +30,7 @@
                     android:id="@+id/imageSliders"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
+                    android:layout_marginTop="60dp"
                     app:sliderAnimationDuration="600"
                     app:sliderAutoCycleDirection="back_and_forth"
                     app:sliderAutoCycleEnabled="true"
@@ -96,7 +52,9 @@
             <TextView
                 android:layout_below="@+id/imageSlider"
                 android:id="@+id/spot_light_text"
-                android:layout_margin="15dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginBottom="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Spotlight"
@@ -107,7 +65,6 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/spotlightRecyclerView"
-                android:layout_margin="12dp"
                 android:layout_below="@+id/spot_light_text"
                 android:paddingBottom="40dp"
                 android:layout_width="match_parent"
@@ -122,7 +79,10 @@
 
             <TextView
                 android:id="@+id/Category"
-                android:layout_margin="15dp"
+
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginBottom="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Category"
@@ -148,66 +108,105 @@
         </RelativeLayout>
 
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10"
+        android:background="#bbffffff"
+        android:padding="5dp"
+        android:orientation="horizontal"
+        >
+
+        <EditText
+            android:layout_weight="8"
+            android:fontFamily="@font/segoe_ui"
+            android:hint="search here..."
+            android:textColor="#707070"
+            android:id="@+id/search_editText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+        <ImageButton
+            android:id="@+id/search_imageBtn"
+            android:src="@drawable/search"
+            android:backgroundTint="@color/textBlue"
+            android:layout_weight="1"
+            android:background="#00FFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"/>
+
+
+        <ImageView
+            android:id="@+id/menu_btn"
+            android:layout_weight="1"
+            android:paddingLeft="30dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:src="@drawable/menu_btns"
+            android:adjustViewBounds="true"
+            android:scaleType="center"
+            />
+
+    </LinearLayout>
+
     <RelativeLayout
-        android:id="@+id/side_option_menu"
-        android:layout_width="wrap_content"
-        android:background="#FFFF"
-        android:layout_alignParentEnd="true"
         android:visibility="gone"
-        android:layout_below="@+id/topbar"
-        android:layout_height="wrap_content">
+        android:id="@+id/side_option_menu_bg_relativeLayout"
+        android:background="#00000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
-        <TextView
-            android:id="@+id/category_option"
-            android:padding="20dp"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/conversationItem_cardView"
             android:layout_width="wrap_content"
+            android:background="@drawable/main_button"
             android:layout_height="wrap_content"
-            android:text="Category"
-            android:textColor="@color/textGrey"
-            android:textSize="16sp"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:layout_centerHorizontal="true"
-            />
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="0dp"
 
-        <TextView
-            android:id="@+id/price_option"
-            android:layout_below="@+id/category_option"
-            android:padding="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Price"
-            android:textColor="@color/textGrey"
+            android:layout_alignParentEnd="true"
+            app:cardElevation="4dp"
             android:layout_centerHorizontal="true"
-            android:textSize="16sp"
-            android:fontFamily="@font/segoe_ui_bold"
-            />
+            app:cardUseCompatPadding="true">
 
-        <TextView
-            android:id="@+id/communication_option"
-            android:layout_below="@+id/price_option"
-            android:padding="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Communication"
-            android:textColor="@color/textGrey"
-            android:layout_centerHorizontal="true"
-            android:textSize="16sp"
-            android:fontFamily="@font/segoe_ui_bold"
-            />
+            <RelativeLayout
+                android:id="@+id/side_option_menu"
+                android:layout_width="wrap_content"
+                android:background="#FFFF"
+                android:visibility="gone"
+                android:layout_below="@+id/topbar"
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/logout"
-            android:layout_below="@+id/communication_option"
-            android:padding="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Logout"
-            android:textColor="@color/textGrey"
-            android:layout_centerHorizontal="true"
-            android:textSize="16sp"
-            android:fontFamily="@font/segoe_ui_bold"
-            />
+                <TextView
+                    android:id="@+id/communication_option"
+                    android:padding="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Communication"
+                    android:textColor="@color/textGrey"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    />
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/logout"
+                    android:layout_below="@+id/communication_option"
+                    android:padding="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Logout"
+                    android:textColor="@color/textGrey"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
 
 </RelativeLayout>

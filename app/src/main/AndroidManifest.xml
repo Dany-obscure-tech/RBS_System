@@ -20,11 +20,20 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".RBS_Smart_Share_Categories_Details"
+            android:name=".BuyLocal_conversations"
             android:theme="@style/AppTheme.no"/>
         <activity
+            android:name=".SearchResult"
+            android:theme="@style/AppTheme.no" />
+        <activity
+            android:name=".BuyLocal_messaging"
+            android:theme="@style/AppTheme.no" />
+        <activity
+            android:name=".RBS_Smart_Share_Categories_Details"
+            android:theme="@style/AppTheme.no" />
+        <activity
             android:name=".Smart_Share"
-            android:theme="@style/AppTheme.no"/>
+            android:theme="@style/AppTheme.no" />
         <activity
             android:name=".BuyLocal_shopkeeperProductDetails"
             android:theme="@style/AppTheme.no" />
