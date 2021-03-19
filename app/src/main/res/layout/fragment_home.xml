@@ -20,8 +20,24 @@
             android:background="#F3F3F3"
             >
 
+            <RelativeLayout
+                android:id="@+id/logo"
+                android:layout_marginTop="60dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:src="@drawable/buylocallogo"
+                    android:padding="50dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/imageSlider"
+                android:visibility="gone"
+                android:layout_below="@id/logo"
                 app:cardCornerRadius="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

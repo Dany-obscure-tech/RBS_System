@@ -16,6 +16,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/imageSlider"
+            android:visibility="visible"
             app:cardCornerRadius="6dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -217,35 +218,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/price_textview"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/profile_screen_header"
                     android:fontFamily="@font/segoe_ui_bold"
+                    android:padding="15dp"
                     android:text="Share now"
-                    android:textColor="#707070"
-                    android:textSize="24sp" />
+                    android:textColor="#ffff"
+                    android:textSize="15sp" />
 
-                <ImageButton
-                    android:id="@+id/whatsapp_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="3dp"
-                    android:background="#ffffffff"
-                    android:src="@drawable/whatsapp"
 
-                    />
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="3dp"
-                    android:background="#ffffffff"
-                    android:src="@drawable/facebook"
-
-                    />
 
             </LinearLayout>
 

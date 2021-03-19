@@ -23,6 +23,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -85,7 +88,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     Query orderQuery;
 
-    ImageButton Back_btn,sms_btn,gmail_btn,print_btn;
+    ImageButton back_btn,sms_btn,gmail_btn,print_btn;
 
     Button date_btn,customer_add_btn,item_add_btn,submit_btn;
 
@@ -98,6 +101,10 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView,suggest_price_TextView;
 
     TextView last_active_textView;
+
+    TextView itemName_textView,itemID_textView,itemPriceCurrency_textView,itemPrice_textView;
+
+    ImageView itemImage_imageView;
 
     String firebaseAuthUID;
 
@@ -207,6 +214,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         Transaction_textview=(TextView)findViewById(R.id.Transaction_textview);
         voucher_number_textview=(TextView)findViewById(R.id.voucher_number_textview);
         voucher_number.setText(voucher_key.toString());
+
         condition_textView=(TextView)findViewById(R.id.condition_textView);
         notes_textView=(TextView)findViewById(R.id.notes_textView);
         phno_textView=(TextView)findViewById(R.id.phno_textView);
@@ -216,8 +224,16 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         date_textView =(TextView)findViewById(R.id.date_textView);
         forExchange_textView =(TextView)findViewById(R.id.forExchange_textView);
         last_active_textView =(TextView)findViewById(R.id.last_active_textView);
-
         suggest_price_TextView = (TextView) findViewById(R.id.suggest_price_TextView);
+
+        itemName_textView = (TextView) findViewById(R.id.itemName_textView);
+        itemID_textView = (TextView) findViewById(R.id.itemID_textView);
+        itemPriceCurrency_textView = (TextView) findViewById(R.id.itemPriceCurrency_textView);
+        itemPriceCurrency_textView.setText(Currency.getInstance().getCurrency());
+        itemPrice_textView = (TextView) findViewById(R.id.itemPrice_textView);
+
+        itemImage_imageView = (ImageView) findViewById(R.id.itemImage_imageView);
+
         purchase_price_editText = (EditText)findViewById(R.id.purchase_price_editText);
         cash_editText = (EditText)findViewById(R.id.cash_editText);
         voucher_editText = (EditText)findViewById(R.id.voucher_editText);
@@ -232,7 +248,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         existingCustomersRef = FirebaseDatabase.getInstance().getReference("Customer_list");
         existingItemsRef = FirebaseDatabase.getInstance().getReference("Items");
 
-        Back_btn=(ImageButton)findViewById(R.id.Back_btn);
+        back_btn =(ImageButton)findViewById(R.id.back_btn);
         customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
         item_add_btn =(Button) findViewById(R.id.item_add_btn);
         date_btn=(Button)findViewById(R.id.date_btn);
@@ -401,7 +417,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     private void onClickListeners() {
 
-        Back_btn.setOnClickListener(new View.OnClickListener() {
+        back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (exchanged_itemdata.getExchangeCheck()){
@@ -925,6 +941,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 String itemid_returnString = data.getStringExtra("Item_id");
                 String itemcategory_returnString = data.getStringExtra("Item_category");
                 String itemkeyid_returnString = data.getStringExtra("Item_keyid");
+                String itemprice_returnString = data.getStringExtra("Item_price");
+                String itemimage_returnString = data.getStringExtra("Item_image");
                 String returnString = data.getStringExtra("Last_Active");
                 // set text view with string
                 last_active_textView.setText(returnString);
@@ -933,7 +951,19 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 itemKeyID = itemkeyid_returnString;
                 itemCategory = itemcategory_returnString;
 
+                itemName_textView.setText(itemname_returnString);
+                itemID_textView.setText(itemid_returnString);
+                itemName_textView.setTextColor(getResources().getColor(R.color.gradientDarkBlue));
+                itemPrice_textView.setText(itemprice_returnString);
+
+                itemID_textView.setVisibility(View.VISIBLE);
+                itemPriceCurrency_textView.setVisibility(View.VISIBLE);
+                itemPrice_textView.setVisibility(View.VISIBLE);
+                itemImage_imageView.setVisibility(View.VISIBLE);
+
                 searchForItem_textView.setText(itemname_returnString+"\n"+itemid_returnString);
+                Picasso.get().load(itemimage_returnString).into(itemImage_imageView);
+//                Toast.makeText(this, itemimage_returnString, Toast.LENGTH_SHORT).show();
                 searchForItem_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
                 searchForItem_textView.setTextColor(getResources().getColor(R.color.textGrey));
             }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.dotcom.rbs_system">
 
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -21,7 +22,7 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".BuyLocal_conversations"
-            android:theme="@style/AppTheme.no"/>
+            android:theme="@style/AppTheme.no" />
         <activity
             android:name=".SearchResult"
             android:theme="@style/AppTheme.no" />
@@ -54,7 +55,20 @@
             android:theme="@style/AppTheme.no" />
         <activity
             android:name=".BuyLocal_productdetails"
-            android:theme="@style/AppTheme.no" />
+            android:theme="@style/AppTheme.no">
+            <tools:validation testUrl="http://buyLocalrbstest.com/productdetails" />
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="buyLocalrbstest.com"
+                    android:pathPrefix="/productdetails" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Registration"
             android:theme="@style/AppTheme.no" />

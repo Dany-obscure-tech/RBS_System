@@ -8,6 +8,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -62,11 +63,11 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     TextView report_textView,distance_textView;
     TextView product_name_textview, category_textView, item_description_textview, itemPrice_textView, currency_textView;
     TextView offerStatus_textView,offerAmountCurrency_textView,offerAmount_textView,offerMessage_textView;
-    TextView make_offer_textView,communicate_textView;
+    TextView make_offer_textView,communicate_textView,share_textview;
     Dialog report_alert_dialog;
     Dialog make_offer_alert_dialog;
     Button alertReportCancel_btn, alertMakeOfferCancel_btn, alertMakeOfferSubmit_btn,alertReportSubmit_btn;
-    ImageButton back_btn, whatsapp_icon;
+    ImageButton back_btn;
     ImageView profileImage;
     String productID,productName,category,shopkeeperID,conversationKey=null;
     DatabaseReference itemRef, reportRef,userRef,stockRef,customerOfferRef,agreedOfferRef,boughtOfferRef,userConversationRef;
@@ -82,27 +83,38 @@ public class BuyLocal_productdetails extends AppCompatActivity {
 
         currency = Currency.getInstance().getCurrency();
 
-        productID = getIntent().getStringExtra("PRODUCT_ID");
-        category = getIntent().getStringExtra("CATEGORY");
-        shopkeeperID = getIntent().getStringExtra("SHOPKEEPER_ID");
+        // ATTENTION: This was auto-generated to handle app links.
+        Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
+        if(appLinkData!=null){
+            //     http://buyLocalrbs_test.com/productdetails/-MUSpP4dkoK4w4f45VaT/Mobile/CfofZGxuR4TC1OEBRMymclpscR73
+            productID = appLinkData.getPathSegments().get(1).toString();
+            category = appLinkData.getPathSegments().get(2).toString();
+            shopkeeperID = appLinkData.getPathSegments().get(3).toString();
+        }else {
+            productID = getIntent().getStringExtra("PRODUCT_ID");
+            category = getIntent().getStringExtra("CATEGORY");
+            shopkeeperID = getIntent().getStringExtra("SHOPKEEPER_ID");
+        }
 
         imageUrl = new ArrayList<>();
 
         itemRef = FirebaseDatabase.getInstance().getReference("Items/" + category + "/" + productID);
-        stockRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/"+shopkeeperID+"/"+ category + "/" + productID);
-        agreedOfferRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/"+shopkeeperID+"/"+ category + "/" + productID+"/Accepted_Offer");
-        boughtOfferRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/"+shopkeeperID+"/"+ category + "/" + productID+"/Bought_Offer");
+        stockRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/" + shopkeeperID + "/" + category + "/" + productID);
+        agreedOfferRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/" + shopkeeperID + "/" + category + "/" + productID + "/Accepted_Offer");
+        boughtOfferRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/" + shopkeeperID + "/" + category + "/" + productID + "/Bought_Offer");
         reportRef = FirebaseDatabase.getInstance().getReference();
         customerOfferRef = FirebaseDatabase.getInstance().getReference();
         itemImageStorageRef = FirebaseStorage.getInstance().getReference().child("Item_Images/" + productID);
-        userConversationRef = FirebaseDatabase.getInstance().getReference("User_conversation/"+FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+        userConversationRef = FirebaseDatabase.getInstance().getReference("User_conversation/" + FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
 
         offer_relativeLayout = (RelativeLayout) findViewById(R.id.offer_relativeLayout);
 
         imageSlider = (CardView) findViewById(R.id.imageSlider);
         back_btn = (ImageButton) findViewById(R.id.back_btn);
         profileImage = (ImageView) findViewById(R.id.profileImage);
-        whatsapp_icon = (ImageButton) findViewById(R.id.whatsapp_icon);
+        share_textview = (TextView) findViewById(R.id.share_textview);
         report_textView = (TextView) findViewById(R.id.report_textView);
         distance_textView = (TextView) findViewById(R.id.distance_textView);
 
@@ -153,6 +165,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     //////////////////////////////////////////////////////////////////////////////////
 
     private void onclicklistners() {
+//        whatsappShareButtonClick();
         report_btn_listner();
         alertReportSubmit_btn_listner();
         alertReportCancel_btn_listner();
@@ -163,6 +176,28 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         whatsapp_icon_listner();
         profileImage_listner();
         communicate_btn_listner();
+    }
+
+    private void whatsappShareButtonClick() {
+        PackageManager pm=getPackageManager();
+        try {
+
+            Intent waIntent = new Intent(Intent.ACTION_SEND);
+            waIntent.setType("text/plain");
+            String text = "http://buyLocalrbstest.com/productdetails/"+productID+"/"+category+"/"+shopkeeperID;
+
+            PackageInfo info=pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+            //Check if package exists or not. If not then code
+            //in catch block will be called
+            waIntent.setPackage("com.whatsapp");
+
+            waIntent.putExtra(Intent.EXTRA_TEXT, text);
+            startActivity(Intent.createChooser(waIntent, "Share with"));
+
+        } catch (PackageManager.NameNotFoundException e) {
+            Toast.makeText(this, "WhatsApp not Installed", Toast.LENGTH_SHORT)
+                    .show();
+        }
     }
 
     private void communicate_btn_listner() {
@@ -206,13 +241,13 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     }
 
     private void whatsapp_icon_listner() {
-        whatsapp_icon.setOnClickListener(new View.OnClickListener() {
+        share_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(Intent.ACTION_SEND);
                 myIntent.setType("text/plain");
-                String shareBody = "Your body is here";
-                String shareSub = "Your subject";
+                String shareBody = "http://buyLocalrbstest.com/productdetails/"+productID+"/"+category+"/"+shopkeeperID;
+                String shareSub = productName;
                 myIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
                 myIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(myIntent, "Share using"));

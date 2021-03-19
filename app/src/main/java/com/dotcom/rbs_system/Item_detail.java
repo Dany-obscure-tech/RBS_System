@@ -7,29 +7,30 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dotcom.rbs_system.Adapter.AdapterItemCategoryListRecyclerView;
 import com.dotcom.rbs_system.Adapter.AdapterItemDetailsImagesRecyclerView;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.github.dhaval2404.imagepicker.ImagePicker;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,7 +41,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,30 +50,41 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Item_detail extends AppCompatActivity {
 
+    AdapterItemCategoryListRecyclerView adapterItemCategoryListRecyclerView;
+
+    RecyclerView categoryList_recyclerView;
+    Dialog categoryList_alert_dialog;
+
     // Progress dialog
     Progress_dialoge pd;
+
+    LinearLayout selectCategory_linearLayout;
 
     AdapterItemDetailsImagesRecyclerView adapterItemDetailsImagesRecyclerView;
     RecyclerView itemImage_recyclerView;
 
     private static final int CAMERA_REQUEST_CODE = 1;
-    Button submit_btn,uploadId_btn;
-    TextView selectCategory_textView;
+    TextView submit_textView,rating_textView;
+    TextView selectCategory_textView,uploadId_textView;
     DatabaseReference categoryRef,reference;
-    ImageView id_imageView;
+    ImageView id_imageView, categoryIcon_imageView;
     EditText itemName_editText,notes_editText,itemId_editText,price_editText,description_editText;
-    List<String> categoryList;
+    EditText search_editText;
     RatingBar ratingBar;
     ImageButton Back_btn;
     Uri fileUri;
+    List<String> categoryList,filteredCategoryList,categoryImageList,filteredCategoryImageList,imageDownloadUrlList;
     List<Uri> imageUrlList;
+    List<UploadTask.TaskSnapshot> taskSnapshotList;
     StorageReference idStorageReference;
     StorageReference storageReference;
 
     String key;
     String key2;
+    String searchMe;
+    String passbackItemImageUrl;
 
-    int i,j,k=0;
+    int i,j,k=0,l=0;
 
     private ArrayList<SampleSearchModel> createCategoryData(){
 
@@ -85,7 +96,6 @@ public class Item_detail extends AppCompatActivity {
         return items;
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,20 +105,26 @@ public class Item_detail extends AppCompatActivity {
         getCategoryList();
         selectCategory();
         onClickListeners();
+        getRating();
+
     }
 
     private void initialize() {
         pd = new Progress_dialoge();
 
         imageUrlList = new ArrayList<>();
+        imageDownloadUrlList = new ArrayList<>();
+        taskSnapshotList = new ArrayList<>();
+
+        selectCategory_linearLayout = (LinearLayout) findViewById(R.id.selectCategory_linearLayout);
 
         itemImage_recyclerView = (RecyclerView) findViewById(R.id.itemImage_recyclerView);
-        itemImage_recyclerView.setLayoutManager(new GridLayoutManager(this,1));
+        itemImage_recyclerView.setLayoutManager(new GridLayoutManager(this,5));
         adapterItemDetailsImagesRecyclerView = new AdapterItemDetailsImagesRecyclerView(Item_detail.this,imageUrlList);
         itemImage_recyclerView.setAdapter(adapterItemDetailsImagesRecyclerView);
 
         storageReference = FirebaseStorage.getInstance().getReference();
-        Back_btn = (ImageButton)findViewById(R.id.Back_btn);
+        Back_btn = (ImageButton)findViewById(R.id.back_btn);
         itemName_editText = (EditText)findViewById(R.id.itemName_editText);
         itemId_editText = (EditText)findViewById(R.id.itemId_editText);
         price_editText = (EditText)findViewById(R.id.price_editText);
@@ -116,13 +132,25 @@ public class Item_detail extends AppCompatActivity {
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         notes_editText = (EditText)findViewById(R.id.notes_editText);
         categoryList = new ArrayList<>();
+        categoryImageList = new ArrayList<>();
+        filteredCategoryList = new ArrayList<>();
+        filteredCategoryImageList = new ArrayList<>();
         categoryRef = FirebaseDatabase.getInstance().getReference("Categories");
         reference = FirebaseDatabase.getInstance().getReference();
-        submit_btn = (Button)findViewById(R.id.submit_btn);
-        uploadId_btn = (Button) findViewById(R.id.uploadId_btn);
+        submit_textView = (TextView)findViewById(R.id.submit_textView);
+        rating_textView = (TextView)findViewById(R.id.rating_textView);
+        uploadId_textView = (TextView) findViewById(R.id.uploadId_textView);
         id_imageView = (ImageView) findViewById(R.id.id_imageView);
+        categoryIcon_imageView = (ImageView) findViewById(R.id.categoryIcon_imageView);
         selectCategory_textView = (TextView) findViewById(R.id.selectCategory_textView);
         idStorageReference = storageReference.child("Item_Images");
+
+        categoryList_alert_dialog = new Dialog(this);
+        categoryList_alert_dialog.setContentView(R.layout.alert_rbs_categorylist);
+
+        categoryList_recyclerView = (RecyclerView)categoryList_alert_dialog.findViewById(R.id.categoryList_recyclerView);
+        search_editText = (EditText) categoryList_alert_dialog.findViewById(R.id.search_editText);
+        categoryList_recyclerView.setLayoutManager(new GridLayoutManager(Item_detail.this,1));
 
     }
 
@@ -132,10 +160,22 @@ public class Item_detail extends AppCompatActivity {
         categoryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                    categoryList.add(String.valueOf(dataSnapshot1.getValue()));
+                if (dataSnapshot.exists()){
+                    for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                        categoryList.add(String.valueOf(dataSnapshot1.child("name").getValue()));
+                        filteredCategoryList.add(String.valueOf(dataSnapshot1.child("name").getValue()));
+                        categoryImageList.add(String.valueOf(dataSnapshot1.child("image_url").getValue()));
+                        filteredCategoryImageList.add(String.valueOf(dataSnapshot1.child("image_url").getValue()));
+                    }
+                    adapterItemCategoryListRecyclerView = new AdapterItemCategoryListRecyclerView(Item_detail.this, categoryList_alert_dialog,selectCategory_textView,categoryIcon_imageView,filteredCategoryList,filteredCategoryImageList);
+                    categoryList_recyclerView.setAdapter(adapterItemCategoryListRecyclerView);
+
+                    searchCategory();
+                    pd.dismissProgressBar(Item_detail.this);
+                }else {
+                    pd.dismissProgressBar(Item_detail.this);
                 }
-                pd.dismissProgressBar(Item_detail.this);
+
             }
 
             @Override
@@ -146,23 +186,27 @@ public class Item_detail extends AppCompatActivity {
     }
 
     private void selectCategory() {
-        selectCategory_textView.setOnClickListener(new View.OnClickListener() {
+        selectCategory_linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SimpleSearchDialogCompat(Item_detail.this, "Search...",
-                        "What are you looking for...?", null, createCategoryData(),
-                        new SearchResultListener<SampleSearchModel>() {
-                            @Override
-                            public void onSelected(BaseSearchDialogCompat dialog,
-                                                   SampleSearchModel item, int position) {
-                                selectCategory_textView.setText(item.getTitle());
-                                selectCategory_textView.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));
-                                selectCategory_textView.setTextColor(getResources().getColor(R.color.textGrey));
 
-                                dialog.dismiss();
-                            }
-                        }).show();
-                // hello
+//                new SimpleSearchDialogCompat(Item_detail.this, "Search...",
+//                        "What are you looking for...?", null, createCategoryData(),
+//                        new SearchResultListener<SampleSearchModel>() {
+//                            @Override
+//                            public void onSelected(BaseSearchDialogCompat dialog,
+//                                                   SampleSearchModel item, int position) {
+//                                selectCategory_textView.setText(item.getTitle());
+//                                selectCategory_textView.setTextColor(getResources().getColor(R.color.colorPrimary));
+//
+//                                categoryIcon_imageView.setVisibility(View.VISIBLE);
+//
+//                                dialog.dismiss();
+//                            }
+//                        }).show();
+//                // hello
+
+                categoryList_alert_dialog.show();
 
             }
         });
@@ -183,12 +227,13 @@ public class Item_detail extends AppCompatActivity {
             reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Item_id").setValue(itemId_editText.getText().toString());
             reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
             reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Item_name").setValue(itemName_editText.getText().toString());
-            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Condition").setValue(ratingBar.getRating());
+            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Condition").setValue(rating_textView.getText().toString());
             reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Notes").setValue(notes_editText.getText().toString());
             reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Price").setValue(price_editText.getText().toString());
             reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Description").setValue(description_editText.getText().toString());
             reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("key_id").setValue(key);
             reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("No_of_images").setValue(String.valueOf(imageUrlList.size()));
+
 
 
             for (i = 0; i<imageUrlList.size();i++) {
@@ -197,12 +242,33 @@ public class Item_detail extends AppCompatActivity {
                 idStorageReference.child(key).child("image_"+String.valueOf(i+1)).putFile(imageUrlList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        pd.dismissProgressBar(Item_detail.this);
 
-                        if(i==imageUrlList.size()){
-                            pass_back_data();
-                            finish();
-                        }
+                        idStorageReference.child(key).child("image_"+String.valueOf(l+1)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                System.out.println("k = "+k+" "+uri);
+                                reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Image_urls").child("image_"+(k+1)).setValue(String.valueOf(uri.toString()));
+                                if (k==0){
+                                    System.out.println("if called");
+                                    passbackItemImageUrl = uri.toString();
+
+                                    if (k==0&&k==imageUrlList.size()-1){
+                                        pass_back_data(passbackItemImageUrl);
+                                        finish();
+                                    }
+
+                                }
+                                if (k!=0&&k==imageUrlList.size()-1){
+                                    pass_back_data(passbackItemImageUrl);
+                                    finish();
+                                }
+
+                                k++;
+                            }
+                        });
+                        l++;
+
+
 
 
                     }
@@ -214,23 +280,26 @@ public class Item_detail extends AppCompatActivity {
                         }
                     });
             }
+            pd.dismissProgressBar(Item_detail.this);
 
-            ///////////////////////////////////////////////////////////
+//            for (int i = 0;i<imageUrlList.size();i++){
+//                taskSnapshotList.get(i).getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                    @Override
+//                    public void onSuccess(Uri uri) {
+//                        System.out.println(uri);
+//                    }
+//                });
+//            }
 
-
-
-            ///////////////////////////////////////////////////////////
 
         }else {
             Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
             connected = false;
         }
 
-
-
     }
 
-    private void pass_back_data() {
+    private void pass_back_data(String uri) {
 
       //   get the text from the EditText
         String last_active = "NA";
@@ -240,6 +309,8 @@ public class Item_detail extends AppCompatActivity {
         intent.putExtra("Item_id", itemId_editText.getText().toString());
         intent.putExtra("Item_category", selectCategory_textView.getText().toString());
         intent.putExtra("Item_keyid", key);
+        intent.putExtra("Item_image", uri.toString());
+        intent.putExtra("Item_price", price_editText.getText().toString());
         intent.putExtra("Last_Active", last_active);
         setResult(RESULT_OK, intent);
     }
@@ -252,7 +323,7 @@ public class Item_detail extends AppCompatActivity {
             }
         });
 
-        uploadId_btn.setOnClickListener(new View.OnClickListener() {
+        uploadId_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (imageUrlList.size()<5){
@@ -264,12 +335,12 @@ public class Item_detail extends AppCompatActivity {
                 }else {
                     Toast.makeText(Item_detail.this, "Maximum 5 images allowed!", Toast.LENGTH_SHORT).show();
                 }
-                
+
 
             }
         });
 
-        submit_btn.setOnClickListener(new View.OnClickListener() {
+        submit_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validateFields() == true)
@@ -282,7 +353,7 @@ public class Item_detail extends AppCompatActivity {
         boolean valid = true;
 
         if (selectCategory_textView.getText().toString().equals("Select Category")) {
-            Toast.makeText(this, "Please select category", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Please select item category", Toast.LENGTH_LONG).show();
             valid = false;
         }
         if (itemName_editText.getText().toString().isEmpty()) {
@@ -294,7 +365,7 @@ public class Item_detail extends AppCompatActivity {
             valid = false;
         }
         if (imageUrlList.size()==0){
-            Toast.makeText(this, "Please upload a picture", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Please upload an item image", Toast.LENGTH_LONG).show();
             valid=false;
         }
         if (itemId_editText.getText().toString().isEmpty()) {
@@ -310,12 +381,81 @@ public class Item_detail extends AppCompatActivity {
             valid = false;
         }
         if (ratingBar.getRating()==0){
-            Toast.makeText(this, "Please select rating", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please select item condition", Toast.LENGTH_SHORT).show();
             valid=false;
         }
 
 
         return valid;
+    }
+
+    private void getRating() {
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                if (ratingBar.getRating()==0){
+                    rating_textView.setText("NA");
+                }else if (ratingBar.getRating()==1){
+                    rating_textView.setText("D");
+                }else if (ratingBar.getRating()==2){
+                    rating_textView.setText("C");
+                }else if (ratingBar.getRating()==3){
+                    rating_textView.setText("B");
+                }else if (ratingBar.getRating()==4){
+                    rating_textView.setText("A");
+                }else if (ratingBar.getRating()==5){
+                    rating_textView.setText("A+");
+                }
+            }
+        });
+    }
+
+    private void searchCategory() {
+        search_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                filterList();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private void filterList() {
+        filteredCategoryList.clear();
+        filteredCategoryImageList.clear();
+        System.out.println(categoryList.size());
+        for (int j = 0; j<categoryList.size();j++){
+
+            searchMe = categoryList.get(j);
+
+            int searchMeLength = searchMe.length();
+            int findMeLength = search_editText.getText().toString().length();
+                    boolean foundIt = false;
+            for (int i = 0;
+                 i <= (searchMeLength - findMeLength);
+                 i++) {
+                if (searchMe.regionMatches(true,i, search_editText.getText().toString(), 0, findMeLength)) {
+                    filteredCategoryList.add(searchMe);
+                    filteredCategoryImageList.add(categoryImageList.get(j));
+                            foundIt = true;
+                            System.out.println(searchMe);
+                    break;
+                }
+            }
+                    if (!foundIt)
+                        System.out.println("No match found.");
+        }
+        adapterItemCategoryListRecyclerView.notifyDataSetChanged();
+
     }
 
     @Override
@@ -342,7 +482,5 @@ public class Item_detail extends AppCompatActivity {
             Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 
 }

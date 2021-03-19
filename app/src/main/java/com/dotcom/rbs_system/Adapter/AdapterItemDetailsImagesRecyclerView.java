@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,7 +36,7 @@ public class AdapterItemDetailsImagesRecyclerView extends RecyclerView.Adapter<A
     public void onBindViewHolder(@NonNull AdapterItemDetailsImagesRecyclerView.ViewHolder holder, final int position) {
         holder.image_imageView.setImageURI(imageUrlList.get(position));
 
-        holder.removeImage_imageButton.setOnClickListener(new View.OnClickListener() {
+        holder.removeImage_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 imageUrlList.remove(position);
@@ -51,12 +52,12 @@ public class AdapterItemDetailsImagesRecyclerView extends RecyclerView.Adapter<A
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image_imageView;
-        ImageButton removeImage_imageButton;
+        TextView removeImage_textView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             image_imageView = (ImageView)itemView.findViewById(R.id.image_imageView);
-            removeImage_imageButton = (ImageButton) itemView.findViewById(R.id.removeImage_imageButton);
+            removeImage_textView = (TextView) itemView.findViewById(R.id.removeImage_textView);
         }
     }
 }
