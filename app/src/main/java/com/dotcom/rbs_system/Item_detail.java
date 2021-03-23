@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterItemCategoryListRecyclerView;
 import com.dotcom.rbs_system.Adapter.AdapterItemDetailsImagesRecyclerView;
+import com.dotcom.rbs_system.Classes.RBSItemDetails;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -49,6 +50,8 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Item_detail extends AppCompatActivity {
+
+    RBSItemDetails rbsItemDetails;
 
     AdapterItemCategoryListRecyclerView adapterItemCategoryListRecyclerView;
 
@@ -96,6 +99,7 @@ public class Item_detail extends AppCompatActivity {
         return items;
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,9 +114,12 @@ public class Item_detail extends AppCompatActivity {
     }
 
     private void initialize() {
+        rbsItemDetails = RBSItemDetails.getInstance();
+
         pd = new Progress_dialoge();
 
         imageUrlList = new ArrayList<>();
+        rbsItemDetails.setImageUrlList(imageUrlList);
         imageDownloadUrlList = new ArrayList<>();
         taskSnapshotList = new ArrayList<>();
 
@@ -222,65 +229,81 @@ public class Item_detail extends AppCompatActivity {
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
             //we are connected to a network
             connected = true;
+
             key = reference.push().getKey();
-            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Category").setValue(selectCategory_textView.getText().toString());
-            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Item_id").setValue(itemId_editText.getText().toString());
-            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
-            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Item_name").setValue(itemName_editText.getText().toString());
-            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Condition").setValue(rating_textView.getText().toString());
-            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Notes").setValue(notes_editText.getText().toString());
-            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Price").setValue(price_editText.getText().toString());
-            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Description").setValue(description_editText.getText().toString());
-            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("key_id").setValue(key);
-            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("No_of_images").setValue(String.valueOf(imageUrlList.size()));
+            rbsItemDetails.setItemCategory(selectCategory_textView.getText().toString());
+            rbsItemDetails.setItemID(itemId_editText.getText().toString());
+            rbsItemDetails.setAddedBy(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            rbsItemDetails.setItemName(itemName_editText.getText().toString());
+            rbsItemDetails.setItemCondition(rating_textView.getText().toString());
+            rbsItemDetails.setPersonalNotes(notes_editText.getText().toString());
+            rbsItemDetails.setItemPrice(price_editText.getText().toString());
+            rbsItemDetails.setItemDescription(description_editText.getText().toString());
+            rbsItemDetails.setNoOfImages(String.valueOf(imageUrlList.size()));
+
+            pass_back_data("https://www.google.com/imgres?imgurl=https%3A%2F%2Fi.dell.com%2Fis%2Fimage%2FDellContent%2Fcontent%2Fdam%2Fglobal-asset-library%2FProducts%2FNotebooks%2FInspiron%2F15_5593_non-touch%2Fin5593nt_cnb_00055lf110_gy.psd%3F%24S7-570x400%24%26layer%3D1%26src%3Dis%7BDellContent%2Fcontent%2Fdam%2Fglobal-asset-library%2FSupporting_Assets%2FScreenfills%2Finspiron%2FInspiron_F60A8784.psd%3Fsize%3D4000%2C4000%7D%26perspective%3D2089%2C1266%2C3588%2C910%2C3268%2C2357%2C1818%2C2276%26pos%3D-174%2C-809%26wid%3D570%26hei%3D400&imgrefurl=https%3A%2F%2Fwww.dell.com%2Fen-us%2Fshop%2Fcty%2Fpdp%2Fspd%2Finspiron-15-5593-laptop&tbnid=w139HmynsB7j-M&vet=12ahUKEwix5qjgm8bvAhWWwoUKHZlpAx0QMygAegUIARDkAQ..i&docid=AjAMVAQ5ctd5iM&w=570&h=400&q=dell%20laptop&ved=2ahUKEwix5qjgm8bvAhWWwoUKHZlpAx0QMygAegUIARDkAQ");
+            finish();
 
 
 
-            for (i = 0; i<imageUrlList.size();i++) {
-
-                key2 = reference.push().getKey();
-                idStorageReference.child(key).child("image_"+String.valueOf(i+1)).putFile(imageUrlList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                        idStorageReference.child(key).child("image_"+String.valueOf(l+1)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                System.out.println("k = "+k+" "+uri);
-                                reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Image_urls").child("image_"+(k+1)).setValue(String.valueOf(uri.toString()));
-                                if (k==0){
-                                    System.out.println("if called");
-                                    passbackItemImageUrl = uri.toString();
-
-                                    if (k==0&&k==imageUrlList.size()-1){
-                                        pass_back_data(passbackItemImageUrl);
-                                        finish();
-                                    }
-
-                                }
-                                if (k!=0&&k==imageUrlList.size()-1){
-                                    pass_back_data(passbackItemImageUrl);
-                                    finish();
-                                }
-
-                                k++;
-                            }
-                        });
-                        l++;
-
-
-
-
-                    }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            pd.dismissProgressBar(Item_detail.this);
-                            Toast.makeText(Item_detail.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            }
-            pd.dismissProgressBar(Item_detail.this);
+//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Category").setValue(selectCategory_textView.getText().toString());
+//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Item_id").setValue(itemId_editText.getText().toString());
+//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
+//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Item_name").setValue(itemName_editText.getText().toString());
+//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Condition").setValue(rating_textView.getText().toString());
+//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Notes").setValue(notes_editText.getText().toString());
+//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Price").setValue(price_editText.getText().toString());
+//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Description").setValue(description_editText.getText().toString());
+//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("key_id").setValue(key);
+//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("No_of_images").setValue(String.valueOf(imageUrlList.size()));
+//
+//
+//
+//            for (i = 0; i<imageUrlList.size();i++) {
+//
+//                key2 = reference.push().getKey();
+//                idStorageReference.child(key).child("image_"+String.valueOf(i+1)).putFile(imageUrlList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//
+//                        idStorageReference.child(key).child("image_"+String.valueOf(l+1)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                            @Override
+//                            public void onSuccess(Uri uri) {
+//                                System.out.println("k = "+k+" "+uri);
+//                                reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Image_urls").child("image_"+(k+1)).setValue(String.valueOf(uri.toString()));
+//                                if (k==0){
+//                                    System.out.println("if called");
+//                                    passbackItemImageUrl = uri.toString();
+//
+//                                    if (k==0&&k==imageUrlList.size()-1){
+//                                        pass_back_data(passbackItemImageUrl);
+//                                        finish();
+//                                    }
+//
+//                                }
+//                                if (k!=0&&k==imageUrlList.size()-1){
+//                                    pass_back_data(passbackItemImageUrl);
+//                                    finish();
+//                                }
+//
+//                                k++;
+//                            }
+//                        });
+//                        l++;
+//
+//
+//
+//
+//                    }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            pd.dismissProgressBar(Item_detail.this);
+//                            Toast.makeText(Item_detail.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//            }
+//            pd.dismissProgressBar(Item_detail.this);
 
 //            for (int i = 0;i<imageUrlList.size();i++){
 //                taskSnapshotList.get(i).getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {

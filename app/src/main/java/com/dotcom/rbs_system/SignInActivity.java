@@ -125,13 +125,15 @@ public class SignInActivity extends AppCompatActivity {
                         Intent intent = new Intent(SignInActivity.this,BuyLocal_main.class);
                         startActivity(intent);
                         finish();
-                    }else {
+                    }if (type.equals("shop keeper")){
                         Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
+                    } if (type.equals("vendor")){
+                        Intent intent = new Intent(SignInActivity.this, VendorMainScreen.class);
+                        startActivity(intent);
+                        finish();
                     }
-                }else {
-
                 }
             }
 

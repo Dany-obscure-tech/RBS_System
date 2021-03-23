@@ -20,6 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".VendorMainScreen"></activity>
         <activity
             android:name=".BuyLocal_conversations"
             android:theme="@style/AppTheme.no" />
@@ -57,6 +58,7 @@
             android:name=".BuyLocal_productdetails"
             android:theme="@style/AppTheme.no">
             <tools:validation testUrl="http://buyLocalrbstest.com/productdetails" />
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -64,9 +66,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="http"
                     android:host="buyLocalrbstest.com"
-                    android:pathPrefix="/productdetails" />
+                    android:pathPrefix="/productdetails"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
         <activity

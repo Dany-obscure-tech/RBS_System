@@ -59,7 +59,7 @@
                 android:text="Item" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/button"
+                android:id="@+id/searchForItem_cardView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/ripple_effect_cardview"

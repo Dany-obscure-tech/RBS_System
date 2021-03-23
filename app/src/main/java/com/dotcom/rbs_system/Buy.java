@@ -3,7 +3,10 @@ package com.dotcom.rbs_system;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -33,6 +36,7 @@ import com.dantsu.escposprinter.connection.tcp.TcpConnection;
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Classes.Exchanged_itemdata;
+import com.dotcom.rbs_system.Classes.RBSItemDetails;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 //import com.dotcom.rbs_system.asynch.AsyncTcpEscPosPrint;
 //import com.dotcom.rbs_system.asynch.AsyncEscPosPrinter;
@@ -60,6 +64,13 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+    RBSItemDetails rbsItemDetails;
+
+    CardView searchForItem_cardView;
+
+    Dialog itemList_alert_dialog;
+
+    RecyclerView itemList_recyclerView;
 
     private static final int ITEM_ACTIVITY_REQUEST_CODE = 0;
 
@@ -115,10 +126,12 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
     List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsPriceList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
     List<String> dateList,lastActiveDatelist;
+    List<String> fullItemNameList,fullItemSerialNoList,fullItemPriceNoList,fullItemImageUrlList;
+    List<String> appendedItemNameList,appendedItemSerialNoList,appendedItemPriceNoList,appendedItemImageUrlList;
 
     LinearLayout itemDetails,customerDetails,print_linearLayout;
 
-    EditText purchase_price_editText,cash_editText,voucher_editText,paid_editText;
+    EditText purchase_price_editText,cash_editText,voucher_editText,paid_editText,search_editText;
 
     EditText ipAddress;
 
@@ -162,6 +175,9 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     }
 
     private void initialize() {
+        rbsItemDetails = RBSItemDetails.getInstance();
+
+        searchForItem_cardView = (CardView)findViewById(R.id.searchForItem_cardView);
 
         reference = FirebaseDatabase.getInstance().getReference();
         voucher_key = reference.push().getKey().toString();
@@ -208,6 +224,16 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
         dateList = new ArrayList<>();
         lastActiveDatelist = new ArrayList<>();
+
+        fullItemNameList = new ArrayList<>();
+        fullItemSerialNoList = new ArrayList<>();
+        fullItemPriceNoList = new ArrayList<>();
+        fullItemImageUrlList = new ArrayList<>();
+
+        appendedItemNameList = new ArrayList<>();
+        appendedItemSerialNoList = new ArrayList<>();
+        appendedItemPriceNoList = new ArrayList<>();
+        appendedItemImageUrlList = new ArrayList<>();
 
         category_textView=(TextView)findViewById(R.id.category_textView);
         voucher_number=(TextView)findViewById(R.id.voucher_number);
@@ -274,6 +300,15 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             e.printStackTrace();
         }
 
+
+        // Select item dialog
+
+        itemList_alert_dialog = new Dialog(this);
+        itemList_alert_dialog.setContentView(R.layout.alert_rbs_itemlist);
+
+        itemList_recyclerView = (RecyclerView) itemList_alert_dialog.findViewById(R.id.itemList_recyclerView);
+        search_editText = (EditText) itemList_alert_dialog.findViewById(R.id.search_editText);
+        itemList_recyclerView.setLayoutManager(new GridLayoutManager(Buy.this,1));
 
 
 
@@ -416,6 +451,12 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     }
 
     private void onClickListeners() {
+        searchForItem_cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itemList_alert_dialog.show();
+            }
+        });
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -752,6 +793,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
 
             connected = false;
+            rbsItemDetails.uploadItemDetails(Buy.this);
         }
 
     }
@@ -874,7 +916,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         );
     }
 
-
     /**
      * Asynchronous printing
      */
@@ -907,7 +948,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 "[L]\n";
     }
 
-
     @Override
     public void onBackPressed() {
         if (exchanged_itemdata.getExchangeCheck()){
@@ -937,6 +977,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         if (requestCode == ITEM_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
                 // get String data from Intent
+                Toast.makeText(this, String.valueOf(rbsItemDetails.getImageUrlList().size()), Toast.LENGTH_SHORT).show();
                 String itemname_returnString = data.getStringExtra("Item_name");
                 String itemid_returnString = data.getStringExtra("Item_id");
                 String itemcategory_returnString = data.getStringExtra("Item_category");
@@ -962,7 +1003,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 itemImage_imageView.setVisibility(View.VISIBLE);
 
                 searchForItem_textView.setText(itemname_returnString+"\n"+itemid_returnString);
-                Picasso.get().load(itemimage_returnString).into(itemImage_imageView);
+                itemImage_imageView.setImageURI(rbsItemDetails.getImageUrlList().get(0));
+//                Picasso.get().load(itemimage_returnString).into(itemImage_imageView);
 //                Toast.makeText(this, itemimage_returnString, Toast.LENGTH_SHORT).show();
                 searchForItem_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
                 searchForItem_textView.setTextColor(getResources().getColor(R.color.textGrey));
