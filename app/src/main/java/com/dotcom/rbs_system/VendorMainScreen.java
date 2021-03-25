@@ -19,6 +19,7 @@ public class VendorMainScreen extends AppCompatActivity {
     private DrawerLayout vendor_drawer_layout;
     private ActionBarDrawerToggle t;
     private NavigationView nv;
+    final VendorHome fragment_vendor_home = new VendorHome();
 
     RecyclerView vendor_inventory_items;
 
@@ -27,8 +28,6 @@ public class VendorMainScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_main_screen);
         vendor_drawer_layout = (DrawerLayout)findViewById(R.id.vendor_drawer_layout);
-        vendor_inventory_items=(RecyclerView)findViewById(R.id.vendor_inventory_items);
-
 
         t = new ActionBarDrawerToggle(this, vendor_drawer_layout,R.string.Open, R.string.Close);
 
@@ -38,19 +37,18 @@ public class VendorMainScreen extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         nv = (NavigationView)findViewById(R.id.nv);
+        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,fragment_vendor_home).commit();
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                Intent intent;
                 switch (id) {
                     case R.id.nav_shop:
-
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,fragment_vendor_home).commit();
+                        closeDrawer();
                         break;
                     case R.id.nav_orders:
-                        intent = new Intent(VendorMainScreen.this, vendor_orders_screen.class);
-                        startActivity(intent);
-                        closeDrawer();
+
                         return true;
                     case R.id.nav_profile:
                         Toast.makeText(VendorMainScreen.this, "Profile", Toast.LENGTH_SHORT).show();

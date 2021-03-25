@@ -3,11 +3,11 @@ package com.dotcom.rbs_system;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,7 +18,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Patterns;
 import android.view.View;
@@ -30,6 +29,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dotcom.rbs_system.Adapter.AdapterItemDetailsImagesRecyclerView;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,17 +41,20 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-
-import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
+import java.util.List;
 
 public class Customer_details extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+
+    AdapterItemDetailsImagesRecyclerView adapterItemDetailsImagesRecyclerView;
+    RecyclerView itemImage_recyclerView;
+
+    List<Uri> imageUrlList;
+    Uri fileUri;
 
     String currentDateString;
     String key;
@@ -64,10 +68,10 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
 
     StorageReference idStorageReference;
 
-    ImageButton Back_btn;
-    Button date_btn, submit_btn, uploadId_id_front,uploadId_id_back,profile_pic_upload;
-    ImageView id_front,id_back,profile_pic;
-    TextView date_of_birth_text;
+    ImageButton back_btn;
+    ImageView id_imageView;
+
+    TextView date_of_birth_text,uploadId_textView,date_textView,submit_textView;
     DatePickerDialog.OnDateSetListener onDateSetListener;
     DatabaseReference reference;
     EditText ac_title, ac_phoneno, ac_id, ac_address, ac_email,ac_postalcode;
@@ -90,6 +94,8 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
     }
 
     private void initialize() {
+        imageUrlList = new ArrayList<>();
+
         storageReference = FirebaseStorage.getInstance().getReference();
 
         reference = FirebaseDatabase.getInstance().getReference();
@@ -100,42 +106,54 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
         ac_email = (EditText) findViewById(R.id.ac_email);
         ac_postalcode = (EditText) findViewById(R.id.ac_postalcode);
 
-        Back_btn = (ImageButton) findViewById(R.id.Back_btn);
+        uploadId_textView = (TextView) findViewById(R.id.uploadId_textView);
 
-        date_btn = (Button) findViewById(R.id.date_btn);
-        submit_btn = (Button) findViewById(R.id.submit_btn);
-        uploadId_id_front = (Button) findViewById(R.id.uploadId_id_front);
-        uploadId_id_back = (Button) findViewById(R.id.uploadId_id_back);
-        profile_pic_upload = (Button) findViewById(R.id.profile_pic_upload);
-        id_front = (ImageView) findViewById(R.id.id_front);
-        id_back = (ImageView) findViewById(R.id.id_back);
-        profile_pic = (ImageView) findViewById(R.id.profile_pic);
+        back_btn = (ImageButton) findViewById(R.id.back_btn);
+        id_imageView = (ImageView) findViewById(R.id.id_imageView);
+
+        date_textView = (TextView) findViewById(R.id.date_textView);
+        submit_textView = (TextView) findViewById(R.id.submit_textView);
         date_of_birth_text = (TextView) findViewById(R.id.date_of_birth_text);
 
 
         idStorageReference = storageReference.child("Customer_IDs");
+
+        itemImage_recyclerView = (RecyclerView) findViewById(R.id.itemImage_recyclerView);
+        itemImage_recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        adapterItemDetailsImagesRecyclerView = new AdapterItemDetailsImagesRecyclerView(Customer_details.this,imageUrlList);
+        itemImage_recyclerView.setAdapter(adapterItemDetailsImagesRecyclerView);
 
 
     }
 
     private void onClickListeners() {
 
+        uploadId_textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (imageUrlList.size()<2){
+                    ImagePicker.Companion.with(Customer_details.this)
+                            .crop()	    			//Crop image(Optional), Check Customization for more option
+                            .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                            .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                            .start();
+                }else {
+                    Toast.makeText(Customer_details.this, "Maximum 2 images allowed!", Toast.LENGTH_SHORT).show();
+                }
 
-        Back_btn.setOnClickListener(new View.OnClickListener() {
+
+            }
+        });
+
+
+        back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
 
-//        date_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                DialogFragment datepicker = new DatePickerFragment();
-//                datepicker.show(getSupportFragmentManager(), "date picker");
-//            }
-//        });
-        date_btn.setOnClickListener(new View.OnClickListener() {
+        date_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
               Calendar calendar=Calendar.getInstance();
@@ -167,7 +185,7 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
         };
 
 
-        submit_btn.setOnClickListener(new View.OnClickListener() {
+        submit_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validateFields() == true) {
@@ -176,30 +194,6 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             }
         });
 
-        uploadId_id_front.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent,CAMERA_REQUEST_CODE);
-
-            }
-        });
-        uploadId_id_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent,CAMERA_REQUEST_CODE2);
-
-            }
-        });
-        profile_pic_upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent,CAMERA_REQUEST_CODE3);
-
-            }
-        });
     }
 
     private boolean validateFields() {
@@ -344,49 +338,6 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
         setResult(RESULT_FIRST_USER, intent);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-
-            id_front.setImageBitmap(imageBitmap);
-
-            // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
-            tempUri = getImageUri(getApplicationContext(), imageBitmap);
-
-            // CALL THIS METHOD TO GET THE ACTUAL PATH
-
-        }
-        if (requestCode == CAMERA_REQUEST_CODE2 && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-
-            id_back.setImageBitmap(imageBitmap);
-
-            // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
-            tempUri2 = getImageUri(getApplicationContext(), imageBitmap);
-
-            // CALL THIS METHOD TO GET THE ACTUAL PATH
-
-        }
-        if (requestCode == CAMERA_REQUEST_CODE3 && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-
-            profile_pic.setImageBitmap(imageBitmap);
-
-            // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
-            tempUri3 = getImageUri(getApplicationContext(), imageBitmap);
-
-            // CALL THIS METHOD TO GET THE ACTUAL PATH
-
-        }
-
-
-
-    }
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -400,6 +351,31 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
         cursor.moveToFirst();
         int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
         return cursor.getString(idx);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            //Image Uri will not be null for RESULT_OK
+            fileUri = data.getData();
+            id_imageView.setImageURI(fileUri);
+            fileUri = data.getData();
+            imageUrlList.add(fileUri);
+
+            adapterItemDetailsImagesRecyclerView.notifyDataSetChanged();
+
+
+            //You can get File object from intent
+//            val file:File = ImagePicker.getFile(data)!!
+
+            //You can also get File Path from intent
+//                    val filePath:String = ImagePicker.getFilePath(data)!!
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+//            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

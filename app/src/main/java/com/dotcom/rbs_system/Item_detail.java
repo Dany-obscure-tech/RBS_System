@@ -241,7 +241,7 @@ public class Item_detail extends AppCompatActivity {
             rbsItemDetails.setItemDescription(description_editText.getText().toString());
             rbsItemDetails.setNoOfImages(String.valueOf(imageUrlList.size()));
 
-            pass_back_data("https://www.google.com/imgres?imgurl=https%3A%2F%2Fi.dell.com%2Fis%2Fimage%2FDellContent%2Fcontent%2Fdam%2Fglobal-asset-library%2FProducts%2FNotebooks%2FInspiron%2F15_5593_non-touch%2Fin5593nt_cnb_00055lf110_gy.psd%3F%24S7-570x400%24%26layer%3D1%26src%3Dis%7BDellContent%2Fcontent%2Fdam%2Fglobal-asset-library%2FSupporting_Assets%2FScreenfills%2Finspiron%2FInspiron_F60A8784.psd%3Fsize%3D4000%2C4000%7D%26perspective%3D2089%2C1266%2C3588%2C910%2C3268%2C2357%2C1818%2C2276%26pos%3D-174%2C-809%26wid%3D570%26hei%3D400&imgrefurl=https%3A%2F%2Fwww.dell.com%2Fen-us%2Fshop%2Fcty%2Fpdp%2Fspd%2Finspiron-15-5593-laptop&tbnid=w139HmynsB7j-M&vet=12ahUKEwix5qjgm8bvAhWWwoUKHZlpAx0QMygAegUIARDkAQ..i&docid=AjAMVAQ5ctd5iM&w=570&h=400&q=dell%20laptop&ved=2ahUKEwix5qjgm8bvAhWWwoUKHZlpAx0QMygAegUIARDkAQ");
+            pass_back_data(null);
             finish();
 
 

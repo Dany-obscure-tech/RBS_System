@@ -124,13 +124,15 @@ public class SplashActivity extends AppCompatActivity {
                         Intent intent = new Intent(SplashActivity.this,BuyLocal_main.class);
                         startActivity(intent);
                         finish();
-                    }else {
+                    }if (type.equals("shop keeper")){
                         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
+                    } if (type.equals("vendor")){
+                        Intent intent = new Intent(SplashActivity.this, VendorMainScreen.class);
+                        startActivity(intent);
+                        finish();
                     }
-                }else {
-
                 }
             }
 
