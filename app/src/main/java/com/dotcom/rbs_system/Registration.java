@@ -64,7 +64,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
     TextView date_of_birth_text;
     FirebaseAuth fAuth;
     DatabaseReference userRef;
-    Button button_register,date_btn,uploadId_profile_image,uploadId_id_image,button_google;
+    Button button_register,date_btn,uploadId_profile_image,uploadId_id_image,button_google,button_facebook;
     EditText editText_fullName,editText_contactNo,editText_address,editText_email,editText_password,editText_confirmPassword;
 
     @Override
@@ -97,6 +97,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         uploadId_profile_image = (Button) findViewById(R.id.uploadId_profile_image);
         uploadId_id_image = (Button) findViewById(R.id.uploadId_id_image);
         button_google = (Button) findViewById(R.id.button_google);
+        button_facebook = (Button) findViewById(R.id.button_facebook);
         date_btn = (Button) findViewById(R.id.date_btn);
         button_register = (Button) findViewById(R.id.button_register);
 
@@ -111,10 +112,20 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void ClickListeners() {
         googleSign_in_button_listner();
+        button_facebook_listner();
         registerButtonClick();
         date_btnClisckListner();
         takeProfileImage();
         takeIdImage();
+    }
+
+    private void button_facebook_listner() {
+        button_facebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     private void googleSign_in_button_listner() {
