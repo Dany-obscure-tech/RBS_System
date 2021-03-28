@@ -20,6 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Stock_entry"></activity>
         <activity
             android:name=".VendorMainScreen"
             android:label="Vendor System" />

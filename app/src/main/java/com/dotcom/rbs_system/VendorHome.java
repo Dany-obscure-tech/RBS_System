@@ -1,12 +1,22 @@
 package com.dotcom.rbs_system;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.dotcom.rbs_system.Adapter.Adapter_Vendor_inventory_RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +24,10 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class VendorHome extends Fragment {
+
+    RecyclerView vendor_inventory_RecyclerView;
+    List<String> vendor_category;
+    Button vendor_inventory_add_btn;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +73,34 @@ public class VendorHome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_vendor_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_vendor_home, container, false);
+
+        vendor_inventory_RecyclerView = (RecyclerView) view.findViewById(R.id.vendor_inventory_RecyclerView);
+        vendor_inventory_add_btn = (Button) view.findViewById(R.id.vendor_inventory_add_btn);
+        vendor_category = new ArrayList<>();
+        vendor_category.add("Computer");
+        vendor_category.add("Laptop");
+        Adapter_Vendor_inventory_RecyclerView adapter_vendor_inventory_recyclerView=new Adapter_Vendor_inventory_RecyclerView(getActivity(),null,null,vendor_category,null,null,null);
+
+        vendor_inventory_RecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),1));
+        vendor_inventory_RecyclerView.setAdapter(adapter_vendor_inventory_recyclerView);
+
+        onclicklistners();
+
+        return view;
+    }
+
+    private void onclicklistners() {
+        vendor_inventory_add_btn_listner();
+    }
+
+    private void vendor_inventory_add_btn_listner() {
+        vendor_inventory_add_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Yes", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 }
