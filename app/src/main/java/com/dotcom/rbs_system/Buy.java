@@ -36,6 +36,7 @@ import com.dantsu.escposprinter.connection.tcp.TcpConnection;
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Classes.Exchanged_itemdata;
+import com.dotcom.rbs_system.Classes.RBSCustomerDetails;
 import com.dotcom.rbs_system.Classes.RBSItemDetails;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 //import com.dotcom.rbs_system.asynch.AsyncTcpEscPosPrint;
@@ -64,6 +65,7 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     RBSItemDetails rbsItemDetails;
+    RBSCustomerDetails rbsCustomerDetails;
 
     CardView searchForItem_cardView;
 
@@ -83,6 +85,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     CheckBox cash_checkbox,voucher_checkbox;
 
     TextView voucher_number,voucher_number_textview,Transaction_textview;
+    TextView customerName_textView,customerEmail_textView,customerPhno_textView;
 
     String voucher_key,itemID;
 
@@ -100,21 +103,19 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     ImageButton back_btn,sms_btn,gmail_btn,print_btn;
 
-    Button date_btn,customer_add_btn,submit_btn;
-
     Button exchange_btn, btn_done;
 
-    TextView searchForCustomer_textView,itemLastActive_textView;
+    TextView itemLastActive_textView,customer_add_textView,datebtn_textView,submit_textView;
 
     TextView date_textView,forExchange_textView;
 
-    TextView category_textView,condition_textView,notes_textView,phno_textView,dob_textView,address_textView,email_textView,suggest_price_TextView;
+    TextView category_textView,condition_textView,notes_textView,address_textView,suggest_price_TextView;
 
     TextView item_add_textView;
 
     TextView itemName_textView,itemID_textView,itemPriceCurrency_textView,itemPrice_textView;
 
-    ImageView itemImage_imageView;
+    ImageView itemImage_imageView,customerImage_imageView;
 
     String firebaseAuthUID;
 
@@ -165,6 +166,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     private void initialize() {
         rbsItemDetails = RBSItemDetails.getInstance();
+        rbsCustomerDetails = RBSCustomerDetails.getInstance();
 
         searchForItem_cardView = (CardView)findViewById(R.id.searchForItem_cardView);
 
@@ -228,12 +230,13 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         voucher_number_textview=(TextView)findViewById(R.id.voucher_number_textview);
         voucher_number.setText(voucher_key.toString());
 
+        customerName_textView=(TextView)findViewById(R.id.customerName_textView);
+        customerEmail_textView=(TextView)findViewById(R.id.customerEmail_textView);
+        customerPhno_textView=(TextView)findViewById(R.id.customerPhno_textView);
+
         condition_textView=(TextView)findViewById(R.id.condition_textView);
         notes_textView=(TextView)findViewById(R.id.notes_textView);
-        phno_textView=(TextView)findViewById(R.id.phno_textView);
-        dob_textView=(TextView)findViewById(R.id.dob_textView);
         address_textView=(TextView)findViewById(R.id.address_textView);
-        email_textView=(TextView)findViewById(R.id.email_textView);
         date_textView =(TextView)findViewById(R.id.date_textView);
         forExchange_textView =(TextView)findViewById(R.id.forExchange_textView);
         suggest_price_TextView = (TextView) findViewById(R.id.suggest_price_TextView);
@@ -243,18 +246,19 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         itemPriceCurrency_textView = (TextView) findViewById(R.id.itemPriceCurrency_textView);
         itemPriceCurrency_textView.setText(Currency.getInstance().getCurrency());
         itemPrice_textView = (TextView) findViewById(R.id.itemPrice_textView);
+        customer_add_textView =(TextView) findViewById(R.id.customer_add_textView);
 
         itemImage_imageView = (ImageView) findViewById(R.id.itemImage_imageView);
+        customerImage_imageView = (ImageView) findViewById(R.id.customerImage_imageView);
 
         purchase_price_editText = (EditText)findViewById(R.id.purchase_price_editText);
         cash_editText = (EditText)findViewById(R.id.cash_editText);
         voucher_editText = (EditText)findViewById(R.id.voucher_editText);
         paid_editText = (EditText)findViewById(R.id.paid_editText);
 
-        searchForCustomer_textView = (TextView) findViewById(R.id.searchForCustomer_textView);
         itemLastActive_textView = (TextView) findViewById(R.id.itemLastActive_textView);
 
-        submit_btn = (Button)findViewById(R.id.submit_btn);
+        submit_textView = (TextView) findViewById(R.id.submit_textView);
         toggling_linear = (LinearLayout)findViewById(R.id.toggling_linear);
         itemLastActive_linearLayout = (LinearLayout)findViewById(R.id.itemLastActive_linearLayout);
 
@@ -263,9 +267,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         existingItemsRef = FirebaseDatabase.getInstance().getReference("Items");
 
         back_btn =(ImageButton)findViewById(R.id.back_btn);
-        customer_add_btn=(Button) findViewById(R.id.customer_add_btn);
         item_add_textView =(TextView) findViewById(R.id.item_add_textView);
-        date_btn=(Button)findViewById(R.id.date_btn);
+        datebtn_textView =(TextView) findViewById(R.id.datebtn_textView);
         exchange_btn=(Button)findViewById(R.id.exchange_btn);
         print_linearLayout = (LinearLayout) sendingdialog.findViewById(R.id.print_linearLayout);
 
@@ -303,21 +306,21 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     }
 
     private void exchangeCustomerCheck() {
-        if (!exchanged_itemdata.getCustomerButtonText().equals("Search for customer")&&!exchanged_itemdata.getCustomerButtonText().isEmpty()) {
-            searchForCustomer_textView.setText(exchanged_itemdata.getCustomerButtonText());
-            phno_textView.setText(exchanged_itemdata.getPhNo());
-            dob_textView.setText(exchanged_itemdata.getDob());
-            address_textView.setText(exchanged_itemdata.getAddress());
-            email_textView.setText(exchanged_itemdata.getEmail());
-            customerKeyID = exchanged_itemdata.getCustomer_keyID();
-            searchForCustomer_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-            searchForCustomer_textView.setTextColor(getResources().getColor(R.color.textGrey));
-            customer=true;
-        }
-        if (exchanged_itemdata.getExchangeCheck()){
-            exchange_btn.setVisibility(View.GONE);
-            forExchange_textView.setVisibility(View.GONE);
-        }
+//        if (!exchanged_itemdata.getCustomerButtonText().equals("Search for customer")&&!exchanged_itemdata.getCustomerButtonText().isEmpty()) {
+//            searchForCustomer_textView.setText(exchanged_itemdata.getCustomerButtonText());
+//            phno_textView.setText(exchanged_itemdata.getPhNo());
+//            dob_textView.setText(exchanged_itemdata.getDob());
+//            address_textView.setText(exchanged_itemdata.getAddress());
+//            email_textView.setText(exchanged_itemdata.getEmail());
+//            customerKeyID = exchanged_itemdata.getCustomer_keyID();
+//            searchForCustomer_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+//            searchForCustomer_textView.setTextColor(getResources().getColor(R.color.textGrey));
+//            customer=true;
+//        }
+//        if (exchanged_itemdata.getExchangeCheck()){
+//            exchange_btn.setVisibility(View.GONE);
+//            forExchange_textView.setVisibility(View.GONE);
+//        }
     }
 
     private void fetchingExisitingCustomers() {
@@ -493,38 +496,9 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
         });
 
-        searchForCustomer_textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new SimpleSearchDialogCompat(Buy.this, "Search...",
-                        "What are you looking for...?", null, createCustomerData(),
-                        new SearchResultListener<SampleSearchModel>() {
-                            @Override
-                            public void onSelected(BaseSearchDialogCompat dialog,
-                                                   SampleSearchModel item, int position) {
-                                searchForCustomer_textView.setText(item.getTitle());
-                                phno_textView.setText(item.getVal1());
-                                customerName = item.getName();
-                                dob_textView.setText(item.getVal2());
-                                address_textView.setText(item.getVal3());
-                                email_textView.setText(item.getVal4());
-                                customerKeyID = item.getVal5();
-                                searchForCustomer_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-                                searchForCustomer_textView.setTextColor(getResources().getColor(R.color.textGrey));
-                                customer=true;
-                                if (item_btn==true&&customer==true){
-                                    toggling_linear.setVisibility(View.VISIBLE);
-                                }
-                                dialog.dismiss();
-                            }
-                        }).show();
-            }
-        });
-
-
         // Firebase config
 
-        date_btn.setOnClickListener(new View.OnClickListener() {
+        datebtn_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment datepicker=new DatePickerFragment();
@@ -533,7 +507,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
         });
 
-        customer_add_btn.setOnClickListener(new View.OnClickListener() {
+        customer_add_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Buy.this,Customer_details.class);
@@ -582,7 +556,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
         });
 
-        submit_btn.setOnClickListener(new View.OnClickListener() {
+        submit_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(validateFields() == true){
@@ -612,11 +586,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     private boolean validateFields() {
         boolean valid = true;
-
-        if (searchForCustomer_textView.getText().toString().equals("SEARCH FOR CUSTOMER")) {
-            Toast.makeText(this, "Please select customer", Toast.LENGTH_LONG).show();
-            valid = false;
-        }
 
         if (purchase_price_editText.getText().toString().isEmpty()) {
             purchase_price_editText.setError("Please enter suggested price");
@@ -655,43 +624,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     private void   detailsSubmit() {
 
-        if (exchanged_itemdata.getExchangeCheck()||exchanged_itemdata.getExchangeFromBuyCheck()){
-
-            exchanged_itemdata.setCustomer_keyID(customerKeyID);
-            exchanged_itemdata.setCustomerButtonText(searchForCustomer_textView.getText().toString());
-            exchanged_itemdata.setPhNo(phno_textView.getText().toString());
-            exchanged_itemdata.setDob(dob_textView.getText().toString());
-            exchanged_itemdata.setAddress(address_textView.getText().toString());
-            exchanged_itemdata.setEmail(email_textView.getText().toString());
-
-            exchanged_itemdata.setItem_keyID(itemKeyID);
-            exchanged_itemdata.setPurchase_price(purchase_price_editText.getText().toString());
-            exchanged_itemdata.setDate(date_textView.getText().toString());
-            exchanged_itemdata.setCash(cash_editText.getText().toString());
-            exchanged_itemdata.setVoucher(voucher_editText.getText().toString());
-            exchanged_itemdata.setPaid(paid_editText.getText().toString());
-
-            exchanged_itemdata.setName(itemName);
-            exchanged_itemdata.setCondition(condition_textView.getText().toString());
-            exchanged_itemdata.setCategory(category_textView.getText().toString());
-            exchanged_itemdata.setNotes(notes_textView.getText().toString());
-            exchanged_itemdata.setTimestamp(date.getTime());
-
-
-            if (exchanged_itemdata.getExchangeFromBuyCheck()){
-                Intent intent = new Intent(Buy.this,Sale.class);
-                startActivity(intent);
-                finish();
-            }else {
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("result",1);
-
-                setResult(RESULT_OK,resultIntent);
-                finish();
-            }
-
-
-        }else {
             pd.showProgressBar(Buy.this);
 
             boolean connected = false;
@@ -746,7 +678,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
             connected = false;
             rbsItemDetails.uploadItemDetails(Buy.this);
-        }
+            rbsCustomerDetails.uploadCustomerDetails(Buy.this);
 
     }
 
@@ -841,8 +773,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 "[C]================================\n" +
                 "[L]\n" +
                 "[L]<u><font color='bg-black' size='tall'>Customer :</font></u>\n" +
-                "[L]"+searchForCustomer_textView.getText().toString()+"\n" +
-                "[L]Phno : "+phno_textView.getText().toString()+"\n" +
+                "[L]"+"\n" +
+                "[L]Phno : "+"\n" +
                 "\n" +
                 "[L]\n";
     }
@@ -870,6 +802,13 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        rbsItemDetails.clearData();
+        rbsCustomerDetails.clearData();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -882,7 +821,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 String itemcategory_returnString = data.getStringExtra("Item_category");
                 String itemkeyid_returnString = data.getStringExtra("Item_keyid");
                 String itemprice_returnString = data.getStringExtra("Item_price");
-                String itemimage_returnString = data.getStringExtra("Item_image");
                 String returnString = data.getStringExtra("Last_Active");
                 // set text view with string
 
@@ -902,7 +840,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 itemImage_imageView.setVisibility(View.VISIBLE);
                 itemLastActive_linearLayout.setVisibility(View.VISIBLE);
 
-                rbsItemDetails.clearData();
+
             }
         }
         if (requestCode == CUSTOMER_ACTIVITY_REQUEST_CODE) {
@@ -916,12 +854,17 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 // set text view with string
 
                 customerKeyID = key_id_returnString;
-                phno_textView.setText(phone_no_returnString);
-                email_textView.setText(email_returnString);
 
-                searchForCustomer_textView.setText(title_returnString+"\n"+id_returnString);
-                searchForCustomer_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-                searchForCustomer_textView.setTextColor(getResources().getColor(R.color.textGrey));
+                customerName_textView.setText(title_returnString);
+                customerName_textView.setTextColor(getResources().getColor(R.color.gradientDarkBlue));
+                customerImage_imageView.setImageURI(rbsCustomerDetails.getImageUrlList().get(0));
+                customerImage_imageView.setVisibility(View.VISIBLE);
+                customerEmail_textView.setText(email_returnString);
+                customerEmail_textView.setVisibility(View.VISIBLE);
+                customerPhno_textView.setText(phone_no_returnString);
+                customerPhno_textView.setVisibility(View.VISIBLE);
+
+
             }
         }
     }

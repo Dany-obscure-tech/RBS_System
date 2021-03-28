@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.dotcom.rbs_system.Adapter.AdapterCategoryRBS_RecyclerView;
 import com.dotcom.rbs_system.Adapter.Adapter_Vendor_inventory_RecyclerView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,10 @@ public class VendorMainScreen extends AppCompatActivity {
                         Toast.makeText(VendorMainScreen.this, "Profile", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_logout:
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intent1 = new Intent(VendorMainScreen.this,SignInActivity.class);
+                        finish();
+                        startActivity(intent1);
                         Toast.makeText(VendorMainScreen.this, "Logout", Toast.LENGTH_SHORT).show();
                         break;
 

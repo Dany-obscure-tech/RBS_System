@@ -98,7 +98,9 @@ public class VendorHome extends Fragment {
         vendor_inventory_add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Yes", Toast.LENGTH_SHORT).show();
+                System.out.println("click");
+//                Toast.makeText(getContext(), "yes", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Yes", Toast.LENGTH_SHORT).show();
 
             }
         });

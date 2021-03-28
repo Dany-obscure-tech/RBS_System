@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterItemDetailsImagesRecyclerView;
+import com.dotcom.rbs_system.Classes.RBSCustomerDetails;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,6 +50,8 @@ import java.util.Calendar;
 import java.util.List;
 
 public class Customer_details extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+
+    RBSCustomerDetails rbsCustomerDetails;
 
     AdapterItemDetailsImagesRecyclerView adapterItemDetailsImagesRecyclerView;
     RecyclerView itemImage_recyclerView;
@@ -94,7 +97,10 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
     }
 
     private void initialize() {
+        rbsCustomerDetails = RBSCustomerDetails.getInstance();
+
         imageUrlList = new ArrayList<>();
+        rbsCustomerDetails.setImageUrlList(imageUrlList);
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -219,14 +225,8 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             ac_id.setError("Please enter your id");
             valid = false;
         }
-        if (tempUri==null){
-            Toast.makeText(this, "Please upload front side of id", Toast.LENGTH_LONG).show();
-            valid=false;
-        }if (tempUri2==null){
-            Toast.makeText(this, "Please upload back side of id", Toast.LENGTH_LONG).show();
-            valid=false;
-        }if (tempUri3==null){
-            Toast.makeText(this, "Please upload a profile picture", Toast.LENGTH_LONG).show();
+        if (imageUrlList.size()==0){
+            Toast.makeText(this, "Please upload customer ID image", Toast.LENGTH_LONG).show();
             valid=false;
         }
         if (date_of_birth_text.getText().toString().equals("Select date")) {
@@ -276,41 +276,17 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
             connected = true;
 
             key = reference.push().getKey();
-            reference.child("Customer_list").child(key).child("Name").setValue(ac_title.getText().toString());
-            reference.child("Customer_list").child(key).child("Phone_no").setValue(ac_phoneno.getText().toString());
-            reference.child("Customer_list").child(key).child("ID").setValue(ac_id.getText().toString());
-            reference.child("Customer_list").child(key).child("DOB").setValue(date_of_birth_text.getText().toString());
-            reference.child("Customer_list").child(key).child("Address").setValue(ac_address.getText().toString());
-            reference.child("Customer_list").child(key).child("Email").setValue(ac_email.getText().toString());
-            reference.child("Customer_list").child(key).child("Postal_code").setValue(ac_postalcode.getText().toString());
-            reference.child("Customer_list").child(key).child("key_id").setValue(key);
-            reference.child("Customer_list").child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
+            rbsCustomerDetails.setCustomerName(ac_title.getText().toString());
+            rbsCustomerDetails.setCustomerPhNo(ac_phoneno.getText().toString());
+            rbsCustomerDetails.setCustomerId(ac_id.getText().toString());
+            rbsCustomerDetails.setCustomerDob(date_of_birth_text.getText().toString());
+            rbsCustomerDetails.setCustomerAddress(ac_address.getText().toString());
+            rbsCustomerDetails.setCustomerEmail(ac_email.getText().toString());
+            rbsCustomerDetails.setCustomerPostalCode(ac_postalcode.getText().toString());
 
-            idStorageReference.child(ac_id.getText().toString()).child("ID").putFile(tempUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(Customer_details.this, "Uploading finished!", Toast.LENGTH_SHORT).show();
-
-                    idStorageReference.child(ac_id.getText().toString()).child("ID").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            reference.child("Customer_list").child(key).child("id_image_url").setValue(String.valueOf(uri));
-                            pass_back_data();
-                            pd.dismissProgressBar(Customer_details.this);
-
-                            finish();
-                        }
-                    });
-
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    pd.dismissProgressBar(Customer_details.this);
-                    Toast.makeText(Customer_details.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(Customer_details.this, "Not Submitted", Toast.LENGTH_SHORT).show();
-                }
-            });
+            pass_back_data();
+            pd.dismissProgressBar(Customer_details.this);
+            finish();
 
         }
         else {
@@ -336,21 +312,6 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
         intent.putExtra("AC_phone_no", ac_phone_no);
         intent.putExtra("AC_email", ac_email_);
         setResult(RESULT_FIRST_USER, intent);
-    }
-
-
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
-
-    public String getRealPathFromURI(Uri uri) {
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-        return cursor.getString(idx);
     }
 
     @Override

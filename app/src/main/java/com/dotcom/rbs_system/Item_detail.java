@@ -241,78 +241,10 @@ public class Item_detail extends AppCompatActivity {
             rbsItemDetails.setItemDescription(description_editText.getText().toString());
             rbsItemDetails.setNoOfImages(String.valueOf(imageUrlList.size()));
 
-            pass_back_data(null);
+            pass_back_data();
+            pd.dismissProgressBar(Item_detail.this);
             finish();
 
-
-
-//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Category").setValue(selectCategory_textView.getText().toString());
-//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Item_id").setValue(itemId_editText.getText().toString());
-//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
-//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Item_name").setValue(itemName_editText.getText().toString());
-//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Condition").setValue(rating_textView.getText().toString());
-//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Notes").setValue(notes_editText.getText().toString());
-//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Price").setValue(price_editText.getText().toString());
-//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Description").setValue(description_editText.getText().toString());
-//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("key_id").setValue(key);
-//            reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("No_of_images").setValue(String.valueOf(imageUrlList.size()));
-//
-//
-//
-//            for (i = 0; i<imageUrlList.size();i++) {
-//
-//                key2 = reference.push().getKey();
-//                idStorageReference.child(key).child("image_"+String.valueOf(i+1)).putFile(imageUrlList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                    @Override
-//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//
-//                        idStorageReference.child(key).child("image_"+String.valueOf(l+1)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                            @Override
-//                            public void onSuccess(Uri uri) {
-//                                System.out.println("k = "+k+" "+uri);
-//                                reference.child("Items").child(selectCategory_textView.getText().toString()).child(key).child("Image_urls").child("image_"+(k+1)).setValue(String.valueOf(uri.toString()));
-//                                if (k==0){
-//                                    System.out.println("if called");
-//                                    passbackItemImageUrl = uri.toString();
-//
-//                                    if (k==0&&k==imageUrlList.size()-1){
-//                                        pass_back_data(passbackItemImageUrl);
-//                                        finish();
-//                                    }
-//
-//                                }
-//                                if (k!=0&&k==imageUrlList.size()-1){
-//                                    pass_back_data(passbackItemImageUrl);
-//                                    finish();
-//                                }
-//
-//                                k++;
-//                            }
-//                        });
-//                        l++;
-//
-//
-//
-//
-//                    }
-//                    }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            pd.dismissProgressBar(Item_detail.this);
-//                            Toast.makeText(Item_detail.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//            }
-//            pd.dismissProgressBar(Item_detail.this);
-
-//            for (int i = 0;i<imageUrlList.size();i++){
-//                taskSnapshotList.get(i).getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                    @Override
-//                    public void onSuccess(Uri uri) {
-//                        System.out.println(uri);
-//                    }
-//                });
-//            }
 
 
         }else {
@@ -322,7 +254,7 @@ public class Item_detail extends AppCompatActivity {
 
     }
 
-    private void pass_back_data(String uri) {
+    private void pass_back_data() {
 
       //   get the text from the EditText
         String last_active = "NA";
@@ -332,7 +264,6 @@ public class Item_detail extends AppCompatActivity {
         intent.putExtra("Item_id", itemId_editText.getText().toString());
         intent.putExtra("Item_category", selectCategory_textView.getText().toString());
         intent.putExtra("Item_keyid", key);
-        intent.putExtra("Item_image", uri.toString());
         intent.putExtra("Item_price", price_editText.getText().toString());
         intent.putExtra("Last_Active", last_active);
         setResult(RESULT_OK, intent);
