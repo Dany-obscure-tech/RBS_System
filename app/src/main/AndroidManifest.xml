@@ -20,7 +20,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Stock_entry"></activity>
+        <activity
+            android:name=".Rbs_options"
+            android:theme="@style/AppTheme.no"/>
+        <activity android:name=".RBS_mainscreen" />
+        <activity android:name=".Stock_entry" />
         <activity
             android:name=".VendorMainScreen"
             android:label="Vendor System" />
@@ -47,9 +51,6 @@
             android:theme="@style/AppTheme.no" />
         <activity
             android:name=".BuyLocal_shopkeeper_shop"
-            android:theme="@style/AppTheme.no" />
-        <activity
-            android:name=".Shopkeeper_shop_showcase"
             android:theme="@style/AppTheme.no" />
         <activity
             android:name=".BuyLocal_profile_edit"
@@ -137,7 +138,6 @@
         <activity
             android:name=".Buy"
             android:theme="@style/AppTheme.no" />
-        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

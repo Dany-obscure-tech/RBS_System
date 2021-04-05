@@ -1,25 +1,18 @@
 package com.dotcom.rbs_system;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.dotcom.rbs_system.Classes.Exchanged_itemdata;
-import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,15 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-public class MainActivity extends AppCompatActivity {
+public class Rbs_options extends AppCompatActivity {
 
     DatabaseReference bannerRef;
-
-//Navigation drawer
-    private DrawerLayout dl;
-    private ActionBarDrawerToggle t;
-    private NavigationView nv;
-    //Navigation drawer
 
     CardView BUY,Sale,repair,Exchange,Accessories,Settings;
 
@@ -49,49 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        //Nav drawer
-        dl = (DrawerLayout)findViewById(R.id.activity_main);
-        t = new ActionBarDrawerToggle(this, dl,R.string.Open, R.string.Close);
-        dl.addDrawerListener(t);
-        t.syncState();
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        nv = (NavigationView)findViewById(R.id.nv);
-        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                Intent intent;
-                switch(id)
-                {
-                    case R.id.nav_profile:
-                        Toast.makeText(MainActivity.this, "My Account",Toast.LENGTH_SHORT).show();break;
-                    case R.id.nav_settings:
-                        intent = new Intent(MainActivity.this, Settings.class);
-                        startActivity(intent);
-                        closeDrawer();
-                        return true;
-                    case R.id.nav_logout:
-                        FirebaseAuth.getInstance().signOut();
-                        Intent intent1 = new Intent(MainActivity.this,SignInActivity.class);
-                        finish();
-                        startActivity(intent1);
-                    default:
-                        return true;
-                }
-                return true;
-            }
-
-            private void closeDrawer() {
-                if (dl.isDrawerOpen(GravityCompat.START)) {
-                    dl.closeDrawer(GravityCompat.START);
-                }
-            }
-        });
-
+        setContentView(R.layout.activity_rbs_options);
 
         bannerRef = FirebaseDatabase.getInstance().getReference("Admin/banner");
 
@@ -130,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         Sale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Sale.class);
+                Intent intent=new Intent(Rbs_options.this,Sale.class);
                 startActivity(intent);
             }
         });
@@ -145,21 +90,21 @@ public class MainActivity extends AppCompatActivity {
         icon1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Repair_Ticket.class);
+                Intent intent=new Intent(Rbs_options.this,Repair_Ticket.class);
                 startActivity(intent);
             }
         });
         icon5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Exchange.class);
+                Intent intent=new Intent(Rbs_options.this,Exchange.class);
                 startActivity(intent);
             }
         });
         BUY.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Buy.class);
+                Intent intent=new Intent(Rbs_options.this,Buy.class);
                 Exchanged_itemdata.getInstance().setExchangeCheck(false);
                 Exchanged_itemdata.getInstance().setExchangeFromBuyCheck(false);
                 Exchanged_itemdata.getInstance().clearData();
@@ -170,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         icon2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Buy.class);
+                Intent intent=new Intent(Rbs_options.this,Buy.class);
                 Exchanged_itemdata.getInstance().setExchangeCheck(false);
                 Exchanged_itemdata.getInstance().setExchangeFromBuyCheck(false);
                 Exchanged_itemdata.getInstance().clearData();
@@ -180,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         Sale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Sale.class);
+                Intent intent=new Intent(Rbs_options.this,Sale.class);
                 Exchanged_itemdata.getInstance().setExchangeCheck(false);
                 Exchanged_itemdata.getInstance().setExchangeFromBuyCheck(false);
                 Exchanged_itemdata.getInstance().clearData();
@@ -190,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         icon3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Sale.class);
+                Intent intent=new Intent(Rbs_options.this,Sale.class);
                 Exchanged_itemdata.getInstance().setExchangeCheck(false);
                 Exchanged_itemdata.getInstance().setExchangeFromBuyCheck(false);
                 Exchanged_itemdata.getInstance().clearData();
@@ -200,14 +145,14 @@ public class MainActivity extends AppCompatActivity {
         repair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Repair_Ticket.class);
+                Intent intent=new Intent(Rbs_options.this,Repair_Ticket.class);
                 startActivity(intent);
             }
         });
         Exchange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Exchange.class);
+                Intent intent=new Intent(Rbs_options.this,Exchange.class);
                 startActivity(intent);
             }
         });
@@ -215,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         Settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Settings.class);
+                Intent intent=new Intent(Rbs_options.this,Settings.class);
                 startActivity(intent);
             }
         });
@@ -223,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
         icon6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Settings.class);
+                Intent intent=new Intent(Rbs_options.this,Settings.class);
                 startActivity(intent);
             }
         });
@@ -231,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
         alert_addAccessory_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Accessory_add.class);
+                Intent intent=new Intent(Rbs_options.this,Accessory_add.class);
                 startActivity(intent);
                 selectAccessory_dialog.dismiss();
             }
@@ -239,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         alert_saleAccessory_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Accessory_sale.class);
+                Intent intent=new Intent(Rbs_options.this,Accessory_sale.class);
                 startActivity(intent);
                 selectAccessory_dialog.dismiss();
             }
@@ -248,25 +193,18 @@ public class MainActivity extends AppCompatActivity {
         icon8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this, Shopkeeper_shop_showcase.class);
-                startActivity(intent);
+
             }
         });
         icon9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,Smart_Share.class);
+                Intent intent=new Intent(Rbs_options.this,Smart_Share.class);
                 startActivity(intent);
             }
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(t.onOptionsItemSelected(item))
-            return true;
-        return super.onOptionsItemSelected(item);
-    }
 
     private void getBannerImage() {
         bannerRef.addListenerForSingleValueEvent(new ValueEventListener() {

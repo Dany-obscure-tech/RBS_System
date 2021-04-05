@@ -59,9 +59,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
-import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
-import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     RBSItemDetails rbsItemDetails;
@@ -84,7 +81,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     CheckBox cash_checkbox,voucher_checkbox;
 
-    TextView voucher_number,voucher_number_textview,Transaction_textview;
+    TextView voucher_number,voucher_number_textview;
     TextView customerName_textView,customerEmail_textView,customerPhno_textView;
 
     String voucher_key,itemID;
@@ -168,6 +165,9 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         rbsItemDetails = RBSItemDetails.getInstance();
         rbsCustomerDetails = RBSCustomerDetails.getInstance();
 
+        rbsItemDetails.clearData();
+        rbsCustomerDetails.clearData();
+
         searchForItem_cardView = (CardView)findViewById(R.id.searchForItem_cardView);
 
         reference = FirebaseDatabase.getInstance().getReference();
@@ -226,7 +226,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
         category_textView=(TextView)findViewById(R.id.category_textView);
         voucher_number=(TextView)findViewById(R.id.voucher_number);
-        Transaction_textview=(TextView)findViewById(R.id.Transaction_textview);
         voucher_number_textview=(TextView)findViewById(R.id.voucher_number_textview);
         voucher_number.setText(voucher_key.toString());
 
@@ -677,7 +676,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
 
             connected = false;
-            rbsItemDetails.uploadItemDetails(Buy.this);
+            rbsItemDetails.uploadNewItemDetails(Buy.this);
             rbsCustomerDetails.uploadCustomerDetails(Buy.this);
 
     }
@@ -802,13 +801,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        rbsItemDetails.clearData();
-        rbsCustomerDetails.clearData();
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -839,6 +831,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 itemPrice_textView.setVisibility(View.VISIBLE);
                 itemImage_imageView.setVisibility(View.VISIBLE);
                 itemLastActive_linearLayout.setVisibility(View.VISIBLE);
+                rbsItemDetails.setCheck("Buy new item");
 
 
             }
@@ -867,5 +860,12 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
             }
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        rbsCustomerDetails.clearData();
+        rbsItemDetails.clearData();
     }
 }

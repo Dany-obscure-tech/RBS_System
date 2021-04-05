@@ -22,8 +22,11 @@ import com.google.firebase.storage.UploadTask;
 import java.util.List;
 
 public class RBSItemDetails {
+    String check;
     Context context;
     int i,k=0,l=0;
+
+    Uri firstImageUri;
 
     StorageReference idStorageReference;
     DatabaseReference reference;
@@ -35,6 +38,14 @@ public class RBSItemDetails {
     String itemCategory,itemID,addedBy,itemName,itemCondition,personalNotes,itemPrice,itemDescription,key,key2,noOfImages;
 
     List<Uri> imageUrlList;
+
+    public String getCheck() {
+        return check;
+    }
+
+    public void setCheck(String check) {
+        this.check = check;
+    }
 
     public String getItemCategory() {
         return itemCategory;
@@ -122,7 +133,7 @@ public class RBSItemDetails {
         return rbsItemDetails;
     }
 
-    public void uploadItemDetails(Context contextt){
+    public void uploadNewItemDetails(Context contextt){
         context = contextt;
         idStorageReference = FirebaseStorage.getInstance().getReference().child("Item_Images");
         pd = new Progress_dialoge();
@@ -137,62 +148,9 @@ public class RBSItemDetails {
             //we are connected to a network
             connected = true;
 
-            key = reference.push().getKey();
+            uploadToDatabase();
 
-            reference.child("Items").child(itemCategory).child(key).child("Category").setValue(itemCategory);
-            reference.child("Items").child(itemCategory).child(key).child("Item_id").setValue(itemID);
-            reference.child("Items").child(itemCategory).child(key).child("added_by").setValue(addedBy);
-            reference.child("Items").child(itemCategory).child(key).child("Item_name").setValue(itemName);
-            reference.child("Items").child(itemCategory).child(key).child("Condition").setValue(itemCondition);
-            reference.child("Items").child(itemCategory).child(key).child("Notes").setValue(personalNotes);
-            reference.child("Items").child(itemCategory).child(key).child("Price").setValue(itemPrice);
-            reference.child("Items").child(itemCategory).child(key).child("Description").setValue(itemDescription);
-            reference.child("Items").child(itemCategory).child(key).child("key_id").setValue(key);
-            reference.child("Items").child(itemCategory).child(key).child("No_of_images").setValue(String.valueOf(imageUrlList.size()));
-
-
-
-            for (i = 0; i<imageUrlList.size();i++) {
-
-                key2 = reference.push().getKey();
-                idStorageReference.child(key).child("image_"+String.valueOf(i+1)).putFile(imageUrlList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                        idStorageReference.child(key).child("image_"+String.valueOf(l+1)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                System.out.println("k = "+k+" "+uri);
-                                reference.child("Items").child(itemCategory).child(key).child("Image_urls").child("image_"+(k+1)).setValue(String.valueOf(uri.toString()));
-
-                                k++;
-                            }
-                        });
-                        l++;
-
-
-
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        pd.dismissProgressBar(context);
-                        Toast.makeText(context, String.valueOf(e), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
             pd.dismissProgressBar(context);
-
-//            for (int i = 0;i<imageUrlList.size();i++){
-//                taskSnapshotList.get(i).getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                    @Override
-//                    public void onSuccess(Uri uri) {
-//                        System.out.println(uri);
-//                    }
-//                });
-//            }
-
 
         }else {
             Toast.makeText(context, "Internet is not Connected", Toast.LENGTH_SHORT).show();
@@ -201,7 +159,82 @@ public class RBSItemDetails {
 
     }
 
+    private void uploadToDatabase() {
+        key = reference.push().getKey();
+
+        reference.child("Items").child(itemCategory).child(key).child("Category").setValue(itemCategory);
+        reference.child("Items").child(itemCategory).child(key).child("Item_id").setValue(itemID);
+        reference.child("Items").child(itemCategory).child(key).child("added_by").setValue(addedBy);
+        reference.child("Items").child(itemCategory).child(key).child("Item_name").setValue(itemName);
+        reference.child("Items").child(itemCategory).child(key).child("Condition").setValue(itemCondition);
+        reference.child("Items").child(itemCategory).child(key).child("Notes").setValue(personalNotes);
+        reference.child("Items").child(itemCategory).child(key).child("Price").setValue(itemPrice);
+        reference.child("Items").child(itemCategory).child(key).child("Description").setValue(itemDescription);
+        reference.child("Items").child(itemCategory).child(key).child("key_id").setValue(key);
+        reference.child("Items").child(itemCategory).child(key).child("No_of_images").setValue(String.valueOf(imageUrlList.size()));
+
+        for (i = 0; i<imageUrlList.size();i++) {
+
+            key2 = reference.push().getKey();
+            idStorageReference.child(key).child("image_"+String.valueOf(i+1)).putFile(imageUrlList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    idStorageReference.child(key).child("image_"+String.valueOf(l+1)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            if(k==0){
+                                firstImageUri = uri;
+                                Toast.makeText(context, String.valueOf(uri), Toast.LENGTH_SHORT).show();
+                            }
+                            reference.child("Items").child(itemCategory).child(key).child("Image_urls").child("image_"+(k+1)).setValue(String.valueOf(uri.toString()));
+                            k++;
+                            if (k==imageUrlList.size()){
+                                if (check=="Buy new item"){
+                                    uploadToStock();
+                                    uploadToRbsInvoiceList(addedBy);
+                                    updateStockOwner(addedBy);
+                                }
+                            }
+                        }
+                    });
+                    l++;
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    pd.dismissProgressBar(context);
+                    Toast.makeText(context, String.valueOf(e), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    private void uploadToStock() {
+        reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Category").setValue(itemCategory);
+        reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Image").setValue(firstImageUri.toString());
+        reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Item_id").setValue(key);
+        reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Serial_no").setValue(itemID);
+        reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Item_name").setValue(itemName);
+        reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Price").setValue(itemPrice);
+    }
+
+    private void uploadToRbsInvoiceList(String ownerID){
+        reference.child("Stock").child("RbsInvoiceList").child(ownerID).child(key).child("Item_id").setValue(key);
+        reference.child("Stock").child("RbsInvoiceList").child(ownerID).child(key).child("Item_name").setValue(itemName);
+        reference.child("Stock").child("RbsInvoiceList").child(ownerID).child(key).child("Price").setValue(itemPrice);
+        reference.child("Stock").child("RbsInvoiceList").child(ownerID).child(key).child("Serial_no").setValue(itemID);
+        reference.child("Stock").child("RbsInvoiceList").child(ownerID).child(key).child("Image").setValue(firstImageUri.toString());
+    }
+
+    private void updateStockOwner(String ownerID){
+        reference.child("Stock").child("Items").child(key).child("in_stock_of").setValue(ownerID);
+    }
+
+
     public void clearData(){
+        check = null;
         context = null;
         itemCategory = null;
         itemID = null;

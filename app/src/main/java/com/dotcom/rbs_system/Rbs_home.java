@@ -1,38 +1,43 @@
 package com.dotcom.rbs_system;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.dotcom.rbs_system.Adapter.AdapterShopProductsRecyclerView;
 import com.dotcom.rbs_system.Adapter.AdapterShopProductsShowcaseListRecyclerView;
-import com.dotcom.rbs_system.Adapter.SliderAdapterExample;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Shopkeeper_shop_showcase extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link Rbs_home#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class Rbs_home extends Fragment {
+
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
     DatabaseReference stockRef;
     RecyclerView your_products_RecyclerView;
@@ -42,40 +47,65 @@ public class Shopkeeper_shop_showcase extends AppCompatActivity {
     List<String> product_no_of_offers;
     List<String> image;
     List<String> key_idList;
-    ImageButton back_btn;
-    ImageView menu_btn;
     RelativeLayout side_option_menu;
-    TextView offers_option;
 
-    StorageReference itemImageStorageRef;
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
 
+    public Rbs_home() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment Rbs_home.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static Rbs_home newInstance(String param1, String param2) {
+        Rbs_home fragment = new Rbs_home();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shopkeerper_shop_showcase);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_rbs_home, container, false);
+        Initialize(view);
+        initialProcess();
+        onclicklistners();
+        return view;
+    }
 
+    private void Initialize(View view) {
         stockRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-        your_products_RecyclerView=(RecyclerView)findViewById(R.id.your_products_RecyclerView);
-        back_btn=(ImageButton)findViewById(R.id.back_btn);
-        menu_btn=(ImageView)findViewById(R.id.menu_btn);
-        side_option_menu=(RelativeLayout)findViewById(R.id.side_option_menu);
-        offers_option=(TextView)findViewById(R.id.offers_option);
+        your_products_RecyclerView=(RecyclerView)view.findViewById(R.id.your_products_RecyclerView);
+        side_option_menu=(RelativeLayout)view.findViewById(R.id.side_option_menu);
         product_name = new ArrayList<String>();
         category = new ArrayList<String>();
         product_price = new ArrayList<String>();
         product_no_of_offers = new ArrayList<String>();
         image = new ArrayList<String>();
         key_idList = new ArrayList<String>();
-
-
-
-
-
-        initialProcess();
-        onclicklistners();
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -105,8 +135,8 @@ public class Shopkeeper_shop_showcase extends AppCompatActivity {
                     }
                 }
 
-                AdapterShopProductsShowcaseListRecyclerView adapterShopProductsShowcaseListRecyclerView = new AdapterShopProductsShowcaseListRecyclerView(Shopkeeper_shop_showcase.this, product_name, category, image,product_price,product_no_of_offers,key_idList);
-                your_products_RecyclerView.setLayoutManager(new GridLayoutManager(Shopkeeper_shop_showcase.this,1));
+                AdapterShopProductsShowcaseListRecyclerView adapterShopProductsShowcaseListRecyclerView = new AdapterShopProductsShowcaseListRecyclerView(getActivity(), product_name, category, image,product_price,product_no_of_offers,key_idList);
+                your_products_RecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),1));
                 your_products_RecyclerView.setAdapter(adapterShopProductsShowcaseListRecyclerView);
 
             }
@@ -121,42 +151,7 @@ public class Shopkeeper_shop_showcase extends AppCompatActivity {
     /////////////////////////////////////////////////////////////////////////////////////////
 
     private void onclicklistners() {
-        back_btn_listner();
-        menu_btn_listner();
-        offers_option_listner();
     }
 
-    private void offers_option_listner() {
-        offers_option.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                side_option_menu.setVisibility(View.GONE);
-                Intent intent=new Intent(Shopkeeper_shop_showcase.this,Shopkeeper_Products_offers_list.class);
-                startActivity(intent);
-            }
-        });
-    }
 
-    private void menu_btn_listner() {
-        menu_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (side_option_menu.getVisibility()==View.VISIBLE){
-                    side_option_menu.setVisibility(View.GONE);
-                }
-                else {
-                    side_option_menu.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-    }
-
-    private void back_btn_listner() {
-        back_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
 }

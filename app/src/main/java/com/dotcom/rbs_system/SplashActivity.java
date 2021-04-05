@@ -125,7 +125,7 @@ public class SplashActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     }if (type.equals("shop keeper")){
-                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                        Intent intent = new Intent(SplashActivity.this, RBS_mainscreen.class);
                         startActivity(intent);
                         finish();
                     } if (type.equals("vendor")){

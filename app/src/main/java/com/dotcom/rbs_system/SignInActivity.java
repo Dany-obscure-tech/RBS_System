@@ -126,7 +126,7 @@ public class SignInActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     }if (type.equals("shop keeper")){
-                        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                        Intent intent = new Intent(SignInActivity.this, RBS_mainscreen.class);
                         startActivity(intent);
                         finish();
                     } if (type.equals("vendor")){
