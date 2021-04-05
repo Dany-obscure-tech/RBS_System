@@ -1,6 +1,5 @@
 package com.dotcom.rbs_system;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,24 +9,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.Adapter_Vendor_inventory_RecyclerView;
+import com.dotcom.rbs_system.Adapter.Adapter_Vendor_order_list_RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link VendorHome#newInstance} factory method to
+ * Use the {@link VendorOrders#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class VendorHome extends Fragment {
-
-    RecyclerView vendor_inventory_RecyclerView;
-    List<String> vendor_category;
-    Button vendor_inventory_add_btn;
+public class VendorOrders extends Fragment {
+    RecyclerView orders_list_recyclerview;
+    List<String> shop_name,order_no_vendor;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,7 +34,7 @@ public class VendorHome extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public VendorHome() {
+    public VendorOrders() {
         // Required empty public constructor
     }
 
@@ -48,11 +44,11 @@ public class VendorHome extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment VendorHome.
+     * @return A new instance of fragment VendorOrders.
      */
     // TODO: Rename and change types and number of parameters
-    public static VendorHome newInstance(String param1, String param2) {
-        VendorHome fragment = new VendorHome();
+    public static VendorOrders newInstance(String param1, String param2) {
+        VendorOrders fragment = new VendorOrders();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -73,36 +69,19 @@ public class VendorHome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_vendor_home, container, false);
+        View view= inflater.inflate(R.layout.fragment_vendor_orders, container, false);
+        orders_list_recyclerview = (RecyclerView) view.findViewById(R.id.orders_list_recyclerview);
+        shop_name = new ArrayList<>();
+        order_no_vendor = new ArrayList<>();
+        shop_name.add("ITECH Computers");
+        shop_name.add("Forex Trading");
+        order_no_vendor.add("ITECH Computers");
+        order_no_vendor.add("Forex Trading");
+        Adapter_Vendor_order_list_RecyclerView adapter_vendor_order_list_recyclerView=new Adapter_Vendor_order_list_RecyclerView(getActivity(),order_no_vendor,shop_name,null,null,null,null,null,null);
 
-        vendor_inventory_RecyclerView = (RecyclerView) view.findViewById(R.id.vendor_inventory_RecyclerView);
-        vendor_inventory_add_btn = (Button) view.findViewById(R.id.vendor_inventory_add_btn);
-        vendor_category = new ArrayList<>();
-        vendor_category.add("Computer");
-        vendor_category.add("Laptop");
-        Adapter_Vendor_inventory_RecyclerView adapter_vendor_inventory_recyclerView=new Adapter_Vendor_inventory_RecyclerView(getActivity(),null,null,vendor_category,null,null,null);
-
-        vendor_inventory_RecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),1));
-        vendor_inventory_RecyclerView.setAdapter(adapter_vendor_inventory_recyclerView);
-
-        onclicklistners();
+        orders_list_recyclerview.setLayoutManager(new GridLayoutManager(getActivity(),1));
+        orders_list_recyclerview.setAdapter(adapter_vendor_order_list_recyclerView);
 
         return view;
-    }
-
-    private void onclicklistners() {
-        vendor_inventory_add_btn_listner();
-    }
-
-    private void vendor_inventory_add_btn_listner() {
-        vendor_inventory_add_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("click");
-//                Toast.makeText(getContext(), "yes", Toast.LENGTH_SHORT).show();
-//                Toast.makeText(getActivity(), "Yes", Toast.LENGTH_SHORT).show();
-
-            }
-        });
     }
 }

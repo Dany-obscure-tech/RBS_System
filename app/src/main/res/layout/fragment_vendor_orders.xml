@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VendorOrders">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/buy_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/segoe_ui_bold"
+        android:text="Orders"
+        android:textColor="@color/textGreen"
+        android:textSize="30sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buy_textview">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <RelativeLayout
+                android:id="@+id/date_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp">
+
+                <TextView
+                    android:id="@+id/search_textview"
+                    style="@style/RBSInvoice_TextViews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="Search by date" />
+
+                <LinearLayout
+                    android:id="@+id/date_written"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/search_textview"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/date_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.9"
+                        android:backgroundTint="#6E76E3"
+                        android:fontFamily="@font/segoe_ui"
+                        android:text="-- -- --"
+                        android:textColor="#9F9F9F"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/date_written"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/yesterday_date_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:layout_weight="0.1"
+                        android:background="@drawable/profile_screen_header"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="Yesterday Date"
+                        android:textAlignment="center"
+                        android:textColor="#ffff"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/current_date_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:layout_weight="0.1"
+                        android:background="@drawable/profile_screen_header"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="Current Date"
+                        android:textAlignment="center"
+                        android:textColor="#ffff"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/specific_date_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:layout_weight="0.1"
+                        android:background="@drawable/profile_screen_header"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="Specific Date"
+                        android:textAlignment="center"
+                        android:textColor="#ffff"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/orders_list_textview"
+                style="@style/RBSInvoice_TextViews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/date_view"
+                android:layout_centerHorizontal="true"
+                android:text="Orders list"
+                android:textColor="@color/textBlue"
+                android:textSize="25sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/orders_list_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/orders_list_textview"
+                android:layout_margin="15dp"
+                android:orientation="vertical" />
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

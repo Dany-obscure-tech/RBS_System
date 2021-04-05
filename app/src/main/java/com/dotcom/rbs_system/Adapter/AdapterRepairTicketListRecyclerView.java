@@ -6,17 +6,14 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.Progreess_dialog;
 import com.dotcom.rbs_system.R;
-import com.dotcom.rbs_system.Repair_Ticket;
 import com.dotcom.rbs_system.Repair_details;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -105,7 +102,7 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
 
             ticketNo_textView = (TextView)itemView.findViewById(R.id.ticketNo_textView);
             customerName_textView = (TextView)itemView.findViewById(R.id.customerName_textView);
-            itemName_textView = (TextView)itemView.findViewById(R.id.itemName_textView);
+            itemName_textView = (TextView)itemView.findViewById(R.id.item_category_textView);
             remove_textView = (TextView)itemView.findViewById(R.id.remove_textView);
 
             leftLayout = (LinearLayout) itemView.findViewById(R.id.leftLayout);

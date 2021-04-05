@@ -14,10 +14,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterItemHistoryListRecyclerView;
-import com.dotcom.rbs_system.Adapter.AdapterRepairTicketListRecyclerView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -79,7 +77,7 @@ public class Item_history extends AppCompatActivity {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void Initialization() {
-        itemName_textView = (TextView)findViewById(R.id.itemName_textView);
+        itemName_textView = (TextView)findViewById(R.id.item_category_textView);
         serialNo_textView = (TextView)findViewById(R.id.serialNo_textView);
         category_textView = (TextView)findViewById(R.id.category_textView);
         condition_textView = (TextView)findViewById(R.id.condition_textView);

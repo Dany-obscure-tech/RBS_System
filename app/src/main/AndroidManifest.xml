@@ -21,10 +21,14 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Rbs_options"
+            android:name=".Vendor_shopkeepers_orders_progress"
             android:theme="@style/AppTheme.no"/>
-        <activity android:name=".RBS_mainscreen" />
-        <activity android:name=".Stock_entry" />
+        <activity
+            android:name=".VendorShopkeepersShopReceipts"
+            android:theme="@style/AppTheme.no" />
+        <activity
+            android:name=".Vendor_stock_entry"
+            android:theme="@style/AppTheme.no" />
         <activity
             android:name=".VendorMainScreen"
             android:label="Vendor System" />

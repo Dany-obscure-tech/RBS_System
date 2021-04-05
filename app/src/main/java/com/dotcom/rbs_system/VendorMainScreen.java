@@ -5,29 +5,21 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.dotcom.rbs_system.Adapter.AdapterCategoryRBS_RecyclerView;
-import com.dotcom.rbs_system.Adapter.Adapter_Vendor_inventory_RecyclerView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class VendorMainScreen extends AppCompatActivity {
 
     private DrawerLayout vendor_drawer_layout;
     private ActionBarDrawerToggle t;
     private NavigationView nv;
-    final VendorHome fragment_vendor_home = new VendorHome();
+    final VendorShop fragment_vendor_home = new VendorShop();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +37,7 @@ public class VendorMainScreen extends AppCompatActivity {
 
 
         nv = (NavigationView)findViewById(R.id.nv);
+
         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,fragment_vendor_home).commit();
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -52,13 +45,16 @@ public class VendorMainScreen extends AppCompatActivity {
                 int id = item.getItemId();
                 switch (id) {
                     case R.id.nav_shop:
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,fragment_vendor_home).commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,new VendorShop()).commit();
                         closeDrawer();
                         break;
                     case R.id.nav_orders:
-                        return true;
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,new VendorOrders()).commit();
+                        closeDrawer();
+                        break;
                     case R.id.nav_profile:
-                        Toast.makeText(VendorMainScreen.this, "Profile", Toast.LENGTH_SHORT).show();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,new VendorProfile()).commit();
+                        closeDrawer();
                         break;
                     case R.id.nav_logout:
                         FirebaseAuth.getInstance().signOut();

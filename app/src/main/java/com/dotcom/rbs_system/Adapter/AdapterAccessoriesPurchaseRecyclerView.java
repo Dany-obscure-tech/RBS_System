@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -66,7 +65,7 @@ public class AdapterAccessoriesPurchaseRecyclerView extends RecyclerView.Adapter
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            itemName_textView = (TextView)itemView.findViewById(R.id.itemName_textView);
+            itemName_textView = (TextView)itemView.findViewById(R.id.item_category_textView);
             category_textView = (TextView)itemView.findViewById(R.id.category_textView);
             priceUnit_textView = (TextView)itemView.findViewById(R.id.priceUnit_textView);
             quantity_textView = (TextView)itemView.findViewById(R.id.quantity_textView);

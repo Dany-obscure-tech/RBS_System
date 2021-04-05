@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dotcom.rbs_system.Adapter.AdapterItemHistoryListRecyclerView;
 import com.dotcom.rbs_system.Adapter.AdapterRepairsFaultListRecyclerView;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Classes.Repair_details_edit;
@@ -32,7 +31,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class Repair_details extends AppCompatActivity {
     String currency = Currency.getInstance().getCurrency();
@@ -105,7 +103,7 @@ public class Repair_details extends AppCompatActivity {
         balanceAmount_TextView = (TextView)findViewById(R.id.balanceAmount_TextView);
         specialConditions_TextView = (TextView)findViewById(R.id.specialConditions_TextView);
 
-        itemName_textView = (TextView)findViewById(R.id.itemName_textView);
+        itemName_textView = (TextView)findViewById(R.id.item_category_textView);
         serialNo_textView = (TextView)findViewById(R.id.serialNo_textView);
         category_textView = (TextView)findViewById(R.id.category_textView);
         condition_textView = (TextView)findViewById(R.id.condition_textView);
