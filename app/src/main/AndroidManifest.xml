@@ -20,6 +20,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".Rbs_options"
+            android:theme="@style/AppTheme.no"/>
+        <activity android:name=".RBS_mainscreen" />
         <activity
             android:name=".Vendor_shopkeepers_orders_progress"
             android:theme="@style/AppTheme.no"/>
