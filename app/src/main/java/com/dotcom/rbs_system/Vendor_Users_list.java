@@ -29,7 +29,7 @@ public class Vendor_Users_list extends AppCompatActivity {
     RecyclerView users_list_recyclerview;
     List<String> user_name;
     ImageButton back_btn;
-    TextView add_users_btn,cancel_btn;
+    TextView add_users_btn, cancel_btn;
     Dialog add_user_alert_dialog;
     LinearLayout select_user_category;
     TextView user_category_textView;
@@ -54,9 +54,9 @@ public class Vendor_Users_list extends AppCompatActivity {
         initialization();
         onclicklistners();
 
-        Adapter_Vendor_users_list_RecyclerView adapter_vendor_users_list_recyclerView=new Adapter_Vendor_users_list_RecyclerView(Vendor_Users_list.this,null,user_name,null,null);
+        Adapter_Vendor_users_list_RecyclerView adapter_vendor_users_list_recyclerView = new Adapter_Vendor_users_list_RecyclerView(Vendor_Users_list.this, null, user_name, null, null);
 
-        users_list_recyclerview.setLayoutManager(new GridLayoutManager(Vendor_Users_list.this,1));
+        users_list_recyclerview.setLayoutManager(new GridLayoutManager(Vendor_Users_list.this, 1));
         users_list_recyclerview.setAdapter(adapter_vendor_users_list_recyclerView);
     }
 
@@ -66,7 +66,9 @@ public class Vendor_Users_list extends AppCompatActivity {
         select_user_category_listner();
         cancel_btn_listner();
 
+
     }
+
 
     private void cancel_btn_listner() {
         cancel_btn.setOnClickListener(new View.OnClickListener() {
@@ -88,8 +90,7 @@ public class Vendor_Users_list extends AppCompatActivity {
                             public void onSelected(BaseSearchDialogCompat dialog,
                                                    SampleSearchModel item, int position) {
                                 user_category_textView.setText(item.getTitle());
-                                user_category_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-                                user_category_textView.setTextColor(getResources().getColor(R.color.textGrey));
+                                user_category_textView.setTextColor(getResources().getColor(R.color.textBlue));
                                 dialog.dismiss();
                             }
                         }).show();
@@ -119,19 +120,22 @@ public class Vendor_Users_list extends AppCompatActivity {
     }
 
     private void initialization() {
-        users_list_recyclerview=(RecyclerView)findViewById(R.id.users_list_recyclerview);
-        back_btn=(ImageButton)findViewById(R.id.back_btn);
-        add_users_btn=(TextView)findViewById(R.id.add_users_btn);
-        user_name=new ArrayList<>();
+        users_list_recyclerview = (RecyclerView) findViewById(R.id.users_list_recyclerview);
+        back_btn = (ImageButton) findViewById(R.id.back_btn);
+        add_users_btn = (TextView) findViewById(R.id.add_users_btn);
+        user_name = new ArrayList<>();
         user_name.add("Mehmood");
         user_name.add("Amjad");
         user_name.add("Ali");
         add_user_alert_dialog = new Dialog(this);
+
+
         add_user_alert_dialog.setContentView(R.layout.alert_vendor_add_users);
         select_user_category = (LinearLayout) add_user_alert_dialog.findViewById(R.id.select_user_category);
         user_category_textView = (TextView) add_user_alert_dialog.findViewById(R.id.user_category_textView);
         cancel_btn = (TextView) add_user_alert_dialog.findViewById(R.id.cancel_btn);
-        user_category_list=new ArrayList<>();
+
+        user_category_list = new ArrayList<>();
         user_category_list.add("Data Entry");
         user_category_list.add("Salesman");
     }

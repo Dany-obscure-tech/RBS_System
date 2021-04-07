@@ -2,10 +2,14 @@ package com.dotcom.rbs_system;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -17,7 +21,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
@@ -27,10 +35,12 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 public class Vendor_stock_entry extends AppCompatActivity {
     ImageButton back_btn;
     LinearLayout searchForCategories;
-    TextView item_category_textView, add_btn;
+    TextView item_category_textView, add_btn,date_of_birth_text,date_textView;
+    DatePickerDialog.OnDateSetListener onDateSetListener;
     List<String> Vendor_category_data_list;
     DatabaseReference reference;
     String vendor_stock_entry_id;
+    String currentDateString;
     String firebaseAuthUID;
     EditText vendor_item_name_editText, vendor_item_price_editText, vendor_item_qty_editText;
 
@@ -57,6 +67,40 @@ public class Vendor_stock_entry extends AppCompatActivity {
         back_btn_listner();
         searchForCategories_listner();
         add_btn_listner();
+        date_textView_listner();
+    }
+
+    private void date_textView_listner() {
+        date_textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar=Calendar.getInstance();
+                int year= (calendar.get(Calendar.YEAR))-18;
+                int month= 0;
+                int day= 1;
+
+                DatePickerDialog dialog = new DatePickerDialog(Vendor_stock_entry.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,onDateSetListener,year,month,day);
+                currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+        onDateSetListener=new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month=month+1;
+                String date = dayOfMonth+"/"+ month + "/"+ year;
+
+                SimpleDateFormat input = new SimpleDateFormat("d/M/yyyy");
+                SimpleDateFormat output = new SimpleDateFormat("EEEE, d MMMM yyyy");
+
+                try {
+                    date_of_birth_text.setText(output.format(input.parse(date)));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
     }
 
     private void add_btn_listner() {
@@ -106,8 +150,7 @@ public class Vendor_stock_entry extends AppCompatActivity {
                             public void onSelected(BaseSearchDialogCompat dialog,
                                                    SampleSearchModel item, int position) {
                                 item_category_textView.setText(item.getTitle());
-                                item_category_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-                                item_category_textView.setTextColor(getResources().getColor(R.color.textGrey));
+                                item_category_textView.setTextColor(getResources().getColor(R.color.textBlue));
                                 dialog.dismiss();
                             }
                         }).show();
@@ -160,12 +203,14 @@ public class Vendor_stock_entry extends AppCompatActivity {
 
     private void Initialization() {
         back_btn = (ImageButton) findViewById(R.id.back_btn);
-        item_category_textView = (TextView) findViewById(R.id.company_name_textView);
+        item_category_textView = (TextView) findViewById(R.id.item_category_textView);
         vendor_item_name_editText = (EditText) findViewById(R.id.vendor_item_name_editText);
         vendor_item_price_editText = (EditText) findViewById(R.id.vendor_item_price_editText);
         vendor_item_qty_editText = (EditText) findViewById(R.id.vendor_item_qty_editText);
+        date_of_birth_text = (TextView) findViewById(R.id.date_of_birth_text);
         add_btn = (TextView) findViewById(R.id.add_btn);
         searchForCategories = (LinearLayout) findViewById(R.id.searchForCategories);
+        date_textView = (TextView) findViewById(R.id.date_textView);
         Vendor_category_data_list = new ArrayList<>();
         Vendor_category_data_list.add("Laptop");
         Vendor_category_data_list.add("Tablet");
@@ -180,4 +225,6 @@ public class Vendor_stock_entry extends AppCompatActivity {
         finish();
 
     }
+
+
 }

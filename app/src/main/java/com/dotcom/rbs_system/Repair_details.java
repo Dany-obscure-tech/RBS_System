@@ -103,7 +103,7 @@ public class Repair_details extends AppCompatActivity {
         balanceAmount_TextView = (TextView)findViewById(R.id.balanceAmount_TextView);
         specialConditions_TextView = (TextView)findViewById(R.id.specialConditions_TextView);
 
-        itemName_textView = (TextView)findViewById(R.id.company_name_textView);
+        itemName_textView = (TextView)findViewById(R.id.item_category_textView);
         serialNo_textView = (TextView)findViewById(R.id.serialNo_textView);
         category_textView = (TextView)findViewById(R.id.category_textView);
         condition_textView = (TextView)findViewById(R.id.condition_textView);

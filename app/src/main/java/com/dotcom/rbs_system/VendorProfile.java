@@ -1,5 +1,6 @@
 package com.dotcom.rbs_system;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,7 +18,8 @@ import android.widget.TextView;
  * create an instance of this fragment.
  */
 public class VendorProfile extends Fragment {
-    TextView view_users_btn;
+    TextView view_users_btn,change_passcode_btn,change_passcode_cancel_btn,change_passcode_submit_btn,change_new_passcode_cancel_btn;
+    Dialog change_passcode_alert_dialog,new_passcode_alert_dialog;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -64,12 +67,63 @@ public class VendorProfile extends Fragment {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_vendor_profile, container, false);
         view_users_btn=(TextView)view.findViewById(R.id.view_users_btn);
+        change_passcode_btn=(TextView)view.findViewById(R.id.change_passcode_btn);
+        change_passcode_alert_dialog = new Dialog(getActivity());
+        change_passcode_alert_dialog.setContentView(R.layout.alert_vendor_change_passcode);
+        change_passcode_cancel_btn = (TextView) change_passcode_alert_dialog.findViewById(R.id.change_passcode_cancel_btn);
+        change_passcode_submit_btn = (TextView) change_passcode_alert_dialog.findViewById(R.id.change_passcode_submit_btn);
+        new_passcode_alert_dialog = new Dialog(getActivity());
+        new_passcode_alert_dialog.setContentView(R.layout.alert_vendor_new_passcode);
+        change_new_passcode_cancel_btn = (TextView) new_passcode_alert_dialog.findViewById(R.id.change_new_passcode_cancel_btn);
+
         onclicklistners();
         return view;
     }
 
     private void onclicklistners() {
         view_users_btn_listner();
+        change_passcode_btn_listner();
+        change_passcode_cancel_btn_listner();
+        change_passcode_submit_btn_listner();
+        change_new_passcode_cancel_btn_listner();
+    }
+
+    private void change_new_passcode_cancel_btn_listner() {
+        change_new_passcode_cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new_passcode_alert_dialog.dismiss();
+            }
+        });
+    }
+
+    private void change_passcode_btn_listner() {
+        change_passcode_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_passcode_alert_dialog.show();
+            }
+        });
+    }
+
+    private void change_passcode_cancel_btn_listner() {
+        change_passcode_cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_passcode_alert_dialog.dismiss();
+            }
+        });
+    }
+
+    private void change_passcode_submit_btn_listner() {
+        change_passcode_submit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Yes working", Toast.LENGTH_SHORT).show();
+                new_passcode_alert_dialog.show();
+                change_passcode_alert_dialog.dismiss();
+            }
+        });
     }
 
     private void view_users_btn_listner() {

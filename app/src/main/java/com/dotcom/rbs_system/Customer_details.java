@@ -49,7 +49,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class Customer_details extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class Customer_details extends AppCompatActivity {
 
     RBSCustomerDetails rbsCustomerDetails;
 
@@ -254,16 +254,17 @@ public class Customer_details extends AppCompatActivity implements DatePickerDia
 
         return valid;
     }
+//TODO
 
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
-        date_of_birth_text.setText(currentDateString);
-    }
+//    @Override
+//    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.set(Calendar.YEAR, year);
+//        calendar.set(Calendar.MONTH, month);
+//        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+//        date_of_birth_text.setText(currentDateString);
+//    }
 
     private void detailsSubmit() {
         pd.showProgressBar(Customer_details.this);

@@ -240,7 +240,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         forExchange_textView =(TextView)findViewById(R.id.forExchange_textView);
         suggest_price_TextView = (TextView) findViewById(R.id.suggest_price_TextView);
 
-        itemName_textView = (TextView) findViewById(R.id.company_name_textView);
+        itemName_textView = (TextView) findViewById(R.id.item_category_textView);
         itemID_textView = (TextView) findViewById(R.id.itemID_textView);
         itemPriceCurrency_textView = (TextView) findViewById(R.id.itemPriceCurrency_textView);
         itemPriceCurrency_textView.setText(Currency.getInstance().getCurrency());

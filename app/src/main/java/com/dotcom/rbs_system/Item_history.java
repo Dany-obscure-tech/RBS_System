@@ -77,7 +77,7 @@ public class Item_history extends AppCompatActivity {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void Initialization() {
-        itemName_textView = (TextView)findViewById(R.id.company_name_textView);
+        itemName_textView = (TextView)findViewById(R.id.item_category_textView);
         serialNo_textView = (TextView)findViewById(R.id.serialNo_textView);
         category_textView = (TextView)findViewById(R.id.category_textView);
         condition_textView = (TextView)findViewById(R.id.condition_textView);

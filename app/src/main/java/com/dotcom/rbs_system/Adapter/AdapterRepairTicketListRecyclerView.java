@@ -102,7 +102,7 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
 
             ticketNo_textView = (TextView)itemView.findViewById(R.id.ticketNo_textView);
             customerName_textView = (TextView)itemView.findViewById(R.id.customerName_textView);
-            itemName_textView = (TextView)itemView.findViewById(R.id.company_name_textView);
+            itemName_textView = (TextView)itemView.findViewById(R.id.item_category_textView);
             remove_textView = (TextView)itemView.findViewById(R.id.remove_textView);
 
             leftLayout = (LinearLayout) itemView.findViewById(R.id.leftLayout);
