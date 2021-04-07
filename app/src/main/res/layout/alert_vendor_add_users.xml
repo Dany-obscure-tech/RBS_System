@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000">
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/profile_screen_header">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:text="Add New User"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/add_user_data_fields_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/RBSInvoice_TextViews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_weight="1"
+            android:text="User Category" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/searchForItem_cardView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardBackgroundColor="@color/colorWhite"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:id="@+id/select_user_category"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/user_category_textView"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:text="Select user category ..."
+                        android:textColor="@color/textGrey"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            style="@style/RBSInvoice_TextViews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_weight="1"
+            android:text="User Name" />
+
+        <EditText
+            android:id="@+id/username_editText"
+            style="@style/RBSInvoice_EditTexts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="Enter username ...."
+            android:maxLength="32" />
+
+        <TextView
+            style="@style/RBSInvoice_TextViews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_weight="1"
+            android:text="Phone Number" />
+
+        <EditText
+            android:id="@+id/phone_number_editText"
+            style="@style/RBSInvoice_EditTexts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="Enter phone number ...."
+            android:inputType="numberDecimal"
+            android:maxLength="32" />
+
+        <TextView
+            style="@style/RBSInvoice_TextViews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_weight="1"
+            android:text="Email" />
+
+        <EditText
+            android:id="@+id/email_editText"
+            style="@style/RBSInvoice_EditTexts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="Enter email address ...."
+            android:inputType="textEmailAddress"
+            android:maxLength="32" />
+
+        <TextView
+            style="@style/RBSInvoice_TextViews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_weight="1"
+            android:text="Random Passcode" />
+
+        <EditText
+            android:id="@+id/random_passcode_editText"
+            style="@style/RBSInvoice_EditTexts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="********"
+            android:inputType="textEmailAddress"
+            android:maxLength="32" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_user_data_fields_area"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:weightSum="2"
+        android:paddingBottom="20dp"
+        >
+
+        <TextView
+            android:id="@+id/save_btn"
+            style="@style/RBSInvoice_SaveButtonTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.6"
+            android:text="Save" />
+
+        <TextView
+            android:id="@+id/cancel_btn"
+            style="@style/RBSInvoice_CancelButtonTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="0.6"
+            android:text="Cancel" />
+
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

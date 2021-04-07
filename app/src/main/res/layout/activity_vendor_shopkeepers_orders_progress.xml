@@ -60,7 +60,7 @@
                 android:textSize="25sp" />
 
             <TextView
-                android:id="@+id/shopkeeper_shop_name"
+                android:id="@+id/company_name"
                 style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
                 android:id="@+id/shopkeeper_name_view_cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/shopkeeper_shop_name"
+                android:layout_below="@+id/company_name"
                 android:background="@drawable/ripple_effect_cardview"
                 app:cardBackgroundColor="@color/colorWhite"
                 app:cardCornerRadius="10dp"
@@ -92,7 +92,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/item_category_textView"
+                            android:id="@+id/company_name_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
@@ -108,7 +108,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/shopkeeper_phone_number"
+                android:id="@+id/company_registration_number"
                 style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
                 android:id="@+id/searchForItem_cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/shopkeeper_phone_number"
+                android:layout_below="@+id/company_registration_number"
                 android:background="@drawable/ripple_effect_cardview"
                 app:cardBackgroundColor="@color/colorWhite"
                 app:cardCornerRadius="10dp"
@@ -140,7 +140,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/phone_textView"
+                            android:id="@+id/company_reg_no_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
@@ -156,7 +156,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/shopkeeper_email_number"
+                android:id="@+id/post_code"
                 style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -169,7 +169,7 @@
                 android:id="@+id/shopkeeper_email_cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/shopkeeper_email_number"
+                android:layout_below="@+id/post_code"
                 android:background="@drawable/ripple_effect_cardview"
                 app:cardBackgroundColor="@color/colorWhite"
                 app:cardCornerRadius="10dp"
@@ -188,7 +188,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/email_textView"
+                            android:id="@+id/post_code_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
@@ -204,7 +204,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/shopkeeper_address"
+                android:id="@+id/vendor_address"
                 style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -214,10 +214,10 @@
                 android:text="Address" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/shopkeeper_address_cardView"
+                android:id="@+id/vendor_address_cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/shopkeeper_address"
+                android:layout_below="@+id/vendor_address"
                 android:background="@drawable/ripple_effect_cardview"
                 app:cardBackgroundColor="@color/colorWhite"
                 app:cardCornerRadius="10dp"
@@ -236,7 +236,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/address_textView"
+                            android:id="@+id/vendor_address_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
@@ -256,7 +256,7 @@
                 style="@style/RBSInvoice_TextViews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/shopkeeper_address_cardView"
+                android:layout_below="@+id/vendor_address_cardView"
                 android:layout_marginTop="25dp"
                 android:layout_weight="1"
                 android:background="@color/textBlue"

@@ -1,5 +1,6 @@
 package com.dotcom.rbs_system;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class VendorProfile extends Fragment {
+    TextView view_users_btn;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +62,24 @@ public class VendorProfile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_vendor_profile, container, false);
+        View view=inflater.inflate(R.layout.fragment_vendor_profile, container, false);
+        view_users_btn=(TextView)view.findViewById(R.id.view_users_btn);
+        onclicklistners();
+        return view;
     }
+
+    private void onclicklistners() {
+        view_users_btn_listner();
+    }
+
+    private void view_users_btn_listner() {
+        view_users_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(),Vendor_Users_list.class);
+                startActivity(intent);
+            }
+        });
+    }
+
 }

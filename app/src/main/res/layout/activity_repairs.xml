@@ -287,7 +287,7 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
-                        android:id="@+id/address_textView"
+                        android:id="@+id/vendor_address_textView"
                         android:text="asoidhjas das;djasdd asd;ojkasd a;sdljasd as;sdkjasd  as;djas dpo;oajssdd  asd;pjasd  as;lkdkjjasd ;ojasd"
                         android:textColor="@color/colorPrimaryDark"
                         android:fontFamily="@font/segoe_ui_bold"
@@ -309,7 +309,7 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
-                        android:id="@+id/email_textView"
+                        android:id="@+id/post_code_textView"
                         android:text="asoidhjas das;djasdd asd;ojkasd a;sdljasd as;sdkjasd  as;djas dpo;oajssdd  asd;pjasd  as;lkdkjjasd ;ojasd"
                         android:textColor="@color/colorPrimaryDark"
                         android:fontFamily="@font/segoe_ui_bold"

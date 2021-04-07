@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,8 +74,8 @@ public class Customer_history extends AppCompatActivity {
         customerName_textView = (TextView)findViewById(R.id.customerName_textView);
         customerID_textView = (TextView)findViewById(R.id.customerID_textView);
         phno_textView = (TextView)findViewById(R.id.phno_textView);
-        address_textView = (TextView)findViewById(R.id.address_textView);
-        email_textView = (TextView)findViewById(R.id.email_textView);
+        address_textView = (TextView)findViewById(R.id.vendor_address_textView);
+        email_textView = (TextView)findViewById(R.id.post_code_textView);
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
         edit_btn=(Button)findViewById(R.id.edit_btn);
 

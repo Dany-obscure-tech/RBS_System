@@ -22,12 +22,15 @@
         android:usesCleartextTraffic="true">
 
         <activity
+            android:name=".Vendor_Users_list"
+            android:theme="@style/AppTheme.no" />
+        <activity
             android:name=".Rbs_options"
-            android:theme="@style/AppTheme.no"/>
+            android:theme="@style/AppTheme.no" />
         <activity android:name=".RBS_mainscreen" />
         <activity
             android:name=".Vendor_shopkeepers_orders_progress"
-            android:theme="@style/AppTheme.no"/>
+            android:theme="@style/AppTheme.no" />
         <activity
             android:name=".VendorShopkeepersShopReceipts"
             android:theme="@style/AppTheme.no" />

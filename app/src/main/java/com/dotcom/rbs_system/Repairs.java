@@ -260,8 +260,8 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         notes_textView=(TextView)findViewById(R.id.notes_textView);
         phno_textView=(TextView)findViewById(R.id.phno_textView);
         dob_textView=(TextView)findViewById(R.id.dob_textView);
-        address_textView=(TextView)findViewById(R.id.address_textView);
-        email_textView=(TextView)findViewById(R.id.email_textView);
+        address_textView=(TextView)findViewById(R.id.vendor_address_textView);
+        email_textView=(TextView)findViewById(R.id.post_code_textView);
         ticketNo_TextView = (TextView)findViewById(R.id.ticketNo_TextView);
         ticketNo_TextView.setText(key);
         pendingAgreed_price_textView = (TextView)findViewById(R.id.pendingAgreed_price_textView);

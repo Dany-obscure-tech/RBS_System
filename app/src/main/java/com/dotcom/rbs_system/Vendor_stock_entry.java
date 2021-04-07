@@ -2,7 +2,6 @@ package com.dotcom.rbs_system;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -161,7 +160,7 @@ public class Vendor_stock_entry extends AppCompatActivity {
 
     private void Initialization() {
         back_btn = (ImageButton) findViewById(R.id.back_btn);
-        item_category_textView = (TextView) findViewById(R.id.item_category_textView);
+        item_category_textView = (TextView) findViewById(R.id.company_name_textView);
         vendor_item_name_editText = (EditText) findViewById(R.id.vendor_item_name_editText);
         vendor_item_price_editText = (EditText) findViewById(R.id.vendor_item_price_editText);
         vendor_item_qty_editText = (EditText) findViewById(R.id.vendor_item_qty_editText);

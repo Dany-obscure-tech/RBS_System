@@ -148,9 +148,9 @@ public class Settings extends AppCompatActivity {
         alertEditConditionEnter_btn = editConditionDialog.findViewById(R.id.alertEditConditionEnter_btn);
         alertEditConditionCancel_btn = editConditionDialog.findViewById(R.id.alertEditConditionCancel_btn);
 
-        email_textView = (TextView)findViewById(R.id.email_textView);
+        email_textView = (TextView)findViewById(R.id.post_code_textView);
         phno_textView = (TextView)findViewById(R.id.phno_textView);
-        address_textView = (TextView)findViewById(R.id.address_textView);
+        address_textView = (TextView)findViewById(R.id.vendor_address_textView);
         conditions_textView = (TextView)findViewById(R.id.conditions_textView);
         rbsMessage_textView = (TextView)findViewById(R.id.rbsMessage_textView);
     }

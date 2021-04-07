@@ -65,7 +65,7 @@ public class AdapterAccessoriesPurchaseRecyclerView extends RecyclerView.Adapter
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            itemName_textView = (TextView)itemView.findViewById(R.id.item_category_textView);
+            itemName_textView = (TextView)itemView.findViewById(R.id.company_name_textView);
             category_textView = (TextView)itemView.findViewById(R.id.category_textView);
             priceUnit_textView = (TextView)itemView.findViewById(R.id.priceUnit_textView);
             quantity_textView = (TextView)itemView.findViewById(R.id.quantity_textView);

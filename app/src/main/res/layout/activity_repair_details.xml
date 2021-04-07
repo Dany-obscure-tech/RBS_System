@@ -88,7 +88,7 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
-                        android:id="@+id/item_category_textView"
+                        android:id="@+id/company_name_textView"
                         android:text=""
                         android:textColor="@color/colorPrimaryDark"
                         android:fontFamily="@font/segoe_ui_bold"
@@ -326,7 +326,7 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
-                        android:id="@+id/address_textView"
+                        android:id="@+id/vendor_address_textView"
                         android:textColor="@color/colorPrimaryDark"
                         android:fontFamily="@font/segoe_ui_bold"
                         android:layout_width="wrap_content"
@@ -347,7 +347,7 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
-                        android:id="@+id/email_textView"
+                        android:id="@+id/post_code_textView"
                         android:textColor="@color/colorPrimaryDark"
                         android:fontFamily="@font/segoe_ui_bold"
                         android:layout_width="wrap_content"

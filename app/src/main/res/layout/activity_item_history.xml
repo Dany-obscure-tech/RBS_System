@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/item_category_textView"
+                android:id="@+id/company_name_textView"
                 android:text="Item name"
                 android:textColor="@color/colorPrimaryDark"
                 android:fontFamily="@font/segoe_ui_bold"

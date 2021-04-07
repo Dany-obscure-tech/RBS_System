@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.Adapter_Vendor_inventory_RecyclerView;
 
@@ -73,8 +72,7 @@ public class VendorShop extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_vendor_home, container, false);
-        initialization();
+        View view = inflater.inflate(R.layout.fragment_vendor_shop, container, false);
 
         vendor_inventory_RecyclerView = (RecyclerView) view.findViewById(R.id.vendor_inventory_RecyclerView);
         vendor_inventory_add_btn = (Button) view.findViewById(R.id.vendor_inventory_add_btn);
@@ -89,10 +87,6 @@ public class VendorShop extends Fragment {
         onclicklistners();
 
         return view;
-    }
-
-    private void initialization() {
-
     }
 
     private void onclicklistners() {
