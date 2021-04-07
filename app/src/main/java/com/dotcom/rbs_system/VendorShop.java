@@ -24,6 +24,8 @@ import java.util.List;
  */
 public class VendorShop extends Fragment {
 
+    View view;
+
     RecyclerView vendor_inventory_RecyclerView;
     List<String> vendor_category;
     Button vendor_inventory_add_btn;
@@ -72,8 +74,18 @@ public class VendorShop extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_vendor_shop, container, false);
+        view = inflater.inflate(R.layout.fragment_vendor_shop, container, false);
 
+        Initialize();
+        InitialOperations();
+        Onclicklistners();
+
+        return view;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void Initialize() {
         vendor_inventory_RecyclerView = (RecyclerView) view.findViewById(R.id.vendor_inventory_RecyclerView);
         vendor_inventory_add_btn = (Button) view.findViewById(R.id.vendor_inventory_add_btn);
         vendor_category = new ArrayList<>();
@@ -84,12 +96,17 @@ public class VendorShop extends Fragment {
         vendor_inventory_RecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),1));
         vendor_inventory_RecyclerView.setAdapter(adapter_vendor_inventory_recyclerView);
 
-        onclicklistners();
-
-        return view;
     }
 
-    private void onclicklistners() {
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void InitialOperations() {
+
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void Onclicklistners() {
         vendor_inventory_add_btn_listner();
     }
 

@@ -133,6 +133,8 @@ public class RBSItemDetails {
         return rbsItemDetails;
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     public void uploadNewItemDetails(Context contextt){
         context = contextt;
         idStorageReference = FirebaseStorage.getInstance().getReference().child("Item_Images");
@@ -230,6 +232,10 @@ public class RBSItemDetails {
 
     private void updateStockOwner(String ownerID){
         reference.child("Stock").child("Items").child(key).child("in_stock_of").setValue(ownerID);
+    }
+
+    public void uploadExistingItemDetails(){
+
     }
 
 

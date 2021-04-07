@@ -17,6 +17,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.Button;
@@ -26,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,7 +62,10 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     RBSItemDetails rbsItemDetails;
     RBSCustomerDetails rbsCustomerDetails;
 
-    Boolean isScrolling = false;
+    Boolean isScrolling = false, itemDatafullyloaded = false;
+
+    ProgressBar alert_rbs_itemlist_progressBar;
+
     int currentItems, totalItems, scrollOutItems;
 
     CardView searchForItem_cardView;
@@ -105,6 +110,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
     List<String> exisitngItemsNamesList, exisitngItemsSerialNoList,exisitngItemsKeyIDList,existingItemsPriceList,existingItemsLastActiveList,existingItemsImageUrlList;
+    List<String> lessExisitngItemsNamesList, lessExisitngItemsSerialNoList,lessExisitngItemsKeyIDList,lessExistingItemsPriceList,lessExistingItemsLastActiveList,lessExistingItemsImageUrlList;
     List<String> voucher_number_list,Voucher_amount_list;
     List<String> dateList,lastActiveDatelist;
 
@@ -160,6 +166,9 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         itemList_recyclerView = (RecyclerView)itemList_alert_dialog.findViewById(R.id.itemList_recyclerView);
         itemList_recyclerView.setLayoutManager(new GridLayoutManager(Sale.this,1));
 
+        alert_rbs_itemlist_progressBar = (ProgressBar)itemList_alert_dialog.findViewById(R.id.alert_rbs_itemlist_progressBar);
+
+
         searchForItem_cardView = (CardView)findViewById(R.id.searchForItem_cardView);
 
         reference = FirebaseDatabase.getInstance().getReference();
@@ -177,6 +186,13 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         existingItemsPriceList= new ArrayList<>();
         existingItemsLastActiveList= new ArrayList<>();
         existingItemsImageUrlList= new ArrayList<>();
+
+        lessExisitngItemsNamesList = new ArrayList<>();
+        lessExisitngItemsSerialNoList = new ArrayList<>();
+        lessExisitngItemsKeyIDList = new ArrayList<>();
+        lessExistingItemsPriceList= new ArrayList<>();
+        lessExistingItemsLastActiveList= new ArrayList<>();
+        lessExistingItemsImageUrlList= new ArrayList<>();
 
         exisitngCustomerList = new ArrayList<>();
         exisitngCustomerIDList = new ArrayList<>();
@@ -307,7 +323,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
-                    int i = 0;
+
                     for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                         for (DataSnapshot dataSnapshot2: dataSnapshot1.getChildren()){
                             exisitngItemsNamesList.add(String.valueOf(dataSnapshot2.child("Item_name").getValue()));
@@ -324,8 +340,19 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
                         }
                     }
-                    adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(Sale.this,exisitngItemsNamesList,exisitngItemsSerialNoList,exisitngItemsKeyIDList,existingItemsPriceList,existingItemsLastActiveList,existingItemsImageUrlList);
+                    if (exisitngItemsNamesList.size()>3){
+                        for (int i = 0 ; i<3;i++){
+                            lessExisitngItemsNamesList.add(exisitngItemsNamesList.get(i));
+                            lessExisitngItemsSerialNoList.add(exisitngItemsSerialNoList.get(i));
+                            lessExistingItemsLastActiveList.add(existingItemsLastActiveList.get(i));
+                            lessExistingItemsImageUrlList.add(existingItemsImageUrlList.get(i));
+                            lessExistingItemsPriceList.add(existingItemsPriceList.get(i));
+                            lessExisitngItemsKeyIDList.add(exisitngItemsKeyIDList.get(i));
+                        }
+                    }
+                    adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(Sale.this,lessExisitngItemsNamesList,lessExisitngItemsSerialNoList,lessExisitngItemsKeyIDList,lessExistingItemsPriceList,lessExistingItemsLastActiveList,lessExistingItemsImageUrlList);
                     itemList_recyclerView.setAdapter(adapter_itemList_alert_dialog);
+                    onScrollListner();
                     pd2.dismissProgressBar(Sale.this);
                 }else {
                     pd2.dismissProgressBar(Sale.this);
@@ -538,10 +565,42 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                 currentItems = itemList_recyclerView.getLayoutManager().getChildCount();
                 totalItems = itemList_recyclerView.getLayoutManager().getItemCount();
                 scrollOutItems = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
+                if (isScrolling && (currentItems+scrollOutItems == totalItems)){
+                    isScrolling = false;
+                    fetchDataforRecyclerView();
+                }
             }
         });
     }
 
+    private void fetchDataforRecyclerView() {
+        if (itemDatafullyloaded){
+
+        }else {
+            alert_rbs_itemlist_progressBar.setVisibility(View.VISIBLE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = lessExisitngItemsNamesList.size()-1 ; i<lessExisitngItemsNamesList.size()+2;i++){
+                        if (i<exisitngItemsNamesList.size()){
+                            lessExisitngItemsNamesList.add(exisitngItemsNamesList.get(i));
+                            lessExisitngItemsSerialNoList.add(exisitngItemsSerialNoList.get(i));
+                            lessExistingItemsLastActiveList.add(existingItemsLastActiveList.get(i));
+                            lessExistingItemsImageUrlList.add(existingItemsImageUrlList.get(i));
+                            lessExistingItemsPriceList.add(existingItemsPriceList.get(i));
+                            lessExisitngItemsKeyIDList.add(exisitngItemsKeyIDList.get(i));
+                        }
+
+                    }
+                    adapter_itemList_alert_dialog.notifyDataSetChanged();
+                    alert_rbs_itemlist_progressBar.setVisibility(View.GONE);
+                    itemDatafullyloaded = true;
+                }
+            },3000);
+        }
+
+    }
 
 
     private boolean validateFields() {

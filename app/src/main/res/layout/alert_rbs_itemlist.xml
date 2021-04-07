@@ -39,9 +39,16 @@
 
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/alert_rbs_itemlist_progressBar"
+        android:layout_below="@+id/searchbar_editText"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/itemList_recyclerView"
-        android:layout_below="@+id/searchbar_editText"
+        android:layout_below="@+id/alert_rbs_itemlist_progressBar"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
