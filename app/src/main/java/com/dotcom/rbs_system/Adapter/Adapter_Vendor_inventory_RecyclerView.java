@@ -16,21 +16,21 @@ import java.util.List;
 
 public class Adapter_Vendor_inventory_RecyclerView extends RecyclerView.Adapter<Adapter_Vendor_inventory_RecyclerView.MyViewHolder> {
     Context context;
-    List<String> s_no_vendor_inventory;
-    List<String> accessory_name;
-    List<String> accesory_vendor_inventory;
-    List<String> price_vendor_inventory;
-    List<String> quantity_vendor_inventory;
-    List<String> image_vendor_inventory;
+    List<String> stockSNo_list;
+    List<String> stockName_list;
+    List<String> stockCategory_list;
+    List<String> stockPrice_list;
+    List<String> stockQuantity_list;
+    List<String> stockImageUrl_list;
 
-    public Adapter_Vendor_inventory_RecyclerView(Context context, List<String> s_no_vendor_inventory,List<String>accessory_name, List<String> accesory_vendor_inventory, List<String> price_vendor_inventory,List<String> quantity_vendor_inventory,List<String> image_vendor_inventory) {
+    public Adapter_Vendor_inventory_RecyclerView(Context context, List<String> stockSNo_list, List<String> stockName_list, List<String> stockCategory_list, List<String> stockPrice_list, List<String> quantity_vendor_inventory, List<String> stockImageUrl_list) {
         this.context = context;
-        this.s_no_vendor_inventory = s_no_vendor_inventory;
-        this.accessory_name = accessory_name;
-        this.accesory_vendor_inventory = accesory_vendor_inventory;
-        this.price_vendor_inventory = price_vendor_inventory;
-        this.quantity_vendor_inventory = quantity_vendor_inventory;
-        this.image_vendor_inventory = image_vendor_inventory;
+        this.stockSNo_list = stockSNo_list;
+        this.stockName_list = stockName_list;
+        this.stockCategory_list = stockCategory_list;
+        this.stockPrice_list = stockPrice_list;
+        this.stockQuantity_list = quantity_vendor_inventory;
+        this.stockImageUrl_list = stockImageUrl_list;
     }
 
     @NonNull
@@ -45,28 +45,29 @@ public class Adapter_Vendor_inventory_RecyclerView extends RecyclerView.Adapter<
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.accesory_vendor_inventory.setText(accesory_vendor_inventory.get(position));
+        holder.stockCategory_textView.setText(stockCategory_list.get(position));
     }
 
     @Override
     public int getItemCount() {
 
-        return accesory_vendor_inventory.size();
+        return stockCategory_list.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView image_vendor_inventory;
-        TextView s_no_vendor_inventory,accessory_name,accesory_vendor_inventory,price_vendor_inventory,quantity_vendor_inventory;
+        ImageView stockImage_imageView;
+        TextView stockSNo_textView, stockName_textView, stockCategory_textView, stockPrice_textView, stockQuantity_textView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            s_no_vendor_inventory = (TextView) itemView.findViewById(R.id.s_no_vendor_inventory);
-            accessory_name = (TextView) itemView.findViewById(R.id.accessory_name);
-            accesory_vendor_inventory = (TextView) itemView.findViewById(R.id.accesory_vendor_inventory);
-            price_vendor_inventory = (TextView) itemView.findViewById(R.id.price_vendor_inventory);
-            quantity_vendor_inventory = (TextView) itemView.findViewById(R.id.quantity_vendor_inventory);
-            image_vendor_inventory = (ImageView) itemView.findViewById(R.id.image_vendor_inventory);
+            stockSNo_textView = (TextView) itemView.findViewById(R.id.stockSNo_textView);
+            stockName_textView = (TextView) itemView.findViewById(R.id.stockName_textView);
+            stockCategory_textView = (TextView) itemView.findViewById(R.id.stockCategory_textView);
+            stockPrice_textView = (TextView) itemView.findViewById(R.id.stockPrice_textView);
+            stockQuantity_textView = (TextView) itemView.findViewById(R.id.stockQuantity_textView);
+            
+            stockImage_imageView = (ImageView) itemView.findViewById(R.id.stockImage_imageView);
 
 
         }

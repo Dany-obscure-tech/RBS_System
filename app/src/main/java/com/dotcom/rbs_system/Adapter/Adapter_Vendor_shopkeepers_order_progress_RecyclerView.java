@@ -1,7 +1,6 @@
 package com.dotcom.rbs_system.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.R;
-import com.dotcom.rbs_system.VendorShopkeepersShopReceipts;
-import com.dotcom.rbs_system.Vendor_shopkeepers_orders_progress;
 
 import java.util.List;
 
@@ -58,7 +55,7 @@ public class Adapter_Vendor_shopkeepers_order_progress_RecyclerView extends Recy
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             sr_no_order = (TextView) itemView.findViewById(R.id.sr_no_order);
-            accessory_name = (TextView) itemView.findViewById(R.id.accessory_name);
+            accessory_name = (TextView) itemView.findViewById(R.id.stockName_textView);
             rate_currency = (TextView) itemView.findViewById(R.id.rate_currency);
             rate_price = (TextView) itemView.findViewById(R.id.rate_price);
             order_qty = (TextView) itemView.findViewById(R.id.order_qty);

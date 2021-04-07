@@ -3,6 +3,7 @@ package com.dotcom.rbs_system;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +14,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.dotcom.rbs_system.Adapter.Adapter_Vendor_inventory_RecyclerView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +36,8 @@ public class VendorShop extends Fragment {
     RecyclerView vendor_inventory_RecyclerView;
     List<String> vendor_category;
     Button vendor_inventory_add_btn;
+
+    DatabaseReference vendorStockRef;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -86,22 +95,49 @@ public class VendorShop extends Fragment {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Initialize() {
+        vendorStockRef = FirebaseDatabase.getInstance().getReference("Vendor_stock/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
+
         vendor_inventory_RecyclerView = (RecyclerView) view.findViewById(R.id.vendor_inventory_RecyclerView);
+        vendor_inventory_RecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),1));
+
         vendor_inventory_add_btn = (Button) view.findViewById(R.id.vendor_inventory_add_btn);
+
         vendor_category = new ArrayList<>();
         vendor_category.add("Computer");
         vendor_category.add("Laptop");
-        Adapter_Vendor_inventory_RecyclerView adapter_vendor_inventory_recyclerView=new Adapter_Vendor_inventory_RecyclerView(getActivity(),null,null,vendor_category,null,null,null);
-
-        vendor_inventory_RecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),1));
-        vendor_inventory_RecyclerView.setAdapter(adapter_vendor_inventory_recyclerView);
 
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void InitialOperations() {
+        fetchStock();
+    }
 
+    private void fetchStock() {
+        vendorStockRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot1:snapshot.getChildren()){
+
+                    for (DataSnapshot dataSnapshot2:dataSnapshot1.getChildren()){
+                        vendor_category.add(dataSnapshot2.child("Category").getValue().toString());
+                    }
+
+                }
+
+
+                Adapter_Vendor_inventory_RecyclerView adapter_vendor_inventory_recyclerView=new Adapter_Vendor_inventory_RecyclerView(getActivity(),null,null,vendor_category,null,null,null);
+                vendor_inventory_RecyclerView.setAdapter(adapter_vendor_inventory_recyclerView);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

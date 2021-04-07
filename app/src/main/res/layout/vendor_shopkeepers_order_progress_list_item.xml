@@ -54,7 +54,7 @@
                 android:padding="5dp">
 
                 <TextView
-                    android:id="@+id/accessory_name"
+                    android:id="@+id/stockName_textView"
                     style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

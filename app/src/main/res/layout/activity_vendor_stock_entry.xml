@@ -58,7 +58,6 @@
                 android:layout_weight="1"
                 android:text="Category" />
 
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/searchForItem_cardView"
                 android:layout_width="match_parent"
@@ -175,7 +174,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false" />
-
 
             <ImageView
                 android:id="@+id/id_imageView"
