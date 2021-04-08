@@ -20,7 +20,7 @@ public class VendorShopkeepersShopReceipts extends AppCompatActivity {
     TextView vendor_shop_name;
     ImageButton back_btn;
     RecyclerView shopkeeper_invoices_recyclerview;
-    List<String> shopkeeper_paid;
+    List<String> shopkeeper_invoice_no,amount_currency,amount_price,invoice_date,balance_currency,shopkeeper_balance,paid_currency,shopkeeper_paid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,14 @@ public class VendorShopkeepersShopReceipts extends AppCompatActivity {
         vendor_shop_name=(TextView)findViewById(R.id.vendor_shop_name);
         back_btn=(ImageButton)findViewById(R.id.back_btn);
         shopkeeper_invoices_recyclerview=(RecyclerView) findViewById(R.id.shopkeeper_invoices_recyclerview);
+        shopkeeper_invoice_no=new ArrayList<>();
+        amount_currency=new ArrayList<>();
+        amount_price=new ArrayList<>();
+        invoice_date=new ArrayList<>();
+        balance_currency=new ArrayList<>();
+        shopkeeper_balance=new ArrayList<>();
+        paid_currency=new ArrayList<>();
+        shopkeeper_balance=new ArrayList<>();
         shopkeeper_paid=new ArrayList<>();
         shopkeeper_paid.add("ITECH Computers");
         shopkeeper_paid.add("Forex Trading");

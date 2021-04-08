@@ -18,6 +18,7 @@ import android.widget.Toast;
  * create an instance of this fragment.
  */
 public class VendorProfile extends Fragment {
+    View view;
     TextView view_users_btn,change_passcode_btn,change_passcode_cancel_btn,change_passcode_submit_btn,change_new_passcode_cancel_btn;
     Dialog change_passcode_alert_dialog,new_passcode_alert_dialog;
 
@@ -65,7 +66,14 @@ public class VendorProfile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_vendor_profile, container, false);
+        view=inflater.inflate(R.layout.fragment_vendor_profile, container, false);
+        initialization();
+        onclicklistners();
+
+        return view;
+    }
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+    private void initialization() {
         view_users_btn=(TextView)view.findViewById(R.id.view_users_btn);
         change_passcode_btn=(TextView)view.findViewById(R.id.change_passcode_btn);
         change_passcode_alert_dialog = new Dialog(getActivity());
@@ -76,10 +84,8 @@ public class VendorProfile extends Fragment {
         new_passcode_alert_dialog.setContentView(R.layout.alert_vendor_new_passcode);
         change_new_passcode_cancel_btn = (TextView) new_passcode_alert_dialog.findViewById(R.id.change_new_passcode_cancel_btn);
 
-        onclicklistners();
-        return view;
     }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////
     private void onclicklistners() {
         view_users_btn_listner();
         change_passcode_btn_listner();
@@ -119,7 +125,6 @@ public class VendorProfile extends Fragment {
         change_passcode_submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Yes working", Toast.LENGTH_SHORT).show();
                 new_passcode_alert_dialog.show();
                 change_passcode_alert_dialog.dismiss();
             }

@@ -27,7 +27,7 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 public class Vendor_Users_list extends AppCompatActivity {
 
     RecyclerView users_list_recyclerview;
-    List<String> user_name;
+    List<String> user_category, user_name, user_phone_number, user_email;
     ImageButton back_btn;
     TextView add_users_btn, cancel_btn;
     Dialog add_user_alert_dialog;
@@ -59,7 +59,30 @@ public class Vendor_Users_list extends AppCompatActivity {
         users_list_recyclerview.setLayoutManager(new GridLayoutManager(Vendor_Users_list.this, 1));
         users_list_recyclerview.setAdapter(adapter_vendor_users_list_recyclerView);
     }
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    private void initialization() {
+        users_list_recyclerview = (RecyclerView) findViewById(R.id.users_list_recyclerview);
+        back_btn = (ImageButton) findViewById(R.id.back_btn);
+        add_users_btn = (TextView) findViewById(R.id.add_users_btn);
+        user_category = new ArrayList<>();
+        user_name = new ArrayList<>();
+        user_phone_number = new ArrayList<>();
+        user_email = new ArrayList<>();
+        user_name.add("Mehmood");
+        user_name.add("Amjad");
+        user_name.add("Ali");
+        add_user_alert_dialog = new Dialog(this);
+        add_user_alert_dialog.setContentView(R.layout.alert_vendor_add_users);
+        select_user_category = (LinearLayout) add_user_alert_dialog.findViewById(R.id.select_user_category);
+        user_category_textView = (TextView) add_user_alert_dialog.findViewById(R.id.user_category_textView);
+        cancel_btn = (TextView) add_user_alert_dialog.findViewById(R.id.cancel_btn);
+
+        user_category_list = new ArrayList<>();
+        user_category_list.add("Data Entry");
+        user_category_list.add("Salesman");
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
     private void onclicklistners() {
         back_btn_listner();
         add_users_btn_listner();
@@ -109,7 +132,6 @@ public class Vendor_Users_list extends AppCompatActivity {
             }
         });
     }
-
     private void back_btn_listner() {
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,26 +139,5 @@ public class Vendor_Users_list extends AppCompatActivity {
                 finish();
             }
         });
-    }
-
-    private void initialization() {
-        users_list_recyclerview = (RecyclerView) findViewById(R.id.users_list_recyclerview);
-        back_btn = (ImageButton) findViewById(R.id.back_btn);
-        add_users_btn = (TextView) findViewById(R.id.add_users_btn);
-        user_name = new ArrayList<>();
-        user_name.add("Mehmood");
-        user_name.add("Amjad");
-        user_name.add("Ali");
-        add_user_alert_dialog = new Dialog(this);
-
-
-        add_user_alert_dialog.setContentView(R.layout.alert_vendor_add_users);
-        select_user_category = (LinearLayout) add_user_alert_dialog.findViewById(R.id.select_user_category);
-        user_category_textView = (TextView) add_user_alert_dialog.findViewById(R.id.user_category_textView);
-        cancel_btn = (TextView) add_user_alert_dialog.findViewById(R.id.cancel_btn);
-
-        user_category_list = new ArrayList<>();
-        user_category_list.add("Data Entry");
-        user_category_list.add("Salesman");
     }
 }

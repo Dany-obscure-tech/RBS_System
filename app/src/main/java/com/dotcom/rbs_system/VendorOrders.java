@@ -22,8 +22,10 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class VendorOrders extends Fragment {
+
+    View view;
     RecyclerView orders_list_recyclerview;
-    List<String> shop_name,order_no_vendor;
+    List<String> order_no_vendor,shop_name,price_currency,vendor_order_price,paid_currency,vendor_order_paid,balance_currency,vendor_order_status;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,19 +71,38 @@ public class VendorOrders extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_vendor_orders, container, false);
+        view= inflater.inflate(R.layout.fragment_vendor_orders, container, false);
+        initialization();
+        onclicklistners();
+
+
+        return view;
+    }
+////////////////////////////////////////////////////////////////////////////////////////
+    private void onclicklistners() {
+
+    }
+///////////////////////////////////////////////////////////////////////////////////////
+    private void initialization() {
+
         orders_list_recyclerview = (RecyclerView) view.findViewById(R.id.orders_list_recyclerview);
-        shop_name = new ArrayList<>();
         order_no_vendor = new ArrayList<>();
+        shop_name = new ArrayList<>();
+        price_currency = new ArrayList<>();
+        vendor_order_price = new ArrayList<>();
+        paid_currency = new ArrayList<>();
+        vendor_order_paid = new ArrayList<>();
+        balance_currency = new ArrayList<>();
+        vendor_order_status = new ArrayList<>();
+
+
         shop_name.add("ITECH Computers");
         shop_name.add("Forex Trading");
-        order_no_vendor.add("ITECH Computers");
-        order_no_vendor.add("Forex Trading");
+        order_no_vendor.add("10002");
+        order_no_vendor.add("10003");
         Adapter_Vendor_order_list_RecyclerView adapter_vendor_order_list_recyclerView=new Adapter_Vendor_order_list_RecyclerView(getActivity(),order_no_vendor,shop_name,null,null,null,null,null,null);
 
         orders_list_recyclerview.setLayoutManager(new GridLayoutManager(getActivity(),1));
         orders_list_recyclerview.setAdapter(adapter_vendor_order_list_recyclerView);
-
-        return view;
     }
 }

@@ -17,6 +17,10 @@
             android:icon="@drawable/ic_baseline_account_circle_24"
             android:title="Profile" />
         <item
+            android:id="@+id/nav_inbox"
+            android:icon="@drawable/ic_baseline_message_24"
+            android:title="Inbox" />
+        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_baseline_login_24"
             android:title="Logout" />

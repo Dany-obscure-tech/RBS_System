@@ -56,6 +56,11 @@ public class VendorMainScreen extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,new VendorProfile()).commit();
                         closeDrawer();
                         break;
+                    case R.id.nav_inbox:
+//                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,new VendorProfile()).commit();
+                        closeDrawer();
+                        break;
+
                     case R.id.nav_logout:
                         FirebaseAuth.getInstance().signOut();
                         Intent intent1 = new Intent(VendorMainScreen.this,SignInActivity.class);

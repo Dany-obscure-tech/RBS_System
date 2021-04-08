@@ -20,7 +20,7 @@ public class Vendor_shopkeepers_orders_progress extends AppCompatActivity {
     TextView shop_name;
     ImageButton back_btn;
     RecyclerView shopkeeper_invoice_details_recyclerview;
-    List<String> accessory_name;
+    List<String> sr_no_order,accessory_name,rate_currency,rate_price,order_qty,total_price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,12 @@ public class Vendor_shopkeepers_orders_progress extends AppCompatActivity {
         shopkeeper_invoice_details_recyclerview=(RecyclerView)findViewById(R.id.shopkeeper_invoice_details_recyclerview);
         shop_name=(TextView)findViewById(R.id.shop_name);
         back_btn=(ImageButton)findViewById(R.id.back_btn);
+        sr_no_order=new ArrayList<>();
         accessory_name=new ArrayList<>();
+        rate_currency=new ArrayList<>();
+        rate_price=new ArrayList<>();
+        order_qty=new ArrayList<>();
+        total_price=new ArrayList<>();
         accessory_name.add("Samsung Note 8 Screen");
         accessory_name.add("Samsung Note 7 Screen");
         accessory_name.add("Samsung Note 10 Screen");
