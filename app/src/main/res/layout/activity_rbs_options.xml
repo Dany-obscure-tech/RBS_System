@@ -258,7 +258,8 @@
                         android:weightSum="2"
                         android:orientation="horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal">
 
 
                         <androidx.cardview.widget.CardView
@@ -285,7 +286,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerHorizontal="true"
                                     android:background="#00000000"
-                                    android:src="@drawable/sale" />
+                                    android:src="@drawable/marketstore" />
 
                                 <TextView
                                     android:textColor="#2EA4CF"
@@ -295,7 +296,7 @@
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="8dp"
                                     android:layout_marginBottom="8dp"
-                                    android:text="Buy Local"
+                                    android:text="Vendor"
                                     android:textSize="13.5sp" />
 
                             </RelativeLayout>
@@ -309,6 +310,7 @@
                             android:layout_marginStart="44dp"
                             android:layout_marginLeft="44dp"
                             app:cardBackgroundColor="#F1F1F1"
+                            android:visibility="gone"
                             app:cardCornerRadius="10dp"
                             app:cardElevation="4dp"
                             android:background="@drawable/main_button"
