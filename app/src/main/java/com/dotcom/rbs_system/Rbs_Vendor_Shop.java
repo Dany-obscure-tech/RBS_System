@@ -112,11 +112,15 @@ public class Rbs_Vendor_Shop extends Fragment {
         vendor_stock_imageView = new ArrayList<>();
         vendor_stock_selection_checkbox = new ArrayList<>();
         vendors_name_list = new ArrayList<>();
+        vendor_stock_category_textView.add("Mobile");
         vendor_stockName_textView.add("Samsung C7 Screens");
+        vendor_stock_currency_textview.add("$");
+        vendor_stock_price_textview.add("1000455");
+        vendor_stock_quantity_textView.add("10");
         vendors_name_list.add("Itech Computers");
         vendors_name_list.add("Phi Computers");
         vendor_stock_imageView.add("https://samsungmobilespecs.com/wp-content/uploads/2018/03/Samsung-Galaxy-C7-Price-Specs-featured-581x571.jpg");
-        Adapter_RBS_Vendor_inventory_RecyclerView adapter_rbs_vendor_inventory_recyclerView=new Adapter_RBS_Vendor_inventory_RecyclerView(getActivity(),null,vendor_stockName_textView,null,null,null,vendor_stock_imageView,null);
+        Adapter_RBS_Vendor_inventory_RecyclerView adapter_rbs_vendor_inventory_recyclerView=new Adapter_RBS_Vendor_inventory_RecyclerView(getActivity(),vendor_stock_category_textView,vendor_stockName_textView,vendor_stock_currency_textview,vendor_stock_price_textview,vendor_stock_quantity_textView,vendor_stock_imageView,null);
 
         rbs_vendor_products_recyclerview.setLayoutManager(new GridLayoutManager(getActivity(),1));
         rbs_vendor_products_recyclerview.setAdapter(adapter_rbs_vendor_inventory_recyclerView);

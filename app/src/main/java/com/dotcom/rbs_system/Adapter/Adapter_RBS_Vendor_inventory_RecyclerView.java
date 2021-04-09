@@ -49,7 +49,11 @@ public class Adapter_RBS_Vendor_inventory_RecyclerView extends RecyclerView.Adap
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        holder.vendor_stock_category_textView.setText(vendor_stock_category_textView.get(position));
         holder.vendor_stockName_textView.setText(vendor_stockName_textView.get(position));
+        holder.vendor_stock_currency_textview.setText(vendor_stock_currency_textview.get(position));
+        holder.vendor_stock_price_textview.setText(vendor_stock_price_textview.get(position));
+        holder.vendor_stock_quantity_textView.setText(vendor_stock_quantity_textView.get(position));
         Picasso.get().load(vendor_stock_imageView.get(position)).into(holder.vendor_stock_imageView);
     }
 
@@ -69,7 +73,7 @@ public class Adapter_RBS_Vendor_inventory_RecyclerView extends RecyclerView.Adap
             super(itemView);
             vendor_stock_category_textView = (TextView) itemView.findViewById(R.id.vendor_stock_category_textView);
             vendor_stockName_textView = (TextView) itemView.findViewById(R.id.vendor_stockName_textView);
-            vendor_stock_currency_textview = (TextView) itemView.findViewById(R.id.stockCategory_textView);
+            vendor_stock_currency_textview = (TextView) itemView.findViewById(R.id.vendor_stock_currency_textview);
             vendor_stock_price_textview = (TextView) itemView.findViewById(R.id.vendor_stock_price_textview);
             vendor_stock_quantity_textView = (TextView) itemView.findViewById(R.id.vendor_stock_quantity_textView);
             vendor_stock_imageView = (ImageView) itemView.findViewById(R.id.vendor_stock_imageView);
