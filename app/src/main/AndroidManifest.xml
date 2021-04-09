@@ -20,8 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".RBS_Vendor_HomeScreen"/>
+        <activity android:name=".Rbs_vendor_order"></activity>
+        <activity android:name=".RBS_Vendor_HomeScreen" />
         <activity
             android:name=".Vendor_Users_list"
             android:theme="@style/AppTheme.no" />
