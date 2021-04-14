@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -15,9 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.dotcom.rbs_system.Adapter.AdapterCategoryRecyclerView;
 import com.dotcom.rbs_system.Adapter.AdapterOffersItemListRecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -88,7 +85,7 @@ public class Profile extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        profileImage=(ImageView)view.findViewById(R.id.profileImage);
+        profileImage=(ImageView)view.findViewById(R.id.profileImage_imageView);
         idImage=(ImageView)view.findViewById(R.id.idImage);
         name=(TextView)view.findViewById(R.id.name);
         phno=(TextView)view.findViewById(R.id.phno);

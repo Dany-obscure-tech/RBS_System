@@ -84,7 +84,7 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
         sell_offer_btn = (Button)findViewById(R.id.sell_offer_btn);
         date_textView = (TextView)findViewById(R.id.date_textView);
         product_offer_msg = (TextView)findViewById(R.id.product_offer_msg);
-        profileImage = (ImageView)findViewById(R.id.profileImage);
+        profileImage = (ImageView)findViewById(R.id.profileImage_imageView);
 
         itemRef = FirebaseDatabase.getInstance().getReference("Items/" + category + "/" + productID);
         agreedOfferRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+ category + "/" + productID+"/Accepted_Offer");

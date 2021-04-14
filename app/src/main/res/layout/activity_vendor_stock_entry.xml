@@ -117,6 +117,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:layout_weight="1"
+                android:text="Serial No" />
+
+            <EditText
+                android:id="@+id/vendor_sno_editText"
+                style="@style/RBSInvoice_EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="Enter item sno..."
+                android:maxLength="32" />
+
+            <TextView
+                style="@style/RBSInvoice_TextViews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_weight="1"
                 android:text="Price" />
 
             <EditText
@@ -151,21 +168,6 @@
                     android:hint="Enter item quantity..."
                     android:inputType="number" />
 
-                <TextView
-                    android:id="@+id/datebtn_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/profile_screen_header"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="Edit"
-                    android:textColor="#ffff"
-                    android:textSize="15sp" />
-
             </LinearLayout>
 
             <TextView
@@ -182,7 +184,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/date_of_birth_text"
+                    android:id="@+id/invoiceDate_textView"
                     android:layout_weight="1.9"
                     android:textColor="#9F9F9F"
                     android:fontFamily="@font/segoe_ui"
@@ -211,22 +213,15 @@
             </LinearLayout>
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/itemImage_recyclerView"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_imageView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false" />
-
-            <ImageView
-                android:id="@+id/id_imageView"
-                android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_weight="1.9"
-                android:adjustViewBounds="true"
-                android:visibility="gone" />
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp" />
 
             <TextView
-                android:id="@+id/uploadId_textView"
+                android:id="@+id/uploadImage_textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/profile_screen_header"
@@ -246,7 +241,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:text="ADD" />
+                android:text="Add" />
 
         </LinearLayout>
 

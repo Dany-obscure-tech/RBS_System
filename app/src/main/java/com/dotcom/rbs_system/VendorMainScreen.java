@@ -84,11 +84,18 @@ public class VendorMainScreen extends AppCompatActivity {
             }
         });
     }
+
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if(t.onOptionsItemSelected(item))
             return true;
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        recreate();
     }
 }

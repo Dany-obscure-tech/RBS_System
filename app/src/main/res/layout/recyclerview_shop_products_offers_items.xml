@@ -38,8 +38,8 @@
                 android:layout_height="120dp"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profileImage"
-                android:layout_below="@+id/store_banner"
+                android:id="@+id/profileImage_imageView"
+                android:layout_below="@+id/store_banner_imageView"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"

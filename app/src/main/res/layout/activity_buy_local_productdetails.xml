@@ -270,7 +270,7 @@
                 android:weightSum="3">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profileImage"
+                    android:id="@+id/profileImage_imageView"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center"

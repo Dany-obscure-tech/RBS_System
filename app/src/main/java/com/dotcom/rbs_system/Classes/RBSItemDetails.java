@@ -175,6 +175,7 @@ public class RBSItemDetails {
         reference.child("Items").child(itemCategory).child(key).child("key_id").setValue(key);
         reference.child("Items").child(itemCategory).child(key).child("No_of_images").setValue(String.valueOf(imageUrlList.size()));
 
+
         for (i = 0; i<imageUrlList.size();i++) {
 
             key2 = reference.push().getKey();

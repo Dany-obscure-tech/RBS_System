@@ -84,7 +84,7 @@ public class AdapterProductsOffersListRecyclerView extends  RecyclerView.Adapter
             product_orignal_price = (TextView) itemView.findViewById(R.id.product_orignal_price);
             product_offer_msg = (TextView) itemView.findViewById(R.id.product_offer_msg);
             product_image = (ImageView) itemView.findViewById(R.id.product_image);
-            profileImage = (ImageView) itemView.findViewById(R.id.profileImage);
+            profileImage = (ImageView) itemView.findViewById(R.id.profileImage_imageView);
         }
     }
 }

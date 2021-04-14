@@ -10,7 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -45,7 +47,15 @@ public class Adapter_Vendor_inventory_RecyclerView extends RecyclerView.Adapter<
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        holder.stockSNo_textView.setText(stockSNo_list.get(position));
+        holder.stockName_textView.setText(stockName_list.get(position));
         holder.stockCategory_textView.setText(stockCategory_list.get(position));
+        holder.stockPrice_textView.setText(stockPrice_list.get(position));
+        holder.stockQuantity_textView.setText(stockQuantity_list.get(position));
+
+        holder.currency_textView.setText(Currency.getInstance().getCurrency());
+
+        Picasso.get().load(stockImageUrl_list.get(position)).into(holder.stockImage_imageView);
     }
 
     @Override
@@ -58,6 +68,7 @@ public class Adapter_Vendor_inventory_RecyclerView extends RecyclerView.Adapter<
 
         ImageView stockImage_imageView;
         TextView stockSNo_textView, stockName_textView, stockCategory_textView, stockPrice_textView, stockQuantity_textView;
+        TextView currency_textView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,7 +77,9 @@ public class Adapter_Vendor_inventory_RecyclerView extends RecyclerView.Adapter<
             stockCategory_textView = (TextView) itemView.findViewById(R.id.stockCategory_textView);
             stockPrice_textView = (TextView) itemView.findViewById(R.id.stockPrice_textView);
             stockQuantity_textView = (TextView) itemView.findViewById(R.id.stockQuantity_textView);
-            
+
+            currency_textView = (TextView) itemView.findViewById(R.id.currency_textView);
+
             stockImage_imageView = (ImageView) itemView.findViewById(R.id.stockImage_imageView);
 
 

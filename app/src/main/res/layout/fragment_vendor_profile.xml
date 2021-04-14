@@ -28,25 +28,40 @@
                 android:textSize="30sp" />
 
             <ImageView
-                android:id="@+id/store_banner"
+                android:id="@+id/store_banner_imageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/profile_title"
                 android:scaleType="fitXY"
                 android:src="@drawable/store_image" />
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profileImage_imageView"
+                android:layout_below="@+id/store_banner_imageView"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                app:civ_border_width="0dp"
+                android:src="@drawable/profile_icon"
+                android:layout_centerHorizontal="true"
+                app:civ_border_color="#4A4A4A"
+                android:layout_weight="0.5"
+                />
+
 
             <TextView
                 android:id="@+id/shop_name"
+                android:layout_below="@+id/profileImage_imageView"
+                android:layout_marginTop="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/store_banner"
-                android:layout_centerHorizontal="true"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:padding="5dp"
                 android:text="HP Store"
+                android:padding="5dp"
+                android:layout_centerHorizontal="true"
                 android:textColor="@color/textGrey"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:fontFamily="@font/segoe_ui_bold"
+                />
 
             <TextView
                 android:id="@+id/edit_banner_btn"
@@ -85,20 +100,68 @@
                     android:textSize="25sp" />
 
                 <TextView
-                    android:id="@+id/username_name"
+                    android:id="@+id/app_regno"
                     style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/vendor_shop_details_textview"
                     android:layout_marginTop="25dp"
                     android:layout_weight="1"
-                    android:text="Username" />
+                    android:text="App reg no" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/appRegNo_view_cardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/app_regno"
+                    android:background="@drawable/ripple_effect_cardview"
+                    app:cardBackgroundColor="@color/colorWhite"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="4dp"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:id="@+id/appRegNo_name_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="15dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/appRegNo_textView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:fontFamily="@font/segoe_ui_bold"
+                                android:text="ID12345"
+                                android:textColor="@color/textGrey"
+                                android:textSize="18sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/name_name"
+                    style="@style/RBSInvoice_TextViews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/appRegNo_view_cardView"
+                    android:layout_marginTop="25dp"
+                    android:layout_weight="1"
+                    android:text="User Name" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/username_view_cardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/username_name"
+                    android:layout_below="@+id/name_name"
                     android:background="@drawable/ripple_effect_cardview"
                     app:cardBackgroundColor="@color/colorWhite"
                     app:cardCornerRadius="10dp"
@@ -117,7 +180,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/username_textView"
+                                android:id="@+id/name_textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
@@ -165,7 +228,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/item_category_textView"
+                                android:id="@+id/company_name_textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
@@ -498,7 +561,7 @@
                     >
 
                     <TextView
-                        android:id="@+id/update_vendor_details_btn"
+                        android:id="@+id/edit_vendor_details_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -509,7 +572,7 @@
                         android:paddingTop="10dp"
                         android:paddingRight="10dp"
                         android:paddingBottom="10dp"
-                        android:text="Update Details"
+                        android:text="Edit Details"
                         android:textAlignment="center"
                         android:textColor="#ffff"
                         android:textSize="15sp" />

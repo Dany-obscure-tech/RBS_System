@@ -2,14 +2,12 @@ package com.dotcom.rbs_system.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -109,7 +107,7 @@ public class AdapterProductsOffersReceivedListRecyclerView extends  RecyclerView
             accept_offer_btn = (Button) itemView.findViewById(R.id.accept_offer_btn);
             date_textView = (TextView) itemView.findViewById(R.id.date_textView);
             product_offer_msg = (TextView) itemView.findViewById(R.id.product_offer_msg);
-            profileImage = (ImageView) itemView.findViewById(R.id.profileImage);
+            profileImage = (ImageView) itemView.findViewById(R.id.profileImage_imageView);
         }
     }
 }

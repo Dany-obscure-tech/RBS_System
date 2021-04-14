@@ -113,7 +113,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
 
         imageSlider = (CardView) findViewById(R.id.imageSlider);
         back_btn = (ImageButton) findViewById(R.id.back_btn);
-        profileImage = (ImageView) findViewById(R.id.profileImage);
+        profileImage = (ImageView) findViewById(R.id.profileImage_imageView);
         share_textview = (TextView) findViewById(R.id.share_textview);
         report_textView = (TextView) findViewById(R.id.report_textView);
         distance_textView = (TextView) findViewById(R.id.distance_textView);

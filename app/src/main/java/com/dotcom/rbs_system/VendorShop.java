@@ -31,11 +31,20 @@ import java.util.List;
  */
 public class VendorShop extends Fragment {
 
+    Adapter_Vendor_inventory_RecyclerView adapter_vendor_inventory_recyclerView;
+
     View view;
 
     RecyclerView vendor_inventory_RecyclerView;
-    List<String> vendor_category;
+
+    List<String> stockSNo_list;
+    List<String> stockName_list;
+    List<String> stockCategory_list;
+    List<String> stockPrice_list;
+    List<String> stockQuantity_list;
+    List<String> stockImageUrl_list;
     Button vendor_inventory_add_btn;
+
 
     DatabaseReference vendorStockRef;
 
@@ -102,9 +111,13 @@ public class VendorShop extends Fragment {
 
         vendor_inventory_add_btn = (Button) view.findViewById(R.id.vendor_inventory_add_btn);
 
-        vendor_category = new ArrayList<>();
-        vendor_category.add("Computer");
-        vendor_category.add("Laptop");
+        stockCategory_list = new ArrayList<>();
+        stockSNo_list = new ArrayList<>();
+        stockName_list = new ArrayList<>();
+        stockCategory_list = new ArrayList<>();
+        stockPrice_list = new ArrayList<>();
+        stockQuantity_list = new ArrayList<>();
+        stockImageUrl_list = new ArrayList<>();
 
     }
 
@@ -122,13 +135,18 @@ public class VendorShop extends Fragment {
                 for (DataSnapshot dataSnapshot1:snapshot.getChildren()){
 
                     for (DataSnapshot dataSnapshot2:dataSnapshot1.getChildren()){
-                        vendor_category.add(dataSnapshot2.child("Category").getValue().toString());
+                        stockSNo_list.add(dataSnapshot2.child("Sno").getValue().toString());
+                        stockName_list.add(dataSnapshot2.child("Name").getValue().toString());
+                        stockCategory_list.add(dataSnapshot2.child("Category").getValue().toString());
+                        stockPrice_list.add(dataSnapshot2.child("Price").getValue().toString());
+                        stockQuantity_list.add(dataSnapshot2.child("Quantity").getValue().toString());
+                        stockImageUrl_list.add(dataSnapshot2.child("Image_url").getValue().toString());
                     }
 
                 }
 
 
-                Adapter_Vendor_inventory_RecyclerView adapter_vendor_inventory_recyclerView=new Adapter_Vendor_inventory_RecyclerView(getActivity(),null,null,vendor_category,null,null,null);
+                adapter_vendor_inventory_recyclerView = new Adapter_Vendor_inventory_RecyclerView(getActivity(),stockSNo_list,stockName_list, stockCategory_list,stockPrice_list,stockQuantity_list,stockImageUrl_list);
                 vendor_inventory_RecyclerView.setAdapter(adapter_vendor_inventory_recyclerView);
 
             }
@@ -156,4 +174,5 @@ public class VendorShop extends Fragment {
             }
         });
     }
+
 }

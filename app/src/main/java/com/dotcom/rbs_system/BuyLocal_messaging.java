@@ -5,20 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterMessageRecyclerView;
-import com.dotcom.rbs_system.Adapter.SliderAdapterExample;
 import com.dotcom.rbs_system.Model.Data_model_chat;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -99,7 +94,7 @@ public class BuyLocal_messaging extends AppCompatActivity {
 
         user2Name_textView = (TextView) findViewById(R.id.user2Name_textView);
 
-        profileImage = (ImageView) findViewById(R.id.profileImage);
+        profileImage = (ImageView) findViewById(R.id.profileImage_imageView);
 
         messageSend_button = (ImageButton) findViewById(R.id.messageSend_button);
         back_btn = (ImageButton) findViewById(R.id.back_btn);

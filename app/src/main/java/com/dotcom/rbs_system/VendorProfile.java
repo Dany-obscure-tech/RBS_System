@@ -4,13 +4,22 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,9 +27,13 @@ import android.widget.Toast;
  * create an instance of this fragment.
  */
 public class VendorProfile extends Fragment {
+    DatabaseReference userDataRef;
     View view;
     TextView view_users_btn,change_passcode_btn,change_passcode_cancel_btn,change_passcode_submit_btn,change_new_passcode_cancel_btn;
     Dialog change_passcode_alert_dialog,new_passcode_alert_dialog;
+
+    TextView appRegNo_textView, name_textView, company_name_textView,company_reg_no_textView,post_code_textView,vendor_address_textView,vendor_phone_textView,vendor_mobile_textView,vendor_email_textView,vendor_url_textView;
+    ImageView profileImage_imageView,store_banner_imageView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,12 +81,30 @@ public class VendorProfile extends Fragment {
         // Inflate the layout for this fragment
         view=inflater.inflate(R.layout.fragment_vendor_profile, container, false);
         initialization();
+        datafetch();
         onclicklistners();
 
         return view;
     }
-///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
     private void initialization() {
+        userDataRef = FirebaseDatabase.getInstance().getReference("Users_data/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        appRegNo_textView = (TextView)view.findViewById(R.id.appRegNo_textView);
+        name_textView = (TextView)view.findViewById(R.id.name_textView);
+        company_name_textView = (TextView)view.findViewById(R.id.company_name_textView);
+        company_reg_no_textView = (TextView)view.findViewById(R.id.company_reg_no_textView);
+        post_code_textView = (TextView)view.findViewById(R.id.post_code_textView);
+        vendor_address_textView = (TextView)view.findViewById(R.id.vendor_address_textView);
+        vendor_phone_textView = (TextView)view.findViewById(R.id.vendor_phone_textView);
+        vendor_mobile_textView = (TextView)view.findViewById(R.id.vendor_mobile_textView);
+        vendor_email_textView = (TextView)view.findViewById(R.id.vendor_email_textView);
+        vendor_url_textView = (TextView)view.findViewById(R.id.vendor_url_textView);
+
+        profileImage_imageView = (ImageView) view.findViewById(R.id.profileImage_imageView);
+        store_banner_imageView = (ImageView)view.findViewById(R.id.store_banner_imageView);
+
         view_users_btn=(TextView)view.findViewById(R.id.view_users_btn);
         change_passcode_btn=(TextView)view.findViewById(R.id.change_passcode_btn);
         change_passcode_alert_dialog = new Dialog(getActivity());
@@ -85,7 +116,41 @@ public class VendorProfile extends Fragment {
         change_new_passcode_cancel_btn = (TextView) new_passcode_alert_dialog.findViewById(R.id.change_new_passcode_cancel_btn);
 
     }
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void datafetch() {
+        userDataRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    name_textView.setText(dataSnapshot.child("fullname").getValue().toString());
+                    vendor_address_textView.setText(dataSnapshot.child("address").getValue().toString());
+                    vendor_phone_textView.setText(dataSnapshot.child("phno").getValue().toString());
+                    appRegNo_textView.setText(dataSnapshot.child("app_reg_no").getValue().toString());
+                    vendor_email_textView.setText(dataSnapshot.child("email").getValue().toString());
+                    company_name_textView.setText(dataSnapshot.child("company_name").getValue().toString());
+
+                    company_reg_no_textView.setText(dataSnapshot.child("company_regno").getValue().toString());
+                    post_code_textView.setText(dataSnapshot.child("post_code").getValue().toString());
+                    vendor_mobile_textView.setText(dataSnapshot.child("mobno").getValue().toString());
+                    vendor_url_textView.setText(dataSnapshot.child("url").getValue().toString());
+
+                    Picasso.get().load(String.valueOf(dataSnapshot.child("profile_image_url").getValue().toString())).into(profileImage_imageView);
+                    Picasso.get().load(String.valueOf(dataSnapshot.child("banner").getValue().toString())).into(store_banner_imageView);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
     private void onclicklistners() {
         view_users_btn_listner();
         change_passcode_btn_listner();
