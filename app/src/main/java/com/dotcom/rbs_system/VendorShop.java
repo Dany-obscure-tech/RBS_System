@@ -43,6 +43,7 @@ public class VendorShop extends Fragment {
     List<String> stockPrice_list;
     List<String> stockQuantity_list;
     List<String> stockImageUrl_list;
+    List<String> edit_btn_list;
     Button vendor_inventory_add_btn;
 
 
@@ -118,6 +119,7 @@ public class VendorShop extends Fragment {
         stockPrice_list = new ArrayList<>();
         stockQuantity_list = new ArrayList<>();
         stockImageUrl_list = new ArrayList<>();
+        edit_btn_list = new ArrayList<>();
 
     }
 
@@ -146,7 +148,7 @@ public class VendorShop extends Fragment {
                 }
 
 
-                adapter_vendor_inventory_recyclerView = new Adapter_Vendor_inventory_RecyclerView(getActivity(),stockSNo_list,stockName_list, stockCategory_list,stockPrice_list,stockQuantity_list,stockImageUrl_list);
+                adapter_vendor_inventory_recyclerView = new Adapter_Vendor_inventory_RecyclerView(getActivity(),stockSNo_list,stockName_list, stockCategory_list,stockPrice_list,stockQuantity_list,stockImageUrl_list,edit_btn_list);
                 vendor_inventory_RecyclerView.setAdapter(adapter_vendor_inventory_recyclerView);
 
             }
