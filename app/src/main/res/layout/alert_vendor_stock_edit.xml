@@ -178,7 +178,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
                 android:hint="Edit price ...."
-                android:inputType="textEmailAddress"
+                android:inputType="number"
                 android:maxLength="32" />
 
             <TextView
@@ -196,7 +196,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
                 android:hint="Edit price ...."
-                android:inputType="textEmailAddress"
+                android:inputType="number"
                 android:maxLength="32" />
 
         </LinearLayout>
