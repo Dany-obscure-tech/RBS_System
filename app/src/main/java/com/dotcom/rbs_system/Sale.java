@@ -59,7 +59,6 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-
     RBSItemDetails rbsItemDetails;
     RBSCustomerDetails rbsCustomerDetails;
 
@@ -69,9 +68,9 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     int currentItems, totalItems, scrollOutItems;
 
-    CardView searchForItem_cardView,searchForCustomer_cardView;
+    CardView searchForItem_cardView;
 
-    Dialog itemList_alert_dialog , customerList_alert_dialog;
+    Dialog itemList_alert_dialog;
     RecyclerView itemList_recyclerView;
     Adapter_itemList_alert_dialog adapter_itemList_alert_dialog;
 
@@ -81,7 +80,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     private static final int CUSTOMER_ACTIVITY_REQUEST_CODE = 0;
 
     TextView searchForVoucher_textView,Transaction_textview;
-    TextView customerName_textView,customerEmail_textView,customerPhno_textView,customerID_textView;
+    TextView customerName_textView,customerEmail_textView,customerPhno_textView;
 
     Progress_dialoge pd;
 
@@ -96,7 +95,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     Button btn_done;
 
     Dialog sendingdialog;
-    LinearLayout toggling_linear,itemLastActive_linearLayout,customerID_linearLayout,customerPhno_linearLayout;
+    LinearLayout toggling_linear,itemLastActive_linearLayout;
     Boolean item_btn,customer;
 
     ImageView itemImage_imageView,customerImage_imageView;
@@ -109,8 +108,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     String firebaseAuthUID,itemID;
     String customerKeyID, itemKeyID,customerName,itemCategory,itemName;
 
-    List<String> exisitngCustomerNamesList,exisitngCustomerIDList,exisitngCustomerKeyIDList,existingCustomerPhnoList,existingCustomerEmailList,existingCustomerImageUrlList;
-
+    List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
     List<String> exisitngItemsNamesList, exisitngItemsSerialNoList,exisitngItemsKeyIDList,existingItemsPriceList,existingItemsLastActiveList,existingItemsImageUrlList;
     List<String> lessExisitngItemsNamesList, lessExisitngItemsSerialNoList,lessExisitngItemsKeyIDList,lessExistingItemsPriceList,lessExistingItemsLastActiveList,lessExistingItemsImageUrlList;
     List<String> voucher_number_list,Voucher_amount_list;
@@ -132,6 +130,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
         return items;
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,16 +163,13 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         itemList_alert_dialog = new Dialog(this);
         itemList_alert_dialog.setContentView(R.layout.alert_rbs_itemlist);
 
-        customerList_alert_dialog = new Dialog(this);
-        customerList_alert_dialog.setContentView(R.layout.alert_rbs_customerlist);
-
         itemList_recyclerView = (RecyclerView)itemList_alert_dialog.findViewById(R.id.itemList_recyclerView);
         itemList_recyclerView.setLayoutManager(new GridLayoutManager(Sale.this,1));
 
         alert_rbs_itemlist_progressBar = (ProgressBar)itemList_alert_dialog.findViewById(R.id.alert_rbs_itemlist_progressBar);
 
+
         searchForItem_cardView = (CardView)findViewById(R.id.searchForItem_cardView);
-        searchForCustomer_cardView = (CardView)findViewById(R.id.searchForCustomer_cardView);
 
         reference = FirebaseDatabase.getInstance().getReference();
 
@@ -198,12 +194,13 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         lessExistingItemsLastActiveList= new ArrayList<>();
         lessExistingItemsImageUrlList= new ArrayList<>();
 
-        exisitngCustomerNamesList = new ArrayList<>();
+        exisitngCustomerList = new ArrayList<>();
         exisitngCustomerIDList = new ArrayList<>();
         exisitngCustomerKeyIDList = new ArrayList<>();
         existingCustomerPhnoList= new ArrayList<>();
+        existingCustomerDobList= new ArrayList<>();
+        existingCustomerAddressList= new ArrayList<>();
         existingCustomerEmailList= new ArrayList<>();
-        existingCustomerImageUrlList= new ArrayList<>();
 
         voucher_number_list= new ArrayList<>();
         Voucher_amount_list= new ArrayList<>();
@@ -213,8 +210,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         paid_editText = (EditText) findViewById(R.id.paid_editText);
 
         itemLastActive_linearLayout = (LinearLayout)findViewById(R.id.itemLastActive_linearLayout);
-        customerID_linearLayout = (LinearLayout)findViewById(R.id.customerID_linearLayout);
-        customerPhno_linearLayout = (LinearLayout)findViewById(R.id.customerPhno_linearLayout);
 
         itemName_textView = (TextView) findViewById(R.id.itemName_textView);
         itemID_textView = (TextView) findViewById(R.id.itemID_textView);
@@ -225,7 +220,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         customerName_textView=(TextView)findViewById(R.id.customerName_textView);
         customerEmail_textView=(TextView)findViewById(R.id.customerEmail_textView);
         customerPhno_textView=(TextView)findViewById(R.id.customerPhno_textView);
-        customerID_textView=(TextView)findViewById(R.id.customerID_textView);
 
         itemLastActive_textView = (TextView) findViewById(R.id.itemLastActive_textView);
 
@@ -236,10 +230,12 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         itemImage_imageView = (ImageView) findViewById(R.id.itemImage_imageView);
         customerImage_imageView = (ImageView) findViewById(R.id.customerImage_imageView);
 
+
         ////////////////////////
         suggest_price_TextView=(TextView)findViewById(R.id.suggest_price_TextView);
         searchForVoucher_textView=(TextView)findViewById(R.id.searchForVoucher_textView);
         item_add_textView =(TextView) findViewById(R.id.item_add_textView);
+
 
         back_btn =(ImageButton)findViewById(R.id.back_btn);
         submit_textView = (TextView) findViewById(R.id.submit_textView);
@@ -260,8 +256,11 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         sms_btn = (ImageButton) sendingdialog.findViewById(R.id.sms_btn);
         btn_done = (Button) sendingdialog.findViewById(R.id.btn_done);
 
+        exisitngCustomerList = new ArrayList<>();
+        exisitngCustomerIDList = new ArrayList<>();
         dateList = new ArrayList<>();
         lastActiveDatelist = new ArrayList<>();
+
 
         /////Firebase config
         firebaseAuthUID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -285,6 +284,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     }
 
+
     private void fetchingExisitingCustomers() {
         pd3.showProgressBar(Sale.this);
         existingCustomersRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -292,18 +292,20 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
                     for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                        exisitngCustomerNamesList.add(String.valueOf(dataSnapshot1.child("Name").getValue()));
+                        exisitngCustomerList.add(String.valueOf(dataSnapshot1.child("Name").getValue()));
                         exisitngCustomerIDList.add(String.valueOf(dataSnapshot1.child("ID").getValue()));
                         existingCustomerPhnoList.add(String.valueOf(dataSnapshot1.child("Phone_no").getValue()));
+                        existingCustomerDobList.add(String.valueOf(dataSnapshot1.child("DOB").getValue()));
+                        existingCustomerAddressList.add(String.valueOf(dataSnapshot1.child("Address").getValue()));
                         existingCustomerEmailList.add(String.valueOf(dataSnapshot1.child("Email").getValue()));
                         exisitngCustomerKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
-                        existingCustomerImageUrlList.add(String.valueOf(dataSnapshot1.child("ID_Image_urls").child("image_1").getValue()));
+
                         pd3.dismissProgressBar(Sale.this);
-                        //todo
                     }
                 }else {
                     pd3.dismissProgressBar(Sale.this);
                 }
+
 
             }
 
@@ -383,6 +385,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                     Collections.reverse(dateList);
                     lastActiveDatelist.add(dateList.get(0));
 
+
                 }else {
                     lastActiveDatelist.add("NA");
                 }
@@ -421,13 +424,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     }
 
     private void onClickListenes() {
-        searchForCustomer_cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                customerList_alert_dialog.show();
-            }
-        });
-
         searchForItem_cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -710,6 +706,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             connected = false;
             pd1.dismissProgressBar(Sale.this);
         }
+
     }
 
     private void historyActivity() {
@@ -806,10 +803,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                 customerEmail_textView.setVisibility(View.VISIBLE);
                 customerPhno_textView.setText(phone_no_returnString);
                 customerPhno_textView.setVisibility(View.VISIBLE);
-                customerID_textView.setText(id_returnString);
-
-                customerID_linearLayout.setVisibility(View.VISIBLE);
-                customerPhno_linearLayout.setVisibility(View.VISIBLE);
 
 
             }

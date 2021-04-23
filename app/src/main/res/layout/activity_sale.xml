@@ -125,64 +125,19 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
-                        <LinearLayout
-                            android:id="@+id/customerID_linearLayout"
+                        <TextView
+                            android:id="@+id/customerPhno_textView"
                             android:visibility="gone"
+                            android:textColor="@color/textGrey"
+                            android:fontFamily="@font/segoe_ui_bold"
+                            android:textSize="15sp"
                             android:layout_marginTop="10dp"
-                            android:orientation="horizontal"
+                            android:layout_gravity="center_vertical"
+                            android:text="03018804043"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"/>
 
-                            <TextView
-                                android:textColor="@color/textGreen"
-                                android:fontFamily="@font/segoe_ui"
-                                android:textSize="18sp"
-                                android:layout_gravity="center_vertical"
-                                android:text="ID:"
-                                android:layout_marginRight="5dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
 
-                            <TextView
-                                android:id="@+id/customerID_textView"
-                                android:textColor="@color/textGreen"
-                                android:fontFamily="@font/segoe_ui"
-                                android:textSize="18sp"
-                                android:layout_gravity="center_vertical"
-                                android:text="000"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/customerPhno_linearLayout"
-                            android:layout_marginTop="5dp"
-                            android:visibility="gone"
-                            android:orientation="horizontal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:textColor="@color/textGrey"
-                                android:fontFamily="@font/segoe_ui"
-                                android:textSize="15sp"
-                                android:layout_gravity="center_vertical"
-                                android:text="Ph no: "
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-
-                            <TextView
-                                android:id="@+id/customerPhno_textView"
-                                android:textColor="@color/textGrey"
-                                android:fontFamily="@font/segoe_ui"
-                                android:textSize="15sp"
-                                android:layout_gravity="center_vertical"
-                                android:text="03030"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-
-                        </LinearLayout>
 
                     </LinearLayout>
 

@@ -19,13 +19,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Rbs_vendor_order"
+            android:name=".RBS_Vendors"
             android:theme="@style/AppTheme.no"/>
         <activity
-            android:name=".RBS_Vendor_HomeScreen" />
+            android:name=".Rbs_vendor_order"
+            android:theme="@style/AppTheme.no" />
         <activity
             android:name=".Vendor_Users_list"
             android:theme="@style/AppTheme.no" />
@@ -78,7 +78,7 @@
         <activity
             android:name=".BuyLocal_productdetails"
             android:theme="@style/AppTheme.no">
-            <tools:validation testUrl="http://buylocalrbstest.com/productdetails" />
+            <tools:validation testUrl="http://buyLocalrbstest.com/productdetails" />
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -87,7 +87,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="buylocalrbstest.com"
+                    android:host="buyLocalrbstest.com"
                     android:pathPrefix="/productdetails"
                     android:scheme="http" />
             </intent-filter>
