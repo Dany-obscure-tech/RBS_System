@@ -1,16 +1,14 @@
 package com.dotcom.rbs_system;
 
-import android.content.Intent;
-import android.os.Bundle;
-
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,21 +29,17 @@ import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Rbs_Vendor_Shop#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Rbs_Vendor_Shop extends Fragment {
-    DatabaseReference vendorNameListRef, vendorStockRef;
+public class RBS_Vendors extends AppCompatActivity {
 
-    View view;
+    DatabaseReference vendorNameListRef, vendorStockRef;
 
     RecyclerView rbs_vendor_products_recyclerview;
 
     LinearLayout searchForVendors,vendor_details_linearLayout;
 
     ImageView store_banner_imageView,profileImage_imageView;
+
+    ImageButton back_btn;
 
     TextView vendor_name_textView,confirm_order_btn;
     TextView vendor_address_textView,vendor_phone_textView,vendor_email_textView;
@@ -62,78 +56,36 @@ public class Rbs_Vendor_Shop extends Fragment {
         return items;
     }
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public Rbs_Vendor_Shop() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Rbs_Vendor_Shop.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Rbs_Vendor_Shop newInstance(String param1, String param2) {
-        Rbs_Vendor_Shop fragment = new Rbs_Vendor_Shop();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view= inflater.inflate(R.layout.fragment_rbs__vendor__shop, container, false);
+        setContentView(R.layout.activity_r_b_s__vendors);
         initialization();
         intialProcesses();
         onclicklistners();
-        return view;
     }
-
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void initialization() {
         vendorNameListRef = FirebaseDatabase.getInstance().getReference("Vendor_list");
         vendorStockRef = FirebaseDatabase.getInstance().getReference("Vendor_stock");
 
-        rbs_vendor_products_recyclerview=(RecyclerView)view.findViewById(R.id.rbs_vendor_products_recyclerview);
-        rbs_vendor_products_recyclerview.setLayoutManager(new GridLayoutManager(getActivity(),1));
+        rbs_vendor_products_recyclerview=(RecyclerView)findViewById(R.id.rbs_vendor_products_recyclerview);
+        back_btn=(ImageButton)findViewById(R.id.back_btn);
+        rbs_vendor_products_recyclerview.setLayoutManager(new GridLayoutManager(RBS_Vendors.this,1));
 
-        searchForVendors=(LinearLayout)view.findViewById(R.id.searchForVendors);
-        vendor_details_linearLayout=(LinearLayout)view.findViewById(R.id.vendor_details_linearLayout);
+        searchForVendors=(LinearLayout)findViewById(R.id.searchForVendors);
+        vendor_details_linearLayout=(LinearLayout)findViewById(R.id.vendor_details_linearLayout);
 
-        store_banner_imageView=(ImageView) view.findViewById(R.id.store_banner_imageView);
-        profileImage_imageView=(ImageView) view.findViewById(R.id.profileImage_imageView);
+        store_banner_imageView=(ImageView)findViewById(R.id.store_banner_imageView);
+        profileImage_imageView=(ImageView) findViewById(R.id.profileImage_imageView);
 
-        vendor_name_textView=(TextView)view.findViewById(R.id.vendor_name_textView);
-        vendor_phone_textView =(TextView)view.findViewById(R.id.vendor_phone_textView);
-        vendor_address_textView =(TextView)view.findViewById(R.id.vendor_address_textView);
-        vendor_email_textView =(TextView)view.findViewById(R.id.vendor_email_textView);
+        vendor_name_textView=(TextView)findViewById(R.id.vendor_name_textView);
+        vendor_phone_textView =(TextView)findViewById(R.id.vendor_phone_textView);
+        vendor_address_textView =(TextView)findViewById(R.id.vendor_address_textView);
+        vendor_email_textView =(TextView)findViewById(R.id.vendor_email_textView);
 
-        confirm_order_btn=(TextView)view.findViewById(R.id.confirm_order_btn);
+        confirm_order_btn=(TextView)findViewById(R.id.confirm_order_btn);
         vendor_stock_category_list = new ArrayList<>();
         vendor_stockName_list = new ArrayList<>();
         vendor_stock_currency_list = new ArrayList<>();
@@ -193,13 +145,23 @@ public class Rbs_Vendor_Shop extends Fragment {
     private void onclicklistners() {
         searchForVendors_listner();
         confirm_order_btn_listner();
+        back_btn_listner();
+    }
+
+    private void back_btn_listner() {
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void confirm_order_btn_listner() {
         confirm_order_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),Rbs_vendor_order.class);
+                Intent intent=new Intent(RBS_Vendors.this,Rbs_vendor_order.class);
                 startActivity(intent);
             }
         });
@@ -209,7 +171,7 @@ public class Rbs_Vendor_Shop extends Fragment {
         searchForVendors.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SimpleSearchDialogCompat(getActivity(), "Search results...",
+                new SimpleSearchDialogCompat(RBS_Vendors.this, "Search results...",
                         "Search for voucher number.", null, setting_vendors_name_data(),
                         new SearchResultListener<SampleSearchModel>() {
                             @Override
@@ -242,7 +204,7 @@ public class Rbs_Vendor_Shop extends Fragment {
                 for (DataSnapshot snapshot1:snapshot.getChildren()){
 
                 }
-                Adapter_RBS_Vendor_inventory_RecyclerView adapter_rbs_vendor_inventory_recyclerView=new Adapter_RBS_Vendor_inventory_RecyclerView(getActivity(), vendor_stock_category_list, vendor_stockName_list, vendor_stock_currency_list, vendor_stock_price_list, vendor_stock_quantity_list, vendor_stock_imageView_list,null);
+                Adapter_RBS_Vendor_inventory_RecyclerView adapter_rbs_vendor_inventory_recyclerView=new Adapter_RBS_Vendor_inventory_RecyclerView(RBS_Vendors.this, vendor_stock_category_list, vendor_stockName_list, vendor_stock_currency_list, vendor_stock_price_list, vendor_stock_quantity_list, vendor_stock_imageView_list,null);
                 rbs_vendor_products_recyclerview.setAdapter(adapter_rbs_vendor_inventory_recyclerView);
             }
 
@@ -252,5 +214,4 @@ public class Rbs_Vendor_Shop extends Fragment {
             }
         });
     }
-
 }

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,11 +30,13 @@ import com.squareup.picasso.Picasso;
 public class VendorProfile extends Fragment {
     DatabaseReference userDataRef;
     View view;
-    TextView view_users_btn,change_passcode_btn,change_passcode_cancel_btn,change_passcode_submit_btn,change_new_passcode_cancel_btn;
-    Dialog change_passcode_alert_dialog,new_passcode_alert_dialog;
+    TextView view_users_btn,edit_vendor_details_cancel_btn,change_passcode_btn,change_passcode_cancel_btn,change_passcode_submit_btn,change_new_passcode_cancel_btn,edit_vendor_details_btn;
+    Dialog change_passcode_alert_dialog,new_passcode_alert_dialog,edit_vendor_info_alert_dialog;
 
     TextView appRegNo_textView, name_textView, company_name_textView,company_reg_no_textView,post_code_textView,vendor_address_textView,vendor_phone_textView,vendor_mobile_textView,vendor_email_textView,vendor_url_textView;
     ImageView profileImage_imageView,store_banner_imageView;
+
+    EditText edit_pastcode_editText,edit_address_editText,edit_phone_number_editText,edit_mobile_number_editText,edit_email_address_editText,edit_url_address_editText;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,8 +84,8 @@ public class VendorProfile extends Fragment {
         // Inflate the layout for this fragment
         view=inflater.inflate(R.layout.fragment_vendor_profile, container, false);
         initialization();
-        datafetch();
         onclicklistners();
+        datafetch();
 
         return view;
     }
@@ -106,14 +109,25 @@ public class VendorProfile extends Fragment {
         store_banner_imageView = (ImageView)view.findViewById(R.id.store_banner_imageView);
 
         view_users_btn=(TextView)view.findViewById(R.id.view_users_btn);
-        change_passcode_btn=(TextView)view.findViewById(R.id.change_passcode_btn);
+        edit_vendor_details_btn=(TextView)view.findViewById(R.id.edit_vendor_details_btn);
         change_passcode_alert_dialog = new Dialog(getActivity());
         change_passcode_alert_dialog.setContentView(R.layout.alert_vendor_change_passcode);
         change_passcode_cancel_btn = (TextView) change_passcode_alert_dialog.findViewById(R.id.change_passcode_cancel_btn);
         change_passcode_submit_btn = (TextView) change_passcode_alert_dialog.findViewById(R.id.change_passcode_submit_btn);
         new_passcode_alert_dialog = new Dialog(getActivity());
         new_passcode_alert_dialog.setContentView(R.layout.alert_vendor_new_passcode);
+        edit_vendor_info_alert_dialog = new Dialog(getActivity());
+        edit_vendor_info_alert_dialog.setContentView(R.layout.alert_vendor_details_edit);
+        edit_pastcode_editText=(EditText)edit_vendor_info_alert_dialog.findViewById(R.id.edit_pastcode_editText);
+        edit_address_editText=(EditText)edit_vendor_info_alert_dialog.findViewById(R.id.edit_address_editText);
+        edit_phone_number_editText=(EditText)edit_vendor_info_alert_dialog.findViewById(R.id.edit_phone_number_editText);
+        edit_mobile_number_editText=(EditText)edit_vendor_info_alert_dialog.findViewById(R.id.edit_mobile_number_editText);
+        edit_email_address_editText=(EditText)edit_vendor_info_alert_dialog.findViewById(R.id.edit_email_address_editText);
+        edit_url_address_editText=(EditText)edit_vendor_info_alert_dialog.findViewById(R.id.edit_url_address_editText);
+        change_passcode_btn=(TextView) edit_vendor_info_alert_dialog.findViewById(R.id.change_passcode_btn);
+        edit_vendor_details_cancel_btn=(TextView) edit_vendor_info_alert_dialog.findViewById(R.id.edit_vendor_details_cancel_btn);
         change_new_passcode_cancel_btn = (TextView) new_passcode_alert_dialog.findViewById(R.id.change_new_passcode_cancel_btn);
+
 
     }
 
@@ -139,6 +153,12 @@ public class VendorProfile extends Fragment {
                     Picasso.get().load(String.valueOf(dataSnapshot.child("profile_image_url").getValue().toString())).into(profileImage_imageView);
                     Picasso.get().load(String.valueOf(dataSnapshot.child("banner").getValue().toString())).into(store_banner_imageView);
 
+                    edit_pastcode_editText.setText(post_code_textView.getText().toString());
+                    edit_address_editText.setText(vendor_address_textView.getText().toString());
+                    edit_phone_number_editText.setText(vendor_phone_textView.getText().toString());
+                    edit_mobile_number_editText.setText(vendor_mobile_textView.getText().toString());
+                    edit_email_address_editText.setText(vendor_email_textView.getText().toString());
+                    edit_url_address_editText.setText(vendor_url_textView.getText().toString());
                 }
             }
 
@@ -153,10 +173,30 @@ public class VendorProfile extends Fragment {
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     private void onclicklistners() {
         view_users_btn_listner();
+        edit_vendor_details_btn_listner();
         change_passcode_btn_listner();
         change_passcode_cancel_btn_listner();
         change_passcode_submit_btn_listner();
         change_new_passcode_cancel_btn_listner();
+        edit_vendor_details_cancel_btn_listner();
+    }
+
+    private void edit_vendor_details_cancel_btn_listner() {
+        edit_vendor_details_cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edit_vendor_info_alert_dialog.dismiss();
+            }
+        });
+    }
+
+    private void edit_vendor_details_btn_listner() {
+        edit_vendor_details_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edit_vendor_info_alert_dialog.show();
+            }
+        });
     }
 
     private void change_new_passcode_cancel_btn_listner() {

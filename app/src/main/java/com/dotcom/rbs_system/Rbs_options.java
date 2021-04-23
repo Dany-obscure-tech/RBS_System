@@ -193,7 +193,7 @@ public class Rbs_options extends AppCompatActivity {
         icon8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(Rbs_options.this,RBS_Vendor_HomeScreen.class);
+                Intent intent=new Intent(Rbs_options.this,RBS_Vendors.class);
                 startActivity(intent);
             }
         });
