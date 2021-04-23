@@ -66,9 +66,9 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     CardView searchForItem_cardView;
 
-    Dialog itemList_alert_dialog;
+    Dialog itemList_alert_dialog,customerList_alert_dialog;
 
-    RecyclerView itemList_recyclerView;
+    RecyclerView itemList_recyclerView,customerList_recyclerView;
 
     private static final int ITEM_ACTIVITY_REQUEST_CODE = 0;
 
@@ -128,7 +128,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     LinearLayout print_linearLayout;
 
-    EditText purchase_price_editText,cash_editText,voucher_editText,paid_editText,search_editText;
+    EditText purchase_price_editText,cash_editText,voucher_editText,paid_editText,search_editText,search_customer_editText;
 
     EditText ipAddress;
 
@@ -296,11 +296,17 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         itemList_alert_dialog = new Dialog(this);
         itemList_alert_dialog.setContentView(R.layout.alert_rbs_itemlist);
 
+
         itemList_recyclerView = (RecyclerView) itemList_alert_dialog.findViewById(R.id.itemList_recyclerView);
         search_editText = (EditText) itemList_alert_dialog.findViewById(R.id.search_editText);
         itemList_recyclerView.setLayoutManager(new GridLayoutManager(Buy.this,1));
 
+        customerList_alert_dialog = new Dialog(this);
+        customerList_alert_dialog.setContentView(R.layout.alert_rbs_customerlist);
 
+        customerList_recyclerView = (RecyclerView) customerList_alert_dialog.findViewById(R.id.customerList_recyclerView);
+        search_customer_editText = (EditText) customerList_alert_dialog.findViewById(R.id.search_customer_editText);
+        customerList_recyclerView.setLayoutManager(new GridLayoutManager(Buy.this,1));
 
     }
 
@@ -708,7 +714,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         if (asyncTask==null){
             try {
                 // this.printIt(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString())));
-                asyncTask = new AsyncTcpEscPosPrint(this).execute(this.getAsyncEscPosPrinter(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString()))));
+//                asyncTask = new AsyncTcpEscPosPrint(this).execute(this.getAsyncEscPosPrinter(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString()))));
+                asyncTask = new AsyncTcpEscPosPrint(this).execute(this.getAsyncEscPosPrinter(new TcpConnection("192.168.18.123", 9100)));
             } catch (NumberFormatException e) {
                 new AlertDialog.Builder(this)
                         .setTitle("Invalid TCP port address")

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.R;
 import com.squareup.picasso.Picasso;
 
@@ -20,17 +21,15 @@ public class Adapter_RBS_Vendor_inventory_RecyclerView extends RecyclerView.Adap
     Context context;
     List<String> vendor_stock_category_textView;
     List<String> vendor_stockName_textView;
-    List<String> vendor_stock_currency_textview;
     List<String> vendor_stock_price_textview;
     List<String> vendor_stock_quantity_textView;
     List<String> vendor_stock_imageView;
     List<String> vendor_stock_selection_checkbox;
 
-    public Adapter_RBS_Vendor_inventory_RecyclerView(Context context, List<String> vendor_stock_category_textView, List<String> vendor_stockName_textView, List<String> vendor_stock_currency_textview, List<String> vendor_stock_price_textview, List<String> vendor_stock_quantity_textView, List<String> vendor_stock_imageView,List<String> vendor_stock_selection_checkbox) {
+    public Adapter_RBS_Vendor_inventory_RecyclerView(Context context, List<String> vendor_stock_category_textView, List<String> vendor_stockName_textView, List<String> vendor_stock_price_textview, List<String> vendor_stock_quantity_textView, List<String> vendor_stock_imageView,List<String> vendor_stock_selection_checkbox) {
         this.context = context;
         this.vendor_stock_category_textView = vendor_stock_category_textView;
         this.vendor_stockName_textView = vendor_stockName_textView;
-        this.vendor_stock_currency_textview = vendor_stock_currency_textview;
         this.vendor_stock_price_textview = vendor_stock_price_textview;
         this.vendor_stock_quantity_textView = vendor_stock_quantity_textView;
         this.vendor_stock_imageView = vendor_stock_imageView;
@@ -51,7 +50,7 @@ public class Adapter_RBS_Vendor_inventory_RecyclerView extends RecyclerView.Adap
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.vendor_stock_category_textView.setText(vendor_stock_category_textView.get(position));
         holder.vendor_stockName_textView.setText(vendor_stockName_textView.get(position));
-        holder.vendor_stock_currency_textview.setText(vendor_stock_currency_textview.get(position));
+        holder.vendor_stock_currency_textview.setText(Currency.getInstance().getCurrency());
         holder.vendor_stock_price_textview.setText(vendor_stock_price_textview.get(position));
         holder.vendor_stock_quantity_textView.setText(vendor_stock_quantity_textView.get(position));
         Picasso.get().load(vendor_stock_imageView.get(position)).into(holder.vendor_stock_imageView);

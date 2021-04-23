@@ -4,43 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RBS_Vendors">
+    tools:context=".Rbs_Vendor_Shop">
 
-
-    <RelativeLayout
-        android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@drawable/profile_screen_header">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/back_btn"
-            android:layout_centerVertical="true"
-            android:text="Vendor Options"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:textColor="#ffffff"
-            android:textSize="22sp"/>
-
-        <ImageButton
-            android:id="@+id/back_btn"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
-            android:adjustViewBounds="true"
-            android:background="#00000000"
-            android:padding="15dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/back_arrow" />
-
-    </RelativeLayout>
-
+    <!-- TODO: Update blank fragment layout -->
     <ScrollView
-        android:layout_below="@id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
@@ -53,11 +20,23 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
+            <TextView
+                android:id="@+id/buy_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:text="Shop"
+                android:textColor="@color/textGreen"
+                android:textSize="30sp" />
+
             <TextView
                 style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="30dp"
                 android:layout_weight="1"
                 android:text="Vendors" />
 
@@ -265,7 +244,6 @@
         </LinearLayout>
 
     </ScrollView>
-
 
 
 </RelativeLayout>

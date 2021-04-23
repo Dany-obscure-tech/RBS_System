@@ -59,7 +59,7 @@ dependencies {
     //SearchView
     implementation'com.miguelcatalan:materialsearchview:1.4.0'
 
-    implementation 'com.github.dhaval2404:imagepicker:1.7.5'
+    implementation 'com.github.dhaval2404:imagepicker:1.8'
 
     // circular imageview
     implementation 'de.hdodenhof:circleimageview:3.1.0'

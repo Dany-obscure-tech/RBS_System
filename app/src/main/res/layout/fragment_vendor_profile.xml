@@ -551,12 +551,20 @@
 
                 </androidx.cardview.widget.CardView>
 
+                <LinearLayout
+                    android:id="@+id/update_details_change_passcode_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal"
+                    android:layout_below="@+id/vendor_url_cardView"
+                    >
+
                     <TextView
                         android:id="@+id/edit_vendor_details_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_below="@+id/vendor_url_cardView"
                         android:layout_margin="15dp"
                         android:background="@drawable/profile_screen_header"
                         android:fontFamily="@font/segoe_ui_bold"
@@ -569,12 +577,30 @@
                         android:textColor="#ffff"
                         android:textSize="15sp" />
 
+                    <TextView
+                        android:id="@+id/change_passcode_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="15dp"
+                        android:background="@drawable/profile_screen_header"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="Change Passcode"
+                        android:textAlignment="center"
+                        android:textColor="#ffff"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/view_users_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/edit_vendor_details_btn"
+                    android:layout_below="@+id/update_details_change_passcode_area"
                     android:layout_margin="10dp"
                     android:background="@drawable/profile_screen_header"
                     android:fontFamily="@font/segoe_ui_bold"
