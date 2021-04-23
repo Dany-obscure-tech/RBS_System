@@ -128,7 +128,7 @@ public class VendorProfile extends Fragment {
         edit_vendor_details_cancel_btn=(TextView) edit_vendor_info_alert_dialog.findViewById(R.id.edit_vendor_details_cancel_btn);
         change_new_passcode_cancel_btn = (TextView) new_passcode_alert_dialog.findViewById(R.id.change_new_passcode_cancel_btn);
 
-        edit_pastcode_editText.setText(post_code_textView.getText().toString());
+
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -153,6 +153,12 @@ public class VendorProfile extends Fragment {
                     Picasso.get().load(String.valueOf(dataSnapshot.child("profile_image_url").getValue().toString())).into(profileImage_imageView);
                     Picasso.get().load(String.valueOf(dataSnapshot.child("banner").getValue().toString())).into(store_banner_imageView);
 
+                    edit_pastcode_editText.setText(post_code_textView.getText().toString());
+                    edit_address_editText.setText(vendor_address_textView.getText().toString());
+                    edit_phone_number_editText.setText(vendor_phone_textView.getText().toString());
+                    edit_mobile_number_editText.setText(vendor_mobile_textView.getText().toString());
+                    edit_email_address_editText.setText(vendor_email_textView.getText().toString());
+                    edit_url_address_editText.setText(vendor_url_textView.getText().toString());
                 }
             }
 
