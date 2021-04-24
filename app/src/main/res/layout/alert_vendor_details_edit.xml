@@ -170,7 +170,7 @@
         android:padding="20dp">
 
         <TextView
-            android:id="@+id/save_passcode_submit_btn"
+            android:id="@+id/edit_vendor_details_save_btn"
             style="@style/RBSInvoice_SaveButtonTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

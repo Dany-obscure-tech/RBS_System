@@ -669,6 +669,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                     }
                 }
                 pd.dismissProgressBar(Buy.this);
+                rbsItemDetails.uploadNewItemDetails(Buy.this);
+                rbsCustomerDetails.uploadCustomerDetails(Buy.this);
                 sendingdialog.show();
             }else{
                 Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
@@ -676,8 +678,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
 
             connected = false;
-            rbsItemDetails.uploadNewItemDetails(Buy.this);
-            rbsCustomerDetails.uploadCustomerDetails(Buy.this);
 
     }
 

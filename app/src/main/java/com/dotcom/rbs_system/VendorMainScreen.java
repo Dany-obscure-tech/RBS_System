@@ -25,6 +25,7 @@ public class VendorMainScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_main_screen);
+
         vendor_drawer_layout = (DrawerLayout)findViewById(R.id.vendor_drawer_layout);
 
 
@@ -39,6 +40,8 @@ public class VendorMainScreen extends AppCompatActivity {
         nv = (NavigationView)findViewById(R.id.nv);
 
         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,fragment_vendor_home).commit();
+        nv.setCheckedItem(R.id.nav_shop);
+
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -53,7 +56,7 @@ public class VendorMainScreen extends AppCompatActivity {
                         closeDrawer();
                         break;
                     case R.id.nav_profile:
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,new VendorProfile()).commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,new VendorProfile(),"VENDOR_PROFILE_FRAGMENT").commit();
                         closeDrawer();
                         break;
                     case R.id.nav_inbox:
