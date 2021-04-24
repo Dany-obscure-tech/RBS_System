@@ -1,18 +1,32 @@
 package com.dotcom.rbs_system;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.dotcom.rbs_system.Classes.VendorStockDetails;
+import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class VendorMainScreen extends AppCompatActivity {
 
@@ -20,11 +34,19 @@ public class VendorMainScreen extends AppCompatActivity {
     private ActionBarDrawerToggle t;
     private NavigationView nv;
     final VendorShop fragment_vendor_home = new VendorShop();
+    private Uri fileUri;
+    VendorStockDetails vendorStockDetails;
+
+    DatabaseReference vendorStockRef;
+    StorageReference vendorStockImageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_main_screen);
+
+        vendorStockRef = FirebaseDatabase.getInstance().getReference("Vendor_stock/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
+        vendorStockImageReference = FirebaseStorage.getInstance().getReference().child("Vendor_Stock_Images/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         vendor_drawer_layout = (DrawerLayout)findViewById(R.id.vendor_drawer_layout);
 
@@ -100,5 +122,63 @@ public class VendorMainScreen extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         recreate();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            vendorStockDetails = VendorStockDetails.getInstance();
+
+                //Image Uri will not be null for RESULT_OK
+                fileUri = data.getData();
+
+                boolean connected = false;
+            ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(VendorMainScreen.this.CONNECTIVITY_SERVICE);
+            if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                    connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+                    //we are connected to a network
+                    connected = true;
+
+                    vendorStockImageReference.child(vendorStockDetails.getCategory()).child(vendorStockDetails.getKeyId()).child("stock_image").putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            vendorStockImageReference.child(vendorStockDetails.getCategory()).child(vendorStockDetails.getKeyId()).child("stock_image").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+
+                                    vendorStockRef.child(vendorStockDetails.getCategory()).child(vendorStockDetails.getKeyId()).child("Image_url").setValue(String.valueOf(uri.toString()));
+                                    recreate();
+                                }
+                            });
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(VendorMainScreen.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+
+                }else {
+                    Toast.makeText(VendorMainScreen.this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
+                    connected = false;
+                }
+
+
+
+
+
+            //You can get File object from intent
+//            val file:File = ImagePicker.getFile(data)!!
+
+            //You can also get File Path from intent
+//                    val filePath:String = ImagePicker.getFilePath(data)!!
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+//            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(VendorMainScreen.this, "Task Cancelled", Toast.LENGTH_SHORT).show();
+        }
     }
 }
