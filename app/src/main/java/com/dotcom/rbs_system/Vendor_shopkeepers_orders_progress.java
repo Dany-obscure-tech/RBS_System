@@ -56,9 +56,9 @@ public class Vendor_shopkeepers_orders_progress extends AppCompatActivity {
         rate_price=new ArrayList<>();
         order_qty=new ArrayList<>();
         total_price=new ArrayList<>();
-        accessory_name.add("Samsung Note 8 Screen");
-        accessory_name.add("Samsung Note 7 Screen");
-        accessory_name.add("Samsung Note 10 Screen");
+        accessory_name.add("Itech Computers");
+        accessory_name.add("Phi traders");
+        accessory_name.add("Phi Horizon Company");
         Adapter_Vendor_shopkeepers_order_progress_RecyclerView adapter_vendor_shopkeepers_order_progress_recyclerView=new Adapter_Vendor_shopkeepers_order_progress_RecyclerView(Vendor_shopkeepers_orders_progress.this,null,accessory_name,null,null,null,null);
 
         shopkeeper_invoice_details_recyclerview.setLayoutManager(new GridLayoutManager(Vendor_shopkeepers_orders_progress.this,1));

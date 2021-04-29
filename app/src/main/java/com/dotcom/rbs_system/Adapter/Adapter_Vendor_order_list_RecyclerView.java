@@ -94,7 +94,6 @@ public class Adapter_Vendor_order_list_RecyclerView extends RecyclerView.Adapter
             balance_currency = (TextView) itemView.findViewById(R.id.balance_currency);
             vendor_order_status = (TextView) itemView.findViewById(R.id.vendor_order_status);
 
-
         }
     }
 }
