@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Vendor_shopkeepers_orders_progress"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".Rbs_vendor_specific_order">
 
     <RelativeLayout
         android:id="@+id/header"
@@ -19,7 +19,7 @@
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:fontFamily="@font/segoe_ui_bold"
-            android:text="Invoice Details"
+            android:text="Order Details"
             android:textColor="#ffffff"
             android:textSize="22sp" />
 
@@ -50,7 +50,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/shop_name"
+                android:id="@+id/vendor_name"
                 style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
                 android:textSize="25sp" />
 
             <TextView
-                android:id="@+id/company_name"
+                android:id="@+id/customer_name"
                 style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/item_category_textView"
+                            android:id="@+id/shopkeeper_name_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
@@ -107,7 +107,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/company_registration_number"
+                android:id="@+id/phone_number_textview"
                 style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                 android:text="Phone" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/searchForItem_cardView"
+                android:id="@+id/phone_number_cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ripple_effect_cardview"
@@ -137,7 +137,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/company_reg_no_textView"
+                            android:id="@+id/shopkeeper_phone_no_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
@@ -153,7 +153,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/post_code"
+                android:id="@+id/email_code"
                 style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -183,7 +183,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/post_code_textView"
+                            android:id="@+id/shopkeeper_email_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
@@ -199,7 +199,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/vendor_address"
+                android:id="@+id/shopkeeper_address"
                 style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -208,7 +208,7 @@
                 android:text="Address" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/vendor_address_cardView"
+                android:id="@+id/shopkeeper_address_cardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ripple_effect_cardview"
@@ -229,7 +229,53 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/vendor_address_textView"
+                            android:id="@+id/shopkeeper_address_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:fontFamily="@font/segoe_ui_bold"
+                            android:text="House#24563 Pakistan"
+                            android:textColor="@color/textGrey"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/invoice_no"
+                style="@style/RBSInvoice_TextViews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:text="Invoice No" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/invoice_no_cardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_effect_cardview"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:id="@+id/invoice_no_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/invoice_no_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
@@ -246,7 +292,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/shopkeeper_invoice_details_recyclerview"
+                android:id="@+id/shopkeeper_order_details_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -289,97 +335,12 @@
             </LinearLayout>
 
 
-            <LinearLayout
-                android:id="@+id/entry_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:orientation="vertical">
 
-                <TextView
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Paid" />
-
-                <EditText
-                    android:id="@+id/paid_editText"
-                    style="@style/RBSInvoice_EditTexts"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:hint="Enter paid amount"
-                    android:inputType="phone"
-                    android:maxLength="32" />
-
-                <TextView
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Discount" />
-
-                <EditText
-                    android:id="@+id/discount_editText"
-                    style="@style/RBSInvoice_EditTexts"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:hint="Enter discount amount"
-                    android:inputType="phone"
-                    android:maxLength="32" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/balance_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Balance : " />
-
-                <TextView
-                    android:id="@+id/balance_currency"
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="$"
-                    android:textColor="@color/textBlue"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/balance_price_TextView"
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="NA"
-                    android:textColor="@color/textBlue"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/progress_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:padding="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
+                    android:layout_margin="15dp"
                     android:layout_weight="0.1"
                     android:background="@drawable/profile_screen_header"
                     android:fontFamily="@font/segoe_ui_bold"
@@ -387,28 +348,10 @@
                     android:paddingTop="10dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
-                    android:text="Ready"
-                    android:textAlignment="center"
+                    android:layout_gravity="end"
+                    android:text="Update"
                     android:textColor="#ffff"
                     android:textSize="15sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:layout_weight="0.1"
-                    android:background="@drawable/profile_screen_header"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="Communicate"
-                    android:textAlignment="center"
-                    android:textColor="#ffff"
-                    android:textSize="15sp" />
-
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/confirm_order_btn"
@@ -429,5 +372,6 @@
 
         </LinearLayout>
     </ScrollView>
+
 
 </LinearLayout>

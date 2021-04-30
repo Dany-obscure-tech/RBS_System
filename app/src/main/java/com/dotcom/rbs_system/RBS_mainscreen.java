@@ -20,6 +20,7 @@ public class RBS_mainscreen extends AppCompatActivity {
     private NavigationView nv;
     final Rbs_home rbs_home = new Rbs_home();
     final Rbs_passcode rbs_passcode = new Rbs_passcode();
+    final RBS_Vendor_Orders rbs_vendor_orders = new RBS_Vendor_Orders();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +32,10 @@ public class RBS_mainscreen extends AppCompatActivity {
 
     private void Initialize() {
 
-        vendor_drawer_layout = (DrawerLayout)findViewById(R.id.rbs_drawer_layout);
+        vendor_drawer_layout = (DrawerLayout) findViewById(R.id.rbs_drawer_layout);
 
 
-        t = new ActionBarDrawerToggle(this, vendor_drawer_layout,R.string.Open, R.string.Close);
+        t = new ActionBarDrawerToggle(this, vendor_drawer_layout, R.string.Open, R.string.Close);
 
         vendor_drawer_layout.addDrawerListener(t);
         t.syncState();
@@ -42,8 +43,8 @@ public class RBS_mainscreen extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        nv = (NavigationView)findViewById(R.id.nv);
-        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,rbs_home).commit();
+        nv = (NavigationView) findViewById(R.id.nv);
+        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, rbs_home).commit();
         nv.getMenu().findItem(R.id.nav_home).setChecked(true);
 
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -52,17 +53,23 @@ public class RBS_mainscreen extends AppCompatActivity {
                 int id = item.getItemId();
                 switch (id) {
                     case R.id.nav_home:
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,rbs_home).commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, rbs_home).commit();
                         closeDrawer();
                         break;
 
                     case R.id.nav_rbs:
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,rbs_passcode).commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, rbs_passcode).commit();
                         closeDrawer();
                         break;
+
+                    case R.id.nav_rbs_vendor_orders:
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, rbs_vendor_orders).commit();
+                        closeDrawer();
+                        break;
+
                     case R.id.nav_logout:
                         FirebaseAuth.getInstance().signOut();
-                        Intent intent1 = new Intent(RBS_mainscreen.this,SignInActivity.class);
+                        Intent intent1 = new Intent(RBS_mainscreen.this, SignInActivity.class);
                         finish();
                         startActivity(intent1);
                         Toast.makeText(RBS_mainscreen.this, "Logout", Toast.LENGTH_SHORT).show();
@@ -75,6 +82,7 @@ public class RBS_mainscreen extends AppCompatActivity {
                 return true;
 
             }
+
             private void closeDrawer() {
                 if (vendor_drawer_layout.isDrawerOpen(GravityCompat.START)) {
                     vendor_drawer_layout.closeDrawer(GravityCompat.START);
@@ -86,7 +94,7 @@ public class RBS_mainscreen extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if(t.onOptionsItemSelected(item))
+        if (t.onOptionsItemSelected(item))
             return true;
 
         return super.onOptionsItemSelected(item);
