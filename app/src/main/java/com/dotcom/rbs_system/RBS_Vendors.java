@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dotcom.rbs_system.Adapter.Adapter_RBS_Vendor_inventory_RecyclerView;
+import com.dotcom.rbs_system.Classes.RBSVendorSelectedStock;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,10 +31,12 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class RBS_Vendors extends AppCompatActivity {
+    RBSVendorSelectedStock rbsVendorSelectedStock;
 
     DatabaseReference vendorNameListRef, vendorStockRef;
 
     RecyclerView rbs_vendor_products_recyclerview;
+    Adapter_RBS_Vendor_inventory_RecyclerView adapter_rbs_vendor_inventory_recyclerView;
 
     LinearLayout searchForVendors,vendor_details_linearLayout;
 
@@ -45,7 +48,7 @@ public class RBS_Vendors extends AppCompatActivity {
     TextView vendor_address_textView,vendor_phone_textView,vendor_email_textView;
 
     List<String> vendors_name_list,vendors_phno_list,vendors_id_list,vendors_address_list,vendors_email_list,vendors_profileImage_list,vendors_banner_list;
-    List<String> vendor_stock_category_list, vendor_stockName_list, vendor_stock_currency_list, vendor_stock_price_list, vendor_stock_quantity_list, vendor_stock_imageView_list, vendor_stock_selection_checkbox_list;
+    List<String> vendor_stock_category_list, vendor_stockName_list, vendor_stock_price_list, vendor_stock_quantity_list, vendor_stock_imageView_list,vendor_stock_keyID_list;
 
     private ArrayList<SampleSearchModel> setting_vendors_name_data() {
         ArrayList<SampleSearchModel> items = new ArrayList<>();
@@ -67,6 +70,9 @@ public class RBS_Vendors extends AppCompatActivity {
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void initialization() {
+        rbsVendorSelectedStock = RBSVendorSelectedStock.getInstance();
+        rbsVendorSelectedStock.listInitialization();
+
         vendorNameListRef = FirebaseDatabase.getInstance().getReference("Vendor_list");
         vendorStockRef = FirebaseDatabase.getInstance().getReference("Vendor_stock");
 
@@ -88,11 +94,10 @@ public class RBS_Vendors extends AppCompatActivity {
         confirm_order_btn=(TextView)findViewById(R.id.confirm_order_btn);
         vendor_stock_category_list = new ArrayList<>();
         vendor_stockName_list = new ArrayList<>();
-        vendor_stock_currency_list = new ArrayList<>();
         vendor_stock_price_list = new ArrayList<>();
         vendor_stock_quantity_list = new ArrayList<>();
         vendor_stock_imageView_list = new ArrayList<>();
-        vendor_stock_selection_checkbox_list = new ArrayList<>();
+        vendor_stock_keyID_list = new ArrayList<>();
 
         vendors_name_list = new ArrayList<>();
         vendors_phno_list = new ArrayList<>();
@@ -101,14 +106,6 @@ public class RBS_Vendors extends AppCompatActivity {
         vendors_email_list = new ArrayList<>();
         vendors_profileImage_list = new ArrayList<>();
         vendors_banner_list = new ArrayList<>();
-
-        vendor_stock_category_list.add("Mobile");
-        vendor_stockName_list.add("Samsung C7 Screens");
-        vendor_stock_currency_list.add("$");
-        vendor_stock_price_list.add("1000455");
-        vendor_stock_quantity_list.add("10");
-
-        vendor_stock_imageView_list.add("https://samsungmobilespecs.com/wp-content/uploads/2018/03/Samsung-Galaxy-C7-Price-Specs-featured-581x571.jpg");
 
     }
 
@@ -162,6 +159,23 @@ public class RBS_Vendors extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(RBS_Vendors.this,Rbs_vendor_order.class);
+
+                // todo Daniyal: send list to confirm order
+                for (int i=0;i<adapter_rbs_vendor_inventory_recyclerView.getSelectedItemPositions().size();i++){
+//                    rbsVendorSelectedStock.getVendor_stockName_textView().add("name");
+//                    rbsVendorSelectedStock.getVendor_stock_category_textView().add("category");
+//                    rbsVendorSelectedStock.getVendor_stock_price_textview().add("1100");
+//                    rbsVendorSelectedStock.getVendor_stock_quantity_textView().add("10");
+//                    rbsVendorSelectedStock.getVendor_stock_imageView().add("https://samsungmobilespecs.com/wp-content/uploads/2018/03/Samsung-Galaxy-C7-Price-Specs-featured-581x571.jpg");
+
+                    rbsVendorSelectedStock.getVendor_stockName_textView().add(vendor_stockName_list.get(adapter_rbs_vendor_inventory_recyclerView.getSelectedItemPositions().get(i)));
+                    rbsVendorSelectedStock.getVendor_stock_category_textView().add(vendor_stock_category_list.get(adapter_rbs_vendor_inventory_recyclerView.getSelectedItemPositions().get(i)));
+                    rbsVendorSelectedStock.getVendor_stock_price_textview().add(vendor_stock_price_list.get(adapter_rbs_vendor_inventory_recyclerView.getSelectedItemPositions().get(i)));
+                    rbsVendorSelectedStock.getVendor_stock_quantity_textView().add(vendor_stock_quantity_list.get(adapter_rbs_vendor_inventory_recyclerView.getSelectedItemPositions().get(i)));
+                    rbsVendorSelectedStock.getVendor_stock_imageView().add(vendor_stock_imageView_list.get(adapter_rbs_vendor_inventory_recyclerView.getSelectedItemPositions().get(i)));
+                    rbsVendorSelectedStock.getVendor_stock_keyID_list().add(vendor_stock_keyID_list.get(adapter_rbs_vendor_inventory_recyclerView.getSelectedItemPositions().get(i)));
+                }
+
                 startActivity(intent);
             }
         });
@@ -202,9 +216,18 @@ public class RBS_Vendors extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1:snapshot.getChildren()){
+                    for (DataSnapshot snapshot2:snapshot1.getChildren()){
+                        vendor_stock_category_list.add(snapshot1.getKey());
+                        vendor_stockName_list.add(snapshot2.child("Name").getValue().toString());
+                        vendor_stock_price_list.add(snapshot2.child("Price").getValue().toString());
+                        vendor_stock_quantity_list.add(snapshot2.child("Quantity").getValue().toString());
+                        vendor_stock_imageView_list.add(snapshot2.child("Image_url").getValue().toString());
+                        vendor_stock_keyID_list.add(snapshot2.getKey());
+
+                    }
 
                 }
-                Adapter_RBS_Vendor_inventory_RecyclerView adapter_rbs_vendor_inventory_recyclerView=new Adapter_RBS_Vendor_inventory_RecyclerView(RBS_Vendors.this, vendor_stock_category_list, vendor_stockName_list, vendor_stock_currency_list, vendor_stock_price_list, vendor_stock_quantity_list, vendor_stock_imageView_list,null);
+                adapter_rbs_vendor_inventory_recyclerView=new Adapter_RBS_Vendor_inventory_RecyclerView(RBS_Vendors.this, vendor_stock_category_list, vendor_stockName_list, vendor_stock_price_list, vendor_stock_quantity_list, vendor_stock_imageView_list);
                 rbs_vendor_products_recyclerview.setAdapter(adapter_rbs_vendor_inventory_recyclerView);
             }
 

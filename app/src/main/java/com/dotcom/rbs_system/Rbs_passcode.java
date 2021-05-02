@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +20,7 @@ public class Rbs_passcode extends Fragment {
 
     Button enter_button;
     View view;
+    EditText passcode_editText;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -75,6 +77,8 @@ public class Rbs_passcode extends Fragment {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Initialize() {
+        passcode_editText = (EditText) view.findViewById(R.id.passcode_editText);
+
         enter_button = (Button)view.findViewById(R.id.enter_button);
     }
 
@@ -88,8 +92,13 @@ public class Rbs_passcode extends Fragment {
         enter_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), Rbs_options.class);
-                startActivity(intent);
+                if (passcode_editText.getText().toString().equals("1234")){
+                    Intent intent = new Intent(getActivity(), Rbs_options.class);
+                    startActivity(intent);
+                }else {
+                    passcode_editText.setError("Wrong passcode!");
+                }
+
             }
         });
     }

@@ -307,7 +307,7 @@
                             android:textSize="25sp" />
 
                         <TextView
-                            android:id="@+id/balance_currency"
+                            android:id="@+id/balance_currency_textView"
                             style="@style/RBSInvoice_TextViews"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -317,12 +317,12 @@
                             android:textSize="25sp" />
 
                         <TextView
-                            android:id="@+id/balance"
+                            android:id="@+id/totalBalance_textView"
                             style="@style/RBSInvoice_TextViews"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text="1000"
+                            android:text="0.00"
                             android:textColor="@color/textBlue"
                             android:textSize="25sp" />
                     </LinearLayout>
