@@ -64,6 +64,7 @@ public class Adapter_RBS_Vendor_orders_list_RecyclerView extends RecyclerView.Ad
                 Intent intent = new Intent(context, Rbs_vendor_specific_order.class);
                 intent.putExtra("Invoice_no",invoice_no_textview.get(position));
                 intent.putExtra("Vendor_name",vendor_name_textview.get(position));
+                intent.putExtra("Date",date_textView.get(position));
                 context.startActivity(intent);
             }
         });

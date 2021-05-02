@@ -17,9 +17,8 @@ import com.dotcom.rbs_system.Classes.RBSVendorSelectedStock;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rbs_vendor_order extends AppCompatActivity {
+public class Rbs_vendor_order_receipt extends AppCompatActivity {
     RBSVendorSelectedStock rbsVendorSelectedStock;
-
     Adapter_RBS_Vendor_placeorder_RecyclerView adapter_rbs_vendor_placeorder_recyclerView;
     RecyclerView shopkeeper_invoice_details_recyclerview;
 
@@ -34,7 +33,7 @@ public class Rbs_vendor_order extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rbs_vendor_order);
+        setContentView(R.layout.activity_rbs_vendor_order_receipt);
         Initialization();
         Onclicklistners();
 
@@ -56,10 +55,10 @@ public class Rbs_vendor_order extends AppCompatActivity {
 
         back_btn = (ImageButton) findViewById(R.id.back_btn);
 
-        adapter_rbs_vendor_placeorder_recyclerView = new Adapter_RBS_Vendor_placeorder_RecyclerView(Rbs_vendor_order.this, placeorder_item_name_list, placeorder_item_category_list, place_order_price_list, place_order_quantity_list, placeorder_item_pic_list,totalBalance_textView);
+        adapter_rbs_vendor_placeorder_recyclerView = new Adapter_RBS_Vendor_placeorder_RecyclerView(Rbs_vendor_order_receipt.this, placeorder_item_name_list, placeorder_item_category_list, place_order_price_list, place_order_quantity_list, placeorder_item_pic_list,totalBalance_textView);
 
         shopkeeper_invoice_details_recyclerview = (RecyclerView) findViewById(R.id.shopkeeper_invoice_details_recyclerview);
-        shopkeeper_invoice_details_recyclerview.setLayoutManager(new GridLayoutManager(Rbs_vendor_order.this, 1));
+        shopkeeper_invoice_details_recyclerview.setLayoutManager(new GridLayoutManager(Rbs_vendor_order_receipt.this, 1));
         shopkeeper_invoice_details_recyclerview.setAdapter(adapter_rbs_vendor_placeorder_recyclerView);
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,7 +78,7 @@ public class Rbs_vendor_order extends AppCompatActivity {
                     }
                 }
                 if (!validate){
-                    Toast.makeText(Rbs_vendor_order.this, "Please provide valid quantities", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Rbs_vendor_order_receipt.this, "Please provide valid quantities", Toast.LENGTH_SHORT).show();
                 }
             }
         });

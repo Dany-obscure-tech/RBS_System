@@ -28,7 +28,7 @@
             android:name=".RBS_Vendors"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".Rbs_vendor_order"
+            android:name=".Rbs_vendor_order_receipt"
             android:theme="@style/AppTheme.no" />
         <activity
             android:name=".Vendor_Users_list"

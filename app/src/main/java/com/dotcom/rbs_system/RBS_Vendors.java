@@ -158,7 +158,7 @@ public class RBS_Vendors extends AppCompatActivity {
         confirm_order_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(RBS_Vendors.this,Rbs_vendor_order.class);
+                Intent intent=new Intent(RBS_Vendors.this, Rbs_vendor_order_receipt.class);
 
                 // todo Daniyal: send list to confirm order
                 for (int i=0;i<adapter_rbs_vendor_inventory_recyclerView.getSelectedItemPositions().size();i++){
