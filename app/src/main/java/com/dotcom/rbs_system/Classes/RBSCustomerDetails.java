@@ -155,6 +155,9 @@ public class RBSCustomerDetails {
                                 reference.child("Customer_list").child(key).child("ID_Image_urls").child("image_"+(k+1)).setValue(String.valueOf(uri.toString()));
 
                                 k++;
+                                if (k>imageUrlList.size()){
+                                    pd.dismissProgressBar(context);
+                                }
                             }
                         });
                         l++;
@@ -168,12 +171,10 @@ public class RBSCustomerDetails {
                     public void onFailure(@NonNull Exception e) {
                         pd.dismissProgressBar(context);
                         Toast.makeText(context, String.valueOf(e), Toast.LENGTH_SHORT).show();
+                        pd.dismissProgressBar(context);
                     }
                 });
             }
-            pd.dismissProgressBar(context);
-
-
 
         }else {
             Toast.makeText(context, "Internet is not Connected", Toast.LENGTH_SHORT).show();

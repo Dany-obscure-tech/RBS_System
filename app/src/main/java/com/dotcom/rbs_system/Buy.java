@@ -240,7 +240,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         forExchange_textView =(TextView)findViewById(R.id.forExchange_textView);
         suggest_price_TextView = (TextView) findViewById(R.id.suggest_price_TextView);
 
-        itemName_textView = (TextView) findViewById(R.id.item_category_textView);
+        itemName_textView = (TextView) findViewById(R.id.itemName_textView);
         itemID_textView = (TextView) findViewById(R.id.itemID_textView);
         itemPriceCurrency_textView = (TextView) findViewById(R.id.itemPriceCurrency_textView);
         itemPriceCurrency_textView.setText(Currency.getInstance().getCurrency());
@@ -585,6 +585,16 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     private boolean validateFields() {
         boolean valid = true;
+
+        if (customerName_textView.getText().toString().equals("Search for customer ...")){
+            Toast.makeText(this, "Select customer", Toast.LENGTH_LONG).show();
+            valid = false;
+        }
+
+        if (itemName_textView.getText().toString().equals("Search for item ...")){
+            Toast.makeText(this, "Select item", Toast.LENGTH_LONG).show();
+            valid = false;
+        }
 
         if (purchase_price_editText.getText().toString().isEmpty()) {
             purchase_price_editText.setError("Please enter suggested price");

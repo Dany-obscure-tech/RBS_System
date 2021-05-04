@@ -70,7 +70,7 @@ public class Home extends Fragment {
 
     ImageView menu_btn;
 
-    TextView logout,communication_option;
+    TextView logout,communication_option,rbs_option,vendor_option;
 
     RelativeLayout side_option_menu,side_option_menu_bg_relativeLayout;
 
@@ -163,6 +163,8 @@ public class Home extends Fragment {
 
         logout=(TextView) view.findViewById(R.id.logout);
         communication_option=(TextView) view.findViewById(R.id.communication_option);
+        rbs_option=(TextView) view.findViewById(R.id.rbs_option);
+        vendor_option=(TextView) view.findViewById(R.id.vendor_option);
 
         side_option_menu=(RelativeLayout)view.findViewById(R.id.side_option_menu);
         side_option_menu_bg_relativeLayout=(RelativeLayout)view.findViewById(R.id.side_option_menu_bg_relativeLayout);
@@ -187,6 +189,24 @@ public class Home extends Fragment {
     }
 
     private void Onclick_listners() {
+        rbs_option.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), PasscodeActivity.class);
+                intent.putExtra("ACTIVITY_CHECK","RBS");
+                getActivity().startActivity(intent);
+            }
+        });
+
+        vendor_option.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), PasscodeActivity.class);
+                intent.putExtra("ACTIVITY_CHECK","VENDOR");
+                getActivity().startActivity(intent);
+            }
+        });
+
         communication_option.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
