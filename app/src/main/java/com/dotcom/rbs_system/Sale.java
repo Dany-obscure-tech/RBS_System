@@ -350,12 +350,22 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                             lessExistingItemsPriceList.add(existingItemsPriceList.get(i));
                             lessExisitngItemsKeyIDList.add(exisitngItemsKeyIDList.get(i));
                         }
+                    }else {
+                        for (int i = 0 ; i<exisitngItemsNamesList.size();i++){
+                            lessExisitngItemsNamesList.add(exisitngItemsNamesList.get(i));
+                            lessExisitngItemsSerialNoList.add(exisitngItemsSerialNoList.get(i));
+                            lessExistingItemsLastActiveList.add(existingItemsLastActiveList.get(i));
+                            lessExistingItemsImageUrlList.add(existingItemsImageUrlList.get(i));
+                            lessExistingItemsPriceList.add(existingItemsPriceList.get(i));
+                            lessExisitngItemsKeyIDList.add(exisitngItemsKeyIDList.get(i));
+                        }
                     }
                     adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(Sale.this,lessExisitngItemsNamesList,lessExisitngItemsSerialNoList,lessExisitngItemsKeyIDList,lessExistingItemsPriceList,lessExistingItemsLastActiveList,lessExistingItemsImageUrlList,itemName_textView,itemID_textView,itemPriceCurrency_textView,itemPrice_textView,itemLastActive_textView,itemImage_imageView,itemList_alert_dialog);
                     itemList_recyclerView.setAdapter(adapter_itemList_alert_dialog);
                     onScrollListner();
                     pd2.dismissProgressBar(Sale.this);
                 }else {
+
                     pd2.dismissProgressBar(Sale.this);
                 }
 
