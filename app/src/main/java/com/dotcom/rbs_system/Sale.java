@@ -168,7 +168,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
         alert_rbs_itemlist_progressBar = (ProgressBar)itemList_alert_dialog.findViewById(R.id.alert_rbs_itemlist_progressBar);
 
-
         searchForItem_cardView = (CardView)findViewById(R.id.searchForItem_cardView);
 
         reference = FirebaseDatabase.getInstance().getReference();
