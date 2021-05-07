@@ -832,8 +832,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     @Override
     protected void onRestart() {
         super.onRestart();
-        fetchingExisitingCustomers();
-        fetchingExisitingItems();
     }
 
 
