@@ -245,6 +245,8 @@ public class Vendor_stock_entry extends AppCompatActivity {
 
                             reference.child("Vendor_stock").child(firebaseAuthUID).child(vendorStockCategory).child(key).child("Image_url").setValue(String.valueOf(uri.toString()));
                             Toast.makeText(Vendor_stock_entry.this, "Stock entered!", Toast.LENGTH_SHORT).show();
+
+                            setResult(111,new Intent());
                             finish();
                         }
                     });

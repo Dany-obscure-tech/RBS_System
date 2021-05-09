@@ -121,7 +121,6 @@ public class VendorMainScreen extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        recreate();
     }
 
     @Override
@@ -160,7 +159,6 @@ public class VendorMainScreen extends AppCompatActivity {
                         }
                     });
 
-
                 }else {
                     Toast.makeText(VendorMainScreen.this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
                     connected = false;
@@ -177,8 +175,8 @@ public class VendorMainScreen extends AppCompatActivity {
 //                    val filePath:String = ImagePicker.getFilePath(data)!!
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
 //            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(VendorMainScreen.this, "Task Cancelled", Toast.LENGTH_SHORT).show();
+        } else if(resultCode == 111){
+            recreate();
         }
     }
 }

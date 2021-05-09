@@ -70,7 +70,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     CardView searchForItem_cardView;
 
-    Dialog itemList_alert_dialog;
+    Dialog itemList_alert_dialog,customerList_alert_dialog;
     RecyclerView itemList_recyclerView;
     Adapter_itemList_alert_dialog adapter_itemList_alert_dialog;
 
@@ -160,6 +160,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         pd2 = new Progress_dialoge();
         pd3 = new Progress_dialoge();
 
+        ////
+
         itemList_alert_dialog = new Dialog(this);
         itemList_alert_dialog.setContentView(R.layout.alert_rbs_itemlist);
 
@@ -229,6 +231,18 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         itemImage_imageView = (ImageView) findViewById(R.id.itemImage_imageView);
         customerImage_imageView = (ImageView) findViewById(R.id.customerImage_imageView);
 
+        //////
+
+        customerList_alert_dialog= new Dialog(this);
+        customerList_alert_dialog.setContentView(R.layout.alert_rbs_customerlist);
+
+        // TODO: 07-May-21  
+//        customerList_recyclerView = (RecyclerView)customerList_alert_dialog.findViewById(R.id.itemList_recyclerView);
+//        customerList_recyclerView.setLayoutManager(new GridLayoutManager(Sale.this,1));
+//
+//        alert_rbs_customerlist_progressBar = (ProgressBar)customerList_alert_dialog.findViewById(R.id.alert_rbs_customerlist_progressBar);
+
+        //////
 
         ////////////////////////
         suggest_price_TextView=(TextView)findViewById(R.id.suggest_price_TextView);

@@ -174,7 +174,7 @@ public class VendorShop extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent= new Intent(getActivity(),Vendor_stock_entry.class);
-                startActivity(intent);
+                startActivityForResult(intent,111);
 
             }
         });
