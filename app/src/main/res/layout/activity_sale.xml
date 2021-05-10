@@ -116,7 +116,7 @@
 
                         <TextView
                             android:id="@+id/customerEmail_textView"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:textColor="@color/textGrey"
                             android:fontFamily="@font/segoe_ui_bold"
                             android:textSize="15sp"
@@ -125,9 +125,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
+
+
                         <TextView
                             android:id="@+id/customerPhno_textView"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:textColor="@color/textGrey"
                             android:fontFamily="@font/segoe_ui_bold"
                             android:textSize="15sp"
@@ -147,7 +149,7 @@
 
                         <ImageView
                             android:id="@+id/customerImage_imageView"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:src="@drawable/shirt"
