@@ -15,16 +15,15 @@ import java.util.List;
 
 public class Adapter_Vendor_shopkeepers_order_progress_RecyclerView extends RecyclerView.Adapter<Adapter_Vendor_shopkeepers_order_progress_RecyclerView.MyViewHolder> {
     Context context;
-    List<String> sr_no_order,accessory_name,rate_currency,rate_price,order_qty,total_price;
+    List<String> sr_no_order,accessory_name,rate_currency,rate_price,order_qty;
 
-    public Adapter_Vendor_shopkeepers_order_progress_RecyclerView(Context context, List<String> sr_no_order, List<String> accessory_name, List<String> rate_currency, List<String> rate_price, List<String> order_qty, List<String> total_price) {
+    public Adapter_Vendor_shopkeepers_order_progress_RecyclerView(Context context, List<String> sr_no_order, List<String> accessory_name, List<String> rate_currency, List<String> rate_price, List<String> order_qty) {
         this.context = context;
         this.sr_no_order = sr_no_order;
         this.accessory_name = accessory_name;
         this.rate_currency = rate_currency;
         this.rate_price = rate_price;
         this.order_qty = order_qty;
-        this.total_price = total_price;
     }
 
     @NonNull
@@ -59,8 +58,6 @@ public class Adapter_Vendor_shopkeepers_order_progress_RecyclerView extends Recy
             rate_currency = (TextView) itemView.findViewById(R.id.rate_currency);
             rate_price = (TextView) itemView.findViewById(R.id.rate_price);
             order_qty = (TextView) itemView.findViewById(R.id.order_qty);
-            total_price = (TextView) itemView.findViewById(R.id.total_price);
-
 
         }
     }

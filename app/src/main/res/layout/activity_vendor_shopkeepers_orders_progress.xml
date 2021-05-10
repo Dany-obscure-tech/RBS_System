@@ -246,7 +246,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/shopkeeper_invoice_details_recyclerview"
+                android:id="@+id/order_invoice_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 

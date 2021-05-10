@@ -48,14 +48,11 @@
 
                 <TextView
                     android:id="@+id/products_textview"
-                    android:layout_margin="15dp"
+                    style="@style/Headings_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Shop Inventory"
                     android:layout_gravity="center_horizontal"
-                    android:textColor="#707070"
-                    android:textSize="26sp"
-                    android:fontFamily="@font/segoe_ui_bold"
                     />
 
                 <androidx.recyclerview.widget.RecyclerView

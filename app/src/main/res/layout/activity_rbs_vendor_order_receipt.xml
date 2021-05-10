@@ -266,7 +266,7 @@
                 android:textSize="25sp" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/shopkeeper_invoice_details_recyclerview"
+                android:id="@+id/order_invoice_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/invoices"
@@ -278,7 +278,7 @@
                 android:id="@+id/balance_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/shopkeeper_invoice_details_recyclerview"
+                android:layout_below="@+id/order_invoice_recyclerview"
                 android:gravity="center_horizontal">
 
                 <androidx.cardview.widget.CardView

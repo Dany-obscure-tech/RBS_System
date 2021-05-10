@@ -10,11 +10,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dotcom.rbs_system.Adapter.Adapter_RBS_Vendor_inventory_RecyclerView;
 import com.dotcom.rbs_system.Adapter.Adapter_RBS_Vendor_placeorder_RecyclerView;
 import com.dotcom.rbs_system.Classes.RBSVendorSelectedStock;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Rbs_vendor_order_receipt extends AppCompatActivity {
@@ -57,7 +55,7 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
 
         adapter_rbs_vendor_placeorder_recyclerView = new Adapter_RBS_Vendor_placeorder_RecyclerView(Rbs_vendor_order_receipt.this, placeorder_item_name_list, placeorder_item_category_list, place_order_price_list, place_order_quantity_list, placeorder_item_pic_list,totalBalance_textView);
 
-        shopkeeper_invoice_details_recyclerview = (RecyclerView) findViewById(R.id.shopkeeper_invoice_details_recyclerview);
+        shopkeeper_invoice_details_recyclerview = (RecyclerView) findViewById(R.id.order_invoice_recyclerview);
         shopkeeper_invoice_details_recyclerview.setLayoutManager(new GridLayoutManager(Rbs_vendor_order_receipt.this, 1));
         shopkeeper_invoice_details_recyclerview.setAdapter(adapter_rbs_vendor_placeorder_recyclerView);
     }

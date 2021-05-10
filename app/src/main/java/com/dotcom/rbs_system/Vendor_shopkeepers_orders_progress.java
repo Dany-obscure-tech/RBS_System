@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.dotcom.rbs_system.Adapter.Adapter_Vendor_order_list_RecyclerView;
 import com.dotcom.rbs_system.Adapter.Adapter_Vendor_shopkeepers_order_progress_RecyclerView;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class Vendor_shopkeepers_orders_progress extends AppCompatActivity {
     String shopname_getting;
     TextView shop_name;
     ImageButton back_btn;
-    RecyclerView shopkeeper_invoice_details_recyclerview;
+    RecyclerView order_invoice_recyclerview;
     List<String> sr_no_order,accessory_name,rate_currency,rate_price,order_qty,total_price;
 
     @Override
@@ -47,7 +46,7 @@ public class Vendor_shopkeepers_orders_progress extends AppCompatActivity {
 
     private void Initialization() {
         shopname_getting = getIntent().getStringExtra("Shop_Name");
-        shopkeeper_invoice_details_recyclerview=(RecyclerView)findViewById(R.id.shopkeeper_invoice_details_recyclerview);
+        order_invoice_recyclerview =(RecyclerView)findViewById(R.id.order_invoice_recyclerview);
         shop_name=(TextView)findViewById(R.id.shop_name);
         back_btn=(ImageButton)findViewById(R.id.back_btn);
         sr_no_order=new ArrayList<>();
@@ -59,10 +58,10 @@ public class Vendor_shopkeepers_orders_progress extends AppCompatActivity {
         accessory_name.add("Itech Computers");
         accessory_name.add("Phi traders");
         accessory_name.add("Phi Horizon Company");
-        Adapter_Vendor_shopkeepers_order_progress_RecyclerView adapter_vendor_shopkeepers_order_progress_recyclerView=new Adapter_Vendor_shopkeepers_order_progress_RecyclerView(Vendor_shopkeepers_orders_progress.this,null,accessory_name,null,null,null,null);
+        Adapter_Vendor_shopkeepers_order_progress_RecyclerView adapter_vendor_shopkeepers_order_progress_recyclerView=new Adapter_Vendor_shopkeepers_order_progress_RecyclerView(Vendor_shopkeepers_orders_progress.this,null,accessory_name,null,null,null);
 
-        shopkeeper_invoice_details_recyclerview.setLayoutManager(new GridLayoutManager(Vendor_shopkeepers_orders_progress.this,1));
-        shopkeeper_invoice_details_recyclerview.setAdapter(adapter_vendor_shopkeepers_order_progress_recyclerView);
+        order_invoice_recyclerview.setLayoutManager(new GridLayoutManager(Vendor_shopkeepers_orders_progress.this,1));
+        order_invoice_recyclerview.setAdapter(adapter_vendor_shopkeepers_order_progress_recyclerView);
 
 
     }

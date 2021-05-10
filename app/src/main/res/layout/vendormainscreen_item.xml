@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/searchForItem_cardView"
+        android:id="@+id/vendor_shop_cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ripple_effect_cardview"
@@ -19,7 +19,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="3">
-
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -58,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:layout_weight="1.7"
+                android:layout_weight="1.9"
                 android:layout_gravity="center_vertical"
                 android:orientation="vertical">
 
@@ -81,12 +80,11 @@
                     android:layout_marginTop="5dp"
                     />
 
-
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
+                    android:layout_gravity="center_horizontal"
                     android:orientation="horizontal">
 
                     <TextView
@@ -121,8 +119,10 @@
 
             <ImageView
                 android:id="@+id/stockImage_imageView"
-                android:layout_width="300px"
-                android:layout_height="300px"
+                style="@style/Image_views"
+                android:layout_width="230px"
+                android:layout_height="230px"
+                android:layout_weight="0.6"
                 android:src="@drawable/laptop"
                 android:layout_gravity="center"
                 />
