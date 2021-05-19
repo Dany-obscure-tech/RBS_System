@@ -9,10 +9,10 @@
         android:id="@+id/home"
         android:name="com.dotcom.rbs_system.BuyLocal_home"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_buylocal_home" />
     <fragment
         android:id="@+id/profile"
-        android:name="com.dotcom.rbs_system.Profile"
+        android:name="com.dotcom.rbs_system.BuyLocal_Profile"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_buylocal_profile" />
 </navigation>

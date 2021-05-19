@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -35,7 +36,6 @@ public class BuyLocal_shopkeeper_shop extends AppCompatActivity {
         itemname.add("Mobiles");
 
         onclicklistners();
-
 
         AdapterShopProductsRecyclerView adapterShopProductsRecyclerView = new AdapterShopProductsRecyclerView(BuyLocal_shopkeeper_shop.this, itemname, null, null);
         shop_products_RecyclerView.setLayoutManager(new GridLayoutManager(BuyLocal_shopkeeper_shop.this,2));

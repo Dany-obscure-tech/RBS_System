@@ -5,8 +5,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dotcom.rbs_system.Adapter.AdapterOffersItemListRecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Profile extends Fragment {
+public class BuyLocal_Profile extends Fragment {
 
     DatabaseReference customerdataRef,customer_offerRef;
 
@@ -51,12 +48,12 @@ public class Profile extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Profile() {
+    public BuyLocal_Profile() {
 
     }
 
-    public static Profile newInstance(String param1, String param2) {
-        Profile fragment = new Profile();
+    public static BuyLocal_Profile newInstance(String param1, String param2) {
+        BuyLocal_Profile fragment = new BuyLocal_Profile();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -81,7 +78,7 @@ public class Profile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_buylocal_profile, container, false);
 
         profileImage=(ImageView)view.findViewById(R.id.profileImage_imageView);
         idImage=(ImageView)view.findViewById(R.id.idImage);

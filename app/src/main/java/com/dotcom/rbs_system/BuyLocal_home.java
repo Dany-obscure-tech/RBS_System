@@ -136,7 +136,7 @@ public class BuyLocal_home extends Fragment {
 
         SliderAdapterExample sliderAdapterExample = new SliderAdapterExample(getActivity(),imageUrl);
 
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_buylocal_home, container, false);
         slider_link_list=new ArrayList<>();
 
         datafetch();

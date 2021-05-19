@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF"
     android:layout_height="match_parent"
-    tools:context=".Profile">
+    tools:context=".BuyLocal_Profile">
 
     <!-- TODO: Update blank fragment layout -->
     <ScrollView

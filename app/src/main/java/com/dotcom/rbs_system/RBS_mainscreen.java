@@ -21,6 +21,7 @@ public class RBS_mainscreen extends AppCompatActivity {
     final Rbs_home rbs_home = new Rbs_home();
     final Rbs_passcode rbs_passcode = new Rbs_passcode();
     final RBS_Vendor_Orders rbs_vendor_orders = new RBS_Vendor_Orders();
+    final RBS_offers rbs_offers = new RBS_offers();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,12 @@ public class RBS_mainscreen extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, rbs_vendor_orders).commit();
                         closeDrawer();
                         break;
+
+                    case R.id.nav_rbs_offers:
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, rbs_offers).commit();
+                        closeDrawer();
+                        break;
+
 
                     case R.id.nav_logout:
                         FirebaseAuth.getInstance().signOut();

@@ -15,7 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class BuyLocal_main extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     final BuyLocal_home fragment_buyLocalhome = new BuyLocal_home();
-    final Profile fragment_profile = new Profile();
+    final BuyLocal_Profile fragment_BuyLocal_profile = new BuyLocal_Profile();
 
     private long lastPressedTime;
 
@@ -44,7 +44,7 @@ public class BuyLocal_main extends AppCompatActivity {
                         break;
                     case R.id.profile:
                         // Switch to page two
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,fragment_profile).commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer, fragment_BuyLocal_profile).commit();
                         break;
                 }
                 return true;
