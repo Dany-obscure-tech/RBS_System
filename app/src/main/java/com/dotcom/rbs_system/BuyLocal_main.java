@@ -2,15 +2,11 @@ package com.dotcom.rbs_system;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.NavHostController;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -18,7 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BuyLocal_main extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
-    final Home fragment_home = new Home();
+    final BuyLocal_home fragment_buyLocalhome = new BuyLocal_home();
     final Profile fragment_profile = new Profile();
 
     private long lastPressedTime;
@@ -36,7 +32,7 @@ public class BuyLocal_main extends AppCompatActivity {
         // Fragment home already selected
         bottomNavigationView.setSelectedItemId(R.id.home);
 
-        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,fragment_home).commit();
+        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer, fragment_buyLocalhome).commit();
         // Bottom navigation menu fragments connected
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -44,7 +40,7 @@ public class BuyLocal_main extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.home:
                         // Switch to page one
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,fragment_home).commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer, fragment_buyLocalhome).commit();
                         break;
                     case R.id.profile:
                         // Switch to page two

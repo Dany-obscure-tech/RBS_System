@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.CalendarContract;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,7 +22,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterCategoryRecyclerView;
 import com.dotcom.rbs_system.Adapter.AdapterSpotlightItemListRecyclerView;
@@ -46,10 +43,10 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Home#newInstance} factory method to
+ * Use the {@link BuyLocal_home#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Home extends Fragment {
+public class BuyLocal_home extends Fragment {
     EditText search_editText;
 
     BuylocalSlider buylocalSliderlistObj;
@@ -70,7 +67,7 @@ public class Home extends Fragment {
 
     ImageView menu_btn;
 
-    TextView logout,communication_option,rbs_option,vendor_option;
+    TextView logout,communication_option,rbs_option,vendor_option,offers_option;
 
     RelativeLayout side_option_menu,side_option_menu_bg_relativeLayout;
 
@@ -82,13 +79,13 @@ public class Home extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Home() {
+    public BuyLocal_home() {
 
     }
 
 
-    public static Home newInstance(String param1, String param2) {
-        Home fragment = new Home();
+    public static BuyLocal_home newInstance(String param1, String param2) {
+        BuyLocal_home fragment = new BuyLocal_home();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -165,6 +162,7 @@ public class Home extends Fragment {
         communication_option=(TextView) view.findViewById(R.id.communication_option);
         rbs_option=(TextView) view.findViewById(R.id.rbs_option);
         vendor_option=(TextView) view.findViewById(R.id.vendor_option);
+        offers_option=(TextView) view.findViewById(R.id.offers_option);
 
         side_option_menu=(RelativeLayout)view.findViewById(R.id.side_option_menu);
         side_option_menu_bg_relativeLayout=(RelativeLayout)view.findViewById(R.id.side_option_menu_bg_relativeLayout);
@@ -203,6 +201,14 @@ public class Home extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), PasscodeActivity.class);
                 intent.putExtra("ACTIVITY_CHECK","VENDOR");
+                getActivity().startActivity(intent);
+            }
+        });
+
+        offers_option.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(getActivity(),BuyLocal_offers_option.class);
                 getActivity().startActivity(intent);
             }
         });
