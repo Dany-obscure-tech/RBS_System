@@ -37,11 +37,9 @@ public class Profile extends Fragment {
 
     ImageView profileImage,idImage;
 
-    RecyclerView offers;
-
     Button edit_btn;
 
-    List<String> itemname, price, itemImage;
+    List<String> price, itemImage;
     List<String> offer_status;
     List<String> offer_product_price;
     List<String> product_offer_msg;
@@ -94,8 +92,6 @@ public class Profile extends Fragment {
         dob=(TextView)view.findViewById(R.id.dob);
         email=(TextView)view.findViewById(R.id.email);
         edit_btn=(Button)view.findViewById(R.id.edit_btn);
-        offers = (RecyclerView) view.findViewById(R.id.offers);
-        itemname = new ArrayList<String>();
         price = new ArrayList<String>();
         itemImage = new ArrayList<String>();
         offer_status = new ArrayList<String>();
@@ -103,12 +99,7 @@ public class Profile extends Fragment {
         product_offer_msg = new ArrayList<String>();
 
 
-        AdapterOffersItemListRecyclerView adapterOffersItemListRecyclerView=new AdapterOffersItemListRecyclerView(getActivity(),itemname,null,null,null,null,null);
 
-//        offers.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,true));
-//        offers.setAdapter(adapterOffersItemListRecyclerView);
-        offers.setLayoutManager(new GridLayoutManager(getActivity(),1));
-        offers.setAdapter(adapterOffersItemListRecyclerView);
 
         onclicklistners();
 

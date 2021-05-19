@@ -38,7 +38,27 @@
 
     </RelativeLayout>
 
+    <SearchView
+        android:id="@+id/simpleSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_weight="1.8"
+        android:iconifiedByDefault="false"
+        android:layout_marginLeft="8dp"
+        android:background="#F1F1F1"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:queryHint="Search here"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/offers"
+        android:layout_below="@+id/simpleSearchView"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="40dp"
+        android:orientation="vertical"/>
 
 
 </RelativeLayout>
