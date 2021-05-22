@@ -1,6 +1,5 @@
 package com.dotcom.rbs_system;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -10,18 +9,16 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -32,24 +29,27 @@ import android.widget.Toast;
 import com.dotcom.rbs_system.Adapter.AdapterItemDetailsImagesRecyclerView;
 import com.dotcom.rbs_system.Classes.RBSCustomerDetails;
 import com.github.dhaval2404.imagepicker.ImagePicker;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class Customer_details extends AppCompatActivity {
+    LatLng latLng;
+    Double latitude;
+    Double longitude;
+    Geocoder geocoder;
+    List<Address> addressList;
 
     RBSCustomerDetails rbsCustomerDetails;
 
@@ -74,10 +74,10 @@ public class Customer_details extends AppCompatActivity {
     ImageButton back_btn;
     ImageView id_imageView;
 
-    TextView date_of_birth_text,uploadId_textView,date_textView,submit_textView;
+    TextView date_of_birth_text,uploadId_textView,date_textView,submit_textView,postcodeCheck_textView,ac_address;
     DatePickerDialog.OnDateSetListener onDateSetListener;
     DatabaseReference reference;
-    EditText ac_title, ac_phoneno, ac_id, ac_address, ac_email,ac_postalcode;
+    EditText ac_title,ac_phoneno,ac_houseNo,ac_id,ac_email,ac_postcode;
 
     private static final int CAMERA_REQUEST_CODE = 1;
     private static final int CAMERA_REQUEST_CODE2 = 2;
@@ -107,10 +107,11 @@ public class Customer_details extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference();
         ac_title = (EditText) findViewById(R.id.ac_title);
         ac_phoneno = (EditText) findViewById(R.id.ac_phoneno);
+        ac_houseNo = (EditText) findViewById(R.id.ac_houseNo);
         ac_id = (EditText) findViewById(R.id.ac_id);
-        ac_address = (EditText) findViewById(R.id.ac_address);
+        ac_address = (TextView) findViewById(R.id.ac_address);
         ac_email = (EditText) findViewById(R.id.ac_email);
-        ac_postalcode = (EditText) findViewById(R.id.ac_postalcode);
+        ac_postcode = (EditText) findViewById(R.id.ac_postcode);
 
         uploadId_textView = (TextView) findViewById(R.id.uploadId_textView);
 
@@ -118,6 +119,7 @@ public class Customer_details extends AppCompatActivity {
         id_imageView = (ImageView) findViewById(R.id.id_imageView);
 
         date_textView = (TextView) findViewById(R.id.date_textView);
+        postcodeCheck_textView = (TextView) findViewById(R.id.postcodeCheck_textView);
         submit_textView = (TextView) findViewById(R.id.submit_textView);
         date_of_birth_text = (TextView) findViewById(R.id.date_of_birth_text);
 
@@ -133,6 +135,13 @@ public class Customer_details extends AppCompatActivity {
     }
 
     private void onClickListeners() {
+
+        postcodeCheck_textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkPostcode();
+            }
+        });
 
         uploadId_textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,6 +203,7 @@ public class Customer_details extends AppCompatActivity {
         submit_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                checkPostcode();
                 if (validateFields() == true) {
                     detailsSubmit();
                 }
@@ -202,11 +212,105 @@ public class Customer_details extends AppCompatActivity {
 
     }
 
+    private void checkPostcode() {
+        // SE13 6AZ
+        String postcode = ac_postcode.getText().toString();
+        latLng = getLocationFromAddress(Customer_details.this,postcode);
+        if (latLng==null){
+            ac_postcode.setError("Enter Valid formatted postcode\n\"XXXX XXX\"");
+            ac_address.setText("----");
+        }else {
+            latitude = latLng.latitude;
+            longitude = latLng.longitude;
+
+            addressList = new ArrayList<>();
+            geocoder = new Geocoder(this, Locale.getDefault());
+
+            try {
+                addressList = geocoder.getFromLocation(latitude,longitude,1);
+                String country = addressList.get(0).getCountryName();
+                String city = addressList.get(0).getAdminArea();
+                String subCity = addressList.get(0).getSubAdminArea();
+                String area = addressList.get(0).getLocality();
+                String street = addressList.get(0).getThoroughfare();
+                String streetno = addressList.get(0).getSubThoroughfare();
+                String address = addressList.get(0).getAddressLine(0);
+                String check = addressList.get(0).getAddressLine(0);
+//                Toast.makeText(this, check, Toast.LENGTH_SHORT).show();
+//                System.out.println(address);
+//                System.out.println(check);
+
+                if (street == null){
+                    street="";
+                }else {
+                    street = street+", ";
+                }
+
+                if (area == null){
+                    area="";
+                }else {
+                    area = area+", ";
+                }
+
+                if (subCity == null){
+                    subCity="";
+                }else {
+                    subCity = subCity+", ";
+                }
+
+                if (city == null){
+                    city="";
+                }else {
+                    city = city+", ";
+                }
+
+                if (country == null) {
+                    country = "";
+                }
+
+                ac_address.setText(street+area+subCity+city+country);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    private LatLng getLocationFromAddress(Context context, String strAddress) {
+
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try {
+            // May throw an IOException
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+
+            try {
+                Address location = address.get(0);
+                p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+            }catch (Exception e){
+
+            }
+
+
+        } catch (IOException ex) {
+
+            ex.printStackTrace();
+        }
+
+        System.out.println(String.valueOf(p1));
+        return p1;
+    }
+
     private boolean validateFields() {
         boolean valid = true;
 
         if (ac_title.getText().toString().isEmpty()) {
-            ac_title.setError("Please enter your name");
+            ac_title.setError("Please enter name");
             valid = false;
         }
         if (ac_title.length() > 32) {
@@ -214,15 +318,19 @@ public class Customer_details extends AppCompatActivity {
             valid = false;
         }
         if (ac_phoneno.getText().toString().isEmpty()) {
-            ac_phoneno.setError("Please enter your phone number");
+            ac_phoneno.setError("Please enter phone number");
             valid = false;
         }
         if (ac_phoneno.length() < 11) {
+            if (ac_houseNo.getText().toString().isEmpty()) {
+                ac_houseNo.setError("Please enter house/door number");
+                valid = false;
+            }
             ac_phoneno.setError("Please enter valid contact no");
             valid = false;
         }
         if (ac_id.getText().toString().isEmpty()) {
-            ac_id.setError("Please enter your id");
+            ac_id.setError("Please enter id");
             valid = false;
         }
         if (imageUrlList.size()==0){
@@ -234,16 +342,16 @@ public class Customer_details extends AppCompatActivity {
             valid = false;
         }
 
-        if (ac_address.getText().toString().isEmpty()) {
-            ac_address.setError("Please enter your date of birth");
+        if (ac_address.getText().toString().equals("----")) {
+            Toast.makeText(this, "Please enter valid postcode", Toast.LENGTH_SHORT).show();
             valid = false;
         }
         if (ac_email.getText().toString().isEmpty()) {
             ac_email.setError("Please enter your email address");
             valid = false;
         }
-        if (ac_postalcode.getText().toString().isEmpty()) {
-            ac_postalcode.setError("Please enter your postal code");
+        if (ac_postcode.getText().toString().isEmpty()) {
+            ac_postcode.setError("Please enter your postal code");
             valid = false;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(String.valueOf(ac_email.getText())).matches()) {
@@ -279,11 +387,12 @@ public class Customer_details extends AppCompatActivity {
             key = reference.push().getKey();
             rbsCustomerDetails.setCustomerName(ac_title.getText().toString());
             rbsCustomerDetails.setCustomerPhNo(ac_phoneno.getText().toString());
+            rbsCustomerDetails.setCustomerHouseNo(ac_houseNo.getText().toString());
             rbsCustomerDetails.setCustomerId(ac_id.getText().toString());
             rbsCustomerDetails.setCustomerDob(date_of_birth_text.getText().toString());
             rbsCustomerDetails.setCustomerAddress(ac_address.getText().toString());
             rbsCustomerDetails.setCustomerEmail(ac_email.getText().toString());
-            rbsCustomerDetails.setCustomerPostalCode(ac_postalcode.getText().toString());
+            rbsCustomerDetails.setCustomerPostcode(ac_postcode.getText().toString());
 
             pass_back_data();
             pd.dismissProgressBar(Customer_details.this);

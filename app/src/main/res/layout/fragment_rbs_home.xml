@@ -75,6 +75,24 @@
                         android:fontFamily="@font/segoe_ui_bold"
                         />
 
+                    <TextView
+                        android:id="@+id/addItem_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:textAlignment="center"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/profile_screen_header"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:text="Add item"
+                        android:textColor="#ffff"
+                        android:textSize="15sp" />
+
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView

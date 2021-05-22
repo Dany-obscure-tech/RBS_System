@@ -1,5 +1,6 @@
 package com.dotcom.rbs_system.Classes;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -22,6 +23,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.List;
 
 public class RBSItemDetails {
+    Activity activity;
     String check;
     Context context;
     int i,k=0,l=0;
@@ -35,7 +37,7 @@ public class RBSItemDetails {
 
     private static RBSItemDetails rbsItemDetails = new RBSItemDetails();
 
-    String itemCategory,itemID,addedBy,itemName,itemCondition,personalNotes,itemPrice,itemDescription,key,key2,noOfImages;
+    String itemCategory,itemID,addedBy,itemName,itemCondition,personalNotes,itemPrice,itemDescription,key = null,key2,noOfImages;
 
     List<Uri> imageUrlList;
 
@@ -111,6 +113,30 @@ public class RBSItemDetails {
         this.itemDescription = itemDescription;
     }
 
+    public Uri getFirstImageUri() {
+        return firstImageUri;
+    }
+
+    public void setFirstImageUri(Uri firstImageUri) {
+        this.firstImageUri = firstImageUri;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
+
     public String getNoOfImages() {
         return noOfImages;
     }
@@ -161,7 +187,8 @@ public class RBSItemDetails {
 
     }
 
-    private void uploadToDatabase() {
+    public void uploadToDatabase() {
+
         key = reference.push().getKey();
 
         reference.child("Items").child(itemCategory).child(key).child("Category").setValue(itemCategory);
@@ -196,6 +223,7 @@ public class RBSItemDetails {
                                     uploadToStock();
                                     uploadToRbsInvoiceList(addedBy);
                                     updateStockOwner(addedBy);
+                                    finishActivity(activity);
                                 }
                             }
                         }
@@ -222,6 +250,17 @@ public class RBSItemDetails {
         reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Price").setValue(itemPrice);
     }
 
+    public void switchStock(String buyer,String seller) {
+
+        reference.child("Stock").child("Shopkeepers").child(buyer).child(itemCategory).child(key).child("Category").setValue(itemCategory);
+
+        reference.child("Stock").child("Shopkeepers").child(buyer).child(itemCategory).child(key).child("Category").setValue(itemCategory);
+        reference.child("Stock").child("Shopkeepers").child(buyer).child(itemCategory).child(key).child("Image").setValue(firstImageUri.toString());
+        reference.child("Stock").child("Shopkeepers").child(buyer).child(itemCategory).child(key).child("Serial_no").setValue(itemID);
+        reference.child("Stock").child("Shopkeepers").child(buyer).child(itemCategory).child(key).child("Item_name").setValue(itemName);
+        reference.child("Stock").child("Shopkeepers").child(buyer).child(itemCategory).child(key).child("Price").setValue(itemPrice);
+    }
+
     private void uploadToRbsInvoiceList(String ownerID){
         reference.child("Stock").child("RbsInvoiceList").child(ownerID).child(key).child("Item_id").setValue(key);
         reference.child("Stock").child("RbsInvoiceList").child(ownerID).child(key).child("Item_name").setValue(itemName);
@@ -240,6 +279,7 @@ public class RBSItemDetails {
 
 
     public void clearData(){
+        activity = null;
         check = null;
         context = null;
         itemCategory = null;
@@ -254,5 +294,9 @@ public class RBSItemDetails {
         key2 = null;
         noOfImages = null;
         imageUrlList = null;
+    }
+
+    public void finishActivity(Activity activity){
+        activity.finish();
     }
 }

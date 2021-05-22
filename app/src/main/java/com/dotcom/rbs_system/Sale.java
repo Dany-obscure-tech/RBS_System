@@ -84,7 +84,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     private static final int CUSTOMER_ACTIVITY_REQUEST_CODE = 0;
 
     TextView searchForVoucher_textView, transaction_textview;
-    TextView customerName_textView,customerEmail_textView,customerPhno_textView;
+    TextView customerName_textView,customerEmail_textView,customerPhno_textView,customerID_textView;
 
     Progress_dialoge pd;
 
@@ -99,7 +99,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     Button btn_done;
 
     Dialog sendingdialog;
-    LinearLayout toggling_linear,itemLastActive_linearLayout;
+    LinearLayout toggling_linear,itemLastActive_linearLayout,customerID_linearLayout;
     Boolean item_btn,customer;
 
     ImageView itemImage_imageView,customerImage_imageView;
@@ -114,8 +114,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList,existingCustomerImageUrlList;
     List<String> lessExisitngCustomerList,lessExisitngCustomerIDList,lessExistingCustomerPhnoList,lessExistingCustomerEmailList,lessExisitngCustomerKeyIDList,lessExistingCustomerImageUrlList;
-    List<String> exisitngItemsNamesList, exisitngItemsSerialNoList,exisitngItemsKeyIDList,existingItemsPriceList,existingItemsLastActiveList,existingItemsImageUrlList;
-    List<String> lessExisitngItemsNamesList, lessExisitngItemsSerialNoList,lessExisitngItemsKeyIDList,lessExistingItemsPriceList,lessExistingItemsLastActiveList,lessExistingItemsImageUrlList;
+    List<String> exisitngItemsNamesList, exisitngItemsSerialNoList,exisitngItemsKeyIDList,existingItemsPriceList,existingItemsCategoryList,existingItemsLastActiveList,existingItemsImageUrlList;
+    List<String> lessExisitngItemsNamesList, lessExisitngItemsSerialNoList,lessExisitngItemsKeyIDList,lessExistingItemsPriceList,lessExistingItemsCategoryList,lessExistingItemsLastActiveList,lessExistingItemsImageUrlList;
     List<String> voucher_number_list,Voucher_amount_list;
     List<String> dateList,lastActiveDatelist;
 
@@ -191,6 +191,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         exisitngItemsSerialNoList = new ArrayList<>();
         exisitngItemsKeyIDList = new ArrayList<>();
         existingItemsPriceList= new ArrayList<>();
+        existingItemsCategoryList= new ArrayList<>();
         existingItemsLastActiveList= new ArrayList<>();
         existingItemsImageUrlList= new ArrayList<>();
 
@@ -198,6 +199,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         lessExisitngItemsSerialNoList = new ArrayList<>();
         lessExisitngItemsKeyIDList = new ArrayList<>();
         lessExistingItemsPriceList= new ArrayList<>();
+        lessExistingItemsCategoryList= new ArrayList<>();
         lessExistingItemsLastActiveList= new ArrayList<>();
         lessExistingItemsImageUrlList= new ArrayList<>();
 
@@ -227,6 +229,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
         itemLastActive_linearLayout = (LinearLayout)findViewById(R.id.itemLastActive_linearLayout);
 
+        customerID_linearLayout = (LinearLayout)findViewById(R.id.customerID_linearLayout);
+
         itemName_textView = (TextView) findViewById(R.id.itemName_textView);
         itemID_textView = (TextView) findViewById(R.id.itemID_textView);
         itemPriceCurrency_textView = (TextView) findViewById(R.id.itemPriceCurrency_textView);
@@ -235,6 +239,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
         customerName_textView=(TextView)findViewById(R.id.customerName_textView);
         customerEmail_textView=(TextView)findViewById(R.id.customerEmail_textView);
+        customerID_textView=(TextView)findViewById(R.id.customerID_textView);
         customerPhno_textView=(TextView)findViewById(R.id.customerPhno_textView);
 
         itemLastActive_textView = (TextView) findViewById(R.id.itemLastActive_textView);
@@ -311,7 +316,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     }
 
-
     private void fetchingExisitingCustomers() {
         pd3.showProgressBar(Sale.this);
         existingCustomersRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -355,7 +359,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                         }
                     }
 
-                    adapter_customerList_alert_dialog = new Adapter_customerList_alert_dialog(Sale.this,lessExisitngCustomerList,lessExisitngCustomerKeyIDList,lessExisitngCustomerIDList,lessExistingCustomerPhnoList,lessExistingCustomerEmailList,lessExistingCustomerImageUrlList,customerName_textView,customerEmail_textView,customerPhno_textView,customerImage_imageView,customerList_alert_dialog);
+                    adapter_customerList_alert_dialog = new Adapter_customerList_alert_dialog(Sale.this,lessExisitngCustomerList,lessExisitngCustomerKeyIDList,lessExisitngCustomerIDList,lessExistingCustomerPhnoList,lessExistingCustomerEmailList,lessExistingCustomerImageUrlList,customerName_textView,customerEmail_textView,customerID_textView,customerPhno_textView,customerImage_imageView,customerList_alert_dialog,customerID_linearLayout);
                     customerList_recyclerView.setAdapter(adapter_customerList_alert_dialog);
                     onCustomerRecyclerViewScrollListner();
 
@@ -386,7 +390,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                     for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                         for (DataSnapshot dataSnapshot2: dataSnapshot1.getChildren()){
                             exisitngItemsNamesList.add(String.valueOf(dataSnapshot2.child("Item_name").getValue()));
-                            exisitngItemsSerialNoList.add(String.valueOf(dataSnapshot2.child("Item_id").getValue()));
+                            exisitngItemsSerialNoList.add(String.valueOf(dataSnapshot2.child("Serial_no").getValue()));
                             if (dataSnapshot2.child("Last_active").exists()){
                                 existingItemsLastActiveList.add(String.valueOf(dataSnapshot2.child("Last_active").getValue()));
                             }else {
@@ -394,6 +398,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                             }
                             existingItemsImageUrlList.add(String.valueOf(dataSnapshot2.child("Image").getValue()));
                             existingItemsPriceList.add(String.valueOf(dataSnapshot2.child("Price").getValue()));
+                            existingItemsCategoryList.add(String.valueOf(dataSnapshot2.child("Category").getValue()));
                             exisitngItemsKeyIDList.add(String.valueOf(dataSnapshot2.getKey().toString()));
                             gettingHistoryList(String.valueOf(dataSnapshot2.getKey().toString()));
 
@@ -406,6 +411,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                             lessExistingItemsLastActiveList.add(existingItemsLastActiveList.get(i));
                             lessExistingItemsImageUrlList.add(existingItemsImageUrlList.get(i));
                             lessExistingItemsPriceList.add(existingItemsPriceList.get(i));
+                            lessExistingItemsCategoryList.add(existingItemsCategoryList.get(i));
                             lessExisitngItemsKeyIDList.add(exisitngItemsKeyIDList.get(i));
                         }
                     }else {
@@ -415,10 +421,11 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                             lessExistingItemsLastActiveList.add(existingItemsLastActiveList.get(i));
                             lessExistingItemsImageUrlList.add(existingItemsImageUrlList.get(i));
                             lessExistingItemsPriceList.add(existingItemsPriceList.get(i));
+                            lessExistingItemsCategoryList.add(existingItemsCategoryList.get(i));
                             lessExisitngItemsKeyIDList.add(exisitngItemsKeyIDList.get(i));
                         }
                     }
-                    adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(Sale.this,lessExisitngItemsNamesList,lessExisitngItemsSerialNoList,lessExisitngItemsKeyIDList,lessExistingItemsPriceList,lessExistingItemsLastActiveList,lessExistingItemsImageUrlList,itemName_textView,itemID_textView,itemPriceCurrency_textView,itemPrice_textView,itemLastActive_textView,itemImage_imageView,itemList_alert_dialog);
+                    adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(Sale.this,lessExisitngItemsNamesList,lessExisitngItemsSerialNoList,lessExisitngItemsKeyIDList,lessExistingItemsPriceList,lessExistingItemsCategoryList,lessExistingItemsLastActiveList,lessExistingItemsImageUrlList,itemName_textView,itemID_textView,itemPriceCurrency_textView,itemPrice_textView,itemLastActive_textView,itemImage_imageView,itemList_alert_dialog);
                     itemList_recyclerView.setAdapter(adapter_itemList_alert_dialog);
                     onScrollListner();
                     pd2.dismissProgressBar(Sale.this);
@@ -510,6 +517,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         customer_add_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(Sale.this,Customer_details.class);
                 startActivityForResult(intent,CUSTOMER_ACTIVITY_REQUEST_CODE);
             }
@@ -616,6 +624,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         submit_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (validateFields() == true)
                     detailsSubmit();
 
@@ -650,6 +659,38 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         });
     }
 
+    private void fetchDataforRecyclerView() {
+        if (itemDatafullyloaded){
+
+        }else {
+            alert_rbs_itemlist_progressBar.setVisibility(View.VISIBLE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    int size = lessExisitngItemsNamesList.size()+2;
+                    for (int i = lessExisitngItemsNamesList.size() ; i<size;i++){
+                        if (i<exisitngItemsNamesList.size()){
+                            lessExisitngItemsNamesList.add(exisitngItemsNamesList.get(i));
+                            lessExisitngItemsSerialNoList.add(exisitngItemsSerialNoList.get(i));
+                            lessExistingItemsLastActiveList.add(existingItemsLastActiveList.get(i));
+                            lessExistingItemsImageUrlList.add(existingItemsImageUrlList.get(i));
+                            lessExistingItemsPriceList.add(existingItemsPriceList.get(i));
+                            lessExistingItemsCategoryList.add(existingItemsCategoryList.get(i));
+                            lessExisitngItemsKeyIDList.add(exisitngItemsKeyIDList.get(i));
+                        }
+
+                    }
+                    adapter_itemList_alert_dialog.notifyDataSetChanged();
+                    alert_rbs_itemlist_progressBar.setVisibility(View.GONE);
+                    if (lessExisitngItemsNamesList.size()==exisitngItemsNamesList.size()){
+                        itemDatafullyloaded = true;
+                    }
+                }
+            },3000);
+        }
+
+    }
+
     private void onCustomerRecyclerViewScrollListner(){
         customerList_recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -673,37 +714,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                 }
             }
         });
-    }
-
-    private void fetchDataforRecyclerView() {
-        if (itemDatafullyloaded){
-
-        }else {
-            alert_rbs_itemlist_progressBar.setVisibility(View.VISIBLE);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    int size = lessExisitngItemsNamesList.size()+2;
-                    for (int i = lessExisitngItemsNamesList.size() ; i<size;i++){
-                        if (i<exisitngItemsNamesList.size()){
-                            lessExisitngItemsNamesList.add(exisitngItemsNamesList.get(i));
-                            lessExisitngItemsSerialNoList.add(exisitngItemsSerialNoList.get(i));
-                            lessExistingItemsLastActiveList.add(existingItemsLastActiveList.get(i));
-                            lessExistingItemsImageUrlList.add(existingItemsImageUrlList.get(i));
-                            lessExistingItemsPriceList.add(existingItemsPriceList.get(i));
-                            lessExisitngItemsKeyIDList.add(exisitngItemsKeyIDList.get(i));
-                        }
-
-                    }
-                    adapter_itemList_alert_dialog.notifyDataSetChanged();
-                    alert_rbs_itemlist_progressBar.setVisibility(View.GONE);
-                    if (lessExisitngItemsNamesList.size()==exisitngItemsNamesList.size()){
-                        itemDatafullyloaded = true;
-                    }
-                }
-            },3000);
-        }
-
     }
 
     private void fetchDataforCustomerRecyclerView() {
@@ -761,25 +771,26 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             Toast.makeText(this, "Select date", Toast.LENGTH_LONG).show();
             valid = false;
         }
-        if (cash_checkbox.isChecked()) {
-            if (cash_editText.getText().toString().isEmpty()) {
-                cash_editText.setError("Please enter cash");
-                valid = false;
-            }
-        }
 
-        if (voucher_checkbox.isChecked()){
-            if (searchForVoucher_textView.getText().toString().equals("SEARCH FOR VOUCHER")) {
-                Toast.makeText(this, "Select voucher number", Toast.LENGTH_SHORT).show();
-                valid = false;
-            }
-        }
-
-        if (!cash_checkbox.isChecked()&&!voucher_checkbox.isChecked()){
-            transaction_textview.setError("Select atleast one Transaction Method");
-            Toast.makeText(this, "Select atleast one Transaction Method", Toast.LENGTH_SHORT).show();
-            valid=false;
-        }
+//        if (cash_checkbox.isChecked()) {
+//            if (cash_editText.getText().toString().isEmpty()) {
+//                cash_editText.setError("Please enter cash");
+//                valid = false;
+//            }
+//        }
+//
+//        if (voucher_checkbox.isChecked()){
+//            if (searchForVoucher_textView.getText().toString().equals("SEARCH FOR VOUCHER")) {
+//                Toast.makeText(this, "Select voucher number", Toast.LENGTH_SHORT).show();
+//                valid = false;
+//            }
+//        }
+//
+//        if (!cash_checkbox.isChecked()&&!voucher_checkbox.isChecked()){
+//            transaction_textview.setError("Select atleast one Transaction Method");
+//            Toast.makeText(this, "Select atleast one Transaction Method", Toast.LENGTH_SHORT).show();
+//            valid=false;
+//        }
 
         if (paid_editText.getText().toString().isEmpty()) {
             paid_editText.setError("Please enter paid amount");
@@ -801,6 +812,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             connected = true;
             String key = reference.push().getKey();
 
+            itemKeyID = adapter_itemList_alert_dialog.getItemKeyID();
+            customerKeyID = adapter_customerList_alert_dialog.getCustomerKeyID();
 
             reference.child("Sale_list").child(key).child("Customer_keyID").setValue(customerKeyID);
             reference.child("Sale_list").child(key).child("Item_keyID").setValue(itemKeyID);
@@ -809,39 +822,42 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
             reference.child("Sale_list").child(key).child("Paid").setValue(paid_editText.getText().toString());
 
-
             reference.child("Sale_list").child(key).child("key_id").setValue(key);
             reference.child("Sale_list").child(key).child("added_by").setValue(firebaseAuthUID);
 
-            if (cash_checkbox.isChecked()) {
-                if (!cash_editText.getText().toString().isEmpty()) {
-                    reference.child("Sale_list").child(key).child("Cash").setValue(cash_editText.getText().toString());
-                }
+//            if (cash_checkbox.isChecked()) {
+//                if (!cash_editText.getText().toString().isEmpty()) {
+//                    reference.child("Sale_list").child(key).child("Cash").setValue(cash_editText.getText().toString());
+//                }
+//            }
+//
+//
+//            //Problem is here of sending \n in the database with text
+//
+//            if (voucher_checkbox.isChecked()) {
+//                if (!searchForVoucher_textView.getText().toString().equals("SEARCH FOR VOUCHER")) {
+//                    reference.child("Sale_list").child(key).child("Voucher_number").setValue(searchForVoucher_textView.getText().toString());
+//                }
+//            }
+
+//            reference.child("Item_history").child(itemKeyID).child(key).child("Item").setValue(itemKeyID);
+//            reference.child("Item_history").child(itemKeyID).child(key).child("Customer_name").setValue(customerName);
+//            reference.child("Item_history").child(itemKeyID).child(key).child("RBS").setValue("Sale");
+//            reference.child("Item_history").child(itemKeyID).child(key).child("Timestamp").setValue(date.getTime());
+//            reference.child("Item_history").child(itemKeyID).child(key).child("Date").setValue(date_textView.getText().toString());
+
+//            reference.child("Customer_history").child(customerKeyID).child(key).child("Item_name").setValue(itemName);
+//            reference.child("Customer_history").child(customerKeyID).child(key).child("Customer").setValue(customerKeyID);
+//            reference.child("Customer_history").child(customerKeyID).child(key).child("RBS").setValue("Sale");
+//            reference.child("Customer_history").child(customerKeyID).child(key).child("Timestamp").setValue(date.getTime());
+//            reference.child("Customer_history").child(customerKeyID).child(key).child("Date").setValue(date_textView.getText().toString());
+
+            if (rbsItemDetails.getCheck().equals("Sale existing item")){
+                rbsItemDetails.switchStock(customerKeyID,FirebaseAuth.getInstance().getCurrentUser().getUid());
+            }else {
+                rbsItemDetails.uploadNewItemDetails(Sale.this);
+                rbsCustomerDetails.uploadCustomerDetails(Sale.this);
             }
-
-            //TODO
-            //Problem is here of sending \n in the database with text
-
-            if (voucher_checkbox.isChecked()) {
-                if (!searchForVoucher_textView.getText().toString().equals("SEARCH FOR VOUCHER")) {
-                    reference.child("Sale_list").child(key).child("Voucher_number").setValue(searchForVoucher_textView.getText().toString());
-                }
-            }
-
-            reference.child("Item_history").child(itemKeyID).child(key).child("Item").setValue(itemKeyID);
-            reference.child("Item_history").child(itemKeyID).child(key).child("Customer_name").setValue(customerName);
-            reference.child("Item_history").child(itemKeyID).child(key).child("RBS").setValue("Sale");
-            reference.child("Item_history").child(itemKeyID).child(key).child("Timestamp").setValue(date.getTime());
-            reference.child("Item_history").child(itemKeyID).child(key).child("Date").setValue(date_textView.getText().toString());
-
-            reference.child("Customer_history").child(customerKeyID).child(key).child("Item_name").setValue(itemName);
-            reference.child("Customer_history").child(customerKeyID).child(key).child("Customer").setValue(customerKeyID);
-            reference.child("Customer_history").child(customerKeyID).child(key).child("RBS").setValue("Sale");
-            reference.child("Customer_history").child(customerKeyID).child(key).child("Timestamp").setValue(date.getTime());
-            reference.child("Customer_history").child(customerKeyID).child(key).child("Date").setValue(date_textView.getText().toString());
-
-            rbsItemDetails.uploadNewItemDetails(Sale.this);
-            rbsCustomerDetails.uploadCustomerDetails(Sale.this);
 
             pd1.dismissProgressBar(Sale.this);
             sendingdialog.show();
@@ -949,6 +965,10 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                 customerEmail_textView.setVisibility(View.VISIBLE);
                 customerPhno_textView.setText(phone_no_returnString);
                 customerPhno_textView.setVisibility(View.VISIBLE);
+
+                customerID_textView.setText(id_returnString);
+                customerID_textView.setVisibility(View.VISIBLE);
+                customerID_linearLayout.setVisibility(View.VISIBLE);
 
 
             }

@@ -120,6 +120,37 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
+                        <LinearLayout
+                            android:id="@+id/customerID_linearLayout"
+                            android:visibility="gone"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:textColor="@color/textGreen"
+                                android:fontFamily="@font/segoe_ui"
+                                android:textSize="18sp"
+                                android:layout_gravity="center_vertical"
+                                android:text="ID:"
+                                android:layout_marginRight="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                            <TextView
+                                android:id="@+id/customerID_textView"
+                                android:visibility="visible"
+                                android:textColor="@color/textGreen"
+                                android:fontFamily="@font/segoe_ui"
+                                android:textSize="18sp"
+                                android:layout_gravity="center_vertical"
+                                android:text="0.00"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                        </LinearLayout>
+
                         <TextView
                             android:id="@+id/customerPhno_textView"
                             android:visibility="gone"

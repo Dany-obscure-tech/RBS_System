@@ -188,32 +188,78 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 style="@style/RBSInvoice_TextViews"
-                android:text="Customer Address" />
+                android:text="Customer Postcode" />
 
-            <EditText
-                android:id="@+id/ac_address"
+            <LinearLayout
+                android:weightSum="2"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-                style="@style/RBSInvoice_EditTexts"
-                android:hint="Enter customer address"
-                android:maxLength="32" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/ac_postcode"
+                    android:layout_weight="1.9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:backgroundTint="@color/colorPrimary"
+                    style="@style/RBSInvoice_EditTexts"
+                    android:hint="Enter customer postcode"
+                    android:maxLength="32" />
+
+                <TextView
+                    android:id="@+id/postcodeCheck_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingRight="20dp"
+                    android:paddingLeft="20dp"
+                    android:background="@drawable/profile_screen_header"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:text="Enter"
+                    android:textColor="#ffff"
+                    android:textSize="15sp" />
+
+
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 style="@style/RBSInvoice_TextViews"
-                android:text="Customer Postal Code" />
+                android:text="Customer Address" />
+
+            <TextView
+                android:id="@+id/ac_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                style="@style/RBSInvoice_TextViews_Values"
+                android:text="----"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                style="@style/RBSInvoice_TextViews"
+                android:text="Customer House No/Door No" />
 
             <EditText
-                android:id="@+id/ac_postalcode"
+                android:id="@+id/ac_houseNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
                 style="@style/RBSInvoice_EditTexts"
-                android:hint="Enter customer postal code"
+                android:hint="Enter customer house/door no"
                 android:maxLength="32" />
+
+
 
             <TextView
                 android:layout_width="wrap_content"

@@ -38,6 +38,7 @@ import android.widget.Toast;
 import com.dantsu.escposprinter.connection.DeviceConnection;
 import com.dantsu.escposprinter.connection.tcp.TcpConnection;
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
+import com.dotcom.rbs_system.Adapter.Adapter_customerList_alert_dialog;
 import com.dotcom.rbs_system.Adapter.Adapter_itemList_alert_dialog;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Classes.Exchanged_itemdata;
@@ -69,19 +70,23 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     RBSItemDetails rbsItemDetails;
     RBSCustomerDetails rbsCustomerDetails;
 
-    CardView searchForItem_cardView;
+    CardView searchForItem_cardView,searchForCustomer_cardView;
 
     Boolean isScrolling = false, itemDatafullyloaded = false;
+    Boolean isCustomerScrolling = false, customerDatafullyloaded = false;
 
     int currentItems, totalItems, scrollOutItems;
+    int currentCustomer, totalCustomer, scrollOutCustomer;
 
-    ProgressBar alert_rbs_itemlist_progressBar;
 
-    Dialog itemList_alert_dialog;
+    ProgressBar alert_rbs_itemlist_progressBar,alert_rbs_customerlist_progressBar;
+
+    Dialog itemList_alert_dialog,customerList_alert_dialog;
 
     Adapter_itemList_alert_dialog adapter_itemList_alert_dialog;
+    Adapter_customerList_alert_dialog adapter_customerList_alert_dialog;
 
-    RecyclerView itemList_recyclerView;
+    RecyclerView itemList_recyclerView,customerList_recyclerView;
 
     private static final int ITEM_ACTIVITY_REQUEST_CODE = 0;
 
@@ -95,7 +100,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     CheckBox cash_checkbox,voucher_checkbox;
 
     TextView voucher_number,voucher_number_textview;
-    TextView customerName_textView,customerEmail_textView,customerPhno_textView;
+    TextView customerName_textView,customerEmail_textView,customerPhno_textView,customerID_textView;
 
     String voucher_key,itemID;
 
@@ -134,15 +139,15 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     String voucherNo;
 
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,exisitngItemsList,exisitngItemsIDList,exisitngItemsKeyIDList;
-    List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsPriceList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList;
+    List<String> exisitngItemsCategoryList,existingItemsConditionsList,existingItemsPriceList,existingItemsNotesList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList,existingCustomerImageUrlList;
     List<String> dateList,lastActiveDatelist;
     List<String> fullItemNameList,fullItemSerialNoList,fullItemPriceNoList,fullItemImageUrlList;
     List<String> appendedItemNameList,appendedItemSerialNoList,appendedItemPriceNoList,appendedItemImageUrlList;
     List<String>exisitngItemsNamesList,exisitngItemsSerialNoList,existingItemsLastActiveList,existingItemsImageUrlList;
     List<String>lessExisitngItemsNamesList,lessExisitngItemsSerialNoList,lessExistingItemsLastActiveList,lessExistingItemsImageUrlList,lessExistingItemsPriceList,lessExisitngItemsKeyIDList;
+    List<String> lessExisitngCustomerList,lessExisitngCustomerIDList,lessExistingCustomerPhnoList,lessExistingCustomerEmailList,lessExisitngCustomerKeyIDList,lessExistingCustomerImageUrlList;
 
-
-    LinearLayout print_linearLayout;
+    LinearLayout print_linearLayout,customerID_linearLayout;
 
     EditText purchase_price_editText,cash_editText,voucher_editText,paid_editText,search_editText;
 
@@ -186,6 +191,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         rbsCustomerDetails.clearData();
 
         searchForItem_cardView = (CardView)findViewById(R.id.searchForItem_cardView);
+        searchForCustomer_cardView = (CardView)findViewById(R.id.searchForCustomer_cardView);
+
 
         reference = FirebaseDatabase.getInstance().getReference();
         voucher_key = reference.push().getKey().toString();
@@ -223,6 +230,13 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         lessExistingItemsPriceList = new ArrayList<>();
         lessExisitngItemsKeyIDList = new ArrayList<>();
 
+        lessExisitngCustomerList = new ArrayList<>();
+        lessExisitngCustomerIDList = new ArrayList<>();
+        lessExistingCustomerPhnoList = new ArrayList<>();
+        lessExistingCustomerEmailList = new ArrayList<>();
+        lessExisitngCustomerKeyIDList = new ArrayList<>();
+        lessExistingCustomerImageUrlList = new ArrayList<>();
+
         exisitngCustomerList = new ArrayList<>();
         exisitngCustomerIDList = new ArrayList<>();
         exisitngCustomerKeyIDList = new ArrayList<>();
@@ -238,6 +252,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         existingCustomerDobList= new ArrayList<>();
         existingCustomerAddressList= new ArrayList<>();
         existingCustomerEmailList= new ArrayList<>();
+        existingCustomerImageUrlList= new ArrayList<>();
 
         dateList = new ArrayList<>();
         lastActiveDatelist = new ArrayList<>();
@@ -261,6 +276,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         customerName_textView=(TextView)findViewById(R.id.customerName_textView);
         customerEmail_textView=(TextView)findViewById(R.id.customerEmail_textView);
         customerPhno_textView=(TextView)findViewById(R.id.customerPhno_textView);
+        customerID_textView=(TextView)findViewById(R.id.customerID_textView);
 
         condition_textView=(TextView)findViewById(R.id.condition_textView);
         notes_textView=(TextView)findViewById(R.id.notes_textView);
@@ -298,7 +314,9 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         item_add_textView =(TextView) findViewById(R.id.item_add_textView);
         datebtn_textView =(TextView) findViewById(R.id.datebtn_textView);
         exchange_btn=(Button)findViewById(R.id.exchange_btn);
+
         print_linearLayout = (LinearLayout) sendingdialog.findViewById(R.id.print_linearLayout);
+        customerID_linearLayout = (LinearLayout)findViewById(R.id.customerID_linearLayout);
 
         ipAddress = (EditText) sendingdialog.findViewById(R.id.edittext_tcp_ip);
         portAddress = (EditText) sendingdialog.findViewById(R.id.edittext_tcp_port);
@@ -325,13 +343,18 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         itemList_alert_dialog = new Dialog(this);
         itemList_alert_dialog.setContentView(R.layout.alert_rbs_itemlist);
 
-        alert_rbs_itemlist_progressBar = (ProgressBar)itemList_alert_dialog.findViewById(R.id.alert_rbs_itemlist_progressBar);
+        customerList_alert_dialog= new Dialog(this);
+        customerList_alert_dialog.setContentView(R.layout.alert_rbs_customerlist);
 
+        alert_rbs_itemlist_progressBar = (ProgressBar)itemList_alert_dialog.findViewById(R.id.alert_rbs_itemlist_progressBar);
+        alert_rbs_customerlist_progressBar = (ProgressBar)customerList_alert_dialog.findViewById(R.id.alert_rbs_customerlist_progressBar);
 
         itemList_recyclerView = (RecyclerView) itemList_alert_dialog.findViewById(R.id.itemList_recyclerView);
         search_editText = (EditText) itemList_alert_dialog.findViewById(R.id.search_editText);
         itemList_recyclerView.setLayoutManager(new GridLayoutManager(Buy.this,1));
 
+        customerList_recyclerView = (RecyclerView)customerList_alert_dialog.findViewById(R.id.customerList_recyclerView);
+        customerList_recyclerView.setLayoutManager(new GridLayoutManager(Buy.this,1));
 
 
 
@@ -370,9 +393,39 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                         existingCustomerAddressList.add(String.valueOf(dataSnapshot1.child("Address").getValue()));
                         existingCustomerEmailList.add(String.valueOf(dataSnapshot1.child("Email").getValue()));
                         exisitngCustomerKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
+                        if (dataSnapshot1.child("profile_image").exists()){
+
+                        }else {
+                            existingCustomerImageUrlList.add(String.valueOf(dataSnapshot1.child("ID_Image_urls").child("image_1").getValue()));
+                        }
 
                         pd3.dismissProgressBar(Buy.this);
                     }
+
+                    if (exisitngCustomerList.size()>3){
+                        for (int i = 0 ; i<3;i++){
+                            lessExisitngCustomerList.add(exisitngCustomerList.get(i));
+                            lessExisitngCustomerIDList.add(exisitngCustomerIDList.get(i));
+                            lessExistingCustomerPhnoList.add(existingCustomerPhnoList.get(i));
+                            lessExistingCustomerEmailList.add(existingCustomerEmailList.get(i));
+                            lessExisitngCustomerKeyIDList.add(exisitngCustomerKeyIDList.get(i));
+                            lessExistingCustomerImageUrlList.add(existingCustomerImageUrlList.get(i));
+                        }
+                    }else {
+                        for (int i = 0 ; i<exisitngCustomerList.size();i++){
+                            lessExisitngCustomerList.add(exisitngCustomerList.get(i));
+                            lessExisitngCustomerIDList.add(exisitngCustomerIDList.get(i));
+                            lessExistingCustomerPhnoList.add(existingCustomerPhnoList.get(i));
+                            lessExistingCustomerEmailList.add(existingCustomerEmailList.get(i));
+                            lessExisitngCustomerKeyIDList.add(exisitngCustomerKeyIDList.get(i));
+                            lessExistingCustomerImageUrlList.add(existingCustomerImageUrlList.get(i));
+                        }
+                    }
+
+                    adapter_customerList_alert_dialog = new Adapter_customerList_alert_dialog(Buy.this,lessExisitngCustomerList,lessExisitngCustomerKeyIDList,lessExisitngCustomerIDList,lessExistingCustomerPhnoList,lessExistingCustomerEmailList,lessExistingCustomerImageUrlList,customerName_textView,customerEmail_textView,customerID_textView,customerPhno_textView,customerImage_imageView,customerList_alert_dialog,customerID_linearLayout);
+                    customerList_recyclerView.setAdapter(adapter_customerList_alert_dialog);
+                    onCustomerRecyclerViewScrollListner();
+
                 }else {
                     pd3.dismissProgressBar(Buy.this);
                 }
@@ -380,11 +433,14 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
             }
 
+
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 pd3.dismissProgressBar(Buy.this);
             }
         });
+
     }
 
     private void fetchingExisitingItems() {
@@ -429,7 +485,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                             lessExisitngItemsKeyIDList.add(exisitngItemsKeyIDList.get(i));
                         }
                     }
-                    adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(Buy.this,lessExisitngItemsNamesList,lessExisitngItemsSerialNoList,lessExisitngItemsKeyIDList,lessExistingItemsPriceList,lessExistingItemsLastActiveList,lessExistingItemsImageUrlList,itemName_textView,itemID_textView,itemPriceCurrency_textView,itemPrice_textView,itemLastActive_textView,itemImage_imageView,itemList_alert_dialog);
+//                    adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(Buy.this,lessExisitngItemsNamesList,lessExisitngItemsSerialNoList,lessExisitngItemsKeyIDList,lessExistingItemsPriceList,lessExistingItemsLastActiveList,lessExistingItemsImageUrlList,itemName_textView,itemID_textView,itemPriceCurrency_textView,itemPrice_textView,itemLastActive_textView,itemImage_imageView,itemList_alert_dialog);
                     itemList_recyclerView.setAdapter(adapter_itemList_alert_dialog);
                     onScrollListner();
                     pd2.dismissProgressBar(Buy.this);
@@ -447,10 +503,9 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
         });
 
-
     }
 
-    private void onScrollListner() {
+    private void onScrollListner(){
         itemList_recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -483,7 +538,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    for (int i = lessExisitngItemsNamesList.size()-1 ; i<lessExisitngItemsNamesList.size()+2;i++){
+                    int size = lessExisitngItemsNamesList.size()+2;
+                    for (int i = lessExisitngItemsNamesList.size() ; i<size;i++){
                         if (i<exisitngItemsNamesList.size()){
                             lessExisitngItemsNamesList.add(exisitngItemsNamesList.get(i));
                             lessExisitngItemsSerialNoList.add(exisitngItemsSerialNoList.get(i));
@@ -496,12 +552,73 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                     }
                     adapter_itemList_alert_dialog.notifyDataSetChanged();
                     alert_rbs_itemlist_progressBar.setVisibility(View.GONE);
-                    itemDatafullyloaded = true;
+                    if (lessExisitngItemsNamesList.size()==exisitngItemsNamesList.size()){
+                        itemDatafullyloaded = true;
+                    }
                 }
             },3000);
         }
 
     }
+
+    private void onCustomerRecyclerViewScrollListner(){
+        customerList_recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
+                    isCustomerScrolling = true;
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                currentCustomer = customerList_recyclerView.getLayoutManager().getChildCount();
+                totalCustomer = customerList_recyclerView.getLayoutManager().getItemCount();
+                scrollOutCustomer = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
+                if (isCustomerScrolling && (currentCustomer+scrollOutCustomer == totalCustomer)){
+                    isCustomerScrolling = false;
+                    fetchDataforCustomerRecyclerView();
+                }
+            }
+        });
+    }
+
+    private void fetchDataforCustomerRecyclerView() {
+        if (customerDatafullyloaded){
+
+        }else {
+            alert_rbs_customerlist_progressBar.setVisibility(View.VISIBLE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    int size = lessExisitngCustomerList.size()+2;
+                    for (int i = lessExisitngCustomerList.size(); i<size;i++){
+                        if (i<exisitngCustomerList.size()){
+                            System.out.println(String.valueOf(i));
+                            lessExisitngCustomerList.add(exisitngCustomerList.get(i));
+                            lessExisitngCustomerIDList.add(exisitngCustomerIDList.get(i));
+                            lessExistingCustomerPhnoList.add(existingCustomerPhnoList.get(i));
+                            lessExistingCustomerEmailList.add(existingCustomerEmailList.get(i));
+                            lessExisitngCustomerKeyIDList.add(exisitngCustomerKeyIDList.get(i));
+                            lessExistingCustomerImageUrlList.add(existingCustomerImageUrlList.get(i));
+                        }
+
+                    }
+                    adapter_customerList_alert_dialog.notifyDataSetChanged();
+                    alert_rbs_customerlist_progressBar.setVisibility(View.GONE);
+                    if (lessExisitngCustomerList.size()==exisitngCustomerList.size()){
+                        customerDatafullyloaded = true;
+                    }
+
+                }
+            },3000);
+        }
+
+    }
+
 
     private void gettingHistoryList(String itemID) {
         itemHistoryRef = FirebaseDatabase.getInstance().getReference("Item_history/"+itemID);
@@ -556,6 +673,13 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             @Override
             public void onClick(View view) {
                 itemList_alert_dialog.show();
+            }
+        });
+
+        searchForCustomer_cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                customerList_alert_dialog.show();
             }
         });
 
@@ -977,6 +1101,10 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 customerEmail_textView.setVisibility(View.VISIBLE);
                 customerPhno_textView.setText(phone_no_returnString);
                 customerPhno_textView.setVisibility(View.VISIBLE);
+
+                customerID_textView.setText(id_returnString);
+                customerID_textView.setVisibility(View.VISIBLE);
+                customerID_linearLayout.setVisibility(View.VISIBLE);
 
 
             }

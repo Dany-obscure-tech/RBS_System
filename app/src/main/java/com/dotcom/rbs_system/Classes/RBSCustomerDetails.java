@@ -31,7 +31,7 @@ public class RBSCustomerDetails {
 
     private static RBSCustomerDetails rbsCustomerDetails = new RBSCustomerDetails();
 
-    String customerName,customerPhNo,customerId,customerDob,customerAddress,customerPostalCode,customerEmail,key,key2;
+    String customerName,customerPhNo,customerId,customerDob,customerAddress, customerPostcode,customerHouseNo,customerEmail,key,key2;
 
     List<Uri> imageUrlList;
 
@@ -83,12 +83,20 @@ public class RBSCustomerDetails {
         this.customerAddress = customerAddress;
     }
 
-    public String getCustomerPostalCode() {
-        return customerPostalCode;
+    public String getCustomerPostcode() {
+        return customerPostcode;
     }
 
-    public void setCustomerPostalCode(String customerPostalCode) {
-        this.customerPostalCode = customerPostalCode;
+    public void setCustomerPostcode(String customerPostcode) {
+        this.customerPostcode = customerPostcode;
+    }
+
+    public String getCustomerHouseNo() {
+        return customerHouseNo;
+    }
+
+    public void setCustomerHouseNo(String customerHouseNo) {
+        this.customerHouseNo = customerHouseNo;
     }
 
     public String getCustomerEmail() {
@@ -134,8 +142,9 @@ public class RBSCustomerDetails {
             reference.child("Customer_list").child(key).child("ID").setValue(customerId);
             reference.child("Customer_list").child(key).child("DOB").setValue(customerDob);
             reference.child("Customer_list").child(key).child("Address").setValue(customerAddress);
+            reference.child("Customer_list").child(key).child("House_door").setValue(customerHouseNo);
             reference.child("Customer_list").child(key).child("Email").setValue(customerEmail);
-            reference.child("Customer_list").child(key).child("Postal_code").setValue(customerPostalCode);
+            reference.child("Customer_list").child(key).child("Postcode").setValue(customerPostcode);
             reference.child("Customer_list").child(key).child("key_id").setValue(key);
             reference.child("Customer_list").child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
 
@@ -189,8 +198,9 @@ public class RBSCustomerDetails {
         customerPhNo = null;
         customerId = null;
         customerDob = null;
+        customerHouseNo = null;
         customerAddress = null;
-        customerPostalCode = null;
+        customerPostcode = null;
         customerEmail = null;
         key = null;
         key2 = null;

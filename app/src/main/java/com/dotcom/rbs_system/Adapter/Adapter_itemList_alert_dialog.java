@@ -1,7 +1,9 @@
 package com.dotcom.rbs_system.Adapter;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +16,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.Classes.Currency;
+import com.dotcom.rbs_system.Classes.RBSItemDetails;
 import com.dotcom.rbs_system.R;
+import com.dotcom.rbs_system.Sale;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -22,19 +26,23 @@ import java.util.List;
 public class Adapter_itemList_alert_dialog extends RecyclerView.Adapter<Adapter_itemList_alert_dialog.ViewHolder> {
 
     Context context;
-    List<String> exisitngItemsNamesList, exisitngItemsSerialNoList,exisitngItemsKeyIDList,existingItemsPriceList,existingItemsLastActiveList,existingItemsImageUrlList;
+    RBSItemDetails rbsItemDetails = RBSItemDetails.getInstance();
+    List<String> exisitngItemsNamesList, exisitngItemsSerialNoList,exisitngItemsKeyIDList,existingItemsPriceList,existingItemsCategoryList,existingItemsLastActiveList,existingItemsImageUrlList;
     TextView itemName_textView,  itemID_textView,  itemPrice_textView,  itemLastActive_textView;
     TextView itemPriceCurrency_textView;
     ImageView itemImage_imageView;
 
     Dialog itemList_alert_dialog;
 
-    public Adapter_itemList_alert_dialog(Context context, List<String> exisitngItemsNamesList, List<String> exisitngItemsSerialNoList, List<String> exisitngItemsKeyIDList, List<String> existingItemsPriceList, List<String> existingItemsLastActiveList, List<String> existingItemsImageUrlList, TextView itemName_textView, TextView itemID_textView, TextView itemPriceCurrency_textView, TextView itemPrice_textView, TextView itemLastActive_textView, ImageView itemImage_imageView, Dialog itemList_alert_dialog) {
+    String itemKeyID;
+
+    public Adapter_itemList_alert_dialog(Context context, List<String> exisitngItemsNamesList, List<String> exisitngItemsSerialNoList, List<String> exisitngItemsKeyIDList, List<String> existingItemsPriceList, List<String> existingItemsCategoryList, List<String> existingItemsLastActiveList, List<String> existingItemsImageUrlList, TextView itemName_textView, TextView itemID_textView, TextView itemPriceCurrency_textView, TextView itemPrice_textView, TextView itemLastActive_textView, ImageView itemImage_imageView, Dialog itemList_alert_dialog) {
         this.context = context;
         this.exisitngItemsNamesList = exisitngItemsNamesList;
         this.exisitngItemsSerialNoList = exisitngItemsSerialNoList;
         this.exisitngItemsKeyIDList = exisitngItemsKeyIDList;
         this.existingItemsPriceList = existingItemsPriceList;
+        this.existingItemsCategoryList = existingItemsCategoryList;
         this.existingItemsLastActiveList = existingItemsLastActiveList;
         this.existingItemsImageUrlList = existingItemsImageUrlList;
         this.itemList_alert_dialog = itemList_alert_dialog;
@@ -45,6 +53,7 @@ public class Adapter_itemList_alert_dialog extends RecyclerView.Adapter<Adapter_
         this.itemPrice_textView = itemPrice_textView;
         this.itemLastActive_textView = itemLastActive_textView;
         this.itemImage_imageView = itemImage_imageView;
+
     }
 
     @NonNull
@@ -54,7 +63,7 @@ public class Adapter_itemList_alert_dialog extends RecyclerView.Adapter<Adapter_
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final Adapter_itemList_alert_dialog.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final Adapter_itemList_alert_dialog.ViewHolder holder, final int position) {
         holder.itemName_textView.setText(exisitngItemsNamesList.get(position));
         holder.itemSerialNo_textView.setText(exisitngItemsSerialNoList.get(position));
         holder.itemPrice_textView.setText(existingItemsPriceList.get(position));
@@ -86,9 +95,27 @@ public class Adapter_itemList_alert_dialog extends RecyclerView.Adapter<Adapter_
 
                 itemImage_imageView.setVisibility(View.VISIBLE);
 
+                itemKeyID = exisitngItemsKeyIDList.get(position);
+
+                if (context instanceof Sale){
+                    rbsItemDetails.setCheck("Sale existing item");
+                }
+
+                rbsItemDetails.setItemCategory(existingItemsCategoryList.get(position));
+                rbsItemDetails.setKey(exisitngItemsKeyIDList.get(position));
+                rbsItemDetails.setItemName(exisitngItemsNamesList.get(position));
+                rbsItemDetails.setItemID(exisitngItemsSerialNoList.get(position));
+                rbsItemDetails.setItemPrice(existingItemsPriceList.get(position));
+                rbsItemDetails.setFirstImageUri(Uri.parse(existingItemsImageUrlList.get(position)));
+
+
                 itemList_alert_dialog.dismiss();
             }
         });
+    }
+
+    public String getItemKeyID(){
+        return itemKeyID;
     }
 
 

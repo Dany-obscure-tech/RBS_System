@@ -125,49 +125,59 @@
 
     </ScrollView>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/topbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="10"
+        android:layout_height="60dp"
         android:background="#bbffffff"
         android:padding="5dp"
-        android:orientation="horizontal"
         >
 
-        <EditText
-            android:layout_weight="8"
-            android:fontFamily="@font/segoe_ui"
-            android:hint="search here..."
-            android:textColor="#707070"
+
+
+
+        <LinearLayout
+            android:layout_toStartOf="@+id/menu_btn"
+            android:orientation="horizontal"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
             android:background="@drawable/search_view_style"
-            android:id="@+id/search_editText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent">
 
-        <ImageButton
-            android:id="@+id/search_imageBtn"
-            android:src="@drawable/search"
-            android:backgroundTint="@color/textBlue"
-            android:layout_weight="1"
-            android:background="#00FFFFFF"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"/>
+            <EditText
+                android:layout_weight="8"
+                android:fontFamily="@font/segoe_ui"
+                android:hint="search here..."
+                android:textColor="#707070"
+                android:id="@+id/search_editText"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/search_view_style"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"/>
 
+            <ImageButton
+                android:id="@+id/search_imageBtn"
+                android:src="@drawable/search"
+                android:padding="15dp"
+                android:backgroundTint="@color/textBlue"
+                android:background="#00FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"/>
+
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/menu_btn"
-            android:layout_weight="1"
-            android:paddingLeft="30dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:src="@drawable/menu_btns"
+            android:layout_alignParentEnd="true"
             android:adjustViewBounds="true"
-            android:scaleType="center"
-            />
+            android:scaleType="center" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:visibility="gone"

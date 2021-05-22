@@ -48,6 +48,7 @@ public class Rbs_home extends Fragment {
     List<String> image;
     List<String> key_idList;
     RelativeLayout side_option_menu;
+    TextView addItem_textView;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -100,6 +101,7 @@ public class Rbs_home extends Fragment {
 
         your_products_RecyclerView=(RecyclerView)view.findViewById(R.id.your_products_RecyclerView);
         side_option_menu=(RelativeLayout)view.findViewById(R.id.side_option_menu);
+        addItem_textView=(TextView) view.findViewById(R.id.addItem_textView);
         product_name = new ArrayList<String>();
         category = new ArrayList<String>();
         product_price = new ArrayList<String>();
@@ -151,6 +153,18 @@ public class Rbs_home extends Fragment {
     /////////////////////////////////////////////////////////////////////////////////////////
 
     private void onclicklistners() {
+        addItem_textViewOnClick();
+    }
+
+    private void addItem_textViewOnClick() {
+        addItem_textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),Item_detail.class);
+                intent.putExtra("ADD_ITEM","TRUE");
+                getActivity().startActivity(intent);
+            }
+        });
     }
 
 

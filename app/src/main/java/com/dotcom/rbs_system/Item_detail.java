@@ -241,9 +241,17 @@ public class Item_detail extends AppCompatActivity {
             rbsItemDetails.setItemDescription(description_editText.getText().toString());
             rbsItemDetails.setNoOfImages(String.valueOf(imageUrlList.size()));
 
-            pass_back_data();
+            if (getIntent().getStringExtra("ADD_ITEM").equals("TRUE")){
+                rbsItemDetails.setCheck("Buy new item");
+                rbsItemDetails.setActivity(Item_detail.this);
+                rbsItemDetails.uploadNewItemDetails(Item_detail.this);
+//                rbsItemDetails.clearData();
+            }else {
+                pass_back_data();
+            }
+
             pd.dismissProgressBar(Item_detail.this);
-            finish();
+//            finish();
 
 
 

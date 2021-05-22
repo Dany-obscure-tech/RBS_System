@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -23,11 +25,13 @@ public class Adapter_customerList_alert_dialog extends RecyclerView.Adapter<Adap
     Context context;
 
     List<String> exisitngCustomerList,exisitngCustomerKeyIDList,existingCustomerIDList,existingCustomerPhnoList,existingCustomerEmailList,existingCustomerImageUrlList;
-    TextView customerName_textView,customerEmail_textView,customerPhno_textView;
+    TextView customerName_textView,customerEmail_textView,customerID_textView,customerPhno_textView;
     ImageView customerImage_imageView;
     Dialog customerList_alert_dialog;
+    LinearLayout customerID_linearLayout;
+    String customerKeyID;
 
-    public Adapter_customerList_alert_dialog(Context context, List<String> exisitngCustomerList, List<String> exisitngCustomerKeyIDList, List<String> existingCustomerIDList, List<String> existingCustomerPhnoList, List<String> existingCustomerEmailList, List<String> existingCustomerImageUrlList, TextView customerName_textView, TextView customerEmail_textView, TextView customerPhno_textView, ImageView customerImage_imageView, Dialog customerList_alert_dialog) {
+    public Adapter_customerList_alert_dialog(Context context, List<String> exisitngCustomerList, List<String> exisitngCustomerKeyIDList, List<String> existingCustomerIDList, List<String> existingCustomerPhnoList, List<String> existingCustomerEmailList, List<String> existingCustomerImageUrlList, TextView customerName_textView, TextView customerEmail_textView, TextView customerID_textView, TextView customerPhno_textView, ImageView customerImage_imageView, Dialog customerList_alert_dialog, LinearLayout customerID_linearLayout) {
         this.context = context;
         this.exisitngCustomerList = exisitngCustomerList;
         this.exisitngCustomerKeyIDList = exisitngCustomerKeyIDList;
@@ -37,9 +41,11 @@ public class Adapter_customerList_alert_dialog extends RecyclerView.Adapter<Adap
         this.existingCustomerImageUrlList = existingCustomerImageUrlList;
         this.customerName_textView = customerName_textView;
         this.customerEmail_textView = customerEmail_textView;
+        this.customerID_textView = customerID_textView;
         this.customerPhno_textView = customerPhno_textView;
         this.customerImage_imageView = customerImage_imageView;
         this.customerList_alert_dialog = customerList_alert_dialog;
+        this.customerID_linearLayout = customerID_linearLayout;
     }
 
     @NonNull
@@ -49,7 +55,7 @@ public class Adapter_customerList_alert_dialog extends RecyclerView.Adapter<Adap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final Adapter_customerList_alert_dialog.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final Adapter_customerList_alert_dialog.ViewHolder holder, final int position) {
         holder.customerName_textView.setText(exisitngCustomerList.get(position));
         holder.customerEmail_textView.setText(existingCustomerEmailList.get(position));
         holder.customerPhno_textView.setText(existingCustomerPhnoList.get(position));
@@ -62,6 +68,7 @@ public class Adapter_customerList_alert_dialog extends RecyclerView.Adapter<Adap
             public void onClick(View view) {
                 customerName_textView.setText(holder.customerName_textView.getText().toString());
                 customerEmail_textView.setText(holder.customerEmail_textView.getText().toString());
+                customerID_textView.setText(holder.customerID_textView.getText().toString());
                 customerPhno_textView.setText(holder.customerPhno_textView.getText().toString());
 
                 customerImage_imageView.setImageDrawable(holder.customerImage_imageView.getDrawable());
@@ -72,12 +79,21 @@ public class Adapter_customerList_alert_dialog extends RecyclerView.Adapter<Adap
                 customerName_textView.setTextColor(context.getResources().getColor(R.color.gradientDarkBlue));
 
                 customerEmail_textView.setVisibility(View.VISIBLE);
+                customerID_textView.setVisibility(View.VISIBLE);
                 customerPhno_textView.setVisibility(View.VISIBLE);
                 customerImage_imageView.setVisibility(View.VISIBLE);
+
+                customerID_linearLayout.setVisibility(View.VISIBLE);
+
+                customerKeyID = exisitngCustomerKeyIDList.get(position);
 
                 customerList_alert_dialog.dismiss();
             }
         });
+    }
+
+    public String getCustomerKeyID(){
+        return customerKeyID;
     }
 
 

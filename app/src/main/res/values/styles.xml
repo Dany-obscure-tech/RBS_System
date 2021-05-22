@@ -34,6 +34,12 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="RBSInvoice_TextViews_Values">
+        <item name="android:textColor">@color/gradientDarkBlue</item>
+        <item name="android:fontFamily">@font/segoe_ui</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
 
 
     <style name="Headings_TextViews">
