@@ -57,7 +57,7 @@ public class BuyLocal_home extends Fragment {
 
     MaterialSearchView materialSearchView;
 
-    RecyclerView recyclerView,category_recyclerview;
+    RecyclerView spotlightRecyclerView,category_recyclerview;
 
     CardView imageSlider;
 
@@ -142,7 +142,7 @@ public class BuyLocal_home extends Fragment {
         datafetch();
         categoryfetch();
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.spotlightRecyclerView);
+        spotlightRecyclerView = (RecyclerView) view.findViewById(R.id.spotlightRecyclerView);
         category_recyclerview = (RecyclerView) view.findViewById(R.id.category_recyclerview);
 
         AdapterCategoryRecyclerView adapterCategoryRecyclerView=new AdapterCategoryRecyclerView(getActivity(),null,category_text);
@@ -283,8 +283,8 @@ public class BuyLocal_home extends Fragment {
                     }
 
                     AdapterSpotlightItemListRecyclerView viewAdapter = new AdapterSpotlightItemListRecyclerView(getActivity(), itemname, price, itemImage,key_idList,categoryList,shopkeeperList);
-                    recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
-                    recyclerView.setAdapter(viewAdapter);
+                    spotlightRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
+                    spotlightRecyclerView.setAdapter(viewAdapter);
                 }
             }
 

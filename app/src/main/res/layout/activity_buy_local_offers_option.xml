@@ -38,26 +38,46 @@
 
     </RelativeLayout>
 
-    <SearchView
-        android:id="@+id/simpleSearchView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:id="@+id/search_view_bar"
+        android:orientation="horizontal"
         android:layout_below="@+id/header"
-        android:layout_weight="1.8"
-        android:iconifiedByDefault="false"
-        android:layout_marginLeft="8dp"
+        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
         android:background="#F1F1F1"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:queryHint="Search here"/>
+        android:layout_margin="10dp"
+        android:layout_height="50dp">
+
+        <EditText
+            android:layout_weight="8"
+            android:fontFamily="@font/segoe_ui"
+            android:hint="Search here..."
+            android:textColor="#707070"
+            android:id="@+id/search_editText"
+            android:maxLines="1"
+            android:inputType="text"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/search_view_style"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+        <ImageButton
+            android:id="@+id/search_imageBtn"
+            android:src="@drawable/search"
+            android:padding="15dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/textBlue"
+            android:background="#00FFFFFF"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"/>
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/offers"
-        android:layout_below="@+id/simpleSearchView"
-        android:layout_margin="20dp"
+        android:layout_below="@+id/search_view_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="40dp"
         android:orientation="vertical"/>
 
 

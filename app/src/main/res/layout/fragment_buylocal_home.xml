@@ -66,9 +66,8 @@
 
 
             <TextView
-                android:layout_below="@+id/imageSlider"
                 android:id="@+id/spot_light_text"
-                android:layout_marginTop="30dp"
+                android:layout_below="@+id/imageSlider"
                 android:layout_marginLeft="30dp"
                 android:layout_marginBottom="15dp"
                 android:layout_width="wrap_content"
@@ -82,8 +81,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/spotlightRecyclerView"
                 android:layout_below="@+id/spot_light_text"
-                android:paddingBottom="40dp"
-                android:layout_width="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
 
@@ -95,8 +94,7 @@
 
             <TextView
                 android:id="@+id/Category"
-
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginBottom="15dp"
                 android:layout_width="wrap_content"
@@ -128,28 +126,29 @@
     <RelativeLayout
         android:id="@+id/topbar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
         android:background="#bbffffff"
         android:padding="5dp"
         >
 
 
-
-
         <LinearLayout
             android:layout_toStartOf="@+id/menu_btn"
             android:orientation="horizontal"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
             android:layout_width="match_parent"
             android:background="@drawable/search_view_style"
-            android:layout_height="match_parent">
+            android:layout_height="50dp">
 
             <EditText
                 android:layout_weight="8"
                 android:fontFamily="@font/segoe_ui"
-                android:hint="search here..."
+                android:hint="Search here..."
                 android:textColor="#707070"
                 android:id="@+id/search_editText"
+                android:maxLines="1"
+                android:inputType="text"
                 android:layout_marginStart="15dp"
                 android:background="@drawable/search_view_style"
                 android:layout_width="0dp"
@@ -159,11 +158,11 @@
                 android:id="@+id/search_imageBtn"
                 android:src="@drawable/search"
                 android:padding="15dp"
+                android:layout_gravity="center"
                 android:backgroundTint="@color/textBlue"
                 android:background="#00FFFFFF"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"/>
-
 
         </LinearLayout>
 

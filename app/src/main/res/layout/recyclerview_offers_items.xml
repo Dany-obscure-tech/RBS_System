@@ -1,159 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
-    android:background="@drawable/color_cursor_white"
-    android:layout_marginBottom="10dp"
-    android:layout_height="wrap_content">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="7.5dp"
+    android:background="@drawable/color_cursor_white">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
+        android:id="@+id/conversationItem_cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/linear_layout_border"
-        android:orientation="horizontal">
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/main_button"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/image"
-                android:src="@drawable/shirt"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:adjustViewBounds="true"
-                android:layout_marginTop="10dp"
-                android:layout_centerHorizontal="true"
-                android:layout_width="180dp"
-                android:layout_height="180dp"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/shirt" />
 
             <LinearLayout
-                android:layout_centerHorizontal="true"
-                android:orientation="vertical"
+                android:id="@+id/image_area"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/image"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/name_contact"
-                    android:text="Dress Shirt"
-                    android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="22sp"
-                    android:fontFamily="@font/segoe_ui_bold"/>
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="4dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/segoe_ui"
+                    android:maxLines="1"
+                    android:text="Dress Shirt"
+                    android:textSize="19sp" />
 
                 <TextView
                     android:id="@+id/ph_number"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/segoe_ui_bold"
                     android:text="PKR 4000"
-                    android:layout_marginBottom="10dp"
                     android:textColor="#00C884"
-                    android:fontFamily="@font/segoe_ui"
-                    android:textSize="20sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="16sp" />
 
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/offer_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Offer Pending"
-                android:textAlignment="center"
-                android:layout_gravity="center_horizontal"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:textColor="@color/textBlue"
-                android:textSize="22sp"
-                />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PKR"
-                    android:textAlignment="center"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:textColor="@color/textBlue"
-                    android:textSize="22sp"
-                    />
-                <TextView
-                    android:id="@+id/offer_product_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="5000"
-                    android:textAlignment="center"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:textColor="@color/textBlue"
-                    android:textSize="22sp"
-                    />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/product_offer_msg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:text="This is a message place holder,that will be send with offer"
-                android:layout_marginTop="15dp"
-                android:textAlignment="center"
-                android:layout_gravity="center_horizontal"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:textColor="@color/textGrey"
-                android:textSize="18sp"
-                />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                >
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp"
+                android:layout_toEndOf="@+id/image"
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/alertEditConditionEnter_btn"
-                android:textColor = "#ffffff"
-                android:background="@drawable/buylocal_red_button"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:textSize="15sp"
-                android:text="Cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/offer_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:maxLines="1"
+                    android:text="Offer Pending"
+                    android:textAlignment="center"
+                    android:textColor="@color/gradientDarkBlue"
+                    android:textSize="20sp" />
 
-            <Button
-                android:id="@+id/alertReportCancel_btn"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:textColor="#ffff"
-                android:background="@drawable/buylocal_green_button"
-                android:textSize="15sp"
-                android:text="Change"
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:text="PKR"
+                        android:textAlignment="center"
+                        android:textColor="@color/gradientDarkBlue"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/offer_product_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:paddingLeft="15dp"
+                        android:text="5000"
+                        android:textAlignment="center"
+                        android:textColor="@color/gradientDarkBlue"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/product_offer_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7.5dp"
+                    android:layout_marginBottom="10dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/segoe_ui"
+                    android:maxLines="2"
+                    android:text="This is a message place holder,that will be send with offer"
+                    android:textColor="@color/textGrey"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="15dp"
+                        android:layout_gravity="center_horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/segoe_ui_bold"
+                            android:text="X"
+                            android:textAlignment="center"
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="#FF0000"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/segoe_ui_bold"
+                            android:text="Cancel"
+                            android:textColor="#FF0000"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="15dp"
+                        android:layout_gravity="center_horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/segoe_ui_bold"
+                            android:text="!"
+                            android:textAlignment="center"
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="#00C884"
+                            android:textSize="22sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/segoe_ui_bold"
+                            android:text="Change"
+                            android:textColor="#00C884"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
             </LinearLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

@@ -2,57 +2,59 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginBottom="10dp"
+    android:layout_margin="7.5dp"
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/conversationItem_cardView"
-        android:layout_width="wrap_content"
+        android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:background="@drawable/main_button"
         app:cardBackgroundColor="#FFFFFF"
-        app:cardCornerRadius="10dp"
         app:cardElevation="4dp"
+        app:cardCornerRadius="6dp"
         android:layout_centerHorizontal="true"
         app:cardUseCompatPadding="true">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/image"
                 android:src="@drawable/shirt"
                 android:adjustViewBounds="true"
-                android:layout_margin="10dp"
+                android:scaleType="centerCrop"
                 android:layout_centerHorizontal="true"
-                android:layout_width="180dp"
-                android:layout_height="180dp"/>
+                android:layout_width="match_parent"
+                android:layout_height="180dp" />
 
             <LinearLayout
                 android:layout_centerHorizontal="true"
                 android:orientation="vertical"
                 android:layout_below="@+id/image"
                 android:layout_margin="10dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/name_contact"
                     android:text="Dress Shirt"
-                    android:layout_gravity="center_horizontal"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:fontFamily="@font/segoe_ui_bold"/>
+                    android:textSize="19sp"
+                    android:layout_marginBottom="4dp"
+                    android:fontFamily="@font/segoe_ui"/>
 
                 <TextView
                     android:id="@+id/ph_number"
                     android:layout_gravity="right"
                     android:text="PKR 4000"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="5dp"
                     android:textColor="#00C884"
-                    android:fontFamily="@font/segoe_ui"
+                    android:fontFamily="@font/segoe_ui_bold"
                     android:textSize="16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
