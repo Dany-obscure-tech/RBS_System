@@ -147,7 +147,8 @@ public class BuyLocal_home extends Fragment {
 
         AdapterCategoryRecyclerView adapterCategoryRecyclerView=new AdapterCategoryRecyclerView(getActivity(),null,category_text);
 
-        category_recyclerview.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,true));
+        category_recyclerview.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
+
         category_recyclerview.setAdapter(adapterCategoryRecyclerView);
 
         search_imageBtn=(ImageButton) view.findViewById(R.id.search_imageBtn);

@@ -19,7 +19,7 @@ public class BuyLocal_shopkeeper_shop extends AppCompatActivity {
 
     RecyclerView shop_products_RecyclerView;
     List<String> itemname;
-    ImageButton back_btn,menu_btn;
+    ImageButton back_btn;
 
 
     @Override
@@ -29,7 +29,6 @@ public class BuyLocal_shopkeeper_shop extends AppCompatActivity {
 
         shop_products_RecyclerView=(RecyclerView)findViewById(R.id.shop_products_RecyclerView);
         back_btn=(ImageButton)findViewById(R.id.back_btn);
-//        menu_btn=(ImageButton)findViewById(R.id.menu_btn);
         itemname = new ArrayList<String>();
         itemname.add("Laptop");
         itemname.add("Desktop");

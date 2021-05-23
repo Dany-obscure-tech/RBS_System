@@ -7,7 +7,7 @@
     tools:context=".BuyLocal_profile_edit">
 
     <RelativeLayout
-        android:id="@+id/action_bar"
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@drawable/profile_screen_header">
@@ -15,10 +15,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PROFILE EDIT"
+            android:layout_toRightOf="@+id/back_btn"
+            android:layout_centerVertical="true"
+            android:text="Profile Edit"
             android:fontFamily="@font/segoe_ui_bold"
             android:textColor="#ffffff"
-            android:layout_centerInParent="true"
             android:textSize="22sp"/>
 
         <ImageButton
@@ -40,9 +41,10 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/action_bar"
-        android:paddingTop="10dp"
-        android:layout_margin="20dp"
+        android:layout_below="@+id/header"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -71,7 +73,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+
                 android:weightSum="3"
                 android:orientation="horizontal">
 
@@ -131,7 +133,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
                 android:weightSum="3"
                 android:orientation="horizontal">
 
@@ -192,7 +193,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
                     android:weightSum="3"
                     android:orientation="horizontal">
 
@@ -252,7 +252,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
                     android:weightSum="3"
                     android:orientation="horizontal">
 

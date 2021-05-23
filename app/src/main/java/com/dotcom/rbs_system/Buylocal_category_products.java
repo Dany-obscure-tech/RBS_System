@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.dotcom.rbs_system.Adapter.AdapterCategoryProductsItemRecyclerView;
 import com.dotcom.rbs_system.Adapter.AdapterSpotlightItemListRecyclerView;
@@ -19,6 +20,8 @@ public class Buylocal_category_products extends AppCompatActivity {
     ImageButton back_btn;
     RecyclerView categoryRecyclerView;
     List<String> itemname, price, itemImage;
+    String category_text;
+    TextView category_textview;
 
 
     @Override
@@ -28,6 +31,9 @@ public class Buylocal_category_products extends AppCompatActivity {
 
         back_btn=(ImageButton)findViewById(R.id.back_btn);
         categoryRecyclerView=(RecyclerView)findViewById(R.id.categoryRecyclerView);
+        category_textview=(TextView)findViewById(R.id.category_textview);
+        category_text = getIntent().getStringExtra("CATEGORY_NAME");
+        category_textview.setText(category_text);
 
         itemname = new ArrayList<String>();
         price = new ArrayList<String>();

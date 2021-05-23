@@ -68,7 +68,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     Dialog make_offer_alert_dialog;
     Button alertReportCancel_btn, alertMakeOfferCancel_btn, alertMakeOfferSubmit_btn,alertReportSubmit_btn;
     ImageButton back_btn;
-    ImageView profileImage;
+    ImageView profileImage_imageView;
     String productID,productName,category,shopkeeperID,conversationKey=null;
     DatabaseReference itemRef, reportRef,userRef,stockRef,customerOfferRef,agreedOfferRef,boughtOfferRef,userConversationRef;
     StorageReference itemImageStorageRef;
@@ -113,7 +113,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
 
         imageSlider = (CardView) findViewById(R.id.imageSlider);
         back_btn = (ImageButton) findViewById(R.id.back_btn);
-        profileImage = (ImageView) findViewById(R.id.profileImage_imageView);
+        profileImage_imageView = (ImageView) findViewById(R.id.profileImage_imageView);
         share_textview = (TextView) findViewById(R.id.share_textview);
         report_textView = (TextView) findViewById(R.id.report_textView);
         distance_textView = (TextView) findViewById(R.id.distance_textView);
@@ -231,7 +231,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     }
 
     private void profileImage_listner() {
-        profileImage.setOnClickListener(new View.OnClickListener() {
+        profileImage_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BuyLocal_productdetails.this, BuyLocal_shopkeeper_shop.class);

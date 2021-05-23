@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -45,6 +46,7 @@ public class AdapterCategoryRecyclerView extends RecyclerView.Adapter<AdapterCat
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, Buylocal_category_products.class);
+                intent.putExtra("CATEGORY_NAME",category_name.get(position));
                 context.startActivity(intent);
             }
         });

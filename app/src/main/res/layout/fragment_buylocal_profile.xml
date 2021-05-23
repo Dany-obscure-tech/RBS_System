@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#FFFFFF"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".BuyLocal_Profile">
 
     <!-- TODO: Update blank fragment layout -->
@@ -20,9 +20,8 @@
                 android:id="@+id/header_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:background="@drawable/profile_screen_header"
-                >
+                android:orientation="horizontal">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profileImage_imageView"
@@ -30,48 +29,49 @@
                     android:layout_height="120dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
-                    app:civ_border_width="7dp"
                     app:civ_border_color="#4A4A4A"
+                    app:civ_border_width="7dp"
 
                     />
+
                 <LinearLayout
-                    android:layout_margin="40dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="40dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=""
+                        android:fontFamily="@font/segoe_ui_bold"
                         android:padding="5dp"
+                        android:text="User Name"
                         android:textColor="#FFFFFF"
-                        android:textSize="20sp"
-                        android:fontFamily="@font/segoe_ui"
-                        />
+                        android:textSize="22sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="DOB: "
-                            android:padding="5dp"
-                            android:textColor="#FFFFFF"
-                            android:textSize="16sp"
                             android:fontFamily="@font/segoe_ui_bold"
-                            />
+                            android:padding="5dp"
+                            android:text="DOB: "
+                            android:textColor="#FFFFFF"
+                            android:textSize="16sp" />
+
                         <TextView
                             android:id="@+id/dob"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/segoe_ui"
                             android:padding="5dp"
                             android:text=""
                             android:textColor="#FFFFFF"
-                            android:fontFamily="@font/segoe_ui"
 
                             />
 
@@ -80,34 +80,33 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0 purchases"
-                        android:textColor="#FFFFFF"
-                        android:padding="5dp"
                         android:fontFamily="@font/segoe_ui_bold"
-                        />
+                        android:padding="5dp"
+                        android:text="0 purchases"
+                        android:textColor="#FFFFFF" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Since "
-                            android:textColor="#FFFFFF"
                             android:fontFamily="@font/segoe_ui_bold"
-                            />
+                            android:text="Since "
+                            android:textColor="#FFFFFF" />
+
                         <TextView
                             android:id="@+id/creationDate_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/segoe_ui_bold"
                             android:text=""
                             android:textColor="#FFFFFF"
-                            android:fontFamily="@font/segoe_ui_bold"
 
                             />
-
 
                     </LinearLayout>
 
@@ -117,42 +116,40 @@
 
             <LinearLayout
                 android:id="@+id/id_card_area"
-                android:paddingTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_below="@+id/header_profile"
                 android:gravity="center"
-                android:layout_below="@+id/header_profile">
+                android:orientation="horizontal"
+                android:paddingTop="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Your ID"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:textColor="#19ACE2"
-                    android:textSize="26sp"
                     android:layout_marginRight="20dp"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:text="Your ID"
                     android:textAlignment="center"
-                    />
+                    android:textColor="#19ACE2"
+                    android:textSize="26sp" />
 
                 <ImageView
                     android:id="@+id/idImage"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
                     android:layout_marginLeft="20dp"
+                    android:adjustViewBounds="true"
                     android:background="#ffffff"
-                    />
+                    android:scaleType="fitCenter" />
 
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/profile_des_area"
-                android:layout_below="@+id/id_card_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/id_card_area"
                 android:background="@drawable/ripple_effect_cardview"
                 app:cardBackgroundColor="#F1F1F1"
                 app:cardCornerRadius="10dp"
@@ -166,74 +163,72 @@
 
                     <LinearLayout
                         android:id="@+id/phone_no_area"
-                        android:layout_margin="20dp"
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/phonecall"
-                            />
+                            android:src="@drawable/phonecall" />
+
                         <TextView
                             android:id="@+id/phno"
-                            android:paddingLeft="20dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=""
-                            android:textSize="16sp"
                             android:fontFamily="@font/segoe_ui_bold"
-                            />
+                            android:paddingLeft="20dp"
+                            android:text=""
+                            android:textSize="16sp" />
 
                     </LinearLayout>
+
                     <LinearLayout
-                        android:layout_below="@+id/phone_no_area"
                         android:id="@+id/email_area"
-                        android:layout_margin="20dp"
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/phone_no_area"
+                        android:layout_margin="20dp"
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/email"
-                            />
+                            android:src="@drawable/email" />
+
                         <TextView
                             android:id="@+id/email"
-                            android:paddingLeft="20dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=""
-                            android:textSize="16sp"
                             android:fontFamily="@font/segoe_ui_bold"
-                            />
+                            android:paddingLeft="20dp"
+                            android:text=""
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_below="@+id/email_area"
                         android:id="@+id/location_area"
-                        android:layout_margin="20dp"
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/email_area"
+                        android:layout_margin="20dp"
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/location"
-                            />
+                            android:src="@drawable/location" />
+
                         <TextView
                             android:id="@+id/address"
-                            android:paddingLeft="20dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=""
-                            android:textSize="16sp"
                             android:fontFamily="@font/segoe_ui_bold"
-                            />
+                            android:paddingLeft="20dp"
+                            android:text=""
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
@@ -242,41 +237,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/location_area"
+                        android:layout_alignParentEnd="true"
                         android:layout_margin="10dp"
                         android:background="@drawable/buylocal_green_button"
-                        android:text="EDIT"
-                        android:textColor="#ffff"
-                        android:textAlignment="center"
-                        android:textSize="16sp"
-                        android:layout_alignParentEnd="true"
                         android:fontFamily="@font/segoe_ui_bold"
-                        />
+                        android:text="EDIT"
+                        android:textAlignment="center"
+                        android:textColor="#ffff"
+                        android:textSize="16sp" />
 
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                android:layout_margin="18dp"
-                android:layout_below="@+id/profile_des_area"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Your Offers"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:background="#ffffff"
-                android:textColor="#19ACE2"
-                android:textSize="26sp"
-                android:layout_marginRight="20dp"
-                android:textAlignment="center"
-                />
-
-
-            </LinearLayout>
 
         </RelativeLayout>
 

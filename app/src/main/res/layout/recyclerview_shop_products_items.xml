@@ -56,7 +56,7 @@
                 android:text="Category"
                 android:textSize="18sp"
                 android:fontFamily="@font/segoe_ui_bold"
-                android:background="@drawable/green_btn"
+                android:background="@drawable/red_border"
                 android:layout_centerVertical="true"
                 android:gravity="center"
                 android:textAlignment="center"

@@ -6,58 +6,94 @@
     android:layout_height="match_parent"
     tools:context=".Buylocal_category_products">
 
-    <LinearLayout
-        android:id="@+id/top_bar"
+    <RelativeLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        >
+        android:layout_height="80dp"
+        android:background="@drawable/profile_screen_header">
 
-            <ImageButton
-                android:id="@+id/back_btn"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="0dp"
-                android:adjustViewBounds="true"
-                android:background="#00000000"
-                android:padding="15dp"
-                android:scaleType="fitXY"
-                android:layout_weight="0.2"
-                android:src="@drawable/black_back_arrow" />
-            <SearchView
-                android:id="@+id/simpleSearchView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.8"
-                android:iconifiedByDefault="false"
-                android:layout_marginLeft="8dp"
-                android:background="#F1F1F1"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:queryHint="Search here"/>
+        <TextView
+            android:id="@+id/category_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/back_btn"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:text="Offers"
+            android:textColor="#ffffff"
+            android:textSize="22sp" />
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:padding="15dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/back_arrow" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/search_view_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/header"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:background="#F1F1F1"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/search_editText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:layout_weight="8"
+            android:background="@drawable/search_view_style"
+            android:fontFamily="@font/segoe_ui"
+            android:hint="Search here..."
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="#707070" />
+
+        <ImageButton
+            android:id="@+id/search_imageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="#00FFFFFF"
+            android:backgroundTint="@color/textBlue"
+            android:padding="15dp"
+            android:src="@drawable/search" />
 
     </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/products_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/top_bar"
+        android:layout_below="@+id/search_view_bar"
         android:background="#F3F3F3"
+
         android:orientation="vertical"
         >
 
         <TextView
             android:id="@+id/products_textview"
-            android:layout_margin="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Products"
             android:textColor="#707070"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:textSize="26sp"
             android:fontFamily="@font/segoe_ui_bold"
             />
@@ -65,8 +101,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/categoryRecyclerView"
             android:layout_margin="12dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_below="@+id/products_textview"
-            android:paddingBottom="40dp"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

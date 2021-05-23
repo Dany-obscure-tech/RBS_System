@@ -15,19 +15,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/back_btn"
             android:layout_centerVertical="true"
-            android:text="Offers"
+            android:layout_toRightOf="@+id/back_btn"
             android:fontFamily="@font/segoe_ui_bold"
+            android:text="Offers"
             android:textColor="#ffffff"
-            android:textSize="22sp"/>
+            android:textSize="22sp" />
 
         <ImageButton
             android:id="@+id/back_btn"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
             android:adjustViewBounds="true"
@@ -40,45 +40,45 @@
 
     <LinearLayout
         android:id="@+id/search_view_bar"
-        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_below="@+id/header"
         android:layout_centerVertical="true"
-        android:layout_width="match_parent"
-        android:background="#F1F1F1"
         android:layout_margin="10dp"
-        android:layout_height="50dp">
+        android:background="#F1F1F1"
+        android:orientation="horizontal">
 
         <EditText
+            android:id="@+id/search_editText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
             android:layout_weight="8"
+            android:background="@drawable/search_view_style"
             android:fontFamily="@font/segoe_ui"
             android:hint="Search here..."
-            android:textColor="#707070"
-            android:id="@+id/search_editText"
-            android:maxLines="1"
             android:inputType="text"
-            android:layout_marginStart="15dp"
-            android:background="@drawable/search_view_style"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"/>
+            android:maxLines="1"
+            android:textColor="#707070" />
 
         <ImageButton
             android:id="@+id/search_imageBtn"
-            android:src="@drawable/search"
-            android:padding="15dp"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/textBlue"
-            android:background="#00FFFFFF"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"/>
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="#00FFFFFF"
+            android:backgroundTint="@color/textBlue"
+            android:padding="15dp"
+            android:src="@drawable/search" />
 
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/offers"
-        android:layout_below="@+id/search_view_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"/>
+        android:layout_below="@+id/search_view_bar"
+        android:orientation="vertical" />
 
 
 </RelativeLayout>
