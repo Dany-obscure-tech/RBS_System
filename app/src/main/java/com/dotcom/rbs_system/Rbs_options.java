@@ -26,7 +26,7 @@ public class Rbs_options extends AppCompatActivity {
 
     CardView BUY,Sale,repair,Exchange,Accessories,Settings;
 
-    ImageButton icon1,icon2,icon3,icon5,icon4,icon6,icon8,icon9;
+    ImageButton icon1,icon2,icon3,icon5,icon4,icon6,icon8,icon9,back_btn;
     Button alert_addAccessory_btn,alert_saleAccessory_btn;
 
     ImageView mainBanner_imageView;
@@ -47,6 +47,7 @@ public class Rbs_options extends AppCompatActivity {
         alert_saleAccessory_btn = (Button) selectAccessory_dialog.findViewById(R.id.alert_saleAccessory_btn);
 
         BUY=(CardView)findViewById(R.id.BUY);
+        back_btn=(ImageButton) findViewById(R.id.back_btn);
         Sale=(CardView)findViewById(R.id.Sale);
         repair=(CardView)findViewById(R.id.repair);
         Exchange=(CardView)findViewById(R.id.Exchange);
@@ -64,6 +65,13 @@ public class Rbs_options extends AppCompatActivity {
 
         mainBanner_imageView = (ImageView)findViewById(R.id.mainBanner_imageView);
         getBannerImage();
+
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         Accessories.setOnClickListener(new View.OnClickListener() {
             @Override

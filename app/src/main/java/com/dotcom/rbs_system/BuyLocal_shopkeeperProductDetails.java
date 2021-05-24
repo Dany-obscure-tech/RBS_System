@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +60,7 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
     Button accept_offer_btn,cancel_offer_btn,sell_offer_btn;
     TextView date_textView;
     ImageView profileImage;
+    ImageButton back_btn;
 
     TextView product_name_textview, category_textView, item_description_textview, itemPrice_textView, currency_textView;
     int i, noOfimages;
@@ -85,6 +87,7 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
         date_textView = (TextView)findViewById(R.id.date_textView);
         product_offer_msg = (TextView)findViewById(R.id.product_offer_msg);
         profileImage = (ImageView)findViewById(R.id.profileImage_imageView);
+        back_btn = (ImageButton) findViewById(R.id.back_btn);
 
         itemRef = FirebaseDatabase.getInstance().getReference("Items/" + category + "/" + productID);
         agreedOfferRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+ category + "/" + productID+"/Accepted_Offer");
@@ -312,7 +315,17 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
     private void onClickListeners() {
         cancel_offer_btnOnclick();
         sell_offer_btnOnclick();
+        back_btn_listner();
 
+    }
+
+    private void back_btn_listner() {
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void cancel_offer_btnOnclick() {

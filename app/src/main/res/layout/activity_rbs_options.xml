@@ -4,9 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".Rbs_options">
 
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/profile_screen_header">
+
+        <TextView
+            android:id="@+id/category_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/back_btn"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:text="RBSPOS"
+            android:textColor="#ffffff"
+            android:textSize="22sp" />
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:padding="15dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/back_arrow" />
+
+    </RelativeLayout>
+
+
     <ScrollView
+        android:layout_below="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -25,37 +61,37 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#FFFFFF"
+
                 tools:context=".MainActivity">
 
 
-                <LinearLayout
-                    android:id="@+id/text"
-                    android:layout_marginTop="40dp"
-                    android:layout_centerHorizontal="true"
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/text"-->
+<!--                    android:layout_marginTop="40dp"-->
+<!--                    android:layout_centerHorizontal="true"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content">-->
 
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/kameron_bold"
-                        android:text="RBS"
-                        android:textColor="#707070"
-                        android:textSize="35sp" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/textView"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:fontFamily="@font/kameron_bold"-->
+<!--                        android:text="RBS"-->
+<!--                        android:textColor="#707070"-->
+<!--                        android:textSize="35sp" />-->
 
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/kameron_bold"
-                        android:text="POS"
-                        android:textColor="#2EA4CF"
-                        android:textSize="35sp" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/textView2"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:fontFamily="@font/kameron_bold"-->
+<!--                        android:text="POS"-->
+<!--                        android:textColor="#2EA4CF"-->
+<!--                        android:textSize="35sp" />-->
 
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
 
 
@@ -100,7 +136,7 @@
                                     android:src="@drawable/repair" />
 
                                 <TextView
-                                    android:textColor="#2EA4CF"
+                                    android:textColor="@color/gradientDarkBlue"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@+id/icon1"
@@ -143,7 +179,7 @@
                                     android:src="@drawable/buy" />
 
                                 <TextView
-                                    android:textColor="#2EA4CF"
+                                    android:textColor="@color/gradientDarkBlue"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@+id/icon2"
@@ -194,7 +230,7 @@
                                     android:src="@drawable/sale" />
 
                                 <TextView
-                                    android:textColor="#2EA4CF"
+                                    android:textColor="@color/gradientDarkBlue"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@+id/icon3"
@@ -237,7 +273,7 @@
                                     android:src="@drawable/accessories" />
 
                                 <TextView
-                                    android:textColor="#2EA4CF"
+                                    android:textColor="@color/gradientDarkBlue"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@+id/icon4"

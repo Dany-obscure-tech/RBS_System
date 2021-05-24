@@ -32,6 +32,7 @@
                 android:id="@+id/product_image"
                 android:src="@drawable/shirt"
                 android:adjustViewBounds="true"
+                android:scaleType="fitXY"
                 android:layout_marginTop="10dp"
                 android:layout_centerHorizontal="true"
                 android:layout_width="120dp"
@@ -40,14 +41,13 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profileImage_imageView"
                 android:layout_below="@+id/store_banner_imageView"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_gravity="center"
                 app:civ_border_width="0dp"
                 android:src="@drawable/profile_icon"
                 android:layout_centerHorizontal="true"
                 app:civ_border_color="#4A4A4A"
-                android:layout_weight="0.5"
                 android:layout_margin="15dp"
                 />
 
@@ -67,9 +67,9 @@
                 android:layout_marginTop="10dp"
                 android:text="Dress Shirts"
                 android:layout_gravity="left"
-                android:paddingLeft="5dp"
-                android:fontFamily="@font/segoe_ui"
-                android:textColor="@color/textGrey"
+                android:layout_marginLeft="5dp"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:textColor="@color/gradientDarkBlue"
                 android:textSize="22sp"
                 />
             <TextView
@@ -78,16 +78,16 @@
                 android:layout_marginTop="10dp"
                 android:layout_below="@+id/product_name_textview"
                 android:text="Customer Offered"
-                android:textSize="22sp"
+                android:layout_marginLeft="5dp"
+                android:textSize="18sp"
                 android:fontFamily="@font/segoe_ui_bold"
-                android:padding="5dp"
-                android:textColor="@color/textBlue"
+                android:textColor="@color/textGrey"
                 />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="end"
                 android:layout_margin="10dp"
                 android:orientation="horizontal">
 
@@ -97,17 +97,16 @@
                     android:layout_height="wrap_content"
                     android:text="PKR"
                     android:textAlignment="center"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="center"
                     android:fontFamily="@font/segoe_ui_bold"
-                    android:textColor="@color/textBlue"
-                    android:textSize="22sp"
+                    android:textColor="@color/textGreen"
+                    android:textSize="18sp"
                     />
                 <TextView
                     android:id="@+id/offered_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp"
                     android:text="5000"
                     android:textAlignment="center"
                     android:layout_gravity="center_horizontal"
@@ -135,8 +134,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
                     android:text="Hello, i really want this product"
-                    android:layout_gravity="center"
                     android:fontFamily="@font/segoe_ui_bold"
                     android:textColor="@color/textGrey"
                     android:textSize="16sp"

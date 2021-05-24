@@ -23,6 +23,8 @@ import java.util.List;
  */
 public class RBS_offers extends Fragment {
 
+    //TODO to be removed
+
     View view;
     ImageButton back_btn;
     RecyclerView products_offers;

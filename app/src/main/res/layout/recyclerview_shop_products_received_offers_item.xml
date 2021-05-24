@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -30,12 +30,12 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profileImage_imageView"
-                android:layout_below="@+id/store_banner_imageView"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_gravity="center"
                 app:civ_border_width="0dp"
                 android:src="@drawable/profile_icon"
+                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 app:civ_border_color="#4A4A4A"
                 android:layout_weight="0.5"
@@ -44,8 +44,8 @@
                 android:id="@+id/date_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_below="@+id/product_name_textview"
+                android:layout_marginTop="2dp"
+                android:layout_alignParentBottom="true"
                 android:text="13/04/2019"
                 android:textSize="16sp"
                 android:layout_gravity="bottom"
@@ -55,7 +55,7 @@
                 />
 
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,26 +71,28 @@
                 android:text="Shahzaib Mehfooz"
                 android:textSize="18sp"
                 android:fontFamily="@font/segoe_ui_bold"
-                android:padding="5dp"
-                android:textColor="@color/textBlue"
+                android:textColor="@color/gradientDarkBlue"
                 />
             <TextView
                 android:id="@+id/product_offer_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
                 android:text="Hello, i really want this product"
-                android:layout_gravity="center"
-                android:fontFamily="@font/segoe_ui_bold"
+                android:fontFamily="@font/segoe_ui"
                 android:textColor="@color/textGrey"
                 android:textSize="16sp"
+                android:visibility="gone"
                 />
+
+<!--            //Todo  remove msgtextview and also from database-->
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_margin="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -101,8 +103,8 @@
                     android:textAlignment="center"
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/segoe_ui_bold"
-                    android:textColor="@color/textBlue"
-                    android:textSize="22sp"
+                    android:textColor="@color/textGreen"
+                    android:textSize="18sp"
                     />
                 <TextView
                     android:id="@+id/offered_price"
@@ -112,24 +114,47 @@
                     android:paddingRight="5dp"
                     android:text="5000"
                     android:textAlignment="center"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="center"
                     android:fontFamily="@font/segoe_ui_bold"
                     android:textColor="@color/textGreen"
-                    android:textSize="22sp"
+                    android:textSize="20sp"
                     />
 
             </LinearLayout>
-            <Button
-                android:id="@+id/accept_offer_btn"
-                android:background="@drawable/profile_screen_header"
-                android:textColor="#ffff"
-                android:layout_gravity="end"
-                android:fontFamily="@font/segoe_ui_bold"
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textSize="14sp"
-                android:text="Accept" />
+                android:layout_gravity="end"
+                android:orientation="horizontal"
+                >
+
+                <Button
+                    android:id="@+id/accept_offer_btn"
+                    android:background="@drawable/profile_screen_header"
+                    android:textColor="#ffff"
+                    android:layout_gravity="end"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:textSize="14sp"
+                    android:text="Accept" />
+
+                <Button
+                    android:id="@+id/msg_offer_btn"
+                    android:background="@drawable/profile_screen_header"
+                    android:textColor="#ffff"
+                    android:layout_gravity="end"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:textSize="14sp"
+                    android:text="Message" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 

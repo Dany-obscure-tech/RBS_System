@@ -18,43 +18,44 @@
         app:cardUseCompatPadding="true">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/image"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
+                android:layout_marginEnd="10dp"
                 android:src="@drawable/shirt" />
 
             <LinearLayout
-                android:id="@+id/image_area"
-                android:layout_width="130dp"
+                android:id="@+id/item_name_area"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/image"
+                android:layout_toEndOf="@+id/image"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/name_contact"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginBottom="4dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/segoe_ui"
                     android:maxLines="1"
                     android:text="Dress Shirt"
-                    android:textSize="19sp" />
+                    android:textColor="@color/textGrey"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/ph_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
                     android:layout_marginBottom="5dp"
-                    android:fontFamily="@font/segoe_ui_bold"
+                    android:fontFamily="@font/segoe_ui"
                     android:text="PKR 4000"
                     android:textColor="#00C884"
                     android:textSize="16sp" />
@@ -64,16 +65,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/item_name_area"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="5dp"
-                android:layout_toEndOf="@+id/image"
+                android:layout_toRightOf="@+id/image"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/offer_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/segoe_ui_bold"
                     android:maxLines="1"
@@ -85,7 +85,9 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="5dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -94,8 +96,9 @@
                         android:fontFamily="@font/segoe_ui_bold"
                         android:text="PKR"
                         android:textAlignment="center"
+                        android:layout_gravity="center"
                         android:textColor="@color/gradientDarkBlue"
-                        android:textSize="18sp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/offer_product_price"
@@ -106,85 +109,7 @@
                         android:text="5000"
                         android:textAlignment="center"
                         android:textColor="@color/gradientDarkBlue"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/product_offer_msg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7.5dp"
-                    android:layout_marginBottom="10dp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/segoe_ui"
-                    android:maxLines="2"
-                    android:text="This is a message place holder,that will be send with offer"
-                    android:textColor="@color/textGrey"
-                    android:textSize="18sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="15dp"
-                        android:layout_gravity="center_horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:text="X"
-                            android:textAlignment="center"
-                            android:layout_gravity="center_horizontal"
-                            android:textColor="#FF0000"
-                            android:textSize="22sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:text="Cancel"
-                            android:textColor="#FF0000"
-                            android:textSize="16sp" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="15dp"
-                        android:layout_gravity="center_horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:text="!"
-                            android:textAlignment="center"
-                            android:layout_gravity="center_horizontal"
-                            android:textColor="#00C884"
-                            android:textSize="22sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:text="Change"
-                            android:textColor="#00C884"
-                            android:textSize="16sp" />
-
-
-                    </LinearLayout>
+                        android:textSize="22sp" />
 
                 </LinearLayout>
 

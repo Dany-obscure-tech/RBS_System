@@ -157,12 +157,40 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/item_condition_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/categories_area">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:text="Condition :"
+                        android:textColor="@color/textGrey"
+                        android:textSize="18sp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:layout_marginStart="5dp"
+                        android:text="N.A"
+                        android:textSize="16sp"
+                        android:textColor="@color/gradientDarkBlue"
+                        />
+
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/item_description_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/categories_area"
+                    android:layout_below="@+id/item_condition_area"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/segoe_ui"

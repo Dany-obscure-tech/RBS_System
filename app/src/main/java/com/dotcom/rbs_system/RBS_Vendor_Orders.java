@@ -72,6 +72,7 @@ public class RBS_Vendor_Orders extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_r_b_s__vendor__orders, container, false);
+        getActivity().setTitle("RBS Vendor Orders");
         initialization();
         onclicklistners();
         return view;

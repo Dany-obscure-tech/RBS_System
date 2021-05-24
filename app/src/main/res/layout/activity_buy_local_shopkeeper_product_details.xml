@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BuyLocal_productdetails">
+    tools:context=".BuyLocal_shopkeeperProductDetails">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,9 +16,9 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/imageSlider"
-                app:cardCornerRadius="6dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="6dp">
 
                 <com.smarteist.autoimageslider.SliderView
                     android:id="@+id/imageSliders"
@@ -47,312 +47,368 @@
 
                 <RelativeLayout
                     android:id="@+id/offer_relativeLayout"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/profile_screen_header"
                     android:layout_width="match_parent"
-                    android:visibility="gone"
-                    android:paddingBottom="20dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/profile_screen_header"
                     android:paddingTop="20dp"
-                    android:layout_height="wrap_content">
+                    android:paddingBottom="20dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/offerStatus_textView"
-                        android:text="Offer Status"
-                        android:textColor="#FFFF"
-                        android:layout_centerHorizontal="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="Offer Status"
+                        android:textColor="#FFFF" />
 
                     <TextView
                         android:id="@+id/offerAmountCurrency_textView"
-                        android:layout_below="@+id/offerStatus_textView"
-                        android:text="$"
-                        android:textColor="#FFFF"
-                        android:layout_centerHorizontal="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/offerStatus_textView"
+                        android:layout_centerHorizontal="true"
+                        android:text="$"
+                        android:textColor="#FFFF" />
 
                     <TextView
                         android:id="@+id/offerAmount_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_below="@+id/offerStatus_textView"
                         android:layout_toRightOf="@+id/offerAmountCurrency_textView"
                         android:text="00.00"
-                        android:textColor="#FFFF"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:textColor="#FFFF" />
 
                     <TextView
                         android:id="@+id/offerMessage_textView"
-                        android:text="This is a message"
-                        android:layout_centerHorizontal="true"
-                        android:textColor="#FFFF"
-                        android:layout_below="@+id/offerAmount_textView"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/offerAmount_textView"
+                        android:layout_centerHorizontal="true"
+                        android:text="This is a message"
+                        android:textColor="#FFFF" />
 
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/product_name_textview"
-                    android:layout_below="@+id/offer_relativeLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:textColor="@color/textBlue"
-                    android:textSize="26sp"
-                    android:text="Hp omen Laptop"
-                    />
-                <TextView
-                    android:id="@+id/category_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/product_name_textview"
-                    android:text="Laptop"
-                    android:textSize="18sp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:background="@drawable/red_border"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:textAlignment="center"
-                    android:padding="5dp"
-                    android:textColor="@color/textGreen"
-                    />
-
-                <Button
-                    android:id="@+id/editItem_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/item_description_textview"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/buylocal_green_button"
-                    android:text="Edit item"
-                    android:textColor="#FFFFFF"
-                    android:textAlignment="center"
-                    android:textSize="16sp"
-                    android:layout_alignParentEnd="true"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    />
-
-                <TextView
-                    android:id="@+id/item_description_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/segoe_ui"
-                    android:layout_below="@+id/category_textView"
-                    android:textColor="@color/textGrey"
-                    android:textSize="22sp"
-                    android:text="this is the First line of the text,second line of the text,third line of the description"
-                    />
-                <LinearLayout
-                    android:id="@+id/price_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_alignParentRight="true"
-                    android:orientation="horizontal"
-                    android:layout_below="@+id/editItem_btn">
-
-                    <TextView
-                        android:id="@+id/currency_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:textColor="@color/textGreen"
-                        android:textSize="30sp"
-                        android:text="PKR"
-                        />
-                    <TextView
-                        android:id="@+id/itemPrice_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:textColor="@color/textGreen"
-                        android:textSize="30sp"
-                        android:text="1000"
-                        />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/offersTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:layout_below="@+id/price_textview"
-                    android:textColor="@color/textGreen"
-                    android:textSize="30sp"
-                    android:text="Offers"
-                    />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/buy_local"
-                    android:visibility="gone"
-                    android:layout_below="@id/offersTextView"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:background="@drawable/main_button"
                     android:layout_height="wrap_content"
-                    app:cardBackgroundColor="#FFFFFF"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="4dp"
-                    android:layout_centerHorizontal="true"
-                    app:cardUseCompatPadding="true">
+                    android:layout_below="@+id/offer_relativeLayout"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp">
+
+
+                    <TextView
+                        android:id="@+id/product_name_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:text="Hp omen Laptop"
+                        android:textColor="@color/gradientDarkBlue"
+                        android:textSize="26sp" />
 
                     <LinearLayout
+                        android:id="@+id/categories_area"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/product_name_textview"
                         android:orientation="horizontal">
 
-                        <LinearLayout
+                        <TextView
+                            android:id="@+id/category_textView"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            >
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/segoe_ui"
+                            android:text="Laptop"
+                            android:textColor="@color/textGreen"
+                            android:textSize="20sp" />
 
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/profileImage_imageView"
-                                android:layout_below="@+id/store_banner_imageView"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_gravity="center"
-                                app:civ_border_width="0dp"
-                                android:src="@drawable/profile_icon"
-                                android:layout_centerHorizontal="true"
-                                app:civ_border_color="#4A4A4A"
-                                android:layout_weight="0.5"
-                                />
+                        <LinearLayout
+                            android:id="@+id/price_area"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/item_description_textview"
+                            android:layout_gravity="center"
+                            android:orientation="horizontal">
+
                             <TextView
-                                android:id="@+id/date_textView"
+                                android:id="@+id/currency_textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_below="@+id/product_name_textview"
-                                android:text="13/04/2019"
-                                android:textSize="16sp"
-                                android:layout_gravity="bottom"
+                                android:layout_below="@+id/report_btn"
                                 android:fontFamily="@font/segoe_ui_bold"
-                                android:layout_margin="10dp"
-                                android:textColor="@color/textGrey"
-                                />
+                                android:text="$"
+                                android:textColor="@color/textGreen"
+                                android:textSize="22sp" />
 
+                            <TextView
+                                android:id="@+id/itemPrice_textView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/report_btn"
+                                android:layout_marginLeft="8dp"
+                                android:fontFamily="@font/segoe_ui_bold"
+                                android:text="1000"
+                                android:textColor="@color/textGreen"
+                                android:textSize="24sp" />
 
                         </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/item_condition_area"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/categories_area"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/segoe_ui_bold"
+                            android:text="Condition :"
+                            android:textColor="@color/textGrey"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/segoe_ui_bold"
+                            android:text="N.A"
+                            android:textColor="@color/gradientDarkBlue"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/item_description_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/item_condition_area"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/segoe_ui"
+                        android:text="this is the First line of the text,second line of the text,third line of the description"
+                        android:textColor="@color/textGrey"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/editItem_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/item_description_textview"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/green_border"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:text="Edit item"
+                        android:textAlignment="center"
+                        android:textColor="@color/textGreen"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/personal_notes_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/editItem_btn"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:text="Personal Notes"
+                        android:textColor="@color/gradientDarkBlue"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/item_personal_notes_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/personal_notes_textview"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/segoe_ui"
+                        android:text="this is the First line of the text,second line of the text,third line of the description"
+                        android:textColor="@color/textGrey"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/offersTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/item_personal_notes_textview"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:text="Offers"
+                        android:textColor="@color/gradientDarkBlue"
+                        android:textSize="20sp" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/buy_local"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/offersTextView"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/main_button"
+                        android:visibility="gone"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="4dp"
+                        app:cardUseCompatPadding="true">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:orientation="vertical">
-                            <TextView
-                                android:id="@+id/customer_name"
+                            android:orientation="horizontal">
+
+                            <RelativeLayout
                                 android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:orientation="vertical">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/profileImage_imageView"
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/profile_icon"
+                                    app:civ_border_color="#4A4A4A"
+                                    app:civ_border_width="0dp" />
+
+                                <TextView
+                                    android:id="@+id/date_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_gravity="bottom"
+                                    android:layout_margin="10dp"
+                                    android:layout_marginTop="2dp"
+                                    android:fontFamily="@font/segoe_ui_bold"
+                                    android:text="13/04/2019"
+                                    android:textColor="@color/textGrey"
+                                    android:textSize="16sp" />
+
+
+                            </RelativeLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_below="@+id/product_name_textview"
-                                android:text="Shahzaib Mehfooz"
-                                android:textSize="18sp"
-                                android:fontFamily="@font/segoe_ui_bold"
-                                android:padding="5dp"
-                                android:textColor="@color/textBlue"
-                                />
-                            <TextView
-                                android:id="@+id/product_offer_msg"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="Hello, i really want this product"
                                 android:layout_gravity="center"
-                                android:fontFamily="@font/segoe_ui_bold"
-                                android:textColor="@color/textGrey"
-                                android:textSize="16sp"
-                                />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="right"
-                                android:layout_margin="10dp"
-                                android:orientation="horizontal">
+                                android:orientation="vertical">
 
                                 <TextView
-                                    android:id="@+id/currency"
+                                    android:id="@+id/customer_name"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="PKR"
-                                    android:textAlignment="center"
-                                    android:layout_gravity="center_horizontal"
+                                    android:layout_below="@+id/product_name_textview"
+                                    android:layout_marginTop="10dp"
                                     android:fontFamily="@font/segoe_ui_bold"
-                                    android:textColor="@color/textBlue"
-                                    android:textSize="22sp"
-                                    />
+                                    android:padding="5dp"
+                                    android:text="Shahzaib Mehfooz"
+                                    android:textColor="@color/gradientDarkBlue"
+                                    android:textSize="18sp" />
+
                                 <TextView
-                                    android:id="@+id/offered_price"
+                                    android:id="@+id/product_offer_msg"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:paddingLeft="12dp"
-                                    android:paddingRight="5dp"
-                                    android:text="5000"
-                                    android:textAlignment="center"
-                                    android:layout_gravity="center_horizontal"
-                                    android:fontFamily="@font/segoe_ui_bold"
-                                    android:textColor="@color/textGreen"
-                                    android:textSize="22sp"
-                                    />
+                                    android:layout_marginTop="5dp"
+                                    android:fontFamily="@font/segoe_ui"
+                                    android:paddingLeft="5dp"
+                                    android:text="Hello, i really want this product"
+                                    android:textColor="@color/textGrey"
+                                    android:textSize="16sp" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="right"
+                                    android:layout_margin="10dp"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/currency"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_horizontal"
+                                        android:fontFamily="@font/segoe_ui_bold"
+                                        android:text="PKR"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/textGreen"
+                                        android:textSize="20sp" />
+
+                                    <TextView
+                                        android:id="@+id/offered_price"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_horizontal"
+                                        android:fontFamily="@font/segoe_ui_bold"
+                                        android:paddingLeft="12dp"
+                                        android:paddingRight="5dp"
+                                        android:text="5000"
+                                        android:textAlignment="center"
+                                        android:textColor="@color/textGreen"
+                                        android:textSize="20sp" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="right"
+                                    android:orientation="horizontal">
+
+                                    <Button
+                                        android:id="@+id/cancel_offer_btn"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="end"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="5dp"
+                                        android:background="@color/textGrey"
+                                        android:fontFamily="@font/segoe_ui_bold"
+                                        android:text="CANCEL"
+                                        android:textColor="#ffff"
+
+                                        android:textSize="14sp" />
+
+                                    <Button
+                                        android:id="@+id/sell_offer_btn"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="end"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="5dp"
+                                        android:background="@drawable/profile_screen_header"
+                                        android:fontFamily="@font/segoe_ui_bold"
+                                        android:text="SELL"
+                                        android:textColor="#ffff"
+                                        android:textSize="14sp" />
+
+                                </LinearLayout>
+
 
                             </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="right"
-                                android:layout_margin="10dp"
-                                android:orientation="horizontal">
-
-                                <Button
-                                    android:id="@+id/cancel_offer_btn"
-                                    android:background="@color/textGrey"
-                                    android:textColor="#ffff"
-                                    android:layout_gravity="end"
-                                    android:fontFamily="@font/segoe_ui_bold"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="10dp"
-                                    android:textSize="14sp"
-                                    android:text="CANCEL" />
-
-                                <Button
-                                    android:id="@+id/sell_offer_btn"
-                                    android:background="@drawable/profile_screen_header"
-                                    android:textColor="#ffff"
-                                    android:layout_gravity="end"
-                                    android:fontFamily="@font/segoe_ui_bold"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="10dp"
-                                    android:textSize="14sp"
-                                    android:text="SELL" />
-
-                            </LinearLayout>
-
 
                         </LinearLayout>
 
-                    </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
-                </androidx.cardview.widget.CardView>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/offers_received"
-                    android:layout_below="@+id/buy_local"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/offers_received"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/buy_local"
+                        android:orientation="vertical" />
 
 
-
+                </RelativeLayout>
 
 
             </RelativeLayout>
@@ -364,20 +420,21 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:scaleType="fitXY"
             android:background="#00000000"
+            android:scaleType="fitXY"
             android:src="@drawable/top_black_rectangle" />
 
         <ImageButton
             android:id="@+id/back_btn"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
             android:adjustViewBounds="true"
@@ -387,8 +444,6 @@
             android:src="@drawable/back_arrow" />
 
     </RelativeLayout>
-
-
 
 
 </RelativeLayout>
