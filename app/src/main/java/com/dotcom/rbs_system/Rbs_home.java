@@ -130,10 +130,6 @@ public class Rbs_home extends Fragment {
                         product_no_of_offers.add(String.valueOf(snapshot2.child("Offers").getChildrenCount()));
                         key_idList.add(snapshot2.child("Item_id").getValue().toString());
 
-
-
-
-
                     }
                 }
 
@@ -162,7 +158,7 @@ public class Rbs_home extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),Item_detail.class);
                 intent.putExtra("ADD_ITEM","TRUE");
-                getActivity().startActivity(intent);
+                getActivity().startActivityForResult(intent,1);
             }
         });
     }

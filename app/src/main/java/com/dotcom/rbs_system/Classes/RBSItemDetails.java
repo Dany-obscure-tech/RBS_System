@@ -240,7 +240,7 @@ public class RBSItemDetails {
                                 }
                                 if (check=="Add new item"){
                                     uploadToStock();
-                                    finishActivity(activity);
+
                                 }
 
                             }

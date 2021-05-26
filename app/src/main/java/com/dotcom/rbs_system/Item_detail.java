@@ -246,12 +246,15 @@ public class Item_detail extends AppCompatActivity {
                 rbsItemDetails.setActivity(Item_detail.this);
                 rbsItemDetails.uploadNewItemDetails(Item_detail.this);
 //                rbsItemDetails.clearData();
+                pd.dismissProgressBar(Item_detail.this);
+                finish();
             }else {
                 pass_back_data();
+                pd.dismissProgressBar(Item_detail.this);
+                finish();
             }
 
-            pd.dismissProgressBar(Item_detail.this);
-            finish();
+
 
 
 
