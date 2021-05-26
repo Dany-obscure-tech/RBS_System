@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/color_cursor_white"
     android:layout_marginBottom="10dp"
     android:layout_height="wrap_content">
 
@@ -30,25 +29,22 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profileImage_imageView"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center"
                 app:civ_border_width="0dp"
                 android:src="@drawable/profile_icon"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 app:civ_border_color="#4A4A4A"
-                android:layout_weight="0.5"
                 />
             <TextView
                 android:id="@+id/date_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
                 android:layout_alignParentBottom="true"
                 android:text="13/04/2019"
                 android:textSize="16sp"
-                android:layout_gravity="bottom"
                 android:fontFamily="@font/segoe_ui_bold"
                 android:layout_margin="10dp"
                 android:textColor="@color/textGrey"

@@ -110,7 +110,6 @@ public class Adapter_customerList_alert_dialog extends RecyclerView.Adapter<Adap
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             searchForCustomer_cardView = (CardView) itemView.findViewById(R.id.searchForCustomer_cardView);
-
             customerName_textView = (TextView)itemView.findViewById(R.id.customerName_textView);
             customerEmail_textView = (TextView)itemView.findViewById(R.id.customerEmail_textView);
             customerPhno_textView = (TextView)itemView.findViewById(R.id.customerPhno_textView);

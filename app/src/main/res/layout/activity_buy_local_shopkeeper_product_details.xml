@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".BuyLocal_shopkeeperProductDetails">
 
     <ScrollView
@@ -104,7 +105,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="2dp"
                         android:fontFamily="@font/segoe_ui_bold"
                         android:text="Hp omen Laptop"
                         android:textColor="@color/gradientDarkBlue"
@@ -166,7 +167,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/categories_area"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="12dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -228,8 +229,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/personal_notes_textview"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="15dp"
                         android:fontFamily="@font/segoe_ui"
                         android:text="this is the First line of the text,second line of the text,third line of the description"
                         android:textColor="@color/textGrey"

@@ -2,6 +2,7 @@ package com.dotcom.rbs_system;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,8 +36,8 @@ public class Repair_Ticket extends AppCompatActivity {
     RecyclerView repairTicketList_recyclerView;
     AdapterRepairTicketListRecyclerView adapterRepairTicketListRecyclerView;
 
-    TextView searchForTicket_textView;
     TextView repairTicketAdd_textView;
+    CardView searchForTicket_cardview;
 
     ImageButton Back_btn;
 
@@ -76,8 +77,9 @@ public class Repair_Ticket extends AppCompatActivity {
     private void Initialize() {
         repairTicketRef = FirebaseDatabase.getInstance().getReference("Repairs_ticket_list/"+firebaseUID);
 
-        searchForTicket_textView = (TextView)findViewById(R.id.searchForTicket_textView);
+
         repairTicketAdd_textView =(TextView) findViewById(R.id.repairTicketAdd_textView);
+        searchForTicket_cardview =(CardView) findViewById(R.id.searchForTicket_cardview);
 
         repairTicketList_recyclerView = (RecyclerView)findViewById(R.id.repairTicketList_recyclerView);
         repairTicketList_recyclerView.setLayoutManager(new GridLayoutManager(Repair_Ticket.this,1));
@@ -152,15 +154,16 @@ public class Repair_Ticket extends AppCompatActivity {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void ClickEvents() {
-        repairTicketSearch();
+//        repairTicketSearch();
         addRepairTicket();
         backButton();
+        searchForTicket_cardview_listner();
     }
 
-    private void repairTicketSearch() {
-        searchForTicket_textView.setOnClickListener(new View.OnClickListener() {
+    private void searchForTicket_cardview_listner() {
+        searchForTicket_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 new SimpleSearchDialogCompat(Repair_Ticket.this, "Search results...",
                         "Search for ticket number.", null, createTicketNoData(),
                         new SearchResultListener<SampleSearchModel>() {
@@ -176,6 +179,26 @@ public class Repair_Ticket extends AppCompatActivity {
             }
         });
     }
+
+//    private void repairTicketSearch() {
+//        searchForTicket_textView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                new SimpleSearchDialogCompat(Repair_Ticket.this, "Search results...",
+//                        "Search for ticket number.", null, createTicketNoData(),
+//                        new SearchResultListener<SampleSearchModel>() {
+//                            @Override
+//                            public void onSelected(BaseSearchDialogCompat dialog,
+//                                                   SampleSearchModel item, int position) {
+//                                dialog.dismiss();
+//                                Intent intent = new Intent(Repair_Ticket.this,Repair_details.class);
+//                                intent.putExtra("REPAIR_ID",item.getId());
+//                                startActivity(intent);
+//                            }
+//                        }).show();
+//            }
+//        });
+//    }
 
     private void addRepairTicket() {
         repairTicketAdd_textView.setOnClickListener(new View.OnClickListener() {

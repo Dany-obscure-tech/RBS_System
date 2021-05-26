@@ -9,7 +9,6 @@
         android:id="@+id/conversationItem_cardView"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/main_button"
         app:cardBackgroundColor="#FFFFFF"
         app:cardElevation="4dp"
         app:cardCornerRadius="6dp"

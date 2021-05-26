@@ -338,9 +338,9 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
                         pd3.dismissProgressBar(Sale.this);
                     }
-
-                    if (exisitngCustomerList.size()>3){
-                        for (int i = 0 ; i<3;i++){
+//i changed the value 3 to 10 here
+                    if (exisitngCustomerList.size()>10){
+                        for (int i = 0 ; i<10;i++){
                             lessExisitngCustomerList.add(exisitngCustomerList.get(i));
                             lessExisitngCustomerIDList.add(exisitngCustomerIDList.get(i));
                             lessExistingCustomerPhnoList.add(existingCustomerPhnoList.get(i));
@@ -404,8 +404,9 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
                         }
                     }
-                    if (exisitngItemsNamesList.size()>3){
-                        for (int i = 0 ; i<3;i++){
+                    /////I changed the 3 value to 10 here
+                    if (exisitngItemsNamesList.size()>10){
+                        for (int i = 0 ; i<10;i++){
                             lessExisitngItemsNamesList.add(exisitngItemsNamesList.get(i));
                             lessExisitngItemsSerialNoList.add(exisitngItemsSerialNoList.get(i));
                             lessExistingItemsLastActiveList.add(existingItemsLastActiveList.get(i));
@@ -965,7 +966,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                 customerEmail_textView.setVisibility(View.VISIBLE);
                 customerPhno_textView.setText(phone_no_returnString);
                 customerPhno_textView.setVisibility(View.VISIBLE);
-
                 customerID_textView.setText(id_returnString);
                 customerID_textView.setVisibility(View.VISIBLE);
                 customerID_linearLayout.setVisibility(View.VISIBLE);
