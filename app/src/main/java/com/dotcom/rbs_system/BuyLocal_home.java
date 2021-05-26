@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -47,6 +48,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class BuyLocal_home extends Fragment {
+    Button test_btn;
     EditText search_editText;
 
     BuylocalSlider buylocalSliderlistObj;
@@ -152,6 +154,14 @@ public class BuyLocal_home extends Fragment {
         category_recyclerview.setAdapter(adapterCategoryRecyclerView);
 
         search_imageBtn=(ImageButton) view.findViewById(R.id.search_imageBtn);
+
+        test_btn=(Button) view.findViewById(R.id.test_btn);
+        test_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(),Sale.class));
+            }
+        });
 
         search_editText=(EditText) view.findViewById(R.id.search_editText);
 

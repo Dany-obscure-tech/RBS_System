@@ -106,6 +106,7 @@ public class Adapter_itemList_alert_dialog extends RecyclerView.Adapter<Adapter_
                 rbsItemDetails.setItemName(exisitngItemsNamesList.get(position));
                 rbsItemDetails.setItemID(exisitngItemsSerialNoList.get(position));
                 rbsItemDetails.setItemPrice(existingItemsPriceList.get(position));
+                rbsItemDetails.setKey(exisitngItemsKeyIDList.get(position));
                 rbsItemDetails.setFirstImageUri(Uri.parse(existingItemsImageUrlList.get(position)));
 
 

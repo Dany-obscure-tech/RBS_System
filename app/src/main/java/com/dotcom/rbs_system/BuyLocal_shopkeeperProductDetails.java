@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -343,10 +344,12 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
         sell_offer_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                agreedOfferRef.removeValue();
-                boughtOfferRef.setValue(activeCustomerID);
-                customerOfferStatusRef.setValue("bought");
-                recreate();
+//                agreedOfferRef.removeValue();
+//                boughtOfferRef.setValue(activeCustomerID);
+//                customerOfferStatusRef.setValue("bought");
+//                recreate();
+                Intent intent = new Intent(BuyLocal_shopkeeperProductDetails.this,Sale.class);
+                startActivity(intent);
             }
         });
     }

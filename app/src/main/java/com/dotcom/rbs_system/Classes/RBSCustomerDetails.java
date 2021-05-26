@@ -21,6 +21,8 @@ import com.google.firebase.storage.UploadTask;
 import java.util.List;
 
 public class RBSCustomerDetails {
+    String check;
+
     Context context;
     int i,k=0,l=0;
 
@@ -115,6 +117,22 @@ public class RBSCustomerDetails {
         this.imageUrlList = imageUrlList;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getCheck() {
+        return check;
+    }
+
+    public void setCheck(String check) {
+        this.check = check;
+    }
+
     private RBSCustomerDetails() {}
 
     public static RBSCustomerDetails getInstance() {
@@ -136,7 +154,6 @@ public class RBSCustomerDetails {
             //we are connected to a network
             connected = true;
 
-            key = reference.push().getKey();
             reference.child("Customer_list").child(key).child("Name").setValue(customerName);
             reference.child("Customer_list").child(key).child("Phone_no").setValue(customerPhNo);
             reference.child("Customer_list").child(key).child("ID").setValue(customerId);

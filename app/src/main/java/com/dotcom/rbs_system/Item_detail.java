@@ -69,8 +69,11 @@ public class Item_detail extends AppCompatActivity {
     private static final int CAMERA_REQUEST_CODE = 1;
     TextView submit_textView,rating_textView;
     TextView selectCategory_textView,uploadId_textView;
+
     DatabaseReference categoryRef,reference;
+
     ImageView id_imageView, categoryIcon_imageView;
+
     EditText itemName_editText,notes_editText,itemId_editText,price_editText,description_editText;
     EditText search_editText;
     RatingBar ratingBar;
@@ -82,8 +85,6 @@ public class Item_detail extends AppCompatActivity {
     StorageReference idStorageReference;
     StorageReference storageReference;
 
-    String key;
-    String key2;
     String searchMe;
     String passbackItemImageUrl;
 
@@ -230,7 +231,6 @@ public class Item_detail extends AppCompatActivity {
             //we are connected to a network
             connected = true;
 
-            key = reference.push().getKey();
             rbsItemDetails.setItemCategory(selectCategory_textView.getText().toString());
             rbsItemDetails.setItemID(itemId_editText.getText().toString());
             rbsItemDetails.setAddedBy(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -242,7 +242,7 @@ public class Item_detail extends AppCompatActivity {
             rbsItemDetails.setNoOfImages(String.valueOf(imageUrlList.size()));
 
             if (getIntent().getStringExtra("ADD_ITEM").equals("TRUE")){
-                rbsItemDetails.setCheck("Buy new item");
+                rbsItemDetails.setCheck("Add new item");
                 rbsItemDetails.setActivity(Item_detail.this);
                 rbsItemDetails.uploadNewItemDetails(Item_detail.this);
 //                rbsItemDetails.clearData();
@@ -271,7 +271,6 @@ public class Item_detail extends AppCompatActivity {
         intent.putExtra("Item_name", itemName_editText.getText().toString());
         intent.putExtra("Item_id", itemId_editText.getText().toString());
         intent.putExtra("Item_category", selectCategory_textView.getText().toString());
-        intent.putExtra("Item_keyid", key);
         intent.putExtra("Item_price", price_editText.getText().toString());
         intent.putExtra("Last_Active", last_active);
         setResult(RESULT_OK, intent);

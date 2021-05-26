@@ -528,6 +528,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Sale.this,Item_detail.class);
+                intent.putExtra("ADD_ITEM","FALSE");
                 startActivityForResult(intent,ITEM_ACTIVITY_REQUEST_CODE);
             }
         });
@@ -854,10 +855,17 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 //            reference.child("Customer_history").child(customerKeyID).child(key).child("Date").setValue(date_textView.getText().toString());
 
             if (rbsItemDetails.getCheck().equals("Sale existing item")){
-                rbsItemDetails.switchStock(customerKeyID,FirebaseAuth.getInstance().getCurrentUser().getUid());
-            }else {
+                if (rbsCustomerDetails.getCheck().equals("New customer")){
+                    rbsCustomerDetails.uploadCustomerDetails(Sale.this);
+                }
+                rbsItemDetails.switchStock(rbsCustomerDetails.getKey(),FirebaseAuth.getInstance().getCurrentUser().getUid());
+            }
+            if (rbsItemDetails.getCheck().equals("Sale new item")){
                 rbsItemDetails.uploadNewItemDetails(Sale.this);
-                rbsCustomerDetails.uploadCustomerDetails(Sale.this);
+                if (rbsCustomerDetails.getCheck().equals("New customer")){
+                    rbsCustomerDetails.uploadCustomerDetails(Sale.this);
+                }
+
             }
 
             pd1.dismissProgressBar(Sale.this);
@@ -943,6 +951,9 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                 itemImage_imageView.setVisibility(View.VISIBLE);
                 itemLastActive_linearLayout.setVisibility(View.VISIBLE);
 
+                // todo
+                rbsItemDetails.setCheck("Sale new item");
+
 
             }
         }
@@ -970,6 +981,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                 customerID_textView.setVisibility(View.VISIBLE);
                 customerID_linearLayout.setVisibility(View.VISIBLE);
 
+                rbsCustomerDetails.setKey(reference.push().getKey());
+                rbsCustomerDetails.setCheck("New customer");
 
             }
         }

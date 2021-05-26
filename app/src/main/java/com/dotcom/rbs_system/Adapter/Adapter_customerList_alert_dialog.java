@@ -15,6 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.Classes.Currency;
+import com.dotcom.rbs_system.Classes.RBSCustomerDetails;
 import com.dotcom.rbs_system.R;
 import com.squareup.picasso.Picasso;
 
@@ -23,6 +24,7 @@ import java.util.List;
 public class Adapter_customerList_alert_dialog extends RecyclerView.Adapter<Adapter_customerList_alert_dialog.ViewHolder> {
 
     Context context;
+    RBSCustomerDetails rbsCustomerDetails = RBSCustomerDetails.getInstance();
 
     List<String> exisitngCustomerList,exisitngCustomerKeyIDList,existingCustomerIDList,existingCustomerPhnoList,existingCustomerEmailList,existingCustomerImageUrlList;
     TextView customerName_textView,customerEmail_textView,customerID_textView,customerPhno_textView;
@@ -86,6 +88,7 @@ public class Adapter_customerList_alert_dialog extends RecyclerView.Adapter<Adap
                 customerID_linearLayout.setVisibility(View.VISIBLE);
 
                 customerKeyID = exisitngCustomerKeyIDList.get(position);
+                rbsCustomerDetails.setCheck("Existing customer");
 
                 customerList_alert_dialog.dismiss();
             }

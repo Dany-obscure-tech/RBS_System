@@ -23,6 +23,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.List;
 
 public class RBSItemDetails {
+    RBSCustomerDetails rbsCustomerDetails = RBSCustomerDetails.getInstance();
     Activity activity;
     String check;
     Context context;
@@ -31,13 +32,13 @@ public class RBSItemDetails {
     Uri firstImageUri;
 
     StorageReference idStorageReference;
-    DatabaseReference reference;
+    DatabaseReference reference,spotLightRef;
 
     Progress_dialoge pd;
 
     private static RBSItemDetails rbsItemDetails = new RBSItemDetails();
 
-    String itemCategory,itemID,addedBy,itemName,itemCondition,personalNotes,itemPrice,itemDescription,key = null,key2,noOfImages;
+    String itemCategory,itemID,addedBy,itemName,itemCondition,personalNotes,itemPrice,itemDescription,key = null,noOfImages;
 
     List<Uri> imageUrlList;
 
@@ -205,7 +206,6 @@ public class RBSItemDetails {
 
         for (i = 0; i<imageUrlList.size();i++) {
 
-            key2 = reference.push().getKey();
             idStorageReference.child(key).child("image_"+String.valueOf(i+1)).putFile(imageUrlList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -215,16 +215,32 @@ public class RBSItemDetails {
                             if(k==0){
                                 firstImageUri = uri;
                                 Toast.makeText(context, String.valueOf(uri), Toast.LENGTH_SHORT).show();
+
+                                if (check=="Add new item"){
+                                    spotLightRef = FirebaseDatabase.getInstance().getReference("Spotlight");
+
+                                    spotLightRef.child(key).child("key_id").setValue(key);
+                                    spotLightRef.child(key).child("Category").setValue(itemCategory);
+                                    spotLightRef.child(key).child("Item_name").setValue(itemName);
+                                    spotLightRef.child(key).child("Price").setValue(itemPrice);
+                                    spotLightRef.child(key).child("id_image_url").setValue(uri.toString());
+                                    spotLightRef.child(key).child("shopkeeper").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                }
+
                             }
                             reference.child("Items").child(itemCategory).child(key).child("Image_urls").child("image_"+(k+1)).setValue(String.valueOf(uri.toString()));
                             k++;
                             if (k==imageUrlList.size()){
                                 if (check=="Buy new item"){
                                     uploadToStock();
-                                    uploadToRbsInvoiceList(addedBy);
+                                    uploadToRbsInvoiceList(rbsCustomerDetails.getKey(),addedBy);
                                     updateStockOwner(addedBy);
                                     finishActivity(activity);
                                 }
+                                if (check=="Add new item"){
+                                    uploadToStock();
+                                }
+
                             }
                         }
                     });
@@ -251,8 +267,8 @@ public class RBSItemDetails {
     }
 
     public void switchStock(String buyer,String seller) {
-
-        reference.child("Stock").child("Shopkeepers").child(buyer).child(itemCategory).child(key).child("Category").setValue(itemCategory);
+        reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("Stock").child("Shopkeepers").child(seller).child(itemCategory).child(key).removeValue();
 
         reference.child("Stock").child("Shopkeepers").child(buyer).child(itemCategory).child(key).child("Category").setValue(itemCategory);
         reference.child("Stock").child("Shopkeepers").child(buyer).child(itemCategory).child(key).child("Image").setValue(firstImageUri.toString());
@@ -261,12 +277,14 @@ public class RBSItemDetails {
         reference.child("Stock").child("Shopkeepers").child(buyer).child(itemCategory).child(key).child("Price").setValue(itemPrice);
     }
 
-    private void uploadToRbsInvoiceList(String ownerID){
-        reference.child("Stock").child("RbsInvoiceList").child(ownerID).child(key).child("Item_id").setValue(key);
-        reference.child("Stock").child("RbsInvoiceList").child(ownerID).child(key).child("Item_name").setValue(itemName);
-        reference.child("Stock").child("RbsInvoiceList").child(ownerID).child(key).child("Price").setValue(itemPrice);
-        reference.child("Stock").child("RbsInvoiceList").child(ownerID).child(key).child("Serial_no").setValue(itemID);
-        reference.child("Stock").child("RbsInvoiceList").child(ownerID).child(key).child("Image").setValue(firstImageUri.toString());
+    private void uploadToRbsInvoiceList(String previousOwnerID,String newOwnerID){
+        reference.child("Stock").child("RbsInvoiceList").child(previousOwnerID).child(key).removeValue();
+
+        reference.child("Stock").child("RbsInvoiceList").child(newOwnerID).child(key).child("Item_id").setValue(key);
+        reference.child("Stock").child("RbsInvoiceList").child(newOwnerID).child(key).child("Item_name").setValue(itemName);
+        reference.child("Stock").child("RbsInvoiceList").child(newOwnerID).child(key).child("Price").setValue(itemPrice);
+        reference.child("Stock").child("RbsInvoiceList").child(newOwnerID).child(key).child("Serial_no").setValue(itemID);
+        reference.child("Stock").child("RbsInvoiceList").child(newOwnerID).child(key).child("Image").setValue(firstImageUri.toString());
     }
 
     private void updateStockOwner(String ownerID){
@@ -276,7 +294,6 @@ public class RBSItemDetails {
     public void uploadExistingItemDetails(){
 
     }
-
 
     public void clearData(){
         activity = null;
@@ -291,7 +308,6 @@ public class RBSItemDetails {
         itemPrice = null;
         itemDescription = null;
         key = null;
-        key2 = null;
         noOfImages = null;
         imageUrlList = null;
     }
