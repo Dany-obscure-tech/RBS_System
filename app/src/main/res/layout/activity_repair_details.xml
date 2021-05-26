@@ -63,7 +63,7 @@
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/segoe_ui_bold"
                 android:text="------"
-                android:textColor="@color/colorPrimaryDark" />
+                android:textColor="@color/gradientDarkBlue" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/item_cardView"
@@ -188,6 +188,60 @@
 
                             <TextView
                                 android:id="@+id/category_textView"
+                                style="@style/SubTitles_item_values"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="2dp"
+                                android:text="Asus Rog Strix"
+                                android:visibility="visible" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/condition_area"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/category_area"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/RBSInvoice_TextViews_small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Condition:"
+                                android:textColor="@color/gradientDarkBlue" />
+
+                            <TextView
+                                android:id="@+id/condition_textView"
+                                style="@style/SubTitles_item_values"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="2dp"
+                                android:text="Asus Rog Strix"
+                                android:visibility="visible" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/notes_area"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/condition_area"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/RBSInvoice_TextViews_small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Notes:"
+                                android:textColor="@color/gradientDarkBlue" />
+
+                            <TextView
+                                android:id="@+id/notes_textView"
                                 style="@style/SubTitles_item_values"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -368,28 +422,24 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginBottom="20dp"
+                    android:layout_gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        style="@style/RBSInvoice_TextViews"
                         android:layout_marginRight="20dp"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:inputType="number"
-                        android:text="Agreed Price"
-                        android:textSize="16sp" />
+                        android:text="Agreed Price"/>
 
                     <TextView
                         android:id="@+id/agreedPrice_TextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="20sp" />
+                        style="@style/RBSInvoice_TextViews"
+                        android:textColor="@color/gradientDarkBlue"/>
 
                 </LinearLayout>
 
@@ -415,7 +465,7 @@
                     android:id="@+id/pendingAgreedPrice_linearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginBottom="20dp"
                     android:orientation="horizontal"
                     android:visibility="gone">
@@ -423,12 +473,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        style="@style/RBSInvoice_TextViews"
                         android:layout_marginRight="20dp"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Pending Agreed Price"
-                        android:textColor="@color/textBlue"
-                        android:textSize="16sp" />
+                        android:text="Pending Agreed Price" />
 
                     <TextView
                         android:id="@+id/pendingAgreedPrice_TextView"
