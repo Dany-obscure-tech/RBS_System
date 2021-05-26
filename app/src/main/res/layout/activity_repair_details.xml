@@ -41,16 +41,14 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/header"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp">
+        android:layout_below="@+id/header">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="20dp"
             android:orientation="vertical">
 
             <TextView
@@ -406,11 +404,11 @@
                 android:orientation="vertical">
 
                 <TextView
+                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    style="@style/RBSInvoice_TextViews"
-                    android:text="Listed Faults with price"/>
+                    android:text="Listed Faults with price" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/faultList_recyclerView"
@@ -422,24 +420,23 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="20dp"
                     android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
                     android:orientation="horizontal">
 
                     <TextView
+                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/RBSInvoice_TextViews"
                         android:layout_marginRight="20dp"
-                        android:text="Agreed Price"/>
+                        android:text="Agreed Price" />
 
                     <TextView
                         android:id="@+id/agreedPrice_TextView"
+                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/RBSInvoice_TextViews"
-                        android:textColor="@color/gradientDarkBlue"/>
+                        android:textColor="@color/gradientDarkBlue" />
 
                 </LinearLayout>
 
@@ -450,7 +447,7 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/segoe_ui_bold"
                     android:text="Pending Faults with price"
-                    android:textColor="@color/textBlue"
+                    android:textColor="@color/gradientDarkBlue"
                     android:textSize="16sp"
                     android:visibility="gone" />
 
@@ -471,125 +468,110 @@
                     android:visibility="gone">
 
                     <TextView
+                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/RBSInvoice_TextViews"
                         android:layout_marginRight="20dp"
-                        android:text="Pending Agreed Price" />
+                        android:text="Pending Agreed Price"
+                        android:textColor="@color/gradientDarkBlue" />
 
                     <TextView
                         android:id="@+id/pendingAgreedPrice_TextView"
+                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="20sp" />
+                        android:textColor="@color/textGreen" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
                     android:orientation="horizontal">
 
                     <TextView
+                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center"
                         android:layout_marginRight="20dp"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Date"
-                        android:textSize="16sp" />
+                        android:text="Date" />
 
                     <TextView
                         android:id="@+id/date_TextView"
+                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="20sp" />
+                        android:layout_gravity="center"
+                        android:textColor="@color/gradientDarkBlue" />
 
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="30dp"
                     android:orientation="horizontal">
 
                     <TextView
+                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:layout_marginRight="20dp"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Paid Amount"
-                        android:textSize="16sp" />
+                        android:text="Paid Amount" />
 
                     <TextView
                         android:id="@+id/paidAmount_TextView"
+                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="20sp" />
+                        android:textColor="@color/gradientDarkBlue" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="30dp"
                     android:orientation="horizontal">
 
                     <TextView
+                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:layout_marginRight="20dp"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Balance Amount"
-                        android:textSize="16sp" />
+                        android:text="Balance Amount" />
 
                     <TextView
                         android:id="@+id/balanceAmount_TextView"
+                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="20sp" />
+                        android:textColor="@color/gradientDarkBlue" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="30dp"
                     android:orientation="horizontal">
 
                     <TextView
+                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:layout_marginRight="20dp"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Special Condition"
-                        android:textSize="16sp" />
+                        android:text="Special Condition" />
 
                     <TextView
                         android:id="@+id/specialConditions_TextView"
+                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/segoe_ui"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="16sp" />
+                        android:textColor="@color/gradientDarkBlue" />
 
                 </LinearLayout>
 
@@ -597,91 +579,90 @@
 
             <TextView
                 android:id="@+id/edit_textView"
+                style="@style/RBSInvoice_SaveButtonTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/segoe_ui"
-                android:gravity="center"
-                android:padding="13dp"
-                android:text="EDIT TICKET"
-                android:textColor="#0075B5"
-                android:textSize="15sp" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:text="Edit Ticket" />
 
             <LinearLayout
                 android:id="@+id/changesConfirmation_linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
                 android:orientation="horizontal"
                 android:visibility="gone">
 
                 <TextView
                     android:id="@+id/confirmChanges_textView"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/main_button"
-                    android:fontFamily="@font/segoe_ui"
-                    android:gravity="center"
-                    android:padding="13dp"
-                    android:text="CONFIRM CHANGES"
-                    android:textColor="@color/textBlue"
-                    android:textSize="15sp" />
-
+                    android:background="@drawable/profile_screen_header"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="Confirm Changes"
+                    android:textAlignment="center"
+                    android:textColor="#ffff"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/cancleChanges_textView"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/main_button_grey"
-                    android:fontFamily="@font/segoe_ui"
-                    android:gravity="center"
-                    android:padding="13dp"
-                    android:text="CANCLE CHANGES"
-                    android:textColor="@color/textGrey"
-                    android:textSize="15sp" />
+                    android:background="@drawable/profile_screen_header"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="Cancel Changes"
+                    android:textAlignment="center"
+                    android:textColor="#ffff"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
+                android:layout_marginTop="30dp"
                 android:orientation="horizontal"
                 android:visibility="visible">
 
                 <TextView
                     android:id="@+id/confirmTicket_textView"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:layout_weight="1"
-                    android:fontFamily="@font/segoe_ui"
-                    android:gravity="center"
-                    android:padding="13dp"
-                    android:text="CONFIRM TICKET"
-                    android:textColor="@color/textBlue"
-                    android:textSize="15sp" />
-
+                    android:background="@drawable/profile_screen_header"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="Confirm Ticket"
+                    android:textAlignment="center"
+                    android:textColor="#ffff"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/cancleTicket_textView"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/main_button_grey"
-                    android:fontFamily="@font/segoe_ui"
-                    android:gravity="center"
-                    android:padding="13dp"
-                    android:text="CANCLE TICKET"
-                    android:textColor="@color/textGrey"
-                    android:textSize="15sp" />
+                    android:background="@drawable/profile_screen_header"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="Cancel Ticket"
+                    android:textAlignment="center"
+                    android:textColor="#ffff"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
