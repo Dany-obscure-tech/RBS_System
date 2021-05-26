@@ -3,6 +3,7 @@ package com.dotcom.rbs_system;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +17,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,17 +40,37 @@ public class SplashActivity extends AppCompatActivity {
 
         Initialization();
 
-        new Handler().postDelayed(new Runnable() {
+        Dexter.withContext(this)
+                .withPermissions(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.INTERNET,
+                        Manifest.permission.SEND_SMS,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                ).withListener(new MultiplePermissionsListener() {
+            @Override public void onPermissionsChecked(MultiplePermissionsReport report) {
+                new Handler().postDelayed(new Runnable() {
 
-// Using handler with postDelayed called runnable run method
+                    // Using handler with postDelayed called runnable run method
 
-            @Override
+                    @Override
 
-            public void run() {
-                checkExistingUser();
+                    public void run() {
+                        checkExistingUser();
+                        InitialDataFetch();
+                    }
+
+                }, 2*1000);
+
+
             }
 
-        }, 2*1000);
+            @Override public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                token.continuePermissionRequest();
+            }
+        }).check();
 
     }
 
@@ -65,7 +91,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void checkExistingUser() {
         if (FirebaseAuth.getInstance().getCurrentUser() !=null){
-            InitialDataFetch();
+
             userTypeCheck(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
         }else {
             Intent i = new Intent(SplashActivity.this, SignInActivity.class);

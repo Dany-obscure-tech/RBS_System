@@ -99,7 +99,9 @@ public class SignInActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_LONG).show();
-                            userTypeCheck(String.valueOf(mAuth.getCurrentUser().getUid()));
+                            Intent intent = new Intent(SignInActivity.this,SplashActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
                         else {
                             Toast.makeText(getApplicationContext(), "Login failed! Please try again later", Toast.LENGTH_LONG).show();
@@ -114,35 +116,6 @@ public class SignInActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void userTypeCheck(final String uid) {
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(uid).child("type").exists()){
-                    String type = dataSnapshot.child(uid).child("type").getValue().toString();
-                    if (type.equals("customer")){
-                        Intent intent = new Intent(SignInActivity.this,BuyLocal_main.class);
-                        startActivity(intent);
-                        finish();
-                    }if (type.equals("shop keeper")){
-                        Intent intent = new Intent(SignInActivity.this, RBS_mainscreen.class);
-                        startActivity(intent);
-                        finish();
-                    } if (type.equals("vendor")){
-                        Intent intent = new Intent(SignInActivity.this, VendorMainScreen.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
 
 }

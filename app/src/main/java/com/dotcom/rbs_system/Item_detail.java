@@ -251,7 +251,7 @@ public class Item_detail extends AppCompatActivity {
             }
 
             pd.dismissProgressBar(Item_detail.this);
-//            finish();
+            finish();
 
 
 

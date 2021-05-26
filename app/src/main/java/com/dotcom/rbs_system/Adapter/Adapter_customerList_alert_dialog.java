@@ -89,6 +89,7 @@ public class Adapter_customerList_alert_dialog extends RecyclerView.Adapter<Adap
 
                 customerKeyID = exisitngCustomerKeyIDList.get(position);
                 rbsCustomerDetails.setCheck("Existing customer");
+                rbsCustomerDetails.setKey(customerKeyID);
 
                 customerList_alert_dialog.dismiss();
             }

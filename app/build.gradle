@@ -71,6 +71,9 @@ dependencies {
     // multi dex
     implementation 'com.android.support:multidex:1.0.3'
 
+    // dexter library
+    implementation 'com.karumi:dexter:6.2.2'
+
 
 
 

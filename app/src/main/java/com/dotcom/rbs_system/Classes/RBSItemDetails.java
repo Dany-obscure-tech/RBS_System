@@ -217,6 +217,7 @@ public class RBSItemDetails {
                                 Toast.makeText(context, String.valueOf(uri), Toast.LENGTH_SHORT).show();
 
                                 if (check=="Add new item"){
+
                                     spotLightRef = FirebaseDatabase.getInstance().getReference("Spotlight");
 
                                     spotLightRef.child(key).child("key_id").setValue(key);
@@ -235,10 +236,11 @@ public class RBSItemDetails {
                                     uploadToStock();
                                     uploadToRbsInvoiceList(rbsCustomerDetails.getKey(),addedBy);
                                     updateStockOwner(addedBy);
-                                    finishActivity(activity);
+
                                 }
                                 if (check=="Add new item"){
                                     uploadToStock();
+                                    finishActivity(activity);
                                 }
 
                             }
@@ -268,6 +270,10 @@ public class RBSItemDetails {
 
     public void switchStock(String buyer,String seller) {
         reference = FirebaseDatabase.getInstance().getReference();
+        System.out.println(""+seller);
+        System.out.println(""+buyer);
+        System.out.println(""+itemCategory);
+        System.out.println(""+key);
         reference.child("Stock").child("Shopkeepers").child(seller).child(itemCategory).child(key).removeValue();
 
         reference.child("Stock").child("Shopkeepers").child(buyer).child(itemCategory).child(key).child("Category").setValue(itemCategory);

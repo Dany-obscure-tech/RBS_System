@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dotcom.rbs_system.Buy;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Classes.RBSItemDetails;
 import com.dotcom.rbs_system.R;
@@ -99,6 +100,10 @@ public class Adapter_itemList_alert_dialog extends RecyclerView.Adapter<Adapter_
 
                 if (context instanceof Sale){
                     rbsItemDetails.setCheck("Sale existing item");
+                }
+
+                if (context instanceof Buy){
+                    rbsItemDetails.setCheck("Buy existing item");
                 }
 
                 rbsItemDetails.setItemCategory(existingItemsCategoryList.get(position));

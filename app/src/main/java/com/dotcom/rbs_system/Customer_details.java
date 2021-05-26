@@ -60,7 +60,7 @@ public class Customer_details extends AppCompatActivity {
     Uri fileUri;
 
     String currentDateString;
-    String key;
+    String key,key2;
 
     StorageReference storageReference;
     Progress_dialoge pd;
