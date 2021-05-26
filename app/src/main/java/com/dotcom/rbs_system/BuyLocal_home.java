@@ -55,7 +55,7 @@ public class BuyLocal_home extends Fragment {
 
     SliderView sliderView;
 
-    DatabaseReference itemsRef;
+    DatabaseReference spotlightItemsRef;
 
     MaterialSearchView materialSearchView;
 
@@ -101,7 +101,7 @@ public class BuyLocal_home extends Fragment {
 
         buylocalSliderlistObj = BuylocalSlider.getInstance();
 
-        itemsRef = FirebaseDatabase.getInstance().getReference("Spotlight");
+        spotlightItemsRef = FirebaseDatabase.getInstance().getReference("Spotlight");
         imageUrl = new ArrayList<>();
         key_idList = new ArrayList<>();
         categoryList = new ArrayList<>();
@@ -280,7 +280,7 @@ public class BuyLocal_home extends Fragment {
     }
 
     private void datafetch() {
-        itemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        spotlightItemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
@@ -288,7 +288,8 @@ public class BuyLocal_home extends Fragment {
                         itemname.add(String.valueOf(dataSnapshot1.child("Item_name").getValue()));
                         price.add(String.valueOf(dataSnapshot1.child("Price").getValue()));
                         itemImage.add(String.valueOf(dataSnapshot1.child("id_image_url").getValue()));
-                        key_idList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
+                        key_idList.add(dataSnapshot1.getKey());
+                        System.out.println(": "+dataSnapshot1.getKey());
                         categoryList.add(String.valueOf(dataSnapshot1.child("Category").getValue()));
                         shopkeeperList.add(String.valueOf(dataSnapshot1.child("shopkeeper").getValue()));
                     }
