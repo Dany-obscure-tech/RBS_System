@@ -43,7 +43,7 @@ public class Vendor_detail extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference();
 
         Back_btn = (ImageButton) findViewById(R.id.Back_btn);
-        submit_btn = (Button) findViewById(R.id.submit_btn);
+        submit_btn = (Button) findViewById(R.id.submit_textview);
 
         ac_title = (EditText) findViewById(R.id.ac_title);
         ac_phoneno = (EditText) findViewById(R.id.ac_phoneno);

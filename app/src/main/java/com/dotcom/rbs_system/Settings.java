@@ -113,7 +113,7 @@ public class Settings extends AppCompatActivity {
         banner_imageView = (ImageView)findViewById(R.id.banner_imageView);
 
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
-        addFaults_btn = (Button)findViewById(R.id.addFaults_btn);
+        addFaults_btn = (Button)findViewById(R.id.addFaults_textview);
         addLogo_button = (Button)findViewById(R.id.addLogo_button);
         addBanner_button = (Button)findViewById(R.id.addBanner_button);
         logoSave_button = (Button)findViewById(R.id.logoSave_button);

@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -98,7 +97,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         uploadId_id_image = (Button) findViewById(R.id.uploadId_id_image);
         button_google = (Button) findViewById(R.id.button_google);
         button_facebook = (Button) findViewById(R.id.button_facebook);
-        date_btn = (Button) findViewById(R.id.date_btn);
+        date_btn = (Button) findViewById(R.id.date_textview);
         button_register = (Button) findViewById(R.id.button_register);
 
         editText_fullName = (EditText)findViewById(R.id.editText_fullName);

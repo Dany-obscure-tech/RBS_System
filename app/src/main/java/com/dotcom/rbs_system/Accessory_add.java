@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,7 +31,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -122,11 +120,11 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         alertCategoryAdd_btn = (Button)findViewById(R.id.alertCategoryAdd_btn);
         alertAddCategoryEnter_btn  = (Button) categoryAddAlert.findViewById(R.id.alertAddCategoryEnter_btn);
         alertAddCategoryCancel_btn = (Button) categoryAddAlert.findViewById(R.id.alertAddCategoryCancel_btn);
-        date_btn = (Button) findViewById(R.id.date_btn);
+        date_btn = (Button) findViewById(R.id.date_textview);
         alertAddAccessoryEnter_btn = (Button) accessoryAddAlet.findViewById(R.id.alertAddAccessoryEnter_btn);
         alertAddAccessoryCancel_btn = (Button) accessoryAddAlet.findViewById(R.id.alertAddAccessoryCancel_btn);
         addAccessory_btn = (Button)findViewById(R.id.addAccessory_btn);
-        submit_btn = (Button)findViewById(R.id.submit_btn);
+        submit_btn = (Button)findViewById(R.id.submit_textview);
         Back_btn = (ImageButton)findViewById(R.id.Back_btn);
 
         alertAddCategoryName_editText = (EditText) categoryAddAlert.findViewById(R.id.alertAddCategoryName_editText);

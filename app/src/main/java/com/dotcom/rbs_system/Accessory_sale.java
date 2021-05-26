@@ -130,8 +130,8 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
         Back_btn = (ImageButton) findViewById(R.id.Back_btn);
         customer_name_editText = (EditText) findViewById(R.id.customer_name_editText);
         customer_phone_no_editText = (EditText) findViewById(R.id.customer_phone_no_editText);
-        date_btn = (Button) findViewById(R.id.date_btn);
-        submit_btn = (Button) findViewById(R.id.submit_btn);
+        date_btn = (Button) findViewById(R.id.date_textview);
+        submit_btn = (Button) findViewById(R.id.submit_textview);
         alertAccessoryQuantity_editText=(EditText)accessorySaleAlert.findViewById(R.id.alertAccessoryQuantity_editText);
         alertAccessoryUnitPrice_editText=(EditText)accessorySaleAlert.findViewById(R.id.alertAccessoryUnitPrice_editText);
         paid_editText=(EditText)findViewById(R.id.paid_editText);

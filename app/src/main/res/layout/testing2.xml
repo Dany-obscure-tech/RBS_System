@@ -399,7 +399,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/addFaults_btn"
+                        android:id="@+id/addFaults_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -490,7 +490,7 @@
                         android:textSize="16sp" />
 
                     <Button
-                        android:id="@+id/date_btn"
+                        android:id="@+id/date_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.1"
@@ -561,7 +561,7 @@
                     android:textSize="16sp" />
 
                 <Button
-                    android:id="@+id/submit_btn"
+                    android:id="@+id/submit_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

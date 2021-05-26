@@ -402,7 +402,7 @@
                 android:layout_height="wrap_content">
 
                 <Button
-                    android:id="@+id/addFaults_btn"
+                    android:id="@+id/addFaults_textview"
                     android:layout_weight="1"
                     android:background="@drawable/main_button"
                     android:textColor="#0075B5"

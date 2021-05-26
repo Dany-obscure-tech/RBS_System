@@ -135,7 +135,7 @@
                 <Button
                     android:background="@drawable/main_button"
                     android:textColor="#0075B5"
-                    android:id="@+id/date_btn"
+                    android:id="@+id/date_textview"
                     android:fontFamily="@font/segoe_ui"
                     android:textSize="15sp"
                     android:text="Date"
@@ -241,7 +241,7 @@
 
 
             <Button
-                android:id="@+id/submit_btn"
+                android:id="@+id/submit_textview"
                 android:elevation="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_gravity="center_horizontal"

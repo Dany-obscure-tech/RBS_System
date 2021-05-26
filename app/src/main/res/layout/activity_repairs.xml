@@ -365,51 +365,53 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Ticket Number"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/ticketNo_TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="NA"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Listed Faults with price"
-                    android:textSize="16sp" />
-
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        style="@style/RBSInvoice_TextViews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ticket Number" />
+
+                    <TextView
+                        android:id="@+id/ticketNo_TextView"
+                        style="@style/RBSInvoice_TextViews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="NA"
+                        android:textColor="@color/gradientDarkBlue"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/RBSInvoice_TextViews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="Listed Faults with price" />
+
+                <TextView
+                    android:id="@+id/addFaults_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/addFaults_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:elevation="5dp"
-                        android:fontFamily="@font/segoe_ui"
-                        android:text="Add"
-                        android:textColor="#0075B5"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
+                    android:background="@drawable/profile_screen_header"
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="Add"
+                    android:textAlignment="center"
+                    android:textColor="#ffff"
+                    android:textSize="15sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/faultList_recyclerView"
@@ -417,60 +419,51 @@
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false" />
 
-
                 <TextView
+                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Agreed Price"
-                    android:textSize="16sp" />
+                    android:layout_marginTop="30dp"
+                    android:text="Agreed Price" />
 
                 <EditText
                     android:id="@+id/agreed_price_editText"
+                    style="@style/RBSInvoice_EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#6E76E3"
-                    android:fontFamily="@font/segoe_ui"
+                    android:backgroundTint="@color/colorPrimary"
                     android:hint="Enter agreed price"
                     android:inputType="numberDecimal"
-                    android:maxLength="32"
-                    android:textColor="#9F9F9F"
-                    android:textColorHint="#9F9F9F"
-                    android:textSize="16sp" />
+                    android:maxLength="32" />
 
                 <TextView
                     android:id="@+id/pendingAgreed_price_textView"
+                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
+                    android:layout_marginTop="30dp"
                     android:text="Pending Agreed Price"
-                    android:textColor="@color/textBlue"
-                    android:textSize="16sp"
+                    android:textColor="@color/gradientDarkBlue"
                     android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/pendingAgreed_price_editText"
+                    style="@style/RBSInvoice_EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#6E76E3"
-                    android:fontFamily="@font/segoe_ui"
+                    android:backgroundTint="@color/colorPrimary"
                     android:hint="Enter pending agreed price"
                     android:inputType="numberDecimal"
                     android:maxLength="32"
-                    android:textColor="#9F9F9F"
-                    android:textColorHint="#9F9F9F"
-                    android:textSize="16sp"
                     android:visibility="gone" />
 
                 <TextView
+                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Date"
-                    android:textSize="16sp" />
+                    android:layout_marginTop="30dp"
+                    android:text="Date" />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -485,73 +478,84 @@
                         android:layout_weight="1.9"
                         android:backgroundTint="#6E76E3"
                         android:fontFamily="@font/segoe_ui"
-                        android:text="Select date"
+                        android:text="-- -- --"
                         android:textColor="#9F9F9F"
                         android:textSize="16sp" />
 
-                    <Button
-                        android:id="@+id/date_btn"
+                    <TextView
+                        android:id="@+id/date_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.1"
+                        android:background="@drawable/profile_screen_header"
                         android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Date"
-                        android:textColor="@color/textBlue"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="Select date"
+                        android:textAlignment="center"
+                        android:textColor="#ffff"
                         android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/RBSInvoice_TextViews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="Paid Amount" />
+
+                <EditText
+                    android:id="@+id/paidAmount_editText"
+                    style="@style/RBSInvoice_EditTexts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:hint="Enter paid amount"
+                    android:inputType="numberDecimal"
+                    android:maxLength="32" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        style="@style/RBSInvoice_TextViews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Balance Amount" />
+
+                    <TextView
+                        android:id="@+id/balanceAmount_TextView"
+                        style="@style/RBSInvoice_TextViews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="NA"
+                        android:textColor="@color/gradientDarkBlue"
+                        android:textSize="18sp" />
+
 
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Paid Amount"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/paidAmount_editText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#6E76E3"
-                    android:fontFamily="@font/segoe_ui"
-                    android:hint="Enter paid amount"
-                    android:inputType="numberDecimal"
-                    android:maxLength="32"
-                    android:textColor="#9F9F9F"
-                    android:textColorHint="#9F9F9F"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Balance Amount"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/balanceAmount_TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="NA"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Special Condition"
-                    android:textSize="16sp" />
+                    android:layout_marginTop="30dp"
+                    style="@style/RBSInvoice_TextViews"
+                    android:text="Special Condition" />
 
                 <EditText
                     android:id="@+id/special_condition_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/RBSInvoice_EditTexts"
                     android:backgroundTint="#6E76E3"
                     android:fontFamily="@font/segoe_ui"
                     android:hint="Enter special conditions"
@@ -560,20 +564,15 @@
                     android:textColorHint="#9F9F9F"
                     android:textSize="16sp" />
 
-                <Button
-                    android:id="@+id/submit_btn"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/submit_textview"
+                    style="@style/RBSInvoice_SaveButtonTextView"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="15dp"
-                    android:elevation="10dp"
-                    android:fontFamily="@font/segoe_ui"
-                    android:text="Save"
-                    android:textColor="#0075B5"
-                    android:textSize="15sp"
-
-                    />
+                    android:layout_marginBottom="20dp"
+                    android:text="Save" />
             </LinearLayout>
 
             <LinearLayout

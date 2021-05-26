@@ -163,7 +163,6 @@
 
         <Button
             android:textSize="15sp"
-            android:background="@drawable/main_button"
             android:textColor="#0075B5"
             android:id="@+id/edit_btn"
             android:layout_marginTop="10dp"
@@ -183,7 +182,6 @@
         android:layout_alignParentRight="true"
         android:text="Hide details"
         android:textColor="@color/textGrey"
-        android:background="@drawable/main_button_grey"
         android:layout_gravity="right"
         android:paddingTop="2dp"
         android:paddingBottom="2dp"

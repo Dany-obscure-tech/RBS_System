@@ -2,6 +2,7 @@ package com.dotcom.rbs_system;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,13 +35,14 @@ import java.util.List;
 
 public class Repair_details extends AppCompatActivity {
     String currency = Currency.getInstance().getCurrency();
-    LinearLayout itemDetails,customerDetails,pendingAgreedPrice_linearLayout,changesConfirmation_linearLayout;
+    CardView item_cardView,customer_cardView;
+    LinearLayout pendingAgreedPrice_linearLayout,changesConfirmation_linearLayout;
 
     Repair_details_edit repair_details_edit_obj;
 
     TextView ticketNo_textView,agreedPrice_TextView,date_TextView,paidAmount_TextView,balanceAmount_TextView,specialConditions_TextView;
     TextView itemName_textView,serialNo_textView,category_textView,condition_textView,notes_textView;
-    TextView customerName_textView,id_textView,phno_textView,dob_textView,address_textView,email_textView;
+    TextView customerName_textView,id_textView,phno_textView,email_textView;
     TextView pendingFaults_textView,pendingAgreedPrice_TextView;
     TextView edit_textView;
     TextView confirmChanges_textView,cancleChanges_textView;
@@ -89,8 +91,8 @@ public class Repair_details extends AppCompatActivity {
 
     private void Initialization() {
 
-        itemDetails = (LinearLayout) findViewById(R.id.itemDetails);
-        customerDetails = (LinearLayout) findViewById(R.id.customerDetails);
+        item_cardView = (CardView) findViewById(R.id.item_cardView);
+        customer_cardView = (CardView) findViewById(R.id.customer_cardView);
         pendingAgreedPrice_linearLayout = (LinearLayout) findViewById(R.id.pendingAgreedPrice_linearLayout);
         changesConfirmation_linearLayout = (LinearLayout) findViewById(R.id.changesConfirmation_linearLayout);
 
@@ -112,8 +114,6 @@ public class Repair_details extends AppCompatActivity {
         customerName_textView = (TextView)findViewById(R.id.customerName_textView);
         id_textView = (TextView)findViewById(R.id.id_textView);
         phno_textView = (TextView)findViewById(R.id.phno_textView);
-        dob_textView = (TextView)findViewById(R.id.dob_textView);
-        address_textView = (TextView)findViewById(R.id.vendor_address_textView);
         email_textView = (TextView)findViewById(R.id.post_code_textView);
         pendingFaults_textView = (TextView)findViewById(R.id.pendingFaults_textView);
         pendingAgreedPrice_TextView = (TextView)findViewById(R.id.pendingAgreedPrice_TextView);
@@ -242,8 +242,6 @@ public class Repair_details extends AppCompatActivity {
                         customerName_textView.setText(dataSnapshot.child("Name").getValue().toString());
                         id_textView.setText(dataSnapshot.child("ID").getValue().toString());
                         phno_textView.setText(dataSnapshot.child("Phone_no").getValue().toString());
-                        dob_textView.setText(dataSnapshot.child("DOB").getValue().toString());
-                        address_textView.setText(dataSnapshot.child("Address").getValue().toString());
                         email_textView.setText(dataSnapshot.child("Email").getValue().toString());
 
                         pd2.dismissProgressBar(Repair_details.this);
@@ -386,8 +384,7 @@ public class Repair_details extends AppCompatActivity {
                 repair_details_edit_obj.setCustomerName_textView(customerName_textView.getText().toString());
                 repair_details_edit_obj.setId_textView(id_textView.getText().toString());
                 repair_details_edit_obj.setPhno_textView(phno_textView.getText().toString());
-                repair_details_edit_obj.setDob_textView(dob_textView.getText().toString());
-                repair_details_edit_obj.setAddress_textView(address_textView.getText().toString());
+
                 repair_details_edit_obj.setEmail_textView(email_textView.getText().toString());
 
                 repair_details_edit_obj.setTicketNo_TextView(ticketNo_textView.getText().toString());
@@ -501,7 +498,7 @@ public class Repair_details extends AppCompatActivity {
     }
 
     private void historyActivity() {
-        itemDetails.setOnClickListener(new View.OnClickListener() {
+        item_cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Repair_details.this,Item_history.class);
@@ -511,7 +508,7 @@ public class Repair_details extends AppCompatActivity {
             }
         });
 
-        customerDetails.setOnClickListener(new View.OnClickListener() {
+        customer_cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Repair_details.this,Customer_history.class);

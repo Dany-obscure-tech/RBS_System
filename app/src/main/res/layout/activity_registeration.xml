@@ -71,7 +71,7 @@
                 android:textSize="15sp"
                 android:background="@drawable/main_button"
                 android:textColor="#0075B5"
-                android:id="@+id/date_btn"
+                android:id="@+id/date_textview"
                 android:fontFamily="@font/segoe_ui_bold"
                 android:text="Date"
                 android:layout_weight="0.1"

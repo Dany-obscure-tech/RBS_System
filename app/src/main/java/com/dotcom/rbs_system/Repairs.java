@@ -60,7 +60,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     double incremantalAmount;
     double incremantalPendingAmount;
 
-    TextView customer_textView, itemName_textView,customer_add_textview;
+    TextView customer_textView, itemName_textView,customer_add_textview,item_add_textView;
 
     Repair_details_edit repair_details_edit_obj;
 
@@ -80,9 +80,8 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
 
     ImageButton gmail_btn, sms_btn, print_btn;
     ImageButton Back_btn;
-    Button addFaults_btn;
+    TextView addFaults_textview,date_textview,submit_textview;
     Button btn_done;
-    Button date_btn, submit_btn, item_add_btn;
 
     TextView category_textView, condition_textView, notes_textView, phno_textView, dob_textView, address_textView, email_textView;
     TextView date_text, balanceAmount_TextView;
@@ -211,7 +210,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
 
         faultListRef = FirebaseDatabase.getInstance().getReference("Listed_faults");
 
-        addFaults_btn = (Button) findViewById(R.id.addFaults_btn);
+        addFaults_textview = (TextView) findViewById(R.id.addFaults_textview);
 
         adapterRepairsFaultListRecyclerView = new AdapterRepairsFaultListRecyclerView(Repairs.this, tempFaultNameList, tempFaultPriceList, tempFaultKeyIDList, tempFaultRemoveCheckList, pendingFaultNameList, pendingFaultPriceList, pendingFaultKeyIDList, Repairs.this, false);
         faultList_recyclerView = (RecyclerView) findViewById(R.id.faultList_recyclerView);
@@ -248,12 +247,12 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         existingCustomerAddressList = new ArrayList<>();
         existingCustomerEmailList = new ArrayList<>();
 
-        submit_btn = (Button) findViewById(R.id.submit_btn);
-        date_btn = (Button) findViewById(R.id.date_btn);
+        submit_textview = (TextView) findViewById(R.id.submit_textview);
+        date_textview = (TextView) findViewById(R.id.date_textview);
         Back_btn = (ImageButton) findViewById(R.id.Back_btn);
         date_text = (TextView) findViewById(R.id.date_of_birth_text);
         customer_add_textview = (TextView) findViewById(R.id.customer_add_textview);
-        item_add_btn = (Button) findViewById(R.id.item_add_btn);
+        item_add_textView = (TextView) findViewById(R.id.item_add_textView);
 
 
         searchForCustomer_cardview = (CardView) findViewById(R.id.searchForCustomer_cardView);
@@ -271,6 +270,8 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         confirmChanges_textView = (TextView) findViewById(R.id.confirmChanges_textView);
         cancleChanges_textView = (TextView) findViewById(R.id.cancleChanges_textView);
         last_active_textView = (TextView) findViewById(R.id.last_active_textView);
+        customer_textView = (TextView) findViewById(R.id.customer_textView);
+        itemName_textView= (TextView) findViewById(R.id.itemName_textView);
 
         /////Firebase config
         firebaseAuthUID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -425,7 +426,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         cancleChanges();
 
 
-        addFaults_btn.setOnClickListener(new View.OnClickListener() {
+        addFaults_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new SimpleSearchDialogCompat(Repairs.this, "Search...",
@@ -469,8 +470,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                                 address_textView.setText(item.getVal3());
                                 email_textView.setText(item.getVal4());
                                 customerKeyID = item.getVal5();
-                                customer_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-                                customer_textView.setTextColor(getResources().getColor(R.color.textGrey));
+                                customer_textView.setTextColor(getResources().getColor(R.color.gradientDarkBlue));
                                 customerDetails.setVisibility(View.VISIBLE);
                                 customer = true;
                                 if (item_btn == true && customer == true) {
@@ -500,8 +500,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                                 notes_textView.setText(item.getVal3());
                                 last_active_textView.setText(item.getVal4());
                                 itemKeyID = item.getVal5();
-                                itemName_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-                                itemName_textView.setTextColor(getResources().getColor(R.color.textGrey));
+                                itemName_textView.setTextColor(getResources().getColor(R.color.gradientDarkBlue));
                                 itemDetails.setVisibility(View.VISIBLE);
                                 item_btn = true;
                                 if (item_btn == true && customer == true) {
@@ -521,7 +520,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             }
         });
 
-        date_btn.setOnClickListener(new View.OnClickListener() {
+        date_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment datepicker = new DatePickerFragment();
@@ -538,13 +537,13 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             }
         });
 
-//        item_add_btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(Repairs.this, Item_detail.class);
-//                startActivityForResult(intent, ITEM_ACTIVITY_REQUEST_CODE);
-//            }
-//        });
+        item_add_textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Repairs.this, Item_detail.class);
+                startActivityForResult(intent, ITEM_ACTIVITY_REQUEST_CODE);
+            }
+        });
         print_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -581,7 +580,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         });
 
 
-        submit_btn.setOnClickListener(new View.OnClickListener() {
+        submit_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getIntent().getBooleanExtra("EDIT_CHECK", false)) {
@@ -850,8 +849,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             itemCategory = repair_details_edit_obj.getCategory_textView();
 
             itemName_textView.setText(repair_details_edit_obj.getItemName_textView() + "\n(" + repair_details_edit_obj.getSerialNo_textView() + ")");
-            itemName_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-            itemName_textView.setTextColor(getResources().getColor(R.color.textGrey));
+            itemName_textView.setTextColor(getResources().getColor(R.color.gradientDarkBlue));
 
             itemName = repair_details_edit_obj.getItemName_textView();
             itemID = repair_details_edit_obj.getSerialNo_textView();
@@ -865,8 +863,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             customerKeyID = repair_details_edit_obj.getCustomerKeyID();
 
             customer_textView.setText(repair_details_edit_obj.getCustomerName_textView() + "\n(" + repair_details_edit_obj.getId_textView() + ")");
-            customer_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-            customer_textView.setTextColor(getResources().getColor(R.color.textGrey));
+            customer_textView.setTextColor(getResources().getColor(R.color.gradientDarkBlue));
 
             customerName = repair_details_edit_obj.getCustomerName_textView();
             customerID = repair_details_edit_obj.getId_textView();
@@ -890,9 +887,9 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
 
             searchForCustomer_cardview.setOnClickListener(null);
             searchForItem_cardview.setOnClickListener(null);
-            item_add_btn.setVisibility(View.GONE);
+            item_add_textView.setVisibility(View.GONE);
             customer_add_textview.setVisibility(View.GONE);
-            date_btn.setVisibility(View.GONE);
+            date_textview.setVisibility(View.GONE);
 
             tempFaultNameList = repair_details_edit_obj.getFaultNameList();
             tempFaultPriceList = repair_details_edit_obj.getFaultPriceList();
@@ -1037,8 +1034,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                 itemCategory = itemcategory_returnString;
 
                 itemName_textView.setText(itemname_returnString + "\n" + itemid_returnString);
-                itemName_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-                itemName_textView.setTextColor(getResources().getColor(R.color.textGrey));
+                itemName_textView.setTextColor(getResources().getColor(R.color.gradientDarkBlue));
             }
         }
         if (requestCode == CUSTOMER_ACTIVITY_REQUEST_CODE) {
@@ -1057,8 +1053,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                 customerDetails.setVisibility(View.VISIBLE);
 
                 customer_textView.setText(title_returnString + "\n" + id_returnString);
-                customer_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-                customer_textView.setTextColor(getResources().getColor(R.color.textGrey));
+                customer_textView.setTextColor(getResources().getColor(R.color.gradientDarkBlue));
             }
         }
     }

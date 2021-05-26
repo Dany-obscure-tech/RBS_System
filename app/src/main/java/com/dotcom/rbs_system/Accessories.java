@@ -308,7 +308,7 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
 
         ratingBar = (RatingBar)findViewById(R.id.ratingBar);
 
-        submit_btn = (Button)findViewById(R.id.submit_btn);
+        submit_btn = (Button)findViewById(R.id.submit_textview);
         submit_btn2 = (Button)findViewById(R.id.submit_btn2);
         purchaseSubmit_btn = (Button)findViewById(R.id.purchaseSubmit_btn);
 
@@ -328,7 +328,7 @@ Accessories extends AppCompatActivity implements DatePickerDialog.OnDateSetListe
         invoiceNo_editText = (EditText)findViewById(R.id.invoiceNo_editText);
         purchaseDate_textView = (TextView) findViewById(R.id.date_textView);
 
-        date_btn = (Button) findViewById(R.id.date_btn);
+        date_btn = (Button) findViewById(R.id.date_textview);
 
         date=Calendar.getInstance().getTime();
         String currentDateString= DateFormat.getDateInstance(DateFormat.FULL).format(date);
