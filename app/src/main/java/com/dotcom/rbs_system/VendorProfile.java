@@ -102,6 +102,7 @@ public class VendorProfile extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view=inflater.inflate(R.layout.fragment_vendor_profile, container, false);
+        getActivity().setTitle("Vendor Profile");
         initialization();
         onclicklistners();
         datafetch();

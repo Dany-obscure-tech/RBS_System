@@ -72,6 +72,7 @@ public class VendorOrders extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_vendor_orders, container, false);
+        getActivity().setTitle("Vendor Orders");
         initialization();
         onclicklistners();
 

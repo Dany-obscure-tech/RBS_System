@@ -13,6 +13,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -29,6 +30,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 public class VendorMainScreen extends AppCompatActivity {
+
+    private long lastPressedTime;
+
+    private static final int PERIOD = 2000;
 
     private DrawerLayout vendor_drawer_layout;
     private ActionBarDrawerToggle t;
@@ -84,14 +89,6 @@ public class VendorMainScreen extends AppCompatActivity {
                     case R.id.nav_inbox:
 //                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,new VendorProfile()).commit();
                         closeDrawer();
-                        break;
-
-                    case R.id.nav_logout:
-                        FirebaseAuth.getInstance().signOut();
-                        Intent intent1 = new Intent(VendorMainScreen.this,SignInActivity.class);
-                        finish();
-                        startActivity(intent1);
-                        Toast.makeText(VendorMainScreen.this, "Logout", Toast.LENGTH_SHORT).show();
                         break;
 
                     default:
@@ -178,5 +175,23 @@ public class VendorMainScreen extends AppCompatActivity {
         } else if(resultCode == 111){
             recreate();
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            switch (event.getAction()) {
+                case KeyEvent.ACTION_DOWN:
+                    if (event.getDownTime() - lastPressedTime < PERIOD) {
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Press again to exit.",
+                                Toast.LENGTH_SHORT).show();
+                        lastPressedTime = event.getEventTime();
+                    }
+                    return true;
+            }
+        }
+        return false;
     }
 }

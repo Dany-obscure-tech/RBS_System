@@ -67,7 +67,7 @@ public class Rbs_passcode extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_rbs_passcode, container, false);
-
+        getActivity().setTitle("RBS Passcode");
         Initialize();
         OnClicks();
 

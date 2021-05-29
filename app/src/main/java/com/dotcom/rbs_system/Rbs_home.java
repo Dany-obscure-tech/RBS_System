@@ -90,6 +90,7 @@ public class Rbs_home extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_rbs_home, container, false);
+        getActivity().setTitle("RBS Home");
         Initialize(view);
         initialProcess();
         onclicklistners();

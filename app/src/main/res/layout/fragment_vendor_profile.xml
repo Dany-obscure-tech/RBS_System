@@ -16,22 +16,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/profile_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="Profile"
-                android:padding="10dp"
-                android:textColor="@color/textGreen"
-                android:textSize="30sp" />
-
             <ImageView
                 android:id="@+id/store_banner_imageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/profile_title"
                 android:scaleType="fitXY"
                 android:src="@drawable/store_image" />
 

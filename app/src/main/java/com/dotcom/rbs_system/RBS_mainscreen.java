@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -15,6 +16,11 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class RBS_mainscreen extends AppCompatActivity {
+
+    private long lastPressedTime;
+
+    private static final int PERIOD = 2000;
+
     private DrawerLayout vendor_drawer_layout;
     private ActionBarDrawerToggle t;
     private NavigationView nv;
@@ -67,14 +73,6 @@ public class RBS_mainscreen extends AppCompatActivity {
                         closeDrawer();
                         break;
 
-                    case R.id.nav_logout:
-                        FirebaseAuth.getInstance().signOut();
-                        Intent intent1 = new Intent(RBS_mainscreen.this, SignInActivity.class);
-                        finish();
-                        startActivity(intent1);
-                        Toast.makeText(RBS_mainscreen.this, "Logout", Toast.LENGTH_SHORT).show();
-                        break;
-
                     default:
                         return true;
                 }
@@ -98,5 +96,23 @@ public class RBS_mainscreen extends AppCompatActivity {
             return true;
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            switch (event.getAction()) {
+                case KeyEvent.ACTION_DOWN:
+                    if (event.getDownTime() - lastPressedTime < PERIOD) {
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Press again to exit.",
+                                Toast.LENGTH_SHORT).show();
+                        lastPressedTime = event.getEventTime();
+                    }
+                    return true;
+            }
+        }
+        return false;
     }
 }
