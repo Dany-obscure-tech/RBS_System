@@ -35,7 +35,7 @@ public class BuyLocal_conversations extends AppCompatActivity {
 
     RelativeLayout action_bar;
 
-    List<String> itemIdList, convoIdList, user2List;
+    List<String> itemIdList, convoIdList, user2List,user2NameList;
     List<String> imageUrl, nameList, messageList, itemCategory;
 
     @Override
@@ -60,6 +60,7 @@ public class BuyLocal_conversations extends AppCompatActivity {
         itemIdList = new ArrayList<>();
         convoIdList = new ArrayList<>();
         user2List = new ArrayList<>();
+        user2NameList = new ArrayList<>();
 
         back_btn = (ImageButton) findViewById(R.id.back_btn);
 
@@ -82,16 +83,19 @@ public class BuyLocal_conversations extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot snapshot1: snapshot.getChildren()){
+
                     itemIdList.add(snapshot1.child("item_id").getValue().toString());
                     nameList.add(snapshot1.child("item_name").getValue().toString());
                     itemCategory.add(snapshot1.child("item_category").getValue().toString());
                     convoIdList.add(snapshot1.child("conversation_id").getValue().toString());
                     imageUrl.add(snapshot1.child("item_image").getValue().toString());
                     user2List.add(snapshot1.child("user2").getValue().toString());
+                    user2NameList.add(snapshot1.child("user2_name").getValue().toString());
                     messageList.add(snapshot1.child("last_message").getValue().toString());
 
+
                 }
-                adapterConversationListRecyclerView = new AdapterConversationListRecyclerView(BuyLocal_conversations.this,imageUrl,nameList,messageList,itemCategory,itemIdList,convoIdList,user2List);
+                adapterConversationListRecyclerView = new AdapterConversationListRecyclerView(BuyLocal_conversations.this,imageUrl,nameList,messageList,itemCategory,itemIdList,convoIdList,user2List,user2NameList);
                 conversation_list_recyclerView.setAdapter(adapterConversationListRecyclerView);
             }
 

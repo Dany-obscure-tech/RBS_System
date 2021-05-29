@@ -289,7 +289,6 @@ public class BuyLocal_home extends Fragment {
                         price.add(String.valueOf(dataSnapshot1.child("Price").getValue()));
                         itemImage.add(String.valueOf(dataSnapshot1.child("id_image_url").getValue()));
                         key_idList.add(dataSnapshot1.getKey());
-                        System.out.println(": "+dataSnapshot1.getKey());
                         categoryList.add(String.valueOf(dataSnapshot1.child("Category").getValue()));
                         shopkeeperList.add(String.valueOf(dataSnapshot1.child("shopkeeper").getValue()));
                     }

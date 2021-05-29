@@ -60,7 +60,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     SliderView sliderView;
     List<String> imageUrl;
     EditText alertReportDescription_editText,alertMakeOfferAmount_editText,alertMakeOfferMessage_editText;
-    TextView report_textView,distance_textView;
+    TextView report_textView,distance_textView,shopKeeperName_textView;
     TextView product_name_textview, category_textView, item_description_textview, itemPrice_textView, currency_textView;
     TextView offerStatus_textView,offerAmountCurrency_textView,offerAmount_textView,offerMessage_textView;
     TextView make_offer_textView,communicate_textView,share_textview;
@@ -117,6 +117,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         share_textview = (TextView) findViewById(R.id.share_textview);
         report_textView = (TextView) findViewById(R.id.report_textView);
         distance_textView = (TextView) findViewById(R.id.distance_textView);
+        shopKeeperName_textView = (TextView) findViewById(R.id.shopKeeperName_textView);
 
         product_name_textview = (TextView) findViewById(R.id.product_name_textview);
         category_textView = (TextView) findViewById(R.id.category_textView);
@@ -206,6 +207,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(BuyLocal_productdetails.this, BuyLocal_messaging.class);
                 intent.putExtra("ID",shopkeeperID);
+                intent.putExtra("SHOPKEEPER_NAME",shopKeeperName_textView.getText().toString());
                 intent.putExtra("PRODUCT_ID",productID);
                 intent.putExtra("CATEGORY",category);
                 intent.putExtra("CONVERSATION_KEY",conversationKey);

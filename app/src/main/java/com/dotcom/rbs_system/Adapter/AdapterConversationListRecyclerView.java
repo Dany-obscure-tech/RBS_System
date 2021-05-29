@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -24,8 +25,9 @@ public class AdapterConversationListRecyclerView extends RecyclerView.Adapter<Ad
 
     List<String> imageUrl, nameList, messageList,itemCategory;
     List<String> itemIdList, convoIdList, user2List;
+    List<String> user2NameList;
 
-    public AdapterConversationListRecyclerView(Context context,List<String> imageUrl,List<String> nameList,List<String> messageList, List<String> itemCategory, List<String> itemIdList, List<String> convoIdList, List<String> user2List){
+    public AdapterConversationListRecyclerView(Context context, List<String> imageUrl, List<String> nameList, List<String> messageList, List<String> itemCategory, List<String> itemIdList, List<String> convoIdList, List<String> user2List, List<String> user2NameList){
         this.context = context;
         this.nameList = nameList;
         this.imageUrl = imageUrl;
@@ -34,6 +36,7 @@ public class AdapterConversationListRecyclerView extends RecyclerView.Adapter<Ad
         this.messageList = messageList;
         this.convoIdList = convoIdList;
         this.user2List = user2List;
+        this.user2NameList = user2NameList;
     }
 
     @NonNull
@@ -44,7 +47,7 @@ public class AdapterConversationListRecyclerView extends RecyclerView.Adapter<Ad
 
     @Override
     public void onBindViewHolder(@NonNull AdapterConversationListRecyclerView.ViewHolder holder, final int position) {
-        holder.product_name_textview.setText(nameList.get(position));
+        holder.user_name_textview.setText(user2NameList.get(position));
         holder.last_msg_textView.setText(messageList.get(position));
         Picasso.get().load(imageUrl.get(position)).into(holder.product_image);
 
@@ -59,17 +62,17 @@ public class AdapterConversationListRecyclerView extends RecyclerView.Adapter<Ad
 
     @Override
     public int getItemCount() {
-        return nameList.size();
+        return user2List.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         CardView conversationItem_cardView;
-        TextView product_name_textview,last_msg_textView;
+        TextView user_name_textview,last_msg_textView;
         ImageView product_image;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             conversationItem_cardView = (CardView) itemView.findViewById(R.id.conversationItem_cardView);
-            product_name_textview = (TextView) itemView.findViewById(R.id.product_name_textview);
+            user_name_textview = (TextView) itemView.findViewById(R.id.user_name_textview);
             last_msg_textView = (TextView) itemView.findViewById(R.id.last_msg_textView);
             product_image = (ImageView) itemView.findViewById(R.id.product_image);
         }

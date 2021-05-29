@@ -43,7 +43,7 @@ public class BuyLocal_messaging extends AppCompatActivity {
 
     TextView user2Name_textView;
 
-    String itemId, itemCategory, secondUserID, conversationKey = null;
+    String itemId, itemCategory, secondUserID,seconduserName, conversationKey = null;
     String itemName,itemImage;
 
     ArrayList senderList, messagelist;
@@ -77,6 +77,7 @@ public class BuyLocal_messaging extends AppCompatActivity {
         itemImage = getIntent().getStringExtra("PRODUCT_IMAGE");
         itemCategory = getIntent().getStringExtra("CATEGORY");
         secondUserID = getIntent().getStringExtra("ID");
+        seconduserName = getIntent().getStringExtra("SHOPKEEPER_NAME");
         conversationKey = getIntent().getStringExtra("CONVERSATION_KEY");
 
         userConversationRef = FirebaseDatabase.getInstance().getReference("User_conversation");
@@ -117,27 +118,58 @@ public class BuyLocal_messaging extends AppCompatActivity {
         messageSend_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (newConversation){
-                    userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(itemId).child("conversation_id").setValue(conversationKey);
-                    userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(itemId).child("item_id").setValue(itemId);
-                    userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(itemId).child("item_category").setValue(itemCategory);
-                    userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(itemId).child("item_name").setValue(itemName);
-                    userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(itemId).child("item_image").setValue(itemImage);
-                    userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(itemId).child("user2").setValue(secondUserID);
+                if (!message_editText.getText().toString().isEmpty()){
+                    if (newConversation){
 
-                    conversationRef.child(conversationKey).child("user1").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                    conversationRef.child(conversationKey).child("user2").setValue(secondUserID);
-                    conversationRef.child(conversationKey).child("item").setValue(itemId);
-                    conversationRef.child(conversationKey).child("item_category").setValue(itemCategory);
-                    newConversation = false;
+                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(secondUserID).child("conversation_id").setValue(conversationKey);
+                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(secondUserID).child("item_id").setValue(itemId);
+                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(secondUserID).child("item_category").setValue(itemCategory);
+                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(secondUserID).child("item_name").setValue(itemName);
+                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(secondUserID).child("item_image").setValue(itemImage);
+                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(secondUserID).child("user2").setValue(secondUserID);
+                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(secondUserID).child("user2_name").setValue(seconduserName);
+
+                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("conversation_id").setValue(conversationKey);
+                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("item_id").setValue(itemId);
+                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("item_category").setValue(itemCategory);
+                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("item_name").setValue(itemName);
+                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("item_image").setValue(itemImage);
+                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("user2").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("user2_name").setValue("Customer name");
+
+                        //////////////////////////
+
+//                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(itemId).child("conversation_id").setValue(conversationKey);
+//                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(itemId).child("item_id").setValue(itemId);
+//                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(itemId).child("item_category").setValue(itemCategory);
+//                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(itemId).child("item_name").setValue(itemName);
+//                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(itemId).child("item_image").setValue(itemImage);
+//                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(itemId).child("user2").setValue(secondUserID);
+//
+//                        userConversationRef.child(secondUserID).child(itemId).child("conversation_id").setValue(conversationKey);
+//                        userConversationRef.child(secondUserID).child(itemId).child("item_id").setValue(itemId);
+//                        userConversationRef.child(secondUserID).child(itemId).child("item_category").setValue(itemCategory);
+//                        userConversationRef.child(secondUserID).child(itemId).child("item_name").setValue(itemName);
+//                        userConversationRef.child(secondUserID).child(itemId).child("item_image").setValue(itemImage);
+//                        userConversationRef.child(secondUserID).child(itemId).child("user2").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+
+                        conversationRef.child(conversationKey).child("user1").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        conversationRef.child(conversationKey).child("user2").setValue(secondUserID);
+                        conversationRef.child(conversationKey).child("item").setValue(itemId);
+                        conversationRef.child(conversationKey).child("item_category").setValue(itemCategory);
+                        newConversation = false;
+                    }
+
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put("sender",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    hashMap.put("message",message_editText.getText().toString());
+
+                    userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(secondUserID).child("last_message").setValue(message_editText.getText().toString());
+                    userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("last_message").setValue(message_editText.getText().toString());
+                    conversationRef.child(conversationKey).child("messages").push().setValue(hashMap);
+                    message_editText.setText("");
                 }
 
-                HashMap<String, Object> hashMap = new HashMap<>();
-                hashMap.put("sender",FirebaseAuth.getInstance().getCurrentUser().getUid());
-                hashMap.put("message",message_editText.getText().toString());
-
-                userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(itemId).child("last_message").setValue(message_editText.getText().toString());
-                conversationRef.child(conversationKey).child("messages").push().setValue(hashMap);
             }
         });
     }

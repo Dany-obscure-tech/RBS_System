@@ -304,7 +304,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
         firebaseAuthUID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
         existingCustomersRef = FirebaseDatabase.getInstance().getReference("Customer_list");
-        existingItemsRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/"+FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+        existingItemsRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/");
 
         back_btn =(ImageButton)findViewById(R.id.back_btn);
         item_add_textView =(TextView) findViewById(R.id.item_add_textView);
@@ -447,22 +447,28 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 if (dataSnapshot.exists()){
 
                     for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                        for (DataSnapshot dataSnapshot2: dataSnapshot1.getChildren()){
-                            exisitngItemsNamesList.add(String.valueOf(dataSnapshot2.child("Item_name").getValue()));
-                            exisitngItemsSerialNoList.add(String.valueOf(dataSnapshot2.child("Serial_no").getValue()));
-                            if (dataSnapshot2.child("Last_active").exists()){
-                                existingItemsLastActiveList.add(String.valueOf(dataSnapshot2.child("Last_active").getValue()));
-                            }else {
-                                existingItemsLastActiveList.add("NA");
-                            }
-                            existingItemsImageUrlList.add(String.valueOf(dataSnapshot2.child("Image").getValue()));
-                            existingItemsPriceList.add(String.valueOf(dataSnapshot2.child("Price").getValue()));
-                            existingItemsCategoryList.add(String.valueOf(dataSnapshot2.child("Category").getValue()));
-                            exisitngItemsKeyIDList.add(String.valueOf(dataSnapshot2.getKey().toString()));
-                            gettingHistoryList(String.valueOf(dataSnapshot2.getKey().toString()));
+                        if (!dataSnapshot1.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                            for (DataSnapshot dataSnapshot2:dataSnapshot1.getChildren()){
+                            for (DataSnapshot dataSnapshot3: dataSnapshot2.getChildren()){
+                                exisitngItemsNamesList.add(String.valueOf(dataSnapshot3.child("Item_name").getValue()));
+                                exisitngItemsSerialNoList.add(String.valueOf(dataSnapshot3.child("Serial_no").getValue()));
+                                if (dataSnapshot3.child("Last_active").exists()){
+                                    existingItemsLastActiveList.add(String.valueOf(dataSnapshot3.child("Last_active").getValue()));
+                                }else {
+                                    existingItemsLastActiveList.add("NA");
+                                }
+                                existingItemsImageUrlList.add(String.valueOf(dataSnapshot3.child("Image").getValue()));
+                                existingItemsPriceList.add(String.valueOf(dataSnapshot3.child("Price").getValue()));
+                                existingItemsCategoryList.add(String.valueOf(dataSnapshot3.child("Category").getValue()));
+                                exisitngItemsKeyIDList.add(String.valueOf(dataSnapshot3.getKey().toString()));
+                                gettingHistoryList(String.valueOf(dataSnapshot3.getKey().toString()));
 
+                            }
                         }
+                        }
+
                     }
+
                     /////I changed the 3 value to 10 here
                     if (exisitngItemsNamesList.size()>10){
                         for (int i = 0 ; i<10;i++){
