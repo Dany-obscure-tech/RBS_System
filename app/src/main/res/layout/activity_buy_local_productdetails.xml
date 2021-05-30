@@ -48,7 +48,7 @@
                 android:layout_below="@+id/imageSlider"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/offerStatus_textView"

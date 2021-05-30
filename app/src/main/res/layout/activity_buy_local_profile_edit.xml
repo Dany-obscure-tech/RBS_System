@@ -64,10 +64,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/RBSInvoice_TextViews"
                 android:text="Change Name"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:textColor="@color/textBlue"
-                android:textSize="20sp"
                 />
 
             <LinearLayout
@@ -96,19 +94,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        style="@style/RBSInvoice_TextViews"
                         android:text="Shahzaib Mehfooz"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:textColor="@color/textGrey"
-                        android:textSize="20sp"
                         />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        style="@style/RBSInvoice_EditTexts"
                         android:hint="Enter new name.."
-                        android:fontFamily="@font/segoe_ui"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:maxLines="1"
                         android:textColor="@color/textBlue"
-                        android:textSize="18sp"
                         />
                 </LinearLayout>
 
@@ -125,9 +122,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Change Phone no"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:textColor="@color/textBlue"
-                android:textSize="20sp"
+                style="@style/RBSInvoice_TextViews"
                 />
 
             <LinearLayout
@@ -156,19 +151,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="+923238910757"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:textColor="@color/textGrey"
-                        android:textSize="20sp"
+                        style="@style/RBSInvoice_TextViews"
                         />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
+                        android:maxLines="1"
+                        style="@style/RBSInvoice_EditTexts"
                         android:hint="Enter new phone number.."
-                        android:fontFamily="@font/segoe_ui"
-                        android:textColor="@color/textBlue"
-                        android:textSize="18sp"
+                        android:backgroundTint="@color/colorPrimary"
                         />
                 </LinearLayout>
 
@@ -185,9 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Change Email"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:textColor="@color/textBlue"
-                    android:textSize="20sp"
+                    style="@style/RBSInvoice_TextViews"
                     />
 
                 <LinearLayout
@@ -216,19 +207,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Shahzaib.Mehfooz@gmail.com"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:textColor="@color/textGrey"
-                            android:textSize="20sp"
+                            style="@style/RBSInvoice_TextViews"
                             />
 
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Enter new email"
+                            style="@style/RBSInvoice_EditTexts"
+                            android:backgroundTint="@color/colorPrimary"
                             android:inputType="textEmailAddress"
-                            android:fontFamily="@font/segoe_ui"
-                            android:textColor="@color/textBlue"
-                            android:textSize="18sp"
                             />
                     </LinearLayout>
 
@@ -244,9 +232,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Change Address"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:textColor="@color/textBlue"
-                    android:textSize="20sp"
+                    style="@style/RBSInvoice_TextViews"
                     />
 
                 <LinearLayout
@@ -275,18 +261,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Peshawar City"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:textColor="@color/textGrey"
-                            android:textSize="20sp"
+                            style="@style/RBSInvoice_TextViews"
                             />
 
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Enter new address.."
-                            android:fontFamily="@font/segoe_ui"
-                            android:textColor="@color/textBlue"
-                            android:textSize="18sp"
+                            style="@style/RBSInvoice_EditTexts"
+                            android:backgroundTint="@color/colorPrimary"
                             />
                     </LinearLayout>
 
@@ -295,21 +278,17 @@
             </LinearLayout>
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/edit_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_option_area"
-            android:layout_margin="10dp"
-            android:background="@drawable/buylocal_green_button"
-            android:text="SAVE"
-            android:textColor="#ffff"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            android:layout_alignParentEnd="true"
-            android:fontFamily="@font/segoe_ui_bold"
-            />
+            <TextView
+                android:id="@+id/submit_textView"
+                style="@style/RBSInvoice_SaveButtonTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_below="@+id/edit_option_area"
+                android:layout_alignParentEnd="true"
+                android:text="Save" />
         </RelativeLayout>
     </ScrollView>
 

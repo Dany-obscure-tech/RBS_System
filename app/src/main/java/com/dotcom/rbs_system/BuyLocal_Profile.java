@@ -30,11 +30,9 @@ public class BuyLocal_Profile extends Fragment {
 
     DatabaseReference customerdataRef,customer_offerRef;
 
-    TextView name,dob,phno,email,address,creationDate_textView;
+    TextView name,dob,phno,email,address,creationDate_textView,edit_textView;
 
     ImageView profileImage,idImage;
-
-    Button edit_btn;
 
     List<String> price, itemImage;
     List<String> offer_status;
@@ -88,7 +86,7 @@ public class BuyLocal_Profile extends Fragment {
         creationDate_textView=(TextView)view.findViewById(R.id.creationDate_textView);
         dob=(TextView)view.findViewById(R.id.dob);
         email=(TextView)view.findViewById(R.id.email);
-        edit_btn=(Button)view.findViewById(R.id.edit_btn);
+        edit_textView=(TextView) view.findViewById(R.id.edit_textView);
         price = new ArrayList<String>();
         itemImage = new ArrayList<String>();
         offer_status = new ArrayList<String>();
@@ -111,7 +109,7 @@ public class BuyLocal_Profile extends Fragment {
     }
 
     private void edit_btn_listner() {
-        edit_btn.setOnClickListener(new View.OnClickListener() {
+        edit_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),BuyLocal_profile_edit.class);

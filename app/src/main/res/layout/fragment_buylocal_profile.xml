@@ -232,19 +232,22 @@
 
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/edit_btn"
+                    <TextView
+                        android:id="@+id/edit_textView"
+                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/location_area"
                         android:layout_alignParentEnd="true"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/buylocal_green_button"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="EDIT"
+                        android:layout_margin="20dp"
+                        android:background="@drawable/profile_screen_header"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="10dp"
+                        android:text="Edit"
                         android:textAlignment="center"
-                        android:textColor="#ffff"
-                        android:textSize="16sp" />
+                        android:textColor="#ffff" />
 
                 </RelativeLayout>
 
