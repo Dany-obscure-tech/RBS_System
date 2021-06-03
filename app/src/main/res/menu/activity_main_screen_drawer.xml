@@ -12,12 +12,12 @@
         <item
             android:id="@+id/nav_rbs"
             android:icon="@drawable/ic_menu_camera"
-            android:title="RBS" />
+            android:title="RBS Options"/>
 
         <item
             android:id="@+id/nav_rbs_vendor_orders"
             android:icon="@drawable/ic_menu_camera"
-            android:title="RBS Vendor Orders" />
+            android:title="Vendor Orders" />
 
         <item
             android:id="@+id/nav_settings"

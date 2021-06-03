@@ -33,6 +33,7 @@ public class PasscodeActivity extends AppCompatActivity {
                     if (getIntent().getStringExtra("ACTIVITY_CHECK").equals("RBS")){
                         Intent intent = new Intent(PasscodeActivity.this, RBS_mainscreen.class);
                         intent.putExtra("ACTIVITY_CHECK","RBS");
+                        finish();
                         startActivity(intent);
                     }else {
                         Intent intent = new Intent(PasscodeActivity.this, VendorMainScreen.class);

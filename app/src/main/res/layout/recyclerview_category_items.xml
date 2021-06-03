@@ -34,7 +34,7 @@
 
         <TextView
             android:id="@+id/category_Item_Textview"
-            android:textColor="#2EA4CF"
+            style="@style/RBSInvoice_TextViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
