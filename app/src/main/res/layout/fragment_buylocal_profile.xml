@@ -7,6 +7,7 @@
     android:background="#FFFFFF"
     tools:context=".BuyLocal_Profile">
 
+
     <!-- TODO: Update blank fragment layout -->
     <ScrollView
         android:layout_width="match_parent"
@@ -189,7 +190,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/phone_no_area"
-                        android:layout_margin="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="0dp"
                         android:orientation="horizontal">
 
                         <ImageView
@@ -239,14 +242,13 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/location_area"
                         android:layout_alignParentEnd="true"
-                        android:layout_margin="20dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/green_border"
                         android:paddingLeft="20dp"
                         android:paddingTop="10dp"
                         android:paddingRight="20dp"
                         android:paddingBottom="10dp"
                         android:text="Edit"
-                        android:textAlignment="center"
                         android:textColor="@color/textGreen" />
 
                 </RelativeLayout>
@@ -257,6 +259,44 @@
         </RelativeLayout>
 
     </ScrollView>
+
+
+    <RelativeLayout
+        android:id="@+id/alert_background_relativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/transparentGrey">
+
+        <ImageView
+            android:id="@+id/edit_image_image_view"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/edit_image_textView"
+            android:visibility="gone"
+            style="@style/RBSInvoice_TextViews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_image_image_view"
+            android:layout_margin="20dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/green_border"
+            android:backgroundTint="@color/colorWhite"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:text="Edit"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite" />
+
+    </RelativeLayout>
+
+
 
 
 </RelativeLayout>

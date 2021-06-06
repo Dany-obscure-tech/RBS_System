@@ -7,619 +7,124 @@
     android:focusableInTouchMode="true"
     tools:context=".Repairs">
 
-    <RelativeLayout
-        android:id="@+id/header"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/searchForCustomer_cardView"
+        style="@style/CardView_style"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@drawable/profile_screen_header">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/Back_btn"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:text="Add Ticket"
-            android:textColor="#ffffff"
-            android:textSize="22sp" />
-
-        <ImageButton
-            android:id="@+id/Back_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
-            android:adjustViewBounds="true"
-            android:background="#00000000"
-            android:padding="15dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/back_arrow" />
-
-    </RelativeLayout>
-
-    <ScrollView
-        android:id="@+id/scrool"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/header">
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/image"
+                style="@style/Image_views"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/laptop" />
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:layout_margin="5dp"
+                android:layout_toRightOf="@+id/image">
 
                 <TextView
-                    style="@style/RBSInvoice_TextViews"
+                    android:id="@+id/product_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Customer" />
+                    android:fontFamily="@font/segoe_ui_bold"
+                    android:text="Dress Shirts"
+                    android:textColor="@color/gradientDarkBlue"
+                    android:textSize="22sp" />
 
                 <TextView
-                    android:id="@+id/customer_add_textview"
-                    style="@style/RBSInvoice_TextViews"
+                    android:id="@+id/category"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Add Customer +"
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/gradientDarkBlue"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/product_name"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/segoe_ui"
+                    android:text="Category"
+                    android:textAlignment="center"
+                    android:textColor="@color/textGreen"
                     android:textSize="18sp" />
 
-            </LinearLayout>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/searchForCustomer_cardView"
-                style="@style/CardView_style"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/searchForItem_textView"
-                        style="@style/Titles_item"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="Search for customer"
-                        android:textColor="@color/textGrey" />
-
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <LinearLayout
-                android:id="@+id/customerDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="vertical"
-                android:visibility="gone">
 
                 <LinearLayout
+                    android:id="@+id/customerID_linearLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/category"
+                    android:layout_alignParentEnd="true">
+
+                    <TextView
+                        android:id="@+id/currency_textView"
+                        style="@style/RBSInvoice_TextViews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="PKR"
+                        android:textAlignment="center"
+                        android:textColor="@color/textGreen"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:id="@+id/product_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/segoe_ui_bold"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:text="5000"
+                        android:textAlignment="center"
+                        android:textColor="@color/textGreen"
+                        android:textSize="22sp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/quantity_area"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
-                    android:layout_marginBottom="10dp"
+                    android:layout_below="@+id/customerID_linearLayout"
+                    android:gravity="end"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="100dp"
+                        android:id="@+id/product_offer_msg"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Phone no" />
+                        android:text="Offers"
+                        android:textAlignment="center"
+                        android:textColor="@color/textGrey"
+                        android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/phno_textView"
+                        android:id="@+id/product_no_of_offers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Category"
-                        android:textColor="@color/colorPrimaryDark" />
+                        android:paddingLeft="15dp"
+                        android:text="1"
+                        android:layout_marginRight="70dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gradientDarkBlue"
+                        android:textSize="35sp" />
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
+            </RelativeLayout>
 
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="DOB" />
+        </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/dob_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Condition"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Address" />
-
-                    <TextView
-                        android:id="@+id/vendor_address_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="asoidhjas das;djasdd asd;ojkasd a;sdljasd as;sdkjasd  as;djas dpo;oajssdd  asd;pjasd  as;lkdkjjasd ;ojasd"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Email" />
-
-                    <TextView
-                        android:id="@+id/post_code_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="asoidhjas das;djasdd asd;ojkasd a;sdljasd as;sdkjasd  as;djas dpo;oajssdd  asd;pjasd  as;lkdkjjasd ;ojasd"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Item" />
-
-                <TextView
-                    android:id="@+id/item_add_textView"
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Add Item +"
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/gradientDarkBlue"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/searchForItem_cardview"
-                style="@style/CardView_style"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/itemName_textView"
-                        style="@style/Titles_item"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="Search for item ..."
-                        android:textColor="@color/textGrey" />
-
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <LinearLayout
-                android:id="@+id/itemDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Category" />
-
-                    <TextView
-                        android:id="@+id/category_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Category"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Condition" />
-
-                    <TextView
-                        android:id="@+id/condition_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Condition"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Notes" />
-
-                    <TextView
-                        android:id="@+id/notes_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="asoidhjas das;djasdd asd;ojkasd a;sdljasd as;sdkjasd  as;djas dpo;oajssdd  asd;pjasd  as;lkdkjjasd ;ojasd"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    android:visibility="visible">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Last Active" />
-
-                    <TextView
-                        android:id="@+id/last_active_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Last active time"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/toggling_linear"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="visible">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Ticket Number"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/ticketNo_TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="NA"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Listed Faults with price"
-                    android:textSize="16sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/addFaults_textview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:elevation="5dp"
-                        android:fontFamily="@font/segoe_ui"
-                        android:text="Add"
-                        android:textColor="#0075B5"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/faultList_recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Agreed Price"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/agreed_price_editText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#6E76E3"
-                    android:fontFamily="@font/segoe_ui"
-                    android:hint="Enter agreed price"
-                    android:inputType="numberDecimal"
-                    android:maxLength="32"
-                    android:textColor="#9F9F9F"
-                    android:textColorHint="#9F9F9F"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/pendingAgreed_price_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Pending Agreed Price"
-                    android:textColor="@color/textBlue"
-                    android:textSize="16sp"
-                    android:visibility="gone" />
-
-                <EditText
-                    android:id="@+id/pendingAgreed_price_editText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#6E76E3"
-                    android:fontFamily="@font/segoe_ui"
-                    android:hint="Enter pending agreed price"
-                    android:inputType="numberDecimal"
-                    android:maxLength="32"
-                    android:textColor="#9F9F9F"
-                    android:textColorHint="#9F9F9F"
-                    android:textSize="16sp"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Date"
-                    android:textSize="16sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <TextView
-                        android:id="@+id/date_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.9"
-                        android:backgroundTint="#6E76E3"
-                        android:fontFamily="@font/segoe_ui"
-                        android:text="Select date"
-                        android:textColor="#9F9F9F"
-                        android:textSize="16sp" />
-
-                    <Button
-                        android:id="@+id/date_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.1"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Date"
-                        android:textColor="@color/textBlue"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Paid Amount"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/paidAmount_editText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#6E76E3"
-                    android:fontFamily="@font/segoe_ui"
-                    android:hint="Enter paid amount"
-                    android:inputType="numberDecimal"
-                    android:maxLength="32"
-                    android:textColor="#9F9F9F"
-                    android:textColorHint="#9F9F9F"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Balance Amount"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/balanceAmount_TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="NA"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Special Condition"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/special_condition_editText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#6E76E3"
-                    android:fontFamily="@font/segoe_ui"
-                    android:hint="Enter special conditions"
-                    android:paddingBottom="20dp"
-                    android:textColor="#9F9F9F"
-                    android:textColorHint="#9F9F9F"
-                    android:textSize="16sp" />
-
-                <Button
-                    android:id="@+id/submit_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="15dp"
-                    android:elevation="10dp"
-                    android:fontFamily="@font/segoe_ui"
-                    android:text="Save"
-                    android:textColor="#0075B5"
-                    android:textSize="15sp"
-
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/changesConfirmation_linearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/confirmChanges_textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/main_button"
-                    android:fontFamily="@font/segoe_ui"
-                    android:gravity="center"
-                    android:padding="13dp"
-                    android:text="AGREE CHANGES"
-                    android:textColor="@color/textBlue"
-                    android:textSize="15sp" />
-
-
-                <TextView
-                    android:id="@+id/cancleChanges_textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/main_button_grey"
-                    android:fontFamily="@font/segoe_ui"
-                    android:gravity="center"
-                    android:padding="13dp"
-                    android:text="CANCLE CHANGES"
-                    android:textColor="@color/textGrey"
-                    android:textSize="15sp" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-    </ScrollView>
-
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

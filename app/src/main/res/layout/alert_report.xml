@@ -9,12 +9,12 @@
     <TextView
         android:id="@+id/title"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/textBlue"
+        style="@style/RBSInvoice_TextViews"
+        android:textColor="@color/gradientDarkBlue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:fontFamily="@font/segoe_ui_bold"
         android:text="Report Item"
         android:textSize="20sp" />
 
@@ -28,16 +28,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/RBSInvoice_TextViews"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:text="Report description"
-            android:textSize="16sp" />
+            android:text="Report description"/>
 
         <EditText
             android:id="@+id/alertReportDescription_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#6E76E3"
+            android:backgroundTint="@color/colorPrimary"
             android:fontFamily="@font/segoe_ui"
             android:textColor="@color/textGrey"
             android:textColorHint="#9F9F9F"
@@ -53,29 +52,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/alertReportSubmit_btn"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/alertReportSubmit_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
-            android:textColor = "#ffffff"
+            android:layout_weight="1"
             android:background="@drawable/buylocal_main_button"
             android:fontFamily="@font/segoe_ui_bold"
-            android:textSize="15sp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:text="Report"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:textAlignment="center"
+            android:textColor="#ffff"
+            android:textSize="14sp" />
 
-        <Button
-            android:id="@+id/alertReportCancel_btn"
+        <TextView
+            android:id="@+id/alertReportCancel_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:fontFamily="@font/segoe_ui"
-            android:textColor = "@color/textGrey"
-            android:background="@drawable/main_button_grey"
-            android:textSize="15sp"
+            android:background="@drawable/grey_border"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:text="Cancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:textAlignment="center"
+            android:textColor="@color/textGrey"
+            android:textSize="14sp" />
 
     </LinearLayout>
 

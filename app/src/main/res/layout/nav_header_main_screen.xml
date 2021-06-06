@@ -1,43 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@drawable/side_nav_bar"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <LinearLayout
-        android:id="@+id/text"
-        android:layout_marginTop="40dp"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/banner_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/slider"
+            android:scaleType="fitCenter"
+            />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:background="#00000000"
+            android:scaleType="fitXY"
+            android:rotation="180"
+            android:src="@drawable/top_black_rectangle" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImage_imageView"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="20dp"
+            app:civ_border_color="#4A4A4A"
+            app:civ_border_width="7dp"
+            android:src="@drawable/profile_icon"
+            />
 
         <TextView
-            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/kameron_bold"
-            android:text="RBS"
-            android:textColor="#707070"
-            android:textSize="35sp" />
+            android:layout_below="@+id/profileImage_imageView"
+            android:text="shahzaib.mehfooz175@gmail.com"
+            android:layout_alignParentBottom="true"
+            android:gravity="bottom"
+            style="@style/RBSInvoice_TextViews"
+            android:textColor="@color/colorWhite"
+            android:paddingBottom="15dp"
+            android:layout_marginLeft="20dp"
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/kameron_bold"
-            android:text="POS"
-            android:textColor="#2EA4CF"
-            android:textSize="35sp" />
+            />
 
-    </LinearLayout>
+    </RelativeLayout>
 
-</LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:id="@+id/text"-->
+<!--        android:layout_marginTop="40dp"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:fontFamily="@font/kameron_bold"-->
+<!--            android:text="RBS"-->
+<!--            android:textColor="#707070"-->
+<!--            android:textSize="35sp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView2"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:fontFamily="@font/kameron_bold"-->
+<!--            android:text="POS"-->
+<!--            android:textColor="#2EA4CF"-->
+<!--            android:textSize="35sp" />-->
+
+<!--    </LinearLayout>-->
+
+</RelativeLayout>

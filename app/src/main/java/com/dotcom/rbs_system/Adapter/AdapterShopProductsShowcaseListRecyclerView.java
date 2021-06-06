@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.BuyLocal_shopkeeperProductDetails;
@@ -59,7 +60,7 @@ public class AdapterShopProductsShowcaseListRecyclerView extends  RecyclerView.A
         holder.product_no_of_offers.setText(product_no_of_offers.get(position));
         Picasso.get().load(image.get(position)).into(holder.image);
 
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+        holder.shop_items_cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, BuyLocal_shopkeeperProductDetails.class);
@@ -85,7 +86,7 @@ public class AdapterShopProductsShowcaseListRecyclerView extends  RecyclerView.A
         TextView product_no_of_offers;
         TextView currency_textView;
         ImageView image;
-        LinearLayout linearLayout;
+        CardView shop_items_cardView;
 
 
         public MyViewHolder(View itemView) {
@@ -97,7 +98,7 @@ public class AdapterShopProductsShowcaseListRecyclerView extends  RecyclerView.A
             currency_textView = (TextView) itemView.findViewById(R.id.currency_textView);
             product_no_of_offers = (TextView) itemView.findViewById(R.id.product_no_of_offers);
             image = (ImageView) itemView.findViewById(R.id.image);
-            linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
+            shop_items_cardView = (CardView) itemView.findViewById(R.id.shop_items_cardView);
         }
     }
 }

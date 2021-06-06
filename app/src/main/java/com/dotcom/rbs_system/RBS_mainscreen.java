@@ -25,7 +25,7 @@ public class RBS_mainscreen extends AppCompatActivity {
     private ActionBarDrawerToggle t;
     private NavigationView nv;
     final Rbs_home rbs_home = new Rbs_home();
-    final Rbs_passcode rbs_passcode = new Rbs_passcode();
+    final RBS_option rbs_option = new RBS_option();
     final RBS_Vendor_Orders rbs_vendor_orders = new RBS_Vendor_Orders();
 
     @Override
@@ -64,7 +64,7 @@ public class RBS_mainscreen extends AppCompatActivity {
                         break;
 
                     case R.id.nav_rbs:
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, rbs_passcode).commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, rbs_option).commit();
                         closeDrawer();
                         break;
 

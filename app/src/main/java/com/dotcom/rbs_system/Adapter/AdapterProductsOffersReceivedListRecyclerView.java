@@ -70,7 +70,7 @@ public class AdapterProductsOffersReceivedListRecyclerView extends  RecyclerView
 
         Picasso.get().load(profileImage.get(position)).into(holder.profileImage);
 
-        holder.accept_offer_btn.setOnClickListener(new View.OnClickListener() {
+        holder.accept_offer_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 offerlistRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/"+ FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+ category + "/" + item_keyid+"/");
@@ -93,20 +93,23 @@ public class AdapterProductsOffersReceivedListRecyclerView extends  RecyclerView
         TextView currency;
         TextView offered_price;
         TextView product_offer_msg;
-        Button accept_offer_btn;
+        TextView accept_offer_textview;
         TextView date_textView;
         ImageView profileImage;
+        TextView msg_offer_textview;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             customer_name = (TextView) itemView.findViewById(R.id.customer_name);
+            msg_offer_textview = (TextView) itemView.findViewById(R.id.msg_offer_textview);
             currency = (TextView) itemView.findViewById(R.id.currency);
             offered_price = (TextView) itemView.findViewById(R.id.offered_price);
-            accept_offer_btn = (Button) itemView.findViewById(R.id.accept_offer_btn);
+            accept_offer_textview = (TextView) itemView.findViewById(R.id.accept_offer_textview);
             date_textView = (TextView) itemView.findViewById(R.id.date_textView);
             product_offer_msg = (TextView) itemView.findViewById(R.id.product_offer_msg);
+            profileImage = (ImageView) itemView.findViewById(R.id.profileImage_imageView);
             profileImage = (ImageView) itemView.findViewById(R.id.profileImage_imageView);
         }
     }

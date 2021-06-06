@@ -26,7 +26,8 @@
             android:name=".BuyLocal_offers_option"
             android:theme="@style/AppTheme.no"
             android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".PasscodeActivity" />
+        <activity android:name=".PasscodeActivity"
+            android:theme="@style/AppTheme.no"/>
         <activity
             android:name=".Rbs_vendor_specific_order"
             android:theme="@style/AppTheme.no" />
@@ -42,7 +43,8 @@
         <activity
             android:name=".Rbs_options"
             android:theme="@style/AppTheme.no" />
-        <activity android:name=".RBS_mainscreen" />
+        <activity
+            android:name=".RBS_mainscreen" />
         <activity
             android:name=".Vendor_shopkeepers_orders_progress"
             android:theme="@style/AppTheme.no" />

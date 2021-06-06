@@ -17,7 +17,6 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -53,6 +52,7 @@ import java.util.Locale;
 
 public class BuyLocal_productdetails extends AppCompatActivity {
 
+    TextView alertReportSubmit_textview,alertReportCancel_textview,alertMakeOfferSubmit_textview,alertMakeOfferCancel_textview;
     FusedLocationProviderClient fusedLocationProviderClient;
     RelativeLayout offer_relativeLayout;
     String currency,profileImageUrl,customerName;
@@ -66,7 +66,6 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     TextView make_offer_textView,communicate_textView,share_textview;
     Dialog report_alert_dialog;
     Dialog make_offer_alert_dialog;
-    Button alertReportCancel_btn, alertMakeOfferCancel_btn, alertMakeOfferSubmit_btn,alertReportSubmit_btn;
     ImageButton back_btn;
     ImageView profileImage_imageView;
     String productID,productName,category,shopkeeperID,conversationKey=null;
@@ -135,11 +134,11 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         make_offer_alert_dialog = new Dialog(this);
         make_offer_alert_dialog.setContentView(R.layout.alert_make_offer);
 
-        alertReportCancel_btn = report_alert_dialog.findViewById(R.id.alertReportCancel_btn);
+        alertReportCancel_textview=report_alert_dialog.findViewById(R.id.alertReportCancel_textview);
         alertReportDescription_editText = report_alert_dialog.findViewById(R.id.alertReportDescription_editText);
-        alertReportSubmit_btn = report_alert_dialog.findViewById(R.id.alertReportSubmit_btn);
-        alertMakeOfferCancel_btn = make_offer_alert_dialog.findViewById(R.id.alertMakeOfferCancel_btn);
-        alertMakeOfferSubmit_btn = make_offer_alert_dialog.findViewById(R.id.alertMakeOfferSubmit_btn);
+        alertReportSubmit_textview=report_alert_dialog.findViewById(R.id.alertReportSubmit_textview);
+        alertMakeOfferCancel_textview = make_offer_alert_dialog.findViewById(R.id.alertMakeOfferCancel_textview);
+        alertMakeOfferSubmit_textview = make_offer_alert_dialog.findViewById(R.id.alertMakeOfferSubmit_textview);
         alertMakeOfferAmount_editText = make_offer_alert_dialog.findViewById(R.id.alertMakeOfferAmount_editText);
         alertMakeOfferMessage_editText = make_offer_alert_dialog.findViewById(R.id.alertMakeOfferMessage_editText);
         make_offer_textView = (TextView) findViewById(R.id.make_offer_textView);
@@ -168,11 +167,11 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     private void onclicklistners() {
 //        whatsappShareButtonClick();
         report_btn_listner();
-        alertReportSubmit_btn_listner();
-        alertReportCancel_btn_listner();
+        alertReportSubmit_textview_listner();
+        alertReportCancel_textview_listner();
         make_offer_btn_listner();
-        alertMakeOfferCancel_btn_listner();
-        alertMakeOfferSubmit_btn_listner();
+        alertMakeOfferCancel_textview_listner();
+        alertMakeOfferSubmit_textview_listner();
         back_btn_listner();
         whatsapp_icon_listner();
         profileImage_listner();
@@ -218,11 +217,11 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         });
     }
 
-    private void alertReportSubmit_btn_listner() {
-        alertReportSubmit_btn.setOnClickListener(new View.OnClickListener() {
+    private void alertReportSubmit_textview_listner() {
+        alertReportSubmit_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!alertReportDescription_editText.getText().toString().isEmpty()) {
+                if (!alertReportDescription_editText.getText().toString().trim().isEmpty()) {
                     reportRef.child("Customer_reports").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(productID).child("report_description").setValue(alertReportDescription_editText.getText().toString());
                     report_alert_dialog.dismiss();
                 } else {
@@ -266,8 +265,8 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         });
     }
 
-    private void alertMakeOfferCancel_btn_listner() {
-        alertMakeOfferCancel_btn.setOnClickListener(new View.OnClickListener() {
+    private void alertMakeOfferCancel_textview_listner() {
+        alertMakeOfferCancel_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 make_offer_alert_dialog.dismiss();
@@ -276,8 +275,8 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         });
     }
 
-    private void alertMakeOfferSubmit_btn_listner() {
-        alertMakeOfferSubmit_btn.setOnClickListener(new View.OnClickListener() {
+    private void alertMakeOfferSubmit_textview_listner() {
+        alertMakeOfferSubmit_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (offerSubmitValidation()){
@@ -323,8 +322,8 @@ public class BuyLocal_productdetails extends AppCompatActivity {
 
     }
 
-    private void alertReportCancel_btn_listner() {
-        alertReportCancel_btn.setOnClickListener(new View.OnClickListener() {
+    private void alertReportCancel_textview_listner() {
+        alertReportCancel_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 report_alert_dialog.dismiss();
@@ -552,11 +551,11 @@ public class BuyLocal_productdetails extends AppCompatActivity {
 
     private boolean offerSubmitValidation() {
         boolean valid = true;
-        if (alertMakeOfferMessage_editText.getText().toString().isEmpty()){
+        if (alertMakeOfferMessage_editText.getText().toString().trim().isEmpty()){
             alertMakeOfferMessage_editText.setError("Please enter message");
             valid = false;
         }
-        if (alertMakeOfferAmount_editText.getText().toString().isEmpty()){
+        if (alertMakeOfferAmount_editText.getText().toString().trim().isEmpty()){
             alertMakeOfferAmount_editText.setError("Please enter amount");
             valid = false;
         }

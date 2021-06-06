@@ -16,5 +16,6 @@
     <color name="textRed">#DA0000</color>
     <color name="gradientLightBlue">#3CBFEF</color>
     <color name="gradientDarkBlue">#01A0DA</color>
+    <color name="transparentGrey">#BF000000</color>
 
 </resources>

@@ -57,8 +57,8 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
     TextView customer_name,offersTextView;
     TextView currency;
     TextView offered_price;
-    TextView product_offer_msg;
-    Button accept_offer_btn,cancel_offer_btn,sell_offer_btn;
+    TextView product_offer_msg,accept_offer_textview;
+    Button cancel_offer_btn,sell_offer_btn;
     TextView date_textView;
     ImageView profileImage;
     ImageButton back_btn;
@@ -82,7 +82,7 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
         customer_name = (TextView)findViewById(R.id.customer_name);
         currency = (TextView)findViewById(R.id.currency);
         offered_price = (TextView)findViewById(R.id.offered_price);
-        accept_offer_btn = (Button)findViewById(R.id.accept_offer_btn);
+        accept_offer_textview = (TextView)findViewById(R.id.accept_offer_textview);
         cancel_offer_btn = (Button)findViewById(R.id.cancel_offer_btn);
         sell_offer_btn = (Button)findViewById(R.id.sell_offer_btn);
         date_textView = (TextView)findViewById(R.id.date_textView);

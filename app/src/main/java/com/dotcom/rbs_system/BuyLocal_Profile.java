@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -30,9 +32,13 @@ public class BuyLocal_Profile extends Fragment {
 
     DatabaseReference customerdataRef,customer_offerRef;
 
-    TextView name,dob,phno,email,address,creationDate_textView,edit_textView;
+    RelativeLayout alert_background_relativelayout;
 
-    ImageView profileImage,idImage;
+
+
+    TextView name,dob,phno,email,address,creationDate_textView,edit_textView,edit_image_textView;
+
+    ImageView idImage,profileImage_imageView,edit_image_image_view;
 
     List<String> price, itemImage;
     List<String> offer_status;
@@ -78,7 +84,10 @@ public class BuyLocal_Profile extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_buylocal_profile, container, false);
 
-        profileImage=(ImageView)view.findViewById(R.id.profileImage_imageView);
+        profileImage_imageView=(ImageView)view.findViewById(R.id.profileImage_imageView);
+        edit_image_textView=(TextView) view.findViewById(R.id.edit_image_textView);
+        alert_background_relativelayout=(RelativeLayout) view.findViewById(R.id.alert_background_relativelayout);
+        edit_image_image_view=(ImageView)view.findViewById(R.id.edit_image_image_view);
         idImage=(ImageView)view.findViewById(R.id.idImage);
         name=(TextView)view.findViewById(R.id.name);
         phno=(TextView)view.findViewById(R.id.phno);
@@ -93,6 +102,13 @@ public class BuyLocal_Profile extends Fragment {
         offer_product_price = new ArrayList<String>();
         product_offer_msg = new ArrayList<String>();
 
+        edit_image_image_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                
+            }
+        });
+
 
 
 
@@ -106,6 +122,31 @@ public class BuyLocal_Profile extends Fragment {
 
     private void onclicklistners() {
         edit_btn_listner();
+        alert_background_relativelayout_listner();
+        profileImage_imageView_listner();
+    }
+
+    private void alert_background_relativelayout_listner() {
+        alert_background_relativelayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert_background_relativelayout.setVisibility(View.GONE);
+                edit_image_image_view.setVisibility(View.GONE);
+                edit_image_textView.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void profileImage_imageView_listner() {
+        profileImage_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                alert_background_relativelayout.setVisibility(View.VISIBLE);
+                edit_image_image_view.setVisibility(View.VISIBLE);
+                edit_image_textView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void edit_btn_listner() {
@@ -132,7 +173,8 @@ public class BuyLocal_Profile extends Fragment {
                     SimpleDateFormat sfd = new SimpleDateFormat("dd-MMMM-yyyy ");
                     creationDate_textView.setText(String.valueOf(sfd.format(new Date(FirebaseAuth.getInstance().getCurrentUser().getMetadata().getCreationTimestamp()))));
 
-                    Picasso.get().load(String.valueOf(dataSnapshot.child("profile_image_url").getValue().toString())).into(profileImage);
+                    Picasso.get().load(String.valueOf(dataSnapshot.child("profile_image_url").getValue().toString())).into(profileImage_imageView);
+                    Picasso.get().load(String.valueOf(dataSnapshot.child("profile_image_url").getValue().toString())).into(edit_image_image_view);
                     Picasso.get().load(String.valueOf(dataSnapshot.child("id_image_url").getValue().toString())).into(idImage);
 
                 }
