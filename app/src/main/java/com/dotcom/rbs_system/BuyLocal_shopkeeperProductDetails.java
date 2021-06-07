@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -56,9 +55,8 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
 
     TextView customer_name,offersTextView;
     TextView currency;
-    TextView offered_price;
-    TextView product_offer_msg,accept_offer_textview;
-    Button cancel_offer_btn,sell_offer_btn;
+    TextView offered_price,cancel_offer_textview;
+    TextView product_offer_msg,accept_offer_textview,sell_offer_textview;
     TextView date_textView;
     ImageView profileImage;
     ImageButton back_btn;
@@ -83,8 +81,8 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
         currency = (TextView)findViewById(R.id.currency);
         offered_price = (TextView)findViewById(R.id.offered_price);
         accept_offer_textview = (TextView)findViewById(R.id.accept_offer_textview);
-        cancel_offer_btn = (Button)findViewById(R.id.cancel_offer_btn);
-        sell_offer_btn = (Button)findViewById(R.id.sell_offer_btn);
+        cancel_offer_textview = (TextView) findViewById(R.id.cancel_offer_textview);
+        sell_offer_textview = (TextView)findViewById(R.id.sell_offer_textview);
         date_textView = (TextView)findViewById(R.id.date_textView);
         product_offer_msg = (TextView)findViewById(R.id.product_offer_msg);
         profileImage = (ImageView)findViewById(R.id.profileImage_imageView);
@@ -199,8 +197,8 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
                             if (snapshot.exists()){
                                 buy_local.setVisibility(View.VISIBLE);
                                 offersTextView.setText("Sold to");
-                                cancel_offer_btn.setVisibility(View.GONE);
-                                sell_offer_btn.setVisibility(View.GONE);
+                                cancel_offer_textview.setVisibility(View.GONE);
+                                sell_offer_textview.setVisibility(View.GONE);
 
                                 offerlistRef.child(snapshot.getValue().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
@@ -314,8 +312,8 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
     /////////////////////////////////////////////////////////////////////////////////
 
     private void onClickListeners() {
-        cancel_offer_btnOnclick();
-        sell_offer_btnOnclick();
+        cancel_offer_textviewOnclick();
+        sell_offer_textviewOnclick();
         back_btn_listner();
 
     }
@@ -329,8 +327,8 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
         });
     }
 
-    private void cancel_offer_btnOnclick() {
-        cancel_offer_btn.setOnClickListener(new View.OnClickListener() {
+    private void cancel_offer_textviewOnclick() {
+        cancel_offer_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 agreedOfferRef.removeValue();
@@ -340,8 +338,8 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
         });
     }
 
-    private void sell_offer_btnOnclick() {
-        sell_offer_btn.setOnClickListener(new View.OnClickListener() {
+    private void sell_offer_textviewOnclick() {
+        sell_offer_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                agreedOfferRef.removeValue();

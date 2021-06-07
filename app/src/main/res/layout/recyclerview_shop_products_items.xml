@@ -27,14 +27,48 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/image">
 
+                <LinearLayout
+                    android:id="@+id/offers_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:gravity="end"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/product_offer_msg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        style="@style/RBSInvoice_TextViews"
+                        android:text="Offers"
+                        android:textColor="@color/textGrey" />
+
+                    <TextView
+                        android:id="@+id/product_no_of_offers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/RBSInvoice_TextViews"
+                        android:paddingLeft="15dp"
+                        android:text="1"
+                        android:textSize="20sp"
+                        android:textColor="@color/gradientDarkBlue" />
+
+                </LinearLayout>
+
+
                 <TextView
                     android:id="@+id/product_name"
+                    android:layout_below="@+id/offers_area"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/RBSInvoice_TextViews"
                     android:text="Dress Shirts"
                     android:textColor="@color/gradientDarkBlue"
                     android:textSize="22sp" />
+
+
+
 
                 <TextView
                     android:id="@+id/category"
@@ -77,36 +111,6 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/quantity_area"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/customerID_linearLayout"
-                    android:gravity="end"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/product_offer_msg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        style="@style/RBSInvoice_TextViews"
-                        android:text="Offers"
-                        android:textColor="@color/textGrey"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/product_no_of_offers"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/RBSInvoice_TextViews"
-                        android:paddingLeft="15dp"
-                        android:text="1"
-                        android:layout_marginRight="70dp"
-                        android:textColor="@color/gradientDarkBlue"
-                        android:textSize="35sp" />
-
-                </LinearLayout>
 
             </RelativeLayout>
 

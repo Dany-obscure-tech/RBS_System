@@ -16,6 +16,7 @@ public class BuyLocal_main extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     final BuyLocal_home fragment_buyLocalhome = new BuyLocal_home();
     final BuyLocal_Profile fragment_BuyLocal_profile = new BuyLocal_Profile();
+    final BuyLocal_About fragment_BuyLocal_about = new BuyLocal_About();
 
     private long lastPressedTime;
 
@@ -45,6 +46,10 @@ public class BuyLocal_main extends AppCompatActivity {
                     case R.id.profile:
                         // Switch to page two
                         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer, fragment_BuyLocal_profile).commit();
+                        break;
+                    case R.id.about:
+                        // Switch to page two
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer, fragment_BuyLocal_about).commit();
                         break;
                 }
                 return true;

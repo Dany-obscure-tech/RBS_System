@@ -36,9 +36,9 @@ public class BuyLocal_Profile extends Fragment {
 
 
 
-    TextView name,dob,phno,email,address,creationDate_textView,edit_textView,edit_image_textView;
+    TextView name,phno,email,address,creationDate_textView,edit_textView,edit_image_textView;
 
-    ImageView idImage,profileImage_imageView,edit_image_image_view;
+    ImageView profileImage_imageView,edit_image_image_view;
 
     List<String> price, itemImage;
     List<String> offer_status;
@@ -88,12 +88,10 @@ public class BuyLocal_Profile extends Fragment {
         edit_image_textView=(TextView) view.findViewById(R.id.edit_image_textView);
         alert_background_relativelayout=(RelativeLayout) view.findViewById(R.id.alert_background_relativelayout);
         edit_image_image_view=(ImageView)view.findViewById(R.id.edit_image_image_view);
-        idImage=(ImageView)view.findViewById(R.id.idImage);
         name=(TextView)view.findViewById(R.id.name);
         phno=(TextView)view.findViewById(R.id.phno);
         address=(TextView)view.findViewById(R.id.address);
         creationDate_textView=(TextView)view.findViewById(R.id.creationDate_textView);
-        dob=(TextView)view.findViewById(R.id.dob);
         email=(TextView)view.findViewById(R.id.email);
         edit_textView=(TextView) view.findViewById(R.id.edit_textView);
         price = new ArrayList<String>();
@@ -167,7 +165,6 @@ public class BuyLocal_Profile extends Fragment {
                     name.setText(dataSnapshot.child("fullname").getValue().toString());
                     address.setText(dataSnapshot.child("address").getValue().toString());
                     phno.setText(dataSnapshot.child("contactno").getValue().toString());
-                    dob.setText(dataSnapshot.child("dob").getValue().toString());
                     email.setText(dataSnapshot.child("email").getValue().toString());
 
                     SimpleDateFormat sfd = new SimpleDateFormat("dd-MMMM-yyyy ");
@@ -175,7 +172,6 @@ public class BuyLocal_Profile extends Fragment {
 
                     Picasso.get().load(String.valueOf(dataSnapshot.child("profile_image_url").getValue().toString())).into(profileImage_imageView);
                     Picasso.get().load(String.valueOf(dataSnapshot.child("profile_image_url").getValue().toString())).into(edit_image_image_view);
-                    Picasso.get().load(String.valueOf(dataSnapshot.child("id_image_url").getValue().toString())).into(idImage);
 
                 }
             }
