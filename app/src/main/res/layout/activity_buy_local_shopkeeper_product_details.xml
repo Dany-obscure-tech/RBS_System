@@ -447,9 +447,11 @@
             android:layout_marginTop="0dp"
             android:adjustViewBounds="true"
             android:background="#00000000"
-            android:padding="15dp"
+            android:layout_alignParentEnd="true"
+            android:padding="5dp"
             android:scaleType="fitXY"
-            android:src="@drawable/back_arrow" />
+            android:tint="@color/colorWhite"
+            android:src="@drawable/back_btn" />
 
     </RelativeLayout>
 
