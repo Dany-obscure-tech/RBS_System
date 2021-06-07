@@ -164,10 +164,11 @@
             <ImageButton
                 android:id="@+id/search_imageBtn"
                 android:src="@drawable/search"
+                android:tint="@color/colorWhite"
                 android:padding="15dp"
                 android:layout_gravity="center"
-                android:backgroundTint="@color/textBlue"
-                android:background="#00FFFFFF"
+                android:backgroundTint="@color/textGreen"
+                android:background="@drawable/buylocal_green_button"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"/>
 

@@ -256,7 +256,7 @@
                         android:layout_below="@id/offersTextView"
                         android:layout_centerHorizontal="true"
                         android:background="@drawable/main_button"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         app:cardBackgroundColor="#FFFFFF"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="4dp"

@@ -28,7 +28,7 @@
         >
 
         <EditText
-            android:id="@+id/search_editText"
+            android:id="@+id/searchCustomer_editText"
             android:maxLength="32"
             style="@style/RBSInvoice_EditTexts"
             android:backgroundTint="@color/gradientDarkBlue"

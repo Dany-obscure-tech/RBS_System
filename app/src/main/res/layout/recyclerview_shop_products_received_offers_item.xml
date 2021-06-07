@@ -19,6 +19,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
             android:orientation="horizontal">
 
             <RelativeLayout
@@ -41,10 +43,13 @@
                     android:id="@+id/date_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="10dp"
+                    android:layout_below="@+id/profileImage_imageView"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/segoe_ui_bold"
                     android:text="13/04/2019"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+
                     android:textColor="@color/textGrey"
                     android:textSize="16sp" />
 

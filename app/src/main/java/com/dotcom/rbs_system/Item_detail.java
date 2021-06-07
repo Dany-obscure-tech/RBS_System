@@ -247,6 +247,11 @@ public class Item_detail extends AppCompatActivity {
                 rbsItemDetails.uploadNewItemDetails(Item_detail.this);
 //                rbsItemDetails.clearData();
                 pd.dismissProgressBar(Item_detail.this);
+
+                System.out.println("called");
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("result","1");
+                setResult(Activity.RESULT_OK,returnIntent);
                 finish();
             }else {
                 pass_back_data();

@@ -25,7 +25,6 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -304,7 +303,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
         firebaseAuthUID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
         existingCustomersRef = FirebaseDatabase.getInstance().getReference("Customer_list");
-        existingItemsRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/");
+        existingItemsRef = FirebaseDatabase.getInstance().getReference("Stock/Customers/");
 
         back_btn =(ImageButton)findViewById(R.id.back_btn);
         item_add_textView =(TextView) findViewById(R.id.item_add_textView);
@@ -448,23 +447,22 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
                     for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                         if (!dataSnapshot1.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                            for (DataSnapshot dataSnapshot2:dataSnapshot1.getChildren()){
-                            for (DataSnapshot dataSnapshot3: dataSnapshot2.getChildren()){
-                                exisitngItemsNamesList.add(String.valueOf(dataSnapshot3.child("Item_name").getValue()));
-                                exisitngItemsSerialNoList.add(String.valueOf(dataSnapshot3.child("Serial_no").getValue()));
-                                if (dataSnapshot3.child("Last_active").exists()){
-                                    existingItemsLastActiveList.add(String.valueOf(dataSnapshot3.child("Last_active").getValue()));
+                            for (DataSnapshot dataSnapshot2: dataSnapshot1.getChildren()){
+                                exisitngItemsNamesList.add(String.valueOf(dataSnapshot2.child("Item_name").getValue()));
+                                exisitngItemsSerialNoList.add(String.valueOf(dataSnapshot2.child("Serial_no").getValue()));
+                                if (dataSnapshot2.child("Last_active").exists()){
+                                    existingItemsLastActiveList.add(String.valueOf(dataSnapshot2.child("Last_active").getValue()));
                                 }else {
                                     existingItemsLastActiveList.add("NA");
                                 }
-                                existingItemsImageUrlList.add(String.valueOf(dataSnapshot3.child("Image").getValue()));
-                                existingItemsPriceList.add(String.valueOf(dataSnapshot3.child("Price").getValue()));
-                                existingItemsCategoryList.add(String.valueOf(dataSnapshot3.child("Category").getValue()));
-                                exisitngItemsKeyIDList.add(String.valueOf(dataSnapshot3.getKey().toString()));
-                                gettingHistoryList(String.valueOf(dataSnapshot3.getKey().toString()));
+                                existingItemsImageUrlList.add(String.valueOf(dataSnapshot2.child("Image").getValue()));
+                                existingItemsPriceList.add(String.valueOf(dataSnapshot2.child("Price").getValue()));
+                                existingItemsCategoryList.add(String.valueOf(dataSnapshot2.child("Category").getValue()));
+                                exisitngItemsKeyIDList.add(String.valueOf(dataSnapshot2.getKey().toString()));
+                                gettingHistoryList(String.valueOf(dataSnapshot2.getKey().toString()));
 
                             }
-                        }
+
                         }
 
                     }
@@ -837,6 +835,15 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 connected = true;
 
                 String key = reference.push().getKey();
+
+                if (!rbsItemDetails.getCheck().equals("Buy new item")){
+                    itemKeyID = adapter_itemList_alert_dialog.getItemKeyID();
+                }
+
+                if (rbsCustomerDetails.getCheck().equals("New customer")){
+                    customerKeyID = adapter_customerList_alert_dialog.getCustomerKeyID();
+                }
+
                 reference.child("Buy_list").child(key).child("Customer_keyID").setValue(customerKeyID);
                 reference.child("Buy_list").child(key).child("Item_keyID").setValue(itemKeyID);
 
@@ -864,9 +871,10 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                     if (rbsCustomerDetails.getCheck().equals("New customer")){
                         rbsCustomerDetails.uploadCustomerDetails(Buy.this);
                     }
-                    rbsItemDetails.switchStock(FirebaseAuth.getInstance().getCurrentUser().getUid(),rbsCustomerDetails.getKey());
+                    rbsItemDetails.switchStockBuy(FirebaseAuth.getInstance().getCurrentUser().getUid(),rbsCustomerDetails.getKey());
                 }
-                if (rbsItemDetails.getCheck().equals("Buy new item")){
+                if (rbsItemDetails.getCheck().equals("Buy new item"))
+                {
                     rbsItemDetails.uploadNewItemDetails(Buy.this);
                     if (rbsCustomerDetails.getCheck().equals("New customer")){
                         rbsCustomerDetails.uploadCustomerDetails(Buy.this);
@@ -879,10 +887,9 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
             }else{
                 Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
+                connected = false;
                 pd.dismissProgressBar(Buy.this);
             }
-
-            connected = false;
 
     }
 
@@ -1030,13 +1037,14 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 itemLastActive_textView.setText(returnString);
                 itemImage_imageView.setImageURI(rbsItemDetails.getImageUrlList().get(0));
 
+                rbsItemDetails.setFirstImageUri(rbsItemDetails.getImageUrlList().get(0));
+
                 itemID_textView.setVisibility(View.VISIBLE);
                 itemPriceCurrency_textView.setVisibility(View.VISIBLE);
                 itemPrice_textView.setVisibility(View.VISIBLE);
                 itemImage_imageView.setVisibility(View.VISIBLE);
                 itemLastActive_linearLayout.setVisibility(View.VISIBLE);
                 rbsItemDetails.setCheck("Buy new item");
-
 
             }
         }

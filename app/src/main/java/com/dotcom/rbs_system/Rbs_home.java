@@ -1,9 +1,11 @@
 package com.dotcom.rbs_system;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dotcom.rbs_system.Adapter.AdapterShopProductsShowcaseListRecyclerView;
+import com.dotcom.rbs_system.Classes.RBSItemDetails;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -159,10 +162,10 @@ public class Rbs_home extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),Item_detail.class);
                 intent.putExtra("ADD_ITEM","TRUE");
+                RBSItemDetails.getInstance().clearData();
                 getActivity().startActivityForResult(intent,1);
             }
         });
     }
-
 
 }

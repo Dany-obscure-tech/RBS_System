@@ -189,6 +189,7 @@ public class RBSItemDetails {
     }
 
     public void uploadToDatabase() {
+        System.out.println("upload to database");
 
         key = reference.push().getKey();
 
@@ -260,6 +261,8 @@ public class RBSItemDetails {
     }
 
     private void uploadToStock() {
+        System.out.println("upload to stock");
+
         reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Category").setValue(itemCategory);
         reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Image").setValue(firstImageUri.toString());
         reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Item_id").setValue(key);
@@ -268,25 +271,41 @@ public class RBSItemDetails {
         reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Price").setValue(itemPrice);
     }
 
-    public void switchStock(String buyer,String seller) {
+    public void switchStockSale(String buyer, String seller) {
         reference = FirebaseDatabase.getInstance().getReference();
         System.out.println(""+seller);
         System.out.println(""+buyer);
         System.out.println(""+itemCategory);
         System.out.println(""+key);
-        reference.child("Stock").child("Shopkeepers").child(seller).child(itemCategory).child(key).removeValue();
 
+        reference.child("Stock").child("Customers").child(itemCategory).child(key).child("Item_id").setValue(key);
+        reference.child("Stock").child("Customers").child(itemCategory).child(key).child("Category").setValue(itemCategory);
+        reference.child("Stock").child("Customers").child(itemCategory).child(key).child("Image").setValue(firstImageUri.toString());
+        reference.child("Stock").child("Customers").child(itemCategory).child(key).child("Serial_no").setValue(itemID);
+        reference.child("Stock").child("Customers").child(itemCategory).child(key).child("Item_name").setValue(itemName);
+        reference.child("Stock").child("Customers").child(itemCategory).child(key).child("Price").setValue(itemPrice);
+
+        reference.child("Stock").child("Shopkeepers").child(seller).child(itemCategory).child(key).removeValue();
+    }
+    
+    public void switchStockBuy(String buyer, String seller) {
+        reference = FirebaseDatabase.getInstance().getReference();
+
+        reference.child("Stock").child("Shopkeepers").child(buyer).child(itemCategory).child(key).child("Item_id").setValue(key);
         reference.child("Stock").child("Shopkeepers").child(buyer).child(itemCategory).child(key).child("Category").setValue(itemCategory);
         reference.child("Stock").child("Shopkeepers").child(buyer).child(itemCategory).child(key).child("Image").setValue(firstImageUri.toString());
         reference.child("Stock").child("Shopkeepers").child(buyer).child(itemCategory).child(key).child("Serial_no").setValue(itemID);
         reference.child("Stock").child("Shopkeepers").child(buyer).child(itemCategory).child(key).child("Item_name").setValue(itemName);
         reference.child("Stock").child("Shopkeepers").child(buyer).child(itemCategory).child(key).child("Price").setValue(itemPrice);
+
+        reference.child("Stock").child("Customers").child(itemCategory).child(key).removeValue();
     }
 
     private void uploadToRbsInvoiceList(String previousOwnerID,String newOwnerID){
         reference.child("Stock").child("RbsInvoiceList").child(previousOwnerID).child(key).removeValue();
 
         reference.child("Stock").child("RbsInvoiceList").child(newOwnerID).child(key).child("Item_id").setValue(key);
+        reference.child("Stock").child("RbsInvoiceList").child(newOwnerID).child(key).child("Category").setValue(itemCategory);
         reference.child("Stock").child("RbsInvoiceList").child(newOwnerID).child(key).child("Item_name").setValue(itemName);
         reference.child("Stock").child("RbsInvoiceList").child(newOwnerID).child(key).child("Price").setValue(itemPrice);
         reference.child("Stock").child("RbsInvoiceList").child(newOwnerID).child(key).child("Serial_no").setValue(itemID);
@@ -297,11 +316,13 @@ public class RBSItemDetails {
         reference.child("Stock").child("Items").child(key).child("in_stock_of").setValue(ownerID);
     }
 
-    public void uploadExistingItemDetails(){
-
-    }
-
     public void clearData(){
+        idStorageReference = null;
+        l=0;
+        k=0;
+        i=0;
+        pd = null;
+        reference = null;
         activity = null;
         check = null;
         context = null;
