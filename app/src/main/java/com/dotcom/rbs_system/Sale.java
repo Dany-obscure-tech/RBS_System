@@ -67,8 +67,10 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     RBSCustomerDetails rbsCustomerDetails;
 
     Handler handler = new Handler();
+    Handler handler2 = new Handler();
 
     String searchItem, findItem;
+    String searchCustomer, findCustomer;
 
     Boolean isScrolling = false, itemDatafullyloaded = false;
     Boolean isCustomerScrolling = false, customerDatafullyloaded = false;
@@ -123,12 +125,11 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     String customerKeyID, itemKeyID,customerName,itemCategory,itemName;
 
     List<String> exisitngCustomerList,exisitngCustomerIDList,exisitngCustomerKeyIDList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList,existingCustomerImageUrlList;
-    List<String> lessExisitngCustomerList,lessExisitngCustomerIDList,lessExistingCustomerPhnoList,lessExistingCustomerEmailList,lessExisitngCustomerKeyIDList,lessExistingCustomerImageUrlList;
-    List<String> searchExisitngCustomerList,searchExisitngCustomerIDList,searchExisitngCustomerKeyIDList,searchExistingCustomerPhnoList,searchExistingCustomerDobList,searchExistingCustomerAddressList,searchExistingCustomerEmailList,searchExistingCustomerImageUrlList;
+    List<String> lessExisitngCustomerList,lessExisitngCustomerIDList,lessExistingCustomerPhnoList,lessExistingCustomerDobList,lessExistingCustomerAddressList,lessExistingCustomerEmailList,lessExisitngCustomerKeyIDList,lessExistingCustomerImageUrlList;
+    List<String> filteredExisitngCustomerList,filteredExisitngCustomerIDList,filteredExisitngCustomerKeyIDList,filteredExistingCustomerPhnoList,filteredExistingCustomerDobList,filteredExistingCustomerAddressList,filteredExistingCustomerEmailList,filteredExistingCustomerImageUrlList;
     List<String> exisitngItemsNamesList, exisitngItemsSerialNoList,exisitngItemsKeyIDList,existingItemsPriceList,existingItemsCategoryList,existingItemsLastActiveList,existingItemsImageUrlList;
     List<String> filteredExisitngItemsNamesList, filteredExisitngItemsSerialNoList,filteredExisitngItemsKeyIDList,filteredExistingItemsPriceList,filteredExistingItemsCategoryList,filteredExistingItemsLastActiveList,filteredExistingItemsImageUrlList;
     List<String> lessExisitngItemsNamesList, lessExisitngItemsSerialNoList,lessExisitngItemsKeyIDList,lessExistingItemsPriceList,lessExistingItemsCategoryList,lessExistingItemsLastActiveList,lessExistingItemsImageUrlList;
-    List<String> searchExisitngItemsNamesList, searchExisitngItemsSerialNoList,searchExisitngItemsKeyIDList,searchExistingItemsPriceList,searchExistingItemsCategoryList,searchExistingItemsLastActiveList,searchExistingItemsImageUrlList;
     List<String> voucher_number_list,Voucher_amount_list;
     List<String> dateList,lastActiveDatelist;
 
@@ -226,19 +227,13 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         lessExistingItemsLastActiveList= new ArrayList<>();
         lessExistingItemsImageUrlList= new ArrayList<>();
 
-        searchExisitngItemsNamesList = new ArrayList<>();
-        searchExisitngItemsSerialNoList = new ArrayList<>();
-        searchExisitngItemsKeyIDList = new ArrayList<>();
-        searchExistingItemsPriceList= new ArrayList<>();
-        searchExistingItemsCategoryList= new ArrayList<>();
-        searchExistingItemsLastActiveList= new ArrayList<>();
-        searchExistingItemsImageUrlList= new ArrayList<>();
-
         lessExisitngCustomerList = new ArrayList<>();
         lessExisitngCustomerIDList = new ArrayList<>();
-        lessExistingCustomerPhnoList = new ArrayList<>();
-        lessExistingCustomerEmailList = new ArrayList<>();
         lessExisitngCustomerKeyIDList = new ArrayList<>();
+        lessExistingCustomerPhnoList = new ArrayList<>();
+        lessExistingCustomerDobList= new ArrayList<>();
+        lessExistingCustomerAddressList= new ArrayList<>();
+        lessExistingCustomerEmailList = new ArrayList<>();
         lessExistingCustomerImageUrlList = new ArrayList<>();
 
         exisitngCustomerList = new ArrayList<>();
@@ -250,15 +245,14 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         existingCustomerEmailList= new ArrayList<>();
         existingCustomerImageUrlList= new ArrayList<>();
 
-        searchExisitngCustomerList = new ArrayList<>();
-        searchExisitngCustomerIDList = new ArrayList<>();
-        searchExisitngCustomerKeyIDList = new ArrayList<>();
-        searchExistingCustomerPhnoList= new ArrayList<>();
-        searchExistingCustomerDobList= new ArrayList<>();
-        searchExistingCustomerAddressList= new ArrayList<>();
-        searchExistingCustomerEmailList= new ArrayList<>();
-        searchExistingCustomerImageUrlList= new ArrayList<>();
-
+        filteredExisitngCustomerList = new ArrayList<>();
+        filteredExisitngCustomerIDList = new ArrayList<>();
+        filteredExisitngCustomerKeyIDList = new ArrayList<>();
+        filteredExistingCustomerPhnoList= new ArrayList<>();
+        filteredExistingCustomerDobList= new ArrayList<>();
+        filteredExistingCustomerAddressList= new ArrayList<>();
+        filteredExistingCustomerEmailList= new ArrayList<>();
+        filteredExistingCustomerImageUrlList= new ArrayList<>();
 
         voucher_number_list= new ArrayList<>();
         Voucher_amount_list= new ArrayList<>();
@@ -387,6 +381,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                             lessExisitngCustomerList.add(exisitngCustomerList.get(i));
                             lessExisitngCustomerIDList.add(exisitngCustomerIDList.get(i));
                             lessExistingCustomerPhnoList.add(existingCustomerPhnoList.get(i));
+                            lessExistingCustomerDobList.add(existingCustomerDobList.get(i));
+                            lessExistingCustomerAddressList.add(existingCustomerAddressList.get(i));
                             lessExistingCustomerEmailList.add(existingCustomerEmailList.get(i));
                             lessExisitngCustomerKeyIDList.add(exisitngCustomerKeyIDList.get(i));
                             lessExistingCustomerImageUrlList.add(existingCustomerImageUrlList.get(i));
@@ -396,6 +392,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                             lessExisitngCustomerList.add(exisitngCustomerList.get(i));
                             lessExisitngCustomerIDList.add(exisitngCustomerIDList.get(i));
                             lessExistingCustomerPhnoList.add(existingCustomerPhnoList.get(i));
+                            lessExistingCustomerDobList.add(existingCustomerDobList.get(i));
+                            lessExistingCustomerAddressList.add(existingCustomerAddressList.get(i));
                             lessExistingCustomerEmailList.add(existingCustomerEmailList.get(i));
                             lessExisitngCustomerKeyIDList.add(exisitngCustomerKeyIDList.get(i));
                             lessExistingCustomerImageUrlList.add(existingCustomerImageUrlList.get(i));
@@ -420,6 +418,101 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                 pd3.dismissProgressBar(Sale.this);
             }
         });
+
+    }
+
+    private void searchCustomers() {
+        searchCustomer_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                currentItems = 0; totalItems = 0; scrollOutItems=0;
+                handler.removeCallbacksAndMessages(null);
+
+                lessExisitngCustomerList.clear();
+                lessExisitngCustomerIDList.clear();
+                lessExisitngCustomerKeyIDList.clear();
+                lessExistingCustomerPhnoList.clear();
+                lessExistingCustomerDobList.clear();
+                lessExistingCustomerAddressList.clear();
+                lessExistingCustomerEmailList.clear();
+                lessExistingCustomerImageUrlList.clear();
+
+                filteredExisitngCustomerList.clear();
+                filteredExisitngCustomerIDList.clear();
+                filteredExisitngCustomerKeyIDList.clear();
+                filteredExistingCustomerPhnoList.clear();
+                filteredExistingCustomerDobList.clear();
+                filteredExistingCustomerAddressList.clear();
+                filteredExistingCustomerEmailList.clear();
+
+                findCustomer = searchCustomer_editText.getText().toString();
+                for (int j = 0; j< exisitngCustomerList.size();j++){
+                    searchCustomer = exisitngCustomerList.get(j)+" "+exisitngCustomerIDList.get(j);
+
+                    int searchMeLength = searchItem.length();
+                    int findMeLength = findItem.length();
+//                    boolean foundIt = false;
+                    for (int i = 0;
+                         i <= (searchMeLength - findMeLength);
+                         i++) {
+                        if (searchCustomer.regionMatches(true,i, findCustomer, 0, findMeLength)) {
+
+                            filteredExisitngCustomerList.add(exisitngCustomerList.get(j));
+                            filteredExisitngCustomerIDList.add(exisitngCustomerIDList.get(j));
+                            filteredExisitngCustomerKeyIDList.add(exisitngCustomerKeyIDList.get(j));
+                            filteredExistingCustomerPhnoList.add(existingCustomerPhnoList.get(j));
+                            filteredExistingCustomerDobList.add(existingCustomerDobList.get(j));
+                            filteredExistingCustomerAddressList.add(existingCustomerAddressList.get(j));
+                            filteredExistingCustomerEmailList.add(existingCustomerEmailList.get(j));
+                            filteredExistingCustomerImageUrlList.add(existingCustomerImageUrlList.get(j));
+
+
+
+                            break;
+                        }
+                    }
+                }
+                getFilteredCustomers();
+            }
+        });
+    }
+
+    private void getFilteredCustomers() {
+        if (filteredExisitngItemsNamesList.size()>10){
+            for (int i = 0 ; i<10;i++){
+                lessExisitngItemsNamesList.add(filteredExisitngItemsNamesList.get(i));
+                lessExisitngItemsSerialNoList.add(filteredExisitngItemsSerialNoList.get(i));
+                lessExistingItemsLastActiveList.add(filteredExistingItemsLastActiveList.get(i));
+                lessExistingItemsImageUrlList.add(filteredExistingItemsImageUrlList.get(i));
+                lessExistingItemsPriceList.add(filteredExistingItemsPriceList.get(i));
+                lessExistingItemsCategoryList.add(filteredExistingItemsCategoryList.get(i));
+                lessExisitngItemsKeyIDList.add(filteredExisitngItemsKeyIDList.get(i));
+            }
+        }else {
+            for (int i = 0 ; i<filteredExisitngItemsNamesList.size();i++){
+                lessExisitngItemsNamesList.add(filteredExisitngItemsNamesList.get(i));
+                lessExisitngItemsSerialNoList.add(filteredExisitngItemsSerialNoList.get(i));
+                lessExistingItemsLastActiveList.add(filteredExistingItemsLastActiveList.get(i));
+                lessExistingItemsImageUrlList.add(filteredExistingItemsImageUrlList.get(i));
+                lessExistingItemsPriceList.add(filteredExistingItemsPriceList.get(i));
+                lessExistingItemsCategoryList.add(filteredExistingItemsCategoryList.get(i));
+                lessExisitngItemsKeyIDList.add(filteredExisitngItemsKeyIDList.get(i));
+            }
+        }
+
+        adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(Sale.this,lessExisitngItemsNamesList,lessExisitngItemsSerialNoList,lessExisitngItemsKeyIDList,lessExistingItemsPriceList,lessExistingItemsCategoryList,lessExistingItemsLastActiveList,lessExistingItemsImageUrlList,itemName_textView,itemID_textView,itemPriceCurrency_textView,itemPrice_textView,itemLastActive_textView,itemImage_imageView,itemList_alert_dialog);
+        itemList_recyclerView.setAdapter(adapter_itemList_alert_dialog);
+        onScrollListner(filteredExisitngItemsNamesList,filteredExisitngItemsSerialNoList,filteredExistingItemsLastActiveList,filteredExistingItemsImageUrlList,filteredExistingItemsPriceList,filteredExistingItemsCategoryList,filteredExisitngItemsKeyIDList);
 
     }
 
@@ -862,12 +955,14 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    int size = lessExisitngCustomerList.size()+2;
+                    int size = lessExisitngCustomerList.size()+10;
                     for (int i = lessExisitngCustomerList.size(); i<size;i++){
                         if (i<exisitngCustomerList.size()){
                             lessExisitngCustomerList.add(exisitngCustomerList.get(i));
                             lessExisitngCustomerIDList.add(exisitngCustomerIDList.get(i));
                             lessExistingCustomerPhnoList.add(existingCustomerPhnoList.get(i));
+                            lessExistingCustomerDobList.add(existingCustomerDobList.get(i));
+                            lessExistingCustomerAddressList.add(existingCustomerAddressList.get(i));
                             lessExistingCustomerEmailList.add(existingCustomerEmailList.get(i));
                             lessExisitngCustomerKeyIDList.add(exisitngCustomerKeyIDList.get(i));
                             lessExistingCustomerImageUrlList.add(existingCustomerImageUrlList.get(i));
