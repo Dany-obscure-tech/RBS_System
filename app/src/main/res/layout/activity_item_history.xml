@@ -7,31 +7,38 @@
     tools:context=".Item_history">
 
     <RelativeLayout
-        android:background="#0075B5"
         android:id="@+id/header"
-        android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageButton
-            android:id="@+id/Back_btn"
-            android:layout_marginTop="8dp"
-            android:padding="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00000000"
-            android:src="@drawable/back_btn" />
+        android:layout_height="80dp"
+        android:background="@drawable/profile_screen_header">
 
         <TextView
-            android:textColor="#ffffffff"
-            android:textSize="24sp"
-            android:fontFamily="@font/kameron_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/back_btn"
+            android:layout_centerVertical="true"
+            android:text="Item Details"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/Bold_Big"/>
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ITEM HISTORY"/>
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:padding="15dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/back_arrow" />
 
     </RelativeLayout>
+
+
 
     <LinearLayout
         android:id="@+id/itemDetails"

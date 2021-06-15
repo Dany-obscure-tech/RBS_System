@@ -60,10 +60,11 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     SliderView sliderView;
     List<String> imageUrl;
     EditText alertReportDescription_editText,alertMakeOfferAmount_editText,alertMakeOfferMessage_editText;
-    TextView report_textView,distance_textView,shopKeeperName_textView;
+    TextView distance_textView,shopKeeperName_textView;
     TextView product_name_textview, category_textView, item_description_textview, itemPrice_textView, currency_textView;
     TextView offerStatus_textView,offerAmountCurrency_textView,offerAmount_textView,offerMessage_textView;
-    TextView make_offer_textView,communicate_textView,share_textview;
+    TextView make_offer_textView,communicate_textView;
+    ImageButton share_imageButton,report_imageButton;
     Dialog report_alert_dialog;
     Dialog make_offer_alert_dialog;
     ImageButton back_btn;
@@ -113,8 +114,8 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         imageSlider = (CardView) findViewById(R.id.imageSlider);
         back_btn = (ImageButton) findViewById(R.id.back_btn);
         profileImage_imageView = (ImageView) findViewById(R.id.profileImage_imageView);
-        share_textview = (TextView) findViewById(R.id.share_textview);
-        report_textView = (TextView) findViewById(R.id.report_textView);
+        share_imageButton = (ImageButton) findViewById(R.id.share_imageButton);
+        report_imageButton = (ImageButton) findViewById(R.id.report_imageButton);
         distance_textView = (TextView) findViewById(R.id.distance_textView);
         shopKeeperName_textView = (TextView) findViewById(R.id.shopKeeperName_textView);
 
@@ -242,7 +243,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     }
 
     private void whatsapp_icon_listner() {
-        share_textview.setOnClickListener(new View.OnClickListener() {
+        share_imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(Intent.ACTION_SEND);
@@ -332,7 +333,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     }
 
     private void report_btn_listner() {
-        report_textView.setOnClickListener(new View.OnClickListener() {
+        report_imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 report_alert_dialog.show();

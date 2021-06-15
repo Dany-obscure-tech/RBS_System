@@ -50,7 +50,7 @@ public class Item_history extends AppCompatActivity {
 
     Boolean toggleCheck = true;
 
-    ImageButton Back_btn;
+    ImageButton back_btn;
 
     Button edit_btn,save_btn,cancel_btn;
 
@@ -82,7 +82,7 @@ public class Item_history extends AppCompatActivity {
         category_textView = (TextView)findViewById(R.id.category_textView);
         condition_textView = (TextView)findViewById(R.id.condition_textView);
         notes_textView = (TextView)findViewById(R.id.notes_textView);
-        Back_btn = (ImageButton)findViewById(R.id.Back_btn);
+        back_btn = (ImageButton)findViewById(R.id.back_btn);
         edit_btn = (Button)findViewById(R.id.edit_btn);
 
         edit_dialog = new Dialog(this);
@@ -192,7 +192,7 @@ public class Item_history extends AppCompatActivity {
         editbtn();
         cancelbtn();
         savebtn();
-        backbtn();
+        back_btn();
     }
 
     private void savebtn() {
@@ -236,8 +236,8 @@ public class Item_history extends AppCompatActivity {
         });
     }
 
-    private void backbtn() {
-        Back_btn.setOnClickListener(new View.OnClickListener() {
+    private void back_btn() {
+        back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
