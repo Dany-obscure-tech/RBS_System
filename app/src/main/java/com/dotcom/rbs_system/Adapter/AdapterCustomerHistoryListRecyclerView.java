@@ -59,7 +59,7 @@ public class AdapterCustomerHistoryListRecyclerView extends RecyclerView.Adapter
 
             date_textView = (TextView)itemView.findViewById(R.id.date_textView);
             customerName_textView = (TextView)itemView.findViewById(R.id.customerName_textView);
-            rbs_textView = (TextView)itemView.findViewById(R.id.rbs_textView);
+//            rbs_textView = (TextView)itemView.findViewById(R.id.rbs_textView);
 
         }
     }

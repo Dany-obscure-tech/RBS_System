@@ -11,8 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dotcom.rbs_system.Adapter.AdapterItemHistoryListRecyclerView;
@@ -29,8 +29,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Item_history extends AppCompatActivity {
-    String itemID,itemCategory;
-    List<String> customerNameList, rbsList, dateList;
+    String itemID, itemCategory;
+    List<String> dateList,status_list,shopkeeper_list,shopkeeper_name_list,customer_status_list,customer_name_list;
 
     SimpleDateFormat sfd;
 
@@ -41,25 +41,24 @@ public class Item_history extends AppCompatActivity {
     RecyclerView itemHistoryRecyclerView;
     AdapterItemHistoryListRecyclerView adapterItemHistoryListRecyclerView;
 
-    TextView itemDetailsToggle_textView;
-    TextView itemName_textView,serialNo_textView,category_textView,condition_textView,notes_textView;
+    TextView itemDetailsToggle_textView, edit_btn_textview;
+    TextView itemName_textView, serialNo_textView, category_textView, condition_textView;
 
-    LinearLayout itemDetails;
+    RelativeLayout itemDetails_relativelayout;
 
-    Progreess_dialog pd1,pd2;
+    Progreess_dialog pd1, pd2;
 
     Boolean toggleCheck = true;
 
     ImageButton back_btn;
 
-    Button edit_btn,save_btn,cancel_btn;
+    Button save_btn, cancel_btn;
 
     Dialog edit_dialog;
 
     RatingBar ratingBar;
 
     EditText notes_editText;
-
 
 
     @Override
@@ -75,15 +74,14 @@ public class Item_history extends AppCompatActivity {
     }
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void Initialization() {
-        itemName_textView = (TextView)findViewById(R.id.item_category_textView);
-        serialNo_textView = (TextView)findViewById(R.id.serialNo_textView);
-        category_textView = (TextView)findViewById(R.id.category_textView);
-        condition_textView = (TextView)findViewById(R.id.condition_textView);
-        notes_textView = (TextView)findViewById(R.id.notes_textView);
-        back_btn = (ImageButton)findViewById(R.id.back_btn);
-        edit_btn = (Button)findViewById(R.id.edit_btn);
+        itemName_textView = (TextView) findViewById(R.id.item_category_textView);
+        serialNo_textView = (TextView) findViewById(R.id.serialNo_textView);
+        category_textView = (TextView) findViewById(R.id.category_textView);
+        condition_textView = (TextView) findViewById(R.id.condition_textView);
+        back_btn = (ImageButton) findViewById(R.id.back_btn);
+        edit_btn_textview = (TextView) findViewById(R.id.edit_btn_textview);
 
         edit_dialog = new Dialog(this);
         edit_dialog.setContentView(R.layout.edit_dialog_item);
@@ -94,30 +92,46 @@ public class Item_history extends AppCompatActivity {
         cancel_btn = (Button) edit_dialog.findViewById(R.id.cancel_btn);
 
 
-
         itemID = getIntent().getStringExtra("ITEM_ID");
         itemCategory = getIntent().getStringExtra("ITEM_CATEGORY");
-        customerNameList = new ArrayList<>();
-        rbsList = new ArrayList<>();
+
+
         dateList = new ArrayList<>();
+        status_list = new ArrayList<>();
+        shopkeeper_list = new ArrayList<>();
+        shopkeeper_name_list = new ArrayList<>();
+        customer_status_list = new ArrayList<>();
+        customer_name_list = new ArrayList<>();
+
+
+        dateList.add("6/16/2021");
+        status_list.add("Trading");
+        shopkeeper_list.add("Seller");
+        shopkeeper_name_list.add("Itech Computers");
+        customer_status_list.add("Buyer");
+        customer_name_list.add("Shahzaib");
 
         sfd = new SimpleDateFormat("dd-MM-yyyy");
 
-        itemHistoryRef = FirebaseDatabase.getInstance().getReference("Item_history/"+itemID);
+        itemHistoryRef = FirebaseDatabase.getInstance().getReference("Item_history/" + itemID);
 
         orderQuery = itemHistoryRef.orderByChild("Timestamp");
 
-        itemHistoryRecyclerView = (RecyclerView)findViewById(R.id.itemHistoryRecyclerView);
-        itemHistoryRecyclerView.setLayoutManager(new GridLayoutManager(Item_history.this,1));
+        itemHistoryRecyclerView = (RecyclerView) findViewById(R.id.itemHistoryRecyclerView);
+        itemHistoryRecyclerView.setLayoutManager(new GridLayoutManager(Item_history.this, 1));
 
-        itemDetailsToggle_textView = (TextView)findViewById(R.id.itemDetailsToggle_textView);
+        itemDetailsToggle_textView = (TextView) findViewById(R.id.itemDetailsToggle_textView);
 
-        itemDetails = (LinearLayout)findViewById(R.id.itemDetails);
+        itemDetails_relativelayout = (RelativeLayout) findViewById(R.id.itemDetails_relativelayout);
 
         itemRef = FirebaseDatabase.getInstance().getReference("Items");
 
         pd1 = new Progreess_dialog();
         pd2 = new Progreess_dialog();
+
+
+        adapterItemHistoryListRecyclerView = new AdapterItemHistoryListRecyclerView(Item_history.this,status_list,shopkeeper_list,shopkeeper_name_list,customer_status_list,customer_name_list,dateList);
+        itemHistoryRecyclerView.setAdapter(adapterItemHistoryListRecyclerView);
     }
 
 
@@ -125,7 +139,7 @@ public class Item_history extends AppCompatActivity {
 
     private void InitialDataFetch() {
         gettingHistoryList();
-        getItem(itemCategory,itemID);
+        getItem(itemCategory, itemID);
     }
 
     private void gettingHistoryList() {
@@ -133,21 +147,17 @@ public class Item_history extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 pd1.showProgressBar(Item_history.this);
-                if (dataSnapshot.exists()){
-                    for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                        customerNameList.add(dataSnapshot1.child("Customer_name").getValue().toString());
-                        rbsList.add(dataSnapshot1.child("RBS").getValue().toString());
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         dateList.add(dataSnapshot1.child("Date").getValue().toString());
 
                     }
-                    Collections.reverse(customerNameList);
-                    Collections.reverse(rbsList);
                     Collections.reverse(dateList);
-
-                    adapterItemHistoryListRecyclerView = new AdapterItemHistoryListRecyclerView(Item_history.this,customerNameList,rbsList,dateList);
-                    itemHistoryRecyclerView.setAdapter(adapterItemHistoryListRecyclerView);
+//
+//                    adapterItemHistoryListRecyclerView = new AdapterItemHistoryListRecyclerView(Item_history.this,status_list, dateList);
+//                    itemHistoryRecyclerView.setAdapter(adapterItemHistoryListRecyclerView);
                     pd1.dismissProgressBar(Item_history.this);
-                }else {
+                } else {
                     pd1.dismissProgressBar(Item_history.this);
                 }
             }
@@ -164,15 +174,14 @@ public class Item_history extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 pd2.showProgressBar(Item_history.this);
-                if (dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     itemName_textView.setText(dataSnapshot.child("Item_name").getValue().toString());
                     serialNo_textView.setText(dataSnapshot.child("Item_id").getValue().toString());
                     category_textView.setText(dataSnapshot.child("Category").getValue().toString());
                     condition_textView.setText(dataSnapshot.child("Condition").getValue().toString());
-                    notes_textView.setText(dataSnapshot.child("Notes").getValue().toString());
 
                     pd2.dismissProgressBar(Item_history.this);
-                }else {
+                } else {
                     pd2.dismissProgressBar(Item_history.this);
                 }
 
@@ -188,7 +197,7 @@ public class Item_history extends AppCompatActivity {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void ClickListeners() {
-        itemDetailsToggle();
+        itemDetails_relativelayoutToggle();
         editbtn();
         cancelbtn();
         savebtn();
@@ -200,16 +209,16 @@ public class Item_history extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                edit_data(itemCategory,itemID);
+                edit_data(itemCategory, itemID);
             }
         });
     }
 
     private void edit_data(String item_category, String item_keyID) {
-        if (!ratingBar.equals("0")){
+        if (!ratingBar.equals("0")) {
             itemRef.child(item_category).child(item_keyID).child("Condition").setValue(ratingBar.getRating());
         }
-        if (!notes_editText.getText().toString().equals("")){
+        if (!notes_editText.getText().toString().equals("")) {
             itemRef.child(item_category).child(item_keyID).child("Notes").setValue(notes_editText.getText().toString());
         }
         edit_dialog.dismiss();
@@ -217,7 +226,7 @@ public class Item_history extends AppCompatActivity {
 
     }
 
-    private void cancelbtn(){
+    private void cancelbtn() {
         cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,7 +236,7 @@ public class Item_history extends AppCompatActivity {
     }
 
     private void editbtn() {
-        edit_btn.setOnClickListener(new View.OnClickListener() {
+        edit_btn_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 edit_dialog.show();
@@ -245,19 +254,19 @@ public class Item_history extends AppCompatActivity {
         });
     }
 
-    private void itemDetailsToggle() {
+    private void itemDetails_relativelayoutToggle() {
         itemDetailsToggle_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!toggleCheck){
-                    itemDetails.setVisibility(View.VISIBLE);
+                if (!toggleCheck) {
+                    itemDetails_relativelayout.setVisibility(View.VISIBLE);
                     itemDetailsToggle_textView.setText("Hide detailss");
                     itemDetailsToggle_textView.setTextColor(getResources().getColor(R.color.textGrey));
                     itemDetailsToggle_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
 
                     toggleCheck = true;
-                }else {
-                    itemDetails.setVisibility(View.GONE);
+                } else {
+                    itemDetails_relativelayout.setVisibility(View.GONE);
                     itemDetailsToggle_textView.setText("Show Item Details");
                     itemDetailsToggle_textView.setTextColor(getResources().getColor(R.color.textBlue));
                     itemDetailsToggle_textView.setBackground(getResources().getDrawable(R.drawable.main_button));
