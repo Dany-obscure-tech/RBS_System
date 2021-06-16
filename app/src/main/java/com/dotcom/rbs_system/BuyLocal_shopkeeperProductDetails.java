@@ -45,6 +45,8 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
     RecyclerView offers_received;
     CardView buy_local;
 
+    Intent intent;
+
     List<String> customername;
     List<String> offered_price_list;
     List<String> product_offer_msg_list;
@@ -68,6 +70,8 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
     StorageReference itemImageStorageRef;
     ArrayList imageUrl;
     SliderView sliderView;
+
+    String itemname_returnString, itemid_returnString, itemcategory_returnString, itemkeyid_returnString, itemprice_returnString, itemlstactive_returnString, itemfirstimageurl_returnString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,7 +149,28 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
                 item_description_textview.setText(snapshot.child("Description").getValue().toString());
                 itemPrice_textView.setText(snapshot.child("Price").getValue().toString());
                 currency_textView.setText(Currency.getInstance().getCurrency());
-                fetchingItemImages();
+
+                itemname_returnString = snapshot.child("Item_name").getValue().toString();
+                itemid_returnString = snapshot.child("Item_id").getValue().toString();
+                itemcategory_returnString = snapshot.child("Category").getValue().toString();
+                itemkeyid_returnString = snapshot.child("key_id").getValue().toString();
+                itemprice_returnString = snapshot.child("Price").getValue().toString();
+
+                if (snapshot.child("Last_active").exists()){
+                    itemlstactive_returnString = snapshot.child("Last_active").getValue().toString();
+                }else {
+                    itemlstactive_returnString = "NA";
+                }
+
+                for (DataSnapshot dataSnapshot: snapshot.child("Image_urls").getChildren()){
+                    imageUrl.add(dataSnapshot.getValue().toString());
+                }
+
+                SliderAdapterExample sliderAdapterExample = new SliderAdapterExample(BuyLocal_shopkeeperProductDetails.this,imageUrl);
+                sliderView.setSliderAdapter(sliderAdapterExample);
+                intent = new Intent(BuyLocal_shopkeeperProductDetails.this,Sale.class);
+                intent.putExtra("ITEM_SELL_CHECK","TRUE");
+
             }
 
             @Override
@@ -279,36 +304,6 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
         });
     }
 
-    private void fetchingItemImages() {
-
-        for (i = 1;i<=noOfimages;++i){
-
-            itemImageStorageRef.child("image_"+String.valueOf(i)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    imageUrl.add(String.valueOf(uri));
-
-
-                    System.out.println("called fun i="+i+" "+imageUrl.size());
-//
-                    if (imageUrl.size()==noOfimages){
-                        SliderAdapterExample sliderAdapterExample = new SliderAdapterExample(BuyLocal_shopkeeperProductDetails.this,imageUrl);
-                        sliderView.setSliderAdapter(sliderAdapterExample);
-                    }
-
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(BuyLocal_shopkeeperProductDetails.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-
-        }
-
-    }
-
     /////////////////////////////////////////////////////////////////////////////////
 
     private void onClickListeners() {
@@ -346,7 +341,6 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
 //                boughtOfferRef.setValue(activeCustomerID);
 //                customerOfferStatusRef.setValue("bought");
 //                recreate();
-                Intent intent = new Intent(BuyLocal_shopkeeperProductDetails.this,Sale.class);
                 startActivity(intent);
             }
         });
