@@ -33,7 +33,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dotcom.rbs_system.Adapter.AdapterSpotlightItemListRecyclerView;
 import com.dotcom.rbs_system.Adapter.Adapter_customerList_alert_dialog;
 import com.dotcom.rbs_system.Adapter.Adapter_itemList_alert_dialog;
 import com.dotcom.rbs_system.Classes.Currency;
@@ -48,6 +47,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -156,6 +156,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         setContentView(R.layout.activity_sale);
 
         initialize();
+        checkForItemSell();
         fetchingExisitingCustomers();
         fetchingExisitingItems();
         searchItem();
@@ -352,6 +353,45 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             e.printStackTrace();
         }
 
+    }
+
+    private void checkForItemSell() {
+        if (getIntent().getStringExtra("ITEM_SELL_CHECK").equals("TRUE")){
+
+            String itemname_returnString = getIntent().getStringExtra("Item_name");
+            String itemid_returnString = getIntent().getStringExtra("Item_id");
+            String itemcategory_returnString = getIntent().getStringExtra("Item_category");
+            String itemkeyid_returnString = getIntent().getStringExtra("Item_keyid");
+            String itemprice_returnString = getIntent().getStringExtra("Item_price");
+            String itemlstactive_returnString = getIntent().getStringExtra("Last_Active");
+            String itemlimage_returnString = getIntent().getStringExtra("Item_image");
+            // set text view with string
+
+            itemKeyID = itemkeyid_returnString;
+            itemCategory = itemcategory_returnString;
+            itemName_textView.setText(itemname_returnString);
+            itemID_textView.setText(itemid_returnString);
+            itemPrice_textView.setText(itemprice_returnString);
+            itemLastActive_textView.setText(itemlstactive_returnString);
+            Picasso.get().load(itemlimage_returnString).into(itemImage_imageView);
+
+            rbsItemDetails.setKey(itemkeyid_returnString);
+            rbsItemDetails.setItemCategory(itemcategory_returnString);
+            rbsItemDetails.setItemName(itemname_returnString);
+            rbsItemDetails.setItemID(itemid_returnString);
+            rbsItemDetails.setItemPrice(itemprice_returnString);
+            rbsItemDetails.setFirstImageUri(Uri.parse(itemlimage_returnString));
+
+            itemName_textView.setTextColor(getResources().getColor(R.color.gradientDarkBlue));
+            itemID_textView.setVisibility(View.VISIBLE);
+            itemPriceCurrency_textView.setVisibility(View.VISIBLE);
+            itemPrice_textView.setVisibility(View.VISIBLE);
+            itemImage_imageView.setVisibility(View.VISIBLE);
+            itemLastActive_linearLayout.setVisibility(View.VISIBLE);
+            itemLastActive_textView.setVisibility(View.VISIBLE);
+
+            rbsItemDetails.setCheck("Sale existing item");
+        }
     }
 
     private void fetchingExisitingCustomers() {

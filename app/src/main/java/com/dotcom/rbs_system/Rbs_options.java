@@ -84,6 +84,7 @@ public class Rbs_options extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(Rbs_options.this,Sale.class);
+                intent.putExtra("ITEM_SELL_CHECK","FALSE");
                 startActivity(intent);
             }
         });
@@ -134,6 +135,7 @@ public class Rbs_options extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(Rbs_options.this,Sale.class);
+                intent.putExtra("ITEM_SELL_CHECK","FALSE");
                 Exchanged_itemdata.getInstance().setExchangeCheck(false);
                 Exchanged_itemdata.getInstance().setExchangeFromBuyCheck(false);
                 Exchanged_itemdata.getInstance().clearData();
@@ -144,6 +146,7 @@ public class Rbs_options extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(Rbs_options.this,Sale.class);
+                intent.putExtra("ITEM_SELL_CHECK","FALSE");
                 Exchanged_itemdata.getInstance().setExchangeCheck(false);
                 Exchanged_itemdata.getInstance().setExchangeFromBuyCheck(false);
                 Exchanged_itemdata.getInstance().clearData();

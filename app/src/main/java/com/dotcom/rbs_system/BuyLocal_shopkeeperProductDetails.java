@@ -168,8 +168,17 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
 
                 SliderAdapterExample sliderAdapterExample = new SliderAdapterExample(BuyLocal_shopkeeperProductDetails.this,imageUrl);
                 sliderView.setSliderAdapter(sliderAdapterExample);
+
                 intent = new Intent(BuyLocal_shopkeeperProductDetails.this,Sale.class);
                 intent.putExtra("ITEM_SELL_CHECK","TRUE");
+
+                intent.putExtra("Item_name",itemname_returnString);
+                intent.putExtra("Item_id",itemid_returnString);
+                intent.putExtra("Item_category",itemcategory_returnString);
+                intent.putExtra("Item_keyid",itemkeyid_returnString);
+                intent.putExtra("Item_price",itemprice_returnString);
+                intent.putExtra("Last_Active",itemlstactive_returnString);
+                intent.putExtra("Item_image",imageUrl.get(0).toString());
 
             }
 
