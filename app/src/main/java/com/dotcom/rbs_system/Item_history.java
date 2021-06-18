@@ -54,8 +54,6 @@ public class Item_history extends AppCompatActivity {
 
     Button save_btn, cancel_btn;
 
-    Dialog edit_dialog;
-
     RatingBar ratingBar;
 
     EditText notes_editText;
@@ -82,14 +80,6 @@ public class Item_history extends AppCompatActivity {
         condition_textView = (TextView) findViewById(R.id.condition_textView);
         back_btn = (ImageButton) findViewById(R.id.back_btn);
         edit_btn_textview = (TextView) findViewById(R.id.edit_btn_textview);
-
-        edit_dialog = new Dialog(this);
-        edit_dialog.setContentView(R.layout.edit_dialog_item);
-
-        ratingBar = (RatingBar) edit_dialog.findViewById(R.id.ratingBar);
-        notes_editText = (EditText) edit_dialog.findViewById(R.id.notes_editText);
-        save_btn = (Button) edit_dialog.findViewById(R.id.save_btn);
-        cancel_btn = (Button) edit_dialog.findViewById(R.id.cancel_btn);
 
 
         itemID = getIntent().getStringExtra("ITEM_ID");
@@ -198,21 +188,10 @@ public class Item_history extends AppCompatActivity {
 
     private void ClickListeners() {
         itemDetails_relativelayoutToggle();
-        editbtn();
-        cancelbtn();
-        savebtn();
         back_btn();
     }
 
-    private void savebtn() {
-        save_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                edit_data(itemCategory, itemID);
-            }
-        });
-    }
 
     private void edit_data(String item_category, String item_keyID) {
         if (!ratingBar.equals("0")) {
@@ -221,28 +200,8 @@ public class Item_history extends AppCompatActivity {
         if (!notes_editText.getText().toString().equals("")) {
             itemRef.child(item_category).child(item_keyID).child("Notes").setValue(notes_editText.getText().toString());
         }
-        edit_dialog.dismiss();
         recreate();
 
-    }
-
-    private void cancelbtn() {
-        cancel_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                edit_dialog.dismiss();
-            }
-        });
-    }
-
-    private void editbtn() {
-        edit_btn_textview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                edit_dialog.show();
-
-            }
-        });
     }
 
     private void back_btn() {
@@ -260,16 +219,12 @@ public class Item_history extends AppCompatActivity {
             public void onClick(View v) {
                 if (!toggleCheck) {
                     itemDetails_relativelayout.setVisibility(View.VISIBLE);
-                    itemDetailsToggle_textView.setText("Hide detailss");
-                    itemDetailsToggle_textView.setTextColor(getResources().getColor(R.color.textGrey));
-                    itemDetailsToggle_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
+                    itemDetailsToggle_textView.setText("Hide details");
 
                     toggleCheck = true;
                 } else {
                     itemDetails_relativelayout.setVisibility(View.GONE);
                     itemDetailsToggle_textView.setText("Show Item Details");
-                    itemDetailsToggle_textView.setTextColor(getResources().getColor(R.color.textBlue));
-                    itemDetailsToggle_textView.setBackground(getResources().getDrawable(R.drawable.main_button));
                     toggleCheck = false;
                 }
             }

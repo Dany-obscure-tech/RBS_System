@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,14 +19,16 @@ import java.util.List;
 
 public class AdapterCustomerHistoryListRecyclerView extends RecyclerView.Adapter<AdapterCustomerHistoryListRecyclerView.ViewHolder> {
     Context context;
-    List<String> itemNameList, rbsList, dateList;
+    List<String> shopkeeper_name_textview, item_name_textview, dateList,serial_no_textview,status_textView;
     Activity activity;
     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Listed_faults");
 
-    public AdapterCustomerHistoryListRecyclerView(Context context, List<String> itemNameList, List<String> rbsList, List<String> dateList) {
+    public AdapterCustomerHistoryListRecyclerView(Context context, List<String> shopkeeper_name_textview, List<String> item_name_textview,List<String> serial_no_textview,List<String> status_textView, List<String> dateList) {
         this.context = context;
-        this.itemNameList = itemNameList;
-        this.rbsList = rbsList;
+        this.shopkeeper_name_textview = shopkeeper_name_textview;
+        this.item_name_textview = item_name_textview;
+        this.serial_no_textview = serial_no_textview;
+        this.status_textView = status_textView;
         this.dateList = dateList;
 
     }
@@ -33,13 +36,16 @@ public class AdapterCustomerHistoryListRecyclerView extends RecyclerView.Adapter
     @NonNull
     @Override
     public AdapterCustomerHistoryListRecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_itemhistorylist_item,parent,false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_customerhistorylist_item,parent,false));
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull AdapterCustomerHistoryListRecyclerView.ViewHolder holder, final int position) {
-        holder.customerName_textView.setText(itemNameList.get(position));
-        holder.rbs_textView.setText(rbsList.get(position));
+        holder.shopkeeper_name_textview.setText(shopkeeper_name_textview.get(position));
+        holder.item_name_textview.setText(item_name_textview.get(position));
+        holder.status_textView.setText(status_textView.get(position));
+        holder.serial_no_textview.setText(serial_no_textview.get(position));
         holder.date_textView.setText(dateList.get(position));
 
 
@@ -47,19 +53,21 @@ public class AdapterCustomerHistoryListRecyclerView extends RecyclerView.Adapter
 
     @Override
     public int getItemCount() {
-        return dateList.size();
+        return shopkeeper_name_textview.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView date_textView,customerName_textView, rbs_textView;
+            TextView date_textView,shopkeeper_name_textview, item_name_textview,serial_no_textview,status_textView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             date_textView = (TextView)itemView.findViewById(R.id.date_textView);
-            customerName_textView = (TextView)itemView.findViewById(R.id.customerName_textView);
-//            rbs_textView = (TextView)itemView.findViewById(R.id.rbs_textView);
+            shopkeeper_name_textview = (TextView)itemView.findViewById(R.id.shopkeeper_name_textview);
+            item_name_textview = (TextView)itemView.findViewById(R.id.item_name_textview);
+            status_textView = (TextView)itemView.findViewById(R.id.status_textView);
+            serial_no_textview = (TextView)itemView.findViewById(R.id.serial_no_textview);
 
         }
     }

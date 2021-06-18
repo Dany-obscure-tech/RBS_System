@@ -31,7 +31,11 @@ import java.util.List;
 public class Customer_history extends AppCompatActivity {
 
     String customerKeyID;
-    List<String> itemNameList, rbsList, dateList;
+    List<String> shopkeeper_name_textview, item_name_textview,status_textView ,dateList,serial_no_textview;
+
+    LinearLayout header_profile;
+
+    TextView edit_textview;
 
     SimpleDateFormat sfd;
 
@@ -55,7 +59,7 @@ public class Customer_history extends AppCompatActivity {
 
     EditText ac_phoneno,ac_address,ac_email;
 
-    Button edit_btn,cancel_btn,save_btn;
+    Button cancel_btn,save_btn;
 
     Dialog edit_dialog;
 
@@ -77,7 +81,8 @@ public class Customer_history extends AppCompatActivity {
         address_textView = (TextView)findViewById(R.id.vendor_address_textView);
         email_textView = (TextView)findViewById(R.id.post_code_textView);
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
-        edit_btn=(Button)findViewById(R.id.edit_btn);
+        edit_textview=(TextView) findViewById(R.id.edit_textview);
+        header_profile=(LinearLayout) findViewById(R.id.header_profile);
 
         edit_dialog = new Dialog(this);
         edit_dialog.setContentView(R.layout.edit_dialog_customer);
@@ -90,9 +95,16 @@ public class Customer_history extends AppCompatActivity {
 
         customerKeyID = getIntent().getStringExtra("CUSTOMER_ID");
 
-        itemNameList = new ArrayList<>();
-        rbsList = new ArrayList<>();
+        shopkeeper_name_textview = new ArrayList<>();
+        item_name_textview = new ArrayList<>();
+        status_textView = new ArrayList<>();
+        serial_no_textview = new ArrayList<>();
         dateList = new ArrayList<>();
+        shopkeeper_name_textview.add("Itech Computers");
+        item_name_textview.add("Asus Rog Strix");
+        status_textView.add("Buy");
+        serial_no_textview.add("563276582");
+        dateList.add("18/6/2021");
 
         sfd = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -122,24 +134,26 @@ public class Customer_history extends AppCompatActivity {
 
     private void gettingHistoryList() {
         pd1.showProgressBar(Customer_history.this);
+        adapterCustomerHistoryListRecyclerView = new AdapterCustomerHistoryListRecyclerView(Customer_history.this,shopkeeper_name_textview,item_name_textview,serial_no_textview,status_textView,dateList);
+        customerHistoryRecyclerView.setAdapter(adapterCustomerHistoryListRecyclerView);
+        pd1.dismissProgressBar(Customer_history.this);
         orderQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+
                 if (dataSnapshot.exists()){
                     for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                        itemNameList.add(dataSnapshot1.child("Item_name").getValue().toString());
-                        rbsList.add(dataSnapshot1.child("RBS").getValue().toString());
-                        dateList.add(dataSnapshot1.child("Date").getValue().toString());
+//                        itemNameList.add(dataSnapshot1.child("Item_name").getValue().toString());
+//                        rbsList.add(dataSnapshot1.child("RBS").getValue().toString());
+//                        dateList.add(dataSnapshot1.child("Date").getValue().toString());
 
                     }
-                    Collections.reverse(itemNameList);
-                    Collections.reverse(rbsList);
-                    Collections.reverse(dateList);
+//                    Collections.reverse(itemNameList);
+//                    Collections.reverse(rbsList);
+//                    Collections.reverse(dateList);
 
-                    adapterCustomerHistoryListRecyclerView = new AdapterCustomerHistoryListRecyclerView(Customer_history.this,itemNameList,rbsList,dateList);
-                    customerHistoryRecyclerView.setAdapter(adapterCustomerHistoryListRecyclerView);
-                    pd1.dismissProgressBar(Customer_history.this);
+
                 }else {
                     pd1.dismissProgressBar(Customer_history.this);
                 }
@@ -190,7 +204,7 @@ public class Customer_history extends AppCompatActivity {
     }
 
     private void editbtn() {
-        edit_btn.setOnClickListener(new View.OnClickListener() {
+        edit_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 edit_dialog.show();
@@ -238,17 +252,12 @@ public class Customer_history extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!toggleCheck){
-                    customerDetails.setVisibility(View.VISIBLE);
-                    customerDetailsToggle_textView.setText("Hide detailss");
-                    customerDetailsToggle_textView.setTextColor(getResources().getColor(R.color.textGrey));
-                    customerDetailsToggle_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-
+                    header_profile.setVisibility(View.VISIBLE);
+                    customerDetailsToggle_textView.setText("Hide Details");
                     toggleCheck = true;
                 }else {
-                    customerDetails.setVisibility(View.GONE);
+                    header_profile.setVisibility(View.GONE);
                     customerDetailsToggle_textView.setText("Show Item Details");
-                    customerDetailsToggle_textView.setTextColor(getResources().getColor(R.color.textBlue));
-                    customerDetailsToggle_textView.setBackground(getResources().getDrawable(R.drawable.main_button));
                     toggleCheck = false;
                 }
             }

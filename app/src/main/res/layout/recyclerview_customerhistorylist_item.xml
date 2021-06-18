@@ -96,7 +96,7 @@
 
 
                     <TextView
-                        android:id="@+id/customer_name_textview"
+                        android:id="@+id/item_name_textview"
                         style="@style/TextViews_Bold_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -105,13 +105,14 @@
                         android:textSize="@dimen/Regular_Small" />
 
 
-                        <TextView
-                            style="@style/TextViews_Regular_small"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="serial no"
-                            android:textColor="@color/textGrey"
-                            android:textSize="@dimen/Regular_Small" />
+                    <TextView
+                        android:id="@+id/serial_no_textview"
+                        style="@style/TextViews_Regular_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="serial no"
+                        android:textColor="@color/textGrey"
+                        android:textSize="@dimen/Regular_Small" />
 
 
                 </LinearLayout>
