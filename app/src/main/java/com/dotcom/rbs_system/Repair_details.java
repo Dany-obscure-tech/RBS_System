@@ -404,7 +404,7 @@ public class Repair_details extends AppCompatActivity {
 
                 repair_details_edit_obj.setTimestamp(timestamp);
 
-                Intent intent = new Intent(Repair_details.this,Repairs.class);
+                Intent intent = new Intent(Repair_details.this, AddRepairTicket.class);
                 intent.putExtra("EDIT_CHECK",true);
                 startActivity(intent);
             }

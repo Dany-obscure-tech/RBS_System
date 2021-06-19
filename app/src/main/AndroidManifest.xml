@@ -44,9 +44,6 @@
         <activity
             android:name=".Vendor_Users_list"
             android:theme="@style/AppTheme.no" />
-        <activity
-            android:name=".Rbs_options"
-            android:theme="@style/AppTheme.no" />
         <activity android:name=".RBS_mainscreen" />
         <activity
             android:name=".Vendor_shopkeepers_orders_progress"
@@ -69,12 +66,7 @@
         <activity
             android:name=".BuyLocal_messaging"
             android:theme="@style/AppTheme.no" />
-        <activity
-            android:name=".RBS_Smart_Share_Categories_Details"
-            android:theme="@style/AppTheme.no" />
-        <activity
-            android:name=".Smart_Share"
-            android:theme="@style/AppTheme.no" />
+
         <activity
             android:name=".BuyLocal_shopkeeperProductDetails"
             android:theme="@style/AppTheme.no" />
@@ -145,11 +137,9 @@
         <activity
             android:name=".Item_detail"
             android:theme="@style/AppTheme.no" />
+
         <activity
-            android:name=".Exchange"
-            android:theme="@style/AppTheme.no" />
-        <activity
-            android:name=".Repairs"
+            android:name=".AddRepairTicket"
             android:theme="@style/AppTheme.no" />
         <activity
             android:name=".Sale"

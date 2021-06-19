@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -204,7 +203,7 @@ public class Repair_Ticket extends AppCompatActivity {
         repairTicketAdd_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Repair_Ticket.this,Repairs.class);
+                Intent intent = new Intent(Repair_Ticket.this, AddRepairTicket.class);
                 intent.putExtra("EDIT_CHECK",false);
                 startActivity(intent);
             }

@@ -37,7 +37,7 @@ public class RBS_option extends Fragment {
 
     CardView BUY,Sale,repair,Exchange,Accessories,Settings;
 
-    ImageButton icon1,icon2,icon3,icon5,icon4,icon6,icon8,icon9;
+    ImageButton icon1,icon2,icon3,icon4,icon8;
     Button alert_addAccessory_btn,alert_saleAccessory_btn;
 
     ImageView mainBanner_imageView;
@@ -112,10 +112,7 @@ public class RBS_option extends Fragment {
         icon4=(ImageButton)view.findViewById(R.id.icon4);
         icon1=(ImageButton)view.findViewById(R.id.icon1);
         icon3=(ImageButton)view.findViewById(R.id.icon3);
-        icon5=(ImageButton)view.findViewById(R.id.icon5);
-        icon6=(ImageButton)view.findViewById(R.id.icon6);
         icon8=(ImageButton)view.findViewById(R.id.icon8);
-        icon9=(ImageButton)view.findViewById(R.id.icon9);
 
         mainBanner_imageView = (ImageView)view.findViewById(R.id.mainBanner_imageView);
         getBannerImage();
@@ -149,13 +146,7 @@ public class RBS_option extends Fragment {
                 startActivity(intent);
             }
         });
-        icon5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),Exchange.class);
-                startActivity(intent);
-            }
-        });
+
         BUY.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,23 +195,8 @@ public class RBS_option extends Fragment {
                 startActivity(intent);
             }
         });
-        Exchange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),Exchange.class);
-                startActivity(intent);
-            }
-        });
 
         Settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),Settings.class);
-                startActivity(intent);
-            }
-        });
-
-        icon6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(),Settings.class);
@@ -252,13 +228,7 @@ public class RBS_option extends Fragment {
                 startActivity(intent);
             }
         });
-        icon9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),Smart_Share.class);
-                startActivity(intent);
-            }
-        });
+
         return view;
     }
 

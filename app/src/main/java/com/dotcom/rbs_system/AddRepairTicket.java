@@ -51,7 +51,7 @@ import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
-public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class AddRepairTicket extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     long timestamp;
 
     private static final int ITEM_ACTIVITY_REQUEST_CODE = 0;
@@ -151,7 +151,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_repairs);
+        setContentView(R.layout.activity_add_repair_ticket);
 
         initialize();
         balanceAmount();
@@ -212,10 +212,10 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
 
         addFaults_textview = (TextView) findViewById(R.id.addFaults_textview);
 
-        adapterRepairsFaultListRecyclerView = new AdapterRepairsFaultListRecyclerView(Repairs.this, tempFaultNameList, tempFaultPriceList, tempFaultKeyIDList, tempFaultRemoveCheckList, pendingFaultNameList, pendingFaultPriceList, pendingFaultKeyIDList, Repairs.this, false);
+        adapterRepairsFaultListRecyclerView = new AdapterRepairsFaultListRecyclerView(AddRepairTicket.this, tempFaultNameList, tempFaultPriceList, tempFaultKeyIDList, tempFaultRemoveCheckList, pendingFaultNameList, pendingFaultPriceList, pendingFaultKeyIDList, AddRepairTicket.this, false);
         faultList_recyclerView = (RecyclerView) findViewById(R.id.faultList_recyclerView);
         faultList_recyclerView.setAdapter(adapterRepairsFaultListRecyclerView);
-        faultList_recyclerView.setLayoutManager(new GridLayoutManager(Repairs.this, 1));
+        faultList_recyclerView.setLayoutManager(new GridLayoutManager(AddRepairTicket.this, 1));
 
         date_textView = (TextView) findViewById(R.id.date_textView);
         balanceAmount_TextView = (TextView) findViewById(R.id.balanceAmount_TextView);
@@ -296,7 +296,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     }
 
     private void fetchingExisitingCustomers() {
-        pd2.showProgressBar(Repairs.this);
+        pd2.showProgressBar(AddRepairTicket.this);
         exisitngCustomerList.clear();
         exisitngCustomerIDList.clear();
         existingCustomerPhnoList.clear();
@@ -319,20 +319,20 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                     exisitngCustomerKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
                 }
 
-                pd2.dismissProgressBar(Repairs.this);
+                pd2.dismissProgressBar(AddRepairTicket.this);
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                pd2.dismissProgressBar(Repairs.this);
+                pd2.dismissProgressBar(AddRepairTicket.this);
             }
         });
 
     }
 
     private void fetchingExisitingItems() {
-        pd3.showProgressBar(Repairs.this);
+        pd3.showProgressBar(AddRepairTicket.this);
 
         exisitngItemsList.clear();
         exisitngItemsIDList.clear();
@@ -360,14 +360,14 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
 
                     }
                 }
-                pd3.dismissProgressBar(Repairs.this);
+                pd3.dismissProgressBar(AddRepairTicket.this);
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                pd3.dismissProgressBar(Repairs.this);
+                pd3.dismissProgressBar(AddRepairTicket.this);
             }
         });
     }
@@ -401,7 +401,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     }
 
     private void getFaultsList() {
-        pd4.showProgressBar(Repairs.this);
+        pd4.showProgressBar(AddRepairTicket.this);
         faultListRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -411,12 +411,12 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                     faultKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
 
                 }
-                pd4.dismissProgressBar(Repairs.this);
+                pd4.dismissProgressBar(AddRepairTicket.this);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                pd4.dismissProgressBar(Repairs.this);
+                pd4.dismissProgressBar(AddRepairTicket.this);
             }
         });
     }
@@ -429,7 +429,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         addFaults_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SimpleSearchDialogCompat(Repairs.this, "Search...",
+                new SimpleSearchDialogCompat(AddRepairTicket.this, "Search...",
                         "What are you looking for...?", null, createFaultListData(),
                         new SearchResultListener<SampleSearchModel>() {
                             @Override
@@ -456,7 +456,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         searchForCustomer_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SimpleSearchDialogCompat(Repairs.this, "Search...",
+                new SimpleSearchDialogCompat(AddRepairTicket.this, "Search...",
                         "What are you looking for...?", null, createCustomerData(),
                         new SearchResultListener<SampleSearchModel>() {
                             @Override
@@ -485,7 +485,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         searchForItem_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SimpleSearchDialogCompat(Repairs.this, "Search...",
+                new SimpleSearchDialogCompat(AddRepairTicket.this, "Search...",
                         "What are you looking for...?", null, createItemsData(),
                         new SearchResultListener<SampleSearchModel>() {
                             @Override
@@ -532,7 +532,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         customer_add_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Repairs.this, Customer_details.class);
+                Intent intent = new Intent(AddRepairTicket.this, Customer_details.class);
                 startActivityForResult(intent, CUSTOMER_ACTIVITY_REQUEST_CODE);
             }
         });
@@ -540,14 +540,14 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         item_add_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Repairs.this, Item_detail.class);
+                Intent intent = new Intent(AddRepairTicket.this, Item_detail.class);
                 startActivityForResult(intent, ITEM_ACTIVITY_REQUEST_CODE);
             }
         });
         print_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Repairs.this, "YEs working", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddRepairTicket.this, "YEs working", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -585,16 +585,16 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             public void onClick(View v) {
                 if (getIntent().getBooleanExtra("EDIT_CHECK", false)) {
                     if (pendingFaultNameList.size() == 0) {
-                        Toast.makeText(Repairs.this, "Add new Faults", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddRepairTicket.this, "Add new Faults", Toast.LENGTH_SHORT).show();
                     }
                     if (!pendingPriceCheck) {
                         pendingAgreed_price_editText.setError("Enter valid price");
                     }
                     if (pendingFaultNameList.size() != 0 && pendingPriceCheck) {
-                        pd1.showProgressBar(Repairs.this);
+                        pd1.showProgressBar(AddRepairTicket.this);
 
                         boolean connected = false;
-                        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Repairs.CONNECTIVITY_SERVICE);
+                        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(AddRepairTicket.CONNECTIVITY_SERVICE);
                         if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
                             //we are connected to a network
@@ -610,15 +610,15 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                             }
                             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Status").setValue("pending");
 
-                            Toast.makeText(Repairs.this, "Submit Successfully123", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddRepairTicket.this, "Submit Successfully123", Toast.LENGTH_SHORT).show();
                             sendingdialog.show();
-                            pd1.dismissProgressBar(Repairs.this);
+                            pd1.dismissProgressBar(AddRepairTicket.this);
                             repair_details_edit_obj.clear();
 
                         } else {
-                            Toast.makeText(Repairs.this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddRepairTicket.this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
                             connected = false;
-                            pd1.dismissProgressBar(Repairs.this);
+                            pd1.dismissProgressBar(AddRepairTicket.this);
                         }
                     }
 
@@ -654,7 +654,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                     sendingdialog.show();
 
                 } else {
-                    Toast.makeText(Repairs.this, "No changes", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddRepairTicket.this, "No changes", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -670,7 +670,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
                 repairRef.child("Pending_Price").removeValue();
                 repairTicketRef.child("Status").setValue("clear");
 
-                Intent intent = new Intent(Repairs.this, Repair_details.class);
+                Intent intent = new Intent(AddRepairTicket.this, Repair_details.class);
                 intent.putExtra("REPAIR_ID", repair_details_edit_obj.getTicketNo_TextView());
                 finish();
                 startActivity(intent);
@@ -715,10 +715,10 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
     }
 
     private void detailsSubmit() {
-        pd1.showProgressBar(Repairs.this);
+        pd1.showProgressBar(AddRepairTicket.this);
 
         boolean connected = false;
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Repairs.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(AddRepairTicket.CONNECTIVITY_SERVICE);
         if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
             //we are connected to a network
@@ -756,13 +756,13 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
             }
 
             Toast.makeText(this, "Submit Successfully", Toast.LENGTH_SHORT).show();
-            pd1.dismissProgressBar(Repairs.this);
+            pd1.dismissProgressBar(AddRepairTicket.this);
             sendingdialog.show();
 
         } else {
             Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
             connected = false;
-            pd1.dismissProgressBar(Repairs.this);
+            pd1.dismissProgressBar(AddRepairTicket.this);
         }
 
     }
@@ -914,7 +914,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
 
             }
 
-            adapterRepairsFaultListRecyclerView = new AdapterRepairsFaultListRecyclerView(this, tempFaultNameList, tempFaultPriceList, tempFaultKeyIDList, tempFaultRemoveCheckList, pendingFaultNameList, pendingFaultPriceList, pendingFaultKeyIDList, Repairs.this, true);
+            adapterRepairsFaultListRecyclerView = new AdapterRepairsFaultListRecyclerView(this, tempFaultNameList, tempFaultPriceList, tempFaultKeyIDList, tempFaultRemoveCheckList, pendingFaultNameList, pendingFaultPriceList, pendingFaultKeyIDList, AddRepairTicket.this, true);
             faultList_recyclerView.setAdapter(adapterRepairsFaultListRecyclerView);
 
             timestamp = repair_details_edit_obj.getTimestamp();
@@ -971,7 +971,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         itemDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Repairs.this, Item_history.class);
+                Intent intent = new Intent(AddRepairTicket.this, Item_history.class);
                 intent.putExtra("ITEM_ID", itemKeyID);
                 intent.putExtra("ITEM_CATEGORY", itemCategory);
                 startActivity(intent);
@@ -981,7 +981,7 @@ public class Repairs extends AppCompatActivity implements DatePickerDialog.OnDat
         customerDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Repairs.this, Customer_history.class);
+                Intent intent = new Intent(AddRepairTicket.this, Customer_history.class);
                 intent.putExtra("CUSTOMER_ID", customerKeyID);
                 startActivity(intent);
             }

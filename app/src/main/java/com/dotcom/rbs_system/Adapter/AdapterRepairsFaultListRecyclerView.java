@@ -5,10 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,8 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Classes.Repair_details_edit;
 import com.dotcom.rbs_system.R;
-import com.dotcom.rbs_system.Repair_details;
-import com.dotcom.rbs_system.Repairs;
+import com.dotcom.rbs_system.AddRepairTicket;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,7 +28,7 @@ public class AdapterRepairsFaultListRecyclerView extends RecyclerView.Adapter<Ad
     Activity activity;
     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Listed_faults");
 
-    Repairs repairs;
+    AddRepairTicket addRepairTicket;
 
     boolean pendingCheck;
 
@@ -40,7 +36,7 @@ public class AdapterRepairsFaultListRecyclerView extends RecyclerView.Adapter<Ad
     double incremantalAmount;
     double incremantalPendingAmount;
 
-    public AdapterRepairsFaultListRecyclerView(Context context, List<String> faultNameList, List<String> faultPriceList, List<String> faultKeyIDList, List<Boolean> faultRemoveCheckList, List<String> pendingFaultNameList,List<String> pendingFaultPriceList,List<String> pendingFaultKeyIDList, Repairs repairs, boolean pendingCheck) {
+    public AdapterRepairsFaultListRecyclerView(Context context, List<String> faultNameList, List<String> faultPriceList, List<String> faultKeyIDList, List<Boolean> faultRemoveCheckList, List<String> pendingFaultNameList, List<String> pendingFaultPriceList, List<String> pendingFaultKeyIDList, AddRepairTicket addRepairTicket, boolean pendingCheck) {
         currencyObj = Currency.getInstance();
 
         this.context = context;
@@ -55,7 +51,7 @@ public class AdapterRepairsFaultListRecyclerView extends RecyclerView.Adapter<Ad
 
 
         activity = (Activity)context;
-        this.repairs = repairs;
+        this.addRepairTicket = addRepairTicket;
 
         this.pendingCheck=pendingCheck;
 
@@ -94,7 +90,7 @@ public class AdapterRepairsFaultListRecyclerView extends RecyclerView.Adapter<Ad
                 }else {
                     incremantalAmount = Double.parseDouble(Repair_details_edit.getInstance().getAgreedPrice_TextView());
                 }
-                repairs.getIncremantalAmount(incremantalAmount);
+                addRepairTicket.getIncremantalAmount(incremantalAmount);
 
             }
             if (position==faultNameList.size()-1){
@@ -103,7 +99,7 @@ public class AdapterRepairsFaultListRecyclerView extends RecyclerView.Adapter<Ad
                     incremantalPendingAmount = incremantalPendingAmount+(Double.parseDouble(faultPriceList.get(i)));
                 }
 
-                repairs.getPendingIncremantalAmount(incremantalPendingAmount);
+                addRepairTicket.getPendingIncremantalAmount(incremantalPendingAmount);
             }
 
             holder.remove_textView.setOnClickListener(new View.OnClickListener() {
@@ -126,8 +122,8 @@ public class AdapterRepairsFaultListRecyclerView extends RecyclerView.Adapter<Ad
                     pendingFaultKeyIDList.remove(faultNameList.size()-position);
 
 
-                    repairs.getIncremantalAmount(incremantalAmount);
-                    repairs.getPendingIncremantalAmount(incremantalPendingAmount);
+                    addRepairTicket.getIncremantalAmount(incremantalAmount);
+                    addRepairTicket.getPendingIncremantalAmount(incremantalPendingAmount);
 
                     notifyDataSetChanged();
                 }
