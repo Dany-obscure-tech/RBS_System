@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.dotcom.rbs_system.Classes.ActionBarTitle;
 import com.dotcom.rbs_system.Classes.Exchanged_itemdata;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,6 +38,8 @@ public class Rbs_options extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rbs_options);
+
+        ActionBarTitle.getInstance().getTextView().setText("POS");
 
         bannerRef = FirebaseDatabase.getInstance().getReference("Admin/banner");
 

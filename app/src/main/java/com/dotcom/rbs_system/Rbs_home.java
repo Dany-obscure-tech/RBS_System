@@ -1,5 +1,6 @@
 package com.dotcom.rbs_system;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dotcom.rbs_system.Adapter.AdapterShopProductsShowcaseListRecyclerView;
+import com.dotcom.rbs_system.Classes.ActionBarTitle;
 import com.dotcom.rbs_system.Classes.RBSItemDetails;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -41,6 +43,8 @@ public class Rbs_home extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    RBS_mainscreen rbs_mainscreen;
 
     DatabaseReference stockRef;
     RecyclerView your_products_RecyclerView;
@@ -93,7 +97,9 @@ public class Rbs_home extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_rbs_home, container, false);
-        getActivity().setTitle("RBS Home");
+
+        ActionBarTitle.getInstance().getTextView().setText("RBS Home");
+
         Initialize(view);
         initialProcess();
         onclicklistners();
@@ -112,6 +118,7 @@ public class Rbs_home extends Fragment {
         product_no_of_offers = new ArrayList<String>();
         image = new ArrayList<String>();
         key_idList = new ArrayList<String>();
+
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////

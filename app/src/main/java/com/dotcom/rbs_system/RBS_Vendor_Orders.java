@@ -13,6 +13,7 @@ import android.widget.Button;
 
 import com.dotcom.rbs_system.Adapter.AdapterShopProductsShowcaseListRecyclerView;
 import com.dotcom.rbs_system.Adapter.Adapter_RBS_Vendor_orders_list_RecyclerView;
+import com.dotcom.rbs_system.Classes.ActionBarTitle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +73,7 @@ public class RBS_Vendor_Orders extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_r_b_s__vendor__orders, container, false);
-        getActivity().setTitle("RBS Vendor Orders");
+        ActionBarTitle.getInstance().getTextView().setText("Vendor Orders");
         initialization();
         onclicklistners();
         return view;

@@ -1,27 +1,33 @@
 package com.dotcom.rbs_system;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dotcom.rbs_system.Classes.ActionBarTitle;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class RBS_mainscreen extends AppCompatActivity {
+    ActionBar actionBar;
 
     private long lastPressedTime;
 
     private static final int PERIOD = 2000;
+
+    TextView actionBarTitle;
 
     private DrawerLayout vendor_drawer_layout;
     private ActionBarDrawerToggle t;
@@ -39,9 +45,26 @@ public class RBS_mainscreen extends AppCompatActivity {
     }
 
     private void Initialize() {
+        actionBar = this.getSupportActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.profile_screen_header));
+
+        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
+                ActionBar.LayoutParams.MATCH_PARENT, // Width of TextView
+                ActionBar.LayoutParams.WRAP_CONTENT);
+
+        actionBarTitle = new TextView(getApplicationContext());
+
+        actionBarTitle.setLayoutParams(lp);
+        actionBarTitle.setTextColor(Color.WHITE);
+        actionBarTitle.setTextSize(22);
+        actionBarTitle.setTypeface(Typeface.DEFAULT_BOLD);
+
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(actionBarTitle);
+
+        ActionBarTitle.getInstance().setTextView(actionBarTitle);
 
         vendor_drawer_layout = (DrawerLayout) findViewById(R.id.rbs_drawer_layout);
-
 
         t = new ActionBarDrawerToggle(this, vendor_drawer_layout, R.string.Open, R.string.Close);
 

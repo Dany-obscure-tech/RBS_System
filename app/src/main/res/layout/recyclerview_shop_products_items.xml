@@ -25,6 +25,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/image">
 
                 <LinearLayout
@@ -40,7 +41,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        style="@style/RBSInvoice_TextViews"
+                        style="@style/TextViews_Regular_small"
                         android:text="Offers"
                         android:textColor="@color/textGrey" />
 
@@ -48,7 +49,7 @@
                         android:id="@+id/product_no_of_offers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/RBSInvoice_TextViews"
+                        style="@style/TextViews_Bold_big"
                         android:paddingLeft="15dp"
                         android:text="1"
                         android:textSize="20sp"
@@ -62,7 +63,7 @@
                     android:layout_below="@+id/offers_area"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/RBSInvoice_TextViews"
+                    style="@style/TextViews_Bold_small"
                     android:text="Dress Shirts"
                     android:textColor="@color/gradientDarkBlue"
                     android:textSize="22sp" />
@@ -75,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/product_name"
-                    style="@style/RBSInvoice_TextViews_small"
+                    style="@style/TextViews_Regular_small"
                     android:layout_marginTop="10dp"
                     android:text="Category"
                     android:textColor="@color/textGreen" />
@@ -90,7 +91,7 @@
 
                     <TextView
                         android:id="@+id/currency_textView"
-                        style="@style/RBSInvoice_TextViews"
+                        style="@style/TextViews_Regular_big"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="PKR"
@@ -101,7 +102,7 @@
                         android:id="@+id/product_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/RBSInvoice_TextViews"
+                        style="@style/TextViews_Regular_big"
                         android:paddingLeft="10dp"
                         android:paddingRight="5dp"
                         android:text="5000"

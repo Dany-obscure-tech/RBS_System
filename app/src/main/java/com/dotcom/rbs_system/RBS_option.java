@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.dotcom.rbs_system.Classes.ActionBarTitle;
 import com.dotcom.rbs_system.Classes.Exchanged_itemdata;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -88,6 +89,8 @@ public class RBS_option extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_rbs_option, container, false);
+
+        ActionBarTitle.getInstance().getTextView().setText("POS");
 
         bannerRef = FirebaseDatabase.getInstance().getReference("Admin/banner");
 
