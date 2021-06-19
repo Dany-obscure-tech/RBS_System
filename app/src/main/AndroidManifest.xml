@@ -23,11 +23,15 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Shopkeeper_details"
+            android:theme="@style/AppTheme.no" />
+        <activity
             android:name=".BuyLocal_offers_option"
             android:theme="@style/AppTheme.no"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".PasscodeActivity"
-            android:theme="@style/AppTheme.no"/>
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".PasscodeActivity"
+            android:theme="@style/AppTheme.no" />
         <activity
             android:name=".Rbs_vendor_specific_order"
             android:theme="@style/AppTheme.no" />
@@ -43,8 +47,7 @@
         <activity
             android:name=".Rbs_options"
             android:theme="@style/AppTheme.no" />
-        <activity
-            android:name=".RBS_mainscreen" />
+        <activity android:name=".RBS_mainscreen" />
         <activity
             android:name=".Vendor_shopkeepers_orders_progress"
             android:theme="@style/AppTheme.no" />
@@ -84,7 +87,7 @@
         <activity
             android:name=".Buylocal_category_products"
             android:theme="@style/AppTheme.no"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".BuyLocal_productdetails"
             android:theme="@style/AppTheme.no">
@@ -108,7 +111,7 @@
         <activity
             android:name=".BuyLocal_main"
             android:theme="@style/AppTheme.no"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Accessory_sale"
             android:theme="@style/AppTheme.no" />

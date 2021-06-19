@@ -38,214 +38,231 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/header_profile"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/header"
-        android:orientation="horizontal">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profileImage_imageView"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            app:civ_border_color="#4A4A4A"
-            app:civ_border_width="7dp"
-
-            />
+        android:layout_below="@+id/header">
 
         <LinearLayout
-            android:id="@+id/user_details_linearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/customerName_textView"
-                style="@style/TextViews_Bold_small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="User Name"
-                android:textColor="@color/textGrey" />
-
             <LinearLayout
-                android:id="@+id/phone_no_area"
+                android:id="@+id/header_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/phonecall"
-                    android:tint="@color/textGrey" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profileImage_imageView"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/profile_icon"
+                    app:civ_border_color="#4A4A4A"
+                    app:civ_border_width="7dp" />
 
-                <TextView
-                    android:id="@+id/phno_textView"
-                    style="@style/TextViews_Regular_small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:paddingLeft="20dp"
-                    android:text="03234235"
-                    android:textColor="@color/textGrey" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/email_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/phone_no_area"
-                android:layout_gravity="start"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/email"
-                    android:tint="@color/textGrey" />
-
-                <TextView
-                    android:id="@+id/post_code_textView"
-                    style="@style/TextViews_Regular_small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="20dp"
-                    android:text="shahzaib.mehfooz"
-                    android:textColor="@color/textGrey" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/location_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/email_area"
-                android:layout_gravity="start"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/location"
-                    android:tint="@color/textGrey" />
-
-                <TextView
-                    android:id="@+id/vendor_address_textView"
-                    style="@style/TextViews_Regular_small"
+                <LinearLayout
+                    android:id="@+id/user_details_linearlayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="20dp"
-                    android:text="Peshawar city"
-                    android:textColor="@color/textGrey" />
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/customerName_textView"
+                        style="@style/TextViews_Bold_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="User Name"
+                        android:textColor="@color/textGrey" />
+
+                    <LinearLayout
+                        android:id="@+id/phone_no_area"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/phonecall"
+                            android:tint="@color/textGrey" />
+
+                        <TextView
+                            android:id="@+id/phno_textView"
+                            style="@style/TextViews_Regular_small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:paddingLeft="20dp"
+                            android:text="03234235"
+                            android:textColor="@color/textGrey" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/email_area"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/email"
+                            android:tint="@color/textGrey" />
+
+                        <TextView
+                            android:id="@+id/post_code_textView"
+                            style="@style/TextViews_Regular_small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="20dp"
+                            android:text="shahzaib.mehfooz"
+                            android:textColor="@color/textGrey" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/location_area"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/location"
+                            android:tint="@color/textGrey" />
+
+                        <TextView
+                            android:id="@+id/vendor_address_textView"
+                            style="@style/TextViews_Regular_small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="20dp"
+                            android:text="Peshawar city"
+                            android:textColor="@color/textGrey" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/customer_id_icon"
+                            android:tint="@color/textGrey" />
+
+                        <TextView
+                            style="@style/TextViews_Regular_small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:paddingLeft="20dp"
+                            android:text="Customer ID :"
+                            android:textColor="@color/textGrey" />
+
+                        <TextView
+                            android:id="@+id/customerID_textView"
+                            style="@style/TextViews_Regular_small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="---"
+                            android:textColor="@color/textGrey" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/edit_textview"
+                        style="@style/RBSInvoice_TextViews"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/edit"
+                        android:backgroundTint="@color/textGreen" />
+
+
+                </LinearLayout>
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/customer_id_icon"
-                    android:tint="@color/textGrey" />
-
-                <TextView
-                    style="@style/TextViews_Regular_small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:paddingLeft="20dp"
-                    android:text="Customer ID :"
-                    android:textColor="@color/textGrey" />
-
-                <TextView
-                    android:id="@+id/customerID_textView"
-                    style="@style/TextViews_Regular_small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="---"
-                    android:textColor="@color/textGrey" />
-
-            </LinearLayout>
-
 
             <TextView
-                android:id="@+id/edit_textview"
-                style="@style/RBSInvoice_TextViews"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="end"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edit"
-                android:backgroundTint="@color/textGrey" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextViews_Bold_small"
+                android:textColor="@color/textGrey"
+                android:layout_marginBottom="10dp"
+                android:text="Customer ID Images"/>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/customer_ID_Image_recyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:nestedScrollingEnabled="false" />
+
+
+            <ImageView
+                android:id="@+id/id_imageView"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_weight="1.9"
+                android:adjustViewBounds="true"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/customerDetailsToggle_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/profile_screen_header"
+                android:fontFamily="@font/segoe_ui_bold"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="10dp"
+                android:text="Hide Details"
+                android:textColor="#ffff" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/customerHistoryRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
 
         </LinearLayout>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/customerDetails"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/header"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="5dp"
-        android:orientation="vertical">
-
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/customerDetailsToggle_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/TextViews_Regular_small"
-        android:layout_below="@+id/header_profile"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_weight="1"
-        android:background="@drawable/profile_screen_header"
-        android:fontFamily="@font/segoe_ui_bold"
-        android:paddingStart="10dp"
-        android:paddingTop="10dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="10dp"
-        android:text="Hide Details"
-        android:textAlignment="center"
-        android:textColor="#ffff"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/customerHistoryRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/customerDetailsToggle_textView"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp" />
+    </ScrollView>
 
 </RelativeLayout>

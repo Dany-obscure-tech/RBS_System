@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterCustomerHistoryListRecyclerView;
+import com.dotcom.rbs_system.Adapter.AdapterCustomerIDImagesRecyclerView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,13 +26,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Customer_history extends AppCompatActivity {
 
     String customerKeyID;
-    List<String> shopkeeper_name_textview, item_name_textview,status_textView ,dateList,serial_no_textview;
+    List<String> shopkeeper_name_textview, item_name_textview,status_textView ,dateList,serial_no_textview,imageUrlList;
+
+    RecyclerView customer_ID_Image_recyclerView;
 
     LinearLayout header_profile;
 
@@ -49,6 +51,8 @@ public class Customer_history extends AppCompatActivity {
     RecyclerView customerHistoryRecyclerView;
     AdapterCustomerHistoryListRecyclerView adapterCustomerHistoryListRecyclerView;
 
+    AdapterCustomerIDImagesRecyclerView adapterCustomerIDImagesRecyclerView;
+
     LinearLayout customerDetails;
 
     Progreess_dialog pd1,pd2;
@@ -59,7 +63,7 @@ public class Customer_history extends AppCompatActivity {
 
     EditText ac_phoneno,ac_address,ac_email;
 
-    Button cancel_btn,save_btn;
+    TextView save_btn_textview,cancel_btn_textview;
 
     Dialog edit_dialog;
 
@@ -90,8 +94,8 @@ public class Customer_history extends AppCompatActivity {
         ac_phoneno = (EditText) edit_dialog.findViewById(R.id.ac_phoneno);
         ac_address = (EditText) edit_dialog.findViewById(R.id.ac_address);
         ac_email = (EditText) edit_dialog.findViewById(R.id.ac_email);
-        cancel_btn = (Button) edit_dialog.findViewById(R.id.cancel_btn);
-        save_btn = (Button) edit_dialog.findViewById(R.id.save_btn);
+        cancel_btn_textview = (TextView) edit_dialog.findViewById(R.id.cancel_btn_textview);
+        save_btn_textview = (TextView) edit_dialog.findViewById(R.id.save_btn_textview);
 
         customerKeyID = getIntent().getStringExtra("CUSTOMER_ID");
 
@@ -100,6 +104,9 @@ public class Customer_history extends AppCompatActivity {
         status_textView = new ArrayList<>();
         serial_no_textview = new ArrayList<>();
         dateList = new ArrayList<>();
+        imageUrlList = new ArrayList<>();
+        imageUrlList.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MacueLabEgl0ea2Cb1t%2Fimage_1?alt=media&token=92a16e4d-1e46-48f7-9797-d061950bac99");
+        imageUrlList.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MacueLabEgl0ea2Cb1t%2Fimage_1?alt=media&token=92a16e4d-1e46-48f7-9797-d061950bac99");
         shopkeeper_name_textview.add("Itech Computers");
         item_name_textview.add("Asus Rog Strix");
         status_textView.add("Buy");
@@ -115,11 +122,21 @@ public class Customer_history extends AppCompatActivity {
         customerHistoryRecyclerView = (RecyclerView)findViewById(R.id.customerHistoryRecyclerView);
         customerHistoryRecyclerView.setLayoutManager(new GridLayoutManager(Customer_history.this,1));
 
+
         customerDetailsToggle_textView = (TextView)findViewById(R.id.customerDetailsToggle_textView);
 
         customerDetails = (LinearLayout)findViewById(R.id.customerDetails);
 
         customerRef = FirebaseDatabase.getInstance().getReference("Customer_list");
+
+        customer_ID_Image_recyclerView = (RecyclerView)findViewById(R.id.customer_ID_Image_recyclerView);
+
+
+        customer_ID_Image_recyclerView.setLayoutManager(new GridLayoutManager(Customer_history.this,2));
+
+        adapterCustomerIDImagesRecyclerView = new AdapterCustomerIDImagesRecyclerView(Customer_history.this,imageUrlList);
+
+        customer_ID_Image_recyclerView.setAdapter(adapterCustomerIDImagesRecyclerView);
 
         pd1 = new Progreess_dialog();
         pd2 = new Progreess_dialog();
@@ -213,7 +230,7 @@ public class Customer_history extends AppCompatActivity {
     }
 
     private void savebtn() {
-        save_btn.setOnClickListener(new View.OnClickListener() {
+        save_btn_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -239,7 +256,7 @@ public class Customer_history extends AppCompatActivity {
     }
 
     private void cancelbtn(){
-        cancel_btn.setOnClickListener(new View.OnClickListener() {
+        cancel_btn_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 edit_dialog.dismiss();

@@ -40,6 +40,12 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="TextViews_header">
+        <item name="android:fontFamily">@font/segoe_ui_bold</item>
+        <item name="android:textSize">@dimen/Bold_Big</item>
+
+    </style>
+
     <style name="TextViews_Regular_small">
         <item name="android:fontFamily">@font/segoe_ui</item>
         <item name="android:textSize">@dimen/Regular_Small</item>
@@ -119,7 +125,7 @@
         <item name="android:textColorHint">@color/textGrey</item>
         <item name="android:textColor">@color/defaultText</item>
         <item name="android:fontFamily">@font/segoe_ui</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/Regular_Big</item>
     </style>
 
     <style name="RBSInvoice_SaveButtonTextView">

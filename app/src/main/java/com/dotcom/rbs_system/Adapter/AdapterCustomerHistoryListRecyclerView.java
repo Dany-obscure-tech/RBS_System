@@ -2,16 +2,18 @@ package com.dotcom.rbs_system.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.R;
+import com.dotcom.rbs_system.Shopkeeper_details;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -47,6 +49,13 @@ public class AdapterCustomerHistoryListRecyclerView extends RecyclerView.Adapter
         holder.status_textView.setText(status_textView.get(position));
         holder.serial_no_textview.setText(serial_no_textview.get(position));
         holder.date_textView.setText(dateList.get(position));
+        holder.shopkeeper_linearlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, Shopkeeper_details.class);
+                context.startActivity(intent);
+            }
+        });
 
 
     }
@@ -58,6 +67,7 @@ public class AdapterCustomerHistoryListRecyclerView extends RecyclerView.Adapter
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+            LinearLayout shopkeeper_linearlayout;
             TextView date_textView,shopkeeper_name_textview, item_name_textview,serial_no_textview,status_textView;
 
         public ViewHolder(@NonNull View itemView) {
@@ -68,6 +78,7 @@ public class AdapterCustomerHistoryListRecyclerView extends RecyclerView.Adapter
             item_name_textview = (TextView)itemView.findViewById(R.id.item_name_textview);
             status_textView = (TextView)itemView.findViewById(R.id.status_textView);
             serial_no_textview = (TextView)itemView.findViewById(R.id.serial_no_textview);
+            shopkeeper_linearlayout = (LinearLayout) itemView.findViewById(R.id.shopkeeper_linearlayout);
 
         }
     }
