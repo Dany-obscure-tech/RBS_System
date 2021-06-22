@@ -32,7 +32,7 @@ import java.util.List;
 
 public class Item_history extends AppCompatActivity {
     String itemID, itemCategory;
-    List<String> dateList,status_list, shopkeeper_type_list,shopkeeper_name_list, customer_type_list,customer_name_list;
+    List<String> dateList, status_list, shopkeeper_type_list, shopkeeper_name_list, customer_type_list, customer_name_list;
     List<String> itemImageUrl_list;
 
     DatabaseReference itemRef;
@@ -43,7 +43,7 @@ public class Item_history extends AppCompatActivity {
     AdapterItemHistoryListRecyclerView adapterItemHistoryListRecyclerView;
 
     TextView itemDetailsToggle_textView, edit_btn_textview;
-    TextView itemName_textView, serialNo_textView, category_textView, condition_textView,item_description_textview;
+    TextView itemName_textView, serialNo_textView, category_textView, condition_textView, item_description_textview;
 
     RelativeLayout itemDetails_relativelayout;
 
@@ -87,7 +87,7 @@ public class Item_history extends AppCompatActivity {
         itemID = getIntent().getStringExtra("ITEM_ID");
         itemCategory = getIntent().getStringExtra("ITEM_CATEGORY");
 
-        Toast.makeText(this, itemID+itemCategory, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, itemID + itemCategory, Toast.LENGTH_SHORT).show();
 
 
         dateList = new ArrayList<>();
@@ -169,11 +169,11 @@ public class Item_history extends AppCompatActivity {
                         status_list.add(dataSnapshot1.child("RBS").getValue().toString());
                         shopkeeper_name_list.add(dataSnapshot1.child("Shopkeeper_name").getValue().toString());
 
-                        if (dataSnapshot1.child("Customer_name").exists()){
+                        if (dataSnapshot1.child("Customer_name").exists()) {
                             shopkeeper_type_list.add(dataSnapshot1.child("Shopkeeper_type").getValue().toString());
                             customer_type_list.add(dataSnapshot1.child("Customer_type").getValue().toString());
                             customer_name_list.add(dataSnapshot1.child("Customer_name").getValue().toString());
-                        }else {
+                        } else {
                             shopkeeper_type_list.add("NA");
                             customer_type_list.add("NA");
                             customer_name_list.add("NA");
@@ -186,7 +186,7 @@ public class Item_history extends AppCompatActivity {
                         Collections.reverse(customer_type_list);
                         Collections.reverse(customer_name_list);
 
-                        adapterItemHistoryListRecyclerView = new AdapterItemHistoryListRecyclerView(Item_history.this,status_list, shopkeeper_type_list,shopkeeper_name_list, customer_type_list,customer_name_list,dateList);
+                        adapterItemHistoryListRecyclerView = new AdapterItemHistoryListRecyclerView(Item_history.this, status_list, shopkeeper_type_list, shopkeeper_name_list, customer_type_list, customer_name_list, dateList);
                         itemHistoryRecyclerView.setAdapter(adapterItemHistoryListRecyclerView);
 
                     }
@@ -216,7 +216,7 @@ public class Item_history extends AppCompatActivity {
                     condition_textView.setText(dataSnapshot.child("Condition").getValue().toString());
                     item_description_textview.setText(dataSnapshot.child("Description").getValue().toString());
 
-                    for (DataSnapshot dataSnapshot1:dataSnapshot.child("Image_urls").getChildren()){
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.child("Image_urls").getChildren()) {
                         itemImageUrl_list.add(dataSnapshot1.getValue().toString());
                         //todo add this list to slider (Shahzaib)
                     }
@@ -241,7 +241,6 @@ public class Item_history extends AppCompatActivity {
         itemDetails_relativelayoutToggle();
         back_btn();
     }
-
 
 
     private void edit_data(String item_category, String item_keyID) {
