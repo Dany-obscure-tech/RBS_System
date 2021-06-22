@@ -32,7 +32,7 @@ import java.util.List;
 
 public class Item_history extends AppCompatActivity {
     String itemID, itemCategory;
-    List<String> dateList, status_list, shopkeeper_type_list, shopkeeper_name_list, customer_type_list, customer_name_list;
+    List<String> dateList, status_list, shopkeeper_type_list, shopkeeper_name_list, customer_type_list, customer_name_list,shopkeeperImage_imageView,customerImage_imageView;
     List<String> itemImageUrl_list;
 
     DatabaseReference itemRef;
@@ -96,6 +96,18 @@ public class Item_history extends AppCompatActivity {
         shopkeeper_name_list = new ArrayList<>();
         customer_type_list = new ArrayList<>();
         customer_name_list = new ArrayList<>();
+        shopkeeperImage_imageView = new ArrayList<>();
+        customerImage_imageView = new ArrayList<>();
+
+        shopkeeperImage_imageView.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
+        shopkeeperImage_imageView.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
+        shopkeeperImage_imageView.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
+        shopkeeperImage_imageView.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
+
+        customerImage_imageView.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
+        customerImage_imageView.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
+        customerImage_imageView.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
+        customerImage_imageView.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
         itemImageUrl_list = new ArrayList<>();
 
         itemHistoryRef = FirebaseDatabase.getInstance().getReference("Item_history/" + itemID);
@@ -186,7 +198,7 @@ public class Item_history extends AppCompatActivity {
                         Collections.reverse(customer_type_list);
                         Collections.reverse(customer_name_list);
 
-                        adapterItemHistoryListRecyclerView = new AdapterItemHistoryListRecyclerView(Item_history.this, status_list, shopkeeper_type_list, shopkeeper_name_list, customer_type_list, customer_name_list, dateList);
+                        adapterItemHistoryListRecyclerView = new AdapterItemHistoryListRecyclerView(Item_history.this, status_list, shopkeeper_type_list, shopkeeper_name_list, customer_type_list, customer_name_list,shopkeeperImage_imageView,customerImage_imageView ,dateList);
                         itemHistoryRecyclerView.setAdapter(adapterItemHistoryListRecyclerView);
 
                     }

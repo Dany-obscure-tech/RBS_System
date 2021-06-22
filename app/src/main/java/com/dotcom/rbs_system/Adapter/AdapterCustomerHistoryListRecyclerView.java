@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,7 +39,6 @@ public class AdapterCustomerHistoryListRecyclerView extends RecyclerView.Adapter
         this.dateList = dateList;
         this.shopkeeper_key_id = shopkeeper_key_id;
         this.customer_key_id = customer_key_id;
-
     }
 
     @NonNull
@@ -60,8 +60,15 @@ public class AdapterCustomerHistoryListRecyclerView extends RecyclerView.Adapter
         holder.shopkeeper_linearlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(context, "Yes working 1", Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(context, Shopkeeper_details.class);
                 context.startActivity(intent);
+            }
+        });
+        holder.item_detail_linearlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Yes working 2", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -75,7 +82,7 @@ public class AdapterCustomerHistoryListRecyclerView extends RecyclerView.Adapter
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-            LinearLayout shopkeeper_linearlayout;
+            LinearLayout shopkeeper_linearlayout,item_detail_linearlayout;
             TextView date_textView,shopkeeper_name_textview, item_name_textview,serial_no_textview,status_textView;
             ImageView shopkeeperImage_imageView,customerImage_imageView;
 
@@ -88,6 +95,7 @@ public class AdapterCustomerHistoryListRecyclerView extends RecyclerView.Adapter
             status_textView = (TextView)itemView.findViewById(R.id.status_textView);
             serial_no_textview = (TextView)itemView.findViewById(R.id.serial_no_textview);
             shopkeeper_linearlayout = (LinearLayout) itemView.findViewById(R.id.shopkeeper_linearlayout);
+            item_detail_linearlayout = (LinearLayout) itemView.findViewById(R.id.item_detail_linearlayout);
             shopkeeperImage_imageView = (ImageView) itemView.findViewById(R.id.shopkeeperImage_imageView);
             customerImage_imageView = (ImageView) itemView.findViewById(R.id.customerImage_imageView);
 

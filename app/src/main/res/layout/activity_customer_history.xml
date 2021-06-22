@@ -288,7 +288,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="15dp"
                 android:background="@drawable/profile_screen_header"
                 android:fontFamily="@font/segoe_ui_bold"
                 android:paddingStart="10dp"
@@ -303,8 +303,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp" />
+                android:orientation="vertical"/>
 
         </LinearLayout>
 

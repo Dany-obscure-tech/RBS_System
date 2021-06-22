@@ -22,10 +22,12 @@
             android:padding="10dp">
 
             <LinearLayout
+                android:id="@+id/shopkeeper_area_linearlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="5dp">
 
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -40,6 +42,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -81,7 +84,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/customer_detail_area"
+                android:id="@+id/customer_area_linearlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -100,6 +103,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:orientation="vertical">
 
                     <LinearLayout
