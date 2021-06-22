@@ -468,6 +468,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         existingCustomerAddressList = new ArrayList<>();
         existingCustomerEmailList = new ArrayList<>();
         existingCustomerImageUrlList = new ArrayList<>();
+
         lessExisitngItemsNamesList = new ArrayList<>();
         lessExisitngItemsSerialNoList = new ArrayList<>();
         lessExisitngItemsKeyIDList = new ArrayList<>();

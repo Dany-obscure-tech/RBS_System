@@ -41,6 +41,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
         android:layout_below="@+id/header">
 
         <LinearLayout
@@ -56,15 +57,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profileImage_imageView"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="20dp"
-                    android:src="@drawable/profile_icon"
-                    app:civ_border_color="#4A4A4A"
-                    app:civ_border_width="7dp" />
 
                 <LinearLayout
                     android:id="@+id/user_details_linearlayout"
@@ -76,18 +68,17 @@
 
                     <TextView
                         android:id="@+id/customerName_textView"
-                        style="@style/TextViews_Bold_small"
+                        style="@style/TextViews_Bold_big"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
                         android:text="User Name"
-                        android:textColor="@color/textGrey" />
+                        android:textColor="@color/gradientDarkBlue" />
 
                     <LinearLayout
                         android:id="@+id/phone_no_area"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:orientation="horizontal">
 
@@ -96,17 +87,33 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/phonecall"
-                            android:tint="@color/textGrey" />
+                            android:tint="@color/gradientDarkBlue" />
 
-                        <TextView
-                            android:id="@+id/phno_textView"
-                            style="@style/TextViews_Regular_small"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:paddingLeft="20dp"
-                            android:text="03234235"
-                            android:textColor="@color/textGrey" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/TextViews_Bold_small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:paddingLeft="10dp"
+                                android:text="Contact no"
+                                android:textColor="@color/gradientDarkBlue" />
+
+                            <TextView
+                                android:id="@+id/phno_textView"
+                                style="@style/TextViews_Regular_small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:paddingLeft="10dp"
+                                android:text="03234235"
+                                android:textColor="@color/textGrey" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -125,16 +132,32 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/email"
-                            android:tint="@color/textGrey" />
+                            android:tint="@color/gradientDarkBlue" />
 
-                        <TextView
-                            android:id="@+id/post_code_textView"
-                            style="@style/TextViews_Regular_small"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="20dp"
-                            android:text="shahzaib.mehfooz"
-                            android:textColor="@color/textGrey" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/TextViews_Bold_small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:paddingLeft="10dp"
+                                android:text="Email :"
+                                android:textColor="@color/gradientDarkBlue" />
+
+                            <TextView
+                                android:id="@+id/post_code_textView"
+                                style="@style/TextViews_Regular_small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="10dp"
+                                android:text="shahzaib.mehfooz"
+                                android:textColor="@color/textGrey" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -142,9 +165,7 @@
                         android:id="@+id/location_area"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="start"
                         android:layout_marginBottom="10dp"
-                        android:gravity="center"
                         android:orientation="horizontal">
 
                         <ImageView
@@ -152,16 +173,31 @@
                             android:layout_height="24dp"
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/location"
-                            android:tint="@color/textGrey" />
+                            android:tint="@color/gradientDarkBlue" />
 
-                        <TextView
-                            android:id="@+id/vendor_address_textView"
-                            style="@style/TextViews_Regular_small"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="20dp"
-                            android:text="Peshawar city"
-                            android:textColor="@color/textGrey" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/TextViews_Bold_small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:paddingLeft="10dp"
+                                android:text="Addrress :"
+                                android:textColor="@color/gradientDarkBlue" />
+
+                            <TextView
+                                android:id="@+id/vendor_address_textView"
+                                style="@style/TextViews_Regular_small"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="10dp"
+                                android:text="Peshawar city"
+                                android:textColor="@color/textGrey" />
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -176,25 +212,31 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/customer_id_icon"
-                            android:tint="@color/textGrey" />
+                            android:tint="@color/gradientDarkBlue" />
 
-                        <TextView
-                            style="@style/TextViews_Regular_small"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:paddingLeft="20dp"
-                            android:text="Customer ID :"
-                            android:textColor="@color/textGrey" />
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/customerID_textView"
-                            style="@style/TextViews_Regular_small"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="---"
-                            android:textColor="@color/textGrey" />
+                            <TextView
+                                style="@style/TextViews_Bold_small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:paddingLeft="10dp"
+                                android:text="Customer ID :"
+                                android:textColor="@color/gradientDarkBlue" />
+
+                            <TextView
+                                android:id="@+id/customerID_textView"
+                                style="@style/TextViews_Regular_small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="10dp"
+                                android:text="5765687"
+                                android:textColor="@color/textGrey" />
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -216,12 +258,12 @@
             </LinearLayout>
 
             <TextView
+                style="@style/TextViews_Bold_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextViews_Bold_small"
-                android:textColor="@color/textGrey"
                 android:layout_marginBottom="10dp"
-                android:text="Customer ID Images"/>
+                android:text="Customer ID Images"
+                android:textColor="@color/textGrey" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/customer_ID_Image_recyclerView"
@@ -260,9 +302,12 @@
                 android:id="@+id/customerHistoryRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:orientation="vertical"
                 android:layout_marginTop="10dp" />
 
         </LinearLayout>
+
     </ScrollView>
 
 </RelativeLayout>

@@ -221,6 +221,15 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         filteredExistingItemsLastActiveList = new ArrayList<>();
         filteredExistingItemsImageUrlList = new ArrayList<>();
 
+        exisitngCustomerList = new ArrayList<>();
+        exisitngCustomerIDList = new ArrayList<>();
+        exisitngCustomerKeyIDList = new ArrayList<>();
+        existingCustomerPhnoList = new ArrayList<>();
+        existingCustomerDobList = new ArrayList<>();
+        existingCustomerAddressList = new ArrayList<>();
+        existingCustomerEmailList = new ArrayList<>();
+        existingCustomerImageUrlList = new ArrayList<>();
+
         lessExisitngItemsNamesList = new ArrayList<>();
         lessExisitngItemsSerialNoList = new ArrayList<>();
         lessExisitngItemsKeyIDList = new ArrayList<>();

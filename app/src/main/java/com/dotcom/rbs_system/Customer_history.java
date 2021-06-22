@@ -35,7 +35,7 @@ import java.util.List;
 public class Customer_history extends AppCompatActivity {
 
     String customerKeyID;
-    List<String> shopkeeper_name_textview, item_name_textview,status_textView ,dateList,serial_no_textview,imageUrlList;
+    List<String> shopkeeper_name_textview, item_name_textview,status_textView,shopkeeperImage_imageView_list,customerImage_imageView_list ,dateList,shopkeeper_key_id,customer_key_id,serial_no_textview,imageUrlList;
 
     RecyclerView customer_ID_Image_recyclerView;
 
@@ -106,13 +106,25 @@ public class Customer_history extends AppCompatActivity {
         shopkeeper_name_textview = new ArrayList<>();
         item_name_textview = new ArrayList<>();
         status_textView = new ArrayList<>();
+        shopkeeperImage_imageView_list = new ArrayList<>();
+        customerImage_imageView_list = new ArrayList<>();
         serial_no_textview = new ArrayList<>();
         dateList = new ArrayList<>();
+        shopkeeper_key_id = new ArrayList<>();
+        customer_key_id = new ArrayList<>();
         imageUrlList = new ArrayList<>();
 
         shopkeeper_name_textview.add("Itech Computers");
         item_name_textview.add("Asus Rog Strix");
         status_textView.add("Buy");
+        shopkeeperImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
+        shopkeeperImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
+        shopkeeperImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
+        shopkeeperImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
+        customerImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
+        customerImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
+        customerImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
+        customerImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
         serial_no_textview.add("563276582");
         dateList.add("18/6/2021");
 
@@ -204,7 +216,7 @@ public class Customer_history extends AppCompatActivity {
                     pd1.dismissProgressBar(Customer_history.this);
                 }
 
-                adapterCustomerHistoryListRecyclerView = new AdapterCustomerHistoryListRecyclerView(Customer_history.this,shopkeeper_name_textview,item_name_textview,serial_no_textview,status_textView,dateList);
+                adapterCustomerHistoryListRecyclerView = new AdapterCustomerHistoryListRecyclerView(Customer_history.this,shopkeeper_name_textview,item_name_textview,serial_no_textview,status_textView,shopkeeperImage_imageView_list,customerImage_imageView_list,dateList,shopkeeper_key_id,customer_key_id);
                 customerHistoryRecyclerView.setAdapter(adapterCustomerHistoryListRecyclerView);
             }
 
