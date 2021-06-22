@@ -28,6 +28,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -185,16 +186,18 @@ public class Customer_history extends AppCompatActivity {
 
                 if (dataSnapshot.exists()){
                     for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                        shopkeeper_name_textview.add(dataSnapshot1.child("Item_name").getValue().toString());
-                        item_name_textview.add(dataSnapshot1.child("RBS").getValue().toString());
+                        shopkeeper_name_textview.add(dataSnapshot1.child("Shopkeeper_name").getValue().toString());
+                        item_name_textview.add(dataSnapshot1.child("Item_name").getValue().toString());
                         status_textView.add(dataSnapshot1.child("RBS").getValue().toString());
                         serial_no_textview.add(dataSnapshot1.child("Item_serialno").getValue().toString());
                         dateList.add(dataSnapshot1.child("Date").getValue().toString());
 
                     }
-//                    Collections.reverse(itemNameList);
-//                    Collections.reverse(rbsList);
-//                    Collections.reverse(dateList);
+                    Collections.reverse(shopkeeper_name_textview);
+                    Collections.reverse(item_name_textview);
+                    Collections.reverse(status_textView);
+                    Collections.reverse(serial_no_textview);
+                    Collections.reverse(dateList);
 
 
                 }else {
