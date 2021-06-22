@@ -24,8 +24,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Customer_history extends AppCompatActivity {
@@ -105,8 +108,7 @@ public class Customer_history extends AppCompatActivity {
         serial_no_textview = new ArrayList<>();
         dateList = new ArrayList<>();
         imageUrlList = new ArrayList<>();
-        imageUrlList.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MacueLabEgl0ea2Cb1t%2Fimage_1?alt=media&token=92a16e4d-1e46-48f7-9797-d061950bac99");
-        imageUrlList.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MacueLabEgl0ea2Cb1t%2Fimage_1?alt=media&token=92a16e4d-1e46-48f7-9797-d061950bac99");
+
         shopkeeper_name_textview.add("Itech Computers");
         item_name_textview.add("Asus Rog Strix");
         status_textView.add("Buy");
@@ -130,16 +132,39 @@ public class Customer_history extends AppCompatActivity {
         customerRef = FirebaseDatabase.getInstance().getReference("Customer_list");
 
         customer_ID_Image_recyclerView = (RecyclerView)findViewById(R.id.customer_ID_Image_recyclerView);
-
-
         customer_ID_Image_recyclerView.setLayoutManager(new GridLayoutManager(Customer_history.this,2));
 
-        adapterCustomerIDImagesRecyclerView = new AdapterCustomerIDImagesRecyclerView(Customer_history.this,imageUrlList);
 
-        customer_ID_Image_recyclerView.setAdapter(adapterCustomerIDImagesRecyclerView);
 
         pd1 = new Progreess_dialog();
         pd2 = new Progreess_dialog();
+
+        Date date = Calendar.getInstance().getTime();
+        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(date);
+
+//        String key = customerHistoryRef.push().getKey();
+//        customerHistoryRef.child(key).child("Item_name").setValue("HP Omen");
+//        customerHistoryRef.child(key).child("Item_serialno").setValue("HP/112233");
+//        customerHistoryRef.child(key).child("Shopkeeper_name").setValue("ITech Computers");
+//        customerHistoryRef.child(key).child("RBS").setValue("Buy");
+//        customerHistoryRef.child(key).child("Timestamp").setValue(date.getTime());
+//        customerHistoryRef.child(key).child("Date").setValue(currentDateString);
+//
+//        key = customerHistoryRef.push().getKey();
+//        customerHistoryRef.child(key).child("Item_name").setValue("HP Omen");
+//        customerHistoryRef.child(key).child("Item_serialno").setValue("HP/112233");
+//        customerHistoryRef.child(key).child("Shopkeeper_name").setValue("ITech Computers");
+//        customerHistoryRef.child(key).child("RBS").setValue("Sale");
+//        customerHistoryRef.child(key).child("Timestamp").setValue(date.getTime());
+//        customerHistoryRef.child(key).child("Date").setValue(currentDateString);
+//
+//        key = customerHistoryRef.push().getKey();
+//        customerHistoryRef.child(key).child("Item_name").setValue("HP Omen");
+//        customerHistoryRef.child(key).child("Item_serialno").setValue("HP/112233");
+//        customerHistoryRef.child(key).child("Shopkeeper_name").setValue("ITech Computers");
+//        customerHistoryRef.child(key).child("RBS").setValue("Buy");
+//        customerHistoryRef.child(key).child("Timestamp").setValue(date.getTime());
+//        customerHistoryRef.child(key).child("Date").setValue(currentDateString);
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -151,19 +176,20 @@ public class Customer_history extends AppCompatActivity {
 
     private void gettingHistoryList() {
         pd1.showProgressBar(Customer_history.this);
-        adapterCustomerHistoryListRecyclerView = new AdapterCustomerHistoryListRecyclerView(Customer_history.this,shopkeeper_name_textview,item_name_textview,serial_no_textview,status_textView,dateList);
-        customerHistoryRecyclerView.setAdapter(adapterCustomerHistoryListRecyclerView);
+
         pd1.dismissProgressBar(Customer_history.this);
-        orderQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+        customerHistoryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
                 if (dataSnapshot.exists()){
                     for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-//                        itemNameList.add(dataSnapshot1.child("Item_name").getValue().toString());
-//                        rbsList.add(dataSnapshot1.child("RBS").getValue().toString());
-//                        dateList.add(dataSnapshot1.child("Date").getValue().toString());
+                        shopkeeper_name_textview.add(dataSnapshot1.child("Item_name").getValue().toString());
+                        item_name_textview.add(dataSnapshot1.child("RBS").getValue().toString());
+                        status_textView.add(dataSnapshot1.child("RBS").getValue().toString());
+                        serial_no_textview.add(dataSnapshot1.child("Item_serialno").getValue().toString());
+                        dateList.add(dataSnapshot1.child("Date").getValue().toString());
 
                     }
 //                    Collections.reverse(itemNameList);
@@ -174,6 +200,9 @@ public class Customer_history extends AppCompatActivity {
                 }else {
                     pd1.dismissProgressBar(Customer_history.this);
                 }
+
+                adapterCustomerHistoryListRecyclerView = new AdapterCustomerHistoryListRecyclerView(Customer_history.this,shopkeeper_name_textview,item_name_textview,serial_no_textview,status_textView,dateList);
+                customerHistoryRecyclerView.setAdapter(adapterCustomerHistoryListRecyclerView);
             }
 
             @Override
@@ -196,6 +225,12 @@ public class Customer_history extends AppCompatActivity {
                     address_textView.setText(dataSnapshot.child("Address").getValue().toString());
                     email_textView.setText(dataSnapshot.child("Email").getValue().toString());
 
+                    for(DataSnapshot dataSnapshot1: dataSnapshot.child("ID_Image_urls").getChildren()){
+                        imageUrlList.add(dataSnapshot1.getValue().toString());
+                    }
+
+                    adapterCustomerIDImagesRecyclerView = new AdapterCustomerIDImagesRecyclerView(Customer_history.this,imageUrlList);
+                    customer_ID_Image_recyclerView.setAdapter(adapterCustomerIDImagesRecyclerView);
                     pd2.dismissProgressBar(Customer_history.this);
                 }else {
                     pd2.dismissProgressBar(Customer_history.this);

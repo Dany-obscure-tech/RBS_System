@@ -128,6 +128,7 @@ public class RBS_option extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(),Sale.class);
+                intent.putExtra("ITEM_SELL_CHECK","FALSE");
                 startActivity(intent);
             }
         });
@@ -172,6 +173,7 @@ public class RBS_option extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(),Sale.class);
+                intent.putExtra("ITEM_SELL_CHECK","FALSE");
                 Exchanged_itemdata.getInstance().setExchangeCheck(false);
                 Exchanged_itemdata.getInstance().setExchangeFromBuyCheck(false);
                 Exchanged_itemdata.getInstance().clearData();
@@ -182,6 +184,7 @@ public class RBS_option extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(),Sale.class);
+                intent.putExtra("ITEM_SELL_CHECK","FALSE");
                 Exchanged_itemdata.getInstance().setExchangeCheck(false);
                 Exchanged_itemdata.getInstance().setExchangeFromBuyCheck(false);
                 Exchanged_itemdata.getInstance().clearData();

@@ -53,8 +53,10 @@ public class AdapterItemHistoryListRecyclerView extends RecyclerView.Adapter<Ada
     public void onBindViewHolder(@NonNull AdapterItemHistoryListRecyclerView.ViewHolder holder, final int position) {
 
         holder.status_textView.setText(status_textView.get(position));
-        holder.shopkeeper_status.setText(shopkeeper_status.get(position));
         holder.shopkeeper_name_textview.setText(shopkeeper_name_textview.get(position));
+        holder.shopkeeper_status.setText(shopkeeper_status.get(position));
+        holder.customer_status.setText(customer_status.get(position));
+        holder.customer_name_textview.setText(customer_name_textview.get(position));
         holder.date_textView.setText(dateList.get(position));
 //        Picasso.get(shopkeeperImage_imageView).load();
 
@@ -68,7 +70,7 @@ public class AdapterItemHistoryListRecyclerView extends RecyclerView.Adapter<Ada
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView date_textView,status_textView,shopkeeper_status,shopkeeper_name_textview,customer_status,customer_name_textview;
-        ImageView shopkeeperImage_imageView;
+        ImageView shopkeeperImage_imageView,customerImage_imageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,7 +82,7 @@ public class AdapterItemHistoryListRecyclerView extends RecyclerView.Adapter<Ada
             customer_status = (TextView)itemView.findViewById(R.id.customer_status);
             customer_name_textview = (TextView)itemView.findViewById(R.id.customer_name_textview);
             shopkeeperImage_imageView = (ImageView) itemView.findViewById(R.id.shopkeeperImage_imageView);
-
+            customerImage_imageView = (ImageView) itemView.findViewById(R.id.customerImage_imageView);
 
         }
     }

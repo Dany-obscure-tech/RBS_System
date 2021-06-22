@@ -159,7 +159,7 @@ public class BuyLocal_home extends Fragment {
         test_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(),RBS_option.class));
+                startActivity(new Intent(getActivity(),Repair_Ticket.class));
             }
         });
 
