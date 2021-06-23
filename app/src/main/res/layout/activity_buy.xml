@@ -208,33 +208,37 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/searchForItem_cardView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/ripple_effect_cardview"
-                app:cardBackgroundColor="@color/colorWhite"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
+                android:layout_height="wrap_content"
+                style="@style/CardView_style">
 
-                <LinearLayout
-                    android:id="@+id/searchForCategories"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_margin="15dp"
+                    <ImageView
+                        android:id="@+id/itemImage_imageView"
+                        style="@style/Image_views"
+                        android:layout_width="200px"
+                        android:layout_height="200px"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginRight="15dp"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone"
+                        android:src="@drawable/laptop" />
+
+                    <RelativeLayout
+                        android:layout_toRightOf="@+id/itemImage_imageView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
                         <TextView
                             android:id="@+id/itemName_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/Titles_item"
+                            android:text="Search for item..."
                             android:textColor="@color/textGrey"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:textSize="18sp"
-                            android:layout_gravity="center_vertical"
-                            android:text="Search for item ..."
-                            android:layout_width="200dp"
-                            android:layout_height="wrap_content"/>
+                            android:layout_margin="5dp"/>
 
                         <TextView
                             android:id="@+id/itemID_textView"
@@ -242,97 +246,73 @@
                             android:textColor="@color/textGrey"
                             android:fontFamily="@font/segoe_ui_bold"
                             android:textSize="15sp"
-                            android:layout_marginBottom="20dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginLeft="5dp"
                             android:layout_gravity="center_vertical"
                             android:text="IMEI/Serial no"
+                            android:layout_below="@+id/itemName_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
-
-
                         <LinearLayout
-                            android:orientation="horizontal"
+                            android:id="@+id/item_price_linearLayout"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/itemID_textView">
 
                             <TextView
                                 android:id="@+id/itemPriceCurrency_textView"
+                                style="@style/SubTitles_item_values"
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="2dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_height="wrap_content"
                                 android:visibility="gone"
                                 android:textColor="@color/textGreen"
-                                android:fontFamily="@font/segoe_ui_bold"
-                                android:textSize="20sp"
-                                android:layout_gravity="center_vertical"
-                                android:text="$"
-                                android:layout_marginRight="5dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
+                                android:text="$" />
 
                             <TextView
                                 android:id="@+id/itemPrice_textView"
-                                android:visibility="gone"
-                                android:textColor="@color/textGreen"
-                                android:fontFamily="@font/segoe_ui_bold"
-                                android:textSize="20sp"
-                                android:layout_gravity="center_vertical"
-                                android:text="0.00"
+                                style="@style/SubTitles_item_values"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="2dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/textGreen"
+                                android:visibility="gone"
+                                android:text="157" />
+
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/itemLastActive_linearLayout"
-                            android:layout_marginTop="10dp"
-                            android:visibility="gone"
-                            android:orientation="horizontal"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:textColor="@color/textGrey"
-                                android:fontFamily="@font/segoe_ui"
-                                android:textSize="15sp"
-                                android:layout_gravity="center_vertical"
-                                android:text="Last Active: "
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/item_price_linearLayout">
 
                             <TextView
                                 android:id="@+id/itemLastActive_textView"
                                 android:textColor="@color/textGrey"
                                 android:fontFamily="@font/segoe_ui"
                                 android:textSize="15sp"
+                                android:visibility="gone"
                                 android:layout_gravity="center_vertical"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="2dp"
+                                android:layout_marginLeft="5dp"
                                 android:text=""
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
 
                         </LinearLayout>
 
-                    </LinearLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:id="@+id/itemImage_imageView"
-                            android:visibility="gone"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/shirt"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginRight="20dp"
-                            android:adjustViewBounds="true"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"/>
-
                     </RelativeLayout>
 
-                </LinearLayout>
-
-
+                </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
 

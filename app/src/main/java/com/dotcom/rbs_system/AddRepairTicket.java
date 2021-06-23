@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
@@ -16,18 +17,25 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterRepairsFaultListRecyclerView;
+import com.dotcom.rbs_system.Adapter.Adapter_customerList_alert_dialog;
+import com.dotcom.rbs_system.Adapter.Adapter_itemList_alert_dialog;
+import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Classes.Repair_details_edit;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,7 +68,47 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
     double incremantalAmount;
     double incremantalPendingAmount;
 
-    TextView customer_textView, itemName_textView,customer_add_textview,item_add_textView;
+    TextView itemName_textView, itemID_textView, itemPriceCurrency_textView, itemPrice_textView;
+
+
+    TextView customer_textView, customer_add_textview, item_add_textView;
+
+    TextView itemLastActive_textView, customer_add_textView, datebtn_textView, submit_textView;
+
+
+    Adapter_itemList_alert_dialog adapter_itemList_alert_dialog;
+
+    Dialog customerList_alert_dialog, itemList_alert_dialog;
+
+    Boolean isScrolling = false, itemDatafullyloaded = false;
+    Boolean customerDatafullyloaded = false;
+    Boolean isCustomerScrolling = false;
+
+
+    String findCustomer, searchCustomer;
+    String searchItem, findItem;
+
+
+    int currentCustomer, totalCustomer, scrollOutCustomer;
+
+
+    RecyclerView itemList_recyclerView, customerList_recyclerView;
+
+    ImageView customerImage_imageView, itemImage_imageView;
+
+
+    Adapter_customerList_alert_dialog adapter_customerList_alert_dialog;
+
+    Handler handler = new Handler();
+
+    int currentItems, totalItems, scrollOutItems;
+
+
+    EditText searchCustomer_editText, search_editText, searchItem_editText;
+
+    TextView customerName_textView, customerEmail_textView, customerPhno_textView, customerID_textView;
+
+    ProgressBar alert_rbs_customerlist_progressBar,alert_rbs_itemlist_progressBar;
 
     Repair_details_edit repair_details_edit_obj;
 
@@ -76,11 +124,11 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
 
 
     LinearLayout itemDetails, customerDetails, toggling_linear;
-    LinearLayout changesConfirmation_linearLayout;
+    LinearLayout changesConfirmation_linearLayout, customerID_linearLayout;
 
     ImageButton gmail_btn, sms_btn, print_btn;
     ImageButton Back_btn;
-    TextView addFaults_textview,date_textview,submit_textview;
+    TextView addFaults_textview, date_textview, submit_textview;
     Button btn_done;
 
     TextView category_textView, condition_textView, notes_textView, phno_textView, dob_textView, address_textView, email_textView;
@@ -107,8 +155,15 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
     String itemCategory;
     String key;
 
-    List<String> exisitngCustomerList, exisitngCustomerIDList, exisitngCustomerKeyIDList, exisitngItemsList, exisitngItemsIDList, exisitngItemsKeyIDList;
-    List<String> exisitngItemsCategoryList, existingItemsConditionsList, existingItemsNotesList, existingCustomerPhnoList, existingCustomerDobList, existingCustomerAddressList, existingCustomerEmailList;
+    List<String> exisitngItemsCategoryList, existingItemsConditionsList, existingItemsPriceList, existingItemsCategoryList, existingItemsNotesList;
+
+    List<String> exisitngItemsNamesList, exisitngItemsSerialNoList, existingItemsLastActiveList, existingItemsImageUrlList;
+    List<String> filteredExisitngItemsNamesList, filteredExisitngItemsSerialNoList, filteredExisitngItemsKeyIDList, filteredExistingItemsPriceList, filteredExistingItemsCategoryList, filteredExistingItemsLastActiveList, filteredExistingItemsImageUrlList;
+    List<String> lessExisitngItemsNamesList, lessExisitngItemsSerialNoList, lessExistingItemsLastActiveList, lessExistingItemsImageUrlList, lessExistingItemsCategoryList, lessExistingItemsPriceList, lessExisitngItemsKeyIDList;
+    List<String> exisitngCustomerList, exisitngCustomerIDList, exisitngCustomerKeyIDList, existingCustomerPhnoList, existingCustomerDobList, existingCustomerAddressList, existingCustomerEmailList, existingCustomerImageUrlList;
+    List<String> filteredExisitngCustomerList, filteredExisitngCustomerIDList, filteredExisitngCustomerKeyIDList, filteredExistingCustomerPhnoList, filteredExistingCustomerDobList, filteredExistingCustomerAddressList, filteredExistingCustomerEmailList, filteredExistingCustomerImageUrlList;
+    List<String> lessExisitngCustomerList, lessExisitngCustomerIDList, lessExistingCustomerPhnoList, lessExistingCustomerDobList, lessExistingCustomerAddressList, lessExistingCustomerEmailList, lessExisitngCustomerKeyIDList, lessExistingCustomerImageUrlList;
+    List<String> exisitngItemsList, exisitngItemsIDList, exisitngItemsKeyIDList;
     List<String> faultNameList, faultPriceList, faultKeyIDList;
     List<String> tempFaultNameList;
     List<String> tempFaultPriceList;
@@ -158,6 +213,8 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         getFaultsList();
         fetchingExisitingCustomers();
         fetchingExisitingItems();
+        searchItem();
+        searchCustomers();
         onClickListeners();
         historyActivity();
         editCheckAndProcess();
@@ -165,6 +222,316 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         customer = false;
 
 
+    }
+
+    private void searchItem() {
+        searchItem_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                currentItems = 0;
+                totalItems = 0;
+                scrollOutItems = 0;
+                handler.removeCallbacksAndMessages(null);
+
+                lessExisitngItemsNamesList.clear();
+                lessExisitngItemsSerialNoList.clear();
+                lessExistingItemsLastActiveList.clear();
+                lessExistingItemsImageUrlList.clear();
+                lessExistingItemsPriceList.clear();
+                lessExistingItemsCategoryList.clear();
+                lessExisitngItemsKeyIDList.clear();
+
+                filteredExisitngItemsNamesList.clear();
+                filteredExisitngItemsSerialNoList.clear();
+                filteredExistingItemsLastActiveList.clear();
+                filteredExistingItemsImageUrlList.clear();
+                filteredExistingItemsPriceList.clear();
+                filteredExistingItemsCategoryList.clear();
+                filteredExisitngItemsKeyIDList.clear();
+
+                findItem = searchItem_editText.getText().toString();
+                for (int j = 0; j < exisitngItemsNamesList.size(); j++) {
+                    searchItem = exisitngItemsNamesList.get(j) + " " + exisitngItemsSerialNoList.get(j);
+
+                    int searchMeLength = searchItem.length();
+                    int findMeLength = findItem.length();
+//                    boolean foundIt = false;
+                    for (int i = 0;
+                         i <= (searchMeLength - findMeLength);
+                         i++) {
+                        if (searchItem.regionMatches(true, i, findItem, 0, findMeLength)) {
+
+                            filteredExisitngItemsNamesList.add(exisitngItemsNamesList.get(j));
+                            filteredExisitngItemsSerialNoList.add(exisitngItemsSerialNoList.get(j));
+                            filteredExistingItemsLastActiveList.add(existingItemsLastActiveList.get(j));
+                            filteredExistingItemsImageUrlList.add(existingItemsImageUrlList.get(j));
+                            filteredExistingItemsPriceList.add(existingItemsPriceList.get(j));
+                            filteredExistingItemsCategoryList.add(existingItemsCategoryList.get(j));
+                            filteredExisitngItemsKeyIDList.add(exisitngItemsKeyIDList.get(j));
+
+                            adapter_itemList_alert_dialog.notifyDataSetChanged();
+
+                            break;
+                        }
+                    }
+                }
+                getFilteredItems();
+            }
+        });
+
+    }
+
+    private void getFilteredItems() {
+        if (filteredExisitngItemsNamesList.size() > 10) {
+            for (int i = 0; i < 10; i++) {
+                lessExisitngItemsNamesList.add(filteredExisitngItemsNamesList.get(i));
+                lessExisitngItemsSerialNoList.add(filteredExisitngItemsSerialNoList.get(i));
+                lessExistingItemsLastActiveList.add(filteredExistingItemsLastActiveList.get(i));
+                lessExistingItemsImageUrlList.add(filteredExistingItemsImageUrlList.get(i));
+                lessExistingItemsPriceList.add(filteredExistingItemsPriceList.get(i));
+                lessExistingItemsCategoryList.add(filteredExistingItemsCategoryList.get(i));
+                lessExisitngItemsKeyIDList.add(filteredExisitngItemsKeyIDList.get(i));
+            }
+        } else {
+            for (int i = 0; i < filteredExisitngItemsNamesList.size(); i++) {
+                lessExisitngItemsNamesList.add(filteredExisitngItemsNamesList.get(i));
+                lessExisitngItemsSerialNoList.add(filteredExisitngItemsSerialNoList.get(i));
+                lessExistingItemsLastActiveList.add(filteredExistingItemsLastActiveList.get(i));
+                lessExistingItemsImageUrlList.add(filteredExistingItemsImageUrlList.get(i));
+                lessExistingItemsPriceList.add(filteredExistingItemsPriceList.get(i));
+                lessExistingItemsCategoryList.add(filteredExistingItemsCategoryList.get(i));
+                lessExisitngItemsKeyIDList.add(filteredExisitngItemsKeyIDList.get(i));
+            }
+        }
+
+        adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(AddRepairTicket.this, lessExisitngItemsNamesList, lessExisitngItemsSerialNoList, lessExisitngItemsKeyIDList, lessExistingItemsPriceList, lessExistingItemsCategoryList, lessExistingItemsLastActiveList, lessExistingItemsImageUrlList, itemName_textView, itemID_textView, itemPriceCurrency_textView, itemPrice_textView, itemLastActive_textView, itemImage_imageView, itemList_alert_dialog);
+        itemList_recyclerView.setAdapter(adapter_itemList_alert_dialog);
+        onScrollListner(filteredExisitngItemsNamesList, filteredExisitngItemsSerialNoList, filteredExistingItemsLastActiveList, filteredExistingItemsImageUrlList, filteredExistingItemsPriceList, filteredExistingItemsCategoryList, filteredExisitngItemsKeyIDList);
+
+    }
+
+    private void onScrollListner(List<String> filteredExisitngItemsNamesList, List<String> filteredExisitngItemsSerialNoList, List<String> filteredExistingItemsLastActiveList, List<String> filteredExistingItemsImageUrlList, List<String> filteredExistingItemsPriceList, List<String> filteredExistingItemsCategoryList, List<String> filteredExisitngItemsKeyIDList) {
+        itemList_recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    isScrolling = true;
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                currentItems = itemList_recyclerView.getLayoutManager().getChildCount();
+                totalItems = itemList_recyclerView.getLayoutManager().getItemCount();
+                scrollOutItems = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
+                if (isScrolling && (currentItems + scrollOutItems == totalItems)) {
+                    isScrolling = false;
+                    fetchDataforRecyclerView();
+                }
+            }
+        });
+    }
+
+    private void fetchDataforRecyclerView() {
+        if (itemDatafullyloaded) {
+
+        } else {
+            alert_rbs_itemlist_progressBar.setVisibility(View.VISIBLE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    int size = lessExisitngItemsNamesList.size() + 2;
+                    for (int i = lessExisitngItemsNamesList.size(); i < size; i++) {
+                        if (i < exisitngItemsNamesList.size()) {
+                            lessExisitngItemsNamesList.add(exisitngItemsNamesList.get(i));
+                            lessExisitngItemsSerialNoList.add(exisitngItemsSerialNoList.get(i));
+                            lessExistingItemsLastActiveList.add(existingItemsLastActiveList.get(i));
+                            lessExistingItemsImageUrlList.add(existingItemsImageUrlList.get(i));
+                            lessExistingItemsPriceList.add(existingItemsPriceList.get(i));
+                            lessExisitngItemsKeyIDList.add(exisitngItemsKeyIDList.get(i));
+                        }
+
+                    }
+                    adapter_itemList_alert_dialog.notifyDataSetChanged();
+                    alert_rbs_itemlist_progressBar.setVisibility(View.GONE);
+                    if (lessExisitngItemsNamesList.size() == exisitngItemsNamesList.size()) {
+                        itemDatafullyloaded = true;
+                    }
+                }
+            }, 3000);
+        }
+
+    }
+
+    private void searchCustomers() {
+        searchCustomer_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                currentItems = 0;
+                totalItems = 0;
+                scrollOutItems = 0;
+                handler.removeCallbacksAndMessages(null);
+
+                lessExisitngCustomerList.clear();
+                lessExisitngCustomerIDList.clear();
+                lessExisitngCustomerKeyIDList.clear();
+                lessExistingCustomerPhnoList.clear();
+                lessExistingCustomerDobList.clear();
+                lessExistingCustomerAddressList.clear();
+                lessExistingCustomerEmailList.clear();
+                lessExistingCustomerImageUrlList.clear();
+
+                filteredExisitngCustomerList.clear();
+                filteredExisitngCustomerIDList.clear();
+                filteredExisitngCustomerKeyIDList.clear();
+                filteredExistingCustomerPhnoList.clear();
+                filteredExistingCustomerDobList.clear();
+                filteredExistingCustomerAddressList.clear();
+                filteredExistingCustomerEmailList.clear();
+                filteredExistingCustomerImageUrlList.clear();
+
+                findCustomer = searchCustomer_editText.getText().toString();
+                for (int j = 0; j < exisitngCustomerList.size(); j++) {
+                    searchCustomer = exisitngCustomerList.get(j) + " " + exisitngCustomerIDList.get(j);
+
+                    int searchMeLength = searchCustomer.length();
+                    int findMeLength = findCustomer.length();
+//                    boolean foundIt = false;
+                    for (int i = 0;
+                         i <= (searchMeLength - findMeLength);
+                         i++) {
+                        if (searchCustomer.regionMatches(true, i, findCustomer, 0, findMeLength)) {
+
+                            filteredExisitngCustomerList.add(exisitngCustomerList.get(j));
+                            filteredExisitngCustomerIDList.add(exisitngCustomerIDList.get(j));
+                            filteredExisitngCustomerKeyIDList.add(exisitngCustomerKeyIDList.get(j));
+                            filteredExistingCustomerPhnoList.add(existingCustomerPhnoList.get(j));
+                            filteredExistingCustomerDobList.add(existingCustomerDobList.get(j));
+                            filteredExistingCustomerAddressList.add(existingCustomerAddressList.get(j));
+                            filteredExistingCustomerEmailList.add(existingCustomerEmailList.get(j));
+                            filteredExistingCustomerImageUrlList.add(existingCustomerImageUrlList.get(j));
+
+
+                            break;
+                        }
+                    }
+                }
+                getFilteredCustomers();
+            }
+        });
+
+    }
+
+    private void getFilteredCustomers() {
+        if (filteredExisitngCustomerList.size() > 10) {
+            for (int i = 0; i < 10; i++) {
+                lessExisitngCustomerList.add(filteredExisitngCustomerList.get(i));
+                lessExisitngCustomerIDList.add(filteredExisitngCustomerIDList.get(i));
+                lessExisitngCustomerKeyIDList.add(filteredExisitngCustomerKeyIDList.get(i));
+                lessExistingCustomerPhnoList.add(filteredExistingCustomerPhnoList.get(i));
+                lessExistingCustomerDobList.add(filteredExistingCustomerDobList.get(i));
+                lessExistingCustomerAddressList.add(filteredExistingCustomerAddressList.get(i));
+                lessExistingCustomerEmailList.add(filteredExistingCustomerEmailList.get(i));
+                lessExistingCustomerImageUrlList.add(filteredExistingCustomerImageUrlList.get(i));
+            }
+        } else {
+            for (int i = 0; i < filteredExisitngCustomerList.size(); i++) {
+                lessExisitngCustomerList.add(filteredExisitngCustomerList.get(i));
+                lessExisitngCustomerIDList.add(filteredExisitngCustomerIDList.get(i));
+                lessExisitngCustomerKeyIDList.add(filteredExisitngCustomerKeyIDList.get(i));
+                lessExistingCustomerPhnoList.add(filteredExistingCustomerPhnoList.get(i));
+                lessExistingCustomerDobList.add(filteredExistingCustomerDobList.get(i));
+                lessExistingCustomerAddressList.add(filteredExistingCustomerAddressList.get(i));
+                lessExistingCustomerEmailList.add(filteredExistingCustomerEmailList.get(i));
+                lessExistingCustomerImageUrlList.add(filteredExistingCustomerImageUrlList.get(i));
+            }
+        }
+
+        adapter_customerList_alert_dialog = new Adapter_customerList_alert_dialog(AddRepairTicket.this, lessExisitngCustomerList, lessExisitngCustomerKeyIDList, lessExisitngCustomerIDList, lessExistingCustomerPhnoList, lessExistingCustomerEmailList, lessExistingCustomerImageUrlList, customerName_textView, customerEmail_textView, customerID_textView, customerPhno_textView, customerImage_imageView, customerList_alert_dialog, customerID_linearLayout);
+        customerList_recyclerView.setAdapter(adapter_customerList_alert_dialog);
+        onScrollCustomerListner(filteredExisitngCustomerList, filteredExisitngCustomerIDList, filteredExisitngCustomerKeyIDList, filteredExistingCustomerPhnoList, filteredExistingCustomerDobList, filteredExistingCustomerAddressList, filteredExistingCustomerEmailList, filteredExistingCustomerImageUrlList);
+
+    }
+
+    private void onScrollCustomerListner(List<String> filteredExisitngCustomerList, List<String> filteredExisitngCustomerIDList, List<String> filteredExisitngCustomerKeyIDList, List<String> filteredExistingCustomerPhnoList, List<String> filteredExistingCustomerDobList, List<String> filteredExistingCustomerAddressList, List<String> filteredExistingCustomerEmailList, List<String> filteredExistingCustomerImageUrlList) {
+        itemList_recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    isScrolling = true;
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                currentCustomer = customerList_recyclerView.getLayoutManager().getChildCount();
+                totalCustomer = customerList_recyclerView.getLayoutManager().getItemCount();
+                scrollOutCustomer = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
+                if (isScrolling && (currentCustomer + scrollOutCustomer == totalCustomer)) {
+                    isScrolling = false;
+                    fetchDataforCustomerRecyclerView(exisitngCustomerList, exisitngCustomerIDList, existingCustomerPhnoList, existingCustomerDobList, existingCustomerAddressList, existingCustomerEmailList, exisitngCustomerKeyIDList, existingCustomerImageUrlList);
+                }
+            }
+        });
+
+    }
+
+    private void fetchDataforCustomerRecyclerView(List<String> exisitngCustomerList, List<String> exisitngCustomerIDList, List<String> existingCustomerPhnoList, List<String> existingCustomerDobList, List<String> existingCustomerAddressList, List<String> existingCustomerEmailList, List<String> exisitngCustomerKeyIDList, List<String> existingCustomerImageUrlList) {
+        if (customerDatafullyloaded) {
+
+        } else {
+            alert_rbs_customerlist_progressBar.setVisibility(View.VISIBLE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    int size = lessExisitngCustomerList.size() + 2;
+                    for (int i = lessExisitngCustomerList.size(); i < size; i++) {
+                        if (i < exisitngCustomerList.size()) {
+                            System.out.println(String.valueOf(i));
+                            lessExisitngCustomerList.add(exisitngCustomerList.get(i));
+                            lessExisitngCustomerIDList.add(exisitngCustomerIDList.get(i));
+                            lessExistingCustomerPhnoList.add(existingCustomerPhnoList.get(i));
+                            lessExistingCustomerEmailList.add(existingCustomerEmailList.get(i));
+                            lessExisitngCustomerKeyIDList.add(exisitngCustomerKeyIDList.get(i));
+                            lessExistingCustomerImageUrlList.add(existingCustomerImageUrlList.get(i));
+                        }
+
+                    }
+                    adapter_customerList_alert_dialog.notifyDataSetChanged();
+                    alert_rbs_customerlist_progressBar.setVisibility(View.GONE);
+                    if (lessExisitngCustomerList.size() == exisitngCustomerList.size()) {
+                        customerDatafullyloaded = true;
+                    }
+
+                }
+            }, 3000);
+        }
     }
 
 
@@ -232,12 +599,65 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         toggling_linear = (LinearLayout) findViewById(R.id.toggling_linear);
         changesConfirmation_linearLayout = (LinearLayout) findViewById(R.id.changesConfirmation_linearLayout);
 
-        exisitngCustomerList = new ArrayList<>();
-        exisitngCustomerIDList = new ArrayList<>();
-        exisitngCustomerKeyIDList = new ArrayList<>();
+        existingItemsPriceList = new ArrayList<>();
+        existingItemsCategoryList = new ArrayList<>();
+        existingItemsNotesList = new ArrayList<>();
+        existingCustomerPhnoList = new ArrayList<>();
+        existingCustomerDobList = new ArrayList<>();
+        existingCustomerAddressList = new ArrayList<>();
+        existingCustomerEmailList = new ArrayList<>();
+        existingCustomerImageUrlList = new ArrayList<>();
+
+        exisitngItemsNamesList = new ArrayList<>();
+        exisitngItemsSerialNoList = new ArrayList<>();
+        existingItemsLastActiveList = new ArrayList<>();
+        existingItemsImageUrlList = new ArrayList<>();
+
+        filteredExisitngItemsNamesList = new ArrayList<>();
+        filteredExisitngItemsSerialNoList = new ArrayList<>();
+        filteredExisitngItemsKeyIDList = new ArrayList<>();
+        filteredExistingItemsPriceList = new ArrayList<>();
+        filteredExistingItemsCategoryList = new ArrayList<>();
+        filteredExistingItemsLastActiveList = new ArrayList<>();
+        filteredExistingItemsImageUrlList = new ArrayList<>();
+
+        lessExisitngItemsNamesList = new ArrayList<>();
+        lessExisitngItemsSerialNoList = new ArrayList<>();
+        lessExistingItemsLastActiveList = new ArrayList<>();
+        lessExistingItemsImageUrlList = new ArrayList<>();
+        lessExistingItemsCategoryList = new ArrayList<>();
+        lessExistingItemsPriceList = new ArrayList<>();
+        lessExisitngItemsKeyIDList = new ArrayList<>();
+
+        lessExisitngCustomerList = new ArrayList<>();
+        lessExisitngCustomerIDList = new ArrayList<>();
+        lessExisitngCustomerKeyIDList = new ArrayList<>();
+        lessExistingCustomerPhnoList = new ArrayList<>();
+        lessExistingCustomerDobList = new ArrayList<>();
+        lessExistingCustomerAddressList = new ArrayList<>();
+        lessExistingCustomerEmailList = new ArrayList<>();
+        lessExistingCustomerImageUrlList = new ArrayList<>();
+
+        filteredExisitngCustomerList = new ArrayList<>();
+        filteredExisitngCustomerIDList = new ArrayList<>();
+        filteredExisitngCustomerKeyIDList = new ArrayList<>();
+        filteredExistingCustomerPhnoList = new ArrayList<>();
+        filteredExistingCustomerDobList = new ArrayList<>();
+        filteredExistingCustomerAddressList = new ArrayList<>();
+        filteredExistingCustomerEmailList = new ArrayList<>();
+        filteredExistingCustomerImageUrlList = new ArrayList<>();
+
         exisitngItemsList = new ArrayList<>();
         exisitngItemsIDList = new ArrayList<>();
         exisitngItemsKeyIDList = new ArrayList<>();
+        exisitngCustomerList = new ArrayList<>();
+        exisitngCustomerIDList = new ArrayList<>();
+        exisitngCustomerKeyIDList = new ArrayList<>();
+        existingCustomerPhnoList = new ArrayList<>();
+        existingCustomerDobList = new ArrayList<>();
+        existingCustomerAddressList = new ArrayList<>();
+        existingCustomerEmailList = new ArrayList<>();
+        existingCustomerImageUrlList = new ArrayList<>();
 
         exisitngItemsCategoryList = new ArrayList<>();
         existingItemsConditionsList = new ArrayList<>();
@@ -256,7 +676,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
 
 
         searchForCustomer_cardview = (CardView) findViewById(R.id.searchForCustomer_cardView);
-        searchForItem_cardview = (CardView) findViewById(R.id.searchForItem_cardview);
+        searchForItem_cardview = (CardView) findViewById(R.id.searchForItem_cardView);
         category_textView = (TextView) findViewById(R.id.category_textView);
         condition_textView = (TextView) findViewById(R.id.condition_textView);
         notes_textView = (TextView) findViewById(R.id.notes_textView);
@@ -270,13 +690,50 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         confirmChanges_textView = (TextView) findViewById(R.id.confirmChanges_textView);
         cancleChanges_textView = (TextView) findViewById(R.id.cancleChanges_textView);
         last_active_textView = (TextView) findViewById(R.id.last_active_textView);
-        customer_textView = (TextView) findViewById(R.id.customer_textView);
-        itemName_textView= (TextView) findViewById(R.id.itemName_textView);
+
+        itemName_textView = (TextView) findViewById(R.id.itemName_textView);
+
+        itemLastActive_textView = (TextView) findViewById(R.id.itemLastActive_textView);
+        itemID_textView = (TextView) findViewById(R.id.itemID_textView);
+        itemPriceCurrency_textView = (TextView) findViewById(R.id.itemPriceCurrency_textView);
+        itemPriceCurrency_textView.setText(Currency.getInstance().getCurrency());
+        itemPrice_textView = (TextView) findViewById(R.id.itemPrice_textView);
+
+        itemList_alert_dialog = new Dialog(this);
+        itemList_alert_dialog.setContentView(R.layout.alert_rbs_itemlist);
+
+        alert_rbs_itemlist_progressBar = (ProgressBar)itemList_alert_dialog.findViewById(R.id.alert_rbs_itemlist_progressBar);
+
+
+        searchItem_editText = (EditText) itemList_alert_dialog.findViewById(R.id.searchItem_editText);
+
+        customerName_textView = (TextView) findViewById(R.id.customerName_textView);
+        customerEmail_textView = (TextView) findViewById(R.id.customerEmail_textView);
+        customerPhno_textView = (TextView) findViewById(R.id.customerPhno_textView);
+        customerID_textView = (TextView) findViewById(R.id.customerID_textView);
+
+        itemList_recyclerView = (RecyclerView) itemList_alert_dialog.findViewById(R.id.itemList_recyclerView);
+        search_editText = (EditText) itemList_alert_dialog.findViewById(R.id.search_editText);
+        itemList_recyclerView.setLayoutManager(new GridLayoutManager(AddRepairTicket.this, 1));
+
+        customerList_alert_dialog = new Dialog(this);
+        customerList_alert_dialog.setContentView(R.layout.alert_rbs_customerlist);
+
+        alert_rbs_customerlist_progressBar = (ProgressBar) customerList_alert_dialog.findViewById(R.id.alert_rbs_customerlist_progressBar);
+        searchCustomer_editText = (EditText) customerList_alert_dialog.findViewById(R.id.searchCustomer_editText);
+
+        customerImage_imageView = (ImageView) findViewById(R.id.customerImage_imageView);
+        itemImage_imageView = (ImageView) findViewById(R.id.itemImage_imageView);
+
+        customerID_linearLayout = (LinearLayout) findViewById(R.id.customerID_linearLayout);
+
+        customerList_recyclerView = (RecyclerView) customerList_alert_dialog.findViewById(R.id.customerList_recyclerView);
+        customerList_recyclerView.setLayoutManager(new GridLayoutManager(AddRepairTicket.this, 1));
 
         /////Firebase config
         firebaseAuthUID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
         existingCustomersRef = FirebaseDatabase.getInstance().getReference("Customer_list");
-        existingItemsRef = FirebaseDatabase.getInstance().getReference("Items");
+        existingItemsRef = FirebaseDatabase.getInstance().getReference("Stock/Customers/");
         repairRef = FirebaseDatabase.getInstance().getReference("Repairs_list/" + firebaseAuthUID + "/" + repair_details_edit_obj.getTicketNo_TextView());
         repairTicketRef = FirebaseDatabase.getInstance().getReference("Repairs_ticket_list/" + firebaseAuthUID + "/" + repair_details_edit_obj.getTicketNo_TextView());
 
@@ -296,80 +753,163 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
     }
 
     private void fetchingExisitingCustomers() {
-        pd2.showProgressBar(AddRepairTicket.this);
-        exisitngCustomerList.clear();
-        exisitngCustomerIDList.clear();
-        existingCustomerPhnoList.clear();
-        existingCustomerDobList.clear();
-        existingCustomerAddressList.clear();
-        existingCustomerEmailList.clear();
-        exisitngCustomerKeyIDList.clear();
-
+        pd3.showProgressBar(AddRepairTicket.this);
         existingCustomersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        exisitngCustomerList.add(String.valueOf(dataSnapshot1.child("Name").getValue()));
+                        exisitngCustomerIDList.add(String.valueOf(dataSnapshot1.child("ID").getValue()));
+                        existingCustomerPhnoList.add(String.valueOf(dataSnapshot1.child("Phone_no").getValue()));
+                        existingCustomerDobList.add(String.valueOf(dataSnapshot1.child("DOB").getValue()));
+                        existingCustomerAddressList.add(String.valueOf(dataSnapshot1.child("Address").getValue()));
+                        existingCustomerEmailList.add(String.valueOf(dataSnapshot1.child("Email").getValue()));
+                        exisitngCustomerKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
+                        if (dataSnapshot1.child("profile_image").exists()) {
 
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    exisitngCustomerList.add(String.valueOf(dataSnapshot1.child("Name").getValue()));
-                    exisitngCustomerIDList.add(String.valueOf(dataSnapshot1.child("ID").getValue()));
-                    existingCustomerPhnoList.add(String.valueOf(dataSnapshot1.child("Phone_no").getValue()));
-                    existingCustomerDobList.add(String.valueOf(dataSnapshot1.child("DOB").getValue()));
-                    existingCustomerAddressList.add(String.valueOf(dataSnapshot1.child("Address").getValue()));
-                    existingCustomerEmailList.add(String.valueOf(dataSnapshot1.child("Email").getValue()));
-                    exisitngCustomerKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
+                        } else {
+                            existingCustomerImageUrlList.add(String.valueOf(dataSnapshot1.child("ID_Image_urls").child("image_1").getValue()));
+                        }
+
+                        pd3.dismissProgressBar(AddRepairTicket.this);
+                    }
+// I changed the 3 to 10 here
+                    if (exisitngCustomerList.size() > 10) {
+                        for (int i = 0; i < 10; i++) {
+                            lessExisitngCustomerList.add(exisitngCustomerList.get(i));
+                            lessExisitngCustomerIDList.add(exisitngCustomerIDList.get(i));
+                            lessExistingCustomerPhnoList.add(existingCustomerPhnoList.get(i));
+                            lessExistingCustomerEmailList.add(existingCustomerEmailList.get(i));
+                            lessExisitngCustomerKeyIDList.add(exisitngCustomerKeyIDList.get(i));
+                            lessExistingCustomerImageUrlList.add(existingCustomerImageUrlList.get(i));
+                        }
+                    } else {
+                        for (int i = 0; i < exisitngCustomerList.size(); i++) {
+                            lessExisitngCustomerList.add(exisitngCustomerList.get(i));
+                            lessExisitngCustomerIDList.add(exisitngCustomerIDList.get(i));
+                            lessExistingCustomerPhnoList.add(existingCustomerPhnoList.get(i));
+                            lessExistingCustomerEmailList.add(existingCustomerEmailList.get(i));
+                            lessExisitngCustomerKeyIDList.add(exisitngCustomerKeyIDList.get(i));
+                            lessExistingCustomerImageUrlList.add(existingCustomerImageUrlList.get(i));
+                        }
+                    }
+
+                    adapter_customerList_alert_dialog = new Adapter_customerList_alert_dialog(AddRepairTicket.this, lessExisitngCustomerList, lessExisitngCustomerKeyIDList, lessExisitngCustomerIDList, lessExistingCustomerPhnoList, lessExistingCustomerEmailList, lessExistingCustomerImageUrlList, customerName_textView, customerEmail_textView, customerID_textView, customerPhno_textView, customerImage_imageView, customerList_alert_dialog, customerID_linearLayout);
+                    customerList_recyclerView.setAdapter(adapter_customerList_alert_dialog);
+                    onCustomerRecyclerViewScrollListner();
+
+                } else {
+                    pd3.dismissProgressBar(AddRepairTicket.this);
                 }
 
-                pd2.dismissProgressBar(AddRepairTicket.this);
 
             }
 
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                pd2.dismissProgressBar(AddRepairTicket.this);
+                pd3.dismissProgressBar(AddRepairTicket.this);
+            }
+        });
+
+    }
+
+    private void onCustomerRecyclerViewScrollListner() {
+        customerList_recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    isCustomerScrolling = true;
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                currentCustomer = customerList_recyclerView.getLayoutManager().getChildCount();
+                totalCustomer = customerList_recyclerView.getLayoutManager().getItemCount();
+                scrollOutCustomer = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
+                if (isCustomerScrolling && (currentCustomer + scrollOutCustomer == totalCustomer)) {
+                    isCustomerScrolling = false;
+                    fetchDataforCustomerRecyclerView(exisitngCustomerList, exisitngCustomerIDList, existingCustomerPhnoList, existingCustomerDobList, existingCustomerAddressList, existingCustomerEmailList, exisitngCustomerKeyIDList, existingCustomerImageUrlList);
+                }
             }
         });
 
     }
 
     private void fetchingExisitingItems() {
-        pd3.showProgressBar(AddRepairTicket.this);
-
-        exisitngItemsList.clear();
-        exisitngItemsIDList.clear();
-        exisitngItemsCategoryList.clear();
-        existingItemsConditionsList.clear();
-        existingItemsNotesList.clear();
-        exisitngItemsKeyIDList.clear();
-        lastActiveDatelist.clear();
-        dateList.clear();
-
+        pd2.showProgressBar(AddRepairTicket.this);
         existingItemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
 
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
-                        exisitngItemsList.add(String.valueOf(dataSnapshot2.child("Item_name").getValue()));
-                        exisitngItemsIDList.add(String.valueOf(dataSnapshot2.child("Item_id").getValue()));
-                        exisitngItemsCategoryList.add(String.valueOf(dataSnapshot2.child("Category").getValue()));
-                        existingItemsConditionsList.add(String.valueOf(dataSnapshot2.child("Condition").getValue()));
-                        existingItemsNotesList.add(String.valueOf(dataSnapshot2.child("Notes").getValue()));
-                        exisitngItemsKeyIDList.add(String.valueOf(dataSnapshot2.child("key_id").getValue()));
-                        gettingHistoryList(String.valueOf(dataSnapshot2.child("key_id").getValue()));
+                    for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                        if (!dataSnapshot1.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                            for (DataSnapshot dataSnapshot2: dataSnapshot1.getChildren()){
+                                exisitngItemsNamesList.add(String.valueOf(dataSnapshot2.child("Item_name").getValue()));
+                                exisitngItemsSerialNoList.add(String.valueOf(dataSnapshot2.child("Serial_no").getValue()));
+                                if (dataSnapshot2.child("Last_active").exists()){
+                                    existingItemsLastActiveList.add(String.valueOf(dataSnapshot2.child("Last_active").getValue()));
+                                }else {
+                                    existingItemsLastActiveList.add("NA");
+                                }
+                                existingItemsImageUrlList.add(String.valueOf(dataSnapshot2.child("Image").getValue()));
+                                existingItemsPriceList.add(String.valueOf(dataSnapshot2.child("Price").getValue()));
+                                existingItemsCategoryList.add(String.valueOf(dataSnapshot2.child("Category").getValue()));
+                                exisitngItemsKeyIDList.add(String.valueOf(dataSnapshot2.getKey().toString()));
+                                gettingHistoryList(String.valueOf(dataSnapshot2.getKey().toString()));
 
+                            }
+
+                        }
 
                     }
+
+                    /////I changed the 3 value to 10 here
+                    if (exisitngItemsNamesList.size()>10){
+                        for (int i = 0 ; i<10;i++){
+                            lessExisitngItemsNamesList.add(exisitngItemsNamesList.get(i));
+                            lessExisitngItemsSerialNoList.add(exisitngItemsSerialNoList.get(i));
+                            lessExistingItemsLastActiveList.add(existingItemsLastActiveList.get(i));
+                            lessExistingItemsImageUrlList.add(existingItemsImageUrlList.get(i));
+                            lessExistingItemsPriceList.add(existingItemsPriceList.get(i));
+                            lessExistingItemsCategoryList.add(existingItemsCategoryList.get(i));
+                            lessExisitngItemsKeyIDList.add(exisitngItemsKeyIDList.get(i));
+                        }
+                    }else {
+                        for (int i = 0 ; i<exisitngItemsNamesList.size();i++){
+                            lessExisitngItemsNamesList.add(exisitngItemsNamesList.get(i));
+                            lessExisitngItemsSerialNoList.add(exisitngItemsSerialNoList.get(i));
+                            lessExistingItemsLastActiveList.add(existingItemsLastActiveList.get(i));
+                            lessExistingItemsImageUrlList.add(existingItemsImageUrlList.get(i));
+                            lessExistingItemsPriceList.add(existingItemsPriceList.get(i));
+                            lessExistingItemsCategoryList.add(existingItemsCategoryList.get(i));
+                            lessExisitngItemsKeyIDList.add(exisitngItemsKeyIDList.get(i));
+                        }
+                    }
+                    adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(AddRepairTicket.this,lessExisitngItemsNamesList,lessExisitngItemsSerialNoList,lessExisitngItemsKeyIDList,lessExistingItemsPriceList,lessExistingItemsCategoryList,lessExistingItemsLastActiveList,lessExistingItemsImageUrlList,itemName_textView,itemID_textView,itemPriceCurrency_textView,itemPrice_textView,itemLastActive_textView,itemImage_imageView,itemList_alert_dialog);
+                    itemList_recyclerView.setAdapter(adapter_itemList_alert_dialog);
+                    onScrollListner(exisitngItemsNamesList, exisitngItemsSerialNoList, existingItemsLastActiveList, existingItemsImageUrlList, existingItemsPriceList, existingItemsCategoryList, exisitngItemsKeyIDList);
+                    pd2.dismissProgressBar(AddRepairTicket.this);
+                }else {
+
+                    pd2.dismissProgressBar(AddRepairTicket.this);
                 }
-                pd3.dismissProgressBar(AddRepairTicket.this);
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                pd2.dismissProgressBar(AddRepairTicket.this);
 
-                pd3.dismissProgressBar(AddRepairTicket.this);
             }
         });
+
     }
 
     private void gettingHistoryList(String itemID) {
@@ -456,62 +996,76 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         searchForCustomer_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SimpleSearchDialogCompat(AddRepairTicket.this, "Search...",
-                        "What are you looking for...?", null, createCustomerData(),
-                        new SearchResultListener<SampleSearchModel>() {
-                            @Override
-                            public void onSelected(BaseSearchDialogCompat dialog,
-                                                   SampleSearchModel item, int position) {
-                                customerName = item.getName();
-                                customerID = item.getId();
-                                customer_textView.setText(item.getTitle());
-                                phno_textView.setText(item.getVal1());
-                                dob_textView.setText(item.getVal2());
-                                address_textView.setText(item.getVal3());
-                                email_textView.setText(item.getVal4());
-                                customerKeyID = item.getVal5();
-                                customer_textView.setTextColor(getResources().getColor(R.color.gradientDarkBlue));
-                                customerDetails.setVisibility(View.VISIBLE);
-                                customer = true;
-                                if (item_btn == true && customer == true) {
-                                    toggling_linear.setVisibility(View.VISIBLE);
-                                }
-                                dialog.dismiss();
-                            }
-                        }).show();
+                customerList_alert_dialog.show();
             }
         });
-
         searchForItem_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SimpleSearchDialogCompat(AddRepairTicket.this, "Search...",
-                        "What are you looking for...?", null, createItemsData(),
-                        new SearchResultListener<SampleSearchModel>() {
-                            @Override
-                            public void onSelected(BaseSearchDialogCompat dialog,
-                                                   final SampleSearchModel item, int position) {
-                                itemName = item.getName();
-                                itemID = item.getId();
-                                itemName_textView.setText(item.getTitle());
-                                category_textView.setText(item.getVal1());
-                                itemCategory = item.getVal1();
-                                condition_textView.setText(item.getVal2());
-                                notes_textView.setText(item.getVal3());
-                                last_active_textView.setText(item.getVal4());
-                                itemKeyID = item.getVal5();
-                                itemName_textView.setTextColor(getResources().getColor(R.color.gradientDarkBlue));
-                                itemDetails.setVisibility(View.VISIBLE);
-                                item_btn = true;
-                                if (item_btn == true && customer == true) {
-                                    toggling_linear.setVisibility(View.VISIBLE);
-                                }
-                                dialog.dismiss();
-
-                            }
-                        }).show();
+                itemList_alert_dialog.show();
             }
         });
+
+
+//        searchForCustomer_cardview.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                new SimpleSearchDialogCompat(AddRepairTicket.this, "Search...",
+//                        "What are you looking for...?", null, createCustomerData(),
+//                        new SearchResultListener<SampleSearchModel>() {
+//                            @Override
+//                            public void onSelected(BaseSearchDialogCompat dialog,
+//                                                   SampleSearchModel item, int position) {
+//                                customerName = item.getName();
+//                                customerID = item.getId();
+//                                customer_textView.setText(item.getTitle());
+//                                phno_textView.setText(item.getVal1());
+//                                dob_textView.setText(item.getVal2());
+//                                address_textView.setText(item.getVal3());
+//                                email_textView.setText(item.getVal4());
+//                                customerKeyID = item.getVal5();
+//                                customer_textView.setTextColor(getResources().getColor(R.color.gradientDarkBlue));
+//                                customerDetails.setVisibility(View.VISIBLE);
+//                                customer = true;
+//                                if (item_btn == true && customer == true) {
+//                                    toggling_linear.setVisibility(View.VISIBLE);
+//                                }
+//                                dialog.dismiss();
+//                            }
+//                        }).show();
+//            }
+//        });
+
+//        searchForItem_cardview.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                new SimpleSearchDialogCompat(AddRepairTicket.this, "Search...",
+//                        "What are you looking for...?", null, createItemsData(),
+//                        new SearchResultListener<SampleSearchModel>() {
+//                            @Override
+//                            public void onSelected(BaseSearchDialogCompat dialog,
+//                                                   final SampleSearchModel item, int position) {
+//                                itemName = item.getName();
+//                                itemID = item.getId();
+//                                itemName_textView.setText(item.getTitle());
+//                                category_textView.setText(item.getVal1());
+//                                itemCategory = item.getVal1();
+//                                condition_textView.setText(item.getVal2());
+//                                notes_textView.setText(item.getVal3());
+//                                last_active_textView.setText(item.getVal4());
+//                                itemKeyID = item.getVal5();
+//                                itemName_textView.setTextColor(getResources().getColor(R.color.gradientDarkBlue));
+//                                itemDetails.setVisibility(View.VISIBLE);
+//                                item_btn = true;
+//                                if (item_btn == true && customer == true) {
+//                                    toggling_linear.setVisibility(View.VISIBLE);
+//                                }
+//                                dialog.dismiss();
+//
+//                            }
+//                        }).show();
+//            }
+//        });
 
         Back_btn.setOnClickListener(new View.OnClickListener() {
             @Override

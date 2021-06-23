@@ -452,6 +452,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         exisitngItemsSerialNoList = new ArrayList<>();
         existingItemsLastActiveList = new ArrayList<>();
         existingItemsImageUrlList = new ArrayList<>();
+
         lessExisitngItemsNamesList = new ArrayList<>();
         lessExisitngItemsSerialNoList = new ArrayList<>();
         lessExistingItemsLastActiveList = new ArrayList<>();
@@ -463,11 +464,17 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         exisitngCustomerList = new ArrayList<>();
         exisitngCustomerIDList = new ArrayList<>();
         exisitngCustomerKeyIDList = new ArrayList<>();
-        existingCustomerPhnoList = new ArrayList<>();
-        existingCustomerDobList = new ArrayList<>();
-        existingCustomerAddressList = new ArrayList<>();
-        existingCustomerEmailList = new ArrayList<>();
-        existingCustomerImageUrlList = new ArrayList<>();
+        exisitngItemsCategoryList = new ArrayList<>();
+        existingItemsConditionsList= new ArrayList<>();
+
+        existingItemsPriceList= new ArrayList<>();
+        existingItemsCategoryList= new ArrayList<>();
+        existingItemsNotesList= new ArrayList<>();
+        existingCustomerPhnoList= new ArrayList<>();
+        existingCustomerDobList= new ArrayList<>();
+        existingCustomerAddressList= new ArrayList<>();
+        existingCustomerEmailList= new ArrayList<>();
+        existingCustomerImageUrlList= new ArrayList<>();
 
         lessExisitngItemsNamesList = new ArrayList<>();
         lessExisitngItemsSerialNoList = new ArrayList<>();
@@ -493,16 +500,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         exisitngItemsIDList = new ArrayList<>();
         exisitngItemsKeyIDList = new ArrayList<>();
 
-        exisitngItemsCategoryList = new ArrayList<>();
-        existingItemsConditionsList= new ArrayList<>();
-        existingItemsPriceList= new ArrayList<>();
-        existingItemsCategoryList= new ArrayList<>();
-        existingItemsNotesList= new ArrayList<>();
-        existingCustomerPhnoList= new ArrayList<>();
-        existingCustomerDobList= new ArrayList<>();
-        existingCustomerAddressList= new ArrayList<>();
-        existingCustomerEmailList= new ArrayList<>();
-        existingCustomerImageUrlList= new ArrayList<>();
+
 
         filteredExisitngItemsNamesList = new ArrayList<>();
         filteredExisitngItemsSerialNoList = new ArrayList<>();
@@ -552,6 +550,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         suggest_price_TextView = (TextView) findViewById(R.id.suggest_price_TextView);
 
         itemName_textView = (TextView) findViewById(R.id.itemName_textView);
+
         itemID_textView = (TextView) findViewById(R.id.itemID_textView);
         itemPriceCurrency_textView = (TextView) findViewById(R.id.itemPriceCurrency_textView);
         itemPriceCurrency_textView.setText(Currency.getInstance().getCurrency());

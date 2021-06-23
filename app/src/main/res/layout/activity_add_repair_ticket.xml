@@ -81,22 +81,99 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/searchForCustomer_cardView"
-                style="@style/CardView_style"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                style="@style/CardView_style">
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/customer_textView"
-                        style="@style/Titles_item"
+                    <ImageView
+                        android:id="@+id/customerImage_imageView"
+                        style="@style/Image_views"
+                        android:layout_width="200px"
+                        android:layout_height="200px"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginRight="15dp"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone"
+                        android:src="@drawable/laptop" />
+
+                    <RelativeLayout
+                        android:layout_toRightOf="@+id/customerImage_imageView"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="Search for customer"
-                        android:textColor="@color/textGrey" />
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/customerName_textView"
+                            style="@style/Titles_item"
+                            android:text="Search for customer"
+                            android:textColor="@color/textGrey"
+                            android:layout_margin="5dp"/>
+
+                        <LinearLayout
+                            android:id="@+id/email_area"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/customerName_textView">
+
+                            <TextView
+                                android:id="@+id/customerEmail_textView"
+                                style="@style/SubTitles_item_values"
+                                android:visibility="gone"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="2dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Shahzaib@gmail.com" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/customerID_linearLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/email_area">
+
+                            <TextView
+                                android:id="@+id/customerID_textView"
+                                style="@style/SubTitles_item_values"
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="2dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:text="1573470" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/quantity_area"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/customerID_linearLayout">
+
+                            <TextView
+                                android:id="@+id/customerPhno_textView"
+                                style="@style/SubTitles_item_values"
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="2dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:text="100" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
 
                 </RelativeLayout>
 
@@ -233,23 +310,111 @@
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/searchForItem_cardview"
-                style="@style/CardView_style"
+                android:id="@+id/searchForItem_cardView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                style="@style/CardView_style">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/itemName_textView"
-                        style="@style/Titles_item"
+                    <ImageView
+                        android:id="@+id/itemImage_imageView"
+                        style="@style/Image_views"
+                        android:layout_width="200px"
+                        android:layout_height="200px"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginRight="15dp"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone"
+                        android:src="@drawable/laptop" />
+
+                    <RelativeLayout
+                        android:layout_toRightOf="@+id/itemImage_imageView"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="Search for item ..."
-                        android:textColor="@color/textGrey" />
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/itemName_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/Titles_item"
+                            android:text="Search for item..."
+                            android:textColor="@color/textGrey"
+                            android:layout_margin="5dp"/>
+
+                        <TextView
+                            android:id="@+id/itemID_textView"
+                            android:visibility="gone"
+                            android:textColor="@color/textGrey"
+                            android:fontFamily="@font/segoe_ui_bold"
+                            android:textSize="15sp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:text="IMEI/Serial no"
+                            android:layout_below="@+id/itemName_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <LinearLayout
+                            android:id="@+id/item_price_linearLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/itemID_textView">
+
+                            <TextView
+                                android:id="@+id/itemPriceCurrency_textView"
+                                style="@style/SubTitles_item_values"
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="2dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:textColor="@color/textGreen"
+                                android:text="$" />
+
+                            <TextView
+                                android:id="@+id/itemPrice_textView"
+                                style="@style/SubTitles_item_values"
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="2dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/textGreen"
+                                android:visibility="gone"
+                                android:text="157" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/itemLastActive_linearLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/item_price_linearLayout">
+
+                            <TextView
+                                android:id="@+id/itemLastActive_textView"
+                                android:textColor="@color/textGrey"
+                                android:fontFamily="@font/segoe_ui"
+                                android:textSize="15sp"
+                                android:visibility="gone"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="2dp"
+                                android:layout_marginLeft="5dp"
+                                android:text=""
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
 
                 </RelativeLayout>
 
