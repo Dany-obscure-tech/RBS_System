@@ -309,4 +309,20 @@
 
     </ScrollView>
 
+    <RelativeLayout
+        android:id="@+id/alert_background_relativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparentGrey"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/edit_image_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
 </RelativeLayout>

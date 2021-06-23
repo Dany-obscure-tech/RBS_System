@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,11 +19,14 @@ public class AdapterCustomerIDImagesRecyclerView extends RecyclerView.Adapter<Ad
 
     Context context;
     List<String> customer_ID_list;
+    ImageView edit_image_image_view;
+    RelativeLayout alert_background_relativelayout;
 
-    public AdapterCustomerIDImagesRecyclerView(Context context, List<String> customer_ID_list) {
+    public AdapterCustomerIDImagesRecyclerView(Context context, List<String> customer_ID_list, RelativeLayout alert_background_relativelayout, ImageView edit_image_image_view) {
         this.context = context;
         this.customer_ID_list = customer_ID_list;
-
+        this.alert_background_relativelayout = alert_background_relativelayout;
+        this.edit_image_image_view = edit_image_image_view;
 
     }
 
@@ -36,6 +40,21 @@ public class AdapterCustomerIDImagesRecyclerView extends RecyclerView.Adapter<Ad
     public void onBindViewHolder(@NonNull AdapterCustomerIDImagesRecyclerView.ViewHolder holder, final int position) {
 
         Picasso.get().load(customer_ID_list.get(position)).into(holder.customer_id_imageView);
+        holder.customer_id_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Picasso.get().load(customer_ID_list.get(position)).into(edit_image_image_view);
+                alert_background_relativelayout.setVisibility(View.VISIBLE);
+                edit_image_image_view.setVisibility(View.VISIBLE);
+            }
+        });
+        alert_background_relativelayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alert_background_relativelayout.setVisibility(View.GONE);
+                edit_image_image_view.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -51,6 +70,7 @@ public class AdapterCustomerIDImagesRecyclerView extends RecyclerView.Adapter<Ad
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             customer_id_imageView = (ImageView) itemView.findViewById(R.id.customer_id_imageView);
+
         }
     }
 }

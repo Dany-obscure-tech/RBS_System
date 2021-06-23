@@ -6,12 +6,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +41,9 @@ public class Customer_history extends AppCompatActivity {
     List<String> shopkeeper_name_textview, item_name_textview,status_textView,shopkeeperImage_imageView_list,customerImage_imageView_list ,dateList,shopkeeper_key_id,customer_key_id,serial_no_textview,imageUrlList;
 
     RecyclerView customer_ID_Image_recyclerView;
+    ImageView edit_image_image_view;
+
+    RelativeLayout alert_background_relativelayout;
 
     LinearLayout header_profile;
 
@@ -91,6 +97,8 @@ public class Customer_history extends AppCompatActivity {
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
         edit_textview=(TextView) findViewById(R.id.edit_textview);
         header_profile=(LinearLayout) findViewById(R.id.header_profile);
+        alert_background_relativelayout=(RelativeLayout) findViewById(R.id.alert_background_relativelayout);
+        edit_image_image_view=(ImageView) findViewById(R.id.edit_image_image_view);
 
         edit_dialog = new Dialog(this);
         edit_dialog.setContentView(R.layout.edit_dialog_customer);
@@ -244,7 +252,7 @@ public class Customer_history extends AppCompatActivity {
                         imageUrlList.add(dataSnapshot1.getValue().toString());
                     }
 
-                    adapterCustomerIDImagesRecyclerView = new AdapterCustomerIDImagesRecyclerView(Customer_history.this,imageUrlList);
+                    adapterCustomerIDImagesRecyclerView = new AdapterCustomerIDImagesRecyclerView(Customer_history.this,imageUrlList,alert_background_relativelayout,edit_image_image_view);
                     customer_ID_Image_recyclerView.setAdapter(adapterCustomerIDImagesRecyclerView);
                     pd2.dismissProgressBar(Customer_history.this);
                 }else {
