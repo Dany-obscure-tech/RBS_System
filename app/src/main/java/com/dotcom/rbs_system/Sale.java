@@ -37,6 +37,7 @@ import com.dotcom.rbs_system.Adapter.Adapter_customerList_alert_dialog;
 import com.dotcom.rbs_system.Adapter.Adapter_itemList_alert_dialog;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Classes.Exchanged_itemdata;
+import com.dotcom.rbs_system.Classes.Item_history;
 import com.dotcom.rbs_system.Classes.RBSCustomerDetails;
 import com.dotcom.rbs_system.Classes.RBSItemDetails;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
@@ -1152,6 +1153,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                     rbsCustomerDetails.uploadCustomerDetails(Sale.this);
                 }
                 rbsItemDetails.switchStockSale(rbsCustomerDetails.getKey(), FirebaseAuth.getInstance().getCurrentUser().getUid());
+//                new Item_history().elevenValues(rbsItemDetails.getKey(),key,);
 
             }
 

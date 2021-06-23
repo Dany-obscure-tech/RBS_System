@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SplashActivity extends AppCompatActivity {
-    DatabaseReference currencyRef,buylocalSliderRef;
+    DatabaseReference RequiredAdminDataRef;
     Currency currencyObj;
     List<String> buylocalsliderlist;
     BuylocalSlider buylocalSlider;
@@ -59,10 +59,10 @@ public class SplashActivity extends AppCompatActivity {
 
                     public void run() {
                         checkExistingUser();
-                        InitialDataFetch();
+
                     }
 
-                }, 2*1000);
+                }, 0);
 
 
             }
@@ -80,9 +80,7 @@ public class SplashActivity extends AppCompatActivity {
         buylocalsliderlist = new ArrayList<>();
 
         userRef = FirebaseDatabase.getInstance().getReference("Users_data");
-
-        currencyRef = FirebaseDatabase.getInstance().getReference("Admin/currency");
-        buylocalSliderRef = FirebaseDatabase.getInstance().getReference("Admin/buylocal_slider");
+        RequiredAdminDataRef = FirebaseDatabase.getInstance().getReference("Initial_load_data/");
         currencyObj = Currency.getInstance();
         buylocalSlider = BuylocalSlider.getInstance();
     }
@@ -107,26 +105,16 @@ public class SplashActivity extends AppCompatActivity {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void InitialDataFetch() {
-        currencyRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        RequiredAdminDataRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                currencyObj.setCurrency(dataSnapshot.getValue().toString());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        buylocalSliderRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
+                currencyObj.setCurrency(dataSnapshot.child("currency").getValue().toString());
+                if (dataSnapshot.child("buylocal_slider").exists()){
                     for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                         buylocalsliderlist.add(String.valueOf(dataSnapshot1.getValue()));
                     }
                     buylocalSlider.setBuylocalSliderList(buylocalsliderlist);
+                    startMainActivity();
                 }
             }
 
@@ -135,21 +123,27 @@ public class SplashActivity extends AppCompatActivity {
 
             }
         });
+
     }
+
+    private void startMainActivity() {
+        Intent intent = new Intent(SplashActivity.this,BuyLocal_main.class);
+        startActivity(intent);
+        finish();
+    }
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void userTypeCheck(final String uid) {
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(uid).child("type").exists()){
                     String type = dataSnapshot.child(uid).child("type").getValue().toString();
                     if (type.equals("customer")){
-                        Intent intent = new Intent(SplashActivity.this,BuyLocal_main.class);
-                        startActivity(intent);
-                        finish();
+                        InitialDataFetch();
+
                     }if (type.equals("shop keeper")){
                         Intent intent = new Intent(SplashActivity.this, RBS_mainscreen.class);
                         startActivity(intent);

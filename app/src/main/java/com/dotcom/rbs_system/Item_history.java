@@ -122,13 +122,13 @@ public class Item_history extends AppCompatActivity {
 //        itemHistoryRef.child(key).child("Date").setValue(currentDateString);
 //
 //        key = itemHistoryRef.push().getKey();
-//        itemHistoryRef.child(key).child("Customer_name").setValue("Customer 2");
 //        itemHistoryRef.child(key).child("Shopkeeper_name").setValue("ITech Computers");
-//        itemHistoryRef.child(key).child("Customer_type").setValue("Buyer");
-//        itemHistoryRef.child(key).child("Shopkeeper_type").setValue("Seller");
 //        itemHistoryRef.child(key).child("RBS").setValue("Trade");
 //        itemHistoryRef.child(key).child("Timestamp").setValue(date.getTime());
 //        itemHistoryRef.child(key).child("Date").setValue(currentDateString);
+//        itemHistoryRef.child(key).child("Customer_name").setValue("Customer 2");
+//        itemHistoryRef.child(key).child("Customer_type").setValue("Buyer");
+//        itemHistoryRef.child(key).child("Shopkeeper_type").setValue("Seller");
 //
 //        key = itemHistoryRef.push().getKey();
 //        itemHistoryRef.child(key).child("Customer_name").setValue("Customer 2");

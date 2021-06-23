@@ -122,9 +122,6 @@ public class Customer_history extends AppCompatActivity {
         customer_key_id = new ArrayList<>();
         imageUrlList = new ArrayList<>();
 
-        shopkeeper_name_textview.add("Itech Computers");
-        item_name_textview.add("Asus Rog Strix");
-        status_textView.add("Buy");
         shopkeeperImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
         shopkeeperImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
         shopkeeperImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
@@ -133,8 +130,7 @@ public class Customer_history extends AppCompatActivity {
         customerImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
         customerImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
         customerImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
-        serial_no_textview.add("563276582");
-        dateList.add("18/6/2021");
+
 
         sfd = new SimpleDateFormat("dd-MM-yyyy");
 
