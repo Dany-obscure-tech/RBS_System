@@ -37,7 +37,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Settings extends AppCompatActivity {
+public class RBS_settings extends AppCompatActivity {
 
     DatabaseReference faultListRef,reference, userDataRef,rbsMessageRef;
     StorageReference storageReference;
@@ -89,7 +89,7 @@ public class Settings extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_rbs_settings);
 
         initialize();
         checkUserData();
@@ -260,7 +260,7 @@ public class Settings extends AppCompatActivity {
 
                     startActivityForResult(intent, LOGO_READ_REQUEST_CODE);
                 }else {
-                    Toast.makeText(Settings.this, "Information pending", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RBS_settings.this, "Information pending", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -287,7 +287,7 @@ public class Settings extends AppCompatActivity {
 
                     startActivityForResult(intent, BANNER_READ_REQUEST_CODE);
                 }else {
-                    Toast.makeText(Settings.this, "Information pending", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RBS_settings.this, "Information pending", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -456,7 +456,7 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!editProfileEmailCheck&&!editProfilePhnoCheck&&!editProfileAddressCheck){
-                    Toast.makeText(Settings.this, "No changes", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RBS_settings.this, "No changes", Toast.LENGTH_SHORT).show();
                 }else {
                     if (editProfileEmailCheck){
                         userDataRef.child("profile_data").child("email").setValue(alertEditProfileEmail_editText.getText().toString());
@@ -524,7 +524,7 @@ public class Settings extends AppCompatActivity {
                     editConditionsCheck = false;
                     editConditionDialog.dismiss();
                 }else {
-                    Toast.makeText(Settings.this, "No changes", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RBS_settings.this, "No changes", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -551,9 +551,9 @@ public class Settings extends AppCompatActivity {
                     faultKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
                 }
 
-                adapterSettingsFaultListRecyclerView = new AdapterSettingsFaultListRecyclerView(Settings.this,faultNameList,faultPriceList,faultKeyIDList);
+                adapterSettingsFaultListRecyclerView = new AdapterSettingsFaultListRecyclerView(RBS_settings.this,faultNameList,faultPriceList,faultKeyIDList);
                 faultList_recyclerView.setAdapter(adapterSettingsFaultListRecyclerView);
-                faultList_recyclerView.setLayoutManager(new GridLayoutManager(Settings.this,1));
+                faultList_recyclerView.setLayoutManager(new GridLayoutManager(RBS_settings.this,1));
 
             }
 

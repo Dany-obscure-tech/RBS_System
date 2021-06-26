@@ -4,81 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Settings">
-
-    <RelativeLayout
-        android:background="#0075B5"
-        android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageButton
-            android:id="@+id/Back_btn"
-            android:layout_marginTop="8dp"
-            android:padding="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00000000"
-            android:src="@drawable/back_btn" />
-
-        <TextView
-            android:textColor="#ffffffff"
-            android:textSize="24sp"
-            android:fontFamily="@font/kameron_bold"
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SETTINGS"/>
-
-    </RelativeLayout>
+    tools:context=".RBS_settings">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/header"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp">
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp">
 
         <LinearLayout
             android:id="@+id/upperLayout"
-            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <LinearLayout
-                android:layout_marginTop="10dp"
-                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:visibility="visible">
 
                 <TextView
-                    android:layout_gravity="center"
+                    style="@style/TextViews_Bold_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Profile"
-                    android:textSize="16sp" />
-                
+                    android:text="Profile" />
+
                 <View
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"/>
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/profileEdit_button"
-                    android:textColor="@color/textGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/main_button_grey"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:textSize="12dp"
                     android:text="Profile Edit"
-                    android:background="@drawable/main_button_grey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="@color/textGrey"
+                    android:textSize="12dp" />
 
             </LinearLayout>
-
 
 
             <LinearLayout
@@ -106,6 +76,7 @@
                         android:fontFamily="@font/segoe_ui"
                         android:text="Ph no"
                         android:textSize="16sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -117,9 +88,9 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -127,9 +98,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:textColor="@color/textBlue"
                         android:fontFamily="@font/segoe_ui_bold"
                         android:text="NA"
+                        android:textColor="@color/textBlue"
                         android:textSize="16sp" />
 
                     <TextView
@@ -137,9 +108,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:textColor="@color/textBlue"
                         android:fontFamily="@font/segoe_ui_bold"
                         android:text="NA"
+                        android:textColor="@color/textBlue"
                         android:textSize="16sp" />
 
                     <TextView
@@ -147,9 +118,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:textColor="@color/textBlue"
                         android:fontFamily="@font/segoe_ui_bold"
                         android:text="NA"
+                        android:textColor="@color/textBlue"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -157,9 +128,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -170,28 +141,28 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/segoe_ui_bold"
                     android:text="RBS Message"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/rbsMessage_textView"
-                    android:layout_gravity="center"
-                    android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:fontFamily="@font/segoe_ui"
+                    android:gravity="center"
                     android:text="Terms and conditions"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:layout_marginTop="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:fontFamily="@font/segoe_ui_bold"
                     android:text="Conditions"
                     android:textSize="16sp" />
@@ -206,26 +177,26 @@
 
                 <Button
                     android:id="@+id/editConditions_button"
-                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:textColor="@color/textGrey"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/main_button_grey"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:textSize="12dp"
                     android:text="Edit Conditions"
-                    android:background="@drawable/main_button_grey"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="@color/textGrey"
+                    android:textSize="12dp" />
 
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="10dp"
-                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -237,64 +208,64 @@
 
                 <Button
                     android:id="@+id/addLogo_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@drawable/main_button"
-                    android:textColor="#0075B5"
+                    android:background="@color/gradientDarkBlue"
                     android:fontFamily="@font/segoe_ui"
-                    android:textSize="15sp"
-                    android:text="Add your logo"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:text="Add your logo"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:id="@+id/logo_imageView"
-                    android:visibility="gone"
-                    android:src="@drawable/logo"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="70dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginRight="70dp"
                     android:adjustViewBounds="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:src="@drawable/logo"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/logoButtons_linearLayout"
-                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:visibility="gone">
 
                     <Button
                         android:id="@+id/logoSave_button"
-                        android:layout_margin="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_margin="10dp"
                         android:background="@drawable/main_button"
-                        android:textColor="#0075B5"
                         android:fontFamily="@font/segoe_ui"
-                        android:textSize="15sp"
-                        android:text="Save"
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:text="Save"
+                        android:textColor="#0075B5"
+                        android:textSize="15sp" />
 
                     <Button
                         android:id="@+id/logoCancel_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="10dp"
                         android:background="@drawable/main_button_grey"
-                        android:textColor="@color/textGrey"
                         android:fontFamily="@font/segoe_ui"
-                        android:textSize="15sp"
-                        android:text="Cancel"
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:text="Cancel"
+                        android:textColor="@color/textGrey"
+                        android:textSize="15sp" />
 
                 </LinearLayout>
 
@@ -302,11 +273,11 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="10dp"
-                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -318,64 +289,64 @@
 
                 <Button
                     android:id="@+id/addBanner_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@drawable/main_button"
-                    android:textColor="#0075B5"
                     android:fontFamily="@font/segoe_ui"
-                    android:textSize="15sp"
-                    android:text="Add your Banner"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:text="Add your Banner"
+                    android:textColor="#0075B5"
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:id="@+id/banner_imageView"
-                    android:visibility="gone"
-                    android:src="@drawable/logo"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
                     android:adjustViewBounds="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:src="@drawable/logo"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/bannerButtons_linearLayout"
-                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:visibility="gone">
 
                     <Button
                         android:id="@+id/bannerSave_button"
-                        android:layout_margin="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_margin="10dp"
                         android:background="@drawable/main_button"
-                        android:textColor="#0075B5"
                         android:fontFamily="@font/segoe_ui"
-                        android:textSize="15sp"
-                        android:text="Save"
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:text="Save"
+                        android:textColor="#0075B5"
+                        android:textSize="15sp" />
 
                     <Button
                         android:id="@+id/bannerCancel_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="10dp"
                         android:background="@drawable/main_button_grey"
-                        android:textColor="@color/textGrey"
                         android:fontFamily="@font/segoe_ui"
-                        android:textSize="15sp"
-                        android:text="Cancel"
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:text="Cancel"
+                        android:textColor="@color/textGrey"
+                        android:textSize="15sp" />
 
                 </LinearLayout>
 
@@ -383,42 +354,41 @@
             </LinearLayout>
 
 
-
             <TextView
-                android:layout_marginTop="20dp"
-                android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/segoe_ui_bold"
                 android:text="Faults list"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="visible" />
 
             <LinearLayout
-                android:visibility="visible"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:visibility="visible">
 
                 <Button
                     android:id="@+id/addFaults_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/main_button"
-                    android:textColor="#0075B5"
                     android:fontFamily="@font/segoe_ui"
-                    android:textSize="15sp"
                     android:text="Add"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="#0075B5"
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:nestedScrollingEnabled="false"
                 android:id="@+id/faultList_recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
 
         </LinearLayout>
 

@@ -202,7 +202,7 @@ public class RBS_option extends Fragment {
         Settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),Settings.class);
+                Intent intent=new Intent(getActivity(), RBS_settings.class);
                 startActivity(intent);
             }
         });
