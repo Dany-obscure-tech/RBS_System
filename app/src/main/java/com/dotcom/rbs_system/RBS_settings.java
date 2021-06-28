@@ -60,7 +60,7 @@ public class RBS_settings extends AppCompatActivity {
     Button logoCancel_button,bannerCancel_button;
     Button profileEdit_button;
     Button editConditions_button;
-    Button alertEditConditionEnter_btn,alertEditConditionCancel_btn;
+    Button alertEditConditionCancel_btn;
 
     RecyclerView faultList_recyclerView;
     AdapterSettingsFaultListRecyclerView adapterSettingsFaultListRecyclerView;
@@ -91,12 +91,12 @@ public class RBS_settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rbs_settings);
 
-        initialize();
-        checkUserData();
-
-        getRBSMessage();
-        getFaultsList();
-        onClickListeners();
+//        initialize();
+//        checkUserData();
+//
+//        getRBSMessage();
+//        getFaultsList();
+//        onClickListeners();
     }
 
     private void initialize() {
@@ -133,20 +133,11 @@ public class RBS_settings extends AppCompatActivity {
         addFaultDialog.setContentView(R.layout.alert_setting_add_fault);
         alertFaultName_editText = addFaultDialog.findViewById(R.id.alertFaultName_editText);
         alertFaultPrice_editText = addFaultDialog.findViewById(R.id.alertFaultPrice_editText);
-        addFaultAlertenter_btn = addFaultDialog.findViewById(R.id.addFaultAlertenter_btn);
-        addFaultsAlertCancel_btn = addFaultDialog.findViewById(R.id.addFaultsAlertCancel_btn);
-        editProfileDialog = new Dialog(this);
-        editProfileDialog.setContentView(R.layout.alert_edit_profile);
-        alertEditProfileEmail_editText = editProfileDialog.findViewById(R.id.alertEditProfileEmail_editText);
-        alertEditProfilePhno_editText = editProfileDialog.findViewById(R.id.alertEditProfilePhno_editText);
-        alertEditProfileAddress_editText = editProfileDialog.findViewById(R.id.alertEditProfileAddress_editText);
-        alertEditProfileSave_btn = editProfileDialog.findViewById(R.id.alertEditProfileSave_btn);
-        alertEditProfileCancel_btn = editProfileDialog.findViewById(R.id.alertEditProfileCancel_btn);
+
         editConditionDialog = new Dialog(this);
-        editConditionDialog.setContentView(R.layout.alert_edit_conditions);
         alertAddCategoryName_editText = editConditionDialog.findViewById(R.id.alertAddCategoryName_editText);
-        alertEditConditionEnter_btn = editConditionDialog.findViewById(R.id.alertEditConditionEnter_btn);
-        alertEditConditionCancel_btn = editConditionDialog.findViewById(R.id.alertEditConditionCancel_btn);
+
+
 
         email_textView = (TextView)findViewById(R.id.post_code_textView);
         phno_textView = (TextView)findViewById(R.id.phno_textView);
@@ -515,20 +506,6 @@ public class RBS_settings extends AppCompatActivity {
             }
         });
 
-        alertEditConditionEnter_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (editConditionsCheck){
-                    userDataRef.child("conditions").setValue(alertAddCategoryName_editText.getText().toString());
-                    conditions_textView.setText(alertAddCategoryName_editText.getText().toString());
-                    editConditionsCheck = false;
-                    editConditionDialog.dismiss();
-                }else {
-                    Toast.makeText(RBS_settings.this, "No changes", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
 
         alertEditConditionCancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override

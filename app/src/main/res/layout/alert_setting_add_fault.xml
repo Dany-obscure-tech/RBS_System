@@ -1,102 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="10dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/segoe_ui_bold"
-        android:text="Add Fault"
-        android:textSize="20sp" />
 
-    <LinearLayout
-        android:id="@+id/layout"
-        android:layout_below="@+id/title"
-        android:orientation="vertical"
+    <RelativeLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="45dp"
+        android:background="@drawable/screen_header_rectangle">
 
         <TextView
+            style="@style/TextViews_Bold_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/segoe_ui_bold"
+            android:layout_centerInParent="true"
+            android:text="Add Faults"
+            android:textColor="#ffffff" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/phone_no_textview"
+            style="@style/TextViews_Bold_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
             android:text="Fault Name"
-            android:textSize="16sp" />
+            android:textColor="@color/textGrey" />
 
         <EditText
             android:id="@+id/alertFaultName_editText"
+            style="@style/TextViews_Regular_small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#6E76E3"
-            android:fontFamily="@font/segoe_ui"
+            android:layout_below="@+id/phone_no_textview"
+            android:backgroundTint="@color/colorPrimary"
             android:hint="Enter fault name"
-            android:maxLength="32"
-            android:textColor="#9F9F9F"
-            android:textColorHint="#9F9F9F"
-            android:textSize="16sp" />
+            android:maxLines="1"
+            android:textColor="@color/textGrey" />
 
         <TextView
+            android:id="@+id/address_textview"
+            style="@style/TextViews_Bold_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/ac_phoneno"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/segoe_ui_bold"
+            android:padding="5dp"
             android:text="Fault Price"
-            android:textSize="16sp" />
+            android:textColor="@color/textGrey" />
 
         <EditText
             android:id="@+id/alertFaultPrice_editText"
+            style="@style/TextViews_Regular_small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#6E76E3"
-            android:fontFamily="@font/segoe_ui"
+            android:layout_below="@+id/address_textview"
+            android:backgroundTint="@color/colorPrimary"
             android:hint="Enter fault price"
-            android:maxLength="32"
-            android:textColor="#9F9F9F"
-            android:textColorHint="#9F9F9F"
-            android:textSize="16sp" />
+            android:inputType="number"
+            android:textColor="@color/textGrey" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ac_email"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/addFaultsave_textview"
+                style="@style/RBSInvoice_SaveButtonTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:text="Save"
+                android:textAlignment="center" />
+
+
+            <TextView
+                android:id="@+id/addFaultsCancel_textview"
+                style="@style/RBSInvoice_CancelButtonTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="Cancel" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_below="@+id/layout"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/addFaultAlertenter_btn"
-            android:layout_weight="1"
-            android:layout_marginRight="5dp"
-            android:textColor = "@color/textBlue"
-            android:background="@drawable/main_button"
-            android:fontFamily="@font/segoe_ui"
-            android:textSize="15sp"
-            android:text="Enter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:id="@+id/addFaultsAlertCancel_btn"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/segoe_ui"
-            android:textColor = "@color/textGrey"
-            android:background="@drawable/main_button_grey"
-            android:textSize="15sp"
-            android:text="Cancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
 
 </RelativeLayout>

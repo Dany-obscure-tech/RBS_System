@@ -60,24 +60,19 @@ public class RBS_setting extends Fragment {
     LinearLayout logoButtons_linearLayout,bannerButtons_linearLayout;
 
     ImageView logo_imageView,banner_imageView;
-    Button addFaultAlertenter_btn,addFaultsAlertCancel_btn;
+
+    TextView edit_banner_textview,add_logo_textview,add_faults_textview;
+    TextView addFaultsave_textview,addFaultsCancel_textview;
+
     Button alertEditProfileSave_btn,alertEditProfileCancel_btn;
-    Button addFaults_btn;
-    Button addLogo_button,addBanner_button,logoSave_button,bannerSave_button;
-    Button logoCancel_button,bannerCancel_button;
-    Button profileEdit_button;
-    Button editConditions_button;
-    Button alertEditConditionEnter_btn,alertEditConditionCancel_btn;
+
 
     RecyclerView faultList_recyclerView;
     AdapterSettingsFaultListRecyclerView adapterSettingsFaultListRecyclerView;
 
-    Dialog addFaultDialog,editProfileDialog,editConditionDialog;
+    Dialog addFaultDialog,editProfileDialog;
 
-    //    Add fault alert
     EditText alertFaultName_editText,alertFaultPrice_editText;
-    EditText alertEditProfileEmail_editText,alertEditProfilePhno_editText,alertEditProfileAddress_editText;
-    EditText alertAddCategoryName_editText;
 
     List<String> faultNameList, faultPriceList, faultKeyIDList;
 
@@ -85,10 +80,6 @@ public class RBS_setting extends Fragment {
     String bannerUrlString = "";
 
     Boolean logoBannerUploadCheck = true;
-    Boolean editProfileEmailCheck = false;
-    Boolean editProfilePhnoCheck = false;
-    Boolean editProfileAddressCheck = false;
-    Boolean editConditionsCheck = false;
 
     TextView email_textView,phno_textView,address_textView;
     TextView rbsMessage_textView,conditions_textView;
@@ -162,15 +153,9 @@ public class RBS_setting extends Fragment {
         logo_imageView = (ImageView)view.findViewById(R.id.logo_imageView);
         banner_imageView = (ImageView)view.findViewById(R.id.banner_imageView);
 
-        addFaults_btn = (Button)view.findViewById(R.id.addFaults_textview);
-        addLogo_button = (Button)view.findViewById(R.id.addLogo_button);
-        addBanner_button = (Button)view.findViewById(R.id.addBanner_button);
-        logoSave_button = (Button)view.findViewById(R.id.logoSave_button);
-        bannerSave_button = (Button)view.findViewById(R.id.bannerSave_button);
-        logoCancel_button = (Button)view.findViewById(R.id.logoCancel_button);
-        bannerCancel_button = (Button)view.findViewById(R.id.bannerCancel_button);
-        profileEdit_button = (Button)view.findViewById(R.id.profileEdit_button);
-        editConditions_button = (Button)view.findViewById(R.id.editConditions_button);
+        add_faults_textview = (TextView) view.findViewById(R.id.add_faults_textview);
+        add_logo_textview = (TextView)view.findViewById(R.id.add_logo_textview);
+        edit_banner_textview = (TextView) view.findViewById(R.id.edit_banner_textview);
 
         faultNameList = new ArrayList<>();
         faultPriceList = new ArrayList<>();
@@ -182,20 +167,12 @@ public class RBS_setting extends Fragment {
         addFaultDialog.setContentView(R.layout.alert_setting_add_fault);
         alertFaultName_editText = addFaultDialog.findViewById(R.id.alertFaultName_editText);
         alertFaultPrice_editText = addFaultDialog.findViewById(R.id.alertFaultPrice_editText);
-        addFaultAlertenter_btn = addFaultDialog.findViewById(R.id.addFaultAlertenter_btn);
-        addFaultsAlertCancel_btn = addFaultDialog.findViewById(R.id.addFaultsAlertCancel_btn);
+        addFaultsave_textview = addFaultDialog.findViewById(R.id.addFaultsave_textview);
+        addFaultsCancel_textview = addFaultDialog.findViewById(R.id.addFaultsCancel_textview);
         editProfileDialog = new Dialog(getActivity());
-        editProfileDialog.setContentView(R.layout.alert_edit_profile);
-        alertEditProfileEmail_editText = editProfileDialog.findViewById(R.id.alertEditProfileEmail_editText);
-        alertEditProfilePhno_editText = editProfileDialog.findViewById(R.id.alertEditProfilePhno_editText);
-        alertEditProfileAddress_editText = editProfileDialog.findViewById(R.id.alertEditProfileAddress_editText);
-        alertEditProfileSave_btn = editProfileDialog.findViewById(R.id.alertEditProfileSave_btn);
-        alertEditProfileCancel_btn = editProfileDialog.findViewById(R.id.alertEditProfileCancel_btn);
-        editConditionDialog = new Dialog(getActivity());
-        editConditionDialog.setContentView(R.layout.alert_edit_conditions);
-        alertAddCategoryName_editText = editConditionDialog.findViewById(R.id.alertAddCategoryName_editText);
-        alertEditConditionEnter_btn = editConditionDialog.findViewById(R.id.alertEditConditionEnter_btn);
-        alertEditConditionCancel_btn = editConditionDialog.findViewById(R.id.alertEditConditionCancel_btn);
+
+
+
 
         email_textView = (TextView)view.findViewById(R.id.post_code_textView);
         phno_textView = (TextView)view.findViewById(R.id.phno_textView);
@@ -211,7 +188,6 @@ public class RBS_setting extends Fragment {
                 if (dataSnapshot.child("logo").exists()){
                     Picasso.get().load(String.valueOf(dataSnapshot.child("logo").getValue())).into(logo_imageView);
                     logoUrlString = String.valueOf(dataSnapshot.child("logo").getValue());
-                    logo_imageView.setVisibility(View.VISIBLE);
                 }
                 if (dataSnapshot.child("banner").exists()){
                     Picasso.get().load(String.valueOf(dataSnapshot.child("banner").getValue())).into(banner_imageView);
@@ -257,14 +233,14 @@ public class RBS_setting extends Fragment {
 
     private void onClickListeners() {
 
-        addFaults_btn.setOnClickListener(new View.OnClickListener() {
+        add_faults_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addFaultDialog.show();
             }
         });
 
-        addFaultAlertenter_btn.setOnClickListener(new View.OnClickListener() {
+        addFaultsave_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validateAlertAddFault()==true){
@@ -274,14 +250,14 @@ public class RBS_setting extends Fragment {
             }
         });
 
-        addFaultsAlertCancel_btn.setOnClickListener(new View.OnClickListener() {
+        addFaultsCancel_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addFaultDialog.dismiss();
             }
         });
 
-        addLogo_button.setOnClickListener(new View.OnClickListener() {
+        add_logo_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -309,7 +285,7 @@ public class RBS_setting extends Fragment {
             }
         });
 
-        addBanner_button.setOnClickListener(new View.OnClickListener() {
+        edit_banner_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (logoBannerUploadCheck){
@@ -336,249 +312,7 @@ public class RBS_setting extends Fragment {
             }
         });
 
-        logoSave_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Toast.makeText(getActivity(),"Uploading",Toast.LENGTH_SHORT).show();
-
-                UploadTask uploadTask = storageReference.child("Users_data").child("company_logos").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("logo").putFile(logoDocUri);
-                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        storageReference.child("Users_data").child("company_logos").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("logo").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                reference.child("Users_data").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("logo").setValue(String.valueOf(uri));
-                                logoUrlString = String.valueOf(uri);
-                                logoButtons_linearLayout.setVisibility(View.GONE);
-                                logoDocUri = null;
-                                logoBannerUploadCheck = true;
-                            }
-                        });
-                        Toast.makeText(getActivity(),"Uploaded Successful.",Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-
-        bannerSave_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Toast.makeText(getActivity(),"Uploading",Toast.LENGTH_SHORT).show();
-
-                UploadTask uploadTask = storageReference.child("Users_data").child("company_banners").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("banner").putFile(bannerDocUri);
-                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        storageReference.child("Users_data").child("company_banners").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("banner").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                reference.child("Users_data").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("banner").setValue(String.valueOf(uri));
-                                bannerUrlString = String.valueOf(uri);
-                                bannerButtons_linearLayout.setVisibility(View.GONE);
-                                bannerDocUri = null;
-                                logoBannerUploadCheck = true;
-
-                            }
-                        });
-                        Toast.makeText(getActivity(),"Uploaded Successful.",Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-
-        logoCancel_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!logoUrlString.isEmpty()){
-                    Picasso.get().load(logoUrlString).into(logo_imageView);
-                }else {
-                    logo_imageView.setVisibility(View.GONE);
-                }
-                logoButtons_linearLayout.setVisibility(View.GONE);
-                logoDocUri = null;
-                logoBannerUploadCheck = true;
-            }
-        });
-
-        bannerCancel_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!bannerUrlString.isEmpty()){
-                    Picasso.get().load(bannerUrlString).into(banner_imageView);
-                }else {
-                    banner_imageView.setVisibility(View.GONE);
-                }
-                bannerButtons_linearLayout.setVisibility(View.GONE);
-                bannerDocUri = null;
-                logoBannerUploadCheck = true;
-            }
-        });
-
-        profileEdit_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertEditProfileEmail_editText.setText(email_textView.getText().toString());
-                alertEditProfilePhno_editText.setText(phno_textView.getText().toString());
-                alertEditProfileAddress_editText.setText(address_textView.getText().toString());
-
-                alertEditProfileEmail_editText.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (alertEditProfileEmail_editText.getText().toString().equals(email_textView.getText().toString())){
-                            alertEditProfileEmail_editText.setTextColor(getResources().getColor(R.color.textGrey));
-                            editProfileEmailCheck = false;
-                        }else {
-                            alertEditProfileEmail_editText.setTextColor(getResources().getColor(R.color.textBlue));
-                            editProfileEmailCheck = true;
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                });
-                alertEditProfilePhno_editText.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (alertEditProfilePhno_editText.getText().toString().equals(phno_textView.getText().toString())){
-                            alertEditProfilePhno_editText.setTextColor(getResources().getColor(R.color.textGrey));
-                            editProfilePhnoCheck = false;
-                        }else {
-                            alertEditProfilePhno_editText.setTextColor(getResources().getColor(R.color.textBlue));
-                            editProfilePhnoCheck = true;
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                });
-                alertEditProfileAddress_editText.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (alertEditProfileAddress_editText.getText().toString().equals(address_textView.getText().toString())){
-                            alertEditProfileAddress_editText.setTextColor(getResources().getColor(R.color.textGrey));
-                            editProfileAddressCheck = false;
-                        }else {
-                            editProfileAddressCheck = true;
-                            alertEditProfileAddress_editText.setTextColor(getResources().getColor(R.color.textBlue));
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                });
-
-                editProfileDialog.show();
-            }
-        });
-
-        alertEditProfileSave_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!editProfileEmailCheck&&!editProfilePhnoCheck&&!editProfileAddressCheck){
-                    Toast.makeText(getActivity(), "No changes", Toast.LENGTH_SHORT).show();
-                }else {
-                    if (editProfileEmailCheck){
-                        userDataRef.child("profile_data").child("email").setValue(alertEditProfileEmail_editText.getText().toString());
-                        email_textView.setText(alertEditProfileEmail_editText.getText().toString());
-                        editProfileEmailCheck =false;
-                    }
-                    if (editProfilePhnoCheck){
-                        userDataRef.child("profile_data").child("phno").setValue(alertEditProfilePhno_editText.getText().toString());
-                        phno_textView.setText(alertEditProfilePhno_editText.getText().toString());
-                        editProfilePhnoCheck = false;
-                    }
-                    if (editProfileAddressCheck){
-                        userDataRef.child("profile_data").child("address").setValue(alertEditProfileAddress_editText.getText().toString());
-                        address_textView.setText(alertEditProfileAddress_editText.getText().toString());
-                        editProfileAddressCheck = false;
-                    }
-                    editProfileDialog.dismiss();
-                }
-            }
-        });
-
-        alertEditProfileCancel_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editProfileDialog.dismiss();
-            }
-        });
-
-        editConditions_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertAddCategoryName_editText.setText(conditions_textView.getText().toString());
-                alertAddCategoryName_editText.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (alertAddCategoryName_editText.getText().toString().equals(conditions_textView.getText().toString())){
-                            editConditionsCheck=false;
-                            alertAddCategoryName_editText.setTextColor(getResources().getColor(R.color.textGrey));
-                        }else {
-                            editConditionsCheck=true;
-                            alertAddCategoryName_editText.setTextColor(getResources().getColor(R.color.textBlue));
-                        }
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                });
-                editConditionDialog.show();
-            }
-        });
-
-        alertEditConditionEnter_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (editConditionsCheck){
-                    userDataRef.child("conditions").setValue(alertAddCategoryName_editText.getText().toString());
-                    conditions_textView.setText(alertAddCategoryName_editText.getText().toString());
-                    editConditionsCheck = false;
-                    editConditionDialog.dismiss();
-                }else {
-                    Toast.makeText(getActivity(), "No changes", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-
-        alertEditConditionCancel_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editConditionDialog.dismiss();
-            }
-        });
 
 
 

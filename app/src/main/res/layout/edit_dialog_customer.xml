@@ -42,7 +42,7 @@
 
         <EditText
             android:id="@+id/ac_phoneno"
-            style="@style/RBSInvoice_EditTexts"
+            style="@style/TextViews_Regular_small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/phone_no_textview"
@@ -65,7 +65,7 @@
 
         <EditText
             android:id="@+id/ac_address"
-            style="@style/RBSInvoice_EditTexts"
+            style="@style/TextViews_Regular_small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/address_textview"
@@ -86,7 +86,7 @@
 
         <EditText
             android:id="@+id/ac_email"
-            style="@style/RBSInvoice_EditTexts"
+            style="@style/TextViews_Regular_small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/email_textview"
