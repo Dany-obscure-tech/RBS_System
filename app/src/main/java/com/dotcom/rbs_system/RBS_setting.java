@@ -2,6 +2,7 @@ package com.dotcom.rbs_system;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -39,6 +40,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link RBS_setting#newInstance} factory method to
@@ -48,7 +51,13 @@ public class RBS_setting extends Fragment {
 
     View view;
 
-    DatabaseReference faultListRef,reference, userDataRef,rbsMessageRef;
+    String port_value, ip_address;
+
+    public static final String PRINTER_SETTINGS = "Printer_Settings";
+    public static final String Printer_Port_Number = "printer_port_number";
+    public static final String Printer_Ip_Address = "printer_ip_address";
+
+    DatabaseReference faultListRef, reference, userDataRef, rbsMessageRef;
     StorageReference storageReference;
 
     private Uri logoDocUri = null;
@@ -57,22 +66,23 @@ public class RBS_setting extends Fragment {
     private static final int LOGO_READ_REQUEST_CODE = 42;
     private static final int BANNER_READ_REQUEST_CODE = 43;
 
-    LinearLayout logoButtons_linearLayout,bannerButtons_linearLayout;
+    LinearLayout logoButtons_linearLayout, bannerButtons_linearLayout;
 
-    ImageView logo_imageView,banner_imageView;
+    ImageView logo_imageView, banner_imageView;
 
-    TextView edit_banner_textview,add_logo_textview,add_faults_textview;
-    TextView addFaultsave_textview,addFaultsCancel_textview;
+    TextView edit_banner_textview, add_logo_textview, add_faults_textview, port_number_textview, ip_address_textview;
 
-    Button alertEditProfileSave_btn,alertEditProfileCancel_btn;
+    TextView addFaultsave_textview, addFaultsCancel_textview, save_printer_settings_textview, cancel_printer_settings_textview;
 
+    TextView printer_setting_textview;
 
     RecyclerView faultList_recyclerView;
+
     AdapterSettingsFaultListRecyclerView adapterSettingsFaultListRecyclerView;
 
-    Dialog addFaultDialog,editProfileDialog;
+    Dialog addFaultDialog, editProfileDialog, edit_printer_settings_Dialog;
 
-    EditText alertFaultName_editText,alertFaultPrice_editText;
+    EditText alertFaultName_editText, alertFaultPrice_editText, port_number_edittext, ip_address_edittext;
 
     List<String> faultNameList, faultPriceList, faultKeyIDList;
 
@@ -81,8 +91,8 @@ public class RBS_setting extends Fragment {
 
     Boolean logoBannerUploadCheck = true;
 
-    TextView email_textView,phno_textView,address_textView;
-    TextView rbsMessage_textView,conditions_textView;
+    TextView email_textView, phno_textView, address_textView;
+    TextView rbsMessage_textView, conditions_textView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -128,7 +138,7 @@ public class RBS_setting extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        view= inflater.inflate(R.layout.fragment_rbs_setting, container, false);
+        view = inflater.inflate(R.layout.fragment_rbs_setting, container, false);
 
         initialize();
         checkUserData();
@@ -143,19 +153,21 @@ public class RBS_setting extends Fragment {
     private void initialize() {
         storageReference = FirebaseStorage.getInstance().getReference();
         reference = FirebaseDatabase.getInstance().getReference();
-        userDataRef = FirebaseDatabase.getInstance().getReference("Users_data/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
+        userDataRef = FirebaseDatabase.getInstance().getReference("Users_data/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
         faultListRef = FirebaseDatabase.getInstance().getReference("Listed_faults");
         rbsMessageRef = FirebaseDatabase.getInstance().getReference("Admin");
 
-        logoButtons_linearLayout =(LinearLayout)view.findViewById(R.id.logoButtons_linearLayout);
-        bannerButtons_linearLayout = (LinearLayout)view.findViewById(R.id.bannerButtons_linearLayout);
+        logoButtons_linearLayout = (LinearLayout) view.findViewById(R.id.logoButtons_linearLayout);
+        bannerButtons_linearLayout = (LinearLayout) view.findViewById(R.id.bannerButtons_linearLayout);
 
-        logo_imageView = (ImageView)view.findViewById(R.id.logo_imageView);
-        banner_imageView = (ImageView)view.findViewById(R.id.banner_imageView);
+        logo_imageView = (ImageView) view.findViewById(R.id.logo_imageView);
+        banner_imageView = (ImageView) view.findViewById(R.id.banner_imageView);
 
         add_faults_textview = (TextView) view.findViewById(R.id.add_faults_textview);
-        add_logo_textview = (TextView)view.findViewById(R.id.add_logo_textview);
+        add_logo_textview = (TextView) view.findViewById(R.id.add_logo_textview);
         edit_banner_textview = (TextView) view.findViewById(R.id.edit_banner_textview);
+        printer_setting_textview = (TextView) view.findViewById(R.id.printer_setting_textview);
+
 
         faultNameList = new ArrayList<>();
         faultPriceList = new ArrayList<>();
@@ -164,46 +176,61 @@ public class RBS_setting extends Fragment {
         faultList_recyclerView = (RecyclerView) view.findViewById(R.id.faultList_recyclerView);
 
         addFaultDialog = new Dialog(getActivity());
+        edit_printer_settings_Dialog = new Dialog(getActivity());
         addFaultDialog.setContentView(R.layout.alert_setting_add_fault);
+        edit_printer_settings_Dialog.setContentView(R.layout.printer_settings_alert);
         alertFaultName_editText = addFaultDialog.findViewById(R.id.alertFaultName_editText);
         alertFaultPrice_editText = addFaultDialog.findViewById(R.id.alertFaultPrice_editText);
+        port_number_edittext = (EditText) view.findViewById(R.id.port_number_edittext);
         addFaultsave_textview = addFaultDialog.findViewById(R.id.addFaultsave_textview);
         addFaultsCancel_textview = addFaultDialog.findViewById(R.id.addFaultsCancel_textview);
+        port_number_edittext = edit_printer_settings_Dialog.findViewById(R.id.port_number_edittext);
+        ip_address_edittext = edit_printer_settings_Dialog.findViewById(R.id.ip_address_edittext);
+        save_printer_settings_textview = edit_printer_settings_Dialog.findViewById(R.id.save_printer_settings_textview);
+        cancel_printer_settings_textview = edit_printer_settings_Dialog.findViewById(R.id.cancel_printer_settings_textview);
+        port_number_textview = (TextView) view.findViewById(R.id.port_number_textview);
+        ip_address_textview = (TextView) view.findViewById(R.id.ip_address_textview);
+
+        SharedPreferences preferences = getActivity().getSharedPreferences(RBS_setting.PRINTER_SETTINGS, MODE_PRIVATE);
+        port_value = preferences.getString(RBS_setting.Printer_Port_Number, "printer_port_number");
+        ip_address = preferences.getString(RBS_setting.Printer_Ip_Address, "printer_ip_address");
+
+        port_number_textview.setText(String.valueOf(port_value));
+
+        ip_address_textview.setText(String.valueOf(ip_address));
+
         editProfileDialog = new Dialog(getActivity());
 
-
-
-
-        email_textView = (TextView)view.findViewById(R.id.post_code_textView);
-        phno_textView = (TextView)view.findViewById(R.id.phno_textView);
-        address_textView = (TextView)view.findViewById(R.id.vendor_address_textView);
-        conditions_textView = (TextView)view.findViewById(R.id.conditions_textView);
-        rbsMessage_textView = (TextView)view.findViewById(R.id.rbsMessage_textView);
+        email_textView = (TextView) view.findViewById(R.id.post_code_textView);
+        phno_textView = (TextView) view.findViewById(R.id.phno_textView);
+        address_textView = (TextView) view.findViewById(R.id.vendor_address_textView);
+        conditions_textView = (TextView) view.findViewById(R.id.conditions_textView);
+        rbsMessage_textView = (TextView) view.findViewById(R.id.rbsMessage_textView);
     }
 
     private void checkUserData() {
         userDataRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child("logo").exists()){
+                if (dataSnapshot.child("logo").exists()) {
                     Picasso.get().load(String.valueOf(dataSnapshot.child("logo").getValue())).into(logo_imageView);
                     logoUrlString = String.valueOf(dataSnapshot.child("logo").getValue());
                 }
-                if (dataSnapshot.child("banner").exists()){
+                if (dataSnapshot.child("banner").exists()) {
                     Picasso.get().load(String.valueOf(dataSnapshot.child("banner").getValue())).into(banner_imageView);
                     bannerUrlString = String.valueOf(dataSnapshot.child("banner").getValue());
                     banner_imageView.setVisibility(View.VISIBLE);
                 }
-                if (dataSnapshot.child("profile_data").child("email").exists()){
+                if (dataSnapshot.child("profile_data").child("email").exists()) {
                     email_textView.setText(dataSnapshot.child("profile_data").child("email").getValue().toString());
                 }
-                if (dataSnapshot.child("profile_data").child("phno").exists()){
+                if (dataSnapshot.child("profile_data").child("phno").exists()) {
                     phno_textView.setText(dataSnapshot.child("profile_data").child("phno").getValue().toString());
                 }
-                if (dataSnapshot.child("profile_data").child("address").exists()){
+                if (dataSnapshot.child("profile_data").child("address").exists()) {
                     address_textView.setText(dataSnapshot.child("profile_data").child("address").getValue().toString());
                 }
-                if (dataSnapshot.child("conditions").exists()){
+                if (dataSnapshot.child("conditions").exists()) {
                     conditions_textView.setText(dataSnapshot.child("conditions").getValue().toString());
                 }
             }
@@ -219,7 +246,7 @@ public class RBS_setting extends Fragment {
         rbsMessageRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child("rbs_message").exists()){
+                if (dataSnapshot.child("rbs_message").exists()) {
                     rbsMessage_textView.setText(dataSnapshot.child("rbs_message").getValue().toString());
                 }
             }
@@ -233,6 +260,42 @@ public class RBS_setting extends Fragment {
 
     private void onClickListeners() {
 
+        cancel_printer_settings_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edit_printer_settings_Dialog.dismiss();
+            }
+        });
+
+        save_printer_settings_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), String.valueOf(port_number_edittext.getText().toString()), Toast.LENGTH_SHORT).show();
+
+                SharedPreferences.Editor editor = getActivity().getSharedPreferences(PRINTER_SETTINGS, MODE_PRIVATE).edit();
+
+                editor.putString(Printer_Port_Number, String.valueOf(port_number_edittext.getText().toString()));
+                editor.putString(Printer_Ip_Address, String.valueOf(ip_address_edittext.getText().toString()));
+                editor.apply();
+
+                port_number_textview.setText(String.valueOf(port_number_edittext.getText().toString()));
+                ip_address_textview.setText(String.valueOf(ip_address_edittext.getText().toString()));
+
+                edit_printer_settings_Dialog.dismiss();
+
+            }
+        });
+
+        printer_setting_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                port_number_edittext.setText(port_number_textview.getText());
+
+                ip_address_edittext.setText(ip_address_textview.getText());
+                edit_printer_settings_Dialog.show();
+            }
+        });
+
         add_faults_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -243,7 +306,7 @@ public class RBS_setting extends Fragment {
         addFaultsave_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validateAlertAddFault()==true){
+                if (validateAlertAddFault() == true) {
                     detailsSubmitAlertAddFault();
                 }
 
@@ -261,7 +324,7 @@ public class RBS_setting extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (logoBannerUploadCheck){
+                if (logoBannerUploadCheck) {
                     logoBannerUploadCheck = false;
                     // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
                     // browser.
@@ -278,7 +341,7 @@ public class RBS_setting extends Fragment {
                     intent.setType("image/*");
 
                     startActivityForResult(intent, LOGO_READ_REQUEST_CODE);
-                }else {
+                } else {
                     Toast.makeText(getActivity(), "Information pending", Toast.LENGTH_SHORT).show();
                 }
 
@@ -288,7 +351,7 @@ public class RBS_setting extends Fragment {
         edit_banner_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (logoBannerUploadCheck){
+                if (logoBannerUploadCheck) {
                     logoBannerUploadCheck = false;
                     // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
                     // browser.
@@ -305,15 +368,12 @@ public class RBS_setting extends Fragment {
                     intent.setType("image/*");
 
                     startActivityForResult(intent, BANNER_READ_REQUEST_CODE);
-                }else {
+                } else {
                     Toast.makeText(getActivity(), "Information pending", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
-
-
-
 
 
     }
@@ -322,15 +382,15 @@ public class RBS_setting extends Fragment {
         faultListRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     faultNameList.add(String.valueOf(dataSnapshot1.child("Fault_name").getValue()));
                     faultPriceList.add(String.valueOf(dataSnapshot1.child("Fault_price").getValue()));
                     faultKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
                 }
 
-                adapterSettingsFaultListRecyclerView = new AdapterSettingsFaultListRecyclerView(getActivity(),faultNameList,faultPriceList,faultKeyIDList);
+                adapterSettingsFaultListRecyclerView = new AdapterSettingsFaultListRecyclerView(getActivity(), faultNameList, faultPriceList, faultKeyIDList);
                 faultList_recyclerView.setAdapter(adapterSettingsFaultListRecyclerView);
-                faultList_recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),1));
+                faultList_recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
 
             }
 
@@ -344,11 +404,11 @@ public class RBS_setting extends Fragment {
     private boolean validateAlertAddFault() {
         Boolean valid = true;
 
-        if (alertFaultName_editText.getText().toString().isEmpty()){
+        if (alertFaultName_editText.getText().toString().isEmpty()) {
             alertFaultName_editText.setError("enter fault name");
             valid = false;
         }
-        if (alertFaultPrice_editText.getText().toString().isEmpty()){
+        if (alertFaultPrice_editText.getText().toString().isEmpty()) {
             alertFaultPrice_editText.setError("enter fault price");
             valid = false;
         }

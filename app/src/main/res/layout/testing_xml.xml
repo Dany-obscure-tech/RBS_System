@@ -1,152 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:layout_marginBottom="10dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/searchForItem_cardView"
+    <TextView
+        style="@style/TextViews_Regular_small"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Port Number"
+        android:textColor="@color/textGrey" />
+
+    <EditText
+        android:id="@+id/port_number_edittext"
+        style="@style/TextViews_Regular_small"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ripple_effect_cardview"
-        app:cardBackgroundColor="@color/colorWhite"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="4dp"
-        app:cardUseCompatPadding="true">
+        android:inputType="number"
+        android:layout_below="@+id/address_textview"
+        android:backgroundTint="@color/colorPrimary"
+        android:hint="Enter port number.."
+        android:textColor="@color/textGrey" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+    <TextView
+        style="@style/TextViews_Regular_small"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IP Address"
+        android:textColor="@color/textGrey" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/shopkeeperImage_imageView"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/profile_icon"
-                    app:civ_border_color="#4A4A4A"
-                    app:civ_border_width="0dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/TextViews_Regular_small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Shopkeeper "
-                        android:textColor="@color/textGrey"
-                        android:textSize="@dimen/Regular_Small" />
-
-                    <TextView
-                        android:id="@+id/shopkeeper_name_textview"
-                        style="@style/TextViews_Bold_small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Shopkeeper name"
-                        android:textColor="@color/textGrey"
-                        android:textSize="@dimen/Regular_Small" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/customer_detail_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/customerImage_imageView"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/profile_icon"
-                    app:civ_border_color="#4A4A4A"
-                    app:civ_border_width="0dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-                    <TextView
-                        style="@style/TextViews_Regular_small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Item "
-                        android:textColor="@color/textGrey"
-                        android:textSize="@dimen/Regular_Small" />
-
-
-                    <TextView
-                        android:id="@+id/customer_name_textview"
-                        style="@style/TextViews_Bold_small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Item name"
-                        android:textColor="@color/textGrey"
-                        android:textSize="@dimen/Regular_Small" />
-
-
-                        <TextView
-                            style="@style/TextViews_Regular_small"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="serial no"
-                            android:textColor="@color/textGrey"
-                            android:textSize="@dimen/Regular_Small" />
-
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:id="@+id/status_textView"
-                    style="@style/TextViews_Bold_small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Status"
-                    android:textColor="@color/gradientDarkBlue"
-                    android:textSize="@dimen/Bold_Small" />
-
-                <TextView
-                    android:id="@+id/date_textView"
-                    style="@style/TextViews_Regular_small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_gravity="end"
-                    android:text="--/--/--"
-                    android:textColor="@color/textGrey"
-                    android:textSize="@dimen/Regular_Small" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-</RelativeLayout>
+    <EditText
+        style="@style/TextViews_Regular_small"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/address_textview"
+        android:backgroundTint="@color/colorPrimary"
+        android:hint="Enter ip address.."
+        android:textColor="@color/textGrey" />
+</LinearLayout>

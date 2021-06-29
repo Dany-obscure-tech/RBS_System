@@ -88,9 +88,10 @@
                     style="@style/gradient_blue_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="right"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="20dp"
                     android:background="@drawable/profile_screen_header"
                     android:text="Edit Logo" />
 
@@ -105,9 +106,19 @@
                 android:orientation="vertical">
 
                 <TextView
+                    style="@style/TextViews_Bold_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center"
+                    android:text="Shop Details"
+                    android:textColor="@color/textGrey" />
+
+                <TextView
                     style="@style/TextViews_Bold_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="Shop Name"
                     android:textColor="@color/gradientDarkBlue" />
 
@@ -116,7 +127,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Phi Tech"
                     android:textColor="@color/textGrey" />
 
@@ -132,7 +143,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Peshawar City"
                     android:textColor="@color/textGrey" />
 
@@ -182,10 +193,11 @@
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/TextViews_Bold_small"
+                        style="@style/TextViews_Bold_big"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:layout_gravity="center"
                         android:text="Faults list"
                         android:textColor="@color/textGrey" />
 
@@ -216,9 +228,10 @@
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/TextViews_Bold_small"
+                        style="@style/TextViews_Bold_big"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:text="Terms and conditions"
                         android:textColor="@color/textGrey" />
 
@@ -236,14 +249,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="0dp"
                     android:layout_marginBottom="20dp"
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/TextViews_Bold_small"
+                        style="@style/TextViews_Bold_big"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:text="Printer Settings"
                         android:textColor="@color/textGrey" />
 
@@ -255,15 +269,15 @@
                         android:text="Port Number"
                         android:textColor="@color/textGrey" />
 
-                    <EditText
+                    <TextView
+                        android:id="@+id/port_number_textview"
                         style="@style/TextViews_Regular_small"
                         android:layout_marginTop="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="number"
                         android:layout_below="@+id/address_textview"
                         android:backgroundTint="@color/colorPrimary"
-                        android:hint="Enter port number.."
+                        android:text="-----"
                         android:textColor="@color/textGrey" />
 
                     <TextView
@@ -274,15 +288,27 @@
                         android:text="IP Address"
                         android:textColor="@color/textGrey" />
 
-                    <EditText
+                    <TextView
+                        android:id="@+id/ip_address_textview"
                         style="@style/TextViews_Regular_small"
                         android:layout_marginTop="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/address_textview"
                         android:backgroundTint="@color/colorPrimary"
-                        android:hint="Enter ip address.."
+                        android:text="------"
                         android:textColor="@color/textGrey" />
+
+                    <TextView
+                        android:id="@+id/printer_setting_textview"
+                        style="@style/gradient_blue_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/profile_screen_header"
+                        android:text="Printer Setting" />
 
                 </LinearLayout>
 

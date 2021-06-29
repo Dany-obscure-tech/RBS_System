@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/screen_header_rectangle">
+
+        <TextView
+            style="@style/TextViews_Bold_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Edit Printer Settings"
+            android:textColor="#ffffff" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextViews_Bold_small"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Port Number"
+            android:textColor="@color/textGrey" />
+
+        <EditText
+            android:id="@+id/port_number_edittext"
+            style="@style/TextViews_Regular_small"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:layout_below="@+id/address_textview"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="Enter port number.."
+            android:textColor="@color/textGrey" />
+
+        <TextView
+            style="@style/TextViews_Bold_small"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IP Address"
+            android:textColor="@color/textGrey" />
+
+        <EditText
+            android:id="@+id/ip_address_edittext"
+            style="@style/TextViews_Regular_small"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/address_textview"
+            android:backgroundTint="@color/colorPrimary"
+            android:hint="Enter ip address.."
+            android:textColor="@color/textGrey" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ac_email"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/save_printer_settings_textview"
+                style="@style/RBSInvoice_SaveButtonTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:text="Save"
+                android:textAlignment="center" />
+
+
+            <TextView
+                android:id="@+id/cancel_printer_settings_textview"
+                style="@style/RBSInvoice_CancelButtonTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="Cancel" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
