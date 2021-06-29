@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.dotcom.rbs_system.Classes.BuylocalSlider;
 import com.dotcom.rbs_system.Classes.Currency;
+import com.dotcom.rbs_system.Classes.UserDetails;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -79,7 +80,6 @@ public class SplashActivity extends AppCompatActivity {
     private void Initialization() {
         buylocalsliderlist = new ArrayList<>();
 
-        userRef = FirebaseDatabase.getInstance().getReference("Users_data");
         RequiredAdminDataRef = FirebaseDatabase.getInstance().getReference("Initial_load_data/");
         currencyObj = Currency.getInstance();
         buylocalSlider = BuylocalSlider.getInstance();
@@ -90,7 +90,7 @@ public class SplashActivity extends AppCompatActivity {
     private void checkExistingUser() {
         if (FirebaseAuth.getInstance().getCurrentUser() !=null){
 
-            userTypeCheck(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
+            userTypeCheck();
         }else {
             Intent i = new Intent(SplashActivity.this, SignInActivity.class);
 
@@ -135,25 +135,20 @@ public class SplashActivity extends AppCompatActivity {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private void userTypeCheck(final String uid) {
+    private void userTypeCheck() {
+        userRef = FirebaseDatabase.getInstance().getReference("Users_data/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(uid).child("type").exists()){
-                    String type = dataSnapshot.child(uid).child("type").getValue().toString();
-                    if (type.equals("customer")){
-                        InitialDataFetch();
-
-                    }if (type.equals("shop keeper")){
-                        Intent intent = new Intent(SplashActivity.this, RBS_mainscreen.class);
-                        startActivity(intent);
-                        finish();
-                    } if (type.equals("vendor")){
-                        Intent intent = new Intent(SplashActivity.this, VendorMainScreen.class);
-                        startActivity(intent);
-                        finish();
-                    }
+                if (dataSnapshot.child("Shopkeeper_details").exists()){
+                    UserDetails.getInstance().setShopkeeper(true);
+                    UserDetails.getInstance().setShopLogo(dataSnapshot.child("Shopkeeper_details").child("shop_logo").getValue().toString());
+                    UserDetails.getInstance().setShopNmae(dataSnapshot.child("Shopkeeper_details").child("shop_name").getValue().toString());
+                }else {
+                    UserDetails.getInstance().setShopkeeper(false);
                 }
+
+                InitialDataFetch();
             }
 
             @Override

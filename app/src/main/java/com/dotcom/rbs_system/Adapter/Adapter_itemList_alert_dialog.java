@@ -3,6 +3,7 @@ package com.dotcom.rbs_system.Adapter;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dotcom.rbs_system.Buy;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Classes.RBSItemDetails;
+import com.dotcom.rbs_system.Item_history;
 import com.dotcom.rbs_system.R;
 import com.dotcom.rbs_system.Sale;
 import com.squareup.picasso.Picasso;
@@ -28,16 +30,16 @@ public class Adapter_itemList_alert_dialog extends RecyclerView.Adapter<Adapter_
 
     Context context;
     RBSItemDetails rbsItemDetails = RBSItemDetails.getInstance();
-    List<String> exisitngItemsNamesList, exisitngItemsSerialNoList,exisitngItemsKeyIDList,existingItemsPriceList,existingItemsCategoryList,existingItemsLastActiveList,existingItemsImageUrlList;
-    TextView itemName_textView,  itemID_textView,  itemPrice_textView,  itemLastActive_textView;
-    TextView itemPriceCurrency_textView;
+    List<String> exisitngItemsNamesList, exisitngItemsSerialNoList, exisitngItemsKeyIDList, existingItemsPriceList, existingItemsCategoryList, existingItemsLastActiveList, existingItemsImageUrlList;
+    TextView itemName_textView, itemID_textView, itemPrice_textView, itemLastActive_textView;
+    TextView itemPriceCurrency_textView, viewItemDetails_textView;
     ImageView itemImage_imageView;
 
     Dialog itemList_alert_dialog;
 
     String itemKeyID;
 
-    public Adapter_itemList_alert_dialog(Context context, List<String> exisitngItemsNamesList, List<String> exisitngItemsSerialNoList, List<String> exisitngItemsKeyIDList, List<String> existingItemsPriceList, List<String> existingItemsCategoryList, List<String> existingItemsLastActiveList, List<String> existingItemsImageUrlList, TextView itemName_textView, TextView itemID_textView, TextView itemPriceCurrency_textView, TextView itemPrice_textView, TextView itemLastActive_textView, ImageView itemImage_imageView, Dialog itemList_alert_dialog) {
+    public Adapter_itemList_alert_dialog(Context context, List<String> exisitngItemsNamesList, List<String> exisitngItemsSerialNoList, List<String> exisitngItemsKeyIDList, List<String> existingItemsPriceList, List<String> existingItemsCategoryList, List<String> existingItemsLastActiveList, List<String> existingItemsImageUrlList, TextView itemName_textView, TextView itemID_textView, TextView itemPriceCurrency_textView, TextView itemPrice_textView, TextView itemLastActive_textView, ImageView itemImage_imageView, TextView viewItemDetails_textView, Dialog itemList_alert_dialog) {
         this.context = context;
         this.exisitngItemsNamesList = exisitngItemsNamesList;
         this.exisitngItemsSerialNoList = exisitngItemsSerialNoList;
@@ -54,13 +56,14 @@ public class Adapter_itemList_alert_dialog extends RecyclerView.Adapter<Adapter_
         this.itemPrice_textView = itemPrice_textView;
         this.itemLastActive_textView = itemLastActive_textView;
         this.itemImage_imageView = itemImage_imageView;
+        this.viewItemDetails_textView = viewItemDetails_textView;
 
     }
 
     @NonNull
     @Override
     public Adapter_itemList_alert_dialog.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new Adapter_itemList_alert_dialog.ViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_itemlist_alert_item,parent,false));
+        return new Adapter_itemList_alert_dialog.ViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_itemlist_alert_item, parent, false));
     }
 
     @Override
@@ -82,7 +85,7 @@ public class Adapter_itemList_alert_dialog extends RecyclerView.Adapter<Adapter_
                 itemPrice_textView.setText(holder.itemPrice_textView.getText().toString());
                 itemLastActive_textView.setText(holder.itemLastActive_textView.getText().toString());
 
-                itemImage_imageView.setImageDrawable(holder.itemImage_imageView.getDrawable());
+                Picasso.get().load(existingItemsImageUrlList.get(position)).into(itemImage_imageView);
 
                 //////
 
@@ -94,15 +97,29 @@ public class Adapter_itemList_alert_dialog extends RecyclerView.Adapter<Adapter_
                 itemPrice_textView.setVisibility(View.VISIBLE);
                 itemLastActive_textView.setVisibility(View.VISIBLE);
 
-                itemImage_imageView.setVisibility(View.VISIBLE);
+                if (itemImage_imageView != null) {
+                    itemImage_imageView.setVisibility(View.VISIBLE);
+                    viewItemDetails_textView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(context, Item_history.class);
+                            intent.putExtra("ITEM_ID", exisitngItemsKeyIDList.get(position));
+                            intent.putExtra("ITEM_CATEGORY", existingItemsCategoryList.get(position));
+                            context.startActivity(intent);
+                        }
+                    });
+                }
+
+
+                viewItemDetails_textView.setVisibility(View.VISIBLE);
 
                 itemKeyID = exisitngItemsKeyIDList.get(position);
 
-                if (context instanceof Sale){
+                if (context instanceof Sale) {
                     rbsItemDetails.setCheck("Sale existing item");
                 }
 
-                if (context instanceof Buy){
+                if (context instanceof Buy) {
                     rbsItemDetails.setCheck("Buy existing item");
                 }
 
@@ -118,12 +135,13 @@ public class Adapter_itemList_alert_dialog extends RecyclerView.Adapter<Adapter_
                 itemList_alert_dialog.dismiss();
             }
         });
+
+
     }
 
-    public String getItemKeyID(){
+    public String getItemKeyID() {
         return itemKeyID;
     }
-
 
 
     @Override
@@ -132,18 +150,19 @@ public class Adapter_itemList_alert_dialog extends RecyclerView.Adapter<Adapter_
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView itemName_textView,itemSerialNo_textView,itemPrice_textView,itemLastActive_textView,itemPriceCurrency_textView;
+        TextView itemName_textView, itemSerialNo_textView, itemPrice_textView, itemLastActive_textView, itemPriceCurrency_textView;
         ImageView itemImage_imageView;
         CardView searchForItem_cardView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             searchForItem_cardView = (CardView) itemView.findViewById(R.id.searchForItem_cardView);
 
-            itemName_textView = (TextView)itemView.findViewById(R.id.itemName_textView);
-            itemSerialNo_textView = (TextView)itemView.findViewById(R.id.itemSerialNo_textView);
-            itemPrice_textView = (TextView)itemView.findViewById(R.id.itemPrice_textView);
-            itemLastActive_textView = (TextView)itemView.findViewById(R.id.itemLastActive_textView);
-            itemPriceCurrency_textView = (TextView)itemView.findViewById(R.id.itemPriceCurrency_textView);
+            itemName_textView = (TextView) itemView.findViewById(R.id.itemName_textView);
+            itemSerialNo_textView = (TextView) itemView.findViewById(R.id.itemSerialNo_textView);
+            itemPrice_textView = (TextView) itemView.findViewById(R.id.itemPrice_textView);
+            itemLastActive_textView = (TextView) itemView.findViewById(R.id.itemLastActive_textView);
+            itemPriceCurrency_textView = (TextView) itemView.findViewById(R.id.itemPriceCurrency_textView);
             itemImage_imageView = (ImageView) itemView.findViewById(R.id.itemImage_imageView);
 
         }

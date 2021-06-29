@@ -6,10 +6,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -38,7 +36,7 @@ import java.util.List;
 public class Customer_history extends AppCompatActivity {
 
     String customerKeyID;
-    List<String> shopkeeper_name_textview, item_name_textview,status_textView,shopkeeperImage_imageView_list,customerImage_imageView_list ,dateList,shopkeeper_key_id,customer_key_id,serial_no_textview,imageUrlList;
+    List<String> shopkeeper_name_textview, item_name_textview,item_category_textview,status_textView,shopkeeperImage_imageView_list ,dateList,itemKeyId,itemImageView,shopkeeper_key_id,serial_no_textview, customerIDimageUrlList;
 
     RecyclerView customer_ID_Image_recyclerView;
     ImageView edit_image_image_view;
@@ -110,27 +108,18 @@ public class Customer_history extends AppCompatActivity {
         save_btn_textview = (TextView) edit_dialog.findViewById(R.id.save_btn_textview);
 
         customerKeyID = getIntent().getStringExtra("CUSTOMER_ID");
+        customerIDimageUrlList = new ArrayList<>();
 
-        shopkeeper_name_textview = new ArrayList<>();
+        dateList = new ArrayList<>();
+        itemImageView = new ArrayList<>();
+        itemKeyId = new ArrayList<>();
         item_name_textview = new ArrayList<>();
+        item_category_textview = new ArrayList<>();
+        serial_no_textview = new ArrayList<>();
         status_textView = new ArrayList<>();
         shopkeeperImage_imageView_list = new ArrayList<>();
-        customerImage_imageView_list = new ArrayList<>();
-        serial_no_textview = new ArrayList<>();
-        dateList = new ArrayList<>();
         shopkeeper_key_id = new ArrayList<>();
-        customer_key_id = new ArrayList<>();
-        imageUrlList = new ArrayList<>();
-
-        shopkeeperImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
-        shopkeeperImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
-        shopkeeperImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
-        shopkeeperImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
-        customerImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
-        customerImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
-        customerImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
-        customerImage_imageView_list.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
-
+        shopkeeper_name_textview = new ArrayList<>();
 
         sfd = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -202,25 +191,35 @@ public class Customer_history extends AppCompatActivity {
 
                 if (dataSnapshot.exists()){
                     for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                        shopkeeper_name_textview.add(dataSnapshot1.child("Shopkeeper_name").getValue().toString());
-                        item_name_textview.add(dataSnapshot1.child("Item_name").getValue().toString());
-                        status_textView.add(dataSnapshot1.child("RBS").getValue().toString());
-                        serial_no_textview.add(dataSnapshot1.child("Item_serialno").getValue().toString());
                         dateList.add(dataSnapshot1.child("Date").getValue().toString());
+                        item_category_textview.add(dataSnapshot1.child("Item_keyCategory").getValue().toString());
+                        itemImageView.add(dataSnapshot1.child("Item_image").getValue().toString());
+                        itemKeyId.add(dataSnapshot1.child("Item_keyId").getValue().toString());
+                        item_name_textview.add(dataSnapshot1.child("Item_name").getValue().toString());
+                        serial_no_textview.add(dataSnapshot1.child("Item_serialno").getValue().toString());
+                        status_textView.add(dataSnapshot1.child("RBS").getValue().toString());
+                        shopkeeperImage_imageView_list.add(dataSnapshot1.child("Shopkeeper_image").getValue().toString());
+                        shopkeeper_key_id.add(dataSnapshot1.child("Shopkeeper_keyId").getValue().toString());
+                        shopkeeper_name_textview.add(dataSnapshot1.child("Shopkeeper_name").getValue().toString());
 
                     }
-                    Collections.reverse(shopkeeper_name_textview);
-                    Collections.reverse(item_name_textview);
-                    Collections.reverse(status_textView);
-                    Collections.reverse(serial_no_textview);
                     Collections.reverse(dateList);
+                    Collections.reverse(itemImageView);
+                    Collections.reverse(itemKeyId);
+                    Collections.reverse(item_name_textview);
+                    Collections.reverse(item_category_textview);
+                    Collections.reverse(serial_no_textview);
+                    Collections.reverse(status_textView);
+                    Collections.reverse(shopkeeperImage_imageView_list);
+                    Collections.reverse(shopkeeper_key_id);
+                    Collections.reverse(shopkeeper_name_textview);
 
 
                 }else {
                     pd1.dismissProgressBar(Customer_history.this);
                 }
 
-                adapterCustomerHistoryListRecyclerView = new AdapterCustomerHistoryListRecyclerView(Customer_history.this,shopkeeper_name_textview,item_name_textview,serial_no_textview,status_textView,shopkeeperImage_imageView_list,customerImage_imageView_list,dateList,shopkeeper_key_id,customer_key_id);
+                adapterCustomerHistoryListRecyclerView = new AdapterCustomerHistoryListRecyclerView(Customer_history.this,dateList,item_category_textview,itemImageView,itemKeyId,item_name_textview,serial_no_textview,status_textView,shopkeeperImage_imageView_list,shopkeeper_key_id,shopkeeper_name_textview);
                 customerHistoryRecyclerView.setAdapter(adapterCustomerHistoryListRecyclerView);
             }
 
@@ -245,10 +244,10 @@ public class Customer_history extends AppCompatActivity {
                     email_textView.setText(dataSnapshot.child("Email").getValue().toString());
 
                     for(DataSnapshot dataSnapshot1: dataSnapshot.child("ID_Image_urls").getChildren()){
-                        imageUrlList.add(dataSnapshot1.getValue().toString());
+                        customerIDimageUrlList.add(dataSnapshot1.getValue().toString());
                     }
 
-                    adapterCustomerIDImagesRecyclerView = new AdapterCustomerIDImagesRecyclerView(Customer_history.this,imageUrlList,alert_background_relativelayout,edit_image_image_view);
+                    adapterCustomerIDImagesRecyclerView = new AdapterCustomerIDImagesRecyclerView(Customer_history.this, customerIDimageUrlList,alert_background_relativelayout,edit_image_image_view);
                     customer_ID_Image_recyclerView.setAdapter(adapterCustomerIDImagesRecyclerView);
                     pd2.dismissProgressBar(Customer_history.this);
                 }else {

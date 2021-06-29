@@ -99,15 +99,6 @@ public class Item_history extends AppCompatActivity {
         shopkeeperImage_imageView = new ArrayList<>();
         customerImage_imageView = new ArrayList<>();
 
-        shopkeeperImage_imageView.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
-        shopkeeperImage_imageView.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
-        shopkeeperImage_imageView.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
-        shopkeeperImage_imageView.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
-
-        customerImage_imageView.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
-        customerImage_imageView.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
-        customerImage_imageView.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
-        customerImage_imageView.add("https://firebasestorage.googleapis.com/v0/b/rbssystem.appspot.com/o/Item_Images%2F-MbWKj3Ju2hQXGjGdMxj%2Fimage_1?alt=media&token=dc41aeb4-9fbe-42bb-9c8a-5aedf66cc509");
         itemImageUrl_list = new ArrayList<>();
 
         itemHistoryRef = FirebaseDatabase.getInstance().getReference("Item_history/" + itemID);
@@ -180,23 +171,28 @@ public class Item_history extends AppCompatActivity {
                         dateList.add(dataSnapshot1.child("Date").getValue().toString());
                         status_list.add(dataSnapshot1.child("RBS").getValue().toString());
                         shopkeeper_name_list.add(dataSnapshot1.child("Shopkeeper_name").getValue().toString());
+                        shopkeeperImage_imageView.add(dataSnapshot1.child("Shopkeeper_image").getValue().toString());
 
                         if (dataSnapshot1.child("Customer_name").exists()) {
                             shopkeeper_type_list.add(dataSnapshot1.child("Shopkeeper_type").getValue().toString());
                             customer_type_list.add(dataSnapshot1.child("Customer_type").getValue().toString());
                             customer_name_list.add(dataSnapshot1.child("Customer_name").getValue().toString());
+                            customerImage_imageView.add(dataSnapshot1.child("Customer_image").getValue().toString());
                         } else {
                             shopkeeper_type_list.add("NA");
                             customer_type_list.add("NA");
                             customer_name_list.add("NA");
+                            customerImage_imageView.add("NA");
                         }
 
                         Collections.reverse(dateList);
                         Collections.reverse(status_list);
                         Collections.reverse(shopkeeper_name_list);
+                        Collections.reverse(shopkeeperImage_imageView);
                         Collections.reverse(shopkeeper_type_list);
                         Collections.reverse(customer_type_list);
                         Collections.reverse(customer_name_list);
+                        Collections.reverse(customerImage_imageView);
 
                         adapterItemHistoryListRecyclerView = new AdapterItemHistoryListRecyclerView(Item_history.this, status_list, shopkeeper_type_list, shopkeeper_name_list, customer_type_list, customer_name_list,shopkeeperImage_imageView,customerImage_imageView ,dateList);
                         itemHistoryRecyclerView.setAdapter(adapterItemHistoryListRecyclerView);

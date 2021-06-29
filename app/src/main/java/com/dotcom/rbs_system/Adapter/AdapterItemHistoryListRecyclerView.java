@@ -31,8 +31,6 @@ public class AdapterItemHistoryListRecyclerView extends RecyclerView.Adapter<Ada
     List<String> customer_name_textview;
     List<String> shopkeeperImage_imageView_list;
     List<String> customerImage_imageView_list;
-    Activity activity;
-    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Listed_faults");
 
     public AdapterItemHistoryListRecyclerView(Context context,List<String> status_textView, List<String> shopkeeper_status, List<String> shopkeeper_name_textview,List<String> customer_status,List<String> customer_name_textview,List<String> shopkeeperImage_imageView_list,List<String> customerImage_imageView_list,List<String> dateList) {
         this.context = context;
@@ -44,7 +42,6 @@ public class AdapterItemHistoryListRecyclerView extends RecyclerView.Adapter<Ada
         this.shopkeeperImage_imageView_list = shopkeeperImage_imageView_list;
         this.customerImage_imageView_list = customerImage_imageView_list;
         this.dateList = dateList;
-
     }
 
     @NonNull

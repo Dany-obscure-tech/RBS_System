@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 
 import com.dotcom.rbs_system.Item_detail;
 import com.dotcom.rbs_system.Progress_dialoge;
+import com.dotcom.rbs_system.Sale;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +21,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class RBSItemDetails {
@@ -214,7 +218,7 @@ public class RBSItemDetails {
                         @Override
                         public void onSuccess(Uri uri) {
                             if(k==0){
-                                firstImageUri = uri;
+                                firstImageUri=uri;
                                 Toast.makeText(context, String.valueOf(uri), Toast.LENGTH_SHORT).show();
 
                                 if (check=="Add new item"){
@@ -232,7 +236,16 @@ public class RBSItemDetails {
                             }
                             reference.child("Items").child(itemCategory).child(key).child("Image_urls").child("image_"+(k+1)).setValue(String.valueOf(uri.toString()));
                             k++;
+
                             if (k==imageUrlList.size()){
+                                if (check=="Sale new item") {
+                                    rbsItemDetails.switchStockSale(rbsCustomerDetails.getKey(), FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                    Date date = Calendar.getInstance().getTime();
+                                    String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(date);
+                                    new Item_history_class().thirteenValues(key,UniquePushID.getInstance().getUniquePushID(), UserDetails.getInstance().getShopNmae(),FirebaseAuth.getInstance().getCurrentUser().getUid(),UserDetails.getInstance().getShopLogo(),"Seller",rbsCustomerDetails.getCustomerName(),rbsCustomerDetails.getKey(),"Buyer",rbsCustomerDetails.getFirstImageUrl(),"Trade",date.getTime(),currentDateString);
+                                    new Item_history_class().uploadItemImagetoCustomerHistory(rbsCustomerDetails.getKey(),UniquePushID.getInstance().getUniquePushID(), String.valueOf(firstImageUri));
+
+                                }
                                 if (check=="Buy new item"){
                                     uploadToStock();
                                     uploadToRbsInvoiceList(rbsCustomerDetails.getKey(),addedBy);

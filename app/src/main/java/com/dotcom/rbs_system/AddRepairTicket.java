@@ -72,9 +72,10 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
 
 
     TextView customer_textView, customer_add_textview, item_add_textView;
+    TextView viewCustomerDetails_textView;
 
     TextView itemLastActive_textView, customer_add_textView, datebtn_textView, submit_textView;
-
+    TextView viewItemDetails_textView;
 
     Adapter_itemList_alert_dialog adapter_itemList_alert_dialog;
 
@@ -314,7 +315,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             }
         }
 
-        adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(AddRepairTicket.this, lessExisitngItemsNamesList, lessExisitngItemsSerialNoList, lessExisitngItemsKeyIDList, lessExistingItemsPriceList, lessExistingItemsCategoryList, lessExistingItemsLastActiveList, lessExistingItemsImageUrlList, itemName_textView, itemID_textView, itemPriceCurrency_textView, itemPrice_textView, itemLastActive_textView, itemImage_imageView, itemList_alert_dialog);
+        adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(AddRepairTicket.this, lessExisitngItemsNamesList, lessExisitngItemsSerialNoList, lessExisitngItemsKeyIDList, lessExistingItemsPriceList, lessExistingItemsCategoryList, lessExistingItemsLastActiveList, lessExistingItemsImageUrlList, itemName_textView, itemID_textView, itemPriceCurrency_textView, itemPrice_textView, itemLastActive_textView, itemImage_imageView, viewItemDetails_textView,itemList_alert_dialog);
         itemList_recyclerView.setAdapter(adapter_itemList_alert_dialog);
         onScrollListner(filteredExisitngItemsNamesList, filteredExisitngItemsSerialNoList, filteredExistingItemsLastActiveList, filteredExistingItemsImageUrlList, filteredExistingItemsPriceList, filteredExistingItemsCategoryList, filteredExisitngItemsKeyIDList);
 
@@ -470,7 +471,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             }
         }
 
-        adapter_customerList_alert_dialog = new Adapter_customerList_alert_dialog(AddRepairTicket.this, lessExisitngCustomerList, lessExisitngCustomerKeyIDList, lessExisitngCustomerIDList, lessExistingCustomerPhnoList, lessExistingCustomerEmailList, lessExistingCustomerImageUrlList, customerName_textView, customerEmail_textView, customerID_textView, customerPhno_textView, customerImage_imageView, customerList_alert_dialog, customerID_linearLayout);
+        adapter_customerList_alert_dialog = new Adapter_customerList_alert_dialog(AddRepairTicket.this, lessExisitngCustomerList, lessExisitngCustomerKeyIDList, lessExisitngCustomerIDList, lessExistingCustomerPhnoList, lessExistingCustomerEmailList, lessExistingCustomerImageUrlList, customerName_textView, customerEmail_textView, customerID_textView, customerPhno_textView, customerImage_imageView, customerList_alert_dialog, viewCustomerDetails_textView,customerID_linearLayout);
         customerList_recyclerView.setAdapter(adapter_customerList_alert_dialog);
         onScrollCustomerListner(filteredExisitngCustomerList, filteredExisitngCustomerIDList, filteredExisitngCustomerKeyIDList, filteredExistingCustomerPhnoList, filteredExistingCustomerDobList, filteredExistingCustomerAddressList, filteredExistingCustomerEmailList, filteredExistingCustomerImageUrlList);
 
@@ -673,6 +674,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         date_text = (TextView) findViewById(R.id.date_of_birth_text);
         customer_add_textview = (TextView) findViewById(R.id.customer_add_textview);
         item_add_textView = (TextView) findViewById(R.id.item_add_textView);
+        viewCustomerDetails_textView = (TextView) findViewById(R.id.viewCustomerDetails_textView);
 
 
         searchForCustomer_cardview = (CardView) findViewById(R.id.searchForCustomer_cardView);
@@ -698,6 +700,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         itemPriceCurrency_textView = (TextView) findViewById(R.id.itemPriceCurrency_textView);
         itemPriceCurrency_textView.setText(Currency.getInstance().getCurrency());
         itemPrice_textView = (TextView) findViewById(R.id.itemPrice_textView);
+        viewItemDetails_textView = (TextView) findViewById(R.id.viewItemDetails_textView);
 
         itemList_alert_dialog = new Dialog(this);
         itemList_alert_dialog.setContentView(R.layout.alert_rbs_itemlist);
@@ -795,7 +798,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
                         }
                     }
 
-                    adapter_customerList_alert_dialog = new Adapter_customerList_alert_dialog(AddRepairTicket.this, lessExisitngCustomerList, lessExisitngCustomerKeyIDList, lessExisitngCustomerIDList, lessExistingCustomerPhnoList, lessExistingCustomerEmailList, lessExistingCustomerImageUrlList, customerName_textView, customerEmail_textView, customerID_textView, customerPhno_textView, customerImage_imageView, customerList_alert_dialog, customerID_linearLayout);
+                    adapter_customerList_alert_dialog = new Adapter_customerList_alert_dialog(AddRepairTicket.this, lessExisitngCustomerList, lessExisitngCustomerKeyIDList, lessExisitngCustomerIDList, lessExistingCustomerPhnoList, lessExistingCustomerEmailList, lessExistingCustomerImageUrlList, customerName_textView, customerEmail_textView, customerID_textView, customerPhno_textView, customerImage_imageView, customerList_alert_dialog, viewCustomerDetails_textView,customerID_linearLayout);
                     customerList_recyclerView.setAdapter(adapter_customerList_alert_dialog);
                     onCustomerRecyclerViewScrollListner();
 
@@ -892,7 +895,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
                             lessExisitngItemsKeyIDList.add(exisitngItemsKeyIDList.get(i));
                         }
                     }
-                    adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(AddRepairTicket.this,lessExisitngItemsNamesList,lessExisitngItemsSerialNoList,lessExisitngItemsKeyIDList,lessExistingItemsPriceList,lessExistingItemsCategoryList,lessExistingItemsLastActiveList,lessExistingItemsImageUrlList,itemName_textView,itemID_textView,itemPriceCurrency_textView,itemPrice_textView,itemLastActive_textView,itemImage_imageView,itemList_alert_dialog);
+                    adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(AddRepairTicket.this,lessExisitngItemsNamesList,lessExisitngItemsSerialNoList,lessExisitngItemsKeyIDList,lessExistingItemsPriceList,lessExistingItemsCategoryList,lessExistingItemsLastActiveList,lessExistingItemsImageUrlList,itemName_textView,itemID_textView,itemPriceCurrency_textView,itemPrice_textView,itemLastActive_textView,itemImage_imageView,viewItemDetails_textView,itemList_alert_dialog);
                     itemList_recyclerView.setAdapter(adapter_itemList_alert_dialog);
                     onScrollListner(exisitngItemsNamesList, exisitngItemsSerialNoList, existingItemsLastActiveList, existingItemsImageUrlList, existingItemsPriceList, existingItemsCategoryList, exisitngItemsKeyIDList);
                     pd2.dismissProgressBar(AddRepairTicket.this);

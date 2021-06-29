@@ -74,7 +74,7 @@
 
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/customerImage_imageView"
+                    android:id="@+id/itemImage_imageView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginLeft="5dp"

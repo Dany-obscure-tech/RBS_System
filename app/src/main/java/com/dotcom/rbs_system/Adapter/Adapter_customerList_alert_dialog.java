@@ -2,20 +2,21 @@ package com.dotcom.rbs_system.Adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Classes.RBSCustomerDetails;
+import com.dotcom.rbs_system.Customer_history;
+import com.dotcom.rbs_system.Item_history;
 import com.dotcom.rbs_system.R;
 import com.squareup.picasso.Picasso;
 
@@ -29,11 +30,12 @@ public class Adapter_customerList_alert_dialog extends RecyclerView.Adapter<Adap
     List<String> exisitngCustomerList,exisitngCustomerKeyIDList,existingCustomerIDList,existingCustomerPhnoList,existingCustomerEmailList,existingCustomerImageUrlList;
     TextView customerName_textView,customerEmail_textView,customerID_textView,customerPhno_textView;
     ImageView customerImage_imageView;
+    TextView viewCustomerDetails_textView;
     Dialog customerList_alert_dialog;
     LinearLayout customerID_linearLayout;
     String customerKeyID;
 
-    public Adapter_customerList_alert_dialog(Context context, List<String> exisitngCustomerList, List<String> exisitngCustomerKeyIDList, List<String> existingCustomerIDList, List<String> existingCustomerPhnoList, List<String> existingCustomerEmailList, List<String> existingCustomerImageUrlList, TextView customerName_textView, TextView customerEmail_textView, TextView customerID_textView, TextView customerPhno_textView, ImageView customerImage_imageView, Dialog customerList_alert_dialog, LinearLayout customerID_linearLayout) {
+    public Adapter_customerList_alert_dialog(Context context, List<String> exisitngCustomerList, List<String> exisitngCustomerKeyIDList, List<String> existingCustomerIDList, List<String> existingCustomerPhnoList, List<String> existingCustomerEmailList, List<String> existingCustomerImageUrlList, TextView customerName_textView, TextView customerEmail_textView, TextView customerID_textView, TextView customerPhno_textView, ImageView customerImage_imageView, Dialog customerList_alert_dialog, TextView viewCustomerDetails_textView,LinearLayout customerID_linearLayout) {
         this.context = context;
         this.exisitngCustomerList = exisitngCustomerList;
         this.exisitngCustomerKeyIDList = exisitngCustomerKeyIDList;
@@ -47,6 +49,7 @@ public class Adapter_customerList_alert_dialog extends RecyclerView.Adapter<Adap
         this.customerPhno_textView = customerPhno_textView;
         this.customerImage_imageView = customerImage_imageView;
         this.customerList_alert_dialog = customerList_alert_dialog;
+        this.viewCustomerDetails_textView = viewCustomerDetails_textView;
         this.customerID_linearLayout = customerID_linearLayout;
     }
 
@@ -73,7 +76,7 @@ public class Adapter_customerList_alert_dialog extends RecyclerView.Adapter<Adap
                 customerID_textView.setText(holder.customerID_textView.getText().toString());
                 customerPhno_textView.setText(holder.customerPhno_textView.getText().toString());
 
-                customerImage_imageView.setImageDrawable(holder.customerImage_imageView.getDrawable());
+                Picasso.get().load(existingCustomerImageUrlList.get(position)).into(customerImage_imageView);
 
                 //////
 
@@ -87,9 +90,23 @@ public class Adapter_customerList_alert_dialog extends RecyclerView.Adapter<Adap
 
                 customerID_linearLayout.setVisibility(View.VISIBLE);
 
+                if (customerImage_imageView != null) {
+                    viewCustomerDetails_textView.setVisibility(View.VISIBLE);
+                    viewCustomerDetails_textView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(context, Customer_history.class);
+                            intent.putExtra("CUSTOMER_ID", exisitngCustomerKeyIDList.get(position));
+                            context.startActivity(intent);
+                        }
+                    });
+                }
+
                 customerKeyID = exisitngCustomerKeyIDList.get(position);
                 rbsCustomerDetails.setCheck("Existing customer");
                 rbsCustomerDetails.setKey(customerKeyID);
+                rbsCustomerDetails.setCustomerName(holder.customerName_textView.getText().toString());
+                rbsCustomerDetails.setFirstImageUrl(existingCustomerImageUrlList.get(position));
 
                 customerList_alert_dialog.dismiss();
             }
@@ -99,8 +116,6 @@ public class Adapter_customerList_alert_dialog extends RecyclerView.Adapter<Adap
     public String getCustomerKeyID(){
         return customerKeyID;
     }
-
-
 
     @Override
     public int getItemCount() {

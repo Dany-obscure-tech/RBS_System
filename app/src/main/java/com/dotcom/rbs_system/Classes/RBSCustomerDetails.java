@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.dotcom.rbs_system.Progress_dialoge;
+import com.dotcom.rbs_system.Sale;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +35,7 @@ public class RBSCustomerDetails {
     private static RBSCustomerDetails rbsCustomerDetails = new RBSCustomerDetails();
 
     String customerName,customerPhNo,customerId,customerDob,customerAddress, customerPostcode,customerHouseNo,customerEmail,key,key2;
+    String firstImageUrl;
 
     List<Uri> imageUrlList;
 
@@ -117,6 +119,14 @@ public class RBSCustomerDetails {
         this.imageUrlList = imageUrlList;
     }
 
+    public String getFirstImageUrl() {
+        return firstImageUrl;
+    }
+
+    public void setFirstImageUrl(String firstImageUrl) {
+        this.firstImageUrl = firstImageUrl;
+    }
+
     public String getKey() {
         return key;
     }
@@ -177,10 +187,17 @@ public class RBSCustomerDetails {
                         idStorageReference.child(key).child("image_"+String.valueOf(l+1)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
+                                if (k==0){
+                                    firstImageUrl= String.valueOf(uri);
+                                    if (RBSItemDetails.getInstance().getCheck().equals("Sale new item")) {
+                                        new Customer_history_class().uploadCustomerImagetoItemHistory(RBSItemDetails.getInstance().getKey(), UniquePushID.getInstance().getUniquePushID(),firstImageUrl);
+                                    }
+                                }
                                 System.out.println("k = "+k+" "+uri);
                                 reference.child("Customer_list").child(key).child("ID_Image_urls").child("image_"+(k+1)).setValue(String.valueOf(uri.toString()));
 
                                 k++;
+
                                 if (k>imageUrlList.size()){
                                     pd.dismissProgressBar(context);
                                 }
