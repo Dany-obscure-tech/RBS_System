@@ -90,7 +90,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/profile_screen_header"
                     android:text="Edit Logo" />
@@ -100,9 +99,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -110,7 +110,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_gravity="center"
                     android:text="Shop Details"
                     android:textColor="@color/textGrey" />
 
@@ -190,14 +189,13 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
                     android:orientation="vertical">
 
                     <TextView
                         style="@style/TextViews_Bold_big"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center"
                         android:text="Faults list"
                         android:textColor="@color/textGrey" />
 
@@ -223,33 +221,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/TextViews_Bold_big"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Terms and conditions"
-                        android:textColor="@color/textGrey" />
-
-                    <TextView
-                        style="@style/TextViews_Regular_small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="First term is ..... Second term..."
-                        android:textColor="@color/textGrey" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
                     android:layout_marginBottom="20dp"
                     android:orientation="vertical">
 
@@ -257,44 +228,78 @@
                         style="@style/TextViews_Bold_big"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:text="Terms and conditions"
+                        android:textColor="@color/textGrey" />
+
+                    <TextView
+                        android:id="@+id/terms_conditions_textview"
+                        style="@style/TextViews_Regular_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="First term is ..... Second term..."
+                        android:textColor="@color/textGrey" />
+
+                    <TextView
+                        android:id="@+id/edit_terms_conditions_textview"
+                        style="@style/gradient_blue_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/profile_screen_header"
+                        android:text="Edit" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextViews_Bold_big"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="Printer Settings"
                         android:textColor="@color/textGrey" />
 
                     <TextView
                         style="@style/TextViews_Regular_small"
-                        android:layout_marginTop="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:text="Port Number"
                         android:textColor="@color/textGrey" />
 
                     <TextView
                         android:id="@+id/port_number_textview"
                         style="@style/TextViews_Regular_small"
-                        android:layout_marginTop="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/address_textview"
+                        android:layout_marginTop="5dp"
                         android:backgroundTint="@color/colorPrimary"
                         android:text="-----"
                         android:textColor="@color/textGrey" />
 
                     <TextView
                         style="@style/TextViews_Regular_small"
-                        android:layout_marginTop="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:text="IP Address"
                         android:textColor="@color/textGrey" />
 
                     <TextView
                         android:id="@+id/ip_address_textview"
                         style="@style/TextViews_Regular_small"
-                        android:layout_marginTop="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/address_textview"
+                        android:layout_marginTop="5dp"
                         android:backgroundTint="@color/colorPrimary"
                         android:text="------"
                         android:textColor="@color/textGrey" />
@@ -317,5 +322,78 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:id="@+id/banner_background_relativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparentGrey"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/banner_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:scaleType="fitCenter"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/edit_image_textView"
+            style="@style/RBSInvoice_TextViews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/banner_image_view"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="20dp"
+            android:background="@drawable/green_border"
+            android:backgroundTint="@color/colorWhite"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:text="Edit"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/logo_background_relativelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparentGrey"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/logo_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:scaleType="fitCenter"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/edit_logo_image_textView"
+            style="@style/RBSInvoice_TextViews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/logo_image_view"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="20dp"
+            android:background="@drawable/green_border"
+            android:backgroundTint="@color/colorWhite"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:text="Edit"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

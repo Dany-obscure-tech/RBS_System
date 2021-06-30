@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,21 +69,23 @@ public class RBS_setting extends Fragment {
 
     LinearLayout logoButtons_linearLayout, bannerButtons_linearLayout;
 
-    ImageView logo_imageView, banner_imageView;
+    RelativeLayout banner_background_relativelayout,logo_background_relativelayout;
 
-    TextView edit_banner_textview, add_logo_textview, add_faults_textview, port_number_textview, ip_address_textview;
+    ImageView logo_imageView, banner_imageView,banner_image_view,logo_image_view;
 
-    TextView addFaultsave_textview, addFaultsCancel_textview, save_printer_settings_textview, cancel_printer_settings_textview;
+    TextView edit_banner_textview, add_logo_textview, add_faults_textview, port_number_textview, ip_address_textview,edit_image_textView,edit_logo_image_textView;
 
-    TextView printer_setting_textview;
+    TextView addFaultsave_textview, addFaultsCancel_textview, save_printer_settings_textview, cancel_printer_settings_textview,cancel_terms_conditions_textview,save_terms_conditions_textview,edit_terms_conditions_textview;
+
+    TextView printer_setting_textview,terms_conditions_textview;
 
     RecyclerView faultList_recyclerView;
 
     AdapterSettingsFaultListRecyclerView adapterSettingsFaultListRecyclerView;
 
-    Dialog addFaultDialog, editProfileDialog, edit_printer_settings_Dialog;
+    Dialog addFaultDialog, editProfileDialog, edit_printer_settings_Dialog, editTermsConditionsDialog;
 
-    EditText alertFaultName_editText, alertFaultPrice_editText, port_number_edittext, ip_address_edittext;
+    EditText alertFaultName_editText, alertFaultPrice_editText, port_number_edittext, ip_address_edittext,term_conditions_edittext;
 
     List<String> faultNameList, faultPriceList, faultKeyIDList;
 
@@ -159,14 +162,21 @@ public class RBS_setting extends Fragment {
 
         logoButtons_linearLayout = (LinearLayout) view.findViewById(R.id.logoButtons_linearLayout);
         bannerButtons_linearLayout = (LinearLayout) view.findViewById(R.id.bannerButtons_linearLayout);
+        banner_background_relativelayout = (RelativeLayout) view.findViewById(R.id.banner_background_relativelayout);
+        logo_background_relativelayout = (RelativeLayout) view.findViewById(R.id.logo_background_relativelayout);
 
         logo_imageView = (ImageView) view.findViewById(R.id.logo_imageView);
         banner_imageView = (ImageView) view.findViewById(R.id.banner_imageView);
+        banner_image_view = (ImageView) view.findViewById(R.id.banner_image_view);
+        logo_image_view = (ImageView) view.findViewById(R.id.logo_image_view);
 
         add_faults_textview = (TextView) view.findViewById(R.id.add_faults_textview);
+        edit_image_textView = (TextView) view.findViewById(R.id.edit_image_textView);
+        edit_logo_image_textView = (TextView) view.findViewById(R.id.edit_logo_image_textView);
         add_logo_textview = (TextView) view.findViewById(R.id.add_logo_textview);
         edit_banner_textview = (TextView) view.findViewById(R.id.edit_banner_textview);
         printer_setting_textview = (TextView) view.findViewById(R.id.printer_setting_textview);
+        terms_conditions_textview = (TextView) view.findViewById(R.id.terms_conditions_textview);
 
 
         faultNameList = new ArrayList<>();
@@ -177,23 +187,29 @@ public class RBS_setting extends Fragment {
 
         addFaultDialog = new Dialog(getActivity());
         edit_printer_settings_Dialog = new Dialog(getActivity());
+        editTermsConditionsDialog = new Dialog(getActivity());
         addFaultDialog.setContentView(R.layout.alert_setting_add_fault);
         edit_printer_settings_Dialog.setContentView(R.layout.printer_settings_alert);
+        editTermsConditionsDialog.setContentView(R.layout.edit_terms_conditions_alert);
         alertFaultName_editText = addFaultDialog.findViewById(R.id.alertFaultName_editText);
         alertFaultPrice_editText = addFaultDialog.findViewById(R.id.alertFaultPrice_editText);
         port_number_edittext = (EditText) view.findViewById(R.id.port_number_edittext);
         addFaultsave_textview = addFaultDialog.findViewById(R.id.addFaultsave_textview);
         addFaultsCancel_textview = addFaultDialog.findViewById(R.id.addFaultsCancel_textview);
         port_number_edittext = edit_printer_settings_Dialog.findViewById(R.id.port_number_edittext);
+        term_conditions_edittext = editTermsConditionsDialog.findViewById(R.id.term_conditions_edittext);
         ip_address_edittext = edit_printer_settings_Dialog.findViewById(R.id.ip_address_edittext);
         save_printer_settings_textview = edit_printer_settings_Dialog.findViewById(R.id.save_printer_settings_textview);
         cancel_printer_settings_textview = edit_printer_settings_Dialog.findViewById(R.id.cancel_printer_settings_textview);
+        cancel_terms_conditions_textview = editTermsConditionsDialog.findViewById(R.id.cancel_terms_conditions_textview);
+        save_terms_conditions_textview = editTermsConditionsDialog.findViewById(R.id.save_terms_conditions_textview);
         port_number_textview = (TextView) view.findViewById(R.id.port_number_textview);
         ip_address_textview = (TextView) view.findViewById(R.id.ip_address_textview);
+        edit_terms_conditions_textview = (TextView) view.findViewById(R.id.edit_terms_conditions_textview);
 
         SharedPreferences preferences = getActivity().getSharedPreferences(RBS_setting.PRINTER_SETTINGS, MODE_PRIVATE);
-        port_value = preferences.getString(RBS_setting.Printer_Port_Number, "printer_port_number");
-        ip_address = preferences.getString(RBS_setting.Printer_Ip_Address, "printer_ip_address");
+        port_value = preferences.getString(RBS_setting.Printer_Port_Number, "");
+        ip_address = preferences.getString(RBS_setting.Printer_Ip_Address, "");
 
         port_number_textview.setText(String.valueOf(port_value));
 
@@ -206,6 +222,8 @@ public class RBS_setting extends Fragment {
         address_textView = (TextView) view.findViewById(R.id.vendor_address_textView);
         conditions_textView = (TextView) view.findViewById(R.id.conditions_textView);
         rbsMessage_textView = (TextView) view.findViewById(R.id.rbsMessage_textView);
+        term_conditions_edittext.setText(terms_conditions_textview.getText());
+
     }
 
     private void checkUserData() {
@@ -214,10 +232,12 @@ public class RBS_setting extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("logo").exists()) {
                     Picasso.get().load(String.valueOf(dataSnapshot.child("logo").getValue())).into(logo_imageView);
+                    Picasso.get().load(String.valueOf(dataSnapshot.child("logo").getValue())).into(logo_image_view);
                     logoUrlString = String.valueOf(dataSnapshot.child("logo").getValue());
                 }
                 if (dataSnapshot.child("banner").exists()) {
                     Picasso.get().load(String.valueOf(dataSnapshot.child("banner").getValue())).into(banner_imageView);
+                    Picasso.get().load(String.valueOf(dataSnapshot.child("banner").getValue())).into(banner_image_view);
                     bannerUrlString = String.valueOf(dataSnapshot.child("banner").getValue());
                     banner_imageView.setVisibility(View.VISIBLE);
                 }
@@ -259,6 +279,116 @@ public class RBS_setting extends Fragment {
     }
 
     private void onClickListeners() {
+
+        save_terms_conditions_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editTermsConditionsDialog.dismiss();
+            }
+
+        }); cancel_terms_conditions_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editTermsConditionsDialog.dismiss();
+            }
+        });
+
+        edit_terms_conditions_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editTermsConditionsDialog.show();
+            }
+        });
+
+        edit_logo_image_textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (logoBannerUploadCheck) {
+                    logoBannerUploadCheck = false;
+                    // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
+                    // browser.
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+
+                    // Filter to only show results that can be "opened", such as a
+                    // file (as opposed to a list of contacts or timezones)
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+                    // Filter to show only images, using the image MIME data type.
+                    // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
+                    // To search for all documents available via installed storage providers,
+                    // it would be "*/*".
+                    intent.setType("image/*");
+
+                    startActivityForResult(intent, LOGO_READ_REQUEST_CODE);
+                } else {
+                    Toast.makeText(getActivity(), "Information pending", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        logo_background_relativelayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logo_background_relativelayout.setVisibility(View.GONE);
+                logo_image_view.setVisibility(View.GONE);
+                edit_logo_image_textView.setVisibility(View.GONE);
+            }
+        });
+
+        logo_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logo_background_relativelayout.setVisibility(View.VISIBLE);
+                logo_image_view.setVisibility(View.VISIBLE);
+                edit_logo_image_textView.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        edit_image_textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (logoBannerUploadCheck) {
+                    logoBannerUploadCheck = false;
+                    // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
+                    // browser.
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+
+                    // Filter to only show results that can be "opened", such as a
+                    // file (as opposed to a list of contacts or timezones)
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+                    // Filter to show only images, using the image MIME data type.
+                    // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
+                    // To search for all documents available via installed storage providers,
+                    // it would be "*/*".
+                    intent.setType("image/*");
+
+                    startActivityForResult(intent, BANNER_READ_REQUEST_CODE);
+                } else {
+                    Toast.makeText(getActivity(), "Information pending", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        banner_background_relativelayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                banner_background_relativelayout.setVisibility(View.GONE);
+                banner_image_view.setVisibility(View.GONE);
+                edit_image_textView.setVisibility(View.GONE);
+            }
+        });
+
+        banner_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                banner_background_relativelayout.setVisibility(View.VISIBLE);
+                banner_image_view.setVisibility(View.VISIBLE);
+                edit_image_textView.setVisibility(View.VISIBLE);
+
+            }
+        });
 
         cancel_printer_settings_textview.setOnClickListener(new View.OnClickListener() {
             @Override
