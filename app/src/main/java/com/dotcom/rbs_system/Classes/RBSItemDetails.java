@@ -240,10 +240,6 @@ public class RBSItemDetails {
                             if (k==imageUrlList.size()){
                                 if (check=="Sale new item") {
                                     rbsItemDetails.switchStockSale(rbsCustomerDetails.getKey(), FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                    Date date = Calendar.getInstance().getTime();
-                                    String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(date);
-                                    new Item_history_class().thirteenValues(key,UniquePushID.getInstance().getUniquePushID(), UserDetails.getInstance().getShopNmae(),FirebaseAuth.getInstance().getCurrentUser().getUid(),UserDetails.getInstance().getShopLogo(),"Seller",rbsCustomerDetails.getCustomerName(),rbsCustomerDetails.getKey(),"Buyer",rbsCustomerDetails.getFirstImageUrl(),"Trade",date.getTime(),currentDateString);
-                                    new Item_history_class().uploadItemImagetoCustomerHistory(rbsCustomerDetails.getKey(),UniquePushID.getInstance().getUniquePushID(), String.valueOf(firstImageUri));
 
                                 }
                                 if (check=="Buy new item"){
@@ -299,6 +295,11 @@ public class RBSItemDetails {
         reference.child("Stock").child("Customers").child(itemCategory).child(key).child("Price").setValue(itemPrice);
 
         reference.child("Stock").child("Shopkeepers").child(seller).child(itemCategory).child(key).removeValue();
+
+        Date date = Calendar.getInstance().getTime();
+        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(date);
+        new Item_history_class().thirteenValues(key,UniquePushID.getInstance().getUniquePushID(), UserDetails.getInstance().getShopNmae(),FirebaseAuth.getInstance().getCurrentUser().getUid(),UserDetails.getInstance().getShopLogo(),"Seller",rbsCustomerDetails.getCustomerName(),rbsCustomerDetails.getKey(),"Buyer",rbsCustomerDetails.getFirstImageUrl(),"Trade",date.getTime(),currentDateString);
+        new Item_history_class().uploadItemImagetoCustomerHistory(rbsCustomerDetails.getKey(),UniquePushID.getInstance().getUniquePushID(), String.valueOf(firstImageUri));
     }
     
     public void switchStockBuy(String buyer, String seller) {

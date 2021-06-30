@@ -128,6 +128,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     ImageButton back_btn,sms_btn,gmail_btn,print_btn;
 
     Button exchange_btn, btn_done;
+    Button test;
 
     TextView itemLastActive_textView,customer_add_textView,datebtn_textView,submit_textView;
 
@@ -371,6 +372,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         print_btn = (ImageButton) sendingdialog.findViewById(R.id.print_btn);
         sms_btn = (ImageButton) sendingdialog.findViewById(R.id.sms_btn);
         btn_done = (Button) sendingdialog.findViewById(R.id.btn_done);
+        test = (Button) findViewById(R.id.test);
 
         date=Calendar.getInstance().getTime();
         String currentDateString= DateFormat.getDateInstance(DateFormat.FULL).format(date);
@@ -947,6 +949,13 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     }
 
     private void onClickListeners() {
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                printTcp();
+            }
+        });
+
         searchForItem_cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1194,7 +1203,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         if (asyncTask==null){
             try {
                 // this.printIt(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString())));
-                asyncTask = new AsyncTcpEscPosPrint(this).execute(this.getAsyncEscPosPrinter(new TcpConnection("192.168.1.123", Integer.parseInt("9100"))));
+                asyncTask = new AsyncTcpEscPosPrint(this).execute(this.getAsyncEscPosPrinter(new TcpConnection("192.168.1.123", 9100)));
             } catch (NumberFormatException e) {
                 new AlertDialog.Builder(this)
                         .setTitle("Invalid TCP port address")
@@ -1245,6 +1254,24 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     public String printingData() {
         SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
+//        return "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, this.getApplicationContext().getResources().getDrawableForDensity(R.drawable.logo, DisplayMetrics.DENSITY_MEDIUM)) + "</img>\n" +
+//                "[L]\n" +
+//                "[C]<u type='double'>" + format.format(new Date()) + "</u>\n" +
+//                "[C]\n" +
+//                "[C]================================\n" +
+//                "[L]\n" +
+//                "[L]<b>"+"</b>\n" +
+//                "[C]--------------------------------\n" +
+//                "[R]TOTAL PRICE :[R]"+purchase_price_editText.getText().toString()+Currency.getInstance().getCurrency()+ "\n" +
+//                "[L]\n" +
+//                "[C]================================\n" +
+//                "[L]\n" +
+//                "[L]<u><font color='bg-black' size='tall'>Customer :</font></u>\n" +
+//                "[L]"+"\n" +
+//                "[L]Phno : "+"\n" +
+//                "\n" +
+//                "[L]\n";
+
         return "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, this.getApplicationContext().getResources().getDrawableForDensity(R.drawable.logo, DisplayMetrics.DENSITY_MEDIUM)) + "</img>\n" +
                 "[L]\n" +
                 "[C]<u type='double'>" + format.format(new Date()) + "</u>\n" +
@@ -1262,6 +1289,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 "[L]Phno : "+"\n" +
                 "\n" +
                 "[L]\n";
+
     }
 
     @Override

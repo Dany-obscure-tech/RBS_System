@@ -1109,7 +1109,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             }
 
             if (rbsCustomerDetails.getCheck().equals("New customer")) {
-                customerKeyID = adapter_customerList_alert_dialog.getCustomerKeyID();
+                customerKeyID = rbsCustomerDetails.getKey();
             }
 
             reference.child("Sale_list").child(key).child("Customer_keyID").setValue(customerKeyID);
@@ -1121,33 +1121,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
             reference.child("Sale_list").child(key).child("key_id").setValue(key);
             reference.child("Sale_list").child(key).child("added_by").setValue(firebaseAuthUID);
-
-//            if (cash_checkbox.isChecked()) {
-//                if (!cash_editText.getText().toString().isEmpty()) {
-//                    reference.child("Sale_list").child(key).child("Cash").setValue(cash_editText.getText().toString());
-//                }
-//            }
-//
-//
-//            //Problem is here of sending \n in the database with text
-//
-//            if (voucher_checkbox.isChecked()) {
-//                if (!searchForVoucher_textView.getText().toString().equals("SEARCH FOR VOUCHER")) {
-//                    reference.child("Sale_list").child(key).child("Voucher_number").setValue(searchForVoucher_textView.getText().toString());
-//                }
-//            }
-
-//            reference.child("Item_history").child(itemKeyID).child(key).child("Item").setValue(itemKeyID);
-//            reference.child("Item_history").child(itemKeyID).child(key).child("Customer_name").setValue(customerName);
-//            reference.child("Item_history").child(itemKeyID).child(key).child("RBS").setValue("Sale");
-//            reference.child("Item_history").child(itemKeyID).child(key).child("Timestamp").setValue(date.getTime());
-//            reference.child("Item_history").child(itemKeyID).child(key).child("Date").setValue(date_textView.getText().toString());
-
-//            reference.child("Customer_history").child(customerKeyID).child(key).child("Item_name").setValue(itemName);
-//            reference.child("Customer_history").child(customerKeyID).child(key).child("Customer").setValue(customerKeyID);
-//            reference.child("Customer_history").child(customerKeyID).child(key).child("RBS").setValue("Sale");
-//            reference.child("Customer_history").child(customerKeyID).child(key).child("Timestamp").setValue(date.getTime());
-//            reference.child("Customer_history").child(customerKeyID).child(key).child("Date").setValue(date_textView.getText().toString());
 
             if (rbsItemDetails.getCheck().equals("Sale existing item")) {
                 if (rbsCustomerDetails.getCheck().equals("New customer")) {

@@ -198,22 +198,6 @@ public class Item_detail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-//                new SimpleSearchDialogCompat(Item_detail.this, "Search...",
-//                        "What are you looking for...?", null, createCategoryData(),
-//                        new SearchResultListener<SampleSearchModel>() {
-//                            @Override
-//                            public void onSelected(BaseSearchDialogCompat dialog,
-//                                                   SampleSearchModel item, int position) {
-//                                selectCategory_textView.setText(item.getTitle());
-//                                selectCategory_textView.setTextColor(getResources().getColor(R.color.colorPrimary));
-//
-//                                categoryIcon_imageView.setVisibility(View.VISIBLE);
-//
-//                                dialog.dismiss();
-//                            }
-//                        }).show();
-//                // hello
-
                 categoryList_alert_dialog.show();
 
             }
@@ -233,6 +217,7 @@ public class Item_detail extends AppCompatActivity {
 
             rbsItemDetails.setItemCategory(selectCategory_textView.getText().toString());
             rbsItemDetails.setItemID(itemId_editText.getText().toString());
+            rbsItemDetails.setKey(reference.push().getKey());
             rbsItemDetails.setAddedBy(FirebaseAuth.getInstance().getCurrentUser().getUid());
             rbsItemDetails.setItemName(itemName_editText.getText().toString());
             rbsItemDetails.setItemCondition(rating_textView.getText().toString());
