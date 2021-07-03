@@ -14,14 +14,13 @@
         android:background="@drawable/profile_screen_header">
 
         <TextView
+            style="@style/TextViews_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/back_btn"
-            android:fontFamily="@font/segoe_ui_bold"
             android:text="Sale Item"
-            android:textColor="#ffffff"
-            android:textSize="22sp" />
+            android:textColor="#ffffff" />
 
         <ImageButton
             android:id="@+id/back_btn"
@@ -38,7 +37,6 @@
             android:src="@drawable/back_arrow" />
 
     </RelativeLayout>
-
 
     <ScrollView
         android:layout_width="match_parent"

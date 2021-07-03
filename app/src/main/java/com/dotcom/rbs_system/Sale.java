@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.Button;
@@ -33,6 +34,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
 import com.dotcom.rbs_system.Adapter.Adapter_customerList_alert_dialog;
 import com.dotcom.rbs_system.Adapter.Adapter_itemList_alert_dialog;
 import com.dotcom.rbs_system.Classes.Currency;
@@ -44,6 +46,7 @@ import com.dotcom.rbs_system.Classes.RBSItemDetails;
 import com.dotcom.rbs_system.Classes.UniquePushID;
 import com.dotcom.rbs_system.Classes.UserDetails;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
+import com.dotcom.rbs_system.async.AsyncEscPosPrinter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -75,6 +78,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     String searchItem, findItem;
     String searchCustomer, findCustomer;
+
+    AsyncEscPosPrinter printer;
 
     Boolean isScrolling = false, itemDatafullyloaded = false;
     Boolean isCustomerScrolling = false, customerDatafullyloaded = false;
@@ -359,6 +364,46 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public String printingData() {
+        SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
+//        return "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, this.getApplicationContext().getResources().getDrawableForDensity(R.drawable.logo, DisplayMetrics.DENSITY_MEDIUM)) + "</img>\n" +
+//                "[L]\n" +
+//                "[C]<u type='double'>" + format.format(new Date()) + "</u>\n" +
+//                "[C]\n" +
+//                "[C]================================\n" +
+//                "[L]\n" +
+//                "[L]<b>"+"</b>\n" +
+//                "[C]--------------------------------\n" +
+//                "[R]TOTAL PRICE :[R]"+purchase_price_editText.getText().toString()+Currency.getInstance().getCurrency()+ "\n" +
+//                "[L]\n" +
+//                "[C]================================\n" +
+//                "[L]\n" +
+//                "[L]<u><font color='bg-black' size='tall'>Customer :</font></u>\n" +
+//                "[L]"+"\n" +
+//                "[L]Phno : "+"\n" +
+//                "\n" +
+//                "[L]\n";
+
+        return "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, this.getApplicationContext().getResources().getDrawableForDensity(R.drawable.logo, DisplayMetrics.DENSITY_MEDIUM)) + "</img>\n" +
+                "[L]\n" +
+                "[C]<u type='double'>" + format.format(new Date()) + "</u>\n" +
+                "[C]\n" +
+                "[C]================================\n" +
+                "[L]\n" +
+                "[L]<b>"+"</b>\n" +
+                "[C]--------------------------------\n" +
+                "[R]TOTAL PRICE :[R]"+"\n" +
+                "[L]\n" +
+                "[C]================================\n" +
+                "[L]\n" +
+                "[L]<u><font color='bg-black' size='tall'>Customer :</font></u>\n" +
+                "[L]"+"\n" +
+                "[L]Phno : "+"\n" +
+                "\n" +
+                "[L]\n";
 
     }
 
