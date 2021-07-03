@@ -60,6 +60,19 @@
 
     </style>
 
+
+    <style name="green_btn">
+        <item name="android:fontFamily">@font/segoe_ui_bold</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#ffff</item>
+        <item name="android:background">@drawable/buylocal_green_button</item>
+
+    </style>
+
     <style name="TextViews_Regular_small">
         <item name="android:fontFamily">@font/segoe_ui</item>
         <item name="android:textSize">@dimen/Regular_Small</item>
@@ -97,7 +110,7 @@
         <item name="android:textSize">26sp</item>
     </style>
 
-    <style name="Image_views">
+    <style name="Search_views_Image_views">
         <item name="android:adjustViewBounds">true</item>
         <item name="android:scaleType">fitCenter</item>
     </style>

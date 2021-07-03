@@ -15,7 +15,7 @@
 
             <ImageView
                 android:id="@+id/image"
-                style="@style/Image_views"
+                style="@style/Search_views_Image_views"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_alignParentLeft="true"

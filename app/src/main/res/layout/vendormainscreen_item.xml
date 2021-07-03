@@ -119,7 +119,7 @@
 
             <ImageView
                 android:id="@+id/stockImage_imageView"
-                style="@style/Image_views"
+                style="@style/Search_views_Image_views"
                 android:layout_width="230px"
                 android:layout_height="230px"
                 android:layout_weight="0.6"

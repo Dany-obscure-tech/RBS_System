@@ -19,7 +19,7 @@
 
             <ImageView
                 android:id="@+id/customerImage_imageView"
-                style="@style/Image_views"
+                style="@style/Search_views_Image_views"
                 android:layout_width="200px"
                 android:layout_height="200px"
                 android:layout_alignParentLeft="true"

@@ -108,6 +108,9 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     TextView searchForVoucher_textView, transaction_textview;
     TextView customerName_textView, customerEmail_textView, customerPhno_textView, customerID_textView;
     TextView viewCustomerDetails_textView;
+
+    TextView email_title_textview, id_title_textview, phone_no_title_textview;
+
     Progress_dialoge pd;
 
     DatabaseReference reference, itemHistoryRef;
@@ -121,7 +124,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     ImageButton back_btn, sms_btn, gmail_btn, print_btn;
     ImageButton searchItem_imageBtn;
-    Button btn_done,test;
+    Button btn_done, test;
 
     Dialog sendingdialog;
     LinearLayout toggling_linear, itemLastActive_linearLayout, customerID_linearLayout;
@@ -323,6 +326,10 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         transaction_textview = (TextView) findViewById(R.id.transaction_textview);
         item_add_textView = (TextView) findViewById(R.id.item_add_textView);
 
+        email_title_textview = (TextView) findViewById(R.id.email_title_textview);
+        id_title_textview = (TextView) findViewById(R.id.id_title_textview);
+        phone_no_title_textview = (TextView) findViewById(R.id.phone_no_title_textview);
+
 
         submit_textView = (TextView) findViewById(R.id.submit_textView);
         datebtn_textView = (TextView) findViewById(R.id.datebtn_textView);
@@ -374,7 +381,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     }
 
     public void printTcp() {
-        if (asyncTask==null){
+        if (asyncTask == null) {
             try {
                 // this.printIt(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString())));
                 asyncTask = new AsyncTcpEscPosPrint(this).execute(this.getAsyncEscPosPrinter(new TcpConnection("192.168.1.123", 9100)));
@@ -385,7 +392,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                         .show();
                 e.printStackTrace();
             }
-        }else {
+        } else {
             Toast.makeText(this, "called", Toast.LENGTH_SHORT).show();
             asyncTask = null;
 
@@ -448,26 +455,47 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
         return "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, this.getApplicationContext().getResources().getDrawableForDensity(R.drawable.logo, DisplayMetrics.DENSITY_MEDIUM)) + "</img>\n" +
                 "[L]\n" +
+                "[L]Invoice Printed"+
                 "[C]<u type='double'>" + format.format(new Date()) + "</u>\n" +
                 "[C]\n" +
+                "[L]Invoice no: 12345\n"+
                 "[C]================================\n" +
+                "[C]Customer\n"+
                 "[L]\n" +
-                "[L]<b>"+"</b>\n" +
+                "[L]Name:"+customerName_textView.getText().toString()+"\n"+
+                "[L]\n" +
+                "[L]Email:"+customerEmail_textView.getText().toString()+"\n"+
+                "[L]\n" +
+                "[L]ID:"+customerID_textView.getText().toString()+"\n"+
+                "[L]\n" +
+                "[L]Phone no:"+customerID_textView.getText().toString()+"\n"+
                 "[C]--------------------------------\n" +
-                "[R]TOTAL PRICE :[R]"+"\n" +
+                "[C]Item\n"+
                 "[L]\n" +
+                "[L]Name:"+itemName_textView.getText().toString()+"\n"+
+                "[L]\n" +
+                "[L]Serial no:"+itemID_textView.getText().toString()+"\n"+
                 "[C]================================\n" +
+                "[R]Sale Price:"+sale_price_editText.getText().toString()+"\n"+
                 "[L]\n" +
-                "[L]<u><font color='bg-black' size='tall'>Customer :</font></u>\n" +
-                "[L]"+"\n" +
-                "[L]Phno : "+"\n" +
-                "\n" +
-                "[L]\n";
+                "[R]Paid Amount:"+paid_editText.getText().toString()+"\n"+
+                "[L]\n" +
+                "[R]Sale Date:"+date_textView.getText().toString()+"\n"+
+                "[L]\n" +
+                "[C]--------------------------------\n" +
+                "[C]\n" +
+                "[C]Shopkeeper Terms & Conditions\n"+
+                "[C]\n" +
+                "[L]1.This is the first condition. 2. This is the second condition\n"+
+                "[C]\n" +
+                "[C]Buy Local Terms & Conditions\n"+
+                "[C]\n" +
+                "[L]1.This is the first condition. 2. This is the second condition\n";
 
     }
 
     private void checkForItemSell() {
-        if (getIntent().getStringExtra("ITEM_SELL_CHECK").equals("TRUE")){
+        if (getIntent().getStringExtra("ITEM_SELL_CHECK").equals("TRUE")) {
 
             String itemname_returnString = getIntent().getStringExtra("Item_name");
             String itemid_returnString = getIntent().getStringExtra("Item_id");
@@ -554,9 +582,9 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                         }
                     }
 
-                    adapter_customerList_alert_dialog = new Adapter_customerList_alert_dialog(Sale.this, lessExisitngCustomerList, lessExisitngCustomerKeyIDList, lessExisitngCustomerIDList, lessExistingCustomerPhnoList, lessExistingCustomerEmailList, lessExistingCustomerImageUrlList, customerName_textView, customerEmail_textView, customerID_textView, customerPhno_textView, customerImage_imageView, customerList_alert_dialog, viewCustomerDetails_textView,customerID_linearLayout);
+                    adapter_customerList_alert_dialog = new Adapter_customerList_alert_dialog(Sale.this, lessExisitngCustomerList, lessExisitngCustomerKeyIDList, lessExisitngCustomerIDList, lessExistingCustomerPhnoList, lessExistingCustomerEmailList, lessExistingCustomerImageUrlList, customerName_textView, customerEmail_textView, customerID_textView, customerPhno_textView, customerImage_imageView, customerList_alert_dialog, viewCustomerDetails_textView, customerID_linearLayout);
                     customerList_recyclerView.setAdapter(adapter_customerList_alert_dialog);
-                    onCustomerRecyclerViewScrollListner(exisitngCustomerList,exisitngCustomerIDList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList,exisitngCustomerKeyIDList,existingCustomerImageUrlList);
+                    onCustomerRecyclerViewScrollListner(exisitngCustomerList, exisitngCustomerIDList, existingCustomerPhnoList, existingCustomerDobList, existingCustomerAddressList, existingCustomerEmailList, exisitngCustomerKeyIDList, existingCustomerImageUrlList);
 
                 } else {
                     pd3.dismissProgressBar(Sale.this);
@@ -719,7 +747,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                             lessExisitngItemsKeyIDList.add(exisitngItemsKeyIDList.get(i));
                         }
                     }
-                    adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(Sale.this, lessExisitngItemsNamesList, lessExisitngItemsSerialNoList, lessExisitngItemsKeyIDList, lessExistingItemsPriceList, lessExistingItemsCategoryList, lessExistingItemsLastActiveList, lessExistingItemsImageUrlList, itemName_textView, itemID_textView, itemPriceCurrency_textView, itemPrice_textView, itemLastActive_textView, itemImage_imageView,viewItemDetails_textView, itemList_alert_dialog);
+                    adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(Sale.this, lessExisitngItemsNamesList, lessExisitngItemsSerialNoList, lessExisitngItemsKeyIDList, lessExistingItemsPriceList, lessExistingItemsCategoryList, lessExistingItemsLastActiveList, lessExistingItemsImageUrlList, itemName_textView, itemID_textView, itemPriceCurrency_textView, itemPrice_textView, itemLastActive_textView, itemImage_imageView, viewItemDetails_textView, itemList_alert_dialog);
                     itemList_recyclerView.setAdapter(adapter_itemList_alert_dialog);
                     onScrollListner(exisitngItemsNamesList, exisitngItemsSerialNoList, existingItemsLastActiveList, existingItemsImageUrlList, existingItemsPriceList, existingItemsCategoryList, exisitngItemsKeyIDList);
                     pd2.dismissProgressBar(Sale.this);
@@ -1132,7 +1160,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
                 if (isCustomerScrolling && (currentCustomer + scrollOutCustomer == totalCustomer)) {
                     isCustomerScrolling = false;
-                    fetchDataforCustomerRecyclerView(exisitngCustomerList,exisitngCustomerIDList,existingCustomerPhnoList,existingCustomerDobList,existingCustomerAddressList,existingCustomerEmailList,exisitngCustomerKeyIDList,existingCustomerImageUrlList);
+                    fetchDataforCustomerRecyclerView(exisitngCustomerList, exisitngCustomerIDList, existingCustomerPhnoList, existingCustomerDobList, existingCustomerAddressList, existingCustomerEmailList, exisitngCustomerKeyIDList, existingCustomerImageUrlList);
                 }
             }
         });
@@ -1261,7 +1289,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             System.out.println(date_textView.getText().toString());
 
 
-            new Customer_history_class().twelveValues(rbsCustomerDetails.getKey(),key,date_textView.getText().toString(),rbsItemDetails.getItemCategory(),String.valueOf(rbsItemDetails.getFirstImageUri()),rbsItemDetails.getKey(),rbsItemDetails.getItemName(),rbsItemDetails.getItemID(),"Buy",UserDetails.getInstance().getShopLogo(),FirebaseAuth.getInstance().getCurrentUser().getUid(),UserDetails.getInstance().getShopNmae(),date.getTime());
+            new Customer_history_class().twelveValues(rbsCustomerDetails.getKey(), key, date_textView.getText().toString(), rbsItemDetails.getItemCategory(), String.valueOf(rbsItemDetails.getFirstImageUri()), rbsItemDetails.getKey(), rbsItemDetails.getItemName(), rbsItemDetails.getItemID(), "Buy", UserDetails.getInstance().getShopLogo(), FirebaseAuth.getInstance().getCurrentUser().getUid(), UserDetails.getInstance().getShopNmae(), date.getTime());
             pd1.dismissProgressBar(Sale.this);
             sendingdialog.show();
 
@@ -1345,10 +1373,13 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                 customerImage_imageView.setVisibility(View.VISIBLE);
                 customerEmail_textView.setText(email_returnString);
                 customerEmail_textView.setVisibility(View.VISIBLE);
+                email_title_textview.setVisibility(View.VISIBLE);
                 customerPhno_textView.setText(phone_no_returnString);
                 customerPhno_textView.setVisibility(View.VISIBLE);
+                phone_no_title_textview.setVisibility(View.VISIBLE);
                 customerID_textView.setText(id_returnString);
                 customerID_textView.setVisibility(View.VISIBLE);
+                id_title_textview.setVisibility(View.VISIBLE);
                 customerID_linearLayout.setVisibility(View.VISIBLE);
 
                 rbsCustomerDetails.setKey(reference.push().getKey());
