@@ -221,17 +221,17 @@ public class RBSItemDetails {
                                 firstImageUri=uri;
                                 Toast.makeText(context, String.valueOf(uri), Toast.LENGTH_SHORT).show();
 
-                                if (check=="Add new item"){
-
-                                    spotLightRef = FirebaseDatabase.getInstance().getReference("Spotlight");
-
-                                    spotLightRef.child(key).child("key_id").setValue(key);
-                                    spotLightRef.child(key).child("Category").setValue(itemCategory);
-                                    spotLightRef.child(key).child("Item_name").setValue(itemName);
-                                    spotLightRef.child(key).child("Price").setValue(itemPrice);
-                                    spotLightRef.child(key).child("id_image_url").setValue(uri.toString());
-                                    spotLightRef.child(key).child("shopkeeper").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                }
+//                                if (check=="Add new item"){
+//
+//                                    spotLightRef = FirebaseDatabase.getInstance().getReference("Spotlight");
+//
+//                                    spotLightRef.child(key).child("key_id").setValue(key);
+//                                    spotLightRef.child(key).child("Category").setValue(itemCategory);
+//                                    spotLightRef.child(key).child("Item_name").setValue(itemName);
+//                                    spotLightRef.child(key).child("Price").setValue(itemPrice);
+//                                    spotLightRef.child(key).child("id_image_url").setValue(uri.toString());
+//                                    spotLightRef.child(key).child("shopkeeper").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//                                }
 
                             }
                             reference.child("Items").child(itemCategory).child(key).child("Image_urls").child("image_"+(k+1)).setValue(String.valueOf(uri.toString()));

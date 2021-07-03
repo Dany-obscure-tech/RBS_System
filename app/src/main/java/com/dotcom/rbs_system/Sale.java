@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -16,6 +18,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -34,19 +37,20 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dantsu.escposprinter.connection.DeviceConnection;
+import com.dantsu.escposprinter.connection.tcp.TcpConnection;
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
 import com.dotcom.rbs_system.Adapter.Adapter_customerList_alert_dialog;
 import com.dotcom.rbs_system.Adapter.Adapter_itemList_alert_dialog;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Classes.Customer_history_class;
-import com.dotcom.rbs_system.Classes.Exchanged_itemdata;
-import com.dotcom.rbs_system.Classes.Item_history_class;
 import com.dotcom.rbs_system.Classes.RBSCustomerDetails;
 import com.dotcom.rbs_system.Classes.RBSItemDetails;
 import com.dotcom.rbs_system.Classes.UniquePushID;
 import com.dotcom.rbs_system.Classes.UserDetails;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.dotcom.rbs_system.async.AsyncEscPosPrinter;
+import com.dotcom.rbs_system.async.AsyncTcpEscPosPrint;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -76,6 +80,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     Handler handler = new Handler();
     Handler handler2 = new Handler();
 
+    AsyncTask asyncTask = null;
+
     String searchItem, findItem;
     String searchCustomer, findCustomer;
 
@@ -96,8 +102,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     Adapter_itemList_alert_dialog adapter_itemList_alert_dialog;
     Adapter_customerList_alert_dialog adapter_customerList_alert_dialog;
 
-    Exchanged_itemdata exchangeObj = Exchanged_itemdata.getInstance();
-
     private static final int ITEM_ACTIVITY_REQUEST_CODE = 0;
     private static final int CUSTOMER_ACTIVITY_REQUEST_CODE = 0;
 
@@ -117,7 +121,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     ImageButton back_btn, sms_btn, gmail_btn, print_btn;
     ImageButton searchItem_imageBtn;
-    Button btn_done;
+    Button btn_done,test;
 
     Dialog sendingdialog;
     LinearLayout toggling_linear, itemLastActive_linearLayout, customerID_linearLayout;
@@ -340,6 +344,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         sms_btn = (ImageButton) sendingdialog.findViewById(R.id.sms_btn);
 
         btn_done = (Button) sendingdialog.findViewById(R.id.btn_done);
+        test = (Button) findViewById(R.id.test);
+
 
         dateList = new ArrayList<>();
         lastActiveDatelist = new ArrayList<>();
@@ -365,6 +371,59 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             e.printStackTrace();
         }
 
+    }
+
+    public void printTcp() {
+        if (asyncTask==null){
+            try {
+                // this.printIt(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString())));
+                asyncTask = new AsyncTcpEscPosPrint(this).execute(this.getAsyncEscPosPrinter(new TcpConnection("192.168.1.123", 9100)));
+            } catch (NumberFormatException e) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Invalid TCP port address")
+                        .setMessage("Port field must be a number.")
+                        .show();
+                e.printStackTrace();
+            }
+        }else {
+            Toast.makeText(this, "called", Toast.LENGTH_SHORT).show();
+            asyncTask = null;
+
+            try {
+                // this.printIt(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString())));
+                asyncTask = new AsyncTcpEscPosPrint(this).execute(this.getAsyncEscPosPrinter2(printer));
+            } catch (NumberFormatException e) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Invalid TCP port address")
+                        .setMessage("Port field must be a number.")
+                        .show();
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    /**
+     * Asynchronous printing
+     */
+    @SuppressLint("SimpleDateFormat")
+    public AsyncEscPosPrinter getAsyncEscPosPrinter(DeviceConnection printerConnection) {
+        SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
+        printer = new AsyncEscPosPrinter(printerConnection, 203, 48f, 32);
+        return printer.setTextToPrint(
+                printingData()
+        );
+    }
+
+    /**
+     * Asynchronous printing
+     */
+    @SuppressLint("SimpleDateFormat")
+    public AsyncEscPosPrinter getAsyncEscPosPrinter2(AsyncEscPosPrinter printer) {
+        SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
+        return printer.setTextToPrint(
+                printingData()
+        );
     }
 
     public String printingData() {
@@ -830,6 +889,13 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     }
 
     private void onClickListenes() {
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                printTcp();
+            }
+        });
+
         searchForItem_cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

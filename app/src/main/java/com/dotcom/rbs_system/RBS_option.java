@@ -16,7 +16,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.dotcom.rbs_system.Classes.ActionBarTitle;
-import com.dotcom.rbs_system.Classes.Exchanged_itemdata;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -152,10 +151,6 @@ public class RBS_option extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(),Buy.class);
-                Exchanged_itemdata.getInstance().setExchangeCheck(false);
-                Exchanged_itemdata.getInstance().setExchangeFromBuyCheck(false);
-                Exchanged_itemdata.getInstance().clearData();
-
                 startActivity(intent);
             }
         });
@@ -163,9 +158,6 @@ public class RBS_option extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(),Buy.class);
-                Exchanged_itemdata.getInstance().setExchangeCheck(false);
-                Exchanged_itemdata.getInstance().setExchangeFromBuyCheck(false);
-                Exchanged_itemdata.getInstance().clearData();
                 startActivity(intent);
             }
         });
@@ -174,9 +166,6 @@ public class RBS_option extends Fragment {
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(),Sale.class);
                 intent.putExtra("ITEM_SELL_CHECK","FALSE");
-                Exchanged_itemdata.getInstance().setExchangeCheck(false);
-                Exchanged_itemdata.getInstance().setExchangeFromBuyCheck(false);
-                Exchanged_itemdata.getInstance().clearData();
                 startActivity(intent);
             }
         });
@@ -185,9 +174,6 @@ public class RBS_option extends Fragment {
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(),Sale.class);
                 intent.putExtra("ITEM_SELL_CHECK","FALSE");
-                Exchanged_itemdata.getInstance().setExchangeCheck(false);
-                Exchanged_itemdata.getInstance().setExchangeFromBuyCheck(false);
-                Exchanged_itemdata.getInstance().clearData();
                 startActivity(intent);
             }
         });

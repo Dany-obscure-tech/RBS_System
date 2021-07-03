@@ -34,7 +34,7 @@ public class RBSCustomerDetails {
 
     private static RBSCustomerDetails rbsCustomerDetails = new RBSCustomerDetails();
 
-    String customerName,customerPhNo,customerId,customerDob,customerAddress, customerPostcode,customerHouseNo,customerEmail,key,key2;
+    String customerName,customerPhNo,customerId,customerDob,customerAddress, customerPostcode,customerHouseNo,customerEmail,key;
     String firstImageUrl;
 
     List<Uri> imageUrlList;
@@ -179,11 +179,9 @@ public class RBSCustomerDetails {
 
             for (i = 0; i<imageUrlList.size();i++) {
 
-                key2 = reference.push().getKey();
                 idStorageReference.child(key).child("image_"+String.valueOf(i+1)).putFile(imageUrlList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
                         idStorageReference.child(key).child("image_"+String.valueOf(l+1)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
@@ -227,6 +225,17 @@ public class RBSCustomerDetails {
     }
 
     public void clearData(){
+        idStorageReference = null;
+        l=0;
+        k=0;
+        i=0;
+        pd = null;
+        reference = null;
+        check = null;
+        context = null;
+        key = null;
+        imageUrlList = null;
+
         context = null;
         customerName = null;
         customerPhNo = null;
@@ -237,7 +246,6 @@ public class RBSCustomerDetails {
         customerPostcode = null;
         customerEmail = null;
         key = null;
-        key2 = null;
         imageUrlList = null;
 
     }
