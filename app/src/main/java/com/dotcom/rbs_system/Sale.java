@@ -459,9 +459,11 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                 "[C]<u type='double'>" + format.format(new Date()) + "</u>\n" +
                 "[C]\n" +
                 "[L]Invoice no: 12345\n"+
-                "[C]================================\n" +
-                "[C]Customer\n"+
-                "[L]\n" +
+                "[L]\n"+
+                "[C]<font color='bg-black'>================================</font>\n" +
+                "[L]\n"+
+                "[C]<font color='black' size='wide'> CUSTOMER </font>\n" +
+                "[L]\n"+
                 "[L]Name:"+customerName_textView.getText().toString()+"\n"+
                 "[L]\n" +
                 "[L]Email:"+customerEmail_textView.getText().toString()+"\n"+
@@ -470,27 +472,33 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                 "[L]\n" +
                 "[L]Phone no:"+customerID_textView.getText().toString()+"\n"+
                 "[C]--------------------------------\n" +
-                "[C]Item\n"+
+                "[L]\n"+
+                "[C]<font color='black' size='wide'> ITEM </font>\n" +
                 "[L]\n" +
                 "[L]Name:"+itemName_textView.getText().toString()+"\n"+
                 "[L]\n" +
                 "[L]Serial no:"+itemID_textView.getText().toString()+"\n"+
+                "[L]\n"+
                 "[C]================================\n" +
-                "[R]Sale Price:"+sale_price_editText.getText().toString()+"\n"+
+                "[L]\n"+
+                "[L]Sale Price: [R]"+Currency.getInstance().getCurrency()+sale_price_editText.getText().toString()+"\n"+
                 "[L]\n" +
-                "[R]Paid Amount:"+paid_editText.getText().toString()+"\n"+
+                "[L]Paid Amount: [R]"+Currency.getInstance().getCurrency()+paid_editText.getText().toString()+"\n"+
                 "[L]\n" +
-                "[R]Sale Date:"+date_textView.getText().toString()+"\n"+
-                "[L]\n" +
-                "[C]--------------------------------\n" +
+                "[L]Sale Date: [R]"+date_textView.getText().toString()+"\n"+
                 "[C]\n" +
-                "[C]Shopkeeper Terms & Conditions\n"+
+                "[C]<font color='bg-black'> -------------------------------- </font>\n" +
+                "[C]\n" +
+                "[L]<font color='black' size='tall'> Shopkeeper Terms & Conditions </font>\n" +
                 "[C]\n" +
                 "[L]1.This is the first condition. 2. This is the second condition\n"+
                 "[C]\n" +
-                "[C]Buy Local Terms & Conditions\n"+
+                "[L]<font color='black' size='tall'> Buy Local Terms & Conditions </font>\n" +
                 "[C]\n" +
-                "[L]1.This is the first condition. 2. This is the second condition\n";
+                "[L]1.This is the first condition. 2. This is the second condition\n"+
+                "[L]\n"+
+                "[L]\n"+
+                "[L]\n";
 
     }
 

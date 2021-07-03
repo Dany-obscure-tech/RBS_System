@@ -15,6 +15,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -1145,10 +1146,14 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
 
     public void printTcp() {
+        SharedPreferences preferences = getSharedPreferences(RBS_setting.PRINTER_SETTINGS,MODE_PRIVATE);
+        String port_value = preferences.getString(RBS_setting.Printer_Port_Number,"printer_port_number");
+        String ip_address = preferences.getString(RBS_setting.Printer_Ip_Address,"printer_ip_address");
+
         if (asyncTask==null){
             try {
                 // this.printIt(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString())));
-                asyncTask = new AsyncTcpEscPosPrint(this).execute(this.getAsyncEscPosPrinter(new TcpConnection("192.168.1.123", 9100)));
+                asyncTask = new AsyncTcpEscPosPrint(this).execute(this.getAsyncEscPosPrinter(new TcpConnection(ip_address, Integer.parseInt(port_value))));
             } catch (NumberFormatException e) {
                 new AlertDialog.Builder(this)
                         .setTitle("Invalid TCP port address")
@@ -1229,7 +1234,23 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 "[L]\n" +
                 "[C]================================\n" +
                 "[L]\n" +
-                "[L]<u><font color='bg-black' size='tall'>Customer :</font></u>\n" +
+                "[L]<font color='bg-black' size='normal'>normal :</font>\n" +
+                "[L]<font color='bg-black' size='wide'>wide :</font>\n" +
+                "[L]<font color='bg-black' size='tall'>tall :</font>\n" +
+                "[L]<font color='bg-black' size='big'>big :</font>\n" +
+                "[L]<font color='black' size='normal'>normal :</font>\n" +
+                "[L]<font color='black' size='wide'>wide :</font>\n" +
+                "[L]<font color='black' size='tall'>tall :</font>\n" +
+                "[L]<font color='black' size='big'>big :</font>\n" +
+
+                "[L]<b><font color='bg-black' size='normal'>normal :</font></b>\n" +
+                "[L]<b><font color='bg-black' size='wide'>wide :</font></b>\n" +
+                "[L]<b><font color='bg-black' size='tall'>tall :</font></b>\n" +
+                "[L]<b><font color='bg-black' size='big'>big :</font></b>\n" +
+                "[L]<b><font color='black' size='normal'>normal :</font></b>\n" +
+                "[L]<b><font color='black' size='wide'>wide :</font></b>\n" +
+                "[L]<b><font color='black' size='tall'>tall :</font></b>\n" +
+                "[L]<b><font color='black' size='big'>big :</font></b>\n" +
                 "[L]"+"\n" +
                 "[L]Phno : "+"\n" +
                 "\n" +
