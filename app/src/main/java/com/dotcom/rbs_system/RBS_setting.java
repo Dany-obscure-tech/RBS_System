@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterSettingsFaultListRecyclerView;
+import com.dotcom.rbs_system.Classes.UserDetails;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -69,15 +70,15 @@ public class RBS_setting extends Fragment {
 
     LinearLayout logoButtons_linearLayout, bannerButtons_linearLayout;
 
-    RelativeLayout banner_background_relativelayout,logo_background_relativelayout;
+    RelativeLayout banner_background_relativelayout, logo_background_relativelayout;
 
-    ImageView logo_imageView, banner_imageView,banner_image_view,logo_image_view;
+    ImageView logo_imageView, banner_imageView, banner_image_view, logo_image_view;
 
-    TextView edit_banner_textview, add_logo_textview, add_faults_textview, port_number_textview, ip_address_textview,edit_image_textView,edit_logo_image_textView;
+    TextView edit_banner_textview, add_logo_textview, add_faults_textview, port_number_textview, ip_address_textview, edit_image_textView, edit_logo_image_textView;
 
-    TextView addFaultsave_textview, addFaultsCancel_textview, save_printer_settings_textview, cancel_printer_settings_textview,cancel_terms_conditions_textview,save_terms_conditions_textview,edit_terms_conditions_textview;
+    TextView addFaultsave_textview, addFaultsCancel_textview, save_printer_settings_textview, cancel_printer_settings_textview, cancel_terms_conditions_textview, save_terms_conditions_textview, edit_terms_conditions_textview;
 
-    TextView printer_setting_textview,terms_conditions_textview;
+    TextView printer_setting_textview, terms_conditions_textview;
 
     RecyclerView faultList_recyclerView;
 
@@ -85,12 +86,9 @@ public class RBS_setting extends Fragment {
 
     Dialog addFaultDialog, editProfileDialog, edit_printer_settings_Dialog, editTermsConditionsDialog;
 
-    EditText alertFaultName_editText, alertFaultPrice_editText, port_number_edittext, ip_address_edittext,term_conditions_edittext;
+    EditText alertFaultName_editText, alertFaultPrice_editText, port_number_edittext, ip_address_edittext, term_conditions_edittext;
 
     List<String> faultNameList, faultPriceList, faultKeyIDList;
-
-    String logoUrlString = "";
-    String bannerUrlString = "";
 
     Boolean logoBannerUploadCheck = true;
 
@@ -227,20 +225,15 @@ public class RBS_setting extends Fragment {
     }
 
     private void checkUserData() {
+        Picasso.get().load(UserDetails.getInstance().getShopLogo()).into(logo_imageView);
+        Picasso.get().load(UserDetails.getInstance().getShopBanner()).into(banner_imageView);
+        Picasso.get().load(UserDetails.getInstance().getShopLogo()).into(logo_image_view);
+        Picasso.get().load(UserDetails.getInstance().getShopBanner()).into(banner_image_view);
+
         userDataRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child("logo").exists()) {
-                    Picasso.get().load(String.valueOf(dataSnapshot.child("logo").getValue())).into(logo_imageView);
-                    Picasso.get().load(String.valueOf(dataSnapshot.child("logo").getValue())).into(logo_image_view);
-                    logoUrlString = String.valueOf(dataSnapshot.child("logo").getValue());
-                }
-                if (dataSnapshot.child("banner").exists()) {
-                    Picasso.get().load(String.valueOf(dataSnapshot.child("banner").getValue())).into(banner_imageView);
-                    Picasso.get().load(String.valueOf(dataSnapshot.child("banner").getValue())).into(banner_image_view);
-                    bannerUrlString = String.valueOf(dataSnapshot.child("banner").getValue());
-                    banner_imageView.setVisibility(View.VISIBLE);
-                }
+
                 if (dataSnapshot.child("profile_data").child("email").exists()) {
                     email_textView.setText(dataSnapshot.child("profile_data").child("email").getValue().toString());
                 }
@@ -253,6 +246,7 @@ public class RBS_setting extends Fragment {
                 if (dataSnapshot.child("conditions").exists()) {
                     conditions_textView.setText(dataSnapshot.child("conditions").getValue().toString());
                 }
+
             }
 
             @Override
@@ -286,7 +280,8 @@ public class RBS_setting extends Fragment {
                 editTermsConditionsDialog.dismiss();
             }
 
-        }); cancel_terms_conditions_textview.setOnClickListener(new View.OnClickListener() {
+        });
+        cancel_terms_conditions_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editTermsConditionsDialog.dismiss();

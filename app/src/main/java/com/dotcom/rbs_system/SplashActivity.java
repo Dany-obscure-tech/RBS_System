@@ -144,6 +144,7 @@ public class SplashActivity extends AppCompatActivity {
                     UserDetails.getInstance().setShopkeeper(true);
                     UserDetails.getInstance().setShopLogo(dataSnapshot.child("Shopkeeper_details").child("shop_logo").getValue().toString());
                     UserDetails.getInstance().setShopNmae(dataSnapshot.child("Shopkeeper_details").child("shop_name").getValue().toString());
+                    UserDetails.getInstance().setShopBanner(dataSnapshot.child("Shopkeeper_details").child("shop_banner").getValue().toString());
                 }else {
                     UserDetails.getInstance().setShopkeeper(false);
                 }

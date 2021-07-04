@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -28,11 +28,30 @@
                     android:layout_height="180dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/store_image" />
+                    android:src="@drawable/store_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/logo_imageView"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/profile_icon"
+                    app:civ_border_color="@color/colorWhite"
+                    app:civ_border_width="10dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/banner_imageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/banner_imageView" />
 
                 <RelativeLayout
+                    android:id="@+id/relativeLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -64,24 +83,12 @@
 
                 </RelativeLayout>
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/logo_imageView"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_below="@+id/store_banner_imageView"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.5"
-                    android:src="@drawable/profile_icon"
-                    app:civ_border_color="#4A4A4A"
-                    app:civ_border_width="0dp" />
 
                 <TextView
                     android:id="@+id/add_logo_textview"

@@ -4,7 +4,7 @@ public class UserDetails {
     private static UserDetails userDetailsObj = new UserDetails();
 
     Boolean isShopkeeper;
-    String shopNmae,shopLogo;
+    String shopNmae,shopLogo,shopBanner;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -32,6 +32,14 @@ public class UserDetails {
 
     public void setShopLogo(String shopLogo) {
         this.shopLogo = shopLogo;
+    }
+
+    public String getShopBanner() {
+        return shopBanner;
+    }
+
+    public void setShopBanner(String shopBanner) {
+        this.shopBanner = shopBanner;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
