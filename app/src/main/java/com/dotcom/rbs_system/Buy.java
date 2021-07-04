@@ -161,9 +161,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     EditText purchase_price_editText,paid_editText,search_editText;
 
-    EditText ipAddress;
-
-    EditText portAddress;
 
     Dialog sendingdialog;
 
@@ -359,9 +356,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
         print_linearLayout = (LinearLayout) sendingdialog.findViewById(R.id.print_linearLayout);
         customerID_linearLayout = (LinearLayout)findViewById(R.id.customerID_linearLayout);
-
-        ipAddress = (EditText) sendingdialog.findViewById(R.id.edittext_tcp_ip);
-        portAddress = (EditText) sendingdialog.findViewById(R.id.edittext_tcp_port);
 
         gmail_btn = (ImageButton) sendingdialog.findViewById(R.id.gmail_btn);
         print_btn = (ImageButton) sendingdialog.findViewById(R.id.print_btn);
@@ -1152,7 +1146,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
         if (asyncTask==null){
             try {
-                // this.printIt(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString())));
                 asyncTask = new AsyncTcpEscPosPrint(this).execute(this.getAsyncEscPosPrinter(new TcpConnection(ip_address, Integer.parseInt(port_value))));
             } catch (NumberFormatException e) {
                 new AlertDialog.Builder(this)
@@ -1166,7 +1159,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             asyncTask = null;
 
             try {
-                // this.printIt(new TcpConnection(ipAddress.getText().toString(), Integer.parseInt(portAddress.getText().toString())));
                 asyncTask = new AsyncTcpEscPosPrint(this).execute(this.getAsyncEscPosPrinter2(printer));
             } catch (NumberFormatException e) {
                 new AlertDialog.Builder(this)

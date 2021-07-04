@@ -15,6 +15,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -124,9 +126,9 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     ImageButton back_btn, sms_btn, gmail_btn, print_btn;
     ImageButton searchItem_imageBtn;
-    Button btn_done, test;
+    Button btn_done;
 
-    Dialog sendingdialog;
+    Dialog dialoge_items;
     LinearLayout toggling_linear, itemLastActive_linearLayout, customerID_linearLayout;
     Boolean item_btn, customer;
 
@@ -283,6 +285,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         itemLastActive_linearLayout = (LinearLayout) findViewById(R.id.itemLastActive_linearLayout);
 
         customerID_linearLayout = (LinearLayout) findViewById(R.id.customerID_linearLayout);
+        dialoge_items = new Dialog(this);
+        dialoge_items.setContentView(R.layout.dialoge_items);
 
         itemName_textView = (TextView) findViewById(R.id.itemName_textView);
         itemID_textView = (TextView) findViewById(R.id.itemID_textView);
@@ -335,23 +339,14 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         datebtn_textView = (TextView) findViewById(R.id.datebtn_textView);
         date_textView = (TextView) findViewById(R.id.date_textView);
 
-        sendingdialog = new Dialog(this);
-        sendingdialog.setContentView(R.layout.dialoge_items);
-        sendingdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                finish();
-            }
-        });
 
         searchItem_imageBtn = (ImageButton) findViewById(R.id.searchItem_imageBtn);
         back_btn = (ImageButton) findViewById(R.id.back_btn);
-        gmail_btn = (ImageButton) sendingdialog.findViewById(R.id.gmail_btn);
-        print_btn = (ImageButton) sendingdialog.findViewById(R.id.print_btn);
-        sms_btn = (ImageButton) sendingdialog.findViewById(R.id.sms_btn);
+        gmail_btn = (ImageButton) dialoge_items.findViewById(R.id.gmail_btn);
+        print_btn = (ImageButton) dialoge_items.findViewById(R.id.print_btn);
+        sms_btn = (ImageButton) dialoge_items.findViewById(R.id.sms_btn);
 
-        btn_done = (Button) sendingdialog.findViewById(R.id.btn_done);
-        test = (Button) findViewById(R.id.test);
+        btn_done = (Button) dialoge_items.findViewById(R.id.btn_done);
 
 
         dateList = new ArrayList<>();
@@ -379,6 +374,12 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         }
 
     }
+
+    public void onClickWhatsApp(View view) {
+
+
+    }
+
 
     public void printTcp() {
         if (asyncTask == null) {
@@ -455,49 +456,49 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
         return "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, this.getApplicationContext().getResources().getDrawableForDensity(R.drawable.logo, DisplayMetrics.DENSITY_MEDIUM)) + "</img>\n" +
                 "[L]\n" +
-                "[L]Invoice Printed"+
+                "[L]Invoice Printed" +
                 "[C]<u type='double'>" + format.format(new Date()) + "</u>\n" +
                 "[C]\n" +
-                "[L]Invoice no: 12345\n"+
-                "[L]\n"+
+                "[L]Invoice no: 12345\n" +
+                "[L]\n" +
                 "[C]<font color='bg-black'>================================</font>\n" +
-                "[L]\n"+
+                "[L]\n" +
                 "[C]<font color='black' size='wide'> CUSTOMER </font>\n" +
-                "[L]\n"+
-                "[L]Name:"+customerName_textView.getText().toString()+"\n"+
                 "[L]\n" +
-                "[L]Email:"+customerEmail_textView.getText().toString()+"\n"+
+                "[L]Name:" + customerName_textView.getText().toString() + "\n" +
                 "[L]\n" +
-                "[L]ID:"+customerID_textView.getText().toString()+"\n"+
+                "[L]Email:" + customerEmail_textView.getText().toString() + "\n" +
                 "[L]\n" +
-                "[L]Phone no:"+customerID_textView.getText().toString()+"\n"+
+                "[L]ID:" + customerID_textView.getText().toString() + "\n" +
+                "[L]\n" +
+                "[L]Phone no:" + customerPhno_textView.getText().toString() + "\n" +
                 "[C]--------------------------------\n" +
-                "[L]\n"+
+                "[L]\n" +
                 "[C]<font color='black' size='wide'> ITEM </font>\n" +
                 "[L]\n" +
-                "[L]Name:"+itemName_textView.getText().toString()+"\n"+
+                "[L]Name:" + itemName_textView.getText().toString() + "\n" +
                 "[L]\n" +
-                "[L]Serial no:"+itemID_textView.getText().toString()+"\n"+
-                "[L]\n"+
+                "[L]Serial no:" + itemID_textView.getText().toString() + "\n" +
+                "[L]\n" +
                 "[C]================================\n" +
-                "[L]\n"+
-                "[L]Sale Price: [R]"+Currency.getInstance().getCurrency()+sale_price_editText.getText().toString()+"\n"+
                 "[L]\n" +
-                "[L]Paid Amount: [R]"+Currency.getInstance().getCurrency()+paid_editText.getText().toString()+"\n"+
+                "[L]Sale Price: [R]" + Currency.getInstance().getCurrency() + sale_price_editText.getText().toString() + "\n" +
                 "[L]\n" +
-                "[L]Sale Date: [R]"+date_textView.getText().toString()+"\n"+
+                "[L]Paid Amount: [R]" + Currency.getInstance().getCurrency() + paid_editText.getText().toString() + "\n" +
+                "[L]\n" +
+                "[L]Sale Date: [R]" + date_textView.getText().toString() + "\n" +
                 "[C]\n" +
                 "[C]<font color='bg-black'> -------------------------------- </font>\n" +
                 "[C]\n" +
                 "[L]<font color='black' size='tall'> Shopkeeper Terms & Conditions </font>\n" +
                 "[C]\n" +
-                "[L]1.This is the first condition. 2. This is the second condition\n"+
+                "[L]1.This is the first condition. 2. This is the second condition\n" +
                 "[C]\n" +
                 "[L]<font color='black' size='tall'> Buy Local Terms & Conditions </font>\n" +
                 "[C]\n" +
-                "[L]1.This is the first condition. 2. This is the second condition\n"+
-                "[L]\n"+
-                "[L]\n"+
+                "[L]1.This is the first condition. 2. This is the second condition\n" +
+                "[L]\n" +
+                "[L]\n" +
                 "[L]\n";
 
     }
@@ -924,13 +925,14 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         });
     }
 
+    void openWhatsappContact(String number) {
+        Uri uri = Uri.parse("smsto:" + number);
+        Intent i = new Intent(Intent.ACTION_SENDTO, uri);
+        i.setPackage("com.whatsapp");
+        startActivity(Intent.createChooser(i, ""));
+    }
+
     private void onClickListenes() {
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                printTcp();
-            }
-        });
 
         searchForItem_cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1026,6 +1028,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         print_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                printTcp();
                 Toast.makeText(Sale.this, "YEs working", Toast.LENGTH_SHORT).show();
             }
         });
@@ -1041,15 +1044,40 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         sms_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + "0323"));
-                intent.putExtra("sms_body", "Hi how are you");
-                startActivity(intent);
+
+                openWhatsappContact(customerPhno_textView.getText().toString());
+
+
+//                PackageManager pm = getPackageManager();
+//                try {
+//
+//                    Intent waIntent = new Intent(Intent.ACTION_SEND);
+//                    waIntent.setType("text/plain");
+//                    String text = "YOUR TEXT HERE";
+//
+//                    PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+//                    //Check if package exists or not. If not then code
+//                    //in catch block will be called
+//                    waIntent.setPackage("com.whatsapp");
+//
+//                    waIntent.putExtra(Intent.EXTRA_TEXT, text);
+//                    startActivity(Intent.createChooser(waIntent, "Share with"));
+//
+//                } catch (PackageManager.NameNotFoundException e) {
+//                    Toast.makeText(Sale.this, "WhatsApp not Installed", Toast.LENGTH_SHORT)
+//                            .show();
+//                }
+
+
+//                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + "0323"));
+//                intent.putExtra("sms_body", "Hi how are you");
+//                startActivity(intent);
             }
         });
         btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendingdialog.dismiss();
+                dialoge_items.dismiss();
                 finish();
             }
         });
@@ -1299,7 +1327,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
             new Customer_history_class().twelveValues(rbsCustomerDetails.getKey(), key, date_textView.getText().toString(), rbsItemDetails.getItemCategory(), String.valueOf(rbsItemDetails.getFirstImageUri()), rbsItemDetails.getKey(), rbsItemDetails.getItemName(), rbsItemDetails.getItemID(), "Buy", UserDetails.getInstance().getShopLogo(), FirebaseAuth.getInstance().getCurrentUser().getUid(), UserDetails.getInstance().getShopNmae(), date.getTime());
             pd1.dismissProgressBar(Sale.this);
-            sendingdialog.show();
+            dialoge_items.show();
 
         } else {
             Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();

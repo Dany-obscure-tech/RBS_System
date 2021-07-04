@@ -1,178 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/tv_confirmbuy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/textBlue"
-        android:textSize="18sp"
-        android:padding="10dp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:fontFamily="@font/segoe_ui_bold"
-        android:text="Do you want to print, email, sms?"
-        />
 
-    <View
+    <RelativeLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:background="#0075B5"
-        android:layout_height="1dp"/>
+        android:layout_height="45dp"
+        android:background="@drawable/screen_header_rectangle">
+
+        <TextView
+            style="@style/TextViews_Bold_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Do you want to print, email, sms?"
+            android:textColor="#ffffff" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/Linear_layout"
-        android:layout_below="@id/tv_confirmbuy"
-        android:weightSum="3"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:weightSum="3">
 
         <LinearLayout
             android:id="@+id/print_linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:padding="20dp"
             android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:padding="20dp">
 
             <ImageButton
-
                 android:id="@+id/print_btn"
-                android:layout_gravity="center_horizontal"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:paddingBottom="8dp"
-                android:background="#00000000"
-                android:src="@drawable/printer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:textColor="@color/textGrey"
-                android:textSize="16sp"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:adjustViewBounds="true"
+                android:background="#00000000"
+                android:paddingBottom="8dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/printer" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingBottom="10dp"
                 android:text="Print"
-                android:paddingBottom="10dp"/>
+                android:textColor="@color/textGrey"
+                android:textSize="16sp" />
 
         </LinearLayout>
 
         <LinearLayout
 
-            android:layout_weight="1"
-            android:padding="20dp"
-            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="20dp">
 
             <ImageButton
 
                 android:id="@+id/gmail_btn"
-                android:layout_gravity="center_horizontal"
-                android:paddingBottom="10dp"
-                android:background="#00000000"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/gmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:textColor="@color/textGrey"
-                android:textSize="16sp"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:adjustViewBounds="true"
+                android:background="#00000000"
+                android:paddingBottom="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/gmail" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingBottom="10dp"
                 android:text="Email"
-                android:paddingBottom="10dp"/>
+                android:textColor="@color/textGrey"
+                android:textSize="16sp" />
 
         </LinearLayout>
-        android:layout_gravity="center_vertical"
 
         <LinearLayout
 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:padding="20dp"
             android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:padding="20dp">
 
             <ImageButton
                 android:id="@+id/sms_btn"
-                android:layout_gravity="center_horizontal"
-                android:paddingBottom="10dp"
-                android:background="#00000000"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/mail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:textColor="@color/textGrey"
-                android:textSize="16sp"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:adjustViewBounds="true"
+                android:background="#00000000"
+                android:paddingBottom="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/mail" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingBottom="10dp"
                 android:text="SMS"
-                android:paddingBottom="10dp"/>
+                android:textColor="@color/textGrey"
+                android:textSize="16sp" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/portandIp"
-        android:layout_below="@+id/Linear_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:text="IP :" />
-
-        <EditText
-            android:id="@+id/edittext_tcp_ip"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
-            android:digits="0123456789."
-            android:inputType="number" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="5dp"
-            android:text="Port :" />
-
-        <EditText
-            android:id="@+id/edittext_tcp_port"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-    </LinearLayout>
-
     <Button
-        android:layout_below="@+id/portandIp"
         android:id="@+id/btn_done"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_below="@+id/Linear_layout"
+        android:layout_weight="2"
         android:background="@color/textGrey"
         android:backgroundTint="#9d9d9d9d"
         android:clickable="true"
-        android:textStyle="bold"
-        android:textColor="@color/textBlue"
-        android:textAllCaps="false"
-        android:textSize="15sp"
-        android:layout_weight="2"
         android:fontFamily="@font/segoe_ui"
         android:text="Close"
-        />
+        android:textAllCaps="false"
+        android:textColor="@color/textBlue"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
