@@ -1282,6 +1282,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 itemLastActive_textView.setText(itemlstactive_returnString);
                 itemImage_imageView.setImageURI(rbsItemDetails.getImageUrlList().get(0));
 
+                viewItemDetails_textView.setVisibility(View.GONE);
+
                 itemID_textView.setVisibility(View.VISIBLE);
                 itemPriceCurrency_textView.setVisibility(View.VISIBLE);
                 itemPrice_textView.setVisibility(View.VISIBLE);
@@ -1314,6 +1316,8 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 customerID_textView.setText(id_returnString);
                 customerID_textView.setVisibility(View.VISIBLE);
                 customerID_linearLayout.setVisibility(View.VISIBLE);
+
+                viewCustomerDetails_textView.setVisibility(View.GONE);
 
                 rbsCustomerDetails.setKey(reference.push().getKey());
                 rbsCustomerDetails.setCheck("New customer");

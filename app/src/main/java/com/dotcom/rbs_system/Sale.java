@@ -1387,6 +1387,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                 itemImage_imageView.setVisibility(View.VISIBLE);
                 itemLastActive_linearLayout.setVisibility(View.VISIBLE);
 
+                viewItemDetails_textView.setVisibility(View.GONE);
+
                 rbsItemDetails.setCheck("Sale new item");
 
             }
@@ -1417,6 +1419,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                 customerID_textView.setVisibility(View.VISIBLE);
                 id_title_textview.setVisibility(View.VISIBLE);
                 customerID_linearLayout.setVisibility(View.VISIBLE);
+
+                viewCustomerDetails_textView.setVisibility(View.GONE);
 
                 rbsCustomerDetails.setKey(reference.push().getKey());
                 rbsCustomerDetails.setCheck("New customer");
