@@ -33,7 +33,7 @@
     <style name="RBSInvoice_TextViews">
         <item name="android:textColor">@color/defaultText</item>
         <item name="android:fontFamily">@font/segoe_ui_bold</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/Bold_Small</item>
     </style>
 
     <style name="RBSInvoice_TextViews_small">

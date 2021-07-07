@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.TextView;
 
 import com.dotcom.rbs_system.Adapter.Adapter_Vendor_inventory_RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,7 +37,6 @@ public class VendorShop extends Fragment {
 
     RecyclerView vendor_inventory_RecyclerView;
 
-    List<String> stockSNo_list;
     List<String> stockName_list;
     List<String> stockCategory_list;
     List<String> stockPrice_list;
@@ -45,7 +44,7 @@ public class VendorShop extends Fragment {
     List<String> stockImageUrl_list;
     List<String> stockkeyId_list;
     List<String> edit_btn_list;
-    Button vendor_inventory_add_btn;
+    TextView vendor_inventory_add_btn_textiew;
 
 
     DatabaseReference vendorStockRef;
@@ -111,10 +110,9 @@ public class VendorShop extends Fragment {
         vendor_inventory_RecyclerView = (RecyclerView) view.findViewById(R.id.vendor_inventory_RecyclerView);
         vendor_inventory_RecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),1));
 
-        vendor_inventory_add_btn = (Button) view.findViewById(R.id.vendor_inventory_add_btn);
+        vendor_inventory_add_btn_textiew = (TextView) view.findViewById(R.id.vendor_inventory_add_btn_textiew);
 
         stockCategory_list = new ArrayList<>();
-        stockSNo_list = new ArrayList<>();
         stockName_list = new ArrayList<>();
         stockCategory_list = new ArrayList<>();
         stockPrice_list = new ArrayList<>();
@@ -139,7 +137,6 @@ public class VendorShop extends Fragment {
                 for (DataSnapshot dataSnapshot1:snapshot.getChildren()){
 
                     for (DataSnapshot dataSnapshot2:dataSnapshot1.getChildren()){
-                        stockSNo_list.add(dataSnapshot2.child("Sno").getValue().toString());
                         stockName_list.add(dataSnapshot2.child("Name").getValue().toString());
                         stockCategory_list.add(dataSnapshot2.child("Category").getValue().toString());
                         stockPrice_list.add(dataSnapshot2.child("Price").getValue().toString());
@@ -151,7 +148,7 @@ public class VendorShop extends Fragment {
                 }
 
 
-                adapter_vendor_inventory_recyclerView = new Adapter_Vendor_inventory_RecyclerView(getActivity(),stockSNo_list,stockName_list, stockCategory_list,stockPrice_list,stockQuantity_list,stockImageUrl_list,stockkeyId_list,edit_btn_list);
+                adapter_vendor_inventory_recyclerView = new Adapter_Vendor_inventory_RecyclerView(getActivity(),stockName_list, stockCategory_list,stockPrice_list,stockQuantity_list,stockImageUrl_list,stockkeyId_list,edit_btn_list);
                 vendor_inventory_RecyclerView.setAdapter(adapter_vendor_inventory_recyclerView);
 
             }
@@ -166,11 +163,11 @@ public class VendorShop extends Fragment {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Onclicklistners() {
-        vendor_inventory_add_btn_listner();
+        vendor_inventory_add_btn_textiew_listner();
     }
 
-    private void vendor_inventory_add_btn_listner() {
-        vendor_inventory_add_btn.setOnClickListener(new View.OnClickListener() {
+    private void vendor_inventory_add_btn_textiew_listner() {
+        vendor_inventory_add_btn_textiew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent= new Intent(getActivity(),Vendor_stock_entry.class);

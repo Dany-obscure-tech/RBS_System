@@ -1,133 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/vendor_shop_cardView"
+        android:id="@+id/shop_items_cardView"
+        style="@style/CardView_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ripple_effect_cardview"
-        app:cardBackgroundColor="@color/colorWhite"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="4dp"
-        app:cardUseCompatPadding="true">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:layout_weight="0.5"
-                android:layout_gravity="center"
-                android:orientation="vertical">
-
-                <ImageButton
-                    android:id="@+id/edit_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_edit_24"
-                    android:background="#ffffff"
-                    android:layout_gravity="center_horizontal"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="S.NO"
-                    android:layout_gravity="center"
-                    android:layout_marginVertical="5dp"
-                    />
-                <TextView
-                    android:id="@+id/stockSNo_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="00012333"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:layout_weight="1.9"
-                android:layout_gravity="center_vertical"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/stockName_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/textBlue"
-                    android:text="Samsung handfrees"
-                    android:layout_gravity="center_horizontal"
-                    />
-
-                <TextView
-                    android:id="@+id/stockCategory_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Laptop"
-                    android:textColor="@color/textGreen"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:layout_gravity="center_horizontal"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/currency_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="$"
-                        />
-                    <TextView
-                        android:id="@+id/stockPrice_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1000000"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text=" Qty : "
-                        />
-                    <TextView
-                        android:id="@+id/stockQuantity_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="100"
-                        />
-
-                </LinearLayout>
-
-            </LinearLayout>
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/stockImage_imageView"
                 style="@style/Search_views_Image_views"
-                android:layout_width="230px"
-                android:layout_height="230px"
-                android:layout_weight="0.6"
-                android:src="@drawable/laptop"
-                android:layout_gravity="center"
-                />
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@color/textGrey"
+                android:src="@drawable/laptop" />
 
-        </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/stockImage_imageView">
+
+                <LinearLayout
+                    android:id="@+id/offers_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:gravity="end"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/edit_stock_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit"
+                        android:backgroundTint="@color/textGrey"
+
+                        />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/stockName_textView"
+                    style="@style/TextViews_Bold_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Dress Shirts"
+                    android:textColor="@color/gradientDarkBlue" />
+
+
+                <TextView
+                    android:id="@+id/stockCategory_textView"
+                    style="@style/TextViews_Regular_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/stockName_textView"
+                    android:layout_marginTop="10dp"
+                    android:text="Category"
+                    android:textColor="@color/textGreen" />
+
+
+                <LinearLayout
+                    android:id="@+id/customerID_linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/stockCategory_textView"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/currency_textView"
+                            style="@style/TextViews_Regular_big"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$"
+                            android:textColor="@color/textGreen" />
+
+                        <TextView
+                            android:id="@+id/stockPrice_textView"
+                            style="@style/TextViews_Regular_big"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="5dp"
+                            android:text="5000"
+                            android:textColor="@color/textGreen" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/TextViews_Regular_big"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Qty : "
+                            android:textColor="@color/textGrey" />
+
+                        <TextView
+                            style="@style/TextViews_Regular_big"
+                            android:id="@+id/stockQuantity_textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textGrey"
+                            android:text="100" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 

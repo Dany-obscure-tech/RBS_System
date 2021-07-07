@@ -9,18 +9,15 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@drawable/profile_screen_header">
+        android:background="@drawable/screen_header_rectangle">
 
         <TextView
+            style="@style/TextViews_Bold_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:fontFamily="@font/segoe_ui_bold"
             android:text="Change Passcode"
-            android:textColor="#ffffff"
-            android:textSize="20sp" />
-
+            android:textColor="#ffffff" />
 
     </RelativeLayout>
 
@@ -36,12 +33,12 @@
 
 
         <TextView
-            style="@style/RBSInvoice_TextViews"
+            style="@style/TextViews_Bold_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_weight="1"
-            android:text="User Name" />
+            android:layout_marginTop="10dp"
+            android:text="User Name"
+            android:textColor="@color/textGrey" />
 
 
         <androidx.cardview.widget.CardView
@@ -61,15 +58,13 @@
 
 
                 <TextView
-                    android:id="@+id/category_editText"
+                    android:id="@+id/username_textview"
+                    style="@style/TextViews_Bold_small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/segoe_ui_bold"
                     android:gravity="center_horizontal"
                     android:text="Amjad Ali"
-                    android:textAlignment="center"
-                    android:textColor="@color/textGrey"
-                    android:textSize="18sp" />
+                    android:textColor="@color/gradientDarkBlue" />
 
 
             </LinearLayout>
@@ -78,12 +73,12 @@
 
 
         <TextView
-            style="@style/RBSInvoice_TextViews"
+            style="@style/TextViews_Bold_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_weight="1"
-            android:text="Phone Number" />
+            android:layout_marginTop="10dp"
+            android:text="Phone Number"
+            android:textColor="@color/textGrey" />
 
 
         <androidx.cardview.widget.CardView
@@ -102,27 +97,26 @@
 
 
                 <TextView
-                    android:id="@+id/phone_number_editText"
+                    android:id="@+id/phone_number_textview"
+                    style="@style/TextViews_Bold_small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/segoe_ui_bold"
                     android:gravity="center_horizontal"
                     android:text="+8212432432"
-                    android:textAlignment="center"
-                    android:textColor="@color/textGrey"
-                    android:textSize="18sp" />
+                    android:textColor="@color/gradientDarkBlue" />
+
 
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
         <TextView
-            style="@style/RBSInvoice_TextViews"
+            style="@style/TextViews_Bold_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_weight="1"
-            android:text="Email" />
+            android:layout_marginTop="10dp"
+            android:text="Email"
+            android:textColor="@color/textGrey" />
 
 
         <androidx.cardview.widget.CardView
@@ -139,72 +133,74 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp">
 
-
                 <TextView
                     android:id="@+id/email_textview"
+                    style="@style/TextViews_Bold_small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/segoe_ui_bold"
                     android:gravity="center_horizontal"
                     android:text="Amjad.ali2345@gmail.com"
-                    android:textAlignment="center"
-                    android:textColor="@color/textGrey"
-                    android:textSize="18sp" />
+                    android:textColor="@color/gradientDarkBlue" />
 
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
         <TextView
-            style="@style/RBSInvoice_TextViews"
+            style="@style/TextViews_Bold_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_weight="1"
-            android:text="Old Passcode" />
+            android:layout_marginTop="10dp"
+            android:text="Old Passcode"
+            android:textColor="@color/textGrey" />
 
         <EditText
             android:id="@+id/random_passcode_editText"
-            style="@style/RBSInvoice_EditTexts"
+            style="@style/TextViews_Regular_small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/address_textview"
+            android:layout_marginTop="5dp"
             android:backgroundTint="@color/colorPrimary"
             android:hint="********"
-            android:inputType="textEmailAddress"
-            android:maxLength="32" />
+            android:inputType="textPassword"
+            android:maxLength="32"
+            android:textColor="@color/textGrey" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/change_passcode_submit_btn"
+                style="@style/RBSInvoice_SaveButtonTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:text="Save"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/change_passcode_cancel_btn"
+                style="@style/RBSInvoice_CancelButtonTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="Cancel" />
+
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/add_user_data_fields_area"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:paddingBottom="20dp"
-        android:weightSum="2">
-
-        <TextView
-            android:id="@+id/change_passcode_submit_btn"
-            style="@style/RBSInvoice_SaveButtonTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="0.6"
-            android:text="Submit" />
-
-        <TextView
-            android:id="@+id/change_passcode_cancel_btn"
-            style="@style/RBSInvoice_CancelButtonTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="30dp"
-            android:layout_weight="0.6"
-            android:text="Cancel" />
-
-
-    </LinearLayout>
 
 
 </RelativeLayout>

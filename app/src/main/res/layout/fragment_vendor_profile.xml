@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,594 +8,322 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/store_banner_imageView"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:src="@drawable/store_image" />
+                android:layout_height="wrap_content">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/logo_imageView"
-                android:layout_below="@+id/store_banner_imageView"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center"
-                app:civ_border_width="0dp"
-                android:src="@drawable/profile_icon"
-                android:layout_centerHorizontal="true"
-                app:civ_border_color="#4A4A4A"
-                android:layout_weight="0.5"
-                />
+                <ImageView
+                    android:id="@+id/store_banner_imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/store_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/logo_imageView"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/profile_icon"
+                    app:civ_border_color="@color/colorWhite"
+                    app:civ_border_width="10dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/store_banner_imageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/store_banner_imageView" />
 
-            <TextView
-                android:id="@+id/shop_name"
-                android:layout_below="@+id/logo_imageView"
-                android:layout_marginTop="2dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="HP Store"
-                android:padding="5dp"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/textGrey"
-                android:textSize="20sp"
-                android:fontFamily="@font/segoe_ui_bold"
-                />
-
-            <TextView
-                android:id="@+id/edit_banner_btn_textiew"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/shop_name"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="15dp"
-                android:background="@drawable/profile_screen_header"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="10dp"
-                android:text="Edit Banner"
-                android:textAlignment="center"
-                android:textColor="#ffff"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/edit_logo_btn_textiew"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/shop_name"
-                android:layout_margin="15dp"
-                android:background="@drawable/profile_screen_header"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="10dp"
-                android:text="Edit Logo"
-                android:textAlignment="center"
-                android:textColor="#ffff"
-                android:textSize="15sp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/edit_banner_btn_textiew"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
-
-
-                <TextView
-                    android:id="@+id/vendor_shop_details_textview"
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="Details"
-                    android:textColor="@color/textBlue"
-                    android:textSize="25sp" />
-
-                <TextView
-                    android:id="@+id/app_regno"
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/vendor_shop_details_textview"
-                    android:layout_marginTop="25dp"
-                    android:layout_weight="1"
-                    android:text="App reg no" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/appRegNo_view_cardView"
+                <RelativeLayout
+                    android:id="@+id/relativeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/app_regno"
-                    android:background="@drawable/ripple_effect_cardview"
-                    app:cardBackgroundColor="@color/colorWhite"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="4dp"
-                    app:cardUseCompatPadding="true">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <LinearLayout
-                        android:id="@+id/appRegNo_name_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/appRegNo_textView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:fontFamily="@font/segoe_ui_bold"
-                                android:text="ID12345"
-                                android:textColor="@color/textGrey"
-                                android:textSize="18sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:id="@+id/name_name"
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/appRegNo_view_cardView"
-                    android:layout_marginTop="25dp"
-                    android:layout_weight="1"
-                    android:text="User Name" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/username_view_cardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/name_name"
-                    android:background="@drawable/ripple_effect_cardview"
-                    app:cardBackgroundColor="@color/colorWhite"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="4dp"
-                    app:cardUseCompatPadding="true">
-
-                    <LinearLayout
-                        android:id="@+id/vendor_name_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/name_textView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:fontFamily="@font/segoe_ui_bold"
-                                android:text="Shahzaib Mehfooz"
-                                android:textColor="@color/textGrey"
-                                android:textSize="18sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:id="@+id/company_name"
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/username_view_cardView"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="1"
-                    android:text="Company Name" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/shopkeeper_name_view_cardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/company_name"
-                    android:background="@drawable/ripple_effect_cardview"
-                    app:cardBackgroundColor="@color/colorWhite"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="4dp"
-                    app:cardUseCompatPadding="true">
-
-                    <LinearLayout
-                        android:id="@+id/shopkeeper_name_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/company_name_textView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:fontFamily="@font/segoe_ui_bold"
-                                android:text="ITECH Computers"
-                                android:textColor="@color/textGrey"
-                                android:textSize="18sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:id="@+id/company_registration_number"
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/shopkeeper_name_view_cardView"
-                    android:layout_weight="1"
-                    android:layout_marginTop="20dp"
-                    android:text="Company Registeration #" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/searchForItem_cardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/company_registration_number"
-                    android:background="@drawable/ripple_effect_cardview"
-                    app:cardBackgroundColor="@color/colorWhite"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="4dp"
-                    app:cardUseCompatPadding="true">
-
-                    <LinearLayout
-                        android:id="@+id/shopkeeper_phone_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/company_reg_no_textView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:fontFamily="@font/segoe_ui_bold"
-                                android:text="09125678893"
-                                android:textColor="@color/textGrey"
-                                android:textSize="18sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:id="@+id/post_code"
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/searchForItem_cardView"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="1"
-                    android:text="Post Code" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/shopkeeper_email_cardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/post_code"
-                    android:background="@drawable/ripple_effect_cardview"
-                    app:cardBackgroundColor="@color/colorWhite"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="4dp"
-                    app:cardUseCompatPadding="true">
-
-                    <LinearLayout
-                        android:id="@+id/shopkeeper_email_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/post_code_textView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:fontFamily="@font/segoe_ui_bold"
-                                android:text="E15UWE"
-                                android:textColor="@color/textGrey"
-                                android:textSize="18sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:id="@+id/vendor_address"
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/shopkeeper_email_cardView"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="1"
-                    android:text="Address" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/vendor_address_cardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/vendor_address"
-                    android:background="@drawable/ripple_effect_cardview"
-                    app:cardBackgroundColor="@color/colorWhite"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="4dp"
-                    app:cardUseCompatPadding="true">
-
-                    <LinearLayout
-                        android:id="@+id/shopkeeper_address_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/vendor_address_textView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:fontFamily="@font/segoe_ui_bold"
-                                android:text="House#24563 Pakistan"
-                                android:textColor="@color/textGrey"
-                                android:textSize="18sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:id="@+id/vendor_phone_number_textview"
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/vendor_address_cardView"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="1"
-                    android:text="Phone number" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/vendor_phone_cardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/vendor_phone_number_textview"
-                    android:background="@drawable/ripple_effect_cardview"
-                    app:cardBackgroundColor="@color/colorWhite"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="4dp"
-                    app:cardUseCompatPadding="true">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/vendor_phone_textView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:fontFamily="@font/segoe_ui_bold"
-                                android:text="092433456"
-                                android:textColor="@color/textGrey"
-                                android:textSize="18sp" />
-
-                        </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:id="@+id/vendor_mobile_number_textview"
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/vendor_phone_cardView"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="1"
-                    android:text="Mobile number" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/vendor_mobile_cardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/vendor_mobile_number_textview"
-                    android:background="@drawable/ripple_effect_cardview"
-                    app:cardBackgroundColor="@color/colorWhite"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="4dp"
-                    app:cardUseCompatPadding="true">
-
-                    <LinearLayout
+                    <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/vendor_mobile_textView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:text="03333565768"
-                            android:textColor="@color/textGrey"
-                            android:textSize="18sp" />
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:id="@+id/vendor_email_textview"
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/vendor_mobile_cardView"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="1"
-                    android:text="Email" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/vendor_email_cardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/vendor_email_textview"
-                    android:background="@drawable/ripple_effect_cardview"
-                    app:cardBackgroundColor="@color/colorWhite"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="4dp"
-                    app:cardUseCompatPadding="true">
+                        android:layout_alignParentTop="true"
+                        android:background="#00000000"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/top_black_rectangle" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/vendor_email_textView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:text="shahzaib.mehfooz@gmail.com"
-                            android:textColor="@color/textGrey"
-                            android:textSize="18sp" />
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:id="@+id/vendor_url_textview"
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/vendor_email_cardView"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="1"
-                    android:text="URL" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/vendor_url_cardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/vendor_url_textview"
-                    android:background="@drawable/ripple_effect_cardview"
-                    app:cardBackgroundColor="@color/colorWhite"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="4dp"
-                    app:cardUseCompatPadding="true">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/vendor_url_textView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:text="www.buylocal.com"
-                            android:textColor="@color/textGrey"
-                            android:textSize="18sp" />
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                    <TextView
-                        android:id="@+id/edit_vendor_details_btn_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_below="@+id/vendor_url_cardView"
-                        android:layout_margin="15dp"
-                        android:background="@drawable/profile_screen_header"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="10dp"
-                        android:text="Edit Details"
-                        android:textAlignment="center"
-                        android:textColor="#ffff"
-                        android:textSize="15sp" />
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
+                        <TextView
+                            android:id="@+id/edit_banner_btn_textiew"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edit"
+                            android:backgroundTint="@color/colorWhite"
+
+                            />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/view_users_btn"
+                    android:id="@+id/edit_logo_btn_textiew"
+                    style="@style/gradient_blue_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/edit_vendor_details_btn_textView"
-                    android:layout_margin="10dp"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
                     android:background="@drawable/profile_screen_header"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:paddingLeft="25dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="25dp"
-                    android:paddingBottom="10dp"
-                    android:text="View Users"
-                    android:textAlignment="center"
-                    android:textColor="#ffff"
-                    android:layout_centerInParent="true"
-                    android:textSize="20sp" />
+                    android:text="Edit Logo" />
 
-            </RelativeLayout>
-        </RelativeLayout>
+            </LinearLayout>
 
-    </ScrollView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
 
-</FrameLayout>
+                <TextView
+                    style="@style/TextViews_Bold_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Vendor Details"
+                    android:textColor="@color/textGrey" />
+
+                <TextView
+                    style="@style/TextViews_Bold_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="App reg no"
+                    android:textColor="@color/gradientDarkBlue" />
+
+                <TextView
+                    android:id="@+id/appRegNo_textView"
+                    style="@style/TextViews_Regular_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="ID12345"
+                    android:textColor="@color/textGrey" />
+
+                <TextView
+                    style="@style/TextViews_Bold_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="User Name"
+                    android:textColor="@color/gradientDarkBlue" />
+
+                <TextView
+                    android:id="@+id/name_textView"
+                    style="@style/TextViews_Regular_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="Shahzaib Mehfooz"
+                    android:textColor="@color/textGrey" />
+
+                <TextView
+                    style="@style/TextViews_Bold_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Company Name"
+                    android:textColor="@color/gradientDarkBlue" />
+
+                <TextView
+                    android:id="@+id/company_name_textView"
+                    style="@style/TextViews_Regular_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="Itech Computers"
+                    android:textColor="@color/textGrey" />
+
+                <TextView
+                    style="@style/TextViews_Bold_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Company Registeration #"
+                    android:textColor="@color/gradientDarkBlue" />
+
+                <TextView
+                    android:id="@+id/company_reg_no_textView"
+                    style="@style/TextViews_Regular_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="09125678893"
+                    android:textColor="@color/textGrey" />
+
+                <TextView
+                    style="@style/TextViews_Bold_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Post Code"
+                    android:textColor="@color/gradientDarkBlue" />
+
+                <TextView
+                    android:id="@+id/post_code_textView"
+                    style="@style/TextViews_Regular_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="E15UWE"
+                    android:textColor="@color/textGrey" />
+
+                <TextView
+                    style="@style/TextViews_Bold_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Address"
+                    android:textColor="@color/gradientDarkBlue" />
+
+                <TextView
+                    android:id="@+id/vendor_address_textView"
+                    style="@style/TextViews_Regular_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="House#24563 Pakistan"
+                    android:textColor="@color/textGrey" />
+
+                <TextView
+                    style="@style/TextViews_Bold_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Phone Number"
+                    android:textColor="@color/gradientDarkBlue" />
+
+                <TextView
+                    android:id="@+id/vendor_phone_textView"
+                    style="@style/TextViews_Regular_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="092433456"
+                    android:textColor="@color/textGrey" />
+
+                <TextView
+                    style="@style/TextViews_Bold_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mobile Number"
+                    android:textColor="@color/gradientDarkBlue" />
+
+                <TextView
+                    android:id="@+id/vendor_mobile_textView"
+                    style="@style/TextViews_Regular_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="03232442358"
+                    android:textColor="@color/textGrey" />
+
+                <TextView
+                    style="@style/TextViews_Bold_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:textColor="@color/gradientDarkBlue" />
+
+                <TextView
+                    android:id="@+id/vendor_email_textView"
+                    style="@style/TextViews_Regular_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="itechcomputers@gmail.com"
+                    android:textColor="@color/textGrey" />
+
+                <TextView
+                    style="@style/TextViews_Bold_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="URL"
+                    android:textColor="@color/gradientDarkBlue" />
+
+                <TextView
+                    android:id="@+id/vendor_url_textView"
+                    style="@style/TextViews_Regular_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="www.phihorizon.com"
+                    android:textColor="@color/textGrey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/edit_vendor_details_btn_textView"
+                    style="@style/gradient_blue_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/profile_screen_header"
+                    android:text="Edit Details" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/view_users_btn"
+                style="@style/gradient_blue_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/profile_screen_header"
+                android:text="View Users"
+                android:textAlignment="center" />
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

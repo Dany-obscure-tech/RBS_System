@@ -2,29 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#00000000">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@drawable/profile_screen_header">
+        android:background="@drawable/screen_header_rectangle">
 
         <TextView
+            style="@style/TextViews_Bold_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:text="Edit Vendor Info"
-            android:textColor="#ffffff"
-            android:textSize="20sp" />
-
+            android:text="Edit Item Details"
+            android:textColor="#ffffff" />
 
     </RelativeLayout>
 
     <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/header">
@@ -38,153 +35,171 @@
             android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
-
             <TextView
-                android:id="@+id/post_code"
-                style="@style/RBSInvoice_TextViews"
+                style="@style/TextViews_Bold_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/searchForItem_cardView"
                 android:layout_marginTop="10dp"
-                android:text="Post Code" />
+                android:text="Post Code"
+                android:textColor="@color/textGrey" />
 
             <EditText
                 android:id="@+id/edit_pastcode_editText"
-                style="@style/RBSInvoice_EditTexts"
+                style="@style/TextViews_Regular_small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/address_textview"
+                android:layout_marginTop="5dp"
                 android:backgroundTint="@color/colorPrimary"
-                android:hint="Enter passcode" />
+                android:hint="Enter passcode"
+                android:textColor="@color/textGrey" />
+
 
             <TextView
-                android:id="@+id/vendor_address"
-                style="@style/RBSInvoice_TextViews"
+                style="@style/TextViews_Bold_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/shopkeeper_email_cardView"
-                android:layout_marginTop="20dp"
-                android:text="Address" />
+                android:layout_marginTop="10dp"
+                android:text="Address"
+                android:textColor="@color/textGrey" />
 
             <EditText
                 android:id="@+id/edit_address_editText"
-                style="@style/RBSInvoice_EditTexts"
+                style="@style/TextViews_Regular_small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/address_textview"
+                android:layout_marginTop="5dp"
                 android:backgroundTint="@color/colorPrimary"
-                android:hint="Enter address" />
+                android:hint="Enter address"
+                android:textColor="@color/textGrey" />
 
             <TextView
-                android:id="@+id/vendor_phone_number_textview"
-                style="@style/RBSInvoice_TextViews"
+                style="@style/TextViews_Bold_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/vendor_address_cardView"
-                android:layout_marginTop="20dp"
-                android:text="Phone number" />
+                android:layout_marginTop="10dp"
+                android:text="Phone number"
+
+                android:textColor="@color/textGrey" />
 
             <EditText
                 android:id="@+id/edit_phone_number_editText"
-                style="@style/RBSInvoice_EditTexts"
+                style="@style/TextViews_Regular_small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/address_textview"
+                android:layout_marginTop="5dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:hint="Enter phone number"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textColor="@color/textGrey" />
 
             <TextView
-                android:id="@+id/vendor_mobile_number_textview"
-                style="@style/RBSInvoice_TextViews"
+                style="@style/TextViews_Bold_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Mobile number" />
+                android:layout_marginTop="10dp"
+                android:text="Mobile number"
+                android:textColor="@color/textGrey" />
 
             <EditText
                 android:id="@+id/edit_mobile_number_editText"
-                style="@style/RBSInvoice_EditTexts"
+                style="@style/TextViews_Regular_small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/address_textview"
+                android:layout_marginTop="5dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:hint="Enter mobile number"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textColor="@color/textGrey" />
 
             <TextView
-                android:id="@+id/vendor_email_textview"
-                style="@style/RBSInvoice_TextViews"
+                style="@style/TextViews_Bold_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Email" />
+                android:layout_marginTop="10dp"
+                android:text="Email"
+                android:textColor="@color/textGrey" />
 
             <EditText
                 android:id="@+id/edit_email_address_editText"
-                style="@style/RBSInvoice_EditTexts"
+                style="@style/TextViews_Regular_small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/address_textview"
+                android:layout_marginTop="5dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:hint="Enter email address"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:textColor="@color/textGrey" />
 
             <TextView
-                android:id="@+id/vendor_url_textview"
-                style="@style/RBSInvoice_TextViews"
+                style="@style/TextViews_Bold_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="URL" />
+                android:layout_marginTop="10dp"
+                android:text="URL"
+                android:textColor="@color/textGrey" />
 
             <EditText
                 android:id="@+id/edit_url_address_editText"
-                style="@style/RBSInvoice_EditTexts"
+                style="@style/TextViews_Regular_small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/address_textview"
+                android:layout_marginTop="5dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:hint="Enter website URL"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:textColor="@color/textGrey" />
+
 
             <TextView
                 android:id="@+id/change_passcode_btn"
+                style="@style/gradient_blue_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/profile_screen_header"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:padding="10dp"
-                android:text="Change Passcode"
-                android:textAlignment="center"
-                android:textColor="#ffff"
-                android:textSize="15sp" />
+                android:text="Change Passcode" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/edit_vendor_details_save_btn"
+                    style="@style/RBSInvoice_SaveButtonTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:text="Save"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:id="@+id/edit_vendor_details_cancel_btn"
+                    style="@style/RBSInvoice_CancelButtonTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="Cancel" />
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:padding="20dp">
-
-        <TextView
-            android:id="@+id/edit_vendor_details_save_btn"
-            style="@style/RBSInvoice_SaveButtonTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save" />
-
-        <TextView
-            android:id="@+id/edit_vendor_details_cancel_btn"
-            style="@style/RBSInvoice_CancelButtonTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:text="Cancel" />
-
-    </LinearLayout>
-
 
 </RelativeLayout>

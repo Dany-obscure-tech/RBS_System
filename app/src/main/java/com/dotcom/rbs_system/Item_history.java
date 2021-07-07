@@ -42,7 +42,7 @@ public class Item_history extends AppCompatActivity {
     RecyclerView itemHistoryRecyclerView;
     AdapterItemHistoryListRecyclerView adapterItemHistoryListRecyclerView;
 
-    TextView itemDetailsToggle_textView, edit_btn_textview;
+    TextView itemDetailsToggle_textView;
     TextView itemName_textView, serialNo_textView, category_textView, condition_textView, item_description_textview;
 
     RelativeLayout itemDetails_relativelayout;
@@ -81,8 +81,6 @@ public class Item_history extends AppCompatActivity {
         category_textView = (TextView) findViewById(R.id.category_textView);
         condition_textView = (TextView) findViewById(R.id.condition_textView);
         back_btn = (ImageButton) findViewById(R.id.back_btn);
-        edit_btn_textview = (TextView) findViewById(R.id.edit_btn_textview);
-
 
         itemID = getIntent().getStringExtra("ITEM_ID");
         itemCategory = getIntent().getStringExtra("ITEM_CATEGORY");
