@@ -43,8 +43,11 @@ import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
 import com.dotcom.rbs_system.Adapter.Adapter_customerList_alert_dialog;
 import com.dotcom.rbs_system.Adapter.Adapter_itemList_alert_dialog;
 import com.dotcom.rbs_system.Classes.Currency;
+import com.dotcom.rbs_system.Classes.Customer_history_class;
 import com.dotcom.rbs_system.Classes.RBSCustomerDetails;
 import com.dotcom.rbs_system.Classes.RBSItemDetails;
+import com.dotcom.rbs_system.Classes.UniquePushID;
+import com.dotcom.rbs_system.Classes.UserDetails;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 //import com.dotcom.rbs_system.asynch.AsyncTcpEscPosPrint;
 //import com.dotcom.rbs_system.asynch.AsyncEscPosPrinter;
@@ -1069,26 +1072,21 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 //we are connected to a network
                 connected = true;
 
-                String key = reference.push().getKey();
+                UniquePushID.getInstance().generateUniquePushID();
+                String key = UniquePushID.getInstance().getUniquePushID();
 
-                if (!rbsItemDetails.getCheck().equals("Buy new item")){
-                    itemKeyID = rbsItemDetails.getKey();
-                }
+                itemKeyID = rbsItemDetails.getKey();
 
-                if (rbsCustomerDetails.getCheck().equals("New customer")){
-                    customerKeyID = rbsCustomerDetails.getKey();
-                }
+                customerKeyID = rbsCustomerDetails.getKey();
 
                 reference.child("Buy_list").child(key).child("Customer_keyID").setValue(customerKeyID);
-                reference.child("Buy_list").child(key).child("Item_keyID").setValue(itemKeyID);
-
-                reference.child("Buy_list").child(key).child("Purchase_price").setValue(purchase_price_editText.getText().toString());
                 reference.child("Buy_list").child(key).child("Date").setValue(date_textView.getText().toString());
-
                 reference.child("Buy_list").child(key).child("Paid").setValue(paid_editText.getText().toString());
-
-                reference.child("Buy_list").child(key).child("key_id").setValue(key);
+                reference.child("Buy_list").child(key).child("Purchase_price").setValue(purchase_price_editText.getText().toString());
                 reference.child("Buy_list").child(key).child("added_by").setValue(firebaseAuthUID);
+                reference.child("Buy_list").child(key).child("Item_keyID").setValue(itemKeyID);
+                reference.child("Buy_list").child(key).child("key_id").setValue(key);
+
 
                 if (rbsItemDetails.getCheck().equals("Buy existing item")){
                     if (rbsCustomerDetails.getCheck().equals("New customer")){
@@ -1105,6 +1103,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
                 }
 
+                new Customer_history_class().twelveValues(rbsCustomerDetails.getKey(), key, date_textView.getText().toString(), rbsItemDetails.getItemCategory(), String.valueOf(rbsItemDetails.getFirstImageUri()), rbsItemDetails.getKey(), rbsItemDetails.getItemName(), rbsItemDetails.getItemID(), "Sale", UserDetails.getInstance().getShopLogo(), FirebaseAuth.getInstance().getCurrentUser().getUid(), UserDetails.getInstance().getShopNmae(), date.getTime());
                 pd.dismissProgressBar(Buy.this);
                 sendingdialog.show();
 

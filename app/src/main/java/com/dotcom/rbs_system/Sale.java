@@ -17,6 +17,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -61,6 +63,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -453,6 +456,22 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 //                "[L]Phno : "+"\n" +
 //                "\n" +
 //                "[L]\n";
+
+//        Target target = new Target() {
+//            @Override
+//            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//                imageView.setImageBitmap(bitmap);
+//                Drawable image = imageView.getDrawable();
+//            }
+//
+//            @Override
+//            public void onBitmapFailed(Drawable errorDrawable) {}
+//
+//            @Override
+//            public void onPrepareLoad(Drawable placeHolderDrawable) {}
+//        };
+//
+//        Picasso.with(this).load("url").into(target);
 
         return "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, this.getApplicationContext().getResources().getDrawableForDensity(R.drawable.logo, DisplayMetrics.DENSITY_MEDIUM)) + "</img>\n" +
                 "[L]\n" +
@@ -1279,23 +1298,18 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             UniquePushID.getInstance().generateUniquePushID();
             String key = UniquePushID.getInstance().getUniquePushID();
 
-            if (!rbsItemDetails.getCheck().equals("Sale new item")) {
-                itemKeyID = rbsItemDetails.getKey();
-            }
+            itemKeyID = rbsItemDetails.getKey();
 
-            if (rbsCustomerDetails.getCheck().equals("New customer")) {
-                customerKeyID = rbsCustomerDetails.getKey();
-            }
+            customerKeyID = rbsCustomerDetails.getKey();
 
             reference.child("Sale_list").child(key).child("Customer_keyID").setValue(customerKeyID);
-            reference.child("Sale_list").child(key).child("Item_keyID").setValue(itemKeyID);
-            reference.child("Sale_list").child(key).child("Sale_price").setValue(sale_price_editText.getText().toString());
             reference.child("Sale_list").child(key).child("Date").setValue(date_textView.getText().toString());
-
+            reference.child("Sale_list").child(key).child("Item_keyID").setValue(itemKeyID);
             reference.child("Sale_list").child(key).child("Paid").setValue(paid_editText.getText().toString());
+            reference.child("Sale_list").child(key).child("Sale_price").setValue(sale_price_editText.getText().toString());
 
-            reference.child("Sale_list").child(key).child("key_id").setValue(key);
             reference.child("Sale_list").child(key).child("added_by").setValue(firebaseAuthUID);
+            reference.child("Sale_list").child(key).child("key_id").setValue(key);
 
             if (rbsItemDetails.getCheck().equals("Sale existing item")) {
                 if (rbsCustomerDetails.getCheck().equals("New customer")) {
@@ -1310,19 +1324,19 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                 }
             }
 
-            System.out.println(rbsItemDetails.getKey());
-            System.out.println(key);
-            System.out.println(UserDetails.getInstance().getShopNmae());
-            System.out.println(FirebaseAuth.getInstance().getCurrentUser().getUid());
-            System.out.println(UserDetails.getInstance().getShopLogo());
-            System.out.println("Seller");
-            System.out.println(rbsCustomerDetails.getCustomerName());
-            System.out.println(rbsCustomerDetails.getKey());
-            System.out.println("Buyer");
-            System.out.println(rbsCustomerDetails.getFirstImageUrl());
-            System.out.println("Trade");
-            System.out.println(date.getTime());
-            System.out.println(date_textView.getText().toString());
+//            System.out.println(rbsItemDetails.getKey());
+//            System.out.println(key);
+//            System.out.println(UserDetails.getInstance().getShopNmae());
+//            System.out.println(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//            System.out.println(UserDetails.getInstance().getShopLogo());
+//            System.out.println("Seller");
+//            System.out.println(rbsCustomerDetails.getCustomerName());
+//            System.out.println(rbsCustomerDetails.getKey());
+//            System.out.println("Buyer");
+//            System.out.println(rbsCustomerDetails.getFirstImageUrl());
+//            System.out.println("Trade");
+//            System.out.println(date.getTime());
+//            System.out.println(date_textView.getText().toString());
 
 
             new Customer_history_class().twelveValues(rbsCustomerDetails.getKey(), key, date_textView.getText().toString(), rbsItemDetails.getItemCategory(), String.valueOf(rbsItemDetails.getFirstImageUri()), rbsItemDetails.getKey(), rbsItemDetails.getItemName(), rbsItemDetails.getItemID(), "Buy", UserDetails.getInstance().getShopLogo(), FirebaseAuth.getInstance().getCurrentUser().getUid(), UserDetails.getInstance().getShopNmae(), date.getTime());

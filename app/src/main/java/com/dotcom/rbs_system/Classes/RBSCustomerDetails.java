@@ -187,7 +187,7 @@ public class RBSCustomerDetails {
                             public void onSuccess(Uri uri) {
                                 if (k==0){
                                     firstImageUrl= String.valueOf(uri);
-                                    if (RBSItemDetails.getInstance().getCheck().equals("Sale new item")) {
+                                    if (RBSItemDetails.getInstance().getCheck().equals("Sale new item")||RBSItemDetails.getInstance().getCheck().equals("Buy new item")) {
                                         new Customer_history_class().uploadCustomerImagetoItemHistory(RBSItemDetails.getInstance().getKey(), UniquePushID.getInstance().getUniquePushID(),firstImageUrl);
                                     }
                                 }

@@ -36,7 +36,10 @@ import com.dotcom.rbs_system.Adapter.AdapterRepairsFaultListRecyclerView;
 import com.dotcom.rbs_system.Adapter.Adapter_customerList_alert_dialog;
 import com.dotcom.rbs_system.Adapter.Adapter_itemList_alert_dialog;
 import com.dotcom.rbs_system.Classes.Currency;
+import com.dotcom.rbs_system.Classes.RBSCustomerDetails;
+import com.dotcom.rbs_system.Classes.RBSItemDetails;
 import com.dotcom.rbs_system.Classes.Repair_details_edit;
+import com.dotcom.rbs_system.Classes.UniquePushID;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -60,6 +63,9 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class AddRepairTicket extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+    RBSItemDetails rbsItemDetails;
+    RBSCustomerDetails rbsCustomerDetails;
+
     long timestamp;
 
     private static final int ITEM_ACTIVITY_REQUEST_CODE = 0;
@@ -71,7 +77,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
     TextView itemName_textView, itemID_textView, itemPriceCurrency_textView, itemPrice_textView;
 
 
-    TextView customer_textView, customer_add_textview, item_add_textView;
+    TextView customer_add_textview, item_add_textView;
     TextView viewCustomerDetails_textView;
 
     TextView itemLastActive_textView, customer_add_textView, datebtn_textView, submit_textView;
@@ -89,6 +95,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
     String findCustomer, searchCustomer;
     String searchItem, findItem;
 
+    String key;
 
     int currentCustomer, totalCustomer, scrollOutCustomer;
 
@@ -107,9 +114,9 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
 
     EditText searchCustomer_editText, search_editText, searchItem_editText;
 
-    TextView customerName_textView, customerEmail_textView, customerPhno_textView, customerID_textView;
+    TextView customerName_textView , customerEmail_textView, customerPhno_textView, customerID_textView;
 
-    ProgressBar alert_rbs_customerlist_progressBar,alert_rbs_itemlist_progressBar;
+    ProgressBar alert_rbs_customerlist_progressBar, alert_rbs_itemlist_progressBar;
 
     Repair_details_edit repair_details_edit_obj;
 
@@ -154,7 +161,6 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
     String customerKeyID, itemKeyID;
     String customerName, itemName, customerID, itemID;
     String itemCategory;
-    String key;
 
     List<String> exisitngItemsCategoryList, existingItemsConditionsList, existingItemsPriceList, existingItemsCategoryList, existingItemsNotesList;
 
@@ -315,7 +321,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             }
         }
 
-        adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(AddRepairTicket.this, lessExisitngItemsNamesList, lessExisitngItemsSerialNoList, lessExisitngItemsKeyIDList, lessExistingItemsPriceList, lessExistingItemsCategoryList, lessExistingItemsLastActiveList, lessExistingItemsImageUrlList, itemName_textView, itemID_textView, itemPriceCurrency_textView, itemPrice_textView, itemLastActive_textView, itemImage_imageView, viewItemDetails_textView,itemList_alert_dialog);
+        adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(AddRepairTicket.this, lessExisitngItemsNamesList, lessExisitngItemsSerialNoList, lessExisitngItemsKeyIDList, lessExistingItemsPriceList, lessExistingItemsCategoryList, lessExistingItemsLastActiveList, lessExistingItemsImageUrlList, itemName_textView, itemID_textView, itemPriceCurrency_textView, itemPrice_textView, itemLastActive_textView, itemImage_imageView, viewItemDetails_textView, itemList_alert_dialog);
         itemList_recyclerView.setAdapter(adapter_itemList_alert_dialog);
         onScrollListner(filteredExisitngItemsNamesList, filteredExisitngItemsSerialNoList, filteredExistingItemsLastActiveList, filteredExistingItemsImageUrlList, filteredExistingItemsPriceList, filteredExistingItemsCategoryList, filteredExisitngItemsKeyIDList);
 
@@ -471,7 +477,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             }
         }
 
-        adapter_customerList_alert_dialog = new Adapter_customerList_alert_dialog(AddRepairTicket.this, lessExisitngCustomerList, lessExisitngCustomerKeyIDList, lessExisitngCustomerIDList, lessExistingCustomerPhnoList, lessExistingCustomerEmailList, lessExistingCustomerImageUrlList, customerName_textView, customerEmail_textView, customerID_textView, customerPhno_textView, customerImage_imageView, customerList_alert_dialog, viewCustomerDetails_textView,customerID_linearLayout);
+        adapter_customerList_alert_dialog = new Adapter_customerList_alert_dialog(AddRepairTicket.this, lessExisitngCustomerList, lessExisitngCustomerKeyIDList, lessExisitngCustomerIDList, lessExistingCustomerPhnoList, lessExistingCustomerEmailList, lessExistingCustomerImageUrlList, customerName_textView, customerEmail_textView, customerID_textView, customerPhno_textView, customerImage_imageView, customerList_alert_dialog, viewCustomerDetails_textView, customerID_linearLayout);
         customerList_recyclerView.setAdapter(adapter_customerList_alert_dialog);
         onScrollCustomerListner(filteredExisitngCustomerList, filteredExisitngCustomerIDList, filteredExisitngCustomerKeyIDList, filteredExistingCustomerPhnoList, filteredExistingCustomerDobList, filteredExistingCustomerAddressList, filteredExistingCustomerEmailList, filteredExistingCustomerImageUrlList);
 
@@ -535,8 +541,13 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         }
     }
 
-
     private void initialize() {
+        UniquePushID.getInstance().generateUniquePushID();
+        key = UniquePushID.getInstance().getUniquePushID();
+
+        rbsItemDetails = RBSItemDetails.getInstance();
+        rbsCustomerDetails = RBSCustomerDetails.getInstance();
+
         repair_details_edit_obj = Repair_details_edit.getInstance();
 
         reference = FirebaseDatabase.getInstance().getReference();
@@ -705,7 +716,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         itemList_alert_dialog = new Dialog(this);
         itemList_alert_dialog.setContentView(R.layout.alert_rbs_itemlist);
 
-        alert_rbs_itemlist_progressBar = (ProgressBar)itemList_alert_dialog.findViewById(R.id.alert_rbs_itemlist_progressBar);
+        alert_rbs_itemlist_progressBar = (ProgressBar) itemList_alert_dialog.findViewById(R.id.alert_rbs_itemlist_progressBar);
 
 
         searchItem_editText = (EditText) itemList_alert_dialog.findViewById(R.id.searchItem_editText);
@@ -798,7 +809,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
                         }
                     }
 
-                    adapter_customerList_alert_dialog = new Adapter_customerList_alert_dialog(AddRepairTicket.this, lessExisitngCustomerList, lessExisitngCustomerKeyIDList, lessExisitngCustomerIDList, lessExistingCustomerPhnoList, lessExistingCustomerEmailList, lessExistingCustomerImageUrlList, customerName_textView, customerEmail_textView, customerID_textView, customerPhno_textView, customerImage_imageView, customerList_alert_dialog, viewCustomerDetails_textView,customerID_linearLayout);
+                    adapter_customerList_alert_dialog = new Adapter_customerList_alert_dialog(AddRepairTicket.this, lessExisitngCustomerList, lessExisitngCustomerKeyIDList, lessExisitngCustomerIDList, lessExistingCustomerPhnoList, lessExistingCustomerEmailList, lessExistingCustomerImageUrlList, customerName_textView, customerEmail_textView, customerID_textView, customerPhno_textView, customerImage_imageView, customerList_alert_dialog, viewCustomerDetails_textView, customerID_linearLayout);
                     customerList_recyclerView.setAdapter(adapter_customerList_alert_dialog);
                     onCustomerRecyclerViewScrollListner();
 
@@ -849,16 +860,16 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         existingItemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
 
-                    for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                        if (!dataSnapshot1.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
-                            for (DataSnapshot dataSnapshot2: dataSnapshot1.getChildren()){
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        if (!dataSnapshot1.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                            for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
                                 exisitngItemsNamesList.add(String.valueOf(dataSnapshot2.child("Item_name").getValue()));
                                 exisitngItemsSerialNoList.add(String.valueOf(dataSnapshot2.child("Serial_no").getValue()));
-                                if (dataSnapshot2.child("Last_active").exists()){
+                                if (dataSnapshot2.child("Last_active").exists()) {
                                     existingItemsLastActiveList.add(String.valueOf(dataSnapshot2.child("Last_active").getValue()));
-                                }else {
+                                } else {
                                     existingItemsLastActiveList.add("NA");
                                 }
                                 existingItemsImageUrlList.add(String.valueOf(dataSnapshot2.child("Image").getValue()));
@@ -874,8 +885,8 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
                     }
 
                     /////I changed the 3 value to 10 here
-                    if (exisitngItemsNamesList.size()>10){
-                        for (int i = 0 ; i<10;i++){
+                    if (exisitngItemsNamesList.size() > 10) {
+                        for (int i = 0; i < 10; i++) {
                             lessExisitngItemsNamesList.add(exisitngItemsNamesList.get(i));
                             lessExisitngItemsSerialNoList.add(exisitngItemsSerialNoList.get(i));
                             lessExistingItemsLastActiveList.add(existingItemsLastActiveList.get(i));
@@ -884,8 +895,8 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
                             lessExistingItemsCategoryList.add(existingItemsCategoryList.get(i));
                             lessExisitngItemsKeyIDList.add(exisitngItemsKeyIDList.get(i));
                         }
-                    }else {
-                        for (int i = 0 ; i<exisitngItemsNamesList.size();i++){
+                    } else {
+                        for (int i = 0; i < exisitngItemsNamesList.size(); i++) {
                             lessExisitngItemsNamesList.add(exisitngItemsNamesList.get(i));
                             lessExisitngItemsSerialNoList.add(exisitngItemsSerialNoList.get(i));
                             lessExistingItemsLastActiveList.add(existingItemsLastActiveList.get(i));
@@ -895,11 +906,11 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
                             lessExisitngItemsKeyIDList.add(exisitngItemsKeyIDList.get(i));
                         }
                     }
-                    adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(AddRepairTicket.this,lessExisitngItemsNamesList,lessExisitngItemsSerialNoList,lessExisitngItemsKeyIDList,lessExistingItemsPriceList,lessExistingItemsCategoryList,lessExistingItemsLastActiveList,lessExistingItemsImageUrlList,itemName_textView,itemID_textView,itemPriceCurrency_textView,itemPrice_textView,itemLastActive_textView,itemImage_imageView,viewItemDetails_textView,itemList_alert_dialog);
+                    adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(AddRepairTicket.this, lessExisitngItemsNamesList, lessExisitngItemsSerialNoList, lessExisitngItemsKeyIDList, lessExistingItemsPriceList, lessExistingItemsCategoryList, lessExistingItemsLastActiveList, lessExistingItemsImageUrlList, itemName_textView, itemID_textView, itemPriceCurrency_textView, itemPrice_textView, itemLastActive_textView, itemImage_imageView, viewItemDetails_textView, itemList_alert_dialog);
                     itemList_recyclerView.setAdapter(adapter_itemList_alert_dialog);
                     onScrollListner(exisitngItemsNamesList, exisitngItemsSerialNoList, existingItemsLastActiveList, existingItemsImageUrlList, existingItemsPriceList, existingItemsCategoryList, exisitngItemsKeyIDList);
                     pd2.dismissProgressBar(AddRepairTicket.this);
-                }else {
+                } else {
 
                     pd2.dismissProgressBar(AddRepairTicket.this);
                 }
@@ -1242,7 +1253,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             Toast.makeText(this, "Please select item", Toast.LENGTH_LONG).show();
             valid = false;
         }
-        if (customer_textView.getText().toString().equals("Search for customer")) {
+        if (customerName_textView.getText().toString().equals("Search for customer")) {
             Toast.makeText(this, "Please select customer", Toast.LENGTH_LONG).show();
             valid = false;
         }
@@ -1281,29 +1292,33 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             //we are connected to a network
             connected = true;
 
-            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Customer_keyID").setValue(customerKeyID);
-            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Item_keyID").setValue(itemKeyID);
-            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Customer_name").setValue(customerName);
-            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Item_name").setValue(itemName);
-            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Customer_id").setValue(customerID);
-            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Item_id").setValue(itemID);
-            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Item_category").setValue(category_textView.getText().toString());
-            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Ticket_no").setValue(ticketNo_TextView.getText().toString());
+            itemKeyID = rbsItemDetails.getKey();
+
+            customerKeyID = rbsCustomerDetails.getKey();
+
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Agreed_price").setValue(agreed_price_editText.getText().toString());
-            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Date").setValue(date_textView.getText().toString());
-            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Paid_amount").setValue(paidAmount_editText.getText().toString());
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Balance_amount").setValue(balanceAmount_TextView.getText().toString());
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Customer_id").setValue(rbsCustomerDetails.getCustomerId());
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Customer_keyID").setValue(customerKeyID);
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Customer_name").setValue(rbsCustomerDetails.getCustomerName());
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Date").setValue(date_textView.getText().toString());
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Item_category").setValue(rbsItemDetails.getItemCategory());
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Item_keyID").setValue(itemKeyID);
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Item_name").setValue(rbsItemDetails.getItemName());
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Item_serialno").setValue(rbsItemDetails.getItemID());
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Paid_amount").setValue(paidAmount_editText.getText().toString());
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Special_condition").setValue(special_condition_editText.getText().toString());
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Ticket_no").setValue(ticketNo_TextView.getText().toString());
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Timestamp").setValue(timestamp);
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("key_id").setValue(key);
 
             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Customer_keyID").setValue(customerKeyID);
+            reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Customer_name").setValue(rbsCustomerDetails.getCustomerName());
             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Item_keyID").setValue(itemKeyID);
-            reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Customer_name").setValue(customerName);
-            reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Item_name").setValue(itemName);
+            reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Item_name").setValue(rbsItemDetails.getItemName());
             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Repair_key_id").setValue(key);
-            reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Ticket_no").setValue(ticketNo_TextView.getText().toString());
             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Status").setValue("clear");
+            reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Ticket_no").setValue(ticketNo_TextView.getText().toString());
 
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Faults").removeValue();
             for (int i = 0; i < tempFaultNameList.size(); i++) {
@@ -1419,8 +1434,8 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
 
             customerKeyID = repair_details_edit_obj.getCustomerKeyID();
 
-            customer_textView.setText(repair_details_edit_obj.getCustomerName_textView() + "\n(" + repair_details_edit_obj.getId_textView() + ")");
-            customer_textView.setTextColor(getResources().getColor(R.color.gradientDarkBlue));
+            customerName_textView.setText(repair_details_edit_obj.getCustomerName_textView() + "\n(" + repair_details_edit_obj.getId_textView() + ")");
+            customerName_textView.setTextColor(getResources().getColor(R.color.gradientDarkBlue));
 
             customerName = repair_details_edit_obj.getCustomerName_textView();
             customerID = repair_details_edit_obj.getId_textView();
@@ -1609,8 +1624,8 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
                 email_textView.setText(email_returnString);
                 customerDetails.setVisibility(View.VISIBLE);
 
-                customer_textView.setText(title_returnString + "\n" + id_returnString);
-                customer_textView.setTextColor(getResources().getColor(R.color.gradientDarkBlue));
+                customerName_textView.setText(title_returnString + "\n" + id_returnString);
+                customerName_textView.setTextColor(getResources().getColor(R.color.gradientDarkBlue));
             }
         }
     }

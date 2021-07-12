@@ -76,7 +76,6 @@ public class Repair_Ticket extends AppCompatActivity {
     private void Initialize() {
         repairTicketRef = FirebaseDatabase.getInstance().getReference("Repairs_ticket_list/"+firebaseUID);
 
-
         repairTicketAdd_textView =(TextView) findViewById(R.id.repairTicketAdd_textView);
         searchForTicket_cardview =(CardView) findViewById(R.id.searchForTicket_cardview);
 

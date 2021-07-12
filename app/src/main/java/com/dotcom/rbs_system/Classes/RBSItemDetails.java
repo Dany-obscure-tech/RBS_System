@@ -219,7 +219,6 @@ public class RBSItemDetails {
                         public void onSuccess(Uri uri) {
                             if(k==0){
                                 firstImageUri=uri;
-                                Toast.makeText(context, String.valueOf(uri), Toast.LENGTH_SHORT).show();
 
 //                                if (check=="Add new item"){
 //
@@ -278,6 +277,26 @@ public class RBSItemDetails {
         reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Serial_no").setValue(itemID);
         reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Item_name").setValue(itemName);
         reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Price").setValue(itemPrice);
+
+        Date date = Calendar.getInstance().getTime();
+        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(date);
+
+        System.out.println(String.valueOf(key));
+        System.out.println(String.valueOf(UniquePushID.getInstance().getUniquePushID()));
+        System.out.println(String.valueOf(UserDetails.getInstance().getShopNmae()));
+        System.out.println(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
+        System.out.println(String.valueOf(UserDetails.getInstance().getShopLogo()));
+        System.out.println(String.valueOf("Buyer"));
+        System.out.println(String.valueOf(rbsCustomerDetails.getCustomerName()));
+        System.out.println(String.valueOf(rbsCustomerDetails.getKey()));
+        System.out.println(String.valueOf("Seller"));
+        System.out.println(String.valueOf(rbsCustomerDetails.getFirstImageUrl()));
+        System.out.println(String.valueOf("Trade"));
+        System.out.println(String.valueOf(date.getTime()));
+        System.out.println(String.valueOf(currentDateString));
+
+        new Item_history_class().thirteenValues(key,UniquePushID.getInstance().getUniquePushID(), UserDetails.getInstance().getShopNmae(),FirebaseAuth.getInstance().getCurrentUser().getUid(),UserDetails.getInstance().getShopLogo(),"Buyer",rbsCustomerDetails.getCustomerName(),rbsCustomerDetails.getKey(),"Seller",rbsCustomerDetails.getFirstImageUrl(),"Trade",date.getTime(),currentDateString);
+        new Item_history_class().uploadItemImagetoCustomerHistory(rbsCustomerDetails.getKey(),UniquePushID.getInstance().getUniquePushID(), String.valueOf(firstImageUri));
     }
 
     public void switchStockSale(String buyer, String seller) {
@@ -313,6 +332,40 @@ public class RBSItemDetails {
         reference.child("Stock").child("Shopkeepers").child(buyer).child(itemCategory).child(key).child("Price").setValue(itemPrice);
 
         reference.child("Stock").child("Customers").child(itemCategory).child(key).removeValue();
+
+
+        Date date = Calendar.getInstance().getTime();
+        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(date);
+
+//                key,
+//                UniquePushID.getInstance().getUniquePushID(),
+//                UserDetails.getInstance().getShopNmae(),
+//                FirebaseAuth.getInstance().getCurrentUser().getUid(),
+//                UserDetails.getInstance().getShopLogo(),
+//                "Buyer",
+//                rbsCustomerDetails.getCustomerName(),
+//                rbsCustomerDetails.getKey(),
+//                "Seller",
+//                rbsCustomerDetails.getFirstImageUrl(),
+//                "Trade",
+//                date.getTime(),
+//                currentDateString,
+        System.out.println(String.valueOf(key));
+        System.out.println(String.valueOf(UniquePushID.getInstance().getUniquePushID()));
+        System.out.println(String.valueOf(UserDetails.getInstance().getShopNmae()));
+        System.out.println(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
+        System.out.println(String.valueOf(UserDetails.getInstance().getShopLogo()));
+        System.out.println(String.valueOf("Buyer"));
+        System.out.println(String.valueOf(rbsCustomerDetails.getCustomerName()));
+        System.out.println(String.valueOf(rbsCustomerDetails.getKey()));
+        System.out.println(String.valueOf("Seller"));
+        System.out.println(String.valueOf(rbsCustomerDetails.getFirstImageUrl()));
+        System.out.println(String.valueOf("Trade"));
+        System.out.println(String.valueOf(date.getTime()));
+        System.out.println(String.valueOf(currentDateString));
+
+        new Item_history_class().thirteenValues(key,UniquePushID.getInstance().getUniquePushID(), UserDetails.getInstance().getShopNmae(),FirebaseAuth.getInstance().getCurrentUser().getUid(),UserDetails.getInstance().getShopLogo(),"Buyer",rbsCustomerDetails.getCustomerName(),rbsCustomerDetails.getKey(),"Seller",rbsCustomerDetails.getFirstImageUrl(),"Trade",date.getTime(),currentDateString);
+        new Item_history_class().uploadItemImagetoCustomerHistory(rbsCustomerDetails.getKey(),UniquePushID.getInstance().getUniquePushID(), String.valueOf(firstImageUri));
     }
 
     private void uploadToRbsInvoiceList(String previousOwnerID,String newOwnerID){
