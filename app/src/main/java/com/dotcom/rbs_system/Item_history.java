@@ -53,8 +53,6 @@ public class Item_history extends AppCompatActivity {
 
     ImageButton back_btn;
 
-    Button save_btn, cancel_btn;
-
     RatingBar ratingBar;
 
     EditText notes_editText;
