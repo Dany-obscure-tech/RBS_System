@@ -41,15 +41,14 @@ public class Repair_details extends AppCompatActivity {
     Repair_details_edit repair_details_edit_obj;
 
     TextView ticketNo_textView,agreedPrice_TextView,date_TextView,paidAmount_TextView,balanceAmount_TextView,specialConditions_TextView;
-    TextView itemName_textView,serialNo_textView,category_textView,condition_textView,notes_textView;
+    TextView itemName_textView,serialNo_textView;
     TextView customerName_textView,id_textView,phno_textView,email_textView;
     TextView pendingFaults_textView,pendingAgreedPrice_TextView;
     TextView edit_textView;
     TextView confirmChanges_textView,cancleChanges_textView;
     TextView confirmTicket_textView,cancleTicket_textView;
-    TextView lastActive_textView;
 
-    DatabaseReference repairRef,repairTicketRef,customerRef,itemRef,reference,itemHistoryRef;
+    DatabaseReference repairRef,repairTicketRef;
 
     String repairID,itemKeyID,customerKeyID;
     String firebaseUserID;
@@ -105,16 +104,13 @@ public class Repair_details extends AppCompatActivity {
         balanceAmount_TextView = (TextView)findViewById(R.id.balanceAmount_TextView);
         specialConditions_TextView = (TextView)findViewById(R.id.specialConditions_TextView);
 
-        itemName_textView = (TextView)findViewById(R.id.item_category_textView);
+        itemName_textView = (TextView)findViewById(R.id.itemName_textView);
         serialNo_textView = (TextView)findViewById(R.id.serialNo_textView);
-        category_textView = (TextView)findViewById(R.id.category_textView);
-        condition_textView = (TextView)findViewById(R.id.condition_textView);
-        notes_textView = (TextView)findViewById(R.id.notes_textView);
 
         customerName_textView = (TextView)findViewById(R.id.customerName_textView);
         id_textView = (TextView)findViewById(R.id.id_textView);
         phno_textView = (TextView)findViewById(R.id.phno_textView);
-        email_textView = (TextView)findViewById(R.id.post_code_textView);
+        email_textView = (TextView)findViewById(R.id.email_textView);
         pendingFaults_textView = (TextView)findViewById(R.id.pendingFaults_textView);
         pendingAgreedPrice_TextView = (TextView)findViewById(R.id.pendingAgreedPrice_TextView);
 
@@ -124,7 +120,6 @@ public class Repair_details extends AppCompatActivity {
 
         confirmTicket_textView = (TextView) findViewById(R.id.confirmTicket_textView);
         cancleTicket_textView = (TextView) findViewById(R.id.cancleTicket_textView);
-        lastActive_textView = (TextView) findViewById(R.id.lastActive_textView);
 
         faultList_recyclerView = (RecyclerView) findViewById(R.id.faultList_recyclerView);
         faultList_recyclerView.setLayoutManager(new GridLayoutManager(Repair_details.this,1));
@@ -163,10 +158,6 @@ public class Repair_details extends AppCompatActivity {
 
         repairRef = FirebaseDatabase.getInstance().getReference("Repairs_list/"+firebaseUserID+"/"+repairID);
         repairTicketRef = FirebaseDatabase.getInstance().getReference("Repairs_ticket_list/"+firebaseUserID+"/"+repairID);
-        customerRef = FirebaseDatabase.getInstance().getReference("Customer_list");
-        itemRef = FirebaseDatabase.getInstance().getReference("Items");
-        reference = FirebaseDatabase.getInstance().getReference();
-
 
     }
 
@@ -180,6 +171,14 @@ public class Repair_details extends AppCompatActivity {
         repairRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                customerName_textView.setText(dataSnapshot.child("Customer_name").getValue().toString());
+                id_textView.setText(dataSnapshot.child("Customer_id").getValue().toString());
+                phno_textView.setText(dataSnapshot.child("Customer_phno").getValue().toString());
+                email_textView.setText(dataSnapshot.child("Customer_email").getValue().toString());
+
+                itemName_textView.setText(dataSnapshot.child("Item_name").getValue().toString());
+                serialNo_textView.setText(dataSnapshot.child("Item_serial_no").getValue().toString());
+
                 ticketNo_textView.setText(dataSnapshot.child("Ticket_no").getValue().toString());
                 agreedPrice_TextView.setText(currency+dataSnapshot.child("Agreed_price").getValue().toString());
                 agreedAmount_str=dataSnapshot.child("Agreed_price").getValue().toString();
@@ -224,96 +223,13 @@ public class Repair_details extends AppCompatActivity {
                 }
 
 
-
-
-                getCustomer(dataSnapshot.child("Customer_keyID").getValue().toString());
-                getItem(dataSnapshot.child("Item_category").getValue().toString(),dataSnapshot.child("Item_keyID").getValue().toString());
-
                 pd1.dismissProgressBar(Repair_details.this);
 
             }
 
-            private void getCustomer(String customer_keyID) {
-                pd2.showProgressBar(Repair_details.this);
-                customerKeyID = customer_keyID;
-                customerRef.child(customer_keyID).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        customerName_textView.setText(dataSnapshot.child("Name").getValue().toString());
-                        id_textView.setText(dataSnapshot.child("ID").getValue().toString());
-                        phno_textView.setText(dataSnapshot.child("Phone_no").getValue().toString());
-                        email_textView.setText(dataSnapshot.child("Email").getValue().toString());
-
-                        pd2.dismissProgressBar(Repair_details.this);
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        pd2.dismissProgressBar(Repair_details.this);
-                    }
-
-                });
-            }
-
-            private void getItem(String item_category, String item_keyID) {
-                pd3.showProgressBar(Repair_details.this);
-                itemKeyID=item_keyID;
-                itemRef.child(item_category).child(item_keyID).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        itemName_textView.setText(dataSnapshot.child("Item_name").getValue().toString());
-                        serialNo_textView.setText(dataSnapshot.child("Item_id").getValue().toString());
-                        category_textView.setText(dataSnapshot.child("Category").getValue().toString());
-                        condition_textView.setText(dataSnapshot.child("Condition").getValue().toString());
-                        notes_textView.setText(dataSnapshot.child("Notes").getValue().toString());
-
-                        pd3.dismissProgressBar(Repair_details.this);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        pd3.dismissProgressBar(Repair_details.this);
-                    }
-                });
-
-                gettingHistoryList(item_keyID);
-            }
-
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 pd1.dismissProgressBar(Repair_details.this);
-            }
-        });
-    }
-
-    private void gettingHistoryList(String itemID) {
-        itemHistoryRef = FirebaseDatabase.getInstance().getReference("Item_history/"+itemID);
-
-        orderQuery = itemHistoryRef.orderByChild("Timestamp");
-        orderQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                pd4.showProgressBar(Repair_details.this);
-                if (dataSnapshot.exists()){
-                    for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                        dateList.add(dataSnapshot1.child("Date").getValue().toString());
-
-                    }
-                    Collections.reverse(dateList);
-                    lastActive_textView.setText(dateList.get(0));
-                    repair_details_edit_obj.setLastActive_textView(dateList.get(0));
-
-                    pd4.dismissProgressBar(Repair_details.this);
-                }else {
-                    pd4.dismissProgressBar(Repair_details.this);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                pd4.dismissProgressBar(Repair_details.this);
             }
         });
     }
@@ -376,9 +292,6 @@ public class Repair_details extends AppCompatActivity {
                 repair_details_edit_obj.setItemKeyID(itemKeyID);
                 repair_details_edit_obj.setItemName_textView(itemName_textView.getText().toString());
                 repair_details_edit_obj.setSerialNo_textView(serialNo_textView.getText().toString());
-                repair_details_edit_obj.setCategory_textView(category_textView.getText().toString());
-                repair_details_edit_obj.setCondition_textView(condition_textView.getText().toString());
-                repair_details_edit_obj.setNotes_textView(notes_textView.getText().toString());
 
                 repair_details_edit_obj.setCustomerKeyID(customerKeyID);
                 repair_details_edit_obj.setCustomerName_textView(customerName_textView.getText().toString());
@@ -463,17 +376,6 @@ public class Repair_details extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (pendingFaultNameList.size()==0){
-                    reference.child("Item_history").child(itemKeyID).child(repairID).child("Item").setValue(itemKeyID);
-                    reference.child("Item_history").child(itemKeyID).child(repairID).child("Customer_name").setValue(customerName_textView.getText().toString());
-                    reference.child("Item_history").child(itemKeyID).child(repairID).child("RBS").setValue("Repair");
-                    reference.child("Item_history").child(itemKeyID).child(repairID).child("Timestamp").setValue(timestamp);
-                    reference.child("Item_history").child(itemKeyID).child(repairID).child("Date").setValue(date_TextView.getText().toString());
-
-                    reference.child("Customer_history").child(customerKeyID).child(repairID).child("Item_name").setValue(itemName_textView.getText().toString());
-                    reference.child("Customer_history").child(customerKeyID).child(repairID).child("Customer").setValue(customerKeyID);
-                    reference.child("Customer_history").child(customerKeyID).child(repairID).child("RBS").setValue("Repair");
-                    reference.child("Customer_history").child(customerKeyID).child(repairID).child("Timestamp").setValue(timestamp);
-                    reference.child("Customer_history").child(customerKeyID).child(repairID).child("Date").setValue(date_TextView.getText().toString());
 
                     repairTicketRef.removeValue();
                     repairRef.removeValue();
@@ -502,8 +404,6 @@ public class Repair_details extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Repair_details.this,Item_history.class);
-                intent.putExtra("ITEM_ID",itemKeyID);
-                intent.putExtra("ITEM_CATEGORY",category_textView.getText().toString());
                 startActivity(intent);
             }
         });

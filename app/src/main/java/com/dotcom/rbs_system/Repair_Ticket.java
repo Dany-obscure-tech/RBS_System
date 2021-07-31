@@ -117,8 +117,8 @@ public class Repair_Ticket extends AppCompatActivity {
                         ticketNoList.add(dataSnapshot1.child("Ticket_no").getValue().toString());
                         pendingStatusList.add(dataSnapshot1.child("Status").getValue().toString());
 
-                        customerKeyIDList.add(dataSnapshot1.child("Customer_keyID").getValue().toString());
-                        itemKeyIDList.add(dataSnapshot1.child("Item_keyID").getValue().toString());
+                        customerKeyIDList.add(dataSnapshot1.child("Customer_id").getValue().toString());
+                        itemKeyIDList.add("to be removed");
                         repairKeyIDList.add(dataSnapshot1.child("Repair_key_id").getValue().toString());
                     }
 

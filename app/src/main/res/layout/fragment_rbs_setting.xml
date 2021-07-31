@@ -129,6 +129,7 @@
                     android:textColor="@color/gradientDarkBlue" />
 
                 <TextView
+                    android:id="@+id/shop_name_textView"
                     style="@style/TextViews_Regular_big"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -145,6 +146,7 @@
                     android:textColor="@color/gradientDarkBlue" />
 
                 <TextView
+                    android:id="@+id/shop_address_textView"
                     style="@style/TextViews_Regular_big"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -161,6 +163,7 @@
                     android:textColor="@color/gradientDarkBlue" />
 
                 <TextView
+                    android:id="@+id/shop_email_textView"
                     style="@style/TextViews_Regular_big"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -177,6 +180,7 @@
                     android:textColor="@color/gradientDarkBlue" />
 
                 <TextView
+                    android:id="@+id/shop_phno_textView"
                     style="@style/TextViews_Regular_big"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

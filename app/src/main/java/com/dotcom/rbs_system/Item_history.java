@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,12 +17,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterItemHistoryListRecyclerView;
+import com.dotcom.rbs_system.Adapter.SliderAdapterExample;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -57,6 +62,8 @@ public class Item_history extends AppCompatActivity {
 
     EditText notes_editText;
 
+    SliderView sliderView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +80,15 @@ public class Item_history extends AppCompatActivity {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void Initialization() {
+        sliderView = findViewById(R.id.imageSliders);
+        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using IndicatorAnimationType. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+        sliderView.setIndicatorSelectedColor(Color.parseColor("#01A0DA"));
+        sliderView.setIndicatorUnselectedColor(Color.parseColor("#F1F1F1"));
+        sliderView.setScrollTimeInSec(4); //set scroll delay in seconds :
+        sliderView.startAutoCycle();
+
         itemName_textView = (TextView) findViewById(R.id.item_category_textView);
         item_description_textview = (TextView) findViewById(R.id.item_description_textview);
         serialNo_textView = (TextView) findViewById(R.id.serialNo_textView);
@@ -98,40 +114,6 @@ public class Item_history extends AppCompatActivity {
         itemImageUrl_list = new ArrayList<>();
 
         itemHistoryRef = FirebaseDatabase.getInstance().getReference("Item_history/" + itemID);
-
-        Date date = Calendar.getInstance().getTime();
-        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(date);
-
-//        String key = itemHistoryRef.push().getKey();
-//        itemHistoryRef.child(key).child("Shopkeeper_name").setValue("ITech Computers");
-//        itemHistoryRef.child(key).child("RBS").setValue("Stocked");
-//        itemHistoryRef.child(key).child("Timestamp").setValue(date.getTime());
-//        itemHistoryRef.child(key).child("Date").setValue(currentDateString);
-//
-//        key = itemHistoryRef.push().getKey();
-//        itemHistoryRef.child(key).child("Shopkeeper_name").setValue("ITech Computers");
-//        itemHistoryRef.child(key).child("RBS").setValue("Trade");
-//        itemHistoryRef.child(key).child("Timestamp").setValue(date.getTime());
-//        itemHistoryRef.child(key).child("Date").setValue(currentDateString);
-//        itemHistoryRef.child(key).child("Customer_name").setValue("Customer 2");
-//        itemHistoryRef.child(key).child("Customer_type").setValue("Buyer");
-//        itemHistoryRef.child(key).child("Shopkeeper_type").setValue("Seller");
-//
-//        key = itemHistoryRef.push().getKey();
-//        itemHistoryRef.child(key).child("Customer_name").setValue("Customer 2");
-//        itemHistoryRef.child(key).child("Shopkeeper_name").setValue("ITech Computers");
-//        itemHistoryRef.child(key).child("Customer_type").setValue("Seller");
-//        itemHistoryRef.child(key).child("Shopkeeper_type").setValue("Buyer");
-//        itemHistoryRef.child(key).child("RBS").setValue("Trade");
-//        itemHistoryRef.child(key).child("Timestamp").setValue(date.getTime());
-//        itemHistoryRef.child(key).child("Date").setValue(currentDateString);
-//
-//        key = itemHistoryRef.push().getKey();
-//        itemHistoryRef.child(key).child("Shopkeeper_name").setValue("ITech Computers");
-//        itemHistoryRef.child(key).child("RBS").setValue("Out of stock");
-//        itemHistoryRef.child(key).child("Timestamp").setValue(date.getTime());
-//        itemHistoryRef.child(key).child("Date").setValue(currentDateString);
-
 
         orderQuery = itemHistoryRef.orderByChild("Timestamp");
 
@@ -222,8 +204,10 @@ public class Item_history extends AppCompatActivity {
 
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.child("Image_urls").getChildren()) {
                         itemImageUrl_list.add(dataSnapshot1.getValue().toString());
-                        //todo add this list to slider (Shahzaib)
                     }
+
+                    SliderAdapterExample sliderAdapterExample = new SliderAdapterExample(Item_history.this,itemImageUrl_list);
+                    sliderView.setSliderAdapter(sliderAdapterExample);
 
                     pd2.dismissProgressBar(Item_history.this);
                 } else {

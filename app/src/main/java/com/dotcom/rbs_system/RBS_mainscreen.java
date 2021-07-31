@@ -100,7 +100,7 @@ public class RBS_mainscreen extends AppCompatActivity {
                         break;
 
                     case R.id.nav_settings:
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, rbs_setting).commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, rbs_setting,"RBS Settings").commit();
                         closeDrawer();
                         break;
 

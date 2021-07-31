@@ -60,136 +60,86 @@
                 android:weightSum="2">
 
                 <TextView
-                    style="@style/RBSInvoice_TextViews"
+                    style="@style/TextViews_Bold_big"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Customer" />
 
-                <TextView
-                    android:id="@+id/customer_add_textview"
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Add Customer +"
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/gradientDarkBlue"
-                    android:textSize="18sp" />
-
             </LinearLayout>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/searchForCustomer_cardView"
+            <TextView
+                style="@style/TextViews_Bold_small"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Customer name" />
+
+            <EditText
+                android:id="@+id/customerName_editText"
+                style="@style/RBSInvoice_EditTexts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/CardView_style">
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="Enter customer name"
+                android:inputType="textPersonName"
+                android:maxLength="32" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+            <TextView
+                style="@style/TextViews_Bold_small"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Customer Phno" />
 
-                    <ImageView
-                        android:id="@+id/customerImage_imageView"
-                        style="@style/Search_views_Image_views"
-                        android:layout_width="200px"
-                        android:layout_height="200px"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginRight="15dp"
-                        android:layout_centerVertical="true"
-                        android:visibility="gone"
-                        android:src="@drawable/laptop" />
-
-                    <RelativeLayout
-                        android:layout_toRightOf="@+id/customerImage_imageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/customerName_textView"
-                            style="@style/Titles_item"
-                            android:text="Search for customer"
-                            android:textColor="@color/textGrey"
-                            android:layout_margin="5dp"/>
-
-                        <LinearLayout
-                            android:id="@+id/email_area"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/customerName_textView">
-
-                            <TextView
-                                android:id="@+id/customerEmail_textView"
-                                style="@style/SubTitles_item_values"
-                                android:visibility="gone"
-                                android:layout_marginTop="2dp"
-                                android:layout_marginBottom="2dp"
-                                android:layout_marginLeft="5dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Shahzaib@gmail.com" />
+            <EditText
+                android:id="@+id/customerPhno_editText"
+                style="@style/RBSInvoice_EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="Enter customer phno"
+                android:inputType="phone"
+                android:maxLength="32" />
 
 
-                        </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/customerID_linearLayout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/email_area">
+            <TextView
+                style="@style/TextViews_Bold_small"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Customer Email" />
 
-                            <TextView
-                                android:id="@+id/customerID_textView"
-                                style="@style/SubTitles_item_values"
-                                android:layout_width="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:layout_marginBottom="2dp"
-                                android:layout_marginLeft="5dp"
-                                android:layout_height="wrap_content"
-                                android:visibility="gone"
-                                android:text="1573470" />
+            <EditText
+                android:id="@+id/customerEmail_editText"
+                style="@style/RBSInvoice_EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="Enter customer phno"
+                android:inputType="textEmailAddress"
+                android:maxLength="32" />
 
+            <TextView
+                style="@style/TextViews_Bold_small"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Customer ID" />
 
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/quantity_area"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/customerID_linearLayout">
-
-                            <TextView
-                                android:id="@+id/customerPhno_textView"
-                                style="@style/SubTitles_item_values"
-                                android:layout_width="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:layout_marginBottom="2dp"
-                                android:layout_marginLeft="5dp"
-                                android:layout_height="wrap_content"
-                                android:visibility="gone"
-                                android:text="100" />
-
-                        </LinearLayout>
-
-                    </RelativeLayout>
-
-                    <TextView
-                        android:id="@+id/viewCustomerDetails_textView"
-                        android:text="\?"
-                        android:padding="5dp"
-                        android:visibility="gone"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        style="@style/TextViews_Bold_big"
-                        android:textColor="@color/gradientDarkBlue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
+            <EditText
+                android:id="@+id/customerId_editText"
+                style="@style/RBSInvoice_EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="Enter customer id"
+                android:maxLength="32" />
 
             <LinearLayout
                 android:id="@+id/customerDetails"
@@ -302,24 +252,47 @@
                 android:weightSum="2">
 
                 <TextView
-                    style="@style/RBSInvoice_TextViews"
+                    style="@style/TextViews_Bold_big"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Item" />
 
-                <TextView
-                    android:id="@+id/item_add_textView"
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Add Item +"
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/gradientDarkBlue"
-                    android:textSize="18sp" />
-
             </LinearLayout>
+
+            <TextView
+                style="@style/TextViews_Bold_small"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Item Name" />
+
+            <EditText
+                android:id="@+id/itemName_editText"
+                style="@style/RBSInvoice_EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="Enter item name"
+                android:maxLength="32" />
+
+            <TextView
+                style="@style/TextViews_Bold_small"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Item Serial No" />
+
+            <EditText
+                android:id="@+id/itemSerialNo_editText"
+                style="@style/RBSInvoice_EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="Enter item name"
+                android:maxLength="32" />
 
 
             <LinearLayout

@@ -64,200 +64,6 @@
                 android:textColor="@color/gradientDarkBlue" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/item_cardView"
-                style="@style/CardView_style"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/itemImage_imageView"
-                        style="@style/Search_views_Image_views"
-                        android:layout_width="200px"
-                        android:layout_height="200px"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/laptop"
-                        android:visibility="visible" />
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/itemImage_imageView">
-
-                        <LinearLayout
-                            android:id="@+id/item_name_area"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/RBSInvoice_TextViews_small"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Item name:"
-                                android:textColor="@color/gradientDarkBlue" />
-
-                            <TextView
-                                android:id="@+id/item_category_textView"
-                                style="@style/SubTitles_item_values"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="2dp"
-                                android:text="Asus Rog Strix"
-                                android:visibility="visible" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/item_serial_no_area"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/item_name_area"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/RBSInvoice_TextViews_small"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Serial no/IMEI:"
-                                android:textColor="@color/gradientDarkBlue" />
-
-                            <TextView
-                                android:id="@+id/serialNo_textView"
-                                style="@style/SubTitles_item_values"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="2dp"
-                                android:text="Asus Rog Strix"
-                                android:visibility="visible" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/last_active_area"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/item_serial_no_area"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/RBSInvoice_TextViews_small"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Last Active:"
-                                android:textColor="@color/gradientDarkBlue" />
-
-                            <TextView
-                                android:id="@+id/lastActive_textView"
-                                style="@style/SubTitles_item_values"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="2dp"
-                                android:text="Asus Rog Strix"
-                                android:visibility="visible" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/category_area"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/last_active_area"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/RBSInvoice_TextViews_small"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Category:"
-                                android:textColor="@color/gradientDarkBlue" />
-
-                            <TextView
-                                android:id="@+id/category_textView"
-                                style="@style/SubTitles_item_values"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="2dp"
-                                android:text="Asus Rog Strix"
-                                android:visibility="visible" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/condition_area"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/category_area"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/RBSInvoice_TextViews_small"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Condition:"
-                                android:textColor="@color/gradientDarkBlue" />
-
-                            <TextView
-                                android:id="@+id/condition_textView"
-                                style="@style/SubTitles_item_values"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="2dp"
-                                android:text="Asus Rog Strix"
-                                android:visibility="visible" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/notes_area"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/condition_area"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/RBSInvoice_TextViews_small"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Notes:"
-                                android:textColor="@color/gradientDarkBlue" />
-
-                            <TextView
-                                android:id="@+id/notes_textView"
-                                style="@style/SubTitles_item_values"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="2dp"
-                                android:text="Asus Rog Strix"
-                                android:visibility="visible" />
-
-
-                        </LinearLayout>
-
-
-                    </RelativeLayout>
-
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
                 android:id="@+id/customer_cardView"
                 style="@style/CardView_style"
                 android:layout_width="match_parent"
@@ -266,17 +72,6 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/customerImage_imageView"
-                        style="@style/Search_views_Image_views"
-                        android:layout_width="200px"
-                        android:layout_height="200px"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/laptop"
-                        android:visibility="visible" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -379,7 +174,7 @@
                                 android:textColor="@color/gradientDarkBlue" />
 
                             <TextView
-                                android:id="@+id/post_code_textView"
+                                android:id="@+id/email_textView"
                                 style="@style/SubTitles_item_values"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -389,6 +184,112 @@
 
 
                         </LinearLayout>
+
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/item_cardView"
+                style="@style/CardView_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/item_name_area"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/RBSInvoice_TextViews_small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Item name:"
+                                android:textColor="@color/gradientDarkBlue" />
+
+                            <TextView
+                                android:id="@+id/itemName_textView"
+                                style="@style/SubTitles_item_values"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="2dp"
+                                android:text="Asus Rog Strix"
+                                android:visibility="visible" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/item_serial_no_area"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/item_name_area"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/RBSInvoice_TextViews_small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Serial no/IMEI:"
+                                android:textColor="@color/gradientDarkBlue" />
+
+                            <TextView
+                                android:id="@+id/serialNo_textView"
+                                style="@style/SubTitles_item_values"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="2dp"
+                                android:text="Asus Rog Strix"
+                                android:visibility="visible" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/last_active_area"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/item_serial_no_area"
+                            android:gravity="center"
+                            android:orientation="horizontal"/>
+
+                        <LinearLayout
+                            android:id="@+id/category_area"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/last_active_area"
+                            android:gravity="center"
+                            android:orientation="horizontal"/>
+
+                        <LinearLayout
+                            android:id="@+id/condition_area"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/category_area"
+                            android:gravity="center"
+                            android:orientation="horizontal"/>
+
+                        <LinearLayout
+                            android:id="@+id/notes_area"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/condition_area"
+                            android:gravity="center"
+                            android:orientation="horizontal"/>
 
 
                     </RelativeLayout>

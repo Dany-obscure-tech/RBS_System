@@ -8,17 +8,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -26,8 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterSettingsFaultListRecyclerView;
+import com.dotcom.rbs_system.Classes.ActionBarTitle;
 import com.dotcom.rbs_system.Classes.UserDetails;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,7 +33,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -59,7 +55,7 @@ public class RBS_setting extends Fragment {
     public static final String Printer_Port_Number = "printer_port_number";
     public static final String Printer_Ip_Address = "printer_ip_address";
 
-    DatabaseReference faultListRef, reference, userDataRef, rbsMessageRef;
+    DatabaseReference faultListRef, reference, shopKeeperDataRef, rbsMessageRef;
     StorageReference storageReference;
 
     private Uri logoDocUri = null;
@@ -92,7 +88,7 @@ public class RBS_setting extends Fragment {
 
     Boolean logoBannerUploadCheck = true;
 
-    TextView email_textView, phno_textView, address_textView;
+    TextView shop_name_textView,shop_email_textView, shop_phno_textView, shop_address_textView;
     TextView rbsMessage_textView, conditions_textView;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -141,20 +137,21 @@ public class RBS_setting extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_rbs_setting, container, false);
 
-        initialize();
-        checkUserData();
+        ActionBarTitle.getInstance().getTextView().setText("RBS Settings");
 
-        getRBSMessage();
-        getFaultsList();
+        initialize();
+        initialOperations();
         onClickListeners();
         // Inflate the layout for this fragment
         return view;
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     private void initialize() {
         storageReference = FirebaseStorage.getInstance().getReference();
         reference = FirebaseDatabase.getInstance().getReference();
-        userDataRef = FirebaseDatabase.getInstance().getReference("Users_data/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+        shopKeeperDataRef = FirebaseDatabase.getInstance().getReference("Users_data/" + FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Shopkeeper_details");
         faultListRef = FirebaseDatabase.getInstance().getReference("Listed_faults");
         rbsMessageRef = FirebaseDatabase.getInstance().getReference("Admin");
 
@@ -215,13 +212,22 @@ public class RBS_setting extends Fragment {
 
         editProfileDialog = new Dialog(getActivity());
 
-        email_textView = (TextView) view.findViewById(R.id.post_code_textView);
-        phno_textView = (TextView) view.findViewById(R.id.phno_textView);
-        address_textView = (TextView) view.findViewById(R.id.vendor_address_textView);
+        shop_name_textView = (TextView) view.findViewById(R.id.shop_name_textView);
+        shop_email_textView = (TextView) view.findViewById(R.id.shop_email_textView);
+        shop_phno_textView = (TextView) view.findViewById(R.id.shop_phno_textView);
+        shop_address_textView = (TextView) view.findViewById(R.id.shop_address_textView);
         conditions_textView = (TextView) view.findViewById(R.id.conditions_textView);
         rbsMessage_textView = (TextView) view.findViewById(R.id.rbsMessage_textView);
-        term_conditions_edittext.setText(terms_conditions_textview.getText());
 
+
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void initialOperations() {
+        checkUserData();
+        getRBSMessage();
+        getFaultsList();
     }
 
     private void checkUserData() {
@@ -230,30 +236,14 @@ public class RBS_setting extends Fragment {
         Picasso.get().load(UserDetails.getInstance().getShopLogo()).into(logo_image_view);
         Picasso.get().load(UserDetails.getInstance().getShopBanner()).into(banner_image_view);
 
-        userDataRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        shop_name_textView.setText(UserDetails.getInstance().getShopName());
+        shop_address_textView.setText(UserDetails.getInstance().getShopAddress());
+        shop_email_textView.setText(UserDetails.getInstance().getShopEmail());
+        shop_phno_textView.setText(UserDetails.getInstance().getShopPhno());
+        terms_conditions_textview.setText(UserDetails.getInstance().getShopTermsAndConditions());
 
-                if (dataSnapshot.child("profile_data").child("email").exists()) {
-                    email_textView.setText(dataSnapshot.child("profile_data").child("email").getValue().toString());
-                }
-                if (dataSnapshot.child("profile_data").child("phno").exists()) {
-                    phno_textView.setText(dataSnapshot.child("profile_data").child("phno").getValue().toString());
-                }
-                if (dataSnapshot.child("profile_data").child("address").exists()) {
-                    address_textView.setText(dataSnapshot.child("profile_data").child("address").getValue().toString());
-                }
-                if (dataSnapshot.child("conditions").exists()) {
-                    conditions_textView.setText(dataSnapshot.child("conditions").getValue().toString());
-                }
+        term_conditions_edittext.setText(terms_conditions_textview.getText());
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     private void getRBSMessage() {
@@ -272,12 +262,37 @@ public class RBS_setting extends Fragment {
         });
     }
 
+    private void getFaultsList() {
+        faultListRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    faultNameList.add(String.valueOf(dataSnapshot1.child("Fault_name").getValue()));
+                    faultPriceList.add(String.valueOf(dataSnapshot1.child("Fault_price").getValue()));
+                    faultKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
+                }
+
+                adapterSettingsFaultListRecyclerView = new AdapterSettingsFaultListRecyclerView(getActivity(), faultNameList, faultPriceList, faultKeyIDList);
+                faultList_recyclerView.setAdapter(adapterSettingsFaultListRecyclerView);
+                faultList_recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     private void onClickListeners() {
 
         save_terms_conditions_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editTermsConditionsDialog.dismiss();
+                updateTermsAndConditions();
             }
 
         });
@@ -503,27 +518,16 @@ public class RBS_setting extends Fragment {
 
     }
 
-    private void getFaultsList() {
-        faultListRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    faultNameList.add(String.valueOf(dataSnapshot1.child("Fault_name").getValue()));
-                    faultPriceList.add(String.valueOf(dataSnapshot1.child("Fault_price").getValue()));
-                    faultKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
-                }
+    private void updateTermsAndConditions() {
+        if (terms_conditions_textview.getText().toString().equals(term_conditions_edittext.getText().toString())){
+            term_conditions_edittext.setError("Edit to save!");
+        }else {
+            shopKeeperDataRef.child("shop_termsandconditions").setValue(term_conditions_edittext.getText().toString());
+            UserDetails.getInstance().setShopTermsAndConditions(term_conditions_edittext.getText().toString());
+            terms_conditions_textview.setText(term_conditions_edittext.getText().toString());
 
-                adapterSettingsFaultListRecyclerView = new AdapterSettingsFaultListRecyclerView(getActivity(), faultNameList, faultPriceList, faultKeyIDList);
-                faultList_recyclerView.setAdapter(adapterSettingsFaultListRecyclerView);
-                faultList_recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+            editTermsConditionsDialog.dismiss();
+        }
     }
 
     private boolean validateAlertAddFault() {
@@ -555,5 +559,15 @@ public class RBS_setting extends Fragment {
 
         adapterSettingsFaultListRecyclerView.notifyDataSetChanged();
         addFaultDialog.dismiss();
+    }
+
+    private void refreshFragment(){
+        // Reload current fragment
+        Fragment frg = null;
+        frg = getParentFragmentManager ().findFragmentByTag("RBS Settings");
+        final FragmentTransaction ft = getParentFragmentManager ().beginTransaction();
+        ft.detach(frg);
+        ft.attach(frg);
+        ft.commit();
     }
 }

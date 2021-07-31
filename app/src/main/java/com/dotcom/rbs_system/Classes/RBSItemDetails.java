@@ -9,9 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.dotcom.rbs_system.Item_detail;
 import com.dotcom.rbs_system.Progress_dialoge;
-import com.dotcom.rbs_system.Sale;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -283,7 +281,7 @@ public class RBSItemDetails {
 
         System.out.println(String.valueOf(key));
         System.out.println(String.valueOf(UniquePushID.getInstance().getUniquePushID()));
-        System.out.println(String.valueOf(UserDetails.getInstance().getShopNmae()));
+        System.out.println(String.valueOf(UserDetails.getInstance().getShopName()));
         System.out.println(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
         System.out.println(String.valueOf(UserDetails.getInstance().getShopLogo()));
         System.out.println(String.valueOf("Buyer"));
@@ -295,7 +293,7 @@ public class RBSItemDetails {
         System.out.println(String.valueOf(date.getTime()));
         System.out.println(String.valueOf(currentDateString));
 
-        new Item_history_class().thirteenValues(key,UniquePushID.getInstance().getUniquePushID(), UserDetails.getInstance().getShopNmae(),FirebaseAuth.getInstance().getCurrentUser().getUid(),UserDetails.getInstance().getShopLogo(),"Buyer",rbsCustomerDetails.getCustomerName(),rbsCustomerDetails.getKey(),"Seller",rbsCustomerDetails.getFirstImageUrl(),"Trade",date.getTime(),currentDateString);
+        new Item_history_class().thirteenValues(key,UniquePushID.getInstance().getUniquePushID(), UserDetails.getInstance().getShopName(),FirebaseAuth.getInstance().getCurrentUser().getUid(),UserDetails.getInstance().getShopLogo(),"Buyer",rbsCustomerDetails.getCustomerName(),rbsCustomerDetails.getKey(),"Seller",rbsCustomerDetails.getFirstImageUrl(),"Trade",date.getTime(),currentDateString);
         new Item_history_class().uploadItemImagetoCustomerHistory(rbsCustomerDetails.getKey(),UniquePushID.getInstance().getUniquePushID(), String.valueOf(firstImageUri));
     }
 
@@ -317,7 +315,7 @@ public class RBSItemDetails {
 
         Date date = Calendar.getInstance().getTime();
         String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(date);
-        new Item_history_class().thirteenValues(key,UniquePushID.getInstance().getUniquePushID(), UserDetails.getInstance().getShopNmae(),FirebaseAuth.getInstance().getCurrentUser().getUid(),UserDetails.getInstance().getShopLogo(),"Seller",rbsCustomerDetails.getCustomerName(),rbsCustomerDetails.getKey(),"Buyer",rbsCustomerDetails.getFirstImageUrl(),"Trade",date.getTime(),currentDateString);
+        new Item_history_class().thirteenValues(key,UniquePushID.getInstance().getUniquePushID(), UserDetails.getInstance().getShopName(),FirebaseAuth.getInstance().getCurrentUser().getUid(),UserDetails.getInstance().getShopLogo(),"Seller",rbsCustomerDetails.getCustomerName(),rbsCustomerDetails.getKey(),"Buyer",rbsCustomerDetails.getFirstImageUrl(),"Trade",date.getTime(),currentDateString);
         new Item_history_class().uploadItemImagetoCustomerHistory(rbsCustomerDetails.getKey(),UniquePushID.getInstance().getUniquePushID(), String.valueOf(firstImageUri));
     }
     
@@ -352,7 +350,7 @@ public class RBSItemDetails {
 //                currentDateString,
         System.out.println(String.valueOf(key));
         System.out.println(String.valueOf(UniquePushID.getInstance().getUniquePushID()));
-        System.out.println(String.valueOf(UserDetails.getInstance().getShopNmae()));
+        System.out.println(String.valueOf(UserDetails.getInstance().getShopName()));
         System.out.println(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
         System.out.println(String.valueOf(UserDetails.getInstance().getShopLogo()));
         System.out.println(String.valueOf("Buyer"));
@@ -364,7 +362,7 @@ public class RBSItemDetails {
         System.out.println(String.valueOf(date.getTime()));
         System.out.println(String.valueOf(currentDateString));
 
-        new Item_history_class().thirteenValues(key,UniquePushID.getInstance().getUniquePushID(), UserDetails.getInstance().getShopNmae(),FirebaseAuth.getInstance().getCurrentUser().getUid(),UserDetails.getInstance().getShopLogo(),"Buyer",rbsCustomerDetails.getCustomerName(),rbsCustomerDetails.getKey(),"Seller",rbsCustomerDetails.getFirstImageUrl(),"Trade",date.getTime(),currentDateString);
+        new Item_history_class().thirteenValues(key,UniquePushID.getInstance().getUniquePushID(), UserDetails.getInstance().getShopName(),FirebaseAuth.getInstance().getCurrentUser().getUid(),UserDetails.getInstance().getShopLogo(),"Buyer",rbsCustomerDetails.getCustomerName(),rbsCustomerDetails.getKey(),"Seller",rbsCustomerDetails.getFirstImageUrl(),"Trade",date.getTime(),currentDateString);
         new Item_history_class().uploadItemImagetoCustomerHistory(rbsCustomerDetails.getKey(),UniquePushID.getInstance().getUniquePushID(), String.valueOf(firstImageUri));
     }
 

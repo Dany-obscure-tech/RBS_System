@@ -4,7 +4,7 @@ public class UserDetails {
     private static UserDetails userDetailsObj = new UserDetails();
 
     Boolean isShopkeeper;
-    String shopNmae,shopLogo,shopBanner;
+    String shopName,shopLogo,shopBanner,shopAddress,shopEmail,shopPhno,shopTermsAndConditions;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -18,12 +18,12 @@ public class UserDetails {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public String getShopNmae() {
-        return shopNmae;
+    public String getShopName() {
+        return shopName;
     }
 
-    public void setShopNmae(String shopNmae) {
-        this.shopNmae = shopNmae;
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 
     public String getShopLogo() {
@@ -40,6 +40,38 @@ public class UserDetails {
 
     public void setShopBanner(String shopBanner) {
         this.shopBanner = shopBanner;
+    }
+
+    public String getShopAddress() {
+        return shopAddress;
+    }
+
+    public void setShopAddress(String shopAddress) {
+        this.shopAddress = shopAddress;
+    }
+
+    public String getShopEmail() {
+        return shopEmail;
+    }
+
+    public void setShopEmail(String shopEmail) {
+        this.shopEmail = shopEmail;
+    }
+
+    public String getShopPhno() {
+        return shopPhno;
+    }
+
+    public void setShopPhno(String shopPhno) {
+        this.shopPhno = shopPhno;
+    }
+
+    public String getShopTermsAndConditions() {
+        return shopTermsAndConditions;
+    }
+
+    public void setShopTermsAndConditions(String shopTermsAndConditions) {
+        this.shopTermsAndConditions = shopTermsAndConditions;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

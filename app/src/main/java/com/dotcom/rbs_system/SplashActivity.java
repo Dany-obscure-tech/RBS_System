@@ -7,7 +7,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.Toast;
 
 import com.dotcom.rbs_system.Classes.BuylocalSlider;
 import com.dotcom.rbs_system.Classes.Currency;
@@ -142,9 +141,13 @@ public class SplashActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("Shopkeeper_details").exists()){
                     UserDetails.getInstance().setShopkeeper(true);
-                    UserDetails.getInstance().setShopLogo(dataSnapshot.child("Shopkeeper_details").child("shop_logo").getValue().toString());
-                    UserDetails.getInstance().setShopNmae(dataSnapshot.child("Shopkeeper_details").child("shop_name").getValue().toString());
+                    UserDetails.getInstance().setShopAddress(dataSnapshot.child("Shopkeeper_details").child("shop_address").getValue().toString());
                     UserDetails.getInstance().setShopBanner(dataSnapshot.child("Shopkeeper_details").child("shop_banner").getValue().toString());
+                    UserDetails.getInstance().setShopEmail(dataSnapshot.child("Shopkeeper_details").child("shop_email").getValue().toString());
+                    UserDetails.getInstance().setShopLogo(dataSnapshot.child("Shopkeeper_details").child("shop_logo").getValue().toString());
+                    UserDetails.getInstance().setShopName(dataSnapshot.child("Shopkeeper_details").child("shop_name").getValue().toString());
+                    UserDetails.getInstance().setShopPhno(dataSnapshot.child("Shopkeeper_details").child("shop_phno").getValue().toString());
+                    UserDetails.getInstance().setShopTermsAndConditions(dataSnapshot.child("Shopkeeper_details").child("shop_termsandconditions").getValue().toString());
                 }else {
                     UserDetails.getInstance().setShopkeeper(false);
                 }

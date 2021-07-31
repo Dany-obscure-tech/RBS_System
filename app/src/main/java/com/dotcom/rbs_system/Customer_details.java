@@ -216,62 +216,72 @@ public class Customer_details extends AppCompatActivity {
         // SE13 6AZ
         String postcode = ac_postcode.getText().toString();
         latLng = getLocationFromAddress(Customer_details.this,postcode);
+
         if (latLng==null){
             ac_postcode.setError("Enter Valid formatted postcode\n\"XXXX XXX\"");
             ac_address.setText("----");
+            if (ac_houseNo.getText().toString().isEmpty()){
+                ac_houseNo.setError("Enter Door no");
+            }
         }else {
-            latitude = latLng.latitude;
-            longitude = latLng.longitude;
 
-            addressList = new ArrayList<>();
-            geocoder = new Geocoder(this, Locale.getDefault());
+            if (ac_houseNo.getText().toString().isEmpty()){
+                ac_houseNo.setError("Enter Door no");
+            }else {
+                latitude = latLng.latitude;
+                longitude = latLng.longitude;
 
-            try {
-                addressList = geocoder.getFromLocation(latitude,longitude,1);
-                String country = addressList.get(0).getCountryName();
-                String city = addressList.get(0).getAdminArea();
-                String subCity = addressList.get(0).getSubAdminArea();
-                String area = addressList.get(0).getLocality();
-                String street = addressList.get(0).getThoroughfare();
-                String streetno = addressList.get(0).getSubThoroughfare();
-                String address = addressList.get(0).getAddressLine(0);
-                String check = addressList.get(0).getAddressLine(0);
+                addressList = new ArrayList<>();
+                geocoder = new Geocoder(this, Locale.getDefault());
+
+                try {
+                    addressList = geocoder.getFromLocation(latitude,longitude,1);
+                    String country = addressList.get(0).getCountryName();
+                    String city = addressList.get(0).getAdminArea();
+                    String subCity = addressList.get(0).getSubAdminArea();
+                    String area = addressList.get(0).getLocality();
+                    String street = addressList.get(0).getThoroughfare();
+                    String streetno = addressList.get(0).getSubThoroughfare();
+                    String address = addressList.get(0).getAddressLine(0);
+                    String check = addressList.get(0).getAddressLine(0);
 //                Toast.makeText(this, check, Toast.LENGTH_SHORT).show();
 //                System.out.println(address);
 //                System.out.println(check);
 
-                if (street == null){
-                    street="";
-                }else {
-                    street = street+", ";
-                }
+                    if (street == null){
+                        street="";
+                    }else {
+                        street = street+", ";
+                    }
 
-                if (area == null){
-                    area="";
-                }else {
-                    area = area+", ";
-                }
+                    if (area == null){
+                        area="";
+                    }else {
+                        area = area+", ";
+                    }
 
-                if (subCity == null){
-                    subCity="";
-                }else {
-                    subCity = subCity+", ";
-                }
+                    if (subCity == null){
+                        subCity="";
+                    }else {
+                        subCity = subCity+", ";
+                    }
 
-                if (city == null){
-                    city="";
-                }else {
-                    city = city+", ";
-                }
+                    if (city == null){
+                        city="";
+                    }else {
+                        city = city+", ";
+                    }
 
-                if (country == null) {
-                    country = "";
-                }
+                    if (country == null) {
+                        country = "";
+                    }
 
-                ac_address.setText(street+area+subCity+city+country);
-            } catch (IOException e) {
-                e.printStackTrace();
+                    ac_address.setText(street+area+subCity+city+country+", Door No: "+ac_houseNo.getText().toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+
         }
 
     }
