@@ -8,11 +8,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,9 +25,8 @@ import com.google.android.material.navigation.NavigationView;
 public class RBS_mainscreen extends AppCompatActivity {
     ActionBar actionBar;
 
-    private long lastPressedTime;
-
-    private static final int PERIOD = 2000;
+    Dialog confirmation_alert;
+    TextView yes_btn_textview, cancel_btn_textview;
 
     TextView actionBarTitle;
 
@@ -59,6 +60,11 @@ public class RBS_mainscreen extends AppCompatActivity {
         actionBarTitle.setTextColor(Color.WHITE);
         actionBarTitle.setTextSize(22);
         actionBarTitle.setTypeface(Typeface.DEFAULT_BOLD);
+
+        confirmation_alert = new Dialog(this);
+        confirmation_alert.setContentView(R.layout.exit_confirmation_alert);
+        yes_btn_textview = (TextView) confirmation_alert.findViewById(R.id.yes_btn_textview);
+        cancel_btn_textview = (TextView) confirmation_alert.findViewById(R.id.cancel_btn_textview);
 
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setCustomView(actionBarTitle);
@@ -119,6 +125,33 @@ public class RBS_mainscreen extends AppCompatActivity {
             }
         });
 
+        onClickListners();
+
+    }
+
+    private void onClickListners() {
+
+        cancel_btn_textview_listner();
+        yes_btn_textview_listner();
+
+    }
+
+    private void cancel_btn_textview_listner() {
+        cancel_btn_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmation_alert.dismiss();
+            }
+        });
+    }
+
+    private void yes_btn_textview_listner() {
+        yes_btn_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -134,17 +167,14 @@ public class RBS_mainscreen extends AppCompatActivity {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
             switch (event.getAction()) {
                 case KeyEvent.ACTION_DOWN:
-                    if (event.getDownTime() - lastPressedTime < PERIOD) {
-                        finish();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Press again to exit.",
-                                Toast.LENGTH_SHORT).show();
-                        lastPressedTime = event.getEventTime();
-                    }
+                    confirmation_alert.show();
+
                     return true;
             }
         }
         return false;
     }
+
+
 
 }

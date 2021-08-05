@@ -23,6 +23,7 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.Button;
@@ -75,6 +76,9 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     RBSItemDetails rbsItemDetails;
     RBSCustomerDetails rbsCustomerDetails;
+
+    Dialog confirmation_alert;
+    TextView yes_btn_textview, cancel_btn_textview;
 
     Handler handler = new Handler();
     Handler handler2 = new Handler();
@@ -184,6 +188,11 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     private void initialize() {
         rbsItemDetails = RBSItemDetails.getInstance();
         rbsCustomerDetails = RBSCustomerDetails.getInstance();
+
+        confirmation_alert = new Dialog(this);
+        confirmation_alert.setContentView(R.layout.exit_confirmation_alert);
+        yes_btn_textview = (TextView) confirmation_alert.findViewById(R.id.yes_btn_textview);
+        cancel_btn_textview = (TextView) confirmation_alert.findViewById(R.id.cancel_btn_textview);
 
         rbsItemDetails.clearData();
         rbsCustomerDetails.clearData();
@@ -947,6 +956,22 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     private void onClickListenes() {
 
+        cancel_btn_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmation_alert.dismiss();
+            }
+        });
+
+
+        yes_btn_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+
         searchForItem_cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1440,6 +1465,19 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     @Override
     protected void onRestart() {
         super.onRestart();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            switch (event.getAction()) {
+                case KeyEvent.ACTION_DOWN:
+                    confirmation_alert.show();
+
+                    return true;
+            }
+        }
+        return false;
     }
 
 }

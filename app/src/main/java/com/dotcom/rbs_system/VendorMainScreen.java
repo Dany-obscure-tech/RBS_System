@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -15,6 +16,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dotcom.rbs_system.Classes.VendorStockDetails;
@@ -33,6 +36,9 @@ public class VendorMainScreen extends AppCompatActivity {
 
     private long lastPressedTime;
 
+    Dialog confirmation_alert;
+    TextView yes_btn_textview, cancel_btn_textview;
+
     private static final int PERIOD = 2000;
 
     private DrawerLayout vendor_drawer_layout;
@@ -50,13 +56,18 @@ public class VendorMainScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_main_screen);
 
-        vendorStockRef = FirebaseDatabase.getInstance().getReference("Vendor_stock/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
-        vendorStockImageReference = FirebaseStorage.getInstance().getReference().child("Vendor_Stock_Images/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        vendorStockRef = FirebaseDatabase.getInstance().getReference("Vendor_stock/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+        vendorStockImageReference = FirebaseStorage.getInstance().getReference().child("Vendor_Stock_Images/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-        vendor_drawer_layout = (DrawerLayout)findViewById(R.id.vendor_drawer_layout);
+        vendor_drawer_layout = (DrawerLayout) findViewById(R.id.vendor_drawer_layout);
+
+        confirmation_alert = new Dialog(this);
+        confirmation_alert.setContentView(R.layout.exit_confirmation_alert);
+        yes_btn_textview = (TextView) confirmation_alert.findViewById(R.id.yes_btn_textview);
+        cancel_btn_textview = (TextView) confirmation_alert.findViewById(R.id.cancel_btn_textview);
 
 
-        t = new ActionBarDrawerToggle(this, vendor_drawer_layout,R.string.Open, R.string.Close);
+        t = new ActionBarDrawerToggle(this, vendor_drawer_layout, R.string.Open, R.string.Close);
 
         vendor_drawer_layout.addDrawerListener(t);
         t.syncState();
@@ -64,9 +75,9 @@ public class VendorMainScreen extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        nv = (NavigationView)findViewById(R.id.nv);
+        nv = (NavigationView) findViewById(R.id.nv);
 
-        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,fragment_vendor_home).commit();
+        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, fragment_vendor_home).commit();
         nv.setCheckedItem(R.id.nav_shop);
 
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -75,15 +86,15 @@ public class VendorMainScreen extends AppCompatActivity {
                 int id = item.getItemId();
                 switch (id) {
                     case R.id.nav_shop:
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,new VendorShop()).commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, new VendorShop()).commit();
                         closeDrawer();
                         break;
                     case R.id.nav_orders:
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,new VendorOrders()).commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, new VendorOrders()).commit();
                         closeDrawer();
                         break;
                     case R.id.nav_profile:
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,new VendorProfile(),"VENDOR_PROFILE_FRAGMENT").commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, new VendorProfile(), "VENDOR_PROFILE_FRAGMENT").commit();
                         closeDrawer();
                         break;
                     case R.id.nav_inbox:
@@ -99,17 +110,43 @@ public class VendorMainScreen extends AppCompatActivity {
                 return true;
 
             }
+
             private void closeDrawer() {
                 if (vendor_drawer_layout.isDrawerOpen(GravityCompat.START)) {
                     vendor_drawer_layout.closeDrawer(GravityCompat.START);
                 }
             }
         });
+
+        oncreateListners();
+    }
+
+    private void oncreateListners() {
+        yes_btn_textview_listner();
+        cancel_btn_textview_listner();
+    }
+
+    private void cancel_btn_textview_listner() {
+        cancel_btn_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmation_alert.dismiss();
+            }
+        });
+    }
+
+    private void yes_btn_textview_listner() {
+        yes_btn_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if(t.onOptionsItemSelected(item))
+        if (t.onOptionsItemSelected(item))
             return true;
 
         return super.onOptionsItemSelected(item);
@@ -126,43 +163,40 @@ public class VendorMainScreen extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK) {
             vendorStockDetails = VendorStockDetails.getInstance();
 
-                //Image Uri will not be null for RESULT_OK
-                fileUri = data.getData();
+            //Image Uri will not be null for RESULT_OK
+            fileUri = data.getData();
 
-                boolean connected = false;
-            ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(VendorMainScreen.this.CONNECTIVITY_SERVICE);
-            if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+            boolean connected = false;
+            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(VendorMainScreen.this.CONNECTIVITY_SERVICE);
+            if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                     connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-                    //we are connected to a network
-                    connected = true;
+                //we are connected to a network
+                connected = true;
 
-                    vendorStockImageReference.child(vendorStockDetails.getCategory()).child(vendorStockDetails.getKeyId()).child("stock_image").putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            vendorStockImageReference.child(vendorStockDetails.getCategory()).child(vendorStockDetails.getKeyId()).child("stock_image").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
+                vendorStockImageReference.child(vendorStockDetails.getCategory()).child(vendorStockDetails.getKeyId()).child("stock_image").putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        vendorStockImageReference.child(vendorStockDetails.getCategory()).child(vendorStockDetails.getKeyId()).child("stock_image").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
 
-                                    vendorStockRef.child(vendorStockDetails.getCategory()).child(vendorStockDetails.getKeyId()).child("Image_url").setValue(String.valueOf(uri.toString()));
-                                    recreate();
-                                }
-                            });
+                                vendorStockRef.child(vendorStockDetails.getCategory()).child(vendorStockDetails.getKeyId()).child("Image_url").setValue(String.valueOf(uri.toString()));
+                                recreate();
+                            }
+                        });
 
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(VendorMainScreen.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(VendorMainScreen.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-                }else {
-                    Toast.makeText(VendorMainScreen.this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
-                    connected = false;
-                }
-
-
-
+            } else {
+                Toast.makeText(VendorMainScreen.this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
+                connected = false;
+            }
 
 
             //You can get File object from intent
@@ -172,7 +206,7 @@ public class VendorMainScreen extends AppCompatActivity {
 //                    val filePath:String = ImagePicker.getFilePath(data)!!
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
 //            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
-        } else if(resultCode == 111){
+        } else if (resultCode == 111) {
             recreate();
         }
     }
@@ -182,13 +216,8 @@ public class VendorMainScreen extends AppCompatActivity {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
             switch (event.getAction()) {
                 case KeyEvent.ACTION_DOWN:
-                    if (event.getDownTime() - lastPressedTime < PERIOD) {
-                        finish();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Press again to exit.",
-                                Toast.LENGTH_SHORT).show();
-                        lastPressedTime = event.getEventTime();
-                    }
+                    confirmation_alert.show();
+
                     return true;
             }
         }

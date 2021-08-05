@@ -202,6 +202,7 @@ public class BuyLocal_home extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), PasscodeActivity.class);
+                side_option_menu.setVisibility(View.GONE);
                 intent.putExtra("ACTIVITY_CHECK","RBS");
                 getActivity().startActivity(intent);
             }
@@ -211,6 +212,7 @@ public class BuyLocal_home extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), PasscodeActivity.class);
+                side_option_menu.setVisibility(View.GONE);
                 intent.putExtra("ACTIVITY_CHECK","VENDOR");
                 getActivity().startActivity(intent);
             }
@@ -220,6 +222,7 @@ public class BuyLocal_home extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent(getActivity(),BuyLocal_offers_option.class);
+                side_option_menu.setVisibility(View.GONE);
                 getActivity().startActivity(intent);
             }
         });
@@ -228,6 +231,7 @@ public class BuyLocal_home extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), BuyLocal_conversations.class);
+                side_option_menu.setVisibility(View.GONE);
                 getActivity().startActivity(intent);
             }
         });

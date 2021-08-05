@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,6 +19,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -45,6 +47,10 @@ import java.util.List;
 import java.util.Locale;
 
 public class Customer_details extends AppCompatActivity {
+
+    Dialog confirmation_alert;
+    TextView yes_btn_textview, cancel_btn_textview;
+
     LatLng latLng;
     Double latitude;
     Double longitude;
@@ -60,24 +66,24 @@ public class Customer_details extends AppCompatActivity {
     Uri fileUri;
 
     String currentDateString;
-    String key,key2;
+    String key, key2;
 
     StorageReference storageReference;
     Progress_dialoge pd;
 
-    Uri tempUri=null;
-    Uri tempUri2=null;
-    Uri tempUri3=null;
+    Uri tempUri = null;
+    Uri tempUri2 = null;
+    Uri tempUri3 = null;
 
     StorageReference idStorageReference;
 
     ImageButton back_btn;
     ImageView id_imageView;
 
-    TextView date_of_birth_text,uploadId_textView,date_textView,submit_textView,postcodeCheck_textView,ac_address;
+    TextView date_of_birth_text, uploadId_textView, date_textView, submit_textView, postcodeCheck_textView, ac_address;
     DatePickerDialog.OnDateSetListener onDateSetListener;
     DatabaseReference reference;
-    EditText ac_title,ac_phoneno,ac_houseNo,ac_id,ac_email,ac_postcode;
+    EditText ac_title, ac_phoneno, ac_houseNo, ac_id, ac_email, ac_postcode;
 
     private static final int CAMERA_REQUEST_CODE = 1;
     private static final int CAMERA_REQUEST_CODE2 = 2;
@@ -98,6 +104,10 @@ public class Customer_details extends AppCompatActivity {
 
     private void initialize() {
         rbsCustomerDetails = RBSCustomerDetails.getInstance();
+        confirmation_alert = new Dialog(this);
+        confirmation_alert.setContentView(R.layout.exit_confirmation_alert);
+        yes_btn_textview = (TextView) confirmation_alert.findViewById(R.id.yes_btn_textview);
+        cancel_btn_textview = (TextView) confirmation_alert.findViewById(R.id.cancel_btn_textview);
 
         imageUrlList = new ArrayList<>();
         rbsCustomerDetails.setImageUrlList(imageUrlList);
@@ -127,14 +137,28 @@ public class Customer_details extends AppCompatActivity {
         idStorageReference = storageReference.child("Customer_IDs");
 
         itemImage_recyclerView = (RecyclerView) findViewById(R.id.itemImage_recyclerView);
-        itemImage_recyclerView.setLayoutManager(new GridLayoutManager(this,2));
-        adapterItemDetailsImagesRecyclerView = new AdapterItemDetailsImagesRecyclerView(Customer_details.this,imageUrlList);
+        itemImage_recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        adapterItemDetailsImagesRecyclerView = new AdapterItemDetailsImagesRecyclerView(Customer_details.this, imageUrlList);
         itemImage_recyclerView.setAdapter(adapterItemDetailsImagesRecyclerView);
 
 
     }
 
     private void onClickListeners() {
+
+        cancel_btn_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmation_alert.dismiss();
+            }
+        });
+
+        yes_btn_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         postcodeCheck_textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,13 +170,13 @@ public class Customer_details extends AppCompatActivity {
         uploadId_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (imageUrlList.size()<2){
+                if (imageUrlList.size() < 2) {
                     ImagePicker.Companion.with(Customer_details.this)
-                            .crop()	    			//Crop image(Optional), Check Customization for more option
-                            .compress(1024)			//Final image size will be less than 1 MB(Optional)
-                            .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                            .crop()                    //Crop image(Optional), Check Customization for more option
+                            .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                            .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
                             .start();
-                }else {
+                } else {
                     Toast.makeText(Customer_details.this, "Maximum 2 images allowed!", Toast.LENGTH_SHORT).show();
                 }
 
@@ -171,22 +195,22 @@ public class Customer_details extends AppCompatActivity {
         date_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              Calendar calendar=Calendar.getInstance();
-              int year= (calendar.get(Calendar.YEAR))-18;
-              int month= 0;
-              int day= 1;
+                Calendar calendar = Calendar.getInstance();
+                int year = (calendar.get(Calendar.YEAR)) - 18;
+                int month = 0;
+                int day = 1;
 
-              DatePickerDialog dialog = new DatePickerDialog(Customer_details.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,onDateSetListener,year,month,day);
-              currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
-              dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-              dialog.show();
+                DatePickerDialog dialog = new DatePickerDialog(Customer_details.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, onDateSetListener, year, month, day);
+                currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
             }
         });
-        onDateSetListener=new DatePickerDialog.OnDateSetListener() {
+        onDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month=month+1;
-                String date = dayOfMonth+"/"+ month + "/"+ year;
+                month = month + 1;
+                String date = dayOfMonth + "/" + month + "/" + year;
 
                 SimpleDateFormat input = new SimpleDateFormat("d/M/yyyy");
                 SimpleDateFormat output = new SimpleDateFormat("EEEE, d MMMM yyyy");
@@ -215,19 +239,19 @@ public class Customer_details extends AppCompatActivity {
     private void checkPostcode() {
         // SE13 6AZ
         String postcode = ac_postcode.getText().toString();
-        latLng = getLocationFromAddress(Customer_details.this,postcode);
+        latLng = getLocationFromAddress(Customer_details.this, postcode);
 
-        if (latLng==null){
+        if (latLng == null) {
             ac_postcode.setError("Enter Valid formatted postcode\n\"XXXX XXX\"");
             ac_address.setText("----");
-            if (ac_houseNo.getText().toString().isEmpty()){
+            if (ac_houseNo.getText().toString().isEmpty()) {
                 ac_houseNo.setError("Enter Door no");
             }
-        }else {
+        } else {
 
-            if (ac_houseNo.getText().toString().isEmpty()){
+            if (ac_houseNo.getText().toString().isEmpty()) {
                 ac_houseNo.setError("Enter Door no");
-            }else {
+            } else {
                 latitude = latLng.latitude;
                 longitude = latLng.longitude;
 
@@ -235,7 +259,7 @@ public class Customer_details extends AppCompatActivity {
                 geocoder = new Geocoder(this, Locale.getDefault());
 
                 try {
-                    addressList = geocoder.getFromLocation(latitude,longitude,1);
+                    addressList = geocoder.getFromLocation(latitude, longitude, 1);
                     String country = addressList.get(0).getCountryName();
                     String city = addressList.get(0).getAdminArea();
                     String subCity = addressList.get(0).getSubAdminArea();
@@ -248,35 +272,35 @@ public class Customer_details extends AppCompatActivity {
 //                System.out.println(address);
 //                System.out.println(check);
 
-                    if (street == null){
-                        street="";
-                    }else {
-                        street = street+", ";
+                    if (street == null) {
+                        street = "";
+                    } else {
+                        street = street + ", ";
                     }
 
-                    if (area == null){
-                        area="";
-                    }else {
-                        area = area+", ";
+                    if (area == null) {
+                        area = "";
+                    } else {
+                        area = area + ", ";
                     }
 
-                    if (subCity == null){
-                        subCity="";
-                    }else {
-                        subCity = subCity+", ";
+                    if (subCity == null) {
+                        subCity = "";
+                    } else {
+                        subCity = subCity + ", ";
                     }
 
-                    if (city == null){
-                        city="";
-                    }else {
-                        city = city+", ";
+                    if (city == null) {
+                        city = "";
+                    } else {
+                        city = city + ", ";
                     }
 
                     if (country == null) {
                         country = "";
                     }
 
-                    ac_address.setText(street+area+subCity+city+country+", Door No: "+ac_houseNo.getText().toString());
+                    ac_address.setText(street + area + subCity + city + country + ", Door No: " + ac_houseNo.getText().toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -301,8 +325,8 @@ public class Customer_details extends AppCompatActivity {
 
             try {
                 Address location = address.get(0);
-                p1 = new LatLng(location.getLatitude(), location.getLongitude() );
-            }catch (Exception e){
+                p1 = new LatLng(location.getLatitude(), location.getLongitude());
+            } catch (Exception e) {
 
             }
 
@@ -343,9 +367,9 @@ public class Customer_details extends AppCompatActivity {
             ac_id.setError("Please enter id");
             valid = false;
         }
-        if (imageUrlList.size()==0){
+        if (imageUrlList.size() == 0) {
             Toast.makeText(this, "Please upload customer ID image", Toast.LENGTH_LONG).show();
-            valid=false;
+            valid = false;
         }
         if (date_of_birth_text.getText().toString().equals("Select date")) {
             Toast.makeText(this, "Select date of birth", Toast.LENGTH_LONG).show();
@@ -388,8 +412,8 @@ public class Customer_details extends AppCompatActivity {
         pd.showProgressBar(Customer_details.this);
 
         boolean connected = false;
-        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Customer_details.this.CONNECTIVITY_SERVICE);
-        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Customer_details.this.CONNECTIVITY_SERVICE);
+        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
             //we are connected to a network
             connected = true;
@@ -408,8 +432,7 @@ public class Customer_details extends AppCompatActivity {
             pd.dismissProgressBar(Customer_details.this);
             finish();
 
-        }
-        else {
+        } else {
             Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
             connected = false;
         }
@@ -459,5 +482,16 @@ public class Customer_details extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            switch (event.getAction()) {
+                case KeyEvent.ACTION_DOWN:
+                    confirmation_alert.show();
 
+                    return true;
+            }
+        }
+        return false;
+    }
 }

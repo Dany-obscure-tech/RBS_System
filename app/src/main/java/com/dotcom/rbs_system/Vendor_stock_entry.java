@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -13,6 +14,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -47,6 +49,8 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Vendor_stock_entry extends AppCompatActivity {
     DatabaseReference reference;
+    Dialog confirmation_alert;
+    TextView yes_btn_textview, cancel_btn_textview;
     StorageReference stockImageStorageReference;
     ImageView image_imageView;
     ImageButton back_btn;
@@ -91,6 +95,10 @@ public class Vendor_stock_entry extends AppCompatActivity {
         stockImageStorageReference = FirebaseStorage.getInstance().getReference().child("Vendor_Stock_Images");
 
         back_btn = (ImageButton) findViewById(R.id.back_btn);
+        confirmation_alert = new Dialog(this);
+        confirmation_alert.setContentView(R.layout.exit_confirmation_alert);
+        yes_btn_textview = (TextView) confirmation_alert.findViewById(R.id.yes_btn_textview);
+        cancel_btn_textview = (TextView) confirmation_alert.findViewById(R.id.cancel_btn_textview);
 
         image_imageView = (ImageView) findViewById(R.id.image_imageView);
 
@@ -125,11 +133,31 @@ public class Vendor_stock_entry extends AppCompatActivity {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Onclicklistners() {
+        yes_btn_textview_listner();
+        cancel_btn_textview_listner();
         back_btn_listner();
         searchForCategories_listner();
         add_btn_listner();
         date_textView_listner();
         uploadImage_textView_listener();
+    }
+
+    private void cancel_btn_textview_listner() {
+        cancel_btn_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmation_alert.dismiss();
+            }
+        });
+    }
+
+    private void yes_btn_textview_listner() {
+        yes_btn_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void uploadImage_textView_listener() {
@@ -342,5 +370,16 @@ public class Vendor_stock_entry extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            switch (event.getAction()) {
+                case KeyEvent.ACTION_DOWN:
+                    confirmation_alert.show();
 
+                    return true;
+            }
+        }
+        return false;
+    }
 }

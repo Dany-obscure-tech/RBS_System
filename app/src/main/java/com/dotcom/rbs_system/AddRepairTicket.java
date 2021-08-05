@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.Button;
@@ -63,6 +64,9 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 public class AddRepairTicket extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     long timestamp;
+
+    Dialog confirmation_alert;
+    TextView yes_btn_textview, cancel_btn_textview;
 
     private static final int ITEM_ACTIVITY_REQUEST_CODE = 0;
     private static final int CUSTOMER_ACTIVITY_REQUEST_CODE = 0;
@@ -161,6 +165,11 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
     private void initialize() {
         UniquePushID.getInstance().generateUniquePushID();
         key = UniquePushID.getInstance().getUniquePushID();
+
+        confirmation_alert = new Dialog(this);
+        confirmation_alert.setContentView(R.layout.exit_confirmation_alert);
+        yes_btn_textview = (TextView) confirmation_alert.findViewById(R.id.yes_btn_textview);
+        cancel_btn_textview = (TextView) confirmation_alert.findViewById(R.id.cancel_btn_textview);
 
         repair_details_edit_obj = Repair_details_edit.getInstance();
 
@@ -299,6 +308,10 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
     }
 
     private void onClickListeners() {
+
+        yes_btn_textview_listner();
+        cancel_btn_textview_listner();
+
         confirmChanges();
         cancleChanges();
 
@@ -434,6 +447,25 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         });
 
     }
+
+    private void cancel_btn_textview_listner() {
+        cancel_btn_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmation_alert.dismiss();
+            }
+        });
+    }
+
+    private void yes_btn_textview_listner() {
+        yes_btn_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
 
     private void confirmChanges() {
         confirmChanges_textView.setOnClickListener(new View.OnClickListener() {
@@ -773,5 +805,18 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
 
     public void getPendingIncremantalAmount(double pendingIncremantalAmount) {
         pendingAgreed_price_editText.setText(String.valueOf(pendingIncremantalAmount));
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            switch (event.getAction()) {
+                case KeyEvent.ACTION_DOWN:
+                    confirmation_alert.show();
+
+                    return true;
+            }
+        }
+        return false;
     }
 }
