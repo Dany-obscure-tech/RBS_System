@@ -40,7 +40,7 @@ public class Repair_Ticket extends AppCompatActivity {
 
     ImageButton Back_btn;
 
-    List<String> customerNameList,itemNameList,ticketNoList;
+    List<String> customerNameList,customerIdList,itemNameList,itemSerialNoList,ticketNoList,dateList;
     List<String> customerKeyIDList,itemKeyIDList,repairKeyIDList;
     List<String> pendingStatusList;
 
@@ -52,10 +52,10 @@ public class Repair_Ticket extends AppCompatActivity {
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         Collections.reverse(ticketNoList);
         for (int i=0;i<ticketNoList.size();i++){
-            if (pendingStatusList.get(i).equals("pending")){
-                items.add(new SampleSearchModel(ticketNoList.get(i)+"\n(Pending)",repairKeyIDList.get(i),null,null,null,null,null,null));
+            if (pendingStatusList.get(i).equals("clear")){
+                items.add(new SampleSearchModel(ticketNoList.get(i),repairKeyIDList.get(i),null,pendingStatusList.get(i),null,null,null,null));
             }else {
-                items.add(new SampleSearchModel(ticketNoList.get(i),repairKeyIDList.get(i),null,null,null,null,null,null));
+                items.add(new SampleSearchModel(ticketNoList.get(i)+"\n"+pendingStatusList.get(i),repairKeyIDList.get(i),null,pendingStatusList.get(i),null,null,null,null));
             }
 
         }
@@ -85,8 +85,11 @@ public class Repair_Ticket extends AppCompatActivity {
         Back_btn=(ImageButton)findViewById(R.id.Back_btn);
 
         customerNameList = new ArrayList<>();
+        customerIdList = new ArrayList<>();
         itemNameList = new ArrayList<>();
+        itemSerialNoList = new ArrayList<>();
         ticketNoList = new ArrayList<>();
+        dateList = new ArrayList<>();
         customerKeyIDList = new ArrayList<>();
         itemKeyIDList = new ArrayList<>();
         repairKeyIDList = new ArrayList<>();
@@ -113,8 +116,11 @@ public class Repair_Ticket extends AppCompatActivity {
                     for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
 
                         customerNameList.add(dataSnapshot1.child("Customer_name").getValue().toString());
+                        customerIdList.add(dataSnapshot1.child("Customer_id").getValue().toString());
                         itemNameList.add(dataSnapshot1.child("Item_name").getValue().toString());
+                        itemSerialNoList.add(dataSnapshot1.child("Item_serial_no").getValue().toString());
                         ticketNoList.add(dataSnapshot1.child("Ticket_no").getValue().toString());
+                        dateList.add(dataSnapshot1.child("Date").getValue().toString());
                         pendingStatusList.add(dataSnapshot1.child("Status").getValue().toString());
 
                         customerKeyIDList.add(dataSnapshot1.child("Customer_id").getValue().toString());
@@ -122,7 +128,7 @@ public class Repair_Ticket extends AppCompatActivity {
                         repairKeyIDList.add(dataSnapshot1.child("Repair_key_id").getValue().toString());
                     }
 
-                    adapterRepairTicketListRecyclerView = new AdapterRepairTicketListRecyclerView(Repair_Ticket.this,customerNameList,itemNameList,ticketNoList,pendingStatusList);
+                    adapterRepairTicketListRecyclerView = new AdapterRepairTicketListRecyclerView(Repair_Ticket.this,customerNameList,customerIdList,itemNameList,itemSerialNoList,ticketNoList,dateList,pendingStatusList);
                     repairTicketList_recyclerView.setAdapter(adapterRepairTicketListRecyclerView);
                     pd.dismissProgressBar(Repair_Ticket.this);
                 }else {
@@ -171,6 +177,7 @@ public class Repair_Ticket extends AppCompatActivity {
                                 dialog.dismiss();
                                 Intent intent = new Intent(Repair_Ticket.this,Repair_details.class);
                                 intent.putExtra("REPAIR_ID",item.getId());
+                                intent.putExtra("STATUS",item.getVal1());
                                 startActivity(intent);
                             }
                         }).show();
@@ -178,25 +185,6 @@ public class Repair_Ticket extends AppCompatActivity {
         });
     }
 
-//    private void repairTicketSearch() {
-//        searchForTicket_textView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                new SimpleSearchDialogCompat(Repair_Ticket.this, "Search results...",
-//                        "Search for ticket number.", null, createTicketNoData(),
-//                        new SearchResultListener<SampleSearchModel>() {
-//                            @Override
-//                            public void onSelected(BaseSearchDialogCompat dialog,
-//                                                   SampleSearchModel item, int position) {
-//                                dialog.dismiss();
-//                                Intent intent = new Intent(Repair_Ticket.this,Repair_details.class);
-//                                intent.putExtra("REPAIR_ID",item.getId());
-//                                startActivity(intent);
-//                            }
-//                        }).show();
-//            }
-//        });
-//    }
 
     private void addRepairTicket() {
         repairTicketAdd_textView.setOnClickListener(new View.OnClickListener() {

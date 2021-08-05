@@ -201,16 +201,16 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         rbsItemDetails = RBSItemDetails.getInstance();
         rbsCustomerDetails = RBSCustomerDetails.getInstance();
 
-        confirmation_alert = new Dialog(this);
-        confirmation_alert.setContentView(R.layout.exit_confirmation_alert);
-        yes_btn_textview = (TextView) confirmation_alert.findViewById(R.id.yes_btn_textview);
-        cancel_btn_textview = (TextView) confirmation_alert.findViewById(R.id.cancel_btn_textview);
-
         rbsItemDetails.clearData();
         rbsCustomerDetails.clearData();
 
         searchForItem_cardView = (CardView) findViewById(R.id.searchForItem_cardView);
         searchForCustomer_cardView = (CardView) findViewById(R.id.searchForCustomer_cardView);
+
+        confirmation_alert = new Dialog(this);
+        confirmation_alert.setContentView(R.layout.exit_confirmation_alert);
+        yes_btn_textview = (TextView) confirmation_alert.findViewById(R.id.yes_btn_textview);
+        cancel_btn_textview = (TextView) confirmation_alert.findViewById(R.id.cancel_btn_textview);
 
 
         reference = FirebaseDatabase.getInstance().getReference();
@@ -330,7 +330,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         viewCustomerDetails_textView = (TextView) findViewById(R.id.viewCustomerDetails_textView);
 
         condition_textView = (TextView) findViewById(R.id.condition_textView);
-        notes_textView = (TextView) findViewById(R.id.notes_textView);
         address_textView = (TextView) findViewById(R.id.vendor_address_textView);
         date_textView = (TextView) findViewById(R.id.date_textView);
         forExchange_textView = (TextView) findViewById(R.id.forExchange_textView);
@@ -1284,7 +1283,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         if (requestCode == ITEM_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
                 // get String data from Intent
-
+                Toast.makeText(this, String.valueOf(rbsItemDetails.getImageUrlList().size()), Toast.LENGTH_SHORT).show();
                 String itemname_returnString = data.getStringExtra("Item_name");
                 String itemid_returnString = data.getStringExtra("Item_id");
                 String itemcategory_returnString = data.getStringExtra("Item_category");

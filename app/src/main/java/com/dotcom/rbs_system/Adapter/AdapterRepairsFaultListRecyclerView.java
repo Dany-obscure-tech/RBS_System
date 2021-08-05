@@ -26,7 +26,6 @@ public class AdapterRepairsFaultListRecyclerView extends RecyclerView.Adapter<Ad
     List<Boolean> faultRemoveCheckList;
     List<String> pendingFaultNameList, pendingFaultPriceList, pendingFaultKeyIDList;
     Activity activity;
-    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Listed_faults");
 
     AddRepairTicket addRepairTicket;
 
@@ -88,7 +87,7 @@ public class AdapterRepairsFaultListRecyclerView extends RecyclerView.Adapter<Ad
                         incremantalAmount = incremantalAmount+(Double.parseDouble(faultPriceList.get(i)));
                     }
                 }else {
-                    incremantalAmount = Double.parseDouble(Repair_details_edit.getInstance().getAgreedPrice_TextView());
+                    incremantalAmount = Double.parseDouble(Repair_details_edit.getInstance().getAmount_TextView());
                 }
                 addRepairTicket.getIncremantalAmount(incremantalAmount);
 
@@ -98,8 +97,6 @@ public class AdapterRepairsFaultListRecyclerView extends RecyclerView.Adapter<Ad
                 for (int i = 0;i<faultNameList.size();i++){
                     incremantalPendingAmount = incremantalPendingAmount+(Double.parseDouble(faultPriceList.get(i)));
                 }
-
-                addRepairTicket.getPendingIncremantalAmount(incremantalPendingAmount);
             }
 
             holder.remove_textView.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +120,6 @@ public class AdapterRepairsFaultListRecyclerView extends RecyclerView.Adapter<Ad
 
 
                     addRepairTicket.getIncremantalAmount(incremantalAmount);
-                    addRepairTicket.getPendingIncremantalAmount(incremantalPendingAmount);
 
                     notifyDataSetChanged();
                 }

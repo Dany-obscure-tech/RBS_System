@@ -46,6 +46,14 @@
                 android:text="Customer name"/>
 
             <TextView
+                android:id="@+id/customerID_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/RBSInvoice_TextViews"
+                android:fontFamily="@font/segoe_ui"
+                android:text="Customer ID"/>
+
+            <TextView
                 android:id="@+id/item_category_textView"
                 style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
@@ -53,19 +61,23 @@
                 android:fontFamily="@font/segoe_ui"
                 android:text="Item name"/>
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/item_serialNo_textView"
+                style="@style/RBSInvoice_TextViews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/segoe_ui"
+                android:text="Item serial no"/>
 
-        <TextView
-            android:id="@+id/remove_textView"
-            android:layout_marginLeft="10dp"
-            android:padding="12dp"
-            android:layout_gravity="center"
-            android:textColor = "@color/textRed"
-            android:background="@drawable/red_border"
-            android:text="REMOVE"
-            android:textSize="10sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/date_textView"
+                style="@style/RBSInvoice_TextViews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/segoe_ui"
+                android:text="Date"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

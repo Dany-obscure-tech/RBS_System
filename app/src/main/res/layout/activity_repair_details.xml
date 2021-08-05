@@ -75,8 +75,7 @@
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/customerImage_imageView">
+                        android:layout_height="wrap_content">
 
                         <LinearLayout
                             android:id="@+id/customer_name_area"
@@ -330,10 +329,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
-                        android:text="Agreed Price" />
+                        android:text="Amount" />
 
                     <TextView
-                        android:id="@+id/agreedPrice_TextView"
+                        android:id="@+id/amount_TextView"
                         style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -373,11 +372,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
-                        android:text="Pending Agreed Price"
+                        android:text="Pending Amount"
                         android:textColor="@color/gradientDarkBlue" />
 
                     <TextView
-                        android:id="@+id/pendingAgreedPrice_TextView"
+                        android:id="@+id/pendingAmount_TextView"
                         style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -410,49 +409,7 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:orientation="horizontal">
 
-                    <TextView
-                        style="@style/RBSInvoice_TextViews"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:text="Paid Amount" />
-
-                    <TextView
-                        android:id="@+id/paidAmount_TextView"
-                        style="@style/RBSInvoice_TextViews"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/gradientDarkBlue" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/RBSInvoice_TextViews"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
-                        android:text="Balance Amount" />
-
-                    <TextView
-                        android:id="@+id/balanceAmount_TextView"
-                        style="@style/RBSInvoice_TextViews"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/gradientDarkBlue" />
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -486,47 +443,6 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
                 android:text="Edit Ticket" />
-
-            <LinearLayout
-                android:id="@+id/changesConfirmation_linearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="20dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/confirmChanges_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/profile_screen_header"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="Confirm Changes"
-                    android:textAlignment="center"
-                    android:textColor="#ffff"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/cancleChanges_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/profile_screen_header"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="Cancel Changes"
-                    android:textAlignment="center"
-                    android:textColor="#ffff"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

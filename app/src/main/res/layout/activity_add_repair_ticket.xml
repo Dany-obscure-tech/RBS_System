@@ -53,357 +53,158 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/hideToggle_linearLayout"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        style="@style/TextViews_Bold_big"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Customer" />
+
+                </LinearLayout>
 
                 <TextView
-                    style="@style/TextViews_Bold_big"
+                    style="@style/TextViews_Bold_small"
+                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Customer" />
+                    android:text="Customer name" />
 
-            </LinearLayout>
-
-            <TextView
-                style="@style/TextViews_Bold_small"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Customer name" />
-
-            <EditText
-                android:id="@+id/customerName_editText"
-                style="@style/RBSInvoice_EditTexts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-                android:hint="Enter customer name"
-                android:inputType="textPersonName"
-                android:maxLength="32" />
-
-            <TextView
-                style="@style/TextViews_Bold_small"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Customer Phno" />
-
-            <EditText
-                android:id="@+id/customerPhno_editText"
-                style="@style/RBSInvoice_EditTexts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-                android:hint="Enter customer phno"
-                android:inputType="phone"
-                android:maxLength="32" />
-
-
-
-            <TextView
-                style="@style/TextViews_Bold_small"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Customer Email" />
-
-            <EditText
-                android:id="@+id/customerEmail_editText"
-                style="@style/RBSInvoice_EditTexts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-                android:hint="Enter customer phno"
-                android:inputType="textEmailAddress"
-                android:maxLength="32" />
-
-            <TextView
-                style="@style/TextViews_Bold_small"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Customer ID" />
-
-            <EditText
-                android:id="@+id/customerId_editText"
-                style="@style/RBSInvoice_EditTexts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-                android:hint="Enter customer id"
-                android:maxLength="32" />
-
-            <LinearLayout
-                android:id="@+id/customerDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <LinearLayout
+                <EditText
+                    android:id="@+id/customerName_editText"
+                    style="@style/RBSInvoice_EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Phone no" />
-
-                    <TextView
-                        android:id="@+id/phno_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Category"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="DOB" />
-
-                    <TextView
-                        android:id="@+id/dob_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Condition"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Address" />
-
-                    <TextView
-                        android:id="@+id/vendor_address_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="asoidhjas das;djasdd asd;ojkasd a;sdljasd as;sdkjasd  as;djas dpo;oajssdd  asd;pjasd  as;lkdkjjasd ;ojasd"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Email" />
-
-                    <TextView
-                        android:id="@+id/post_code_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="asoidhjas das;djasdd asd;ojkasd a;sdljasd as;sdkjasd  as;djas dpo;oajssdd  asd;pjasd  as;lkdkjjasd ;ojasd"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                    android:backgroundTint="@color/colorPrimary"
+                    android:hint="Enter customer name"
+                    android:inputType="textPersonName"
+                    android:maxLength="32" />
 
                 <TextView
-                    style="@style/TextViews_Bold_big"
+                    style="@style/TextViews_Bold_small"
+                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Item" />
+                    android:text="Customer Phno" />
+
+                <EditText
+                    android:id="@+id/customerPhno_editText"
+                    style="@style/RBSInvoice_EditTexts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:hint="Enter customer phno"
+                    android:inputType="phone"
+                    android:maxLength="32" />
+
+
+
+                <TextView
+                    style="@style/TextViews_Bold_small"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Customer Email" />
+
+                <EditText
+                    android:id="@+id/customerEmail_editText"
+                    style="@style/RBSInvoice_EditTexts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:hint="Enter customer phno"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="32" />
+
+                <TextView
+                    style="@style/TextViews_Bold_small"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Customer ID" />
+
+                <EditText
+                    android:id="@+id/customerId_editText"
+                    style="@style/RBSInvoice_EditTexts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:hint="Enter customer id"
+                    android:maxLength="32" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        style="@style/TextViews_Bold_big"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Item" />
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/TextViews_Bold_small"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Item Name" />
+
+                <EditText
+                    android:id="@+id/itemName_editText"
+                    style="@style/RBSInvoice_EditTexts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:hint="Enter item name"
+                    android:maxLength="32" />
+
+                <TextView
+                    style="@style/TextViews_Bold_small"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Item Serial No" />
+
+                <EditText
+                    android:id="@+id/itemSerialNo_editText"
+                    style="@style/RBSInvoice_EditTexts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:hint="Enter item name"
+                    android:maxLength="32" />
 
             </LinearLayout>
 
-            <TextView
-                style="@style/TextViews_Bold_small"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Item Name" />
-
-            <EditText
-                android:id="@+id/itemName_editText"
-                style="@style/RBSInvoice_EditTexts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-                android:hint="Enter item name"
-                android:maxLength="32" />
-
-            <TextView
-                style="@style/TextViews_Bold_small"
-                android:layout_marginTop="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Item Serial No" />
-
-            <EditText
-                android:id="@+id/itemSerialNo_editText"
-                style="@style/RBSInvoice_EditTexts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-                android:hint="Enter item name"
-                android:maxLength="32" />
-
-
-            <LinearLayout
-                android:id="@+id/itemDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Category" />
-
-                    <TextView
-                        android:id="@+id/category_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Category"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Condition" />
-
-                    <TextView
-                        android:id="@+id/condition_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Condition"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Notes" />
-
-                    <TextView
-                        android:id="@+id/notes_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="asoidhjas das;djasdd asd;ojkasd a;sdljasd as;sdkjasd  as;djas dpo;oajssdd  asd;pjasd  as;lkdkjjasd ;ojasd"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    android:visibility="visible">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Last Active" />
-
-                    <TextView
-                        android:id="@+id/last_active_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Last active time"
-                        android:textColor="@color/colorPrimaryDark" />
-
-                </LinearLayout>
-
-
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/toggling_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="visible">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -464,30 +265,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:text="Agreed Price" />
+                    android:text="Amount" />
 
                 <EditText
-                    android:id="@+id/agreed_price_editText"
+                    android:id="@+id/amount_editText"
                     style="@style/RBSInvoice_EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorPrimary"
-                    android:hint="Enter agreed price"
+                    android:hint="Enter amount"
                     android:inputType="numberDecimal"
                     android:maxLength="32" />
 
                 <TextView
-                    android:id="@+id/pendingAgreed_price_textView"
+                    android:id="@+id/pendingAmount_textView"
                     style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:text="Pending Agreed Price"
+                    android:text="Pending Amount"
                     android:textColor="@color/gradientDarkBlue"
                     android:visibility="gone" />
 
                 <EditText
-                    android:id="@+id/pendingAgreed_price_editText"
+                    android:id="@+id/pendingAmount_editText"
                     style="@style/RBSInvoice_EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -537,50 +338,6 @@
                         android:textAlignment="center"
                         android:textColor="#ffff"
                         android:textSize="15sp" />
-
-                </LinearLayout>
-
-                <TextView
-                    style="@style/RBSInvoice_TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:text="Paid Amount" />
-
-                <EditText
-                    android:id="@+id/paidAmount_editText"
-                    style="@style/RBSInvoice_EditTexts"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:hint="Enter paid amount"
-                    android:inputType="numberDecimal"
-                    android:maxLength="32" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <TextView
-                        style="@style/RBSInvoice_TextViews"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Balance Amount" />
-
-                    <TextView
-                        android:id="@+id/balanceAmount_TextView"
-                        style="@style/RBSInvoice_TextViews"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="NA"
-                        android:textColor="@color/gradientDarkBlue"
-                        android:textSize="18sp" />
-
 
                 </LinearLayout>
 

@@ -61,8 +61,6 @@ public class Customer_history extends AppCompatActivity {
 
     AdapterCustomerIDImagesRecyclerView adapterCustomerIDImagesRecyclerView;
 
-    LinearLayout customerDetails;
-
     Progreess_dialog pd1,pd2;
 
     Boolean toggleCheck = true;
@@ -132,8 +130,6 @@ public class Customer_history extends AppCompatActivity {
 
 
         customerDetailsToggle_textView = (TextView)findViewById(R.id.customerDetailsToggle_textView);
-
-        customerDetails = (LinearLayout)findViewById(R.id.customerDetails);
 
         customerRef = FirebaseDatabase.getInstance().getReference("Customer_list");
 

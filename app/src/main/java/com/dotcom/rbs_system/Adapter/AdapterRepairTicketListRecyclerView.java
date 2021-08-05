@@ -24,21 +24,31 @@ import java.util.List;
 
 public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<AdapterRepairTicketListRecyclerView.ViewHolder> {
     Context context;
-    List<String> customerNameList, itemNameList, ticketNoList,pendingStatusList;
+    List<String> customerNameList, customerIdList,itemNameList, itemSerialNoList,ticketNoList,dateList,pendingStatusList;
     Activity activity;
     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Repairs_ticket_list/"+ FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
 
-    public AdapterRepairTicketListRecyclerView(Context context, List<String> customerNameList, List<String> itemNameList, List<String> ticketNoList,List<String> pendingStatusList) {
+    public AdapterRepairTicketListRecyclerView(Context context, List<String> customerNameList, List<String> customerIdList, List<String> itemNameList, List<String> itemSerialNoList, List<String> ticketNoList, List<String> dateList,List<String> pendingStatusList) {
+
         this.context = context;
+
         this.customerNameList = customerNameList;
         Collections.reverse(this.customerNameList);
+        this.customerIdList = customerIdList;
+        Collections.reverse(this.customerIdList);
         this.itemNameList = itemNameList;
         Collections.reverse(this.itemNameList);
+        this.itemSerialNoList = itemSerialNoList;
+        Collections.reverse(this.itemSerialNoList);
         this.ticketNoList = ticketNoList;
         Collections.reverse(this.ticketNoList);
+        this.dateList = dateList;
+        Collections.reverse(this.dateList);
         this.pendingStatusList = pendingStatusList;
         Collections.reverse(this.pendingStatusList);
+
         activity = (Activity)context;
+
     }
 
     @NonNull
@@ -48,13 +58,21 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterRepairTicketListRecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull AdapterRepairTicketListRecyclerView.ViewHolder holder, int position) {
         holder.customerName_textView.setText(customerNameList.get(position));
+        holder.customerID_textView.setText(customerIdList.get(position));
         holder.itemName_textView.setText(itemNameList.get(position));
+        holder.item_serialNo_textView.setText(itemSerialNoList.get(position));
+        holder.date_textView.setText(dateList.get(position));
+
         if (pendingStatusList!=null){
-            if (pendingStatusList.get(position).equals("pending")){
-                holder.ticketNo_textView.setText(ticketNoList.get(position)+"\n(Pending)");
-            }else {
+            if (pendingStatusList.get(position).equals("Pending Changes")){
+                holder.ticketNo_textView.setText(ticketNoList.get(position)+"\n(Pending Changes)");
+            }else if (pendingStatusList.get(position).equals("Confirmed")){
+                holder.ticketNo_textView.setText(ticketNoList.get(position)+"\n(Confirmed)");
+            }else if (pendingStatusList.get(position).equals("Canceled")){
+                holder.ticketNo_textView.setText(ticketNoList.get(position)+"\n(Canceled)");
+            }else if (pendingStatusList.get(position).equals("clear")){
                 holder.ticketNo_textView.setText(ticketNoList.get(position));
             }
         }else {
@@ -67,18 +85,10 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
             public void onClick(View v) {
                 Intent intent = new Intent(context, Repair_details.class);
                 intent.putExtra("REPAIR_ID",ticketNoList.get(position));
+                intent.putExtra("STATUS",pendingStatusList.get(position));
                 context.startActivity(intent);
             }
         });
-
-        holder.remove_textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                reference.child(ticketNoList.get(position)).removeValue();
-                activity.recreate();
-            }
-        });
-
 
     }
 
@@ -92,7 +102,7 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
         Progreess_dialog pd;
 
         TextView ticketNo_textView,customerName_textView,itemName_textView;
-        TextView remove_textView;
+        TextView customerID_textView,item_serialNo_textView,date_textView;
         LinearLayout leftLayout;
 
         public ViewHolder(@NonNull View itemView) {
@@ -102,8 +112,10 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
 
             ticketNo_textView = (TextView)itemView.findViewById(R.id.ticketNo_textView);
             customerName_textView = (TextView)itemView.findViewById(R.id.customerName_textView);
+            customerID_textView = (TextView)itemView.findViewById(R.id.customerID_textView);
             itemName_textView = (TextView)itemView.findViewById(R.id.item_category_textView);
-            remove_textView = (TextView)itemView.findViewById(R.id.remove_textView);
+            item_serialNo_textView = (TextView)itemView.findViewById(R.id.item_serialNo_textView);
+            date_textView = (TextView)itemView.findViewById(R.id.date_textView);
 
             leftLayout = (LinearLayout) itemView.findViewById(R.id.leftLayout);
 

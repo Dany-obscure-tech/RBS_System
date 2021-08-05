@@ -30,29 +30,26 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Repair_details extends AppCompatActivity {
     String currency = Currency.getInstance().getCurrency();
-    CardView item_cardView,customer_cardView;
-    LinearLayout pendingAgreedPrice_linearLayout,changesConfirmation_linearLayout;
+    LinearLayout pendingAgreedPrice_linearLayout;
 
     Repair_details_edit repair_details_edit_obj;
 
-    TextView ticketNo_textView,agreedPrice_TextView,date_TextView,paidAmount_TextView,balanceAmount_TextView,specialConditions_TextView;
+    TextView ticketNo_textView, amount_TextView,date_TextView,specialConditions_TextView;
     TextView itemName_textView,serialNo_textView;
     TextView customerName_textView,id_textView,phno_textView,email_textView;
-    TextView pendingFaults_textView,pendingAgreedPrice_TextView;
+    TextView pendingFaults_textView, pendingAmount_TextView;
     TextView edit_textView;
-    TextView confirmChanges_textView,cancleChanges_textView;
     TextView confirmTicket_textView,cancleTicket_textView;
 
     DatabaseReference repairRef,repairTicketRef;
 
-    String repairID,itemKeyID,customerKeyID;
+    String repairID,repairTicketStatus,itemKeyID,customerKeyID;
     String firebaseUserID;
-    String paidAmount_str,agreedAmount_str,pendingAmount_str,balanceAmount_str;
+    String agreedAmount_str,pendingAmount_str;
 
     List<String> faultNameList,faultPriceList,faultKeyIDList;
     List<String> pendingFaultNameList,pendingFaultPriceList,pendingFaultKeyIDList;
@@ -90,18 +87,13 @@ public class Repair_details extends AppCompatActivity {
 
     private void Initialization() {
 
-        item_cardView = (CardView) findViewById(R.id.item_cardView);
-        customer_cardView = (CardView) findViewById(R.id.customer_cardView);
         pendingAgreedPrice_linearLayout = (LinearLayout) findViewById(R.id.pendingAgreedPrice_linearLayout);
-        changesConfirmation_linearLayout = (LinearLayout) findViewById(R.id.changesConfirmation_linearLayout);
 
         repair_details_edit_obj = Repair_details_edit.getInstance();
 
         ticketNo_textView = (TextView)findViewById(R.id.ticketNo_textView);
-        agreedPrice_TextView = (TextView)findViewById(R.id.agreedPrice_TextView);
+        amount_TextView = (TextView)findViewById(R.id.amount_TextView);
         date_TextView = (TextView)findViewById(R.id.date_TextView);
-        paidAmount_TextView = (TextView)findViewById(R.id.paidAmount_TextView);
-        balanceAmount_TextView = (TextView)findViewById(R.id.balanceAmount_TextView);
         specialConditions_TextView = (TextView)findViewById(R.id.specialConditions_TextView);
 
         itemName_textView = (TextView)findViewById(R.id.itemName_textView);
@@ -112,11 +104,9 @@ public class Repair_details extends AppCompatActivity {
         phno_textView = (TextView)findViewById(R.id.phno_textView);
         email_textView = (TextView)findViewById(R.id.email_textView);
         pendingFaults_textView = (TextView)findViewById(R.id.pendingFaults_textView);
-        pendingAgreedPrice_TextView = (TextView)findViewById(R.id.pendingAgreedPrice_TextView);
+        pendingAmount_TextView = (TextView)findViewById(R.id.pendingAmount_TextView);
 
         edit_textView = (TextView) findViewById(R.id.edit_textView);
-        confirmChanges_textView = (TextView) findViewById(R.id.confirmChanges_textView);
-        cancleChanges_textView = (TextView) findViewById(R.id.cancleChanges_textView);
 
         confirmTicket_textView = (TextView) findViewById(R.id.confirmTicket_textView);
         cancleTicket_textView = (TextView) findViewById(R.id.cancleTicket_textView);
@@ -146,6 +136,14 @@ public class Repair_details extends AppCompatActivity {
         btn_done = (Button) sendingdialog.findViewById(R.id.btn_done);
 
         repairID = getIntent().getStringExtra("REPAIR_ID");
+        repairTicketStatus = getIntent().getStringExtra("STATUS");
+        if (repairTicketStatus.equals("Confirmed")||repairTicketStatus.equals("Canceled")){
+            edit_textView.setVisibility(View.GONE);
+            confirmTicket_textView.setVisibility(View.GONE);
+            cancleTicket_textView.setVisibility(View.GONE);
+
+        }
+
         firebaseUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         faultNameList = new ArrayList<>();
@@ -180,13 +178,9 @@ public class Repair_details extends AppCompatActivity {
                 serialNo_textView.setText(dataSnapshot.child("Item_serial_no").getValue().toString());
 
                 ticketNo_textView.setText(dataSnapshot.child("Ticket_no").getValue().toString());
-                agreedPrice_TextView.setText(currency+dataSnapshot.child("Agreed_price").getValue().toString());
-                agreedAmount_str=dataSnapshot.child("Agreed_price").getValue().toString();
+                amount_TextView.setText(currency+dataSnapshot.child("Amount").getValue().toString());
+                agreedAmount_str=dataSnapshot.child("Amount").getValue().toString();
                 date_TextView.setText(dataSnapshot.child("Date").getValue().toString());
-                paidAmount_TextView.setText(currency+dataSnapshot.child("Paid_amount").getValue().toString());
-                paidAmount_str=dataSnapshot.child("Paid_amount").getValue().toString();
-                balanceAmount_TextView.setText(currency+dataSnapshot.child("Balance_amount").getValue().toString());
-                balanceAmount_str=dataSnapshot.child("Balance_amount").getValue().toString();
                 specialConditions_TextView.setText(dataSnapshot.child("Special_condition").getValue().toString());
                 timestamp = Long.parseLong(dataSnapshot.child("Timestamp").getValue().toString());
 
@@ -199,7 +193,6 @@ public class Repair_details extends AppCompatActivity {
                 faultList_recyclerView.setAdapter(adapterRepairsFaultListRecyclerView);
 
                 if (dataSnapshot.child("Pending_Faults").exists()){
-//                    changesConfirmation_linearLayout.setVisibility(View.VISIBLE);
                     pendingFaults_textView.setVisibility(View.VISIBLE);
                     pendingFaultList_recyclerView.setVisibility(View.VISIBLE);
 
@@ -212,14 +205,14 @@ public class Repair_details extends AppCompatActivity {
                     pendingFaultList_recyclerView.setAdapter(adapterRepairsPendingFaultListRecyclerView);
                 }
 
-                if (dataSnapshot.child("Pending_Price").exists()){
-                    repair_details_edit_obj.setPendingPrice(dataSnapshot.child("Pending_Price").getValue().toString());
-                    pendingAgreedPrice_TextView.setText(currency+dataSnapshot.child("Pending_Price").getValue().toString());
-                    pendingAmount_str = dataSnapshot.child("Pending_Price").getValue().toString();
+                if (dataSnapshot.child("Pending_Amount").exists()){
+                    repair_details_edit_obj.setPendingAmount_TextView(dataSnapshot.child("Pending_Amount").getValue().toString());
+                    pendingAmount_TextView.setText(currency+dataSnapshot.child("Pending_Amount").getValue().toString());
+                    pendingAmount_str = dataSnapshot.child("Pending_Amount").getValue().toString();
                     pendingAgreedPrice_linearLayout.setVisibility(View.VISIBLE);
 
                 }else {
-                    repair_details_edit_obj.setPendingPrice(agreedAmount_str);
+                    repair_details_edit_obj.setPendingAmount_TextView(agreedAmount_str);
                 }
 
 
@@ -238,13 +231,9 @@ public class Repair_details extends AppCompatActivity {
 
     private void OnClickListeners() {
         editRepairDetails();
-        confirmChanges();
-        cancleChanges();
-
         confirmTicket();
         cancleTicket();
 
-        historyActivity();
         sending_dialog();
         backButton();
     }
@@ -301,10 +290,8 @@ public class Repair_details extends AppCompatActivity {
                 repair_details_edit_obj.setEmail_textView(email_textView.getText().toString());
 
                 repair_details_edit_obj.setTicketNo_TextView(ticketNo_textView.getText().toString());
-                repair_details_edit_obj.setAgreedPrice_TextView(agreedAmount_str);
+                repair_details_edit_obj.setAmount_TextView(agreedAmount_str);
                 repair_details_edit_obj.setDate_TextView(date_TextView.getText().toString());
-                repair_details_edit_obj.setPaidAmount_TextView(paidAmount_str);
-                repair_details_edit_obj.setBalanceAmount_TextView(balanceAmount_str);
                 repair_details_edit_obj.setSpecialConditions_TextView(specialConditions_TextView.getText().toString());
 
                 repair_details_edit_obj.setFaultNameList(faultNameList);
@@ -324,61 +311,13 @@ public class Repair_details extends AppCompatActivity {
         });
     }
 
-    private void confirmChanges() {
-        confirmChanges_textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (pendingFaultNameList.size()!=0){
-                    repairRef.child("Pending_Faults").removeValue();
-                    for (int i = 0;i<pendingFaultNameList.size();i++){
-                        repairRef.child("Faults").child("Fault_"+String.valueOf(faultNameList.size()+1)).child("Fault_name").setValue(pendingFaultNameList.get(i));
-                        repairRef.child("Faults").child("Fault_"+String.valueOf(faultNameList.size()+1)).child("Fault_price").setValue(pendingFaultPriceList.get(i));
-                        repairRef.child("Faults").child("Fault_"+String.valueOf(faultNameList.size()+1)).child("Fault_key").setValue(pendingFaultKeyIDList.get(i));
-                    }
-
-                    repairRef.child("Pending_Price").removeValue();
-                    repairRef.child("Agreed_price").setValue(pendingAmount_str);
-                    repairRef.child("Balance_amount").setValue(String.valueOf(Float.parseFloat(pendingAmount_str)-Float.parseFloat(paidAmount_str)));
-
-                    repairTicketRef.child("Status").setValue("clear");
-
-                    Intent intent = new Intent(Repair_details.this,Repair_details.class);
-                    intent.putExtra("REPAIR_ID",repairID);
-                    finish();
-                    startActivity(intent);
-                }else {
-                    Toast.makeText(Repair_details.this, "No changes", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-    }
-
-    private void cancleChanges() {
-        cancleChanges_textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                repairRef.child("Pending_Faults").removeValue();
-                repairRef.child("Pending_Price").removeValue();
-                repairTicketRef.child("Status").setValue("clear");
-
-                Intent intent = new Intent(Repair_details.this,Repair_details.class);
-                intent.putExtra("REPAIR_ID",repairID);
-                finish();
-                startActivity(intent);
-            }
-        });
-    }
-
     private void confirmTicket() {
         confirmTicket_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (pendingFaultNameList.size()==0){
 
-                    repairTicketRef.removeValue();
-                    repairRef.removeValue();
+                    repairTicketRef.child("Status").setValue("Confirmed");
                     sendingdialog.show();
 
                 }else {
@@ -392,28 +331,8 @@ public class Repair_details extends AppCompatActivity {
         cancleTicket_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                repairTicketRef.removeValue();
-                repairRef.removeValue();
+                repairTicketRef.child("Status").setValue("Canceled");
                 finish();
-            }
-        });
-    }
-
-    private void historyActivity() {
-        item_cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Repair_details.this,Item_history.class);
-                startActivity(intent);
-            }
-        });
-
-        customer_cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Repair_details.this,Customer_history.class);
-                intent.putExtra("CUSTOMER_ID",customerKeyID);
-                startActivity(intent);
             }
         });
     }

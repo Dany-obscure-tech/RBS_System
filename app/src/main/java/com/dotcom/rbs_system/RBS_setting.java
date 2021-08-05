@@ -152,7 +152,7 @@ public class RBS_setting extends Fragment {
         storageReference = FirebaseStorage.getInstance().getReference();
         reference = FirebaseDatabase.getInstance().getReference();
         shopKeeperDataRef = FirebaseDatabase.getInstance().getReference("Users_data/" + FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Shopkeeper_details");
-        faultListRef = FirebaseDatabase.getInstance().getReference("Listed_faults");
+        faultListRef = FirebaseDatabase.getInstance().getReference("Listed_faults/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
         rbsMessageRef = FirebaseDatabase.getInstance().getReference("Admin");
 
         logoButtons_linearLayout = (LinearLayout) view.findViewById(R.id.logoButtons_linearLayout);
@@ -266,16 +266,15 @@ public class RBS_setting extends Fragment {
         faultListRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    faultNameList.add(String.valueOf(dataSnapshot1.child("Fault_name").getValue()));
-                    faultPriceList.add(String.valueOf(dataSnapshot1.child("Fault_price").getValue()));
-                    faultKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
-                }
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        faultNameList.add(String.valueOf(dataSnapshot1.child("Fault_name").getValue()));
+                        faultPriceList.add(String.valueOf(dataSnapshot1.child("Fault_price").getValue()));
+                        faultKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
+                    }
 
-                adapterSettingsFaultListRecyclerView = new AdapterSettingsFaultListRecyclerView(getActivity(), faultNameList, faultPriceList, faultKeyIDList);
-                faultList_recyclerView.setAdapter(adapterSettingsFaultListRecyclerView);
-                faultList_recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-
+                    adapterSettingsFaultListRecyclerView = new AdapterSettingsFaultListRecyclerView(getActivity(), faultNameList, faultPriceList, faultKeyIDList);
+                    faultList_recyclerView.setAdapter(adapterSettingsFaultListRecyclerView);
+                    faultList_recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
             }
 
             @Override

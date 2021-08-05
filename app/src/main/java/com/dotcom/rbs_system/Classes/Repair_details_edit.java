@@ -1,6 +1,5 @@
 package com.dotcom.rbs_system.Classes;
 
-import java.util.Date;
 import java.util.List;
 
 public class Repair_details_edit {
@@ -23,13 +22,11 @@ public class Repair_details_edit {
     String email_textView;
 
     String ticketNo_TextView;
-    String agreedPrice_TextView;
+    String amount_TextView;
     String date_TextView;
-    String paidAmount_TextView;
-    String balanceAmount_TextView;
     String specialConditions_TextView;
 
-    String pendingPrice;
+    String pendingAmount_TextView;
 
     List<String> faultNameList;
     List<String> faultPriceList;
@@ -162,12 +159,12 @@ public class Repair_details_edit {
         this.ticketNo_TextView = ticketNo_TextView;
     }
 
-    public String getAgreedPrice_TextView() {
-        return agreedPrice_TextView;
+    public String getAmount_TextView() {
+        return amount_TextView;
     }
 
-    public void setAgreedPrice_TextView(String agreedPrice_TextView) {
-        this.agreedPrice_TextView = agreedPrice_TextView;
+    public void setAmount_TextView(String amount_TextView) {
+        this.amount_TextView = amount_TextView;
     }
 
     public String getDate_TextView() {
@@ -176,22 +173,6 @@ public class Repair_details_edit {
 
     public void setDate_TextView(String date_TextView) {
         this.date_TextView = date_TextView;
-    }
-
-    public String getPaidAmount_TextView() {
-        return paidAmount_TextView;
-    }
-
-    public void setPaidAmount_TextView(String paidAmount_TextView) {
-        this.paidAmount_TextView = paidAmount_TextView;
-    }
-
-    public String getBalanceAmount_TextView() {
-        return balanceAmount_TextView;
-    }
-
-    public void setBalanceAmount_TextView(String balanceAmount_TextView) {
-        this.balanceAmount_TextView = balanceAmount_TextView;
     }
 
     public String getSpecialConditions_TextView() {
@@ -206,12 +187,12 @@ public class Repair_details_edit {
         return faultNameList;
     }
 
-    public String getPendingPrice() {
-        return pendingPrice;
+    public String getPendingAmount_TextView() {
+        return pendingAmount_TextView;
     }
 
-    public void setPendingPrice(String pendingPrice) {
-        this.pendingPrice = pendingPrice;
+    public void setPendingAmount_TextView(String pendingAmount_TextView) {
+        this.pendingAmount_TextView = pendingAmount_TextView;
     }
 
     public void setFaultNameList(List<String> faultNameList) {
@@ -282,10 +263,8 @@ public class Repair_details_edit {
         this.email_textView = null;
 
         this.ticketNo_TextView = null;
-        this.agreedPrice_TextView = null;
+        this.amount_TextView = null;
         this.date_TextView = null;
-        this.paidAmount_TextView = null;
-        this.balanceAmount_TextView = null;
         this.specialConditions_TextView = null;
 
         this.faultNameList = null;
@@ -295,7 +274,7 @@ public class Repair_details_edit {
         this.pendingFaultNameList = null;
         this.pendingFaultPriceList = null;
         this.pendingFaultKeyIDList = null;
-        this.pendingPrice = null;
+        this.pendingAmount_TextView = null;
     }
 
 

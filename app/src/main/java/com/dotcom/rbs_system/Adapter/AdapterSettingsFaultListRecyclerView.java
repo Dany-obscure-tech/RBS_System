@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -22,7 +23,7 @@ public class AdapterSettingsFaultListRecyclerView extends RecyclerView.Adapter<A
     Context context;
     List<String> faultNameList, faultPriceList, faultKeyIDList;
     Activity activity;
-    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Listed_faults");
+    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Listed_faults/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
 
     public AdapterSettingsFaultListRecyclerView(Context context, List<String> faultNameList, List<String> faultPriceList, List<String> faultKeyIDList) {
         this.context = context;
@@ -39,7 +40,7 @@ public class AdapterSettingsFaultListRecyclerView extends RecyclerView.Adapter<A
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterSettingsFaultListRecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull AdapterSettingsFaultListRecyclerView.ViewHolder holder, int position) {
         holder.faultName_textView.setText(faultNameList.get(position));
         holder.faultPrice_textView.setText(faultPriceList.get(position));
 

@@ -153,8 +153,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     List<String> voucher_number_list, Voucher_amount_list;
     List<String> dateList, lastActiveDatelist;
 
-    LinearLayout itemDetails, customerDetails;
-
     EditText sale_price_editText, cash_editText, paid_editText;
 
     Date date;
@@ -222,8 +220,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
         reference = FirebaseDatabase.getInstance().getReference();
 
-        itemDetails = (LinearLayout) findViewById(R.id.itemDetails);
-        customerDetails = (LinearLayout) findViewById(R.id.customerDetails);
         toggling_linear = (LinearLayout) findViewById(R.id.toggling_linear);
 
         cash_checkbox = (CheckBox) findViewById(R.id.cash_checkbox);
