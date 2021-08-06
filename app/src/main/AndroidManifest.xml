@@ -23,6 +23,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Invoice_preview"
+            android:theme="@style/AppTheme.no"
+            android:exported="true" />
+        <activity
             android:name=".Shopkeeper_details"
             android:theme="@style/AppTheme.no" />
         <activity
@@ -66,7 +70,6 @@
         <activity
             android:name=".BuyLocal_messaging"
             android:theme="@style/AppTheme.no" />
-
         <activity
             android:name=".BuyLocal_shopkeeperProductDetails"
             android:theme="@style/AppTheme.no" />
@@ -137,7 +140,6 @@
         <activity
             android:name=".Item_detail"
             android:theme="@style/AppTheme.no" />
-
         <activity
             android:name=".AddRepairTicket"
             android:theme="@style/AppTheme.no" />

@@ -1127,13 +1127,26 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
             new Customer_history_class().twelveValues(rbsCustomerDetails.getKey(), key, date_textView.getText().toString(), rbsItemDetails.getItemCategory(), String.valueOf(rbsItemDetails.getFirstImageUri()), rbsItemDetails.getKey(), rbsItemDetails.getItemName(), rbsItemDetails.getItemID(), "Sale", UserDetails.getInstance().getShopLogo(), FirebaseAuth.getInstance().getCurrentUser().getUid(), UserDetails.getInstance().getShopName(), date.getTime());
             pd.dismissProgressBar(Buy.this);
-            sendingdialog.show();
 
         } else {
             Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
             connected = false;
             pd.dismissProgressBar(Buy.this);
         }
+
+        Intent intent=new Intent(Buy.this,Invoice_preview.class);
+        intent.putExtra("Date",String.valueOf(date_textView.getText().toString()));
+        intent.putExtra("Customer_Name",String.valueOf(customerName_textView.getText().toString()));
+        intent.putExtra("Customer_Email",String.valueOf(customerEmail_textView.getText().toString()));
+        intent.putExtra("Customer_ID",String.valueOf(customerID_textView.getText().toString()));
+        intent.putExtra("Customer_Ph_No",String.valueOf(customerPhno_textView.getText().toString()));
+        intent.putExtra("Item_Name",String.valueOf(itemName_textView.getText().toString()));
+        intent.putExtra("Item_ID",String.valueOf(itemID_textView.getText().toString()));
+        intent.putExtra("Item_Price_Currency",String.valueOf(itemPriceCurrency_textView.getText().toString()));
+        intent.putExtra("Item_Price",String.valueOf(itemPrice_textView.getText().toString()));
+        intent.putExtra("Paid_Amount",String.valueOf(paid_editText.getText().toString()));
+        finish();
+        startActivity(intent);
 
     }
 
@@ -1283,7 +1296,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         if (requestCode == ITEM_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) { // Activity.RESULT_OK
                 // get String data from Intent
-                Toast.makeText(this, String.valueOf(rbsItemDetails.getImageUrlList().size()), Toast.LENGTH_SHORT).show();
+
                 String itemname_returnString = data.getStringExtra("Item_name");
                 String itemid_returnString = data.getStringExtra("Item_id");
                 String itemcategory_returnString = data.getStringExtra("Item_category");

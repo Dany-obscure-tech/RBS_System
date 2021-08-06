@@ -16,19 +16,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/back_btn"
             android:layout_centerVertical="true"
-            android:text="Buy Item"
+            android:layout_toRightOf="@+id/back_btn"
             android:fontFamily="@font/segoe_ui_bold"
+            android:text="Buy Item"
             android:textColor="#ffffff"
-            android:textSize="@dimen/Bold_Big"/>
+            android:textSize="@dimen/Bold_Big" />
 
         <ImageButton
             android:id="@+id/back_btn"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
             android:adjustViewBounds="true"
@@ -53,30 +53,30 @@
 
             <Button
                 android:id="@+id/test"
-                android:text="test"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="test" />
 
             <LinearLayout
-                android:orientation="horizontal"
-                android:weightSum="2"
-                android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <TextView
+                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    style="@style/RBSInvoice_TextViews"
                     android:text="Customer" />
 
                 <TextView
                     android:id="@+id/customer_add_textView"
-                    android:layout_weight="1"
                     style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:text="Add Customer +"
                     android:textAlignment="viewEnd"
                     android:textColor="@color/gradientDarkBlue"
@@ -86,9 +86,9 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/searchForCustomer_cardView"
+                style="@style/CardView_style"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/CardView_style">
+                android:layout_height="wrap_content">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -100,24 +100,27 @@
                         android:layout_width="200px"
                         android:layout_height="200px"
                         android:layout_alignParentLeft="true"
-                        android:layout_marginRight="15dp"
                         android:layout_centerVertical="true"
-                        android:visibility="gone"
-                        android:src="@drawable/laptop" />
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/laptop"
+                        android:visibility="gone" />
 
                     <RelativeLayout
-                        android:layout_toRightOf="@+id/customerImage_imageView"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/customerImage_imageView">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:id="@+id/customerName_textView"
                             style="@style/Titles_item"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginBottom="5dp"
                             android:text="Search for customer"
-                            android:textColor="@color/textGrey"
-                            android:layout_margin="5dp"/>
+                            android:textColor="@color/textGrey" />
 
                         <LinearLayout
                             android:id="@+id/email_area"
@@ -128,13 +131,13 @@
                             <TextView
                                 android:id="@+id/customerEmail_textView"
                                 style="@style/SubTitles_item_values"
-                                android:visibility="gone"
-                                android:layout_marginTop="2dp"
-                                android:layout_marginBottom="2dp"
-                                android:layout_marginLeft="5dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Shahzaib@gmail.com" />
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="2dp"
+                                android:text="Shahzaib@gmail.com"
+                                android:visibility="gone" />
 
 
                         </LinearLayout>
@@ -149,12 +152,12 @@
                                 android:id="@+id/customerID_textView"
                                 style="@style/SubTitles_item_values"
                                 android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
                                 android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp"
-                                android:layout_marginLeft="5dp"
-                                android:layout_height="wrap_content"
-                                android:visibility="gone"
-                                android:text="1573470" />
+                                android:text="1573470"
+                                android:visibility="gone" />
 
 
                         </LinearLayout>
@@ -169,12 +172,12 @@
                                 android:id="@+id/customerPhno_textView"
                                 style="@style/SubTitles_item_values"
                                 android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
                                 android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp"
-                                android:layout_marginLeft="5dp"
-                                android:layout_height="wrap_content"
-                                android:visibility="gone"
-                                android:text="100" />
+                                android:text="100"
+                                android:visibility="gone" />
 
                         </LinearLayout>
 
@@ -182,52 +185,52 @@
 
                     <TextView
                         android:id="@+id/viewCustomerDetails_textView"
-                        android:text="\?"
-                        android:padding="5dp"
-                        android:visibility="gone"
+                        style="@style/TextViews_Bold_big"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        style="@style/TextViews_Bold_big"
+                        android:padding="5dp"
+                        android:text="\?"
                         android:textColor="@color/gradientDarkBlue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:visibility="gone" />
 
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_marginTop="30dp"
-                android:weightSum="2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <TextView
+                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    style="@style/RBSInvoice_TextViews"
                     android:text="Item" />
 
                 <TextView
                     android:id="@+id/item_add_textView"
+                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:text="Add Item +"
                     android:textAlignment="viewEnd"
-                    style="@style/RBSInvoice_TextViews"
                     android:textColor="@color/gradientDarkBlue"
-                    android:textSize="18sp"
-                    android:text="Add Item +" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/searchForItem_cardView"
+                style="@style/CardView_style"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/CardView_style">
+                android:layout_height="wrap_content">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -239,39 +242,42 @@
                         android:layout_width="200px"
                         android:layout_height="200px"
                         android:layout_alignParentLeft="true"
-                        android:layout_marginRight="15dp"
                         android:layout_centerVertical="true"
-                        android:visibility="gone"
-                        android:src="@drawable/laptop" />
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/laptop"
+                        android:visibility="gone" />
 
                     <RelativeLayout
-                        android:layout_toRightOf="@+id/itemImage_imageView"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/itemImage_imageView">
 
                         <TextView
                             android:id="@+id/itemName_textView"
+                            style="@style/Titles_item"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style="@style/Titles_item"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginBottom="5dp"
                             android:text="Search for item..."
-                            android:textColor="@color/textGrey"
-                            android:layout_margin="5dp"/>
+                            android:textColor="@color/textGrey" />
 
                         <TextView
                             android:id="@+id/itemID_textView"
-                            android:visibility="gone"
-                            android:textColor="@color/textGrey"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:textSize="15sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/itemName_textView"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
                             android:layout_marginTop="2dp"
                             android:layout_marginBottom="2dp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_gravity="center_vertical"
+                            android:fontFamily="@font/segoe_ui_bold"
                             android:text="IMEI/Serial no"
-                            android:layout_below="@+id/itemName_textView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:textColor="@color/textGrey"
+                            android:textSize="15sp"
+                            android:visibility="gone" />
 
                         <LinearLayout
                             android:id="@+id/item_price_linearLayout"
@@ -283,25 +289,25 @@
                                 android:id="@+id/itemPriceCurrency_textView"
                                 style="@style/SubTitles_item_values"
                                 android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
                                 android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp"
-                                android:layout_marginLeft="5dp"
-                                android:layout_height="wrap_content"
-                                android:visibility="gone"
+                                android:text="$"
                                 android:textColor="@color/textGreen"
-                                android:text="$" />
+                                android:visibility="gone" />
 
                             <TextView
                                 android:id="@+id/itemPrice_textView"
                                 style="@style/SubTitles_item_values"
                                 android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
                                 android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp"
-                                android:layout_marginLeft="5dp"
-                                android:layout_height="wrap_content"
+                                android:text="157"
                                 android:textColor="@color/textGreen"
-                                android:visibility="gone"
-                                android:text="157" />
+                                android:visibility="gone" />
 
 
                         </LinearLayout>
@@ -314,17 +320,17 @@
 
                             <TextView
                                 android:id="@+id/itemLastActive_textView"
-                                android:textColor="@color/textGrey"
-                                android:fontFamily="@font/segoe_ui"
-                                android:textSize="15sp"
-                                android:visibility="gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="5dp"
                                 android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp"
-                                android:layout_marginLeft="5dp"
+                                android:fontFamily="@font/segoe_ui"
                                 android:text=""
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
+                                android:textColor="@color/textGrey"
+                                android:textSize="15sp"
+                                android:visibility="gone" />
 
                         </LinearLayout>
 
@@ -332,15 +338,15 @@
 
                     <TextView
                         android:id="@+id/viewItemDetails_textView"
-                        android:text="\?"
-                        android:padding="5dp"
-                        android:visibility="gone"
+                        style="@style/TextViews_Bold_big"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        style="@style/TextViews_Bold_big"
+                        android:padding="5dp"
+                        android:text="\?"
                         android:textColor="@color/gradientDarkBlue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:visibility="gone" />
 
                 </RelativeLayout>
 
@@ -523,9 +529,6 @@
         </LinearLayout>
 
     </ScrollView>
-
-
-
 
 
 </RelativeLayout>
