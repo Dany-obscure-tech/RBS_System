@@ -1,26 +1,38 @@
 package com.dotcom.rbs_system;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dotcom.rbs_system.Classes.Customer_history_class;
+import com.dotcom.rbs_system.Classes.RBSItemDetails;
+import com.dotcom.rbs_system.Classes.UniquePushID;
+import com.dotcom.rbs_system.Classes.UserDetails;
+import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -30,11 +42,9 @@ import java.util.List;
 
 public class BuyLocal_Profile extends Fragment {
 
-    DatabaseReference customerdataRef,customer_offerRef;
-
     RelativeLayout alert_background_relativelayout;
 
-
+    Uri fileUri;
 
     TextView name,phno,email,address,creationDate_textView,edit_textView,edit_image_textView;
 
@@ -69,8 +79,6 @@ public class BuyLocal_Profile extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        customerdataRef = FirebaseDatabase.getInstance().getReference("Users_data");
-        customer_offerRef = FirebaseDatabase.getInstance().getReference("Customer_offers");
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -112,7 +120,6 @@ public class BuyLocal_Profile extends Fragment {
 
         onclicklistners();
 
-        offerListFetch();
         datafetch();
 
         return view;
@@ -122,6 +129,7 @@ public class BuyLocal_Profile extends Fragment {
         edit_btn_listner();
         alert_background_relativelayout_listner();
         profileImage_imageView_listner();
+        edit_image_textView_listener();
     }
 
     private void alert_background_relativelayout_listner() {
@@ -147,6 +155,20 @@ public class BuyLocal_Profile extends Fragment {
         });
     }
 
+    private void edit_image_textView_listener(){
+        edit_image_textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ImagePicker.Companion.with(getActivity())
+                        .crop()                    //Crop image(Optional), Check Customization for more option
+                        .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
+                        .start();
+            }
+        });
+
+    }
+
     private void edit_btn_listner() {
         edit_textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,45 +180,18 @@ public class BuyLocal_Profile extends Fragment {
     }
 
     private void datafetch() {
-        customerdataRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    name.setText(dataSnapshot.child("fullname").getValue().toString());
-                    address.setText(dataSnapshot.child("address").getValue().toString());
-                    phno.setText(dataSnapshot.child("contactno").getValue().toString());
-                    email.setText(dataSnapshot.child("email").getValue().toString());
 
-                    SimpleDateFormat sfd = new SimpleDateFormat("dd-MMMM-yyyy ");
-                    creationDate_textView.setText(String.valueOf(sfd.format(new Date(FirebaseAuth.getInstance().getCurrentUser().getMetadata().getCreationTimestamp()))));
+        name.setText(UserDetails.getInstance().getName());
+        address.setText(UserDetails.getInstance().getAddress());
+        phno.setText(UserDetails.getInstance().getPhno());
+        email.setText(UserDetails.getInstance().getEmail());
 
-                    Picasso.get().load(String.valueOf(dataSnapshot.child("profile_image_url").getValue().toString())).into(profileImage_imageView);
-                    Picasso.get().load(String.valueOf(dataSnapshot.child("profile_image_url").getValue().toString())).into(edit_image_image_view);
+        SimpleDateFormat sfd = new SimpleDateFormat("dd-MMMM-yyyy ");
+        creationDate_textView.setText(String.valueOf(sfd.format(new Date(FirebaseAuth.getInstance().getCurrentUser().getMetadata().getCreationTimestamp()))));
 
-                }
-            }
+        Picasso.get().load(UserDetails.getInstance().getProfileImageUrl()).into(profileImage_imageView);
+        Picasso.get().load(UserDetails.getInstance().getProfileImageUrl()).into(edit_image_image_view);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void offerListFetch() {
-        customer_offerRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot snapshot1:snapshot.getChildren()){
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
 }

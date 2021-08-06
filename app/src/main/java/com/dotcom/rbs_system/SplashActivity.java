@@ -139,6 +139,12 @@ public class SplashActivity extends AppCompatActivity {
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserDetails.getInstance().setName(dataSnapshot.child("fullname").getValue().toString());
+                UserDetails.getInstance().setPhno(dataSnapshot.child("phno").getValue().toString());
+                UserDetails.getInstance().setAddress(dataSnapshot.child("address").getValue().toString());
+                UserDetails.getInstance().setEmail(dataSnapshot.child("email").getValue().toString());
+                UserDetails.getInstance().setProfileImageUrl(dataSnapshot.child("profile_image_url").getValue().toString());
+
                 if (dataSnapshot.child("Shopkeeper_details").exists()){
                     UserDetails.getInstance().setShopkeeper(true);
                     UserDetails.getInstance().setShopAddress(dataSnapshot.child("Shopkeeper_details").child("shop_address").getValue().toString());

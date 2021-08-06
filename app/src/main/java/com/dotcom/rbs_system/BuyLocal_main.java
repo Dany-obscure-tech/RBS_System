@@ -1,11 +1,17 @@
 package com.dotcom.rbs_system;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -13,12 +19,26 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dotcom.rbs_system.Classes.UserDetails;
+import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class BuyLocal_main extends AppCompatActivity {
+    DatabaseReference customerProfileImageRef;
+    StorageReference customerProfileImageStorageReference;
+
     BottomNavigationView bottomNavigationView;
     Dialog confirmation_alert;
     TextView yes_btn_textview, cancel_btn_textview;
+
     final BuyLocal_home fragment_buyLocalhome = new BuyLocal_home();
     final BuyLocal_Profile fragment_BuyLocal_profile = new BuyLocal_Profile();
     final BuyLocal_About fragment_BuyLocal_about = new BuyLocal_About();
@@ -31,6 +51,10 @@ public class BuyLocal_main extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_local_main);
+
+        customerProfileImageStorageReference = FirebaseStorage.getInstance().getReference().child("Customer_Profile_image/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
+        customerProfileImageRef = FirebaseDatabase.getInstance().getReference("Users_data/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         confirmation_alert = new Dialog(this);
         confirmation_alert.setContentView(R.layout.exit_confirmation_alert);
@@ -54,7 +78,7 @@ public class BuyLocal_main extends AppCompatActivity {
                         break;
                     case R.id.profile:
                         // Switch to page two
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, fragment_BuyLocal_profile).commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, fragment_BuyLocal_profile,"FRAGMENT_PROFILE").commit();
                         break;
                     case R.id.about:
                         // Switch to page two
@@ -149,5 +173,51 @@ public class BuyLocal_main extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Toast.makeText(this, "called", Toast.LENGTH_SHORT).show();
+
+        if (resultCode == Activity.RESULT_OK) {
+            //Image Uri will not be null for RESULT_OK
+            Uri fileUri = data.getData();
+
+            Toast.makeText(this, String.valueOf(fileUri), Toast.LENGTH_SHORT).show();
+
+            customerProfileImageStorageReference.child("Profile_image").putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    customerProfileImageStorageReference.child("Profile_image").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            customerProfileImageRef.child("profile_image_url").setValue(String.valueOf(uri.toString()));
+                            UserDetails.getInstance().setProfileImageUrl(String.valueOf(uri.toString()));
+
+                            getSupportFragmentManager().beginTransaction().detach(getSupportFragmentManager().findFragmentByTag("FRAGMENT_PROFILE")).attach(getSupportFragmentManager().findFragmentByTag("FRAGMENT_PROFILE")).commit();
+                        }
+                    });
+
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(BuyLocal_main.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            //You can get File object from intent
+//            val file:File = ImagePicker.getFile(data)!!
+
+            //You can also get File Path from intent
+//                    val filePath:String = ImagePicker.getFilePath(data)!!
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+//            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show();
+        }
     }
 }
