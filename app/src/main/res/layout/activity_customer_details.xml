@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorWhite"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     tools:context=".Customer_details">
 
     <RelativeLayout
@@ -16,19 +16,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/back_btn"
             android:layout_centerVertical="true"
-            android:text="Add Customer"
+            android:layout_toRightOf="@+id/back_btn"
             android:fontFamily="@font/segoe_ui_bold"
+            android:text="Add Customer"
             android:textColor="#ffffff"
-            android:textSize="22sp"/>
+            android:textSize="22sp" />
 
         <ImageButton
             android:id="@+id/back_btn"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
             android:adjustViewBounds="true"
@@ -52,87 +52,115 @@
             android:orientation="vertical">
 
             <TextView
+                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                style="@style/RBSInvoice_TextViews"
                 android:text="Customer Name" />
 
             <EditText
                 android:id="@+id/ac_title"
+                style="@style/RBSInvoice_EditTexts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                style="@style/RBSInvoice_EditTexts"
                 android:hint="Enter customer name"
+                android:maxLines="1"
                 android:maxLength="32" />
 
             <TextView
+                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                style="@style/RBSInvoice_TextViews"
-                android:text="Customer Phone no"/>
+                android:text="Customer Phone no" />
 
-            <EditText
-                android:id="@+id/ac_phoneno"
-                android:inputType="phone"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-                style="@style/RBSInvoice_EditTexts"
-                android:hint="Enter customer phone no"
-                android:maxLength="32"/>
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/ccp"
+                    style="@style/TextViews_Regular_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:onClick="onCountryPickerClick"
+                    app:ccp_flagBorderColor="@color/textGrey"
+                    app:ccpDialog_fastScroller_handleColor="@color/textGrey"
+                    app:ccpDialog_searchEditTextTint="@color/colorAccent"
+                    app:ccpDialog_backgroundColor="@color/colorWhite"
+                    app:ccpDialog_textColor="@color/textGrey"
+                    app:ccp_autoDetectCountry="true"
+                    app:ccp_contentColor="@color/textBlue"
+                    app:ccp_countryAutoDetectionPref="SIM_NETWORK"
+                    app:ccp_defaultPhoneCode="92"
+                    app:ccp_rememberLastSelection="true"/>
+
+                <EditText
+                    android:id="@+id/editText_carrierNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:hint="Enter customer phone no"
+                    android:inputType="phone"
+                    android:singleLine="true"
+                    app:ccp_autoFormatNumber="true" />
+
+            </LinearLayout>
 
 
             <TextView
+                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                style="@style/RBSInvoice_TextViews"
                 android:text="Customer ID" />
 
             <EditText
                 android:id="@+id/ac_id"
+                style="@style/RBSInvoice_EditTexts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                style="@style/RBSInvoice_EditTexts"
                 android:hint="Enter customer id"
                 android:maxLength="32" />
 
             <LinearLayout
-                android:layout_marginTop="30dp"
-                android:weightSum="2"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical"
+                android:weightSum="2">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/itemImage_recyclerView"
-                    android:nestedScrollingEnabled="false"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
 
 
                 <ImageView
-                    android:visibility="gone"
                     android:id="@+id/id_imageView"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_weight="1.9"
                     android:adjustViewBounds="true"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/uploadId_textView"
                     android:layout_width="match_parent"
-                    android:textAlignment="center"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/profile_screen_header"
                     android:fontFamily="@font/segoe_ui_bold"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:text="Upload customer id image"
+                    android:textAlignment="center"
                     android:textColor="#ffff"
                     android:textSize="15sp" />
 
@@ -140,85 +168,84 @@
 
 
             <TextView
+                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                style="@style/RBSInvoice_TextViews"
                 android:text="Customer DOB" />
 
             <LinearLayout
-                android:weightSum="2"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <TextView
                     android:id="@+id/date_of_birth_text"
-                    android:layout_weight="1.9"
-                    android:textColor="#9F9F9F"
-                    android:fontFamily="@font/segoe_ui"
-                    android:backgroundTint="#6E76E3"
-                    android:textSize="16sp"
-                    android:text="-- -- --"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.9"
+                    android:backgroundTint="#6E76E3"
+                    android:fontFamily="@font/segoe_ui"
+                    android:text="-- -- --"
+                    android:textColor="#9F9F9F"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/date_textView"
-                    android:layout_weight="0.1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingLeft="10dp"
+                    android:layout_weight="0.1"
                     android:background="@drawable/profile_screen_header"
                     android:fontFamily="@font/segoe_ui_bold"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
                     android:text="Select date"
+                    android:textAlignment="center"
                     android:textColor="#ffff"
                     android:textSize="15sp" />
-
 
 
             </LinearLayout>
 
             <TextView
+                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                style="@style/RBSInvoice_TextViews"
                 android:text="Customer Postcode" />
 
-                <EditText
-                    android:id="@+id/ac_postcode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary"
-                    style="@style/RBSInvoice_EditTexts"
-                    android:hint="Enter customer postcode"
-                    android:maxLength="32" />
+            <EditText
+                android:id="@+id/ac_postcode"
+                style="@style/RBSInvoice_EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="Enter customer postcode"
+                android:maxLength="32" />
 
             <TextView
+                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                style="@style/RBSInvoice_TextViews"
                 android:text="Customer Door No" />
 
             <LinearLayout
-                android:weightSum="2"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <EditText
                     android:id="@+id/ac_houseNo"
+                    style="@style/RBSInvoice_EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorPrimary"
                     android:hint="Enter customer door no"
-                    style="@style/RBSInvoice_EditTexts"
                     android:maxLength="32" />
 
 
@@ -228,60 +255,59 @@
                 android:id="@+id/postcodeCheck_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingRight="20dp"
-                android:paddingLeft="20dp"
                 android:layout_gravity="right"
                 android:background="@drawable/profile_screen_header"
                 android:fontFamily="@font/segoe_ui_bold"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp"
                 android:text="Search Address"
                 android:textColor="#ffff"
                 android:textSize="15sp" />
 
             <TextView
+                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                style="@style/RBSInvoice_TextViews"
                 android:text="Customer Address" />
 
             <TextView
                 android:id="@+id/ac_address"
+                style="@style/RBSInvoice_TextViews_Values"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="15dp"
-                style="@style/RBSInvoice_TextViews_Values"
-                android:text="----"
-                />
+                android:text="----" />
 
             <TextView
+                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                style="@style/RBSInvoice_TextViews"
                 android:text="Customer Email" />
 
             <EditText
                 android:id="@+id/ac_email"
+                style="@style/RBSInvoice_EditTexts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
                 android:backgroundTint="@color/colorPrimary"
-                style="@style/RBSInvoice_EditTexts"
                 android:hint="Enter customer email"
+                android:inputType="textEmailAddress"
                 android:maxLength="32" />
 
             <TextView
                 android:id="@+id/submit_textView"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
+                style="@style/RBSInvoice_SaveButtonTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/RBSInvoice_SaveButtonTextView"
                 android:layout_gravity="center_horizontal"
-                android:text="Save"/>
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="Save" />
 
         </LinearLayout>
 

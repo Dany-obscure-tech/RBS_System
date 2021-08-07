@@ -38,7 +38,6 @@ public class Invoice_preview extends AppCompatActivity {
     AsyncTask asyncTask = null;
 
     final String num = "+8801521329977";
-    final String text = "Hello";
 
     AsyncEscPosPrinter printer;
 
@@ -191,20 +190,21 @@ public class Invoice_preview extends AppCompatActivity {
 
         inoice_no = "12345";
         SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
-        email_message = "Invoice Printed on " + format.format(new Date()) + "\n" +
-                "Invoice no: " + inoice_no + "\n" +
+
+        email_message = "Invoice Printed  " + format.format(new Date()) + "\n" +
+                "Invoice No: " + inoice_no + "\n" +
                 "============================" + "\n" +
                 "CUSTOMER" + "\n" +
-                "Customer name: " + customer_name + "\n" +
-                "Customer email: " + customer_email + "\n" +
-                "Customer id: " + customer_ID + "\n" +
-                "Customer phone number: " + customer_ph_no + "\n" +
+                "Customer Name: " + customer_name + "\n" +
+                "Customer Email: " + customer_email + "\n" +
+                "Customer Id: " + customer_ID + "\n" +
+                "Customer Phone number: " + customer_ph_no + "\n" +
                 "----------------------------" + "\n" +
                 "ITEM" + "\n" +
-                "Item name: " + item_name + "\n" +
-                "Item id: " + item_id + "\n" +
+                "Item Name: " + item_name + "\n" +
+                "Item Id: " + item_id + "\n" +
                 "============================" + "\n" +
-                "Paid Amount" + paid_amount + "\n" +
+                "Paid Amount: "+item_price_currency+" " + paid_amount + "\n" +
                 "Buy Date: " + date + "\n" +
                 "----------------------------" + "\n" +
                 "Terms And Conditions" + "\n" +

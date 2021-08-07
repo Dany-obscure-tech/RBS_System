@@ -36,6 +36,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.hbb20.CountryCodePicker;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -50,6 +51,12 @@ public class Customer_details extends AppCompatActivity {
 
     Dialog confirmation_alert;
     TextView yes_btn_textview, cancel_btn_textview;
+
+    String selected_country_code;
+
+    EditText editTextCarrierNumber;
+
+    CountryCodePicker ccp;
 
     LatLng latLng;
     Double latitude;
@@ -83,7 +90,7 @@ public class Customer_details extends AppCompatActivity {
     TextView date_of_birth_text, uploadId_textView, date_textView, submit_textView, postcodeCheck_textView, ac_address;
     DatePickerDialog.OnDateSetListener onDateSetListener;
     DatabaseReference reference;
-    EditText ac_title, ac_phoneno, ac_houseNo, ac_id, ac_email, ac_postcode;
+    EditText ac_title, ac_houseNo, ac_id, ac_email, ac_postcode;
 
     private static final int CAMERA_REQUEST_CODE = 1;
     private static final int CAMERA_REQUEST_CODE2 = 2;
@@ -109,6 +116,10 @@ public class Customer_details extends AppCompatActivity {
         yes_btn_textview = (TextView) confirmation_alert.findViewById(R.id.yes_btn_textview);
         cancel_btn_textview = (TextView) confirmation_alert.findViewById(R.id.cancel_btn_textview);
 
+        ccp = findViewById(R.id.ccp);
+        editTextCarrierNumber = (EditText) findViewById(R.id.editText_carrierNumber);
+        ccp.registerCarrierNumberEditText(editTextCarrierNumber);
+
         imageUrlList = new ArrayList<>();
         rbsCustomerDetails.setImageUrlList(imageUrlList);
 
@@ -116,7 +127,6 @@ public class Customer_details extends AppCompatActivity {
 
         reference = FirebaseDatabase.getInstance().getReference();
         ac_title = (EditText) findViewById(R.id.ac_title);
-        ac_phoneno = (EditText) findViewById(R.id.ac_phoneno);
         ac_houseNo = (EditText) findViewById(R.id.ac_houseNo);
         ac_id = (EditText) findViewById(R.id.ac_id);
         ac_address = (TextView) findViewById(R.id.ac_address);
@@ -343,24 +353,16 @@ public class Customer_details extends AppCompatActivity {
     private boolean validateFields() {
         boolean valid = true;
 
+        if (!ccp.isValidFullNumber()) {
+            editTextCarrierNumber.setError("Please enter valid number");
+            valid = false;
+        }
         if (ac_title.getText().toString().isEmpty()) {
             ac_title.setError("Please enter name");
             valid = false;
         }
         if (ac_title.length() > 32) {
             ac_title.setError("Name character limit is 32");
-            valid = false;
-        }
-        if (ac_phoneno.getText().toString().isEmpty()) {
-            ac_phoneno.setError("Please enter phone number");
-            valid = false;
-        }
-        if (ac_phoneno.length() < 11) {
-            if (ac_houseNo.getText().toString().isEmpty()) {
-                ac_houseNo.setError("Please enter house/door number");
-                valid = false;
-            }
-            ac_phoneno.setError("Please enter valid contact no");
             valid = false;
         }
         if (ac_id.getText().toString().isEmpty()) {
@@ -420,7 +422,7 @@ public class Customer_details extends AppCompatActivity {
 
             key = reference.push().getKey();
             rbsCustomerDetails.setCustomerName(ac_title.getText().toString());
-            rbsCustomerDetails.setCustomerPhNo(ac_phoneno.getText().toString());
+            rbsCustomerDetails.setCustomerPhNo(selected_country_code);
             rbsCustomerDetails.setCustomerHouseNo(ac_houseNo.getText().toString());
             rbsCustomerDetails.setCustomerId(ac_id.getText().toString());
             rbsCustomerDetails.setCustomerDob(date_of_birth_text.getText().toString());
@@ -444,7 +446,7 @@ public class Customer_details extends AppCompatActivity {
         // get the text from the EditText
         String ac_title_ = ac_title.getText().toString();
         String ac_id_ = ac_id.getText().toString();
-        String ac_phone_no = ac_phoneno.getText().toString();
+        String ac_phone_no =  ccp.getFullNumberWithPlus();
         String ac_email_ = ac_email.getText().toString();
 
         // put the String to pass back into an Intent and close this activity
@@ -493,5 +495,15 @@ public class Customer_details extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    public void onCountryPickerClick(View view) {
+        ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                //Alert.showMessage(RegistrationActivity.this, ccp.getSelectedCountryCodeWithPlus());
+                selected_country_code = ccp.getFullNumberWithPlus();
+            }
+        });
     }
 }
