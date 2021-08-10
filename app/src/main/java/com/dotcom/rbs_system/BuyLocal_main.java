@@ -179,45 +179,51 @@ public class BuyLocal_main extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Toast.makeText(this, "called", Toast.LENGTH_SHORT).show();
 
-        if (resultCode == Activity.RESULT_OK) {
-            //Image Uri will not be null for RESULT_OK
-            Uri fileUri = data.getData();
+        if (resultCode == 2) {
+                getSupportFragmentManager().beginTransaction().detach(getSupportFragmentManager().findFragmentByTag("FRAGMENT_PROFILE")).attach(getSupportFragmentManager().findFragmentByTag("FRAGMENT_PROFILE")).commit();
+        }else {
+            if (resultCode == Activity.RESULT_OK) {
+                //Image Uri will not be null for RESULT_OK
+                Uri fileUri = data.getData();
 
-            Toast.makeText(this, String.valueOf(fileUri), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, String.valueOf(fileUri), Toast.LENGTH_SHORT).show();
 
-            customerProfileImageStorageReference.child("Profile_image").putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    customerProfileImageStorageReference.child("Profile_image").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            customerProfileImageRef.child("profile_image_url").setValue(String.valueOf(uri.toString()));
-                            UserDetails.getInstance().setProfileImageUrl(String.valueOf(uri.toString()));
+                customerProfileImageStorageReference.child("Profile_image").putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        customerProfileImageStorageReference.child("Profile_image").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                customerProfileImageRef.child("profile_image_url").setValue(String.valueOf(uri.toString()));
+                                UserDetails.getInstance().setProfileImageUrl(String.valueOf(uri.toString()));
 
-                            getSupportFragmentManager().beginTransaction().detach(getSupportFragmentManager().findFragmentByTag("FRAGMENT_PROFILE")).attach(getSupportFragmentManager().findFragmentByTag("FRAGMENT_PROFILE")).commit();
-                        }
-                    });
+                                getSupportFragmentManager().beginTransaction().detach(getSupportFragmentManager().findFragmentByTag("FRAGMENT_PROFILE")).attach(getSupportFragmentManager().findFragmentByTag("FRAGMENT_PROFILE")).commit();
+                            }
+                        });
 
 
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(BuyLocal_main.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
-                }
-            });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(BuyLocal_main.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-            //You can get File object from intent
+                //You can get File object from intent
 //            val file:File = ImagePicker.getFile(data)!!
 
-            //You can also get File Path from intent
+                //You can also get File Path from intent
 //                    val filePath:String = ImagePicker.getFilePath(data)!!
-        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            } else if (resultCode == ImagePicker.RESULT_ERROR) {
 //            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show();
+            }
         }
+
+
+
     }
 }

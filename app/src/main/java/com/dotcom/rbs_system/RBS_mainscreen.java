@@ -1,38 +1,60 @@
 package com.dotcom.rbs_system;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dotcom.rbs_system.Classes.ActionBarTitle;
+import com.dotcom.rbs_system.Classes.UserDetails;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 public class RBS_mainscreen extends AppCompatActivity {
+
+    private static final int LOGO_READ_REQUEST_CODE = 42;
+    private static final int BANNER_READ_REQUEST_CODE = 43;
+
+
     ActionBar actionBar;
+    StorageReference storageReference;
+    DatabaseReference reference;
 
     Dialog confirmation_alert;
     TextView yes_btn_textview, cancel_btn_textview;
 
     TextView actionBarTitle;
 
+    NavigationView nv;
+    ImageView shopLogo_imageView;
+    TextView shopName_textView,shopEmail_textView;
+
     private DrawerLayout vendor_drawer_layout;
     private ActionBarDrawerToggle t;
-    private NavigationView nv;
     final Rbs_home rbs_home = new Rbs_home();
     final RBS_option rbs_option = new RBS_option();
     final RBS_Vendor_Orders rbs_vendor_orders = new RBS_Vendor_Orders();
@@ -47,6 +69,9 @@ public class RBS_mainscreen extends AppCompatActivity {
     }
 
     private void Initialize() {
+        reference = FirebaseDatabase.getInstance().getReference("Users_data/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Shopkeeper_details");
+        storageReference = FirebaseStorage.getInstance().getReference().child("Users_data");
+
         actionBar = this.getSupportActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.profile_screen_header));
 
@@ -125,6 +150,17 @@ public class RBS_mainscreen extends AppCompatActivity {
             }
         });
 
+        View navheader =  nv.getHeaderView(0);
+        shopLogo_imageView = (ImageView)navheader.findViewById(R.id.shopLogo_imageView);
+        Picasso.get().load(UserDetails.getInstance().getShopLogo()).into(shopLogo_imageView);
+
+        shopName_textView = (TextView) navheader.findViewById(R.id.shopName_textView);
+        shopName_textView.setText(UserDetails.getInstance().getShopName());
+
+        shopEmail_textView = (TextView) navheader.findViewById(R.id.shopEmail_textView);
+        shopEmail_textView.setText(UserDetails.getInstance().getShopEmail());
+
+
         onClickListners();
 
     }
@@ -175,6 +211,57 @@ public class RBS_mainscreen extends AppCompatActivity {
         return false;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==RESULT_OK){
+            if (requestCode==LOGO_READ_REQUEST_CODE){
+                storageReference.child("shopkeeper_logos").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("logo").putFile(data.getData()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        storageReference.child("shopkeeper_logos").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("logo").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
 
+                                reference.child("shop_logo").setValue(String.valueOf(uri.toString()));
+                                UserDetails.getInstance().setShopLogo(String.valueOf(uri.toString()));
+                                getSupportFragmentManager().beginTransaction().detach(getSupportFragmentManager().findFragmentByTag("RBS Settings")).attach(getSupportFragmentManager().findFragmentByTag("RBS Settings")).commit();
 
+                            }
+                        });
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(RBS_mainscreen.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }else if (requestCode==BANNER_READ_REQUEST_CODE){
+                storageReference.child("shopkeeper_banner").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("banner").putFile(data.getData()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        storageReference.child("shopkeeper_banner").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("banner").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+
+                                reference.child("shop_banner").setValue(String.valueOf(uri.toString()));
+                                UserDetails.getInstance().setShopBanner(String.valueOf(uri.toString()));
+                                getSupportFragmentManager().beginTransaction().detach(getSupportFragmentManager().findFragmentByTag("RBS Settings")).attach(getSupportFragmentManager().findFragmentByTag("RBS Settings")).commit();
+
+                            }
+                        });
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(RBS_mainscreen.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }
+
+    }
 }

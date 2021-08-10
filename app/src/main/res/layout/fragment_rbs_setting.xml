@@ -349,25 +349,6 @@
             android:scaleType="fitCenter"
             android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/edit_image_textView"
-            style="@style/RBSInvoice_TextViews"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/banner_image_view"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="20dp"
-            android:background="@drawable/green_border"
-            android:backgroundTint="@color/colorWhite"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="10dp"
-            android:text="Edit"
-            android:textAlignment="center"
-            android:textColor="@color/colorWhite"
-            android:visibility="gone" />
-
     </RelativeLayout>
 
     <RelativeLayout

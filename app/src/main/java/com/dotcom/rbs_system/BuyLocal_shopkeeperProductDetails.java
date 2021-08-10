@@ -1,25 +1,33 @@
 package com.dotcom.rbs_system;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dotcom.rbs_system.Adapter.AdapterItemDetailsImagesRecyclerView;
 import com.dotcom.rbs_system.Adapter.AdapterProductsOffersReceivedListRecyclerView;
 import com.dotcom.rbs_system.Adapter.SliderAdapterExample;
 import com.dotcom.rbs_system.Classes.Currency;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +38,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -42,7 +51,19 @@ import java.util.Locale;
 
 public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
 
+    Dialog editItem_alert;
+    StorageReference idStorageReference;
+    DatabaseReference reference;
+    String key,itemCategory;
+    int k=0,l=0;
+
     RecyclerView offers_received;
+    RecyclerView itemImage_recyclerView;
+    AdapterItemDetailsImagesRecyclerView adapterItemDetailsImagesRecyclerView;
+
+    Uri fileUri;
+    Uri firstImageUri;
+
     CardView buy_local;
 
     Intent intent;
@@ -55,20 +76,33 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
     List<String> customer_keyid;
     Long timestamp;
 
+    List<Uri> imageUrlList;
+
     TextView customer_name,offersTextView;
     TextView currency;
+    TextView edit_textView;
     TextView offered_price,cancel_offer_textview;
     TextView product_offer_msg,accept_offer_textview,sell_offer_textview;
     TextView date_textView;
+    TextView item_personal_notes_textview;
+    TextView yes_btn_textview;
+    EditText description_editText;
+    TextView condition_textView;
+    TextView uploadId_textView;
+
     ImageView profileImage;
+    ImageView id_imageView;
+
     ImageButton back_btn;
+
+    Spinner spinner;
 
     TextView product_name_textview, category_textView, item_description_textview, itemPrice_textView, currency_textView;
     int i, noOfimages;
-    DatabaseReference itemRef, offerlistRef,agreedOfferRef,boughtOfferRef,customerOfferStatusRef;
+    DatabaseReference itemRef, stockItemRef,offerlistRef,agreedOfferRef,boughtOfferRef,customerOfferStatusRef;
     String productID, category,date,activeCustomerID;
     StorageReference itemImageStorageRef;
-    ArrayList imageUrl;
+    List imageUrl;
     SliderView sliderView;
 
     String itemname_returnString, itemid_returnString, itemcategory_returnString, itemkeyid_returnString, itemprice_returnString, itemlstactive_returnString, itemfirstimageurl_returnString;
@@ -77,9 +111,31 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_local_shopkeeper_product_details);
+
+        idStorageReference = FirebaseStorage.getInstance().getReference().child("Item_Images");
+        reference = FirebaseDatabase.getInstance().getReference();
+
+        imageUrlList = new ArrayList<>();
+
+        editItem_alert = new Dialog(this);
+        editItem_alert.setContentView(R.layout.edit_item_alert);
+        itemImage_recyclerView = (RecyclerView) editItem_alert.findViewById(R.id.itemImage_recyclerView);
+        spinner = (Spinner) editItem_alert.findViewById(R.id.spinner);
+        id_imageView = (ImageView) editItem_alert.findViewById(R.id.id_imageView);
+        itemImage_recyclerView = (RecyclerView) editItem_alert.findViewById(R.id.itemImage_recyclerView);
+        itemImage_recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        adapterItemDetailsImagesRecyclerView = new AdapterItemDetailsImagesRecyclerView(BuyLocal_shopkeeperProductDetails.this, imageUrlList);
+        itemImage_recyclerView.setAdapter(adapterItemDetailsImagesRecyclerView);
+
+        uploadId_textView = (TextView) editItem_alert.findViewById(R.id.uploadId_textView);
+        yes_btn_textview = (TextView) editItem_alert.findViewById(R.id.yes_btn_textview);
+        description_editText = (EditText) editItem_alert.findViewById(R.id.description_editText);
+
         productID = getIntent().getStringExtra("PRODUCT_ID");
         category = getIntent().getStringExtra("CATEGORY");
-        
+
+        edit_textView = (TextView)findViewById(R.id.edit_textView);
+
         offersTextView = (TextView)findViewById(R.id.offersTextView);
         customer_name = (TextView)findViewById(R.id.customer_name);
         currency = (TextView)findViewById(R.id.currency);
@@ -88,11 +144,14 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
         cancel_offer_textview = (TextView) findViewById(R.id.cancel_offer_textview);
         sell_offer_textview = (TextView)findViewById(R.id.sell_offer_textview);
         date_textView = (TextView)findViewById(R.id.date_textView);
+        item_personal_notes_textview = (TextView)findViewById(R.id.item_personal_notes_textview);
+        condition_textView = (TextView)findViewById(R.id.condition_textView);
         product_offer_msg = (TextView)findViewById(R.id.product_offer_msg);
         profileImage = (ImageView)findViewById(R.id.profileImage_imageView);
         back_btn = (ImageButton) findViewById(R.id.back_btn);
 
         itemRef = FirebaseDatabase.getInstance().getReference("Items/" + category + "/" + productID);
+        stockItemRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers"+FirebaseAuth.getInstance().getCurrentUser().getUid() + category + "/" + productID);
         agreedOfferRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+ category + "/" + productID+"/Accepted_Offer");
         boughtOfferRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+ category + "/" + productID+"/Bought_Offer");
         offerlistRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+ category + "/" + productID+"/Offers");
@@ -115,6 +174,7 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
         date_list = new ArrayList<String>();
         customer_keyid = new ArrayList<String>();
 
+
         imageUrl = new ArrayList<>();
 
         sliderView = findViewById(R.id.imageSliders);
@@ -125,6 +185,13 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
         sliderView.setIndicatorUnselectedColor(Color.parseColor("#F1F1F1"));
         sliderView.setScrollTimeInSec(4); //set scroll delay in seconds :
         sliderView.startAutoCycle();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this, R.layout.custom_spinner,
+                getResources().getStringArray(R.array.list)
+        );
+        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
+        spinner.setAdapter(adapter);
 
 
         InitialProcess();
@@ -147,13 +214,18 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
                 product_name_textview.setText(snapshot.child("Item_name").getValue().toString());
                 category_textView.setText(snapshot.child("Category").getValue().toString());
                 item_description_textview.setText(snapshot.child("Description").getValue().toString());
+                description_editText.setText(snapshot.child("Description").getValue().toString());
                 itemPrice_textView.setText(snapshot.child("Price").getValue().toString());
+                item_personal_notes_textview.setText(snapshot.child("Notes").getValue().toString());
+                condition_textView.setText(snapshot.child("Condition").getValue().toString());
                 currency_textView.setText(Currency.getInstance().getCurrency());
 
                 itemname_returnString = snapshot.child("Item_name").getValue().toString();
                 itemid_returnString = snapshot.child("Item_id").getValue().toString();
                 itemcategory_returnString = snapshot.child("Category").getValue().toString();
+                itemCategory = itemcategory_returnString;
                 itemkeyid_returnString = snapshot.child("key_id").getValue().toString();
+                key = itemkeyid_returnString;
                 itemprice_returnString = snapshot.child("Price").getValue().toString();
 
                 if (snapshot.child("Last_active").exists()){
@@ -313,13 +385,138 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
         });
     }
 
-    /////////////////////////////////////////////////////////////////////////////////
 
+    /////////////////////////////////////////////////////////////////////////////////
     private void onClickListeners() {
         cancel_offer_textviewOnclick();
         sell_offer_textviewOnclick();
         back_btn_listner();
+        edit_textView_listener();
+        yes_btn_textview_listener();
+        uploadId_textView_listener();
 
+    }
+
+    private void uploadId_textView_listener() {
+        uploadId_textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (imageUrlList.size() < 5) {
+                    ImagePicker.Companion.with(BuyLocal_shopkeeperProductDetails.this)
+                            .crop()                    //Crop image(Optional), Check Customization for more option
+                            .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                            .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
+                            .start();
+                } else {
+                    Toast.makeText(BuyLocal_shopkeeperProductDetails.this, "Maximum 5 images allowed!", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+    }
+
+    private void yes_btn_textview_listener() {
+        yes_btn_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int validCheck = 0;
+
+                if (!spinner.getSelectedItem().toString().equals("Please select item condition")&&!spinner.getSelectedItem().toString().equals(condition_textView.getText().toString())) {
+                    itemRef.child("Condition").setValue(spinner.getSelectedItem().toString());
+                }else {validCheck++;}
+
+                if (!description_editText.getText().toString().isEmpty()&&!description_editText.getText().toString().equals(item_description_textview.getText().toString())) {
+                    itemRef.child("Description").setValue(description_editText.getText().toString());
+                }else {validCheck++;}
+
+                if (imageUrlList.size() != 0) {
+                    int deletedImageNumber = 5-imageUrlList.size();
+                    for (i = 1; i<=5;i++) {
+                        if (deletedImageNumber != 0) {
+                            System.out.println(deletedImageNumber+" - "+(imageUrlList.size() + 1));
+                            idStorageReference.child(key).child("image_" + String.valueOf(imageUrlList.size() + i)).delete();
+                            reference.child("Items").child(itemCategory).child(key).child("Image_urls").child("image_" + (imageUrlList.size() + i)).removeValue();
+                            deletedImageNumber--;
+                        }
+                    }
+                    for (i = 0; i<imageUrlList.size();i++) {
+
+                        idStorageReference.child(key).child("image_"+String.valueOf(i+1)).putFile(imageUrlList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                idStorageReference.child(key).child("image_"+String.valueOf(l+1)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        if(k==0){
+                                            firstImageUri=uri;
+
+//                                if (check=="Add new item"){
+//
+//                                    spotLightRef = FirebaseDatabase.getInstance().getReference("Spotlight");
+//
+//                                    spotLightRef.child(key).child("key_id").setValue(key);
+//                                    spotLightRef.child(key).child("Category").setValue(itemCategory);
+//                                    spotLightRef.child(key).child("Item_name").setValue(itemName);
+//                                    spotLightRef.child(key).child("Price").setValue(itemPrice);
+//                                    spotLightRef.child(key).child("id_image_url").setValue(uri.toString());
+//                                    spotLightRef.child(key).child("shopkeeper").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//                                }
+
+                                        }
+                                        reference.child("Items").child(itemCategory).child(key).child("Image_urls").child("image_"+(k+1)).setValue(String.valueOf(uri.toString()));
+                                        k++;
+
+//                                        if (k==imageUrlList.size()){
+//                                            if (check=="Sale new item") {
+//                                                rbsItemDetails.switchStockSale(rbsCustomerDetails.getKey(), FirebaseAuth.getInstance().getCurrentUser().getUid());
+//
+//                                            }
+//                                            if (check=="Buy new item"){
+//                                                uploadToStock();
+//                                                uploadToRbsInvoiceList(rbsCustomerDetails.getKey(),addedBy);
+//                                                updateStockOwner(addedBy);
+//
+//                                            }
+//                                            if (check=="Add new item"){
+//                                                uploadToStock();
+//
+//                                            }
+//
+//                                        }
+                                    }
+                                });
+                                l++;
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(BuyLocal_shopkeeperProductDetails.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }else {validCheck++;}
+
+                if (validCheck!=3){
+                    recreate();
+                }else {
+                    Toast.makeText(BuyLocal_shopkeeperProductDetails.this, String.valueOf(imageUrlList.size()), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BuyLocal_shopkeeperProductDetails.this, "Please edit values!", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+    }
+
+    private void edit_textView_listener() {
+        edit_textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editItem_alert.show();
+            }
+        });
     }
 
     private void back_btn_listner() {
@@ -355,5 +552,31 @@ public class BuyLocal_shopkeeperProductDetails extends AppCompatActivity {
         });
     }
 
+    /////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            //Image Uri will not be null for RESULT_OK
+            fileUri = data.getData();
+            id_imageView.setImageURI(fileUri);
+            fileUri = data.getData();
+            imageUrlList.add(fileUri);
+
+            adapterItemDetailsImagesRecyclerView.notifyDataSetChanged();
+
+
+            //You can get File object from intent
+//            val file:File = ImagePicker.getFile(data)!!
+
+            //You can also get File Path from intent
+//                    val filePath:String = ImagePicker.getFilePath(data)!!
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+//            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 }

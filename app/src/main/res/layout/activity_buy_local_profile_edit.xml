@@ -15,19 +15,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/back_btn"
             android:layout_centerVertical="true"
-            android:text="Profile Edit"
+            android:layout_toRightOf="@+id/back_btn"
             android:fontFamily="@font/segoe_ui_bold"
+            android:text="Profile Edit"
             android:textColor="#ffffff"
-            android:textSize="22sp"/>
+            android:textSize="22sp" />
 
         <ImageButton
             android:id="@+id/back_btn"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
             android:adjustViewBounds="true"
@@ -92,6 +92,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/name_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/RBSInvoice_TextViews"
@@ -99,6 +100,7 @@
                         />
 
                     <EditText
+                        android:id="@+id/name_editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         style="@style/RBSInvoice_EditTexts"
@@ -148,6 +150,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/phno_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="+923238910757"
@@ -155,6 +158,7 @@
                         />
 
                     <EditText
+                        android:id="@+id/phno_editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
@@ -169,60 +173,6 @@
 
         </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Change Email"
-                    style="@style/RBSInvoice_TextViews"
-                    />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="3"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:scaleType="center"
-                        android:src="@drawable/email_icon"
-                        />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="2"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Shahzaib.Mehfooz@gmail.com"
-                            style="@style/RBSInvoice_TextViews"
-                            />
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Enter new email"
-                            style="@style/RBSInvoice_EditTexts"
-                            android:backgroundTint="@color/colorPrimary"
-                            android:inputType="textEmailAddress"
-                            />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -258,6 +208,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/address_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Peshawar City"
@@ -265,6 +216,7 @@
                             />
 
                         <EditText
+                            android:id="@+id/address_editText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Enter new address.."
@@ -278,16 +230,17 @@
             </LinearLayout>
 
         </LinearLayout>
+
             <TextView
                 android:id="@+id/submit_textView"
                 style="@style/RBSInvoice_SaveButtonTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_option_area"
+                android:layout_alignParentEnd="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:layout_below="@+id/edit_option_area"
-                android:layout_alignParentEnd="true"
                 android:text="Save" />
         </RelativeLayout>
     </ScrollView>

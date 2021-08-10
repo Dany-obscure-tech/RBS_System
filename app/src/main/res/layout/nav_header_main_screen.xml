@@ -8,16 +8,9 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <RelativeLayout
+        android:background="@drawable/profile_screen_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/banner_imageview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/slider"
-            android:scaleType="fitCenter"
-            />
 
         <ImageView
             android:layout_width="match_parent"
@@ -25,35 +18,45 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
             android:background="#00000000"
-            android:scaleType="fitXY"
             android:rotation="180"
+            android:scaleType="fitXY"
             android:src="@drawable/top_black_rectangle" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profileImage_imageView"
+            android:id="@+id/shopLogo_imageView"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="20dp"
-            app:civ_border_color="#4A4A4A"
-            app:civ_border_width="7dp"
-            android:src="@drawable/profile_icon"
-            />
+            android:layout_marginBottom="10dp"
+            android:layout_above="@+id/shopName_textView"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/profile_icon"/>
+
+<!--            app:civ_border_color="#4A4A4A"-->
+<!--            app:civ_border_width="3dp"-->
+
 
         <TextView
+            android:id="@+id/shopName_textView"
+            style="@style/TextViews_Bold_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/profileImage_imageView"
-            android:text="shahzaib.mehfooz175@gmail.com"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@+id/shopEmail_textView"
+            android:layout_marginLeft="15dp"
             android:gravity="bottom"
-            style="@style/RBSInvoice_TextViews"
-            android:textColor="@color/colorWhite"
-            android:paddingBottom="15dp"
-            android:layout_marginLeft="20dp"
+            android:text="shahzaib"
+            android:textColor="@color/colorWhite" />
 
-            />
+        <TextView
+            android:id="@+id/shopEmail_textView"
+            style="@style/TextViews_Regular_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:gravity="bottom"
+            android:paddingBottom="10dp"
+            android:text="shahzaib@gmail.com"
+            android:textColor="@color/colorWhite" />
 
     </RelativeLayout>
 

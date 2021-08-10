@@ -8,10 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dotcom.rbs_system.BuyLocal_shopkeeperProductDetails;
 import com.dotcom.rbs_system.R;
 
 import java.util.List;
@@ -24,6 +26,7 @@ public class AdapterItemDetailsImagesRecyclerView extends RecyclerView.Adapter<A
     public AdapterItemDetailsImagesRecyclerView(Context context, List<Uri> imageUrlList) {
         this.context = context;
         this.imageUrlList = imageUrlList;
+        Toast.makeText(context, String.valueOf(context), Toast.LENGTH_SHORT).show();
     }
 
     @NonNull
@@ -34,6 +37,7 @@ public class AdapterItemDetailsImagesRecyclerView extends RecyclerView.Adapter<A
 
     @Override
     public void onBindViewHolder(@NonNull AdapterItemDetailsImagesRecyclerView.ViewHolder holder, final int position) {
+
         holder.image_imageView.setImageURI(imageUrlList.get(position));
 
         holder.removeImage_textView.setOnClickListener(new View.OnClickListener() {

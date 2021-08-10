@@ -70,7 +70,7 @@ public class RBS_setting extends Fragment {
 
     ImageView logo_imageView, banner_imageView, banner_image_view, logo_image_view;
 
-    TextView edit_banner_textview, add_logo_textview, add_faults_textview, port_number_textview, ip_address_textview, edit_image_textView, edit_logo_image_textView;
+    TextView edit_banner_textview, add_faults_textview, port_number_textview, ip_address_textview, edit_logo_image_textView;
 
     TextView addFaultsave_textview, addFaultsCancel_textview, save_printer_settings_textview, cancel_printer_settings_textview, cancel_terms_conditions_textview, save_terms_conditions_textview, edit_terms_conditions_textview;
 
@@ -85,8 +85,6 @@ public class RBS_setting extends Fragment {
     EditText alertFaultName_editText, alertFaultPrice_editText, port_number_edittext, ip_address_edittext, term_conditions_edittext;
 
     List<String> faultNameList, faultPriceList, faultKeyIDList;
-
-    Boolean logoBannerUploadCheck = true;
 
     TextView shop_name_textView,shop_email_textView, shop_phno_textView, shop_address_textView;
     TextView rbsMessage_textView, conditions_textView;
@@ -166,9 +164,7 @@ public class RBS_setting extends Fragment {
         logo_image_view = (ImageView) view.findViewById(R.id.logo_image_view);
 
         add_faults_textview = (TextView) view.findViewById(R.id.add_faults_textview);
-        edit_image_textView = (TextView) view.findViewById(R.id.edit_image_textView);
         edit_logo_image_textView = (TextView) view.findViewById(R.id.edit_logo_image_textView);
-        add_logo_textview = (TextView) view.findViewById(R.id.add_logo_textview);
         edit_banner_textview = (TextView) view.findViewById(R.id.edit_banner_textview);
         printer_setting_textview = (TextView) view.findViewById(R.id.printer_setting_textview);
         terms_conditions_textview = (TextView) view.findViewById(R.id.terms_conditions_textview);
@@ -312,26 +308,21 @@ public class RBS_setting extends Fragment {
         edit_logo_image_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (logoBannerUploadCheck) {
-                    logoBannerUploadCheck = false;
-                    // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
-                    // browser.
-                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
+                // browser.
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
 
-                    // Filter to only show results that can be "opened", such as a
-                    // file (as opposed to a list of contacts or timezones)
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                // Filter to only show results that can be "opened", such as a
+                // file (as opposed to a list of contacts or timezones)
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
 
-                    // Filter to show only images, using the image MIME data type.
-                    // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
-                    // To search for all documents available via installed storage providers,
-                    // it would be "*/*".
-                    intent.setType("image/*");
+                // Filter to show only images, using the image MIME data type.
+                // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
+                // To search for all documents available via installed storage providers,
+                // it would be "*/*".
+                intent.setType("image/*");
 
-                    startActivityForResult(intent, LOGO_READ_REQUEST_CODE);
-                } else {
-                    Toast.makeText(getActivity(), "Information pending", Toast.LENGTH_SHORT).show();
-                }
+                getActivity().startActivityForResult(intent, LOGO_READ_REQUEST_CODE);
             }
         });
 
@@ -354,38 +345,12 @@ public class RBS_setting extends Fragment {
             }
         });
 
-        edit_image_textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (logoBannerUploadCheck) {
-                    logoBannerUploadCheck = false;
-                    // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
-                    // browser.
-                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-
-                    // Filter to only show results that can be "opened", such as a
-                    // file (as opposed to a list of contacts or timezones)
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-                    // Filter to show only images, using the image MIME data type.
-                    // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
-                    // To search for all documents available via installed storage providers,
-                    // it would be "*/*".
-                    intent.setType("image/*");
-
-                    startActivityForResult(intent, BANNER_READ_REQUEST_CODE);
-                } else {
-                    Toast.makeText(getActivity(), "Information pending", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         banner_background_relativelayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 banner_background_relativelayout.setVisibility(View.GONE);
                 banner_image_view.setVisibility(View.GONE);
-                edit_image_textView.setVisibility(View.GONE);
             }
         });
 
@@ -394,8 +359,6 @@ public class RBS_setting extends Fragment {
             public void onClick(View v) {
                 banner_background_relativelayout.setVisibility(View.VISIBLE);
                 banner_image_view.setVisibility(View.VISIBLE);
-                edit_image_textView.setVisibility(View.VISIBLE);
-
             }
         });
 
@@ -459,57 +422,26 @@ public class RBS_setting extends Fragment {
             }
         });
 
-        add_logo_textview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (logoBannerUploadCheck) {
-                    logoBannerUploadCheck = false;
-                    // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
-                    // browser.
-                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-
-                    // Filter to only show results that can be "opened", such as a
-                    // file (as opposed to a list of contacts or timezones)
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-                    // Filter to show only images, using the image MIME data type.
-                    // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
-                    // To search for all documents available via installed storage providers,
-                    // it would be "*/*".
-                    intent.setType("image/*");
-
-                    startActivityForResult(intent, LOGO_READ_REQUEST_CODE);
-                } else {
-                    Toast.makeText(getActivity(), "Information pending", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
 
         edit_banner_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (logoBannerUploadCheck) {
-                    logoBannerUploadCheck = false;
-                    // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
-                    // browser.
-                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                // ACTION_OPEN_DOCUMENT is the intent to choose a file via the system's file
+                // browser.
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
 
-                    // Filter to only show results that can be "opened", such as a
-                    // file (as opposed to a list of contacts or timezones)
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                // Filter to only show results that can be "opened", such as a
+                // file (as opposed to a list of contacts or timezones)
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
 
-                    // Filter to show only images, using the image MIME data type.
-                    // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
-                    // To search for all documents available via installed storage providers,
-                    // it would be "*/*".
-                    intent.setType("image/*");
+                // Filter to show only images, using the image MIME data type.
+                // If one wanted to search for ogg vorbis files, the type would be "audio/ogg".
+                // To search for all documents available via installed storage providers,
+                // it would be "*/*".
+                intent.setType("image/*");
 
-                    startActivityForResult(intent, BANNER_READ_REQUEST_CODE);
-                } else {
-                    Toast.makeText(getActivity(), "Information pending", Toast.LENGTH_SHORT).show();
-                }
+                getActivity().startActivityForResult(intent, BANNER_READ_REQUEST_CODE);
+
 
             }
         });

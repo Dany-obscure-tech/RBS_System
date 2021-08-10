@@ -22,12 +22,14 @@ import android.widget.TextView;
 import com.dotcom.rbs_system.Adapter.AdapterShopProductsShowcaseListRecyclerView;
 import com.dotcom.rbs_system.Classes.ActionBarTitle;
 import com.dotcom.rbs_system.Classes.RBSItemDetails;
+import com.dotcom.rbs_system.Classes.UserDetails;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +58,8 @@ public class Rbs_home extends Fragment {
     List<String> key_idList;
     RelativeLayout side_option_menu;
     TextView addItem_textView;
+
+    ImageView store_banner_imageView;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -119,6 +123,8 @@ public class Rbs_home extends Fragment {
         image = new ArrayList<String>();
         key_idList = new ArrayList<String>();
 
+        store_banner_imageView=(ImageView) view.findViewById(R.id.store_banner_imageView);
+        Picasso.get().load(UserDetails.getInstance().getShopBanner()).into(store_banner_imageView);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////

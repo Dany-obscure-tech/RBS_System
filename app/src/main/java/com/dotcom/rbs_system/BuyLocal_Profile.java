@@ -174,7 +174,7 @@ public class BuyLocal_Profile extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),BuyLocal_profile_edit.class);
-                startActivity(intent);
+                startActivityForResult(intent,2);
             }
         });
     }
@@ -193,5 +193,6 @@ public class BuyLocal_Profile extends Fragment {
         Picasso.get().load(UserDetails.getInstance().getProfileImageUrl()).into(edit_image_image_view);
 
     }
+
 
 }

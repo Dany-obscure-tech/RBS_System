@@ -18,10 +18,9 @@
             <ImageView
                 android:id="@+id/store_banner_imageView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/slider"
-                android:scaleType="fitXY"
-                />
+                android:layout_height="170dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/slider" />
 
             <LinearLayout
                 android:id="@+id/products_list"
