@@ -34,7 +34,7 @@ public class RBS_option extends Fragment {
 
     DatabaseReference bannerRef;
 
-    CardView BUY,Sale,repair,Exchange,Accessories,Settings;
+    CardView BUY,Sale,repair,Exchange,Accessories;
 
     ImageButton icon1,icon2,icon3,icon4,icon8;
     Button alert_addAccessory_btn,alert_saleAccessory_btn;
@@ -105,7 +105,6 @@ public class RBS_option extends Fragment {
         repair=(CardView)view.findViewById(R.id.repair);
         Exchange=(CardView)view.findViewById(R.id.Exchange);
         Accessories=(CardView)view.findViewById(R.id.Accessories);
-        Settings=(CardView)view.findViewById(R.id.Settings);
 
         icon2=(ImageButton)view.findViewById(R.id.icon2);
         icon4=(ImageButton)view.findViewById(R.id.icon4);
@@ -181,14 +180,6 @@ public class RBS_option extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(),Repair_Ticket.class);
-                startActivity(intent);
-            }
-        });
-
-        Settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), RBS_settings.class);
                 startActivity(intent);
             }
         });

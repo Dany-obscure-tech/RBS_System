@@ -92,7 +92,7 @@
 
                 <TextView
                     android:id="@+id/add_logo_textview"
-                    style="@style/gradient_blue_btn"
+                    style="@style/blue_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
@@ -219,7 +219,7 @@
 
                     <TextView
                         android:id="@+id/add_faults_textview"
-                        style="@style/gradient_blue_btn"
+                        style="@style/blue_btn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -253,7 +253,7 @@
 
                     <TextView
                         android:id="@+id/edit_terms_conditions_textview"
-                        style="@style/gradient_blue_btn"
+                        style="@style/blue_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
@@ -317,7 +317,7 @@
 
                     <TextView
                         android:id="@+id/printer_setting_textview"
-                        style="@style/gradient_blue_btn"
+                        style="@style/blue_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"

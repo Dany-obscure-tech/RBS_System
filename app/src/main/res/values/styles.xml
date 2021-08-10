@@ -49,14 +49,16 @@
     </style>
 
 
-    <style name="gradient_blue_btn">
+    <style name="blue_btn">
         <item name="android:fontFamily">@font/segoe_ui_bold</item>
         <item name="android:paddingStart">20dp</item>
         <item name="android:paddingEnd">20dp</item>
         <item name="android:paddingBottom">10dp</item>
         <item name="android:paddingTop">10dp</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/Bold_Small</item>
         <item name="android:textColor">#ffff</item>
+        <item name="android:background">@drawable/profile_screen_header</item>
+        <item name="android:textAlignment">center</item>
 
     </style>
 
@@ -67,9 +69,10 @@
         <item name="android:paddingEnd">20dp</item>
         <item name="android:paddingBottom">10dp</item>
         <item name="android:paddingTop">10dp</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/Bold_Small</item>
         <item name="android:textColor">#ffff</item>
         <item name="android:background">@drawable/buylocal_green_button</item>
+        <item name="android:textAlignment">center</item>
 
     </style>
 

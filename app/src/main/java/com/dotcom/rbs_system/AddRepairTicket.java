@@ -73,7 +73,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
     LinearLayout changesConfirmation_linearLayout, customerID_linearLayout;
 
     ImageButton gmail_btn, sms_btn, print_btn;
-    ImageButton Back_btn;
+    ImageButton back_btn;
     TextView addFaults_textview, date_textview, submit_textview;
     Button btn_done;
 
@@ -207,7 +207,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
 
         submit_textview = (TextView) findViewById(R.id.submit_textview);
         date_textview = (TextView) findViewById(R.id.date_textview);
-        Back_btn = (ImageButton) findViewById(R.id.Back_btn);
+        back_btn = (ImageButton) findViewById(R.id.back_btn);
         date_text = (TextView) findViewById(R.id.date_of_birth_text);
         viewCustomerDetails_textView = (TextView) findViewById(R.id.viewCustomerDetails_textView);
 
@@ -294,7 +294,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             }
         });
 
-        Back_btn.setOnClickListener(new View.OnClickListener() {
+        back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

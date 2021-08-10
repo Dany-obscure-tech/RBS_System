@@ -153,8 +153,7 @@ public class RBS_setting extends Fragment {
         faultListRef = FirebaseDatabase.getInstance().getReference("Listed_faults/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
         rbsMessageRef = FirebaseDatabase.getInstance().getReference("Admin");
 
-        logoButtons_linearLayout = (LinearLayout) view.findViewById(R.id.logoButtons_linearLayout);
-        bannerButtons_linearLayout = (LinearLayout) view.findViewById(R.id.bannerButtons_linearLayout);
+
         banner_background_relativelayout = (RelativeLayout) view.findViewById(R.id.banner_background_relativelayout);
         logo_background_relativelayout = (RelativeLayout) view.findViewById(R.id.logo_background_relativelayout);
 
@@ -212,8 +211,6 @@ public class RBS_setting extends Fragment {
         shop_email_textView = (TextView) view.findViewById(R.id.shop_email_textView);
         shop_phno_textView = (TextView) view.findViewById(R.id.shop_phno_textView);
         shop_address_textView = (TextView) view.findViewById(R.id.shop_address_textView);
-        conditions_textView = (TextView) view.findViewById(R.id.conditions_textView);
-        rbsMessage_textView = (TextView) view.findViewById(R.id.rbsMessage_textView);
 
 
     }

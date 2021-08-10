@@ -11,20 +11,19 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@drawable/profile_screen_header">
+        android:background="@drawable/screen_header_rectangle">
 
         <TextView
+            style="@style/TextViews_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/Back_btn"
-            android:fontFamily="@font/segoe_ui_bold"
+            android:layout_toRightOf="@+id/back_btn"
             android:text="Add Ticket"
-            android:textColor="#ffffff"
-            android:textSize="22sp" />
+            android:textColor="#ffffff" />
 
         <ImageButton
-            android:id="@+id/Back_btn"
+            android:id="@+id/back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -54,37 +53,31 @@
 
             <LinearLayout
                 android:id="@+id/hideToggle_linearLayout"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+
+                <TextView
+                    style="@style/TextViews_Bold_big"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:text="Customer" />
 
-                    <TextView
-                        style="@style/TextViews_Bold_big"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Customer" />
-
-                </LinearLayout>
 
                 <TextView
                     style="@style/TextViews_Bold_small"
-                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:text="Customer name" />
 
                 <EditText
                     android:id="@+id/customerName_editText"
-                    style="@style/RBSInvoice_EditTexts"
+                    style="@style/TextViews_Regular_big"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorPrimary"
@@ -94,15 +87,15 @@
 
                 <TextView
                     style="@style/TextViews_Bold_small"
-                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:text="Customer Phno" />
 
                 <EditText
                     android:id="@+id/customerPhno_editText"
-                    style="@style/RBSInvoice_EditTexts"
+                    style="@style/TextViews_Regular_big"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorPrimary"
@@ -111,18 +104,17 @@
                     android:maxLength="32" />
 
 
-
                 <TextView
                     style="@style/TextViews_Bold_small"
-                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:text="Customer Email" />
 
                 <EditText
                     android:id="@+id/customerEmail_editText"
-                    style="@style/RBSInvoice_EditTexts"
+                    style="@style/TextViews_Regular_big"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorPrimary"
@@ -132,48 +124,41 @@
 
                 <TextView
                     style="@style/TextViews_Bold_small"
-                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:text="Customer ID" />
 
                 <EditText
                     android:id="@+id/customerId_editText"
-                    style="@style/RBSInvoice_EditTexts"
+                    style="@style/TextViews_Regular_big"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorPrimary"
                     android:hint="Enter customer id"
                     android:maxLength="32" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    style="@style/TextViews_Bold_big"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:layout_weight="1"
+                    android:text="Item" />
 
-                    <TextView
-                        style="@style/TextViews_Bold_big"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Item" />
-
-                </LinearLayout>
 
                 <TextView
                     style="@style/TextViews_Bold_small"
-                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:text="Item Name" />
 
                 <EditText
                     android:id="@+id/itemName_editText"
-                    style="@style/RBSInvoice_EditTexts"
+                    style="@style/TextViews_Regular_big"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorPrimary"
@@ -182,15 +167,15 @@
 
                 <TextView
                     style="@style/TextViews_Bold_small"
-                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:text="Item Serial No" />
 
                 <EditText
                     android:id="@+id/itemSerialNo_editText"
-                    style="@style/RBSInvoice_EditTexts"
+                    style="@style/TextViews_Regular_big"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorPrimary"
@@ -214,7 +199,7 @@
                     android:weightSum="2">
 
                     <TextView
-                        style="@style/RBSInvoice_TextViews"
+                        style="@style/TextViews_Bold_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -222,7 +207,7 @@
 
                     <TextView
                         android:id="@+id/ticketNo_TextView"
-                        style="@style/RBSInvoice_TextViews"
+                        style="@style/TextViews_Bold_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -233,7 +218,7 @@
                 </LinearLayout>
 
                 <TextView
-                    style="@style/RBSInvoice_TextViews"
+                    style="@style/TextViews_Bold_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
@@ -241,18 +226,12 @@
 
                 <TextView
                     android:id="@+id/addFaults_textview"
+                    style="@style/green_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/profile_screen_header"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="Add"
-                    android:textAlignment="center"
-                    android:textColor="#ffff"
-                    android:textSize="15sp" />
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="Add" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/faultList_recyclerView"
@@ -261,7 +240,7 @@
                     android:nestedScrollingEnabled="false" />
 
                 <TextView
-                    style="@style/RBSInvoice_TextViews"
+                    style="@style/TextViews_Bold_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
@@ -269,7 +248,7 @@
 
                 <EditText
                     android:id="@+id/amount_editText"
-                    style="@style/RBSInvoice_EditTexts"
+                    style="@style/TextViews_Regular_big"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorPrimary"
@@ -299,7 +278,7 @@
                     android:visibility="gone" />
 
                 <TextView
-                    style="@style/RBSInvoice_TextViews"
+                    style="@style/TextViews_Bold_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
@@ -314,6 +293,7 @@
 
                     <TextView
                         android:id="@+id/date_textView"
+                        style="@style/TextViews_Regular_big"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.9"
@@ -325,34 +305,26 @@
 
                     <TextView
                         android:id="@+id/date_textview"
+                        style="@style/green_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.1"
-                        android:background="@drawable/profile_screen_header"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="10dp"
-                        android:text="Select date"
-                        android:textAlignment="center"
-                        android:textColor="#ffff"
-                        android:textSize="15sp" />
+                        android:text="Select date" />
 
                 </LinearLayout>
 
                 <TextView
+                    style="@style/TextViews_Bold_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    style="@style/RBSInvoice_TextViews"
                     android:text="Special Condition" />
 
                 <EditText
                     android:id="@+id/special_condition_editText"
+                    style="@style/TextViews_Regular_big"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/RBSInvoice_EditTexts"
                     android:backgroundTint="@color/gradientDarkBlue"
                     android:fontFamily="@font/segoe_ui"
                     android:hint="Enter special conditions"
@@ -363,13 +335,14 @@
 
                 <TextView
                     android:id="@+id/submit_textview"
-                    style="@style/RBSInvoice_SaveButtonTextView"
+                    style="@style/blue_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:text="Save" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -378,20 +351,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/confirmChanges_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/profile_screen_header"
                     android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Agree Changes"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:layout_marginEnd="5dp"
+                    android:text="Agree Changes"
                     android:textAlignment="center"
                     android:textColor="#ffff"
                     android:textSize="14sp" />
@@ -402,10 +375,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_weight="1"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
                     android:background="@drawable/profile_screen_header"
                     android:fontFamily="@font/segoe_ui_bold"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:text="Cancel Changes"
                     android:textAlignment="center"
                     android:textColor="#ffff"

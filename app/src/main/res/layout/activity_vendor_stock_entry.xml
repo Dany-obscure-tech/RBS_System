@@ -192,7 +192,7 @@
 
                 <TextView
                     android:id="@+id/date_textView"
-                    style="@style/gradient_blue_btn"
+                    style="@style/blue_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
@@ -212,7 +212,7 @@
 
             <TextView
                 android:id="@+id/uploadImage_textView"
-                style="@style/gradient_blue_btn"
+                style="@style/blue_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/profile_screen_header"

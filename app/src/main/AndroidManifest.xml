@@ -129,9 +129,6 @@
             android:name=".Repair_Ticket"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".RBS_settings"
-            android:theme="@style/AppTheme.no" />
-        <activity
             android:name=".Accessories"
             android:theme="@style/AppTheme.no" />
         <activity

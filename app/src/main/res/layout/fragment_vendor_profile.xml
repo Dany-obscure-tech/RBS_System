@@ -91,7 +91,7 @@
 
                 <TextView
                     android:id="@+id/edit_logo_btn_textiew"
-                    style="@style/gradient_blue_btn"
+                    style="@style/blue_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
@@ -299,7 +299,7 @@
 
                 <TextView
                     android:id="@+id/edit_vendor_details_btn_textView"
-                    style="@style/gradient_blue_btn"
+                    style="@style/blue_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
@@ -311,7 +311,7 @@
 
             <TextView
                 android:id="@+id/view_users_btn"
-                style="@style/gradient_blue_btn"
+                style="@style/blue_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

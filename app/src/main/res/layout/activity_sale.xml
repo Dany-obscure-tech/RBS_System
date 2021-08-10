@@ -454,7 +454,7 @@
 
                     <TextView
                         android:id="@+id/datebtn_textView"
-                        style="@style/gradient_blue_btn"
+                        style="@style/blue_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
