@@ -6,7 +6,6 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/RBSInvoice_TextViews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -24,7 +23,6 @@
         android:orientation="vertical">
 
         <TextView
-            style="@style/RBSInvoice_TextViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -32,7 +30,6 @@
 
         <EditText
             android:id="@+id/alertMakeOfferAmount_editText"
-            style="@style/RBSInvoice_EditTexts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimary"
@@ -49,7 +46,6 @@
         android:orientation="vertical">
 
         <TextView
-            style="@style/RBSInvoice_TextViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -57,7 +53,6 @@
 
         <EditText
             android:id="@+id/alertMakeOfferMessage_editText"
-            style="@style/RBSInvoice_EditTexts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimary" />

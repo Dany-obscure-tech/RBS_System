@@ -56,7 +56,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                style="@style/RBSInvoice_TextViews"
                 android:text="Item Category" />
 
             <androidx.cardview.widget.CardView
@@ -112,15 +111,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                style="@style/RBSInvoice_TextViews"
                 android:text="Item Name" />
 
             <EditText
                 android:id="@+id/itemName_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textCapWords"
                 android:backgroundTint="@color/colorPrimary"
-                style="@style/RBSInvoice_EditTexts"
                 android:hint="Enter item name"
                 android:maxLength="32" />
 
@@ -166,7 +164,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                style="@style/RBSInvoice_TextViews"
                 android:text="Item Serial-NO/IMEI-NO"/>
 
             <EditText
@@ -174,7 +171,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                style="@style/RBSInvoice_EditTexts"
                 android:hint="Enter item Item Serial-NO/IMEI-NO"
                 android:maxLength="32" />
 
@@ -182,7 +178,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                style="@style/RBSInvoice_TextViews"
                 android:text="Item Condition"/>
 
             <LinearLayout
@@ -212,7 +207,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                style="@style/RBSInvoice_TextViews"
                 android:text="Item Price"/>
 
             <EditText
@@ -221,7 +215,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                style="@style/RBSInvoice_EditTexts"
                 android:hint="Enter price"
                 android:maxLength="32"/>
 
@@ -229,7 +222,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                style="@style/RBSInvoice_TextViews"
                 android:text="Personal Notes"/>
 
             <EditText
@@ -237,7 +229,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                style="@style/RBSInvoice_EditTexts"
                 android:hint="Write notes about the item"
                 android:maxLength="150" />
 
@@ -245,7 +236,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                style="@style/RBSInvoice_TextViews"
                 android:text="Item Description"/>
 
             <EditText
@@ -253,7 +243,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                style="@style/RBSInvoice_EditTexts"
                 android:hint="Write description of the item"
                 android:maxLength="300" />
 
@@ -263,7 +252,6 @@
                 android:layout_marginBottom="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/RBSInvoice_SaveButtonTextView"
                 android:layout_gravity="center_horizontal"
                 android:text="Save"/>
 

@@ -129,10 +129,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     Query orderQuery;
 
-    ImageButton back_btn, sms_btn, gmail_btn, print_btn;
-
-    Button btn_done;
-    Button test;
+    ImageButton back_btn;
 
     TextView itemLastActive_textView, customer_add_textView, datebtn_textView, submit_textView;
 
@@ -164,12 +161,10 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     List<String> exisitngItemsNamesList, exisitngItemsSerialNoList, existingItemsLastActiveList, existingItemsImageUrlList;
     List<String> lessExisitngItemsNamesList, lessExisitngItemsSerialNoList, lessExistingItemsLastActiveList, lessExistingItemsImageUrlList, lessExistingItemsCategoryList, lessExistingItemsPriceList, lessExisitngItemsKeyIDList;
 
-    LinearLayout print_linearLayout, customerID_linearLayout;
+    LinearLayout customerID_linearLayout;
 
     EditText purchase_price_editText, paid_editText, search_editText;
 
-
-    Dialog sendingdialog;
 
     Date date;
 
@@ -223,14 +218,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         pd2 = new Progress_dialoge();
         pd3 = new Progress_dialoge();
 
-        sendingdialog = new Dialog(this);
-        sendingdialog.setContentView(R.layout.dialoge_items);
-        sendingdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                finish();
-            }
-        });
 
         reference = FirebaseDatabase.getInstance().getReference();
         voucherNo = reference.push().getKey();
@@ -364,14 +351,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         viewItemDetails_textView = (TextView) findViewById(R.id.viewItemDetails_textView);
         datebtn_textView = (TextView) findViewById(R.id.datebtn_textView);
 
-        print_linearLayout = (LinearLayout) sendingdialog.findViewById(R.id.print_linearLayout);
         customerID_linearLayout = (LinearLayout) findViewById(R.id.customerID_linearLayout);
-
-        gmail_btn = (ImageButton) sendingdialog.findViewById(R.id.gmail_btn);
-        print_btn = (ImageButton) sendingdialog.findViewById(R.id.print_btn);
-        sms_btn = (ImageButton) sendingdialog.findViewById(R.id.sms_btn);
-        btn_done = (Button) sendingdialog.findViewById(R.id.btn_done);
-        test = (Button) findViewById(R.id.test);
 
         date = Calendar.getInstance().getTime();
         String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(date);
@@ -945,14 +925,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
         });
 
-
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                printTcp();
-            }
-        });
-
         searchForItem_cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1002,39 +974,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
         });
 
-        print_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(Buy.this, "YEs working", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        gmail_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(Intent.ACTION_SEND);
-                it.setType("message/rfc822");
-                startActivity(Intent.createChooser(it, "Choose Mail App"));
-            }
-        });
-
-
-        sms_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + "0323"));
-                intent.putExtra("sms_body", "Hi how are you");
-                startActivity(intent);
-            }
-        });
-        btn_done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendingdialog.dismiss();
-                finish();
-            }
-        });
-
         submit_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1044,13 +983,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
         });
 
-
-        print_linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                printTcp();
-            }
-        });
     }
 
     private boolean validateFields() {
@@ -1134,17 +1066,17 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             pd.dismissProgressBar(Buy.this);
         }
 
-        Intent intent=new Intent(Buy.this,Invoice_preview.class);
-        intent.putExtra("Date",String.valueOf(date_textView.getText().toString()));
-        intent.putExtra("Customer_Name",String.valueOf(customerName_textView.getText().toString()));
-        intent.putExtra("Customer_Email",String.valueOf(customerEmail_textView.getText().toString()));
-        intent.putExtra("Customer_ID",String.valueOf(customerID_textView.getText().toString()));
-        intent.putExtra("Customer_Ph_No",String.valueOf(customerPhno_textView.getText().toString()));
-        intent.putExtra("Item_Name",String.valueOf(itemName_textView.getText().toString()));
-        intent.putExtra("Item_ID",String.valueOf(itemID_textView.getText().toString()));
-        intent.putExtra("Item_Price_Currency",String.valueOf(itemPriceCurrency_textView.getText().toString()));
-        intent.putExtra("Item_Price",String.valueOf(itemPrice_textView.getText().toString()));
-        intent.putExtra("Paid_Amount",String.valueOf(paid_editText.getText().toString()));
+        Intent intent = new Intent(Buy.this, Invoice_preview.class);
+        intent.putExtra("Date", String.valueOf(date_textView.getText().toString()));
+        intent.putExtra("Customer_Name", String.valueOf(customerName_textView.getText().toString()));
+        intent.putExtra("Customer_Email", String.valueOf(customerEmail_textView.getText().toString()));
+        intent.putExtra("Customer_ID", String.valueOf(customerID_textView.getText().toString()));
+        intent.putExtra("Customer_Ph_No", String.valueOf(customerPhno_textView.getText().toString()));
+        intent.putExtra("Item_Name", String.valueOf(itemName_textView.getText().toString()));
+        intent.putExtra("Item_ID", String.valueOf(itemID_textView.getText().toString()));
+        intent.putExtra("Item_Price_Currency", String.valueOf(itemPriceCurrency_textView.getText().toString()));
+        intent.putExtra("Item_Price", String.valueOf(itemPrice_textView.getText().toString()));
+        intent.putExtra("Paid_Amount", String.valueOf(paid_editText.getText().toString()));
         finish();
         startActivity(intent);
 
@@ -1169,39 +1101,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 //                startActivity(intent);
 //            }
 //        });
-    }
-
-
-    public void printTcp() {
-        SharedPreferences preferences = getSharedPreferences(RBS_setting.PRINTER_SETTINGS, MODE_PRIVATE);
-        String port_value = preferences.getString(RBS_setting.Printer_Port_Number, "printer_port_number");
-        String ip_address = preferences.getString(RBS_setting.Printer_Ip_Address, "printer_ip_address");
-
-        if (asyncTask == null) {
-            try {
-                asyncTask = new AsyncTcpEscPosPrint(this).execute(this.getAsyncEscPosPrinter(new TcpConnection(ip_address, Integer.parseInt(port_value))));
-            } catch (NumberFormatException e) {
-                new AlertDialog.Builder(this)
-                        .setTitle("Invalid TCP port address")
-                        .setMessage("Port field must be a number.")
-                        .show();
-                e.printStackTrace();
-            }
-        } else {
-            Toast.makeText(this, "called", Toast.LENGTH_SHORT).show();
-            asyncTask = null;
-
-            try {
-                asyncTask = new AsyncTcpEscPosPrint(this).execute(this.getAsyncEscPosPrinter2(printer));
-            } catch (NumberFormatException e) {
-                new AlertDialog.Builder(this)
-                        .setTitle("Invalid TCP port address")
-                        .setMessage("Port field must be a number.")
-                        .show();
-                e.printStackTrace();
-            }
-        }
-
     }
 
     /**

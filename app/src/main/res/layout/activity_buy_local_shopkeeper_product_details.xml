@@ -204,7 +204,6 @@
 
                     <TextView
                         android:id="@+id/edit_textView"
-                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/item_description_textview"
@@ -394,7 +393,6 @@
                                         android:layout_marginEnd="10dp"
                                         android:layout_marginBottom="5dp"
                                         android:background="@drawable/grey_border"
-                                        style="@style/RBSInvoice_TextViews"
                                         android:text="Cancel"
                                         android:paddingLeft="10dp"
                                         android:paddingTop="10dp"

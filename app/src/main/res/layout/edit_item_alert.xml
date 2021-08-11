@@ -55,7 +55,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            style="@style/RBSInvoice_TextViews"
             android:text="Item Description"/>
 
         <EditText
@@ -63,7 +62,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimary"
-            style="@style/RBSInvoice_EditTexts"
             android:hint="Write description of the item"
             android:maxLength="300" />
 
@@ -115,7 +113,6 @@
 
             <TextView
                 android:id="@+id/yes_btn_textview"
-                style="@style/RBSInvoice_SaveButtonTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -126,7 +123,6 @@
 
             <TextView
                 android:id="@+id/cancel_btn_textview"
-                style="@style/RBSInvoice_CancelButtonTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"

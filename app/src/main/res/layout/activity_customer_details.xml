@@ -52,7 +52,6 @@
             android:orientation="vertical">
 
             <TextView
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
@@ -60,7 +59,6 @@
 
             <EditText
                 android:id="@+id/ac_title"
-                style="@style/RBSInvoice_EditTexts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
@@ -69,7 +67,6 @@
                 android:maxLength="32" />
 
             <TextView
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -114,7 +111,6 @@
 
 
             <TextView
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -122,7 +118,6 @@
 
             <EditText
                 android:id="@+id/ac_id"
-                style="@style/RBSInvoice_EditTexts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
@@ -168,7 +163,6 @@
 
 
             <TextView
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
@@ -211,7 +205,6 @@
             </LinearLayout>
 
             <TextView
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
@@ -219,7 +212,6 @@
 
             <EditText
                 android:id="@+id/ac_postcode"
-                style="@style/RBSInvoice_EditTexts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
@@ -227,7 +219,6 @@
                 android:maxLength="32" />
 
             <TextView
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -241,7 +232,6 @@
 
                 <EditText
                     android:id="@+id/ac_houseNo"
-                    style="@style/RBSInvoice_EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorPrimary"
@@ -267,7 +257,6 @@
                 android:textSize="15sp" />
 
             <TextView
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -275,7 +264,6 @@
 
             <TextView
                 android:id="@+id/ac_address"
-                style="@style/RBSInvoice_TextViews_Values"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -283,7 +271,6 @@
                 android:text="----" />
 
             <TextView
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -291,7 +278,6 @@
 
             <EditText
                 android:id="@+id/ac_email"
-                style="@style/RBSInvoice_EditTexts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
@@ -301,7 +287,6 @@
 
             <TextView
                 android:id="@+id/submit_textView"
-                style="@style/RBSInvoice_SaveButtonTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

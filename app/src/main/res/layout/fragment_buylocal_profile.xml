@@ -43,7 +43,6 @@
 
                     <TextView
                         android:id="@+id/name"
-                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
@@ -63,12 +62,11 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center"
-                            android:tint="@color/colorWhite"
-                            android:src="@drawable/phonecall" />
+                            android:src="@drawable/phonecall"
+                            app:tint="@color/colorWhite" />
 
                         <TextView
                             android:id="@+id/phno"
-                            style="@style/RBSInvoice_TextViews"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="20dp"
@@ -94,8 +92,8 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center"
-                            android:tint="@color/colorWhite"
-                            android:src="@drawable/email" />
+                            android:src="@drawable/email"
+                            app:tint="@color/colorWhite" />
 
                         <TextView
                             android:id="@+id/email"
@@ -121,12 +119,11 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:tint="@color/colorWhite"
-                            android:src="@drawable/location" />
+                            android:src="@drawable/location"
+                            app:tint="@color/colorWhite" />
 
                         <TextView
                             android:id="@+id/address"
-                            style="@style/RBSInvoice_TextViews"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingLeft="20dp"
@@ -138,7 +135,6 @@
 
                     <TextView
                         android:id="@+id/edit_textView"
-                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="end"
@@ -169,7 +165,6 @@
 
                     <TextView
                         android:id="@+id/purchase_area"
-                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/segoe_ui_bold"
@@ -229,7 +224,6 @@
 
         <TextView
             android:id="@+id/edit_image_textView"
-            style="@style/RBSInvoice_TextViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/edit_image_image_view"

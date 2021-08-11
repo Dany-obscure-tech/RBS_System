@@ -14,7 +14,7 @@
         android:background="@drawable/screen_header_rectangle">
 
         <TextView
-            style="@style/TextViews_header"
+            style="@style/TextViews_Header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -59,126 +59,113 @@
 
 
                 <TextView
-                    style="@style/TextViews_Bold_big"
+                    style="@style/TextViews_Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:text="Customer" />
 
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_weight="1"
                     android:text="Customer name" />
 
                 <EditText
                     android:id="@+id/customerName_editText"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary"
                     android:hint="Enter customer name"
                     android:inputType="textPersonName"
                     android:maxLength="32" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_weight="1"
                     android:text="Customer Phno" />
 
                 <EditText
                     android:id="@+id/customerPhno_editText"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary"
                     android:hint="Enter customer phno"
                     android:inputType="phone"
                     android:maxLength="32" />
 
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_weight="1"
                     android:text="Customer Email" />
 
                 <EditText
                     android:id="@+id/customerEmail_editText"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary"
                     android:hint="Enter customer phno"
                     android:inputType="textEmailAddress"
                     android:maxLength="32" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_weight="1"
                     android:text="Customer ID" />
 
                 <EditText
                     android:id="@+id/customerId_editText"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary"
                     android:hint="Enter customer id"
                     android:maxLength="32" />
 
                 <TextView
-                    style="@style/TextViews_Bold_big"
+                    style="@style/TextViews_Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:layout_weight="1"
+                    android:layout_marginTop="20dp"
                     android:text="Item" />
 
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_weight="1"
                     android:text="Item Name" />
 
                 <EditText
                     android:id="@+id/itemName_editText"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary"
                     android:hint="Enter item name"
                     android:maxLength="32" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_weight="1"
                     android:text="Item Serial No" />
 
                 <EditText
                     android:id="@+id/itemSerialNo_editText"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary"
                     android:hint="Enter item name"
                     android:maxLength="32" />
 
@@ -196,29 +183,31 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:orientation="horizontal"
+                    android:layout_gravity="center_vertical"
                     android:weightSum="2">
 
                     <TextView
-                        style="@style/TextViews_Bold_small"
+                        style="@style/TextViews_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
                         android:text="Ticket Number" />
 
                     <TextView
                         android:id="@+id/ticketNo_TextView"
-                        style="@style/TextViews_Bold_small"
+                        style="@style/TextViews_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="NA"
-                        android:textColor="@color/gradientDarkBlue"
-                        android:textSize="18sp" />
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/gradientDarkBlue"/>
 
                 </LinearLayout>
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
@@ -227,6 +216,7 @@
                 <TextView
                     android:id="@+id/addFaults_textview"
                     style="@style/green_btn"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -240,7 +230,7 @@
                     android:nestedScrollingEnabled="false" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
@@ -248,17 +238,15 @@
 
                 <EditText
                     android:id="@+id/amount_editText"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary"
                     android:hint="Enter amount"
                     android:inputType="numberDecimal"
                     android:maxLength="32" />
 
                 <TextView
                     android:id="@+id/pendingAmount_textView"
-                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
@@ -268,7 +256,6 @@
 
                 <EditText
                     android:id="@+id/pendingAmount_editText"
-                    style="@style/RBSInvoice_EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorPrimary"
@@ -278,7 +265,7 @@
                     android:visibility="gone" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
@@ -306,6 +293,7 @@
                     <TextView
                         android:id="@+id/date_textview"
                         style="@style/green_btn"
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.1"
@@ -314,7 +302,7 @@
                 </LinearLayout>
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
@@ -322,23 +310,18 @@
 
                 <EditText
                     android:id="@+id/special_condition_editText"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/gradientDarkBlue"
-                    android:fontFamily="@font/segoe_ui"
                     android:hint="Enter special conditions"
-                    android:paddingBottom="20dp"
-                    android:textColor="#9F9F9F"
-                    android:textColorHint="#9F9F9F"
-                    android:textSize="16sp" />
+                    android:paddingBottom="20dp"/>
 
                 <TextView
                     android:id="@+id/submit_textview"
                     style="@style/blue_btn"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:text="Save" />

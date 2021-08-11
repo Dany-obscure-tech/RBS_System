@@ -30,7 +30,6 @@
         <EditText
             android:id="@+id/search_editText"
             android:maxLength="32"
-            style="@style/RBSInvoice_EditTexts"
             android:backgroundTint="@color/gradientDarkBlue"
             android:hint="Search for category..."
             android:textColorHint="@color/textGrey"
@@ -54,7 +53,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/categoryList_recyclerView"
-        style="@style/RBSInvoice_CancelButtonTextView"
         android:layout_gravity="center_horizontal"
         android:text="Cancel"/>
 

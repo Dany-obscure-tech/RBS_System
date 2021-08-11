@@ -29,7 +29,7 @@
 
             <TextView
                 android:id="@+id/faultName_textView"
-                style="@style/TextViews_Bold_small"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -60,15 +60,11 @@
 
         <TextView
             android:id="@+id/remove_textView"
+            style="@style/red_btn"
+            android:foreground="?attr/selectableItemBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/red_border"
-            android:padding="12dp"
-            android:text="REMOVE"
-            android:textColor="@color/textRed"
-            android:textSize="10sp" />
+            android:text="REMOVE"/>
 
     </LinearLayout>
 

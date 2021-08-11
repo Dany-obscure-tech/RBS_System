@@ -14,7 +14,6 @@
         android:background="@drawable/profile_screen_header">
 
         <TextView
-            style="@style/TextViews_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -155,7 +154,6 @@
 
                 <EditText
                     android:id="@+id/vendor_item_qty_editText"
-                    style="@style/RBSInvoice_EditTexts"
                     android:textAlignment="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

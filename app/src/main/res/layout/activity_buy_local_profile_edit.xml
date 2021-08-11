@@ -64,7 +64,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/RBSInvoice_TextViews"
                 android:text="Change Name"
                 />
 
@@ -95,7 +94,6 @@
                         android:id="@+id/name_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/RBSInvoice_TextViews"
                         android:text="Shahzaib Mehfooz"
                         />
 
@@ -103,7 +101,6 @@
                         android:id="@+id/name_editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/RBSInvoice_EditTexts"
                         android:hint="Enter new name.."
                         android:backgroundTint="@color/colorPrimary"
                         android:maxLines="1"
@@ -124,7 +121,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Change Phone no"
-                style="@style/RBSInvoice_TextViews"
                 />
 
             <LinearLayout
@@ -154,7 +150,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="+923238910757"
-                        style="@style/RBSInvoice_TextViews"
                         />
 
                     <EditText
@@ -163,7 +158,6 @@
                         android:layout_height="wrap_content"
                         android:inputType="number"
                         android:maxLines="1"
-                        style="@style/RBSInvoice_EditTexts"
                         android:hint="Enter new phone number.."
                         android:backgroundTint="@color/colorPrimary"
                         />
@@ -182,7 +176,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Change Address"
-                    style="@style/RBSInvoice_TextViews"
                     />
 
                 <LinearLayout
@@ -212,7 +205,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Peshawar City"
-                            style="@style/RBSInvoice_TextViews"
                             />
 
                         <EditText
@@ -220,7 +212,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Enter new address.."
-                            style="@style/RBSInvoice_EditTexts"
                             android:backgroundTint="@color/colorPrimary"
                             />
                     </LinearLayout>
@@ -233,7 +224,6 @@
 
             <TextView
                 android:id="@+id/submit_textView"
-                style="@style/RBSInvoice_SaveButtonTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edit_option_area"

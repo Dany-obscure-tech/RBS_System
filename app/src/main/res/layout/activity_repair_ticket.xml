@@ -61,13 +61,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    style="@style/RBSInvoice_TextViews"
                     android:text="Ticket" />
 
                 <TextView
                     android:id="@+id/repairTicketAdd_textView"
                     android:layout_weight="1"
-                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Add Ticket +"
@@ -95,7 +93,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/customerName_textView"
-                            style="@style/Titles_item"
                             android:text="Search for ticket..."
                             android:textColor="@color/textGrey"
                             android:layout_margin="5dp"/>
@@ -109,7 +106,6 @@
 
             <TextView
                 android:layout_marginTop="30dp"
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ticket List" />

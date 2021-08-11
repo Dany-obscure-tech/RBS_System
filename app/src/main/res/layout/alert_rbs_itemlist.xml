@@ -8,21 +8,21 @@
 
     <TextView
         android:id="@+id/text"
+        style="@style/TextViews_Bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
-        android:textColor="@color/gradientDarkBlue"
-        android:fontFamily="@font/segoe_ui_bold"
-        android:textSize="18sp"
-        android:text="Select Item" />
+        android:text="@string/select_item"
+        android:textColor="@color/gradientDarkBlue" />
 
     <LinearLayout
         android:id="@+id/searchbar_editText"
         android:layout_below="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
         android:background="@drawable/search_view_style"
         android:orientation="horizontal"
         >
@@ -31,7 +31,7 @@
             android:id="@+id/searchItem_editText"
             android:layout_weight="8"
             android:fontFamily="@font/segoe_ui"
-            android:hint="Search here..."
+            android:hint="@string/search_here"
             android:textColor="#707070"
             android:maxLines="1"
             android:inputType="text"
@@ -45,6 +45,7 @@
             android:src="@drawable/search"
             android:padding="15dp"
             android:layout_gravity="center"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:backgroundTint="@color/textBlue"
             android:background="#00FFFFFF"
             android:layout_width="wrap_content"

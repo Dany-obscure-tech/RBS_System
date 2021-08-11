@@ -3,49 +3,19 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionBarSize">80dp</item>
-
     </style>
 
     <style name="AppTheme.no">
-        <item name="android:textColor">@color/defaultText</item>
+        <item name="android:textColor">@color/textGrey</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/yellowStars</item>
-        <item name="colorControlActivated">@color/greyStars</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-    </style>
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="RBSInvoice_TextViews">
-        <item name="android:textColor">@color/defaultText</item>
-        <item name="android:fontFamily">@font/segoe_ui_bold</item>
-        <item name="android:textSize">@dimen/Bold_Small</item>
-    </style>
-
-    <style name="RBSInvoice_TextViews_small">
-        <item name="android:textColor">@color/defaultText</item>
-        <item name="android:fontFamily">@font/segoe_ui</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="TextViews_header">
-        <item name="android:fontFamily">@font/segoe_ui_bold</item>
-        <item name="android:textSize">@dimen/Bold_Big</item>
-
     </style>
 
 
@@ -59,7 +29,6 @@
         <item name="android:textColor">#ffff</item>
         <item name="android:background">@drawable/profile_screen_header</item>
         <item name="android:textAlignment">center</item>
-
     </style>
 
 
@@ -73,45 +42,87 @@
         <item name="android:textColor">#ffff</item>
         <item name="android:background">@drawable/buylocal_green_button</item>
         <item name="android:textAlignment">center</item>
+    </style>
 
+
+    <style name="gray_btn">
+        <item name="android:fontFamily">@font/segoe_ui_bold</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:textSize">@dimen/Bold_Small</item>
+        <item name="android:textColor">#ffff</item>
+        <item name="android:background">@drawable/gray_button_rectangle</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="red_btn">
+        <item name="android:fontFamily">@font/segoe_ui</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/textRed</item>
+        <item name="android:background">@drawable/red_border</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:padding">12dp</item>
     </style>
 
     <style name="TextViews_Regular_small">
         <item name="android:fontFamily">@font/segoe_ui</item>
         <item name="android:textSize">@dimen/Regular_Small</item>
-
     </style>
 
     <style name="TextViews_Regular_big">
         <item name="android:fontFamily">@font/segoe_ui</item>
         <item name="android:textSize">@dimen/Regular_Big</item>
-
     </style>
 
     <style name="TextViews_Bold_big">
         <item name="android:fontFamily">@font/segoe_ui_bold</item>
         <item name="android:textSize">@dimen/Bold_Big</item>
-
     </style>
 
     <style name="TextViews_Bold_small">
         <item name="android:fontFamily">@font/segoe_ui_bold</item>
         <item name="android:textSize">@dimen/Bold_Small</item>
-
     </style>
 
-    <style name="RBSInvoice_TextViews_Values">
-        <item name="android:textColor">@color/gradientDarkBlue</item>
-        <item name="android:fontFamily">@font/segoe_ui</item>
-        <item name="android:textSize">20sp</item>
-    </style>
-
-
-    <style name="Headings_TextViews">
-        <item name="android:textColor">@color/defaultText</item>
+    <style name="TextViews_Header">
+        <item name="android:textSize">@dimen/Bold_Big</item>
+        <item name="android:textColor">@color/colorWhite</item>
         <item name="android:fontFamily">@font/segoe_ui_bold</item>
-        <item name="android:textSize">26sp</item>
     </style>
+
+    <style name="TextViews_Alert">
+        <item name="android:textSize">@dimen/Bold_Big</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:fontFamily">@font/segoe_ui_bold</item>
+    </style>
+
+    <style name="TextViews_Title">
+        <item name="android:textSize">@dimen/Bold_Big</item>
+        <item name="android:fontFamily">@font/segoe_ui_bold</item>
+        <item name="android:textColor">@color/textGrey</item>
+    </style>
+
+    <style name="TextViews_Bold">
+        <item name="android:textSize">@dimen/Bold_Small</item>
+        <item name="android:fontFamily">@font/segoe_ui_bold</item>
+    </style>
+
+    <style name="TextViews">
+        <item name="android:textSize">@dimen/Regular_Small</item>
+        <item name="android:fontFamily">@font/segoe_ui</item>
+    </style>
+
+    <style name="EditTexts">
+        <item name="android:textSize">@dimen/Regular_Big</item>
+        <item name="android:fontFamily">@font/segoe_ui</item>
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/textGrey</item>
+        <item name="hintTextColor">@color/textGrey</item>
+
+    </style>
+
 
     <style name="Search_views_Image_views">
         <item name="android:adjustViewBounds">true</item>
@@ -125,60 +136,6 @@
         <item name="cardUseCompatPadding">true</item>
         <item name="contentPadding">10dp</item>
 
-    </style>
-
-    <style name="Titles">
-        <item name="android:textAlignment">center</item>
-        <item name="android:fontFamily">@font/segoe_ui_bold</item>
-        <item name="android:layout_gravity">center</item>
-    </style>
-
-    <style name="Titles_item">
-        <item name="android:textAlignment">center</item>
-        <item name="android:fontFamily">@font/segoe_ui_bold</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="SubTitles_item">
-        <item name="android:fontFamily">@font/segoe_ui_bold</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="SubTitles_item_values">
-        <item name="android:fontFamily">@font/segoe_ui</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="RBSInvoice_EditTexts">
-        <item name="android:textColorHint">@color/textGrey</item>
-        <item name="android:textColor">@color/defaultText</item>
-        <item name="android:fontFamily">@font/segoe_ui</item>
-        <item name="android:textSize">@dimen/Regular_Big</item>
-    </style>
-
-    <style name="RBSInvoice_SaveButtonTextView">
-        <item name="android:textColor">@color/colorWhite</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:background">@drawable/buylocal_green_button</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingBottom">10dp</item>
-        <item name="android:paddingLeft">20dp</item>
-        <item name="android:paddingRight">20dp</item>
-        <item name="android:fontFamily">@font/segoe_ui_bold</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="RBSInvoice_CancelButtonTextView">
-        <item name="android:textColor">@color/textGrey</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:background">@drawable/btn_grey</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingBottom">10dp</item>
-        <item name="android:paddingLeft">20dp</item>
-        <item name="android:paddingRight">20dp</item>
-        <item name="android:fontFamily">@font/segoe_ui_bold</item>
-        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="Divider">

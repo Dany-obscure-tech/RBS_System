@@ -65,7 +65,6 @@
 
             <TextView
                 android:id="@+id/spot_light_text"
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imageSlider"
@@ -99,7 +98,6 @@
 
                 <TextView
                     android:id="@+id/Category"
-                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
@@ -165,7 +163,7 @@
                 android:backgroundTint="@color/textGreen"
                 android:padding="15dp"
                 android:src="@drawable/search"
-                android:tint="@color/colorWhite" />
+                app:tint="@color/colorWhite" />
 
         </LinearLayout>
 

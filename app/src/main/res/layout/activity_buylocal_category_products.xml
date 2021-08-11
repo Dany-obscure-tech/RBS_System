@@ -10,18 +10,16 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@drawable/profile_screen_header">
+        android:background="@drawable/screen_header_rectangle">
 
         <TextView
-            android:id="@+id/category_textview"
+            style="@style/TextViews_Header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/back_btn"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:text="Offers"
-            android:textColor="#ffffff"
-            android:textSize="22sp" />
+            android:text="Categories_Name"
+            android:textColor="#ffffff" />
 
         <ImageButton
             android:id="@+id/back_btn"
@@ -47,6 +45,7 @@
         android:layout_centerVertical="true"
         android:layout_margin="10dp"
         android:background="#F1F1F1"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
         android:orientation="horizontal">
 
         <EditText
@@ -68,6 +67,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:background="#00FFFFFF"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:backgroundTint="@color/textBlue"
             android:padding="15dp"
             android:src="@drawable/search" />

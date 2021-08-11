@@ -52,7 +52,6 @@
 
             <TextView
                 android:id="@+id/vendor_shop_name"
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
@@ -64,7 +63,6 @@
 
             <TextView
                 android:id="@+id/company_name"
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/vendor_shop_name"
@@ -112,7 +110,6 @@
 
             <TextView
                 android:id="@+id/company_registration_number"
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/shopkeeper_name_view_cardView"
@@ -160,7 +157,6 @@
 
             <TextView
                 android:id="@+id/post_code"
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/searchForItem_cardView"
@@ -208,7 +204,6 @@
 
             <TextView
                 android:id="@+id/vendor_address"
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/shopkeeper_email_cardView"
@@ -256,7 +251,6 @@
 
             <TextView
                 android:id="@+id/invoices"
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/vendor_address_cardView"

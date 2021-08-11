@@ -14,7 +14,6 @@
         android:background="@drawable/profile_screen_header">
 
         <TextView
-            style="@style/TextViews_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -392,7 +391,6 @@
                     android:weightSum="2">
 
                     <TextView
-                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -400,7 +398,6 @@
 
                     <TextView
                         android:id="@+id/suggest_price_TextView"
-                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -467,7 +464,6 @@
 
                 <TextView
                     android:id="@+id/transaction_textview"
-                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
@@ -486,7 +482,6 @@
 
                 <EditText
                     android:id="@+id/cash_editText"
-                    style="@style/RBSInvoice_EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorPrimary"

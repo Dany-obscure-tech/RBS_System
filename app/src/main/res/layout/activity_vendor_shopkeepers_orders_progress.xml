@@ -51,7 +51,6 @@
 
             <TextView
                 android:id="@+id/shop_name"
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
@@ -62,7 +61,6 @@
 
             <TextView
                 android:id="@+id/company_name"
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -108,7 +106,6 @@
 
             <TextView
                 android:id="@+id/company_registration_number"
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -154,7 +151,6 @@
 
             <TextView
                 android:id="@+id/post_code"
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -200,7 +196,6 @@
 
             <TextView
                 android:id="@+id/vendor_address"
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -261,7 +256,6 @@
                 android:weightSum="2">
 
                 <TextView
-                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -269,7 +263,6 @@
 
                 <TextView
                     android:id="@+id/_currency"
-                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$"
@@ -278,7 +271,6 @@
 
                 <TextView
                     android:id="@+id/suggest_price_TextView"
-                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -297,14 +289,12 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Paid" />
 
                 <EditText
                     android:id="@+id/paid_editText"
-                    style="@style/RBSInvoice_EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorPrimary"
@@ -313,14 +303,12 @@
                     android:maxLength="32" />
 
                 <TextView
-                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Discount" />
 
                 <EditText
                     android:id="@+id/discount_editText"
-                    style="@style/RBSInvoice_EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorPrimary"
@@ -340,7 +328,6 @@
                 android:weightSum="2">
 
                 <TextView
-                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -348,7 +335,6 @@
 
                 <TextView
                     android:id="@+id/balance_currency"
-                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$"
@@ -357,7 +343,6 @@
 
                 <TextView
                     android:id="@+id/balance_price_TextView"
-                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

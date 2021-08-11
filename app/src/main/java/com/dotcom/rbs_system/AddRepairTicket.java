@@ -51,6 +51,7 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class AddRepairTicket extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
+    //TODO is activity ka save button pa print wala alert lagana ha
     long timestamp;
 
     TextView viewCustomerDetails_textView;
@@ -67,15 +68,12 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
     DatabaseReference repairRef, repairTicketRef;
 
     Progress_dialoge pd1, pd2, pd3, pd4;
-    Dialog sendingdialog;
 
-    LinearLayout toggling_linear,hideToggle_linearLayout;
+    LinearLayout toggling_linear, hideToggle_linearLayout;
     LinearLayout changesConfirmation_linearLayout, customerID_linearLayout;
 
-    ImageButton gmail_btn, sms_btn, print_btn;
     ImageButton back_btn;
     TextView addFaults_textview, date_textview, submit_textview;
-    Button btn_done;
 
     TextView date_text;
     TextView date_textView;
@@ -86,8 +84,8 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
     EditText amount_editText, special_condition_editText;
     EditText pendingAmount_editText;
 
-    EditText customerName_editText,customerId_editText,customerPhno_editText,customerEmail_editText;
-    EditText itemName_editText,itemSerialNo_editText;
+    EditText customerName_editText, customerId_editText, customerPhno_editText, customerEmail_editText;
+    EditText itemName_editText, itemSerialNo_editText;
 
     RecyclerView faultList_recyclerView;
     AdapterRepairsFaultListRecyclerView adapterRepairsFaultListRecyclerView;
@@ -147,19 +145,6 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         pd2 = new Progress_dialoge();
         pd3 = new Progress_dialoge();
         pd4 = new Progress_dialoge();
-        sendingdialog = new Dialog(this);
-        sendingdialog.setContentView(R.layout.dialoge_items);
-        sendingdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                finish();
-            }
-        });
-        gmail_btn = (ImageButton) sendingdialog.findViewById(R.id.gmail_btn);
-        print_btn = (ImageButton) sendingdialog.findViewById(R.id.print_btn);
-        sms_btn = (ImageButton) sendingdialog.findViewById(R.id.sms_btn);
-        btn_done = (Button) sendingdialog.findViewById(R.id.btn_done);
-
 
         faultNameList = new ArrayList<>();
         faultPriceList = new ArrayList<>();
@@ -177,7 +162,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         dateList = new ArrayList<>();
         lastActiveDatelist = new ArrayList<>();
 
-        faultListRef = FirebaseDatabase.getInstance().getReference("Listed_faults/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        faultListRef = FirebaseDatabase.getInstance().getReference("Listed_faults/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         addFaults_textview = (TextView) findViewById(R.id.addFaults_textview);
 
@@ -310,40 +295,6 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             }
         });
 
-        print_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(AddRepairTicket.this, "YEs working", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        gmail_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(Intent.ACTION_SEND);
-                it.setType("message/rfc822");
-                startActivity(Intent.createChooser(it, "Choose Mail App"));
-            }
-        });
-        sms_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:" + "0323"));
-                intent.putExtra("sms_body", "Hi how are you");
-                startActivity(intent);
-            }
-        });
-        btn_done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                sendingdialog.dismiss();
-//                Intent intent = new Intent(Repairs.this,Repair_details.class);
-//                intent.putExtra("REPAIR_ID",repair_details_edit_obj.getTicketNo_TextView());
-//                startActivity(intent);
-                finish();
-            }
-        });
 
 
         submit_textview.setOnClickListener(new View.OnClickListener() {
@@ -377,7 +328,8 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
                             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Status").setValue("Pending Changes");
 
                             Toast.makeText(AddRepairTicket.this, "Submit Successfully123", Toast.LENGTH_SHORT).show();
-                            sendingdialog.show();
+
+                            //TODO yaha dialog box lgana ha
                             pd1.dismissProgressBar(AddRepairTicket.this);
                             repair_details_edit_obj.clear();
 
@@ -416,7 +368,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
 
                     repairTicketRef.child("Status").setValue("clear");
 
-                    sendingdialog.show();
+                    //ToDO yaha pa dialog box lgana ha
 
                 } else {
                     Toast.makeText(AddRepairTicket.this, "No changes", Toast.LENGTH_SHORT).show();
@@ -509,7 +461,8 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
 
             Toast.makeText(this, "Submit Successfully", Toast.LENGTH_SHORT).show();
             pd1.dismissProgressBar(AddRepairTicket.this);
-            sendingdialog.show();
+
+            //TODO yaha dialog box lgana ha
 
         } else {
             Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();

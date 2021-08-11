@@ -13,7 +13,6 @@
         android:background="@drawable/profile_screen_header">
 
         <TextView
-            style="@style/TextViews_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

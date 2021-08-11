@@ -53,7 +53,6 @@
 
             <TextView
                 android:id="@+id/ticketNo_textView"
-                style="@style/RBSInvoice_TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -85,7 +84,6 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                style="@style/RBSInvoice_TextViews_small"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Customer name:"
@@ -93,7 +91,6 @@
 
                             <TextView
                                 android:id="@+id/customerName_textView"
-                                style="@style/SubTitles_item_values"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="2dp"
@@ -112,7 +109,6 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                style="@style/RBSInvoice_TextViews_small"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="ID:"
@@ -120,7 +116,6 @@
 
                             <TextView
                                 android:id="@+id/id_textView"
-                                style="@style/SubTitles_item_values"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="2dp"
@@ -139,7 +134,6 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                style="@style/RBSInvoice_TextViews_small"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Phone no:"
@@ -147,7 +141,6 @@
 
                             <TextView
                                 android:id="@+id/phno_textView"
-                                style="@style/SubTitles_item_values"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="2dp"
@@ -166,7 +159,6 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                style="@style/RBSInvoice_TextViews_small"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Email:"
@@ -174,7 +166,6 @@
 
                             <TextView
                                 android:id="@+id/email_textView"
-                                style="@style/SubTitles_item_values"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="2dp"
@@ -213,7 +204,6 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                style="@style/RBSInvoice_TextViews_small"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Item name:"
@@ -221,7 +211,6 @@
 
                             <TextView
                                 android:id="@+id/itemName_textView"
-                                style="@style/SubTitles_item_values"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="2dp"
@@ -240,7 +229,6 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                style="@style/RBSInvoice_TextViews_small"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Serial no/IMEI:"
@@ -248,7 +236,6 @@
 
                             <TextView
                                 android:id="@+id/serialNo_textView"
-                                style="@style/SubTitles_item_values"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="2dp"
@@ -304,7 +291,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -325,7 +311,6 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
@@ -333,7 +318,6 @@
 
                     <TextView
                         android:id="@+id/amount_TextView"
-                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/gradientDarkBlue" />
@@ -368,7 +352,6 @@
                     android:visibility="gone">
 
                     <TextView
-                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
@@ -377,7 +360,6 @@
 
                     <TextView
                         android:id="@+id/pendingAmount_TextView"
-                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/textGreen" />
@@ -392,7 +374,6 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -401,7 +382,6 @@
 
                     <TextView
                         android:id="@+id/date_TextView"
-                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -418,7 +398,6 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
@@ -426,7 +405,6 @@
 
                     <TextView
                         android:id="@+id/specialConditions_TextView"
-                        style="@style/RBSInvoice_TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/gradientDarkBlue" />
@@ -437,7 +415,6 @@
 
             <TextView
                 android:id="@+id/edit_textView"
-                style="@style/RBSInvoice_SaveButtonTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

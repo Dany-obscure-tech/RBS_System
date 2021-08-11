@@ -58,7 +58,6 @@
 
             <TextView
                 android:id="@+id/save_terms_conditions_textview"
-                style="@style/RBSInvoice_SaveButtonTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
@@ -69,7 +68,6 @@
 
             <TextView
                 android:id="@+id/cancel_terms_conditions_textview"
-                style="@style/RBSInvoice_CancelButtonTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"

@@ -15,7 +15,6 @@
 
         <TextView
             android:id="@+id/title_activity"
-            style="@style/RBSInvoice_TextViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -77,7 +76,6 @@
 
                 <Button
                     android:id="@+id/btn_1_button"
-                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:background="@drawable/passcode_circle_background"
@@ -90,7 +88,6 @@
 
                 <Button
                     android:id="@+id/btn_2_button"
-                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_marginStart="20dp"
@@ -105,7 +102,6 @@
                 <Button
                     android:id="@+id/btn_3_button"
 
-                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:background="@drawable/passcode_circle_background"
@@ -128,7 +124,6 @@
                 <Button
                     android:id="@+id/btn_4_button"
 
-                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:background="@drawable/passcode_circle_background"
@@ -141,7 +136,6 @@
 
                 <Button
                     android:id="@+id/btn_5_button"
-                    style="@style/RBSInvoice_TextViews"
 
                     android:layout_width="80dp"
                     android:layout_height="80dp"
@@ -156,7 +150,6 @@
 
                 <Button
                     android:id="@+id/btn_6_button"
-                    style="@style/RBSInvoice_TextViews"
 
                     android:layout_width="80dp"
                     android:layout_height="80dp"
@@ -179,7 +172,6 @@
 
                 <Button
                     android:id="@+id/btn_7_button"
-                    style="@style/RBSInvoice_TextViews"
 
                     android:layout_width="80dp"
                     android:layout_height="80dp"
@@ -193,7 +185,6 @@
 
                 <Button
                     android:id="@+id/btn_8_button"
-                    style="@style/RBSInvoice_TextViews"
 
                     android:layout_width="80dp"
                     android:layout_height="80dp"
@@ -208,7 +199,6 @@
 
                 <Button
                     android:id="@+id/btn_9_button"
-                    style="@style/RBSInvoice_TextViews"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:background="@drawable/passcode_circle_background"
@@ -239,7 +229,6 @@
 
                 <Button
                     android:id="@+id/btn_0_button"
-                    style="@style/RBSInvoice_TextViews"
 
                     android:layout_width="82dp"
                     android:layout_height="80dp"

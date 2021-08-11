@@ -81,7 +81,6 @@
 
             <TextView
                 android:id="@+id/save_printer_settings_textview"
-                style="@style/RBSInvoice_SaveButtonTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -92,7 +91,6 @@
 
             <TextView
                 android:id="@+id/cancel_printer_settings_textview"
-                style="@style/RBSInvoice_CancelButtonTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"

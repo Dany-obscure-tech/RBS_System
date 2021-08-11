@@ -10,7 +10,7 @@
         android:background="@drawable/screen_header_rectangle">
 
         <TextView
-            style="@style/TextViews_Bold_small"
+            style="@style/TextViews_Alert"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

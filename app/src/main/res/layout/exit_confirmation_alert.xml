@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@drawable/top_black_rectangle"
     android:layout_height="match_parent">
 
     <RelativeLayout
@@ -10,31 +11,30 @@
         android:background="@drawable/screen_header_rectangle">
 
         <TextView
-            style="@style/TextViews_Bold_big"
+            style="@style/TextViews_Alert"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Alert!"
-            android:textColor="#ffffff" />
+            android:text="@string/alert_string" />
 
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_below="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/confirmation_textview"
-            style="@style/TextViews_Regular_big"
+            style="@style/TextViews_Bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="30dp"
-            android:text="Are you sure you want to exit?"
+            android:text="@string/alert_msg_string"
             android:textAlignment="center" />
 
         <LinearLayout
@@ -48,23 +48,27 @@
 
             <TextView
                 android:id="@+id/yes_btn_textview"
-                style="@style/RBSInvoice_SaveButtonTextView"
-                android:layout_width="wrap_content"
+                style="@style/green_btn"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:text="Yes"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="@string/yes_string"
                 android:textAlignment="center" />
 
 
             <TextView
                 android:id="@+id/cancel_btn_textview"
-                style="@style/RBSInvoice_CancelButtonTextView"
-                android:layout_width="wrap_content"
+                style="@style/gray_btn"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:text="Cancel" />
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="@string/cancel_string" />
 
         </LinearLayout>
 

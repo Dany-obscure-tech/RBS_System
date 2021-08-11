@@ -32,7 +32,6 @@
 
                 <TextView
                     android:id="@+id/stockName_textView"
-                    style="@style/Titles_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="6dp"
@@ -47,7 +46,6 @@
                     android:layout_alignLeft="@+id/stockName_textView">
 
                     <TextView
-                        style="@style/SubTitles_item"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
@@ -56,7 +54,6 @@
 
                     <TextView
                         android:id="@+id/sr_no_order"
-                        style="@style/SubTitles_item_values"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="00012333" />
@@ -72,7 +69,6 @@
                     android:layout_alignLeft="@+id/stockName_textView">
 
                     <TextView
-                        style="@style/SubTitles_item"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
@@ -86,7 +82,6 @@
 
                     <TextView
                         android:id="@+id/rate_price"
-                        style="@style/SubTitles_item_values"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="1000000" />
@@ -102,7 +97,6 @@
                     android:layout_alignLeft="@+id/stockName_textView">
 
                     <TextView
-                        style="@style/SubTitles_item"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
@@ -110,7 +104,6 @@
 
                     <TextView
                         android:id="@+id/order_qty"
-                        style="@style/SubTitles_item_values"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="100" />
