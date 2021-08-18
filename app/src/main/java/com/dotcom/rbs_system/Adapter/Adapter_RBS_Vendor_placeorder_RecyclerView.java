@@ -104,13 +104,14 @@ public class Adapter_RBS_Vendor_placeorder_RecyclerView extends RecyclerView.Ada
                         holder.requiredQuantity_editText.setText("");
                     }else {
                         totalBalance = totalBalance - previousValue;
-                        totalBalance= totalBalance + (Float.parseFloat(holder.requiredQuantity_editText.getText().toString())*Float.parseFloat(holder.place_order_price_textview.getText().toString()));
+                        totalBalance = totalBalance + (Float.parseFloat(holder.requiredQuantity_editText.getText().toString())*Float.parseFloat(holder.place_order_price_textview.getText().toString()));
                         totalBalance_textView.setText(String.valueOf(totalBalance));
                         if (Float.parseFloat(holder.requiredQuantity_editText.getText().toString())>Float.parseFloat(holder.place_order_quantity_textView.getText().toString())){
                             holder.requiredQuantity_editText.setError("Quantity exceeds!");
                             validateList.set(position,false);
                         }else {
                             validateList.set(position,true);
+                            place_order_quantity_editText.set(position,holder.requiredQuantity_editText.getText().toString());
                         }
 
                     }

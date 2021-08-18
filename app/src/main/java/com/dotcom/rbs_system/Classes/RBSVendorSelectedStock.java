@@ -77,10 +77,22 @@ public class RBSVendorSelectedStock {
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
+
     private RBSVendorSelectedStock(){}
 
     public static RBSVendorSelectedStock getInstance(){
 
         return rbsVendorSelectedStock;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public  void clearData(){
+        vendor_stock_category_textView.clear();
+        vendor_stockName_textView.clear();
+        vendor_stock_price_textview.clear();
+        vendor_stock_quantity_textView.clear();
+        vendor_stock_imageView.clear();
+        vendor_stock_keyID_list.clear();
     }
 }

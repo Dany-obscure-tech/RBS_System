@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dotcom.rbs_system.Classes.ActionBarTitle;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -102,7 +103,8 @@ public class VendorProfile extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view=inflater.inflate(R.layout.fragment_vendor_profile, container, false);
-        getActivity().setTitle("Vendor Profile");
+        ActionBarTitle.getInstance().getTextView().setText("Vendor Profile");
+
         initialization();
         onclicklistners();
         datafetch();

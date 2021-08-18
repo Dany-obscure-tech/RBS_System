@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.Adapter_RBS_Vendor_inventory_RecyclerView;
 import com.dotcom.rbs_system.Classes.RBSVendorSelectedStock;
@@ -43,6 +44,8 @@ public class RBS_Vendors extends AppCompatActivity {
     ImageView store_banner_imageView,profileImage_imageView;
 
     ImageButton back_btn;
+
+    String selectedVendorID;
 
     TextView vendor_name_textView,confirm_order_btn;
     TextView vendor_address_textView,vendor_phone_textView,vendor_email_textView;
@@ -175,8 +178,17 @@ public class RBS_Vendors extends AppCompatActivity {
                     rbsVendorSelectedStock.getVendor_stock_imageView().add(vendor_stock_imageView_list.get(adapter_rbs_vendor_inventory_recyclerView.getSelectedItemPositions().get(i)));
                     rbsVendorSelectedStock.getVendor_stock_keyID_list().add(vendor_stock_keyID_list.get(adapter_rbs_vendor_inventory_recyclerView.getSelectedItemPositions().get(i)));
                 }
+                if (rbsVendorSelectedStock.getVendor_stockName_textView().size() != 0){
+                    intent.putExtra("VENDOR_NAME",vendor_name_textView.getText().toString());
+                    intent.putExtra("VENDOR_EMAIL",vendor_email_textView.getText().toString());
+                    intent.putExtra("VENDOR_ADDRESS",vendor_address_textView.getText().toString());
+                    intent.putExtra("VENDOR_PHNO",vendor_phone_textView.getText().toString());
+                    intent.putExtra("VENDOR_keyID",selectedVendorID);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(RBS_Vendors.this, "Please select items!", Toast.LENGTH_SHORT).show();
+                }
 
-                startActivity(intent);
             }
         });
     }
@@ -215,6 +227,7 @@ public class RBS_Vendors extends AppCompatActivity {
         vendorStockRef.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                selectedVendorID = id;
                 for (DataSnapshot snapshot1:snapshot.getChildren()){
                     for (DataSnapshot snapshot2:snapshot1.getChildren()){
                         vendor_stock_category_list.add(snapshot1.getKey());

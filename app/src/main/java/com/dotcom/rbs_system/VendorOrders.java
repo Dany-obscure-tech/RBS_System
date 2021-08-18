@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.dotcom.rbs_system.Adapter.Adapter_Vendor_inventory_RecyclerView;
 import com.dotcom.rbs_system.Adapter.Adapter_Vendor_order_list_RecyclerView;
+import com.dotcom.rbs_system.Classes.ActionBarTitle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +73,7 @@ public class VendorOrders extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_vendor_orders, container, false);
-        getActivity().setTitle("Vendor Orders");
+        ActionBarTitle.getInstance().getTextView().setText("Vendor Orders");
         initialization();
         onclicklistners();
 

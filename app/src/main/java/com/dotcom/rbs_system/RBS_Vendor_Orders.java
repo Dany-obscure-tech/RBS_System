@@ -80,11 +80,6 @@ public class RBS_Vendor_Orders extends Fragment {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    private void onclicklistners() {
-
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
     private void initialization() {
         rbs_vendor_orders_recyclerview = (RecyclerView) view.findViewById(R.id.rbs_vendor_orders_recyclerview);
         invoice_no_list = new ArrayList<String>();
@@ -110,5 +105,10 @@ public class RBS_Vendor_Orders extends Fragment {
         Adapter_RBS_Vendor_orders_list_RecyclerView adapter_rbs_vendor_orders_list_recyclerView = new Adapter_RBS_Vendor_orders_list_RecyclerView(getActivity(), invoice_no_list, vendor_name_list, amount_currency_list,amount_list,paid_currency_list,paid_list,date_list,balance_currency_list,balance_list,order_status_list);
         rbs_vendor_orders_recyclerview.setLayoutManager(new GridLayoutManager(getActivity(),1));
         rbs_vendor_orders_recyclerview.setAdapter(adapter_rbs_vendor_orders_list_recyclerView);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    private void onclicklistners() {
+
     }
 }

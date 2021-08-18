@@ -238,6 +238,7 @@ public class Customer_details extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkPostcode();
+
                 if (validateFields() == true) {
                     detailsSubmit();
                 }
@@ -422,7 +423,7 @@ public class Customer_details extends AppCompatActivity {
 
             key = reference.push().getKey();
             rbsCustomerDetails.setCustomerName(ac_title.getText().toString());
-            rbsCustomerDetails.setCustomerPhNo(selected_country_code);
+            rbsCustomerDetails.setCustomerPhNo(String.valueOf(ccp.getFullNumberWithPlus()));
             rbsCustomerDetails.setCustomerHouseNo(ac_houseNo.getText().toString());
             rbsCustomerDetails.setCustomerId(ac_id.getText().toString());
             rbsCustomerDetails.setCustomerDob(date_of_birth_text.getText().toString());
@@ -507,3 +508,10 @@ public class Customer_details extends AppCompatActivity {
         });
     }
 }
+
+
+
+
+
+
+

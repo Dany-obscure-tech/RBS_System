@@ -2,6 +2,7 @@ package com.dotcom.rbs_system;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -10,6 +11,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -20,6 +23,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dotcom.rbs_system.Classes.ActionBarTitle;
 import com.dotcom.rbs_system.Classes.VendorStockDetails;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,6 +39,8 @@ import com.google.firebase.storage.UploadTask;
 public class VendorMainScreen extends AppCompatActivity {
 
     private long lastPressedTime;
+    ActionBar actionBar;
+    TextView actionBarTitle;
 
     Dialog confirmation_alert;
     TextView yes_btn_textview, cancel_btn_textview;
@@ -55,6 +61,25 @@ public class VendorMainScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_main_screen);
+
+        actionBar = this.getSupportActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.profile_screen_header));
+
+        ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
+                ActionBar.LayoutParams.MATCH_PARENT, // Width of TextView
+                ActionBar.LayoutParams.WRAP_CONTENT);
+
+        actionBarTitle = new TextView(getApplicationContext());
+
+        actionBarTitle.setLayoutParams(lp);
+        actionBarTitle.setTextColor(Color.WHITE);
+        actionBarTitle.setTextSize(22);
+        actionBarTitle.setTypeface(Typeface.DEFAULT_BOLD);
+
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(actionBarTitle);
+
+        ActionBarTitle.getInstance().setTextView(actionBarTitle);
 
         vendorStockRef = FirebaseDatabase.getInstance().getReference("Vendor_stock/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
         vendorStockImageReference = FirebaseStorage.getInstance().getReference().child("Vendor_Stock_Images/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
