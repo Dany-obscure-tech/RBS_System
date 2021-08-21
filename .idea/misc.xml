@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_add_repair_ticket.xml" value="0.12411347517730496" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_buy.xml" value="0.2001013171225937" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_buy_local_profile_edit.xml" value="0.33" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_buy_local_shopkeeper_product_details.xml" value="0.2001013171225937" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_buylocal_category_products.xml" value="0.25" />
@@ -14,6 +15,7 @@
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_rbs_vendor_order_receipt.xml" value="0.33" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_repair_ticket.xml" value="0.2001013171225937" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_vendor_main_screen.xml" value="0.33" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_vendor_shopkeepers_orders_progress.xml" value="0.33" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/edit_item_alert.xml" value="0.33" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/exit_confirmation_alert.xml" value="0.4114583333333333" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/fragment_buylocal_home.xml" value="0.4114583333333333" />
@@ -21,11 +23,15 @@
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/fragment_r_b_s__vendor__orders.xml" value="0.33" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/fragment_rbs_home.xml" value="0.25" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/fragment_rbs_setting.xml" value="0.2001013171225937" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/fragment_vendor_orders.xml" value="0.4114583333333333" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/nav_header_main_screen.xml" value="0.33" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/rbs_vendor_orders_list_item.xml" value="0.4114583333333333" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/rbs_vendor_placeorder_item.xml" value="0.33" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/rbs_vendormainscreen_item.xml" value="0.33" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/rbs_vendorsystem_navigation_header.xml" value="0.25" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/recyclerview_repairticket_repairticketlist_item.xml" value="0.2001013171225937" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/vendor_orders_list_item.xml" value="0.33" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/vendor_shopkeepers_order_progress_list_item.xml" value="0.4098731884057971" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/drawable-v21/ripple_effect_cardview.xml" value="0.57421875" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/drawable/profile_screen_header.xml" value="0.52125" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/drawable/ripple_effect_cardview.xml" value="0.57421875" />

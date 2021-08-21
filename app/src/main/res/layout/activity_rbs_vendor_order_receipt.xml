@@ -201,10 +201,40 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
+                android:id="@+id/text"
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vendor_address_cardView"
+                android:layout_marginTop="20dp"
+                android:text="@string/date" />
+
+            <LinearLayout
+                android:layout_below="@+id/text"
+                android:id="@+id/date_linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/date_textView"
+                    style="@style/TextViews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.9"
+                    android:layout_gravity="center_vertical"
+                    android:text="-- -- --" />
+
+            </LinearLayout>
+
+
+
+            <TextView
                 android:id="@+id/invoices"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/vendor_address_cardView"
+                android:layout_below="@+id/date_linearLayout"
                 android:layout_marginTop="25dp"
                 android:layout_weight="1"
                 android:background="@color/textBlue"

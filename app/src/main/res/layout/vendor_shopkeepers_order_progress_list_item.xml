@@ -20,8 +20,8 @@
                 android:layout_width="200px"
                 android:layout_height="200px"
                 android:layout_alignParentLeft="true"
-                android:layout_marginRight="15dp"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
                 android:src="@drawable/laptop" />
 
             <RelativeLayout
@@ -38,34 +38,13 @@
                     android:text="Samsung C7 Screens"
                     android:textColor="@color/textBlue" />
 
-                <LinearLayout
-                    android:id="@+id/stock_no_area"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/stockName_textView"
-                    android:layout_alignLeft="@+id/stockName_textView">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
-                        android:text="Stock S.NO"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/sr_no_order"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="00012333" />
-
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/unit_price_area"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/stock_no_area"
+                    android:layout_below="@+id/stockName_textView"
                     android:layout_alignLeft="@+id/stockName_textView">
 
                     <TextView
