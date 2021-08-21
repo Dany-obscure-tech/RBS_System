@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
@@ -28,16 +27,13 @@ import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnima
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 public class Item_history extends AppCompatActivity {
     String itemID, itemCategory;
-    List<String> dateList, status_list, shopkeeper_type_list, shopkeeper_name_list, customer_type_list, customer_name_list,shopkeeperImage_imageView,customerImage_imageView;
+    List<String> dateList, status_list, shopkeeper_type_list, shopkeeper_name_list, customer_type_list, customer_name_list, shopkeeperImage_imageView, customerImage_imageView;
     List<String> itemImageUrl_list;
 
     DatabaseReference itemRef;
@@ -89,12 +85,12 @@ public class Item_history extends AppCompatActivity {
         sliderView.setScrollTimeInSec(4); //set scroll delay in seconds :
         sliderView.startAutoCycle();
 
-        itemName_textView = (TextView) findViewById(R.id.item_category_textView);
-        item_description_textview = (TextView) findViewById(R.id.item_description_textview);
-        serialNo_textView = (TextView) findViewById(R.id.serialNo_textView);
-        category_textView = (TextView) findViewById(R.id.category_textView);
-        condition_textView = (TextView) findViewById(R.id.condition_textView);
-        back_btn = (ImageButton) findViewById(R.id.back_btn);
+        itemName_textView = findViewById(R.id.item_category_textView);
+        item_description_textview = findViewById(R.id.item_description_textview);
+        serialNo_textView = findViewById(R.id.serialNo_textView);
+        category_textView = findViewById(R.id.category_textView);
+        condition_textView = findViewById(R.id.condition_textView);
+        back_btn = findViewById(R.id.back_btn);
 
         itemID = getIntent().getStringExtra("ITEM_ID");
         itemCategory = getIntent().getStringExtra("ITEM_CATEGORY");
@@ -117,12 +113,12 @@ public class Item_history extends AppCompatActivity {
 
         orderQuery = itemHistoryRef.orderByChild("Timestamp");
 
-        itemHistoryRecyclerView = (RecyclerView) findViewById(R.id.itemHistoryRecyclerView);
+        itemHistoryRecyclerView = findViewById(R.id.itemHistoryRecyclerView);
         itemHistoryRecyclerView.setLayoutManager(new GridLayoutManager(Item_history.this, 1));
 
-        itemDetailsToggle_textView = (TextView) findViewById(R.id.itemDetailsToggle_textView);
+        itemDetailsToggle_textView = findViewById(R.id.itemDetailsToggle_textView);
 
-        itemDetails_relativelayout = (RelativeLayout) findViewById(R.id.itemDetails_relativelayout);
+        itemDetails_relativelayout = findViewById(R.id.itemDetails_relativelayout);
 
         itemRef = FirebaseDatabase.getInstance().getReference("Items");
 
@@ -172,7 +168,7 @@ public class Item_history extends AppCompatActivity {
                         Collections.reverse(customer_name_list);
                         Collections.reverse(customerImage_imageView);
 
-                        adapterItemHistoryListRecyclerView = new AdapterItemHistoryListRecyclerView(Item_history.this, status_list, shopkeeper_type_list, shopkeeper_name_list, customer_type_list, customer_name_list,shopkeeperImage_imageView,customerImage_imageView ,dateList);
+                        adapterItemHistoryListRecyclerView = new AdapterItemHistoryListRecyclerView(Item_history.this, status_list, shopkeeper_type_list, shopkeeper_name_list, customer_type_list, customer_name_list, shopkeeperImage_imageView, customerImage_imageView, dateList);
                         itemHistoryRecyclerView.setAdapter(adapterItemHistoryListRecyclerView);
 
                     }
@@ -206,7 +202,7 @@ public class Item_history extends AppCompatActivity {
                         itemImageUrl_list.add(dataSnapshot1.getValue().toString());
                     }
 
-                    SliderAdapterExample sliderAdapterExample = new SliderAdapterExample(Item_history.this,itemImageUrl_list);
+                    SliderAdapterExample sliderAdapterExample = new SliderAdapterExample(Item_history.this, itemImageUrl_list);
                     sliderView.setSliderAdapter(sliderAdapterExample);
 
                     pd2.dismissProgressBar(Item_history.this);
@@ -230,7 +226,7 @@ public class Item_history extends AppCompatActivity {
         back_btn();
     }
 
-
+    //Todo edit_data ka function use nhi howa yaha
     private void edit_data(String item_category, String item_keyID) {
         if (!ratingBar.equals("0")) {
             itemRef.child(item_category).child(item_keyID).child("Condition").setValue(ratingBar.getRating());

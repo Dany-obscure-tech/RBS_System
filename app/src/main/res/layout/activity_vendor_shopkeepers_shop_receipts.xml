@@ -6,29 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".VendorShopkeepersShopReceipts">
 
+
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@drawable/profile_screen_header">
+        android:background="@drawable/screen_header_rectangle">
 
         <TextView
+            style="@style/TextViews_Header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:fontFamily="@font/segoe_ui_bold"
+            android:layout_toEndOf="@+id/back_btn"
             android:text="Shopkeeper Details"
-            android:textColor="#ffffff"
-            android:textSize="22sp" />
+            android:textColor="#ffffff" />
 
         <ImageButton
             android:id="@+id/back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="0dp"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:adjustViewBounds="true"
             android:background="#00000000"
@@ -41,235 +41,116 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_below="@+id/header"
-        >
+        android:layout_below="@+id/header">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/vendor_shop_name"
+                style="@style/TextViews_Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
                 android:text="Itech Computers"
-                android:textColor="@color/textBlue"
-                android:textSize="25sp"
-                />
+                android:textColor="@color/textBlue" />
 
             <TextView
-                android:id="@+id/company_name"
+                style="@style/TextViews_Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/vendor_shop_name"
-                android:layout_marginTop="25dp"
-                android:layout_weight="1"
-                android:text="Name" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/shopkeeper_name_view_cardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/company_name"
-                android:background="@drawable/ripple_effect_cardview"
-                app:cardBackgroundColor="@color/colorWhite"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
-
-                <LinearLayout
-                    android:id="@+id/shopkeeper_name_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/item_category_textView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:text="Mr Khan"
-                            android:textColor="@color/textGrey"
-                            android:textSize="18sp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
+                android:layout_marginTop="10dp"
+                android:text="Shop Details" />
 
             <TextView
-                android:id="@+id/company_registration_number"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/shopkeeper_name_view_cardView"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:text="Phone" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/searchForItem_cardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/company_registration_number"
-                android:background="@drawable/ripple_effect_cardview"
-                app:cardBackgroundColor="@color/colorWhite"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
-
-                <LinearLayout
-                    android:id="@+id/shopkeeper_phone_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/company_reg_no_textView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:text="09125678893"
-                            android:textColor="@color/textGrey"
-                            android:textSize="18sp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
+                android:layout_marginTop="10dp"
+                android:text="Name"
+                android:textColor="@color/gradientDarkBlue" />
 
             <TextView
-                android:id="@+id/post_code"
+                android:id="@+id/shop_name_textView"
+                style="@style/TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/searchForItem_cardView"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:text="Email" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/shopkeeper_email_cardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/post_code"
-                android:background="@drawable/ripple_effect_cardview"
-                app:cardBackgroundColor="@color/colorWhite"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
-
-                <LinearLayout
-                    android:id="@+id/shopkeeper_email_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/post_code_textView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:text="mrkhan@gmail.com"
-                            android:textColor="@color/textGrey"
-                            android:textSize="18sp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/shop_name" />
 
             <TextView
-                android:id="@+id/vendor_address"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/shopkeeper_email_cardView"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:text="Address" />
+                android:text="Phone"
+                android:textColor="@color/gradientDarkBlue" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/vendor_address_cardView"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/shop_address_textView"
+                style="@style/TextViews"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/vendor_address"
-                android:background="@drawable/ripple_effect_cardview"
-                app:cardBackgroundColor="@color/colorWhite"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/Fake_phone_no" />
 
-                <LinearLayout
-                    android:id="@+id/shopkeeper_address_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+            <TextView
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textColor="@color/gradientDarkBlue" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:orientation="vertical">
+            <TextView
+                android:id="@+id/shop_email_textView"
+                style="@style/TextViews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/Fake_email" />
 
-                        <TextView
-                            android:id="@+id/vendor_address_textView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:text="House#24563 Pakistan"
-                            android:textColor="@color/textGrey"
-                            android:textSize="18sp" />
+            <TextView
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address"
+                android:textColor="@color/gradientDarkBlue" />
 
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/shop_phno_textView"
+                style="@style/TextViews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/fake_city" />
 
             <TextView
                 android:id="@+id/invoices"
+                style="@style/TextViews_Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/vendor_address_cardView"
-                android:layout_marginTop="25dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:textColor="@color/textBlue"
-                android:textSize="25sp"
-                android:layout_centerHorizontal="true"
                 android:text="Invoices" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/shopkeeper_invoices_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/invoices"
+                android:layout_marginTop="10dp"
 
                 />
 
-        </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
 
 </RelativeLayout>

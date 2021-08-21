@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import com.dotcom.rbs_system.Adapter.AdapterShopProductsShowcaseListRecyclerView;
 import com.dotcom.rbs_system.Adapter.Adapter_RBS_Vendor_orders_list_RecyclerView;
 import com.dotcom.rbs_system.Classes.ActionBarTitle;
 
@@ -26,7 +24,7 @@ import java.util.List;
 public class RBS_Vendor_Orders extends Fragment {
     RecyclerView rbs_vendor_orders_recyclerview;
     View view;
-    List<String> invoice_no_list,vendor_name_list,amount_currency_list,amount_list,paid_currency_list,paid_list,date_list,balance_currency_list,balance_list,order_status_list;
+    List<String> invoice_no_list, vendor_name_list, amount_currency_list, amount_list, paid_currency_list, paid_list, date_list, balance_currency_list, balance_list, order_status_list;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -75,23 +73,22 @@ public class RBS_Vendor_Orders extends Fragment {
         view = inflater.inflate(R.layout.fragment_r_b_s__vendor__orders, container, false);
         ActionBarTitle.getInstance().getTextView().setText("Vendor Orders");
         initialization();
-        onclicklistners();
         return view;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     private void initialization() {
-        rbs_vendor_orders_recyclerview = (RecyclerView) view.findViewById(R.id.rbs_vendor_orders_recyclerview);
-        invoice_no_list = new ArrayList<String>();
-        vendor_name_list = new ArrayList<String>();
-        amount_currency_list = new ArrayList<String>();
-        amount_list = new ArrayList<String>();
-        paid_currency_list = new ArrayList<String>();
-        paid_list = new ArrayList<String>();
-        date_list = new ArrayList<String>();
-        balance_currency_list = new ArrayList<String>();
-        balance_list = new ArrayList<String>();
-        order_status_list = new ArrayList<String>();
+        rbs_vendor_orders_recyclerview = view.findViewById(R.id.rbs_vendor_orders_recyclerview);
+        invoice_no_list = new ArrayList<>();
+        vendor_name_list = new ArrayList<>();
+        amount_currency_list = new ArrayList<>();
+        amount_list = new ArrayList<>();
+        paid_currency_list = new ArrayList<>();
+        paid_list = new ArrayList<>();
+        date_list = new ArrayList<>();
+        balance_currency_list = new ArrayList<>();
+        balance_list = new ArrayList<>();
+        order_status_list = new ArrayList<>();
         invoice_no_list.add("00012333");
         vendor_name_list.add("ITech Computers");
         amount_currency_list.add("$");
@@ -102,8 +99,8 @@ public class RBS_Vendor_Orders extends Fragment {
         balance_currency_list.add("$");
         balance_list.add("790");
         order_status_list.add("pending");
-        Adapter_RBS_Vendor_orders_list_RecyclerView adapter_rbs_vendor_orders_list_recyclerView = new Adapter_RBS_Vendor_orders_list_RecyclerView(getActivity(), invoice_no_list, vendor_name_list, amount_currency_list,amount_list,paid_currency_list,paid_list,date_list,balance_currency_list,balance_list,order_status_list);
-        rbs_vendor_orders_recyclerview.setLayoutManager(new GridLayoutManager(getActivity(),1));
+        Adapter_RBS_Vendor_orders_list_RecyclerView adapter_rbs_vendor_orders_list_recyclerView = new Adapter_RBS_Vendor_orders_list_RecyclerView(getActivity(), invoice_no_list, vendor_name_list, amount_currency_list, amount_list, paid_currency_list, paid_list, date_list, balance_currency_list, balance_list, order_status_list);
+        rbs_vendor_orders_recyclerview.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         rbs_vendor_orders_recyclerview.setAdapter(adapter_rbs_vendor_orders_list_recyclerView);
     }
 

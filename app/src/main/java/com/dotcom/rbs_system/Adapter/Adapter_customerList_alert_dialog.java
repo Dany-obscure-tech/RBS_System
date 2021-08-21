@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.Classes.RBSCustomerDetails;
 import com.dotcom.rbs_system.Customer_history;
-import com.dotcom.rbs_system.Item_history;
 import com.dotcom.rbs_system.R;
 import com.squareup.picasso.Picasso;
 
@@ -27,15 +26,15 @@ public class Adapter_customerList_alert_dialog extends RecyclerView.Adapter<Adap
     Context context;
     RBSCustomerDetails rbsCustomerDetails = RBSCustomerDetails.getInstance();
 
-    List<String> exisitngCustomerList,exisitngCustomerKeyIDList,existingCustomerIDList,existingCustomerPhnoList,existingCustomerEmailList,existingCustomerImageUrlList;
-    TextView customerName_textView,customerEmail_textView,customerID_textView,customerPhno_textView;
+    List<String> exisitngCustomerList, exisitngCustomerKeyIDList, existingCustomerIDList, existingCustomerPhnoList, existingCustomerEmailList, existingCustomerImageUrlList;
+    TextView customerName_textView, customerEmail_textView, customerID_textView, customerPhno_textView;
     ImageView customerImage_imageView;
     TextView viewCustomerDetails_textView;
     Dialog customerList_alert_dialog;
     LinearLayout customerID_linearLayout;
     String customerKeyID;
 
-    public Adapter_customerList_alert_dialog(Context context, List<String> exisitngCustomerList, List<String> exisitngCustomerKeyIDList, List<String> existingCustomerIDList, List<String> existingCustomerPhnoList, List<String> existingCustomerEmailList, List<String> existingCustomerImageUrlList, TextView customerName_textView, TextView customerEmail_textView, TextView customerID_textView, TextView customerPhno_textView, ImageView customerImage_imageView, Dialog customerList_alert_dialog, TextView viewCustomerDetails_textView,LinearLayout customerID_linearLayout) {
+    public Adapter_customerList_alert_dialog(Context context, List<String> exisitngCustomerList, List<String> exisitngCustomerKeyIDList, List<String> existingCustomerIDList, List<String> existingCustomerPhnoList, List<String> existingCustomerEmailList, List<String> existingCustomerImageUrlList, TextView customerName_textView, TextView customerEmail_textView, TextView customerID_textView, TextView customerPhno_textView, ImageView customerImage_imageView, Dialog customerList_alert_dialog, TextView viewCustomerDetails_textView, LinearLayout customerID_linearLayout) {
         this.context = context;
         this.exisitngCustomerList = exisitngCustomerList;
         this.exisitngCustomerKeyIDList = exisitngCustomerKeyIDList;
@@ -56,7 +55,7 @@ public class Adapter_customerList_alert_dialog extends RecyclerView.Adapter<Adap
     @NonNull
     @Override
     public Adapter_customerList_alert_dialog.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new Adapter_customerList_alert_dialog.ViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_customerlist_alert_item,parent,false));
+        return new Adapter_customerList_alert_dialog.ViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_customerlist_alert_item, parent, false));
     }
 
     @Override
@@ -113,7 +112,7 @@ public class Adapter_customerList_alert_dialog extends RecyclerView.Adapter<Adap
         });
     }
 
-    public String getCustomerKeyID(){
+    public String getCustomerKeyID() {
         return customerKeyID;
     }
 
@@ -123,16 +122,17 @@ public class Adapter_customerList_alert_dialog extends RecyclerView.Adapter<Adap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView customerName_textView,customerEmail_textView,customerID_textView,customerPhno_textView;
+        TextView customerName_textView, customerEmail_textView, customerID_textView, customerPhno_textView;
         ImageView customerImage_imageView;
         CardView searchForCustomer_cardView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             searchForCustomer_cardView = (CardView) itemView.findViewById(R.id.searchForCustomer_cardView);
-            customerName_textView = (TextView)itemView.findViewById(R.id.customerName_textView);
-            customerEmail_textView = (TextView)itemView.findViewById(R.id.customerEmail_textView);
-            customerPhno_textView = (TextView)itemView.findViewById(R.id.customerPhno_textView);
-            customerID_textView = (TextView)itemView.findViewById(R.id.customerID_textView);
+            customerName_textView = (TextView) itemView.findViewById(R.id.customerName_textView);
+            customerEmail_textView = (TextView) itemView.findViewById(R.id.customerEmail_textView);
+            customerPhno_textView = (TextView) itemView.findViewById(R.id.customerPhno_textView);
+            customerID_textView = (TextView) itemView.findViewById(R.id.customerID_textView);
             customerImage_imageView = (ImageView) itemView.findViewById(R.id.customerImage_imageView);
 
         }

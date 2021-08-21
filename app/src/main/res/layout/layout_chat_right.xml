@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_alignParentRight="true"
-    android:layout_width="match_parent" android:layout_height="wrap_content">
+    android:padding="8dp">
 
     <TextView
         android:id="@+id/show_message"
-        android:layout_alignParentRight="true"
-        android:text="Hello"
-        android:paddingVertical="10dp"
-        android:paddingHorizontal="20dp"
-        android:fontFamily="@font/segoe_ui"
-        android:textSize="16sp"
-        android:textColor="@color/textGrey"
-        android:maxWidth="300dp"
+        style="@style/TextViews"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:maxWidth="300dp"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
+        android:text="Hello" />
 
 </RelativeLayout>

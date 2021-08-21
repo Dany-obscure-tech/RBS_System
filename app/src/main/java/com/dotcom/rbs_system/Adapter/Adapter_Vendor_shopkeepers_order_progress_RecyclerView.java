@@ -18,7 +18,7 @@ import java.util.List;
 
 public class Adapter_Vendor_shopkeepers_order_progress_RecyclerView extends RecyclerView.Adapter<Adapter_Vendor_shopkeepers_order_progress_RecyclerView.MyViewHolder> {
     Context context;
-    List<String> accessory_name,rate_price,order_qty,image_url;
+    List<String> accessory_name, rate_price, order_qty, image_url;
 
     public Adapter_Vendor_shopkeepers_order_progress_RecyclerView(Context context, List<String> accessory_name, List<String> rate_price, List<String> order_qty, List<String> image_url) {
         this.context = context;
@@ -34,7 +34,7 @@ public class Adapter_Vendor_shopkeepers_order_progress_RecyclerView extends Recy
 
         View v;
         v = LayoutInflater.from(context).inflate(R.layout.vendor_shopkeepers_order_progress_list_item, parent, false);
-        Adapter_Vendor_shopkeepers_order_progress_RecyclerView.MyViewHolder myViewHolder = new Adapter_Vendor_shopkeepers_order_progress_RecyclerView.MyViewHolder(v);
+        Adapter_Vendor_shopkeepers_order_progress_RecyclerView.MyViewHolder myViewHolder = new MyViewHolder(v);
         return myViewHolder;
     }
 
@@ -53,18 +53,18 @@ public class Adapter_Vendor_shopkeepers_order_progress_RecyclerView extends Recy
         return accessory_name.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView accessory_name,rate_currency,rate_price,order_qty;
+        TextView accessory_name, rate_currency, rate_price, order_qty;
         ImageView placeorder_item_pic_imageView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            accessory_name = (TextView) itemView.findViewById(R.id.stockName_textView);
-            rate_currency = (TextView) itemView.findViewById(R.id.rate_currency);
-            rate_price = (TextView) itemView.findViewById(R.id.rate_price);
-            order_qty = (TextView) itemView.findViewById(R.id.order_qty);
-            placeorder_item_pic_imageView = (ImageView) itemView.findViewById(R.id.placeorder_item_pic_imageView);
+            accessory_name = itemView.findViewById(R.id.stockName_textView);
+            rate_currency = itemView.findViewById(R.id.rate_currency);
+            rate_price = itemView.findViewById(R.id.rate_price);
+            order_qty = itemView.findViewById(R.id.order_qty);
+            placeorder_item_pic_imageView = itemView.findViewById(R.id.placeorder_item_pic_imageView);
 
         }
     }

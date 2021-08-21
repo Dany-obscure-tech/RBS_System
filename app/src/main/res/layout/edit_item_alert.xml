@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/header"
@@ -11,7 +11,7 @@
         android:background="@drawable/screen_header_rectangle">
 
         <TextView
-            style="@style/TextViews_Bold_big"
+            style="@style/TextViews_Bold_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -21,29 +21,28 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_below="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <Spinner
                 android:id="@+id/spinner"
-                style="@style/TextViews_Bold_big"
-                android:layout_marginTop="5dp"
+                style="@style/green_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:entries="@array/list"
-                android:background="@drawable/profile_screen_header"
-                android:paddingRight="10dp"
+                android:paddingEnd="10dp"
                 android:spinnerMode="dialog"
-                android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -52,60 +51,55 @@
         </LinearLayout>
 
         <TextView
+            style="@style/TextViews_Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Item Description"/>
+            android:text="Item Description" />
 
         <EditText
             android:id="@+id/description_editText"
+            style="@style/EditTexts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
-            android:hint="Write description of the item"
+            android:hint="Write description of the item.."
             android:maxLength="300" />
 
         <LinearLayout
-            android:layout_marginTop="30dp"
-            android:weightSum="2"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            android:weightSum="2">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/itemImage_recyclerView"
-                android:nestedScrollingEnabled="false"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
 
 
             <ImageView
-                android:visibility="gone"
                 android:id="@+id/id_imageView"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_weight="1.9"
                 android:adjustViewBounds="true"
-                android:layout_width="80dp"
-                android:layout_height="80dp"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/uploadId_textView"
+                style="@style/green_btn"
                 android:layout_width="match_parent"
-                android:textAlignment="center"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/profile_screen_header"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="Upload item image"
-                android:textColor="#ffff"
-                android:textSize="15sp" />
+                android:text="Upload item image" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:gravity="center"
             android:orientation="horizontal"
@@ -113,21 +107,26 @@
 
             <TextView
                 android:id="@+id/yes_btn_textview"
+                style="@style/blue_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:text="Yes"
-                android:textAlignment="center" />
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="Yes" />
 
 
             <TextView
                 android:id="@+id/cancel_btn_textview"
+                style="@style/gray_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:text="Cancel" />
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="@string/cancel_string" />
 
         </LinearLayout>
 

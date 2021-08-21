@@ -1,80 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
-    android:layout_marginBottom="10dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_height="wrap_content">
+    android:layout_marginBottom="10dp">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_height="wrap_content">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="15dp"
             android:layout_height="15dp"
+            android:layout_margin="10dp"
             android:background="@drawable/outline_blue_circle"
             android:gravity="center_vertical"
-            android:text=""
-            android:layout_margin="10dp"
-            android:textColor="@color/textBlue"
-            android:textSize="30sp" />
+            android:text="" />
 
         <LinearLayout
             android:id="@+id/leftLayout"
-            android:layout_weight="1"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/ticketNo_textView"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/gradientDarkBlue"
-                android:text="Ticket No"/>
+                android:layout_marginTop="5dp"
+                android:text="Ticket No"
+                android:textColor="@color/gradientDarkBlue" />
 
             <TextView
                 android:id="@+id/customerName_textView"
+                style="@style/TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/segoe_ui"
-                android:text="Customer name"/>
+                android:text="Customer name" />
 
             <TextView
                 android:id="@+id/customerID_textView"
+                style="@style/TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/segoe_ui"
-                android:text="Customer ID"/>
+                android:layout_marginTop="2dp"
+                android:text="Customer ID" />
 
             <TextView
                 android:id="@+id/item_category_textView"
+                style="@style/TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/segoe_ui"
-                android:text="Item name"/>
+                android:text="Item name" />
 
             <TextView
                 android:id="@+id/item_serialNo_textView"
+                style="@style/TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/segoe_ui"
-                android:text="Item serial no"/>
+                android:text="Item serial no" />
 
             <TextView
                 android:id="@+id/date_textView"
+                style="@style/TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/segoe_ui"
-                android:text="Date"/>
+                android:text="Date" />
 
         </LinearLayout>
 
     </LinearLayout>
-
 
 
 </RelativeLayout>

@@ -1,7 +1,6 @@
 package com.dotcom.rbs_system.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +9,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dotcom.rbs_system.BuyLocal_productdetails;
-import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -21,7 +17,7 @@ import java.util.List;
  * Created by Mahadi on 3/11/2018.
  */
 
-public class AdapterOffersItemListRecyclerView extends  RecyclerView.Adapter<AdapterOffersItemListRecyclerView.MyViewHolder> {
+public class AdapterOffersItemListRecyclerView extends RecyclerView.Adapter<AdapterOffersItemListRecyclerView.MyViewHolder> {
 
     Context context;
     List<String> itemname;
@@ -31,7 +27,7 @@ public class AdapterOffersItemListRecyclerView extends  RecyclerView.Adapter<Ada
     List<String> offer_product_price;
     List<String> product_offer_msg;
 
-    public AdapterOffersItemListRecyclerView(Context context, List<String> itemname, List<String> price, List<String> itemImage,List<String> offer_status, List<String> offer_product_price, List<String> product_offer_msg) {
+    public AdapterOffersItemListRecyclerView(Context context, List<String> itemname, List<String> price, List<String> itemImage, List<String> offer_status, List<String> offer_product_price, List<String> product_offer_msg) {
         this.context = context;
         this.itemname = itemname;
         this.price = price;
@@ -53,16 +49,6 @@ public class AdapterOffersItemListRecyclerView extends  RecyclerView.Adapter<Ada
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         holder.name.setText(itemname.get(position));
-//        holder.priceTV.setText(Currency.getInstance().getCurrency() + " " + price.get(position));
-//        Picasso.get().load(itemImage.get(position)).into(holder.image);
-//
-//        holder.image.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(context, BuyLocal_productdetails.class);
-//                context.startActivity(intent);
-//            }
-//        });
     }
 
     @Override
@@ -79,7 +65,8 @@ public class AdapterOffersItemListRecyclerView extends  RecyclerView.Adapter<Ada
         TextView offer_product_price;
         TextView product_offer_msg;
 
-
+        //TODo check and remove problems
+        //TODO dany is activity pa kam rehta ha
         public MyViewHolder(View itemView) {
             super(itemView);
 

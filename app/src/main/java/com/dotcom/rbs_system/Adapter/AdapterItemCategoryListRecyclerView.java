@@ -15,7 +15,6 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dotcom.rbs_system.Item_detail;
 import com.dotcom.rbs_system.R;
 import com.squareup.picasso.Picasso;
 
@@ -24,7 +23,7 @@ import java.util.List;
 public class AdapterItemCategoryListRecyclerView extends RecyclerView.Adapter<AdapterItemCategoryListRecyclerView.ViewHolder> {
 
     Context context;
-    List<String> categoryList,categoryImageList;
+    List<String> categoryList, categoryImageList;
     Dialog dialog;
     TextView selectCategory_textView;
     ImageView categoryIcon_imageView;
@@ -34,15 +33,15 @@ public class AdapterItemCategoryListRecyclerView extends RecyclerView.Adapter<Ad
         this.categoryList = categoryList;
         this.categoryImageList = categoryImageList;
         this.dialog = dialog;
-        this.selectCategory_textView = (TextView) ((Activity)context).findViewById(R.id.selectCategory_textView);
-        this.categoryIcon_imageView = (ImageView) ((Activity)context).findViewById(R.id.categoryIcon_imageView);
+        this.selectCategory_textView = ((Activity) context).findViewById(R.id.selectCategory_textView);
+        this.categoryIcon_imageView = ((Activity) context).findViewById(R.id.categoryIcon_imageView);
     }
 
 
     @NonNull
     @Override
     public AdapterItemCategoryListRecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new AdapterItemCategoryListRecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_category_list_item,parent,false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_category_list_item, parent, false));
     }
 
     @Override
@@ -53,13 +52,13 @@ public class AdapterItemCategoryListRecyclerView extends RecyclerView.Adapter<Ad
         holder.button.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    holder.button.setCardBackgroundColor(ContextCompat.getColor(context,R.color.colorLightGrey));
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    holder.button.setCardBackgroundColor(ContextCompat.getColor(context, R.color.colorLightGrey));
                 } else if (event.getAction() == MotionEvent.ACTION_CANCEL) {
-                    holder.button.setCardBackgroundColor(ContextCompat.getColor(context,R.color.colorWhite));
+                    holder.button.setCardBackgroundColor(ContextCompat.getColor(context, R.color.colorWhite));
 
-                }else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    holder.button.setCardBackgroundColor(ContextCompat.getColor(context,R.color.colorWhite));
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    holder.button.setCardBackgroundColor(ContextCompat.getColor(context, R.color.colorWhite));
                     selectCategory_textView.setText(categoryList.get(position));
                     categoryIcon_imageView.setVisibility(View.VISIBLE);
                     categoryIcon_imageView.setImageDrawable(holder.categoryIcon_imageView.getDrawable());
@@ -76,16 +75,17 @@ public class AdapterItemCategoryListRecyclerView extends RecyclerView.Adapter<Ad
         return categoryList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView selectCategory_textView;
         ImageView categoryIcon_imageView;
         CardView button;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            selectCategory_textView = (TextView) itemView.findViewById(R.id.selectCategory_textView);
-            categoryIcon_imageView = (ImageView)itemView.findViewById(R.id.categoryIcon_imageView);
-            button = (CardView) itemView.findViewById(R.id.button);
+            selectCategory_textView = itemView.findViewById(R.id.selectCategory_textView);
+            categoryIcon_imageView = itemView.findViewById(R.id.categoryIcon_imageView);
+            button = itemView.findViewById(R.id.button);
         }
     }
 }

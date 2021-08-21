@@ -2,16 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorWhite"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".Item_detail">
+    android:background="@color/colorWhite"
+    tools:context=".Add_item">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/searchForItem_cardView"
+        style="@style/CardView_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/CardView_style">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -22,67 +22,94 @@
                 style="@style/Search_views_Image_views"
                 android:layout_width="200px"
                 android:layout_height="200px"
-                android:layout_alignParentLeft="true"
-                android:layout_marginRight="15dp"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:visibility="visible"
-                android:src="@drawable/laptop" />
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/laptop"
+                android:visibility="visible" />
 
             <RelativeLayout
-                android:layout_toRightOf="@+id/itemImage_imageView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/itemImage_imageView">
 
                 <TextView
                     android:id="@+id/itemName_textView"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Search for item..."
-                    android:textColor="@color/textGrey"
-                    android:layout_margin="5dp"/>
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/fake_item_name"
+                    android:textColor="@color/textBlue" />
 
-                <TextView
-                    android:id="@+id/itemSerialNo_textView"
-                    android:visibility="visible"
-                    android:textColor="@color/textGrey"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:textSize="15sp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="IMEI/Serial no"
+                <LinearLayout
+                    android:id="@+id/serial_no_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/itemName_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViews_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/serial_no" />
+
+                    <TextView
+                        android:id="@+id/itemSerialNo_textView"
+                        style="@style/TextViews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:text="@string/Fake_item_id"
+                        android:visibility="visible" />
+
+
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/item_price_linearLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/itemSerialNo_textView">
+                    android:layout_below="@+id/serial_no_area"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViews_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/item_price" />
 
                     <TextView
                         android:id="@+id/itemPriceCurrency_textView"
+                        style="@style/TextViews"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
                         android:layout_marginTop="2dp"
                         android:layout_marginBottom="2dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible"
+                        android:text="@string/Fake_currency"
                         android:textColor="@color/textGreen"
-                        android:text="$" />
+                        android:visibility="visible" />
 
                     <TextView
                         android:id="@+id/itemPrice_textView"
+                        style="@style/TextViews"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
                         android:layout_marginTop="2dp"
                         android:layout_marginBottom="2dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_height="wrap_content"
+                        android:text="@string/Fake_rupees"
                         android:textColor="@color/textGreen"
-                        android:visibility="visible"
-                        android:text="157" />
+                        android:visibility="visible" />
 
 
                 </LinearLayout>
@@ -94,29 +121,24 @@
                     android:layout_below="@+id/item_price_linearLayout">
 
                     <TextView
-                        android:textColor="@color/textGrey"
-                        android:fontFamily="@font/segoe_ui"
-                        android:textSize="15sp"
+                        style="@style/TextViews_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="Last Active: "
                         android:layout_marginTop="2dp"
                         android:layout_marginBottom="2dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:text="@string/last_active" />
 
                     <TextView
                         android:id="@+id/itemLastActive_textView"
-                        android:textColor="@color/textGrey"
-                        android:fontFamily="@font/segoe_ui"
-                        android:textSize="15sp"
+                        style="@style/TextViews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginStart="2dp"
                         android:layout_marginTop="2dp"
                         android:layout_marginBottom="2dp"
-                        android:layout_marginLeft="2dp"
-                        android:text=""
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:text="" />
 
                 </LinearLayout>
 

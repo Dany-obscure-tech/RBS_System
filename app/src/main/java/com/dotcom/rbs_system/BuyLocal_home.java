@@ -12,9 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -34,7 +31,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -53,33 +49,30 @@ public class BuyLocal_home extends Fragment {
 
     BuylocalSlider buylocalSliderlistObj;
 
+    //TODo ye slider remove karna ha
     SliderView sliderView;
 
     DatabaseReference spotlightItemsRef;
 
-    MaterialSearchView materialSearchView;
 
-    RecyclerView spotlightRecyclerView,category_recyclerview;
+    RecyclerView spotlightRecyclerView, category_recyclerview;
 
-    CardView imageSlider;
+    CardView imageSlider, side_menu_cardview;
 
     List<String> slider_link_list, itemname, price, itemImage;
     List<String> imageUrl;
-    List<String> category_text,key_idList,categoryList,shopkeeperList;
+    List<String> category_text, key_idList, categoryList, shopkeeperList;
 
     ImageView menu_btn;
 
-    TextView logout,communication_option,rbs_option,vendor_option,offers_option;
+    TextView logout, communication_option, rbs_option, vendor_option, offers_option;
 
-    RelativeLayout side_option_menu,side_option_menu_bg_relativeLayout;
+    RelativeLayout side_option_menu_bg_relativeLayout;
 
     ImageButton search_imageBtn;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
 
     public BuyLocal_home() {
 
@@ -120,14 +113,10 @@ public class BuyLocal_home extends Fragment {
 
         imageUrl = buylocalSliderlistObj.getBuylocalSliderList();
 
-        itemname = new ArrayList<String>();
-        price = new ArrayList<String>();
-        itemImage = new ArrayList<String>();
+        itemname = new ArrayList<>();
+        price = new ArrayList<>();
+        itemImage = new ArrayList<>();
 
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
     }
 
@@ -136,47 +125,47 @@ public class BuyLocal_home extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        SliderAdapterExample sliderAdapterExample = new SliderAdapterExample(getActivity(),imageUrl);
+        SliderAdapterExample sliderAdapterExample = new SliderAdapterExample(getActivity(), imageUrl);
 
         View view = inflater.inflate(R.layout.fragment_buylocal_home, container, false);
-        slider_link_list=new ArrayList<>();
+        slider_link_list = new ArrayList<>();
 
         datafetch();
         categoryfetch();
 
-        spotlightRecyclerView = (RecyclerView) view.findViewById(R.id.spotlightRecyclerView);
-        category_recyclerview = (RecyclerView) view.findViewById(R.id.category_recyclerview);
+        spotlightRecyclerView = view.findViewById(R.id.spotlightRecyclerView);
+        category_recyclerview = view.findViewById(R.id.category_recyclerview);
 
-        AdapterCategoryRecyclerView adapterCategoryRecyclerView=new AdapterCategoryRecyclerView(getActivity(),null,category_text);
+        AdapterCategoryRecyclerView adapterCategoryRecyclerView = new AdapterCategoryRecyclerView(getActivity(), null, category_text);
 
-        category_recyclerview.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
+        category_recyclerview.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
 
         category_recyclerview.setAdapter(adapterCategoryRecyclerView);
 
-        search_imageBtn=(ImageButton) view.findViewById(R.id.search_imageBtn);
+        search_imageBtn = view.findViewById(R.id.search_imageBtn);
 
-        test_btn=(Button) view.findViewById(R.id.test_btn);
+        test_btn = view.findViewById(R.id.test_btn);
         test_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(),RBS_mainscreen.class));
+                startActivity(new Intent(getActivity(), RBS_mainscreen.class));
             }
         });
 
-        search_editText=(EditText) view.findViewById(R.id.search_editText);
+        search_editText = view.findViewById(R.id.search_editText);
 
-        menu_btn=(ImageView)view.findViewById(R.id.menu_btn);
+        menu_btn = view.findViewById(R.id.menu_btn);
 
-        imageSlider=(CardView)view.findViewById(R.id.imageSlider);
+        imageSlider = view.findViewById(R.id.imageSlider);
+        side_menu_cardview = view.findViewById(R.id.side_menu_cardview);
 
-        logout=(TextView) view.findViewById(R.id.logout);
-        communication_option=(TextView) view.findViewById(R.id.communication_option);
-        rbs_option=(TextView) view.findViewById(R.id.rbs_option);
-        vendor_option=(TextView) view.findViewById(R.id.vendor_option);
-        offers_option=(TextView) view.findViewById(R.id.offers_option);
+        logout = view.findViewById(R.id.logout);
+        communication_option = view.findViewById(R.id.communication_option);
+        rbs_option = view.findViewById(R.id.rbs_option);
+        vendor_option = view.findViewById(R.id.vendor_option);
+        offers_option = view.findViewById(R.id.offers_option);
 
-        side_option_menu=(RelativeLayout)view.findViewById(R.id.side_option_menu);
-        side_option_menu_bg_relativeLayout=(RelativeLayout)view.findViewById(R.id.side_option_menu_bg_relativeLayout);
+        side_option_menu_bg_relativeLayout = view.findViewById(R.id.side_option_menu_bg_relativeLayout);
         Onclick_listners();
 
         sliderView = view.findViewById(R.id.imageSliders);
@@ -202,8 +191,9 @@ public class BuyLocal_home extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), PasscodeActivity.class);
-                side_option_menu.setVisibility(View.GONE);
-                intent.putExtra("ACTIVITY_CHECK","RBS");
+                side_menu_cardview.setVisibility(View.GONE);
+                side_option_menu_bg_relativeLayout.setVisibility(View.GONE);
+                intent.putExtra("ACTIVITY_CHECK", "RBS");
                 getActivity().startActivity(intent);
             }
         });
@@ -212,8 +202,9 @@ public class BuyLocal_home extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), PasscodeActivity.class);
-                side_option_menu.setVisibility(View.GONE);
-                intent.putExtra("ACTIVITY_CHECK","VENDOR");
+                side_menu_cardview.setVisibility(View.GONE);
+                side_option_menu_bg_relativeLayout.setVisibility(View.GONE);
+                intent.putExtra("ACTIVITY_CHECK", "VENDOR");
                 getActivity().startActivity(intent);
             }
         });
@@ -221,8 +212,9 @@ public class BuyLocal_home extends Fragment {
         offers_option.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(getActivity(),BuyLocal_offers_option.class);
-                side_option_menu.setVisibility(View.GONE);
+                Intent intent = new Intent(getActivity(), BuyLocal_offers_option.class);
+                side_menu_cardview.setVisibility(View.GONE);
+                side_option_menu_bg_relativeLayout.setVisibility(View.GONE);
                 getActivity().startActivity(intent);
             }
         });
@@ -231,7 +223,8 @@ public class BuyLocal_home extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), BuyLocal_conversations.class);
-                side_option_menu.setVisibility(View.GONE);
+                side_menu_cardview.setVisibility(View.GONE);
+                side_option_menu_bg_relativeLayout.setVisibility(View.GONE);
                 getActivity().startActivity(intent);
             }
         });
@@ -239,11 +232,11 @@ public class BuyLocal_home extends Fragment {
         search_imageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!search_editText.getText().toString().isEmpty()){
-                    Intent intent = new Intent(getActivity(),SearchResult.class);
-                    intent.putExtra("SEARCHED",search_editText.getText().toString());
+                if (!search_editText.getText().toString().isEmpty()) {
+                    Intent intent = new Intent(getActivity(), SearchResult.class);
+                    intent.putExtra("SEARCHED", search_editText.getText().toString());
                     getActivity().startActivity(intent);
-                }else {
+                } else {
                     search_editText.setError("Please search valid item");
                 }
             }
@@ -252,20 +245,20 @@ public class BuyLocal_home extends Fragment {
         side_option_menu_bg_relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                side_menu_cardview.setVisibility(View.GONE);
                 side_option_menu_bg_relativeLayout.setVisibility(View.GONE);
-                side_option_menu.setVisibility(View.GONE);
             }
         });
 
         menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (side_option_menu.getVisibility()==View.VISIBLE){
-                    side_option_menu.setVisibility(View.GONE);
+
+                if (side_menu_cardview.getVisibility() == View.VISIBLE) {
+                    side_menu_cardview.setVisibility(View.GONE);
                     side_option_menu_bg_relativeLayout.setVisibility(View.GONE);
-                }
-                else {
-                    side_option_menu.setVisibility(View.VISIBLE);
+                } else {
+                    side_menu_cardview.setVisibility(View.VISIBLE);
                     side_option_menu_bg_relativeLayout.setVisibility(View.VISIBLE);
                 }
             }
@@ -275,8 +268,9 @@ public class BuyLocal_home extends Fragment {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
-                side_option_menu.setVisibility(View.GONE);
-                Intent intent = new Intent(getActivity(),SignInActivity.class);
+                side_menu_cardview.setVisibility(View.GONE);
+                side_option_menu_bg_relativeLayout.setVisibility(View.GONE);
+                Intent intent = new Intent(getActivity(), SignInActivity.class);
                 getActivity().finish();
                 startActivity(intent);
             }
@@ -287,8 +281,8 @@ public class BuyLocal_home extends Fragment {
         spotlightItemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         itemname.add(String.valueOf(dataSnapshot1.child("Item_name").getValue()));
                         price.add(String.valueOf(dataSnapshot1.child("Price").getValue()));
                         itemImage.add(String.valueOf(dataSnapshot1.child("id_image_url").getValue()));
@@ -297,8 +291,8 @@ public class BuyLocal_home extends Fragment {
                         shopkeeperList.add(String.valueOf(dataSnapshot1.child("shopkeeper").getValue()));
                     }
 
-                    AdapterSpotlightItemListRecyclerView viewAdapter = new AdapterSpotlightItemListRecyclerView(getActivity(), itemname, price, itemImage,key_idList,categoryList,shopkeeperList);
-                    spotlightRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
+                    AdapterSpotlightItemListRecyclerView viewAdapter = new AdapterSpotlightItemListRecyclerView(getActivity(), itemname, price, itemImage, key_idList, categoryList, shopkeeperList);
+                    spotlightRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
                     spotlightRecyclerView.setAdapter(viewAdapter);
                 }
             }
@@ -308,15 +302,6 @@ public class BuyLocal_home extends Fragment {
 
             }
         });
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.search_menu,menu);
-        MenuItem menuItem=menu.findItem(R.id.search);
-        materialSearchView.setMenuItem(menuItem);
-
     }
 
 }

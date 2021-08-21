@@ -2,100 +2,109 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:background="@drawable/top_black_rectangle">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="Send Offer"
-        android:textColor="@color/gradientDarkBlue"
-        android:textSize="20sp" />
-
-    <LinearLayout
-        android:id="@+id/midLayout"
+    <RelativeLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:orientation="vertical">
+        android:layout_height="45dp"
+        android:background="@drawable/screen_header_rectangle">
 
         <TextView
+            android:id="@+id/title"
+            style="@style/TextViews_Bold_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Enter Amount" />
+            android:layout_centerInParent="true"
+            android:text="Send Offer"
+            android:textColor="#ffffff" />
 
-        <EditText
-            android:id="@+id/alertMakeOfferAmount_editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
-            android:inputType="number"
-            android:maxLines="1" />
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/secondLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/midLayout"
+        android:layout_below="@+id/header"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Enter Message" />
-
-        <EditText
-            android:id="@+id/alertMakeOfferMessage_editText"
+        <LinearLayout
+            android:id="@+id/midLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary" />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <TextView
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Enter Amount" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/secondLayout"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
+            <EditText
+                android:id="@+id/alertMakeOfferAmount_editText"
+                style="@style/EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter amount.."
+                android:inputType="number"
+                android:maxLines="1" />
 
-        <TextView
-            android:id="@+id/alertMakeOfferSubmit_textview"
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/secondLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/buylocal_main_button"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="Send offer"
-            android:textAlignment="center"
-            android:textColor="#ffff"
-            android:textSize="14sp" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/alertMakeOfferCancel_textview"
+            <TextView
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Enter Message" />
+
+            <EditText
+                android:id="@+id/alertMakeOfferMessage_editText"
+                style="@style/EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter message..." />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/grey_border"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="Cancel"
-            android:textAlignment="center"
-            android:textColor="@color/textGrey"
-            android:textSize="14sp" />
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/alertMakeOfferSubmit_textview"
+                style="@style/green_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="Send offer" />
+
+            <TextView
+                android:id="@+id/alertMakeOfferCancel_textview"
+                style="@style/gray_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="Cancel" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

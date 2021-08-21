@@ -5,9 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,20 +21,20 @@ public class AdapterSettingsFaultListRecyclerView extends RecyclerView.Adapter<A
     Context context;
     List<String> faultNameList, faultPriceList, faultKeyIDList;
     Activity activity;
-    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Listed_faults/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
+    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Listed_faults/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
     public AdapterSettingsFaultListRecyclerView(Context context, List<String> faultNameList, List<String> faultPriceList, List<String> faultKeyIDList) {
         this.context = context;
         this.faultNameList = faultNameList;
         this.faultPriceList = faultPriceList;
         this.faultKeyIDList = faultKeyIDList;
-        activity = (Activity)context;
+        activity = (Activity) context;
     }
 
     @NonNull
     @Override
     public AdapterSettingsFaultListRecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_settings_faultlist_item,parent,false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_settings_faultlist_item, parent, false));
     }
 
     @Override
@@ -63,17 +61,17 @@ public class AdapterSettingsFaultListRecyclerView extends RecyclerView.Adapter<A
         return faultNameList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView faultName_textView,faultPrice_textView;
+        TextView faultName_textView, faultPrice_textView;
         TextView remove_textView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            faultName_textView = (TextView)itemView.findViewById(R.id.faultName_textView);
-            faultPrice_textView = (TextView)itemView.findViewById(R.id.faultPrice_textView);
-            remove_textView = (TextView) itemView.findViewById(R.id.remove_textView);
+            faultName_textView = itemView.findViewById(R.id.faultName_textView);
+            faultPrice_textView = itemView.findViewById(R.id.faultPrice_textView);
+            remove_textView = itemView.findViewById(R.id.remove_textView);
         }
     }
 }

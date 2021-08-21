@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".RBS_Shopkeeper_Inventory_Details">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/imageSlider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="6dp">
+
+                <com.smarteist.autoimageslider.SliderView
+                    android:id="@+id/imageSliders"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    app:sliderAnimationDuration="600"
+                    app:sliderAutoCycleDirection="back_and_forth"
+                    app:sliderAutoCycleEnabled="true"
+                    app:sliderIndicatorAnimationDuration="600"
+                    app:sliderIndicatorGravity="center_horizontal|bottom"
+                    app:sliderIndicatorMargin="15dp"
+                    app:sliderIndicatorOrientation="horizontal"
+                    app:sliderIndicatorPadding="3dp"
+                    app:sliderIndicatorRadius="2dp"
+                    app:sliderIndicatorSelectedColor="#5A5A5A"
+                    app:sliderIndicatorUnselectedColor="#FFF"
+                    app:sliderScrollTimeInSec="1"
+                    app:sliderStartAutoCycle="true" />
+
+            </androidx.cardview.widget.CardView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageSlider">
+
+                <RelativeLayout
+                    android:id="@+id/offer_relativeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/screen_header_rectangle"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="15dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/offerStatus_textView"
+                        style="@style/TextViews_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="Offer Status"
+                        android:textColor="#FFFF" />
+
+                    <LinearLayout
+                        android:id="@+id/offerAmount_textView_area"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/offerStatus_textView"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/offerAmountCurrency_textView"
+                            style="@style/TextViews"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Fake_currency"
+                            android:textColor="#FFFF" />
+
+                        <TextView
+                            android:id="@+id/offerAmount_textView"
+                            style="@style/TextViews"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Fake_rupees"
+                            android:textColor="#FFFF" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/offerMessage_textView"
+                        style="@style/TextViews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/offerAmount_textView_area"
+                        android:layout_centerHorizontal="true"
+                        android:text="This is a message"
+                        android:textColor="#FFFF" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/offer_relativeLayout"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp">
+
+
+                    <TextView
+                        android:id="@+id/product_name_textview"
+                        style="@style/TextViews_Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="2dp"
+                        android:text="Hp omen Laptop"
+                        android:textColor="@color/gradientDarkBlue" />
+
+                    <LinearLayout
+                        android:id="@+id/categories_area"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/product_name_textview"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/category_textView"
+                            style="@style/TextViews_Bold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Laptop"
+                            android:textColor="@color/textGreen" />
+
+                        <LinearLayout
+                            android:id="@+id/price_area"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/currency_textView"
+                                style="@style/TextViews_Bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/Fake_currency"
+                                android:textColor="@color/textGreen" />
+
+                            <TextView
+                                android:id="@+id/itemPrice_textView"
+                                style="@style/TextViews_Bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="1000"
+                                android:textColor="@color/textGreen" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/item_condition_area"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/categories_area"
+                        android:layout_marginTop="20dp">
+
+                        <TextView
+                            style="@style/TextViews_Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Condition " />
+
+                        <TextView
+                            android:id="@+id/condition_textView"
+                            style="@style/TextViews"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="@string/na"
+                            android:textColor="@color/gradientDarkBlue" />
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/item_description_textview"
+                        style="@style/TextViews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/item_condition_area"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/lorem_ipsum" />
+
+                    <TextView
+                        android:id="@+id/edit_textView"
+                        style="@style/green_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/item_description_textview"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        android:text="Edit" />
+
+                    <TextView
+                        android:id="@+id/personal_notes_textview"
+                        style="@style/TextViews_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/edit_textView"
+                        android:text="Personal Notes" />
+
+                    <TextView
+                        android:id="@+id/item_personal_notes_textview"
+                        style="@style/TextViews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/personal_notes_textview"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/lorem_ipsum" />
+
+                    <TextView
+                        android:id="@+id/offersTextView"
+                        style="@style/TextViews_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/item_personal_notes_textview"
+                        android:layout_marginTop="10dp"
+                        android:text="Offers" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/buy_local"
+                        style="@style/CardView_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/offersTextView"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:orientation="vertical">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/profileImage_imageView"
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/profile_icon"
+                                    app:civ_border_color="#4A4A4A"
+                                    app:civ_border_width="0dp" />
+
+                                <TextView
+                                    android:id="@+id/date_textView"
+                                    style="@style/TextViews"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_centerInParent="true"
+                                    android:layout_gravity="bottom"
+                                    android:layout_margin="10dp"
+                                    android:layout_marginTop="2dp"
+                                    android:text="@string/date" />
+
+
+                            </RelativeLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/customer_name"
+                                    style="@style/TextViews_Bold"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/fake_customer_name"
+                                    android:textColor="@color/gradientDarkBlue" />
+
+                                <TextView
+                                    android:id="@+id/product_offer_msg"
+                                    style="@style/TextViews"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:paddingStart="5dp"
+                                    android:text="Hello, i really want this product" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="right"
+                                    android:layout_margin="10dp"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/currency"
+                                        style="@style/TextViews_Bold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_horizontal"
+                                        android:text="@string/Fake_currency"
+                                        android:textColor="@color/textGreen" />
+
+                                    <TextView
+                                        android:id="@+id/offered_price"
+                                        style="@style/TextViews_Bold"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_horizontal"
+                                        android:fontFamily="@font/segoe_ui_bold"
+                                        android:paddingStart="12dp"
+                                        android:text="@string/Fake_rupees"
+                                        android:textColor="@color/textGreen" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="right"
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
+
+                                    <TextView
+                                        android:id="@+id/sell_offer_textview"
+                                        style="@style/green_btn"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_weight="1"
+                                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                                        android:text="Sell" />
+
+                                    <TextView
+                                        android:id="@+id/cancel_offer_textview"
+                                        style="@style/gray_btn"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_marginEnd="10dp"
+                                        android:layout_marginBottom="5dp"
+                                        android:layout_weight="1"
+                                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                                        android:text="@string/cancel_string" />
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/offers_received"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/buy_local"
+                        android:orientation="vertical" />
+
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="#00000000"
+            android:scaleType="fitXY"
+            android:src="@drawable/top_black_rectangle" />
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:padding="15dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/back_arrow" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

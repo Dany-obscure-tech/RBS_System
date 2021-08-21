@@ -75,7 +75,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edit"
-                            android:backgroundTint="@color/colorWhite"
+                            android:backgroundTint="@color/textGreen"
 
                             />
 
@@ -98,7 +98,7 @@
                     android:layout_gravity="right"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
-                    android:background="@drawable/profile_screen_header"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:text="Edit Logo" />
 
             </LinearLayout>
@@ -107,21 +107,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/TextViews_Bold_big"
+                    style="@style/TextViews_Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Shop Details"
-                    android:textColor="@color/textGrey" />
+                    android:text="Shop Details" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -130,16 +128,15 @@
 
                 <TextView
                     android:id="@+id/shop_name_textView"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Phi Tech"
-                    android:textColor="@color/textGrey" />
+                    android:text="@string/shop_name" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Shop Address"
@@ -147,16 +144,15 @@
 
                 <TextView
                     android:id="@+id/shop_address_textView"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Peshawar City"
-                    android:textColor="@color/textGrey" />
+                    android:text="@string/fake_city" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Shop Email"
@@ -164,30 +160,28 @@
 
                 <TextView
                     android:id="@+id/shop_email_textView"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Phi.horizon.org@gmail.com"
-                    android:textColor="@color/textGrey" />
+                    android:text="@string/Fake_email" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Shop Phone #"
+                    android:text="Shop Phone Number"
                     android:textColor="@color/gradientDarkBlue" />
 
                 <TextView
                     android:id="@+id/shop_phno_textView"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
-                    android:text="09124356367"
-                    android:textColor="@color/textGrey" />
+                    android:text="@string/Fake_phone_no" />
             </LinearLayout>
 
             <LinearLayout
@@ -204,11 +198,10 @@
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/TextViews_Bold_big"
+                        style="@style/TextViews_Title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Faults list"
-                        android:textColor="@color/textGrey" />
+                        android:text="Faults list" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/faultList_recyclerView"
@@ -223,9 +216,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/profile_screen_header"
-                        android:text="Add Faults"
-                        android:textAlignment="center" />
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        android:text="Add Faults" />
 
                 </LinearLayout>
 
@@ -236,20 +228,18 @@
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/TextViews_Bold_big"
+                        style="@style/TextViews_Title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Terms and conditions"
-                        android:textColor="@color/textGrey" />
+                        android:text="Terms and conditions" />
 
                     <TextView
                         android:id="@+id/terms_conditions_textview"
-                        style="@style/TextViews_Regular_small"
+                        style="@style/TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="First term is ..... Second term..."
-                        android:textColor="@color/textGrey" />
+                        android:text="First term is ..... Second term..." />
 
                     <TextView
                         android:id="@+id/edit_terms_conditions_textview"
@@ -258,7 +248,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/profile_screen_header"
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
                         android:text="Edit" />
 
 
@@ -271,49 +261,40 @@
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/TextViews_Bold_big"
+                        style="@style/TextViews_Title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Printer Settings"
-                        android:textColor="@color/textGrey" />
+                        android:text="Printer Settings" />
 
                     <TextView
-                        style="@style/TextViews_Regular_small"
+                        style="@style/TextViews_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="Port Number"
-                        android:textColor="@color/textGrey" />
+                        android:text="Port Number" />
 
                     <TextView
                         android:id="@+id/port_number_textview"
-                        style="@style/TextViews_Regular_small"
+                        style="@style/TextViews"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/address_textview"
                         android:layout_marginTop="5dp"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:text="-----"
-                        android:textColor="@color/textGrey" />
+                        android:text="-----" />
 
                     <TextView
-                        style="@style/TextViews_Regular_small"
+                        style="@style/TextViews_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="IP Address"
-                        android:textColor="@color/textGrey" />
+                        android:text="IP Address" />
 
                     <TextView
                         android:id="@+id/ip_address_textview"
-                        style="@style/TextViews_Regular_small"
+                        style="@style/TextViews"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/address_textview"
                         android:layout_marginTop="5dp"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:text="------"
-                        android:textColor="@color/textGrey" />
+                        android:text="------" />
 
                     <TextView
                         android:id="@+id/printer_setting_textview"
@@ -323,7 +304,7 @@
                         android:layout_gravity="right"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        android:background="@drawable/profile_screen_header"
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
                         android:text="Printer Setting" />
 
                 </LinearLayout>

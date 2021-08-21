@@ -50,7 +50,8 @@ public class SplashActivity extends AppCompatActivity {
                         Manifest.permission.ACCESS_COARSE_LOCATION,
                         Manifest.permission.ACCESS_FINE_LOCATION
                 ).withListener(new MultiplePermissionsListener() {
-            @Override public void onPermissionsChecked(MultiplePermissionsReport report) {
+            @Override
+            public void onPermissionsChecked(MultiplePermissionsReport report) {
                 new Handler().postDelayed(new Runnable() {
 
                     // Using handler with postDelayed called runnable run method
@@ -67,7 +68,8 @@ public class SplashActivity extends AppCompatActivity {
 
             }
 
-            @Override public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+            @Override
+            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
                 token.continuePermissionRequest();
             }
         }).check();
@@ -87,10 +89,10 @@ public class SplashActivity extends AppCompatActivity {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void checkExistingUser() {
-        if (FirebaseAuth.getInstance().getCurrentUser() !=null){
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
             userTypeCheck();
-        }else {
+        } else {
             Intent i = new Intent(SplashActivity.this, SignInActivity.class);
 
             startActivity(i);
@@ -108,8 +110,8 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 currencyObj.setCurrency(dataSnapshot.child("currency").getValue().toString());
-                if (dataSnapshot.child("buylocal_slider").exists()){
-                    for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                if (dataSnapshot.child("buylocal_slider").exists()) {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         buylocalsliderlist.add(String.valueOf(dataSnapshot1.getValue()));
                     }
                     buylocalSlider.setBuylocalSliderList(buylocalsliderlist);
@@ -126,7 +128,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void startMainActivity() {
-        Intent intent = new Intent(SplashActivity.this,BuyLocal_main.class);
+        Intent intent = new Intent(SplashActivity.this, BuyLocal_main.class);
         startActivity(intent);
         finish();
     }
@@ -135,7 +137,7 @@ public class SplashActivity extends AppCompatActivity {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void userTypeCheck() {
-        userRef = FirebaseDatabase.getInstance().getReference("Users_data/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        userRef = FirebaseDatabase.getInstance().getReference("Users_data/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -145,7 +147,7 @@ public class SplashActivity extends AppCompatActivity {
                 UserDetails.getInstance().setEmail(dataSnapshot.child("email").getValue().toString());
                 UserDetails.getInstance().setProfileImageUrl(dataSnapshot.child("profile_image_url").getValue().toString());
 
-                if (dataSnapshot.child("Shopkeeper_details").exists()){
+                if (dataSnapshot.child("Shopkeeper_details").exists()) {
                     UserDetails.getInstance().setShopkeeper(true);
                     UserDetails.getInstance().setShopAddress(dataSnapshot.child("Shopkeeper_details").child("shop_address").getValue().toString());
                     UserDetails.getInstance().setShopBanner(dataSnapshot.child("Shopkeeper_details").child("shop_banner").getValue().toString());
@@ -154,7 +156,7 @@ public class SplashActivity extends AppCompatActivity {
                     UserDetails.getInstance().setShopName(dataSnapshot.child("Shopkeeper_details").child("shop_name").getValue().toString());
                     UserDetails.getInstance().setShopPhno(dataSnapshot.child("Shopkeeper_details").child("shop_phno").getValue().toString());
                     UserDetails.getInstance().setShopTermsAndConditions(dataSnapshot.child("Shopkeeper_details").child("shop_termsandconditions").getValue().toString());
-                }else {
+                } else {
                     UserDetails.getInstance().setShopkeeper(false);
                 }
 

@@ -33,7 +33,7 @@ public class AdapterCustomerIDImagesRecyclerView extends RecyclerView.Adapter<Ad
     @NonNull
     @Override
     public AdapterCustomerIDImagesRecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new AdapterCustomerIDImagesRecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_customer_id_image_item, parent, false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_customer_id_image_item, parent, false));
     }
 
     @Override
@@ -63,13 +63,13 @@ public class AdapterCustomerIDImagesRecyclerView extends RecyclerView.Adapter<Ad
 
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView customer_id_imageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            customer_id_imageView = (ImageView) itemView.findViewById(R.id.customer_id_imageView);
+            customer_id_imageView = itemView.findViewById(R.id.customer_id_imageView);
 
         }
     }

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="10dp"
-    android:background="#00000000"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#00000000"
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/text"
@@ -19,53 +18,51 @@
 
     <LinearLayout
         android:id="@+id/searchbar_editText"
-        android:layout_below="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:layout_below="@+id/text"
         android:background="@drawable/search_view_style"
-        android:orientation="horizontal"
-        >
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/searchItem_editText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
             android:layout_weight="8"
+            android:background="@drawable/search_view_style"
             android:fontFamily="@font/segoe_ui"
             android:hint="@string/search_here"
-            android:textColor="#707070"
-            android:maxLines="1"
             android:inputType="text"
-            android:layout_marginStart="15dp"
-            android:background="@drawable/search_view_style"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"/>
+            android:maxLines="1"
+            android:textColor="#707070" />
 
         <ImageButton
             android:id="@+id/searchItem_imageBtn"
-            android:src="@drawable/search"
-            android:padding="15dp"
-            android:layout_gravity="center"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:backgroundTint="@color/textBlue"
-            android:background="#00FFFFFF"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"/>
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="#00FFFFFF"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:padding="15dp"
+            android:src="@drawable/search" />
 
     </LinearLayout>
 
     <ProgressBar
         android:id="@+id/alert_rbs_itemlist_progressBar"
-        android:layout_below="@+id/searchbar_editText"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchbar_editText"
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/itemList_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/alert_rbs_itemlist_progressBar"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_marginBottom="10dp" />
 
 </RelativeLayout>

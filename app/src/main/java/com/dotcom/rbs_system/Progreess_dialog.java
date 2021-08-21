@@ -9,7 +9,7 @@ import cc.cloudist.acplibrary.ACProgressFlower;
 public class Progreess_dialog {
     public ACProgressFlower dialog;
 
-    public void showProgressBar(Context context){
+    public void showProgressBar(Context context) {
         dialog = new ACProgressFlower.Builder(context)
                 .direction(ACProgressConstant.DIRECT_CLOCKWISE)
                 .themeColor(Color.WHITE)
@@ -19,8 +19,8 @@ public class Progreess_dialog {
         dialog.show();
     }
 
-    public void dismissProgressBar(Context context){
-        if (dialog != null){
+    public void dismissProgressBar(Context context) {
+        if (dialog != null) {
             dialog.dismiss();
         }
     }

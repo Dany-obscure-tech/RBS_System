@@ -43,8 +43,8 @@ public class BuyLocal_messaging extends AppCompatActivity {
 
     TextView user2Name_textView;
 
-    String itemId, itemCategory, secondUserID,seconduserName, conversationKey = null;
-    String itemName,itemImage;
+    String itemId, itemCategory, secondUserID, seconduserName, conversationKey = null;
+    String itemName, itemImage;
 
     ArrayList senderList, messagelist;
     ArrayList<Data_model_chat> chatList;
@@ -81,17 +81,17 @@ public class BuyLocal_messaging extends AppCompatActivity {
         conversationKey = getIntent().getStringExtra("CONVERSATION_KEY");
 
         userConversationRef = FirebaseDatabase.getInstance().getReference("User_conversation");
-        itemRef = FirebaseDatabase.getInstance().getReference("Items/"+itemCategory+"/"+itemId);
-        userDataRef = FirebaseDatabase.getInstance().getReference("Users_data/"+secondUserID);
+        itemRef = FirebaseDatabase.getInstance().getReference("Items/" + itemCategory + "/" + itemId);
+        userDataRef = FirebaseDatabase.getInstance().getReference("Users_data/" + secondUserID);
         conversationRef = FirebaseDatabase.getInstance().getReference("Conversation");
-        if (conversationKey==null){
+        if (conversationKey == null) {
             newConversation = true;
             conversationKey = conversationRef.push().getKey();
         }
 
-        itemImageStorageRef = FirebaseStorage.getInstance().getReference().child("Item_Images/" + itemId+"/image_1");
+        itemImageStorageRef = FirebaseStorage.getInstance().getReference().child("Item_Images/" + itemId + "/image_1");
 
-        message_editText = (EditText)findViewById(R.id.message_editText);
+        message_editText = (EditText) findViewById(R.id.message_editText);
 
         user2Name_textView = (TextView) findViewById(R.id.user2Name_textView);
 
@@ -100,7 +100,7 @@ public class BuyLocal_messaging extends AppCompatActivity {
         messageSend_button = (ImageButton) findViewById(R.id.messageSend_button);
         back_btn = (ImageButton) findViewById(R.id.back_btn);
 
-        messagingRecyclerView = (RecyclerView)findViewById(R.id.messaging_recyclerView);
+        messagingRecyclerView = (RecyclerView) findViewById(R.id.messaging_recyclerView);
         messagingRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
@@ -118,24 +118,24 @@ public class BuyLocal_messaging extends AppCompatActivity {
         messageSend_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!message_editText.getText().toString().isEmpty()){
-                    if (newConversation){
+                if (!message_editText.getText().toString().isEmpty()) {
+                    if (newConversation) {
 
-                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(secondUserID).child("conversation_id").setValue(conversationKey);
-                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(secondUserID).child("item_id").setValue(itemId);
-                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(secondUserID).child("item_category").setValue(itemCategory);
-                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(secondUserID).child("item_name").setValue(itemName);
-                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(secondUserID).child("item_image").setValue(itemImage);
-                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(secondUserID).child("user2").setValue(secondUserID);
-                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(secondUserID).child("user2_name").setValue(seconduserName);
+                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(secondUserID).child("conversation_id").setValue(conversationKey);
+                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(secondUserID).child("item_id").setValue(itemId);
+                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(secondUserID).child("item_category").setValue(itemCategory);
+                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(secondUserID).child("item_name").setValue(itemName);
+                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(secondUserID).child("item_image").setValue(itemImage);
+                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(secondUserID).child("user2").setValue(secondUserID);
+                        userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(secondUserID).child("user2_name").setValue(seconduserName);
 
-                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("conversation_id").setValue(conversationKey);
-                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("item_id").setValue(itemId);
-                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("item_category").setValue(itemCategory);
-                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("item_name").setValue(itemName);
-                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("item_image").setValue(itemImage);
-                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("user2").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
-                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("user2_name").setValue("Customer name");
+                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("conversation_id").setValue(conversationKey);
+                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("item_id").setValue(itemId);
+                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("item_category").setValue(itemCategory);
+                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("item_name").setValue(itemName);
+                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("item_image").setValue(itemImage);
+                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("user2").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("user2_name").setValue("Customer name");
 
                         //////////////////////////
 
@@ -161,11 +161,11 @@ public class BuyLocal_messaging extends AppCompatActivity {
                     }
 
                     HashMap<String, Object> hashMap = new HashMap<>();
-                    hashMap.put("sender",FirebaseAuth.getInstance().getCurrentUser().getUid());
-                    hashMap.put("message",message_editText.getText().toString());
+                    hashMap.put("sender", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    hashMap.put("message", message_editText.getText().toString());
 
-                    userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child(secondUserID).child("last_message").setValue(message_editText.getText().toString());
-                    userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid().toString()).child("last_message").setValue(message_editText.getText().toString());
+                    userConversationRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(secondUserID).child("last_message").setValue(message_editText.getText().toString());
+                    userConversationRef.child(secondUserID).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("last_message").setValue(message_editText.getText().toString());
                     conversationRef.child(conversationKey).child("messages").push().setValue(hashMap);
                     message_editText.setText("");
                 }
@@ -209,13 +209,13 @@ public class BuyLocal_messaging extends AppCompatActivity {
         conversationRef.child(conversationKey).child("messages").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
+                if (snapshot.exists()) {
                     chatList.clear();
-                    for (DataSnapshot snapshot1: snapshot.getChildren()){
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                         Data_model_chat mChat = snapshot1.getValue(Data_model_chat.class);
                         chatList.add(mChat);
                     }
-                    adapter_message = new AdapterMessageRecyclerView(BuyLocal_messaging.this,chatList);
+                    adapter_message = new AdapterMessageRecyclerView(BuyLocal_messaging.this, chatList);
                     messagingRecyclerView.setAdapter(adapter_message);
                 }
             }

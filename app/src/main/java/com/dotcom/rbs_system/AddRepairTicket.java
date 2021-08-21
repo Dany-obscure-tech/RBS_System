@@ -7,17 +7,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -129,7 +125,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         item_btn = false;
         customer = false;
 
-
+//TODO customer phone number ko country code picker ka sath connect karna ha
     }
 
     private void initialize() {
@@ -139,7 +135,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         repair_details_edit_obj = Repair_details_edit.getInstance();
 
         reference = FirebaseDatabase.getInstance().getReference();
-        key = reference.push().getKey().toString();
+        key = reference.push().getKey();
 
         pd1 = new Progress_dialoge();
         pd2 = new Progress_dialoge();
@@ -207,7 +203,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         customerID_linearLayout = (LinearLayout) findViewById(R.id.customerID_linearLayout);
 
         /////Firebase config
-        firebaseAuthUID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        firebaseAuthUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         repairRef = FirebaseDatabase.getInstance().getReference("Repairs_list/" + firebaseAuthUID + "/" + repair_details_edit_obj.getTicketNo_TextView());
         repairTicketRef = FirebaseDatabase.getInstance().getReference("Repairs_ticket_list/" + firebaseAuthUID + "/" + repair_details_edit_obj.getTicketNo_TextView());
 
@@ -296,7 +292,6 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         });
 
 
-
         submit_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -310,20 +305,18 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
                     if (pendingFaultNameList.size() != 0 && pendingPriceCheck) {
                         pd1.showProgressBar(AddRepairTicket.this);
 
-                        boolean connected = false;
                         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(AddRepairTicket.CONNECTIVITY_SERVICE);
                         if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
                             //we are connected to a network
-                            connected = true;
 
                             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Pending_Amount").setValue(pendingAmount_editText.getText().toString());
 
                             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Pending_Faults").removeValue();
                             for (int i = 0; i < pendingFaultNameList.size(); i++) {
-                                reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Pending_Faults").child("Fault_" + String.valueOf(i + 1)).child("Fault_name").setValue(pendingFaultNameList.get(i));
-                                reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Pending_Faults").child("Fault_" + String.valueOf(i + 1)).child("Fault_price").setValue(pendingFaultPriceList.get(i));
-                                reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Pending_Faults").child("Fault_" + String.valueOf(i + 1)).child("Fault_key").setValue(pendingFaultKeyIDList.get(i));
+                                reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Pending_Faults").child("Fault_" + (i + 1)).child("Fault_name").setValue(pendingFaultNameList.get(i));
+                                reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Pending_Faults").child("Fault_" + (i + 1)).child("Fault_price").setValue(pendingFaultPriceList.get(i));
+                                reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Pending_Faults").child("Fault_" + (i + 1)).child("Fault_key").setValue(pendingFaultKeyIDList.get(i));
                             }
                             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Status").setValue("Pending Changes");
 
@@ -335,13 +328,12 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
 
                         } else {
                             Toast.makeText(AddRepairTicket.this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
-                            connected = false;
                             pd1.dismissProgressBar(AddRepairTicket.this);
                         }
                     }
 
                 } else {
-                    if (validateFields() == true) {
+                    if (validateFields()) {
                         detailsSubmit();
                     }
                 }
@@ -358,9 +350,9 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
                 if (pendingFaultNameList.size() != 0) {
                     repairRef.child("Pending_Faults").removeValue();
                     for (int i = 0; i < pendingFaultNameList.size(); i++) {
-                        repairRef.child("Faults").child("Fault_" + String.valueOf(faultNameList.size() + 1)).child("Fault_name").setValue(pendingFaultNameList.get(i));
-                        repairRef.child("Faults").child("Fault_" + String.valueOf(faultNameList.size() + 1)).child("Fault_price").setValue(pendingFaultPriceList.get(i));
-                        repairRef.child("Faults").child("Fault_" + String.valueOf(faultNameList.size() + 1)).child("Fault_key").setValue(pendingFaultKeyIDList.get(i));
+                        repairRef.child("Faults").child("Fault_" + (faultNameList.size() + 1)).child("Fault_name").setValue(pendingFaultNameList.get(i));
+                        repairRef.child("Faults").child("Fault_" + (faultNameList.size() + 1)).child("Fault_price").setValue(pendingFaultPriceList.get(i));
+                        repairRef.child("Faults").child("Fault_" + (faultNameList.size() + 1)).child("Fault_key").setValue(pendingFaultKeyIDList.get(i));
                     }
 
                     repairRef.child("Pending_Amount").removeValue();
@@ -387,7 +379,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
                 repairRef.child("Pending_Amount").removeValue();
                 repairTicketRef.child("Status").setValue("clear");
 
-                Intent intent = new Intent(AddRepairTicket.this, Repair_details.class);
+                Intent intent = new Intent(AddRepairTicket.this, Repair_ticket_details.class);
                 intent.putExtra("REPAIR_ID", repair_details_edit_obj.getTicketNo_TextView());
                 finish();
                 startActivity(intent);
@@ -422,12 +414,10 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
     private void detailsSubmit() {
         pd1.showProgressBar(AddRepairTicket.this);
 
-        boolean connected = false;
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(AddRepairTicket.CONNECTIVITY_SERVICE);
         if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
             //we are connected to a network
-            connected = true;
 
             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Customer_email").setValue(customerEmail_editText.getText().toString());
             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Customer_id").setValue(customerId_editText.getText().toString());
@@ -448,9 +438,9 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Date").setValue(date_textView.getText().toString());
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Faults").removeValue();
             for (int i = 0; i < tempFaultNameList.size(); i++) {
-                reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Faults").child("Fault_" + String.valueOf(i + 1)).child("Fault_name").setValue(tempFaultNameList.get(i));
-                reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Faults").child("Fault_" + String.valueOf(i + 1)).child("Fault_price").setValue(tempFaultPriceList.get(i));
-                reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Faults").child("Fault_" + String.valueOf(i + 1)).child("Fault_key").setValue(tempFaultKeyIDList.get(i));
+                reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Faults").child("Fault_" + (i + 1)).child("Fault_name").setValue(tempFaultNameList.get(i));
+                reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Faults").child("Fault_" + (i + 1)).child("Fault_price").setValue(tempFaultPriceList.get(i));
+                reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Faults").child("Fault_" + (i + 1)).child("Fault_key").setValue(tempFaultKeyIDList.get(i));
             }
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Item_name").setValue(itemName_editText.getText().toString());
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Item_serial_no").setValue(itemSerialNo_editText.getText().toString());
@@ -460,15 +450,13 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("key_id").setValue(key);
 
             Toast.makeText(this, "Submit Successfully", Toast.LENGTH_SHORT).show();
-            pd1.dismissProgressBar(AddRepairTicket.this);
 
             //TODO yaha dialog box lgana ha
 
         } else {
             Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
-            connected = false;
-            pd1.dismissProgressBar(AddRepairTicket.this);
         }
+        pd1.dismissProgressBar(AddRepairTicket.this);
 
     }
 

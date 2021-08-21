@@ -548,7 +548,7 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         vendor_add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Accessory_add.this,Vendor_detail.class);
+                Intent intent = new Intent(Accessory_add.this, RBS_accesories_vendor_detail.class);
                 startActivityForResult(intent,VENDOR_ACTIVITY_REQUEST_CODE);
             }
         });

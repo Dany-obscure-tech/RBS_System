@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
@@ -32,50 +31,38 @@
 
         <TextView
             android:id="@+id/phone_no_textview"
-            style="@style/TextViews_Bold_small"
+            style="@style/TextViews_Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Fault Name"
-            android:textColor="@color/textGrey" />
+            android:text="Fault Name" />
 
         <EditText
             android:id="@+id/alertFaultName_editText"
-            style="@style/TextViews_Regular_small"
+            style="@style/EditTexts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/phone_no_textview"
-            android:backgroundTint="@color/colorPrimary"
             android:hint="Enter fault name"
-            android:maxLines="1"
-            android:textColor="@color/textGrey" />
+            android:maxLines="1" />
 
         <TextView
             android:id="@+id/address_textview"
-            style="@style/TextViews_Bold_small"
+            style="@style/TextViews_Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ac_phoneno"
             android:layout_marginTop="10dp"
-            android:padding="5dp"
-            android:text="Fault Price"
-            android:textColor="@color/textGrey" />
+            android:text="Fault Price" />
 
         <EditText
             android:id="@+id/alertFaultPrice_editText"
-            style="@style/TextViews_Regular_small"
+            style="@style/EditTexts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/address_textview"
-            android:backgroundTint="@color/colorPrimary"
             android:hint="Enter fault price"
-            android:inputType="number"
-            android:textColor="@color/textGrey" />
+            android:inputType="number" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ac_email"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:gravity="center"
@@ -84,21 +71,26 @@
 
             <TextView
                 android:id="@+id/addFaultsave_textview"
+                style="@style/green_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:text="Save"
-                android:textAlignment="center" />
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="@string/save_btn_string" />
 
 
             <TextView
                 android:id="@+id/addFaultsCancel_textview"
+                style="@style/gray_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:text="Cancel" />
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="@string/cancel_string" />
 
 
         </LinearLayout>

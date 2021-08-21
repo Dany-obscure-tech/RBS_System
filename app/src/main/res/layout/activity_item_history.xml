@@ -12,7 +12,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/imageSlider"
@@ -50,26 +50,23 @@
 
                 <TextView
                     android:id="@+id/item_category_textView"
+                    style="@style/TextViews_Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
                     android:layout_marginTop="5dp"
-                    android:text=""
-                    android:textColor="@color/gradientDarkBlue"
-                    android:textSize="@dimen/Bold_Big" />
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/fake_item_name"
+                    android:textColor="@color/gradientDarkBlue" />
 
 
                 <TextView
                     android:id="@+id/category_textView"
-                    android:layout_below="@+id/item_category_textView"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text=""
-                    android:textColor="@color/textGreen"
-                    android:textSize="@dimen/Bold_Small" />
+                    android:layout_below="@+id/item_category_textView"
+                    android:text="Category"
+                    android:textColor="@color/textGreen" />
 
 
                 <LinearLayout
@@ -77,25 +74,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/category_textView"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="20dp">
 
                     <TextView
+                        style="@style/TextViews_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Serial no/IMEI: "
-                        android:textColor="@color/textGrey"
-                        android:textSize="@dimen/Bold_Small" />
+                        android:text="Serial no/IMEI: " />
 
                     <TextView
                         android:id="@+id/serialNo_textView"
+                        style="@style/TextViews_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:fontFamily="@font/segoe_ui"
-                        android:text=""
-                        android:textColor="@color/gradientDarkBlue"
-                        android:textSize="@dimen/Regular_Small" />
+                        android:text="@string/Fake_item_id"
+                        android:textColor="@color/gradientDarkBlue" />
 
                 </LinearLayout>
 
@@ -104,73 +98,57 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/item_serial_no_area"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="20dp">
 
                     <TextView
+                        style="@style/TextViews_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Condition: "
-                        android:textColor="@color/textGrey"
-                        android:textSize="@dimen/Bold_Small" />
+                        android:text="Condition: " />
 
                     <TextView
                         android:id="@+id/condition_textView"
+                        style="@style/TextViews_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:fontFamily="@font/segoe_ui"
-                        android:text=""
-                        android:textColor="@color/gradientDarkBlue"
-                        android:textSize="@dimen/Regular_Small" />
+                        android:text="A"
+                        android:textColor="@color/gradientDarkBlue" />
 
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/description_textview"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/item_condition_area"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Description"
-                    android:textColor="@color/textGrey"
-                    android:textSize="@dimen/Bold_Small" />
+                    android:layout_marginTop="20dp"
+                    android:text="Description" />
 
                 <TextView
                     android:id="@+id/item_description_textview"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/description_textview"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:fontFamily="@font/segoe_ui"
-                    android:text="this is the First line of the text,second line of the text,third line of the description"
-                    android:textColor="@color/textGrey"
-                    android:textSize="@dimen/Regular_Small" />
+                    android:text="@string/lorem_ipsum" />
 
 
             </RelativeLayout>
 
             <TextView
                 android:id="@+id/itemDetailsToggle_textView"
-                android:layout_below="@+id/itemDetails_relativelayout"
-                android:layout_centerInParent="true"
+                style="@style/green_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/profile_screen_header"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:layout_marginTop="5dp"
-                android:text="Hide Details"
-                android:textAlignment="center"
-                android:textColor="#ffff"
-                android:textSize="14sp" />
+                android:layout_below="@+id/itemDetails_relativelayout"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Hide Details" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/itemHistoryRecyclerView"
@@ -201,9 +179,9 @@
             android:id="@+id/back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="0dp"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:adjustViewBounds="true"
             android:background="#00000000"

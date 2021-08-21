@@ -39,24 +39,24 @@ public class RBS_Vendors extends AppCompatActivity {
     RecyclerView rbs_vendor_products_recyclerview;
     Adapter_RBS_Vendor_inventory_RecyclerView adapter_rbs_vendor_inventory_recyclerView;
 
-    LinearLayout searchForVendors,vendor_details_linearLayout;
+    LinearLayout searchForVendors, vendor_details_linearLayout;
 
-    ImageView store_banner_imageView,profileImage_imageView;
+    ImageView store_banner_imageView, profileImage_imageView;
 
     ImageButton back_btn;
 
     String selectedVendorID;
 
-    TextView vendor_name_textView,confirm_order_btn;
-    TextView vendor_address_textView,vendor_phone_textView,vendor_email_textView;
+    TextView vendor_name_textView, confirm_order_btn;
+    TextView vendor_address_textView, vendor_phone_textView, vendor_email_textView;
 
-    List<String> vendors_name_list,vendors_phno_list,vendors_id_list,vendors_address_list,vendors_email_list,vendors_profileImage_list,vendors_banner_list;
-    List<String> vendor_stock_category_list, vendor_stockName_list, vendor_stock_price_list, vendor_stock_quantity_list, vendor_stock_imageView_list,vendor_stock_keyID_list;
+    List<String> vendors_name_list, vendors_phno_list, vendors_id_list, vendors_address_list, vendors_email_list, vendors_profileImage_list, vendors_banner_list;
+    List<String> vendor_stock_category_list, vendor_stockName_list, vendor_stock_price_list, vendor_stock_quantity_list, vendor_stock_imageView_list, vendor_stock_keyID_list;
 
     private ArrayList<SampleSearchModel> setting_vendors_name_data() {
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i = 0; i < vendors_name_list.size(); i++) {
-            items.add(new SampleSearchModel(vendors_name_list.get(i)+"\n"+vendors_phno_list.get(i), vendors_id_list.get(i), vendors_name_list.get(i), vendors_phno_list.get(i), vendors_address_list.get(i), vendors_email_list.get(i), vendors_profileImage_list.get(i), vendors_banner_list.get(i)));
+            items.add(new SampleSearchModel(vendors_name_list.get(i) + "\n" + vendors_phno_list.get(i), vendors_id_list.get(i), vendors_name_list.get(i), vendors_phno_list.get(i), vendors_address_list.get(i), vendors_email_list.get(i), vendors_profileImage_list.get(i), vendors_banner_list.get(i)));
         }
 
         return items;
@@ -65,7 +65,7 @@ public class RBS_Vendors extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_r_b_s__vendors);
+        setContentView(R.layout.activity_rbs_vendors);
         initialization();
         intialProcesses();
         onclicklistners();
@@ -79,22 +79,22 @@ public class RBS_Vendors extends AppCompatActivity {
         vendorNameListRef = FirebaseDatabase.getInstance().getReference("Vendor_list");
         vendorStockRef = FirebaseDatabase.getInstance().getReference("Vendor_stock");
 
-        rbs_vendor_products_recyclerview=(RecyclerView)findViewById(R.id.rbs_vendor_products_recyclerview);
-        back_btn=(ImageButton)findViewById(R.id.back_btn);
-        rbs_vendor_products_recyclerview.setLayoutManager(new GridLayoutManager(RBS_Vendors.this,1));
+        rbs_vendor_products_recyclerview = findViewById(R.id.rbs_vendor_products_recyclerview);
+        back_btn = findViewById(R.id.back_btn);
+        rbs_vendor_products_recyclerview.setLayoutManager(new GridLayoutManager(RBS_Vendors.this, 1));
 
-        searchForVendors=(LinearLayout)findViewById(R.id.searchForVendors);
-        vendor_details_linearLayout=(LinearLayout)findViewById(R.id.vendor_details_linearLayout);
+        searchForVendors = findViewById(R.id.searchForVendors);
+        vendor_details_linearLayout = findViewById(R.id.vendor_details_linearLayout);
 
-        store_banner_imageView=(ImageView)findViewById(R.id.store_banner_imageView);
-        profileImage_imageView=(ImageView) findViewById(R.id.profileImage_imageView);
+        store_banner_imageView = findViewById(R.id.store_banner_imageView);
+        profileImage_imageView = findViewById(R.id.profileImage_imageView);
 
-        vendor_name_textView=(TextView)findViewById(R.id.vendor_name_textView);
-        vendor_phone_textView =(TextView)findViewById(R.id.vendor_phone_textView);
-        vendor_address_textView =(TextView)findViewById(R.id.vendor_address_textView);
-        vendor_email_textView =(TextView)findViewById(R.id.vendor_email_textView);
+        vendor_name_textView = findViewById(R.id.vendor_name_textView);
+        vendor_phone_textView = findViewById(R.id.vendor_phone_textView);
+        vendor_address_textView = findViewById(R.id.customer_address_textView);
+        vendor_email_textView = findViewById(R.id.vendor_email_textView);
 
-        confirm_order_btn=(TextView)findViewById(R.id.confirm_order_btn);
+        confirm_order_btn = findViewById(R.id.confirm_order_btn);
         vendor_stock_category_list = new ArrayList<>();
         vendor_stockName_list = new ArrayList<>();
         vendor_stock_price_list = new ArrayList<>();
@@ -122,14 +122,14 @@ public class RBS_Vendors extends AppCompatActivity {
         vendorNameListRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot snapshot1: snapshot.getChildren()){
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     vendors_name_list.add(snapshot1.child("Name").getValue().toString());
                     vendors_phno_list.add(snapshot1.child("Phone_no").getValue().toString());
                     vendors_address_list.add(snapshot1.child("address").getValue().toString());
                     vendors_email_list.add(snapshot1.child("email").getValue().toString());
                     vendors_profileImage_list.add(snapshot1.child("profile_image_url").getValue().toString());
                     vendors_banner_list.add(snapshot1.child("banner").getValue().toString());
-                    vendors_id_list.add(snapshot1.getKey().toString());
+                    vendors_id_list.add(snapshot1.getKey());
                 }
             }
 
@@ -161,15 +161,10 @@ public class RBS_Vendors extends AppCompatActivity {
         confirm_order_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(RBS_Vendors.this, Rbs_vendor_order_receipt.class);
+                Intent intent = new Intent(RBS_Vendors.this, Rbs_vendor_order_receipt.class);
 
                 // todo Daniyal: send list to confirm order
-                for (int i=0;i<adapter_rbs_vendor_inventory_recyclerView.getSelectedItemPositions().size();i++){
-//                    rbsVendorSelectedStock.getVendor_stockName_textView().add("name");
-//                    rbsVendorSelectedStock.getVendor_stock_category_textView().add("category");
-//                    rbsVendorSelectedStock.getVendor_stock_price_textview().add("1100");
-//                    rbsVendorSelectedStock.getVendor_stock_quantity_textView().add("10");
-//                    rbsVendorSelectedStock.getVendor_stock_imageView().add("https://samsungmobilespecs.com/wp-content/uploads/2018/03/Samsung-Galaxy-C7-Price-Specs-featured-581x571.jpg");
+                for (int i = 0; i < adapter_rbs_vendor_inventory_recyclerView.getSelectedItemPositions().size(); i++) {
 
                     rbsVendorSelectedStock.getVendor_stockName_textView().add(vendor_stockName_list.get(adapter_rbs_vendor_inventory_recyclerView.getSelectedItemPositions().get(i)));
                     rbsVendorSelectedStock.getVendor_stock_category_textView().add(vendor_stock_category_list.get(adapter_rbs_vendor_inventory_recyclerView.getSelectedItemPositions().get(i)));
@@ -209,6 +204,7 @@ public class RBS_Vendors extends AppCompatActivity {
                                 vendor_address_textView.setText(item.getVal2());
                                 vendor_email_textView.setText(item.getVal3());
                                 Picasso.get().load(item.getVal4()).into(profileImage_imageView);
+                                profileImage_imageView.setVisibility(View.VISIBLE);
                                 Picasso.get().load(item.getVal5()).into(store_banner_imageView);
                                 vendor_details_linearLayout.setVisibility(View.VISIBLE);
                                 confirm_order_btn.setVisibility(View.VISIBLE);
@@ -228,8 +224,8 @@ public class RBS_Vendors extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 selectedVendorID = id;
-                for (DataSnapshot snapshot1:snapshot.getChildren()){
-                    for (DataSnapshot snapshot2:snapshot1.getChildren()){
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
                         vendor_stock_category_list.add(snapshot1.getKey());
                         vendor_stockName_list.add(snapshot2.child("Name").getValue().toString());
                         vendor_stock_price_list.add(snapshot2.child("Price").getValue().toString());
@@ -240,7 +236,7 @@ public class RBS_Vendors extends AppCompatActivity {
                     }
 
                 }
-                adapter_rbs_vendor_inventory_recyclerView=new Adapter_RBS_Vendor_inventory_RecyclerView(RBS_Vendors.this, vendor_stock_category_list, vendor_stockName_list, vendor_stock_price_list, vendor_stock_quantity_list, vendor_stock_imageView_list);
+                adapter_rbs_vendor_inventory_recyclerView = new Adapter_RBS_Vendor_inventory_RecyclerView(RBS_Vendors.this, vendor_stock_category_list, vendor_stockName_list, vendor_stock_price_list, vendor_stock_quantity_list, vendor_stock_imageView_list);
                 rbs_vendor_products_recyclerview.setAdapter(adapter_rbs_vendor_inventory_recyclerView);
             }
 

@@ -107,12 +107,12 @@ public class VendorShop extends Fragment {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Initialize() {
-        vendorStockRef = FirebaseDatabase.getInstance().getReference("Vendor_stock/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
+        vendorStockRef = FirebaseDatabase.getInstance().getReference("Vendor_stock/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-        vendor_inventory_RecyclerView = (RecyclerView) view.findViewById(R.id.vendor_inventory_RecyclerView);
-        vendor_inventory_RecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),1));
+        vendor_inventory_RecyclerView = view.findViewById(R.id.vendor_inventory_RecyclerView);
+        vendor_inventory_RecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
 
-        vendor_inventory_add_btn_textiew = (TextView) view.findViewById(R.id.vendor_inventory_add_btn_textiew);
+        vendor_inventory_add_btn_textiew = view.findViewById(R.id.vendor_inventory_add_btn_textiew);
 
         stockCategory_list = new ArrayList<>();
         stockName_list = new ArrayList<>();
@@ -136,21 +136,21 @@ public class VendorShop extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for (DataSnapshot dataSnapshot1:snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
 
-                    for (DataSnapshot dataSnapshot2:dataSnapshot1.getChildren()){
+                    for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
                         stockName_list.add(dataSnapshot2.child("Name").getValue().toString());
                         stockCategory_list.add(dataSnapshot2.child("Category").getValue().toString());
                         stockPrice_list.add(dataSnapshot2.child("Price").getValue().toString());
                         stockQuantity_list.add(dataSnapshot2.child("Quantity").getValue().toString());
                         stockImageUrl_list.add(dataSnapshot2.child("Image_url").getValue().toString());
-                        stockkeyId_list.add(dataSnapshot2.getKey().toString());
+                        stockkeyId_list.add(dataSnapshot2.getKey());
                     }
 
                 }
 
 
-                adapter_vendor_inventory_recyclerView = new Adapter_Vendor_inventory_RecyclerView(getActivity(),stockName_list, stockCategory_list,stockPrice_list,stockQuantity_list,stockImageUrl_list,stockkeyId_list,edit_btn_list);
+                adapter_vendor_inventory_recyclerView = new Adapter_Vendor_inventory_RecyclerView(getActivity(), stockName_list, stockCategory_list, stockPrice_list, stockQuantity_list, stockImageUrl_list, stockkeyId_list, edit_btn_list);
                 vendor_inventory_RecyclerView.setAdapter(adapter_vendor_inventory_recyclerView);
 
             }
@@ -172,13 +172,12 @@ public class VendorShop extends Fragment {
         vendor_inventory_add_btn_textiew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(getActivity(),Vendor_stock_entry.class);
-                startActivityForResult(intent,111);
+                Intent intent = new Intent(getActivity(), Vendor_stock_entry.class);
+                startActivityForResult(intent, 111);
 
             }
         });
     }
-
 
 
 }

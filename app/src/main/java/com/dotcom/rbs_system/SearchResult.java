@@ -6,11 +6,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.dotcom.rbs_system.Adapter.AdapterCategoryRecyclerView;
-import com.dotcom.rbs_system.Adapter.AdapterShopProductsRecyclerView;
 import com.dotcom.rbs_system.Adapter.AdapterSpotlightItemListRecyclerView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,17 +18,16 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.internal.cache.DiskLruCache;
 
 public class SearchResult extends AppCompatActivity {
-    int x=0;
+    int x = 0;
 
-    DatabaseReference searchingListRef,itemsRef;
+    DatabaseReference searchingListRef, itemsRef;
 
-    List<String> searchItemsList,filteredList,itemname;
-    List<String> filteredItemname,key_idList,categoryList,shopkeeperList,price, itemImage;
+    List<String> searchItemsList, filteredList, itemname;
+    List<String> filteredItemname, key_idList, categoryList, shopkeeperList, price, itemImage;
 
-    String searchMe,findMe;
+    String searchMe, findMe;
 
     RecyclerView recyclerView;
 
@@ -42,20 +38,20 @@ public class SearchResult extends AppCompatActivity {
 
         Initialize();
         InitialProcess();
+        //TODO search activity ko online karna ha
 
     }
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void Initialize() {
         key_idList = new ArrayList<>();
         categoryList = new ArrayList<>();
         shopkeeperList = new ArrayList<>();
-        filteredItemname = new ArrayList<String>();
-        price = new ArrayList<String>();
-        itemImage = new ArrayList<String>();
+        filteredItemname = new ArrayList<>();
+        price = new ArrayList<>();
+        itemImage = new ArrayList<>();
 
-        itemname = new ArrayList<String>();
+        itemname = new ArrayList<>();
 
         itemsRef = FirebaseDatabase.getInstance().getReference("Search/Name_to_items");
         searchingListRef = FirebaseDatabase.getInstance().getReference("Search/Name_list");
@@ -65,7 +61,7 @@ public class SearchResult extends AppCompatActivity {
 
         findMe = getIntent().getStringExtra("SEARCHED");
 
-        recyclerView = (RecyclerView)findViewById(R.id.spotlightRecyclerView);
+        recyclerView = findViewById(R.id.spotlightRecyclerView);
 
     }
 
@@ -79,13 +75,11 @@ public class SearchResult extends AppCompatActivity {
         searchingListRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot snapshot1: snapshot.getChildren()){
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     searchItemsList.add(snapshot1.getValue().toString());
 
                 }
                 filterList();
-
-
 
 
             }
@@ -98,24 +92,19 @@ public class SearchResult extends AppCompatActivity {
     }
 
     private void filterList() {
-        for (int j = 0; j<searchItemsList.size();j++){
+        for (int j = 0; j < searchItemsList.size(); j++) {
             searchMe = searchItemsList.get(j);
 
             int searchMeLength = searchMe.length();
             int findMeLength = findMe.length();
-//                    boolean foundIt = false;
             for (int i = 0;
                  i <= (searchMeLength - findMeLength);
                  i++) {
-                if (searchMe.regionMatches(true,i, findMe, 0, findMeLength)) {
+                if (searchMe.regionMatches(true, i, findMe, 0, findMeLength)) {
                     filteredList.add(searchMe);
-//                            foundIt = true;
-//                            System.out.println(searchMe);
                     break;
                 }
             }
-//                    if (!foundIt)
-//                        System.out.println("No match found.");
         }
         getFilteredItems();
     }
@@ -124,8 +113,8 @@ public class SearchResult extends AppCompatActivity {
         itemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    for (DataSnapshot dataSnapshot1:dataSnapshot.child(filteredList.get(x)).getChildren()){
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.child(filteredList.get(x)).getChildren()) {
                         Toast.makeText(SearchResult.this, filteredList.get(x), Toast.LENGTH_SHORT).show();
                         filteredItemname.add(String.valueOf(dataSnapshot1.child("item_name").getValue()));
                         price.add(String.valueOf(dataSnapshot1.child("Price").getValue()));
@@ -136,8 +125,8 @@ public class SearchResult extends AppCompatActivity {
                         x++;
                     }
 
-                    AdapterSpotlightItemListRecyclerView viewAdapter = new AdapterSpotlightItemListRecyclerView(SearchResult.this, filteredItemname, price, itemImage,key_idList,categoryList,shopkeeperList);
-                    recyclerView.setLayoutManager(new GridLayoutManager(SearchResult.this,2));
+                    AdapterSpotlightItemListRecyclerView viewAdapter = new AdapterSpotlightItemListRecyclerView(SearchResult.this, filteredItemname, price, itemImage, key_idList, categoryList, shopkeeperList);
+                    recyclerView.setLayoutManager(new GridLayoutManager(SearchResult.this, 2));
                     recyclerView.setAdapter(viewAdapter);
                 }
             }
@@ -148,6 +137,4 @@ public class SearchResult extends AppCompatActivity {
             }
         });
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

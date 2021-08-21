@@ -10,15 +10,14 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemBackground="@android:color/transparent"
-        android:background="#bbffffff"
         android:layout_alignParentBottom="true"
+        android:background="#bbffffff"
+        app:elevation="0.00000005969dp"
+        app:itemBackground="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_menu"
-        app:elevation="0.00000005969dp"
-        />
+        app:menu="@menu/bottom_menu" />
 
     <FrameLayout
         android:id="@+id/screenContainer"

@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,7 +53,7 @@ public class Adapter_RBS_Vendor_placeorder_RecyclerView extends RecyclerView.Ada
 
         View v;
         v = LayoutInflater.from(context).inflate(R.layout.rbs_vendor_placeorder_item, parent, false);
-        Adapter_RBS_Vendor_placeorder_RecyclerView.MyViewHolder myViewHolder = new Adapter_RBS_Vendor_placeorder_RecyclerView.MyViewHolder(v);
+        Adapter_RBS_Vendor_placeorder_RecyclerView.MyViewHolder myViewHolder = new MyViewHolder(v);
         return myViewHolder;
     }
 
@@ -72,46 +71,42 @@ public class Adapter_RBS_Vendor_placeorder_RecyclerView extends RecyclerView.Ada
         holder.requiredQuantity_editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (holder.requiredQuantity_editText.getText().toString().isEmpty()){
+                if (holder.requiredQuantity_editText.getText().toString().isEmpty()) {
                     previousValue = 0.0f;
-                }else {
-                    previousValue = (Float.parseFloat(holder.requiredQuantity_editText.getText().toString()))*(Float.parseFloat(holder.place_order_price_textview.getText().toString()));
+                } else {
+                    previousValue = (Float.parseFloat(holder.requiredQuantity_editText.getText().toString())) * (Float.parseFloat(holder.place_order_price_textview.getText().toString()));
                 }
-
 
 
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                if (stockPrice_list.get(position).equals(item_price_editText.getText().toString())){
-//                    item_price_editText.setError("Please enter new value!");
-//                    validate = false;
-//                }
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (holder.requiredQuantity_editText.getText().toString().isEmpty()){
+                if (holder.requiredQuantity_editText.getText().toString().isEmpty()) {
                     holder.requiredQuantity_editText.setError("Please enter value!");
                     totalBalance = totalBalance - previousValue;
                     totalBalance_textView.setText(String.valueOf(totalBalance));
-                    validateList.set(position,false);
-                }else {
-                    if (Float.parseFloat(holder.requiredQuantity_editText.getText().toString())==0.0f){
+                    validateList.set(position, false);
+                } else {
+                    if (Float.parseFloat(holder.requiredQuantity_editText.getText().toString()) == 0.0f) {
                         totalBalance = totalBalance - previousValue;
-                        validateList.set(position,false);
+                        validateList.set(position, false);
                         holder.requiredQuantity_editText.setText("");
-                    }else {
+                    } else {
                         totalBalance = totalBalance - previousValue;
-                        totalBalance = totalBalance + (Float.parseFloat(holder.requiredQuantity_editText.getText().toString())*Float.parseFloat(holder.place_order_price_textview.getText().toString()));
+                        totalBalance = totalBalance + (Float.parseFloat(holder.requiredQuantity_editText.getText().toString()) * Float.parseFloat(holder.place_order_price_textview.getText().toString()));
                         totalBalance_textView.setText(String.valueOf(totalBalance));
-                        if (Float.parseFloat(holder.requiredQuantity_editText.getText().toString())>Float.parseFloat(holder.place_order_quantity_textView.getText().toString())){
+                        if (Float.parseFloat(holder.requiredQuantity_editText.getText().toString()) > Float.parseFloat(holder.place_order_quantity_textView.getText().toString())) {
                             holder.requiredQuantity_editText.setError("Quantity exceeds!");
-                            validateList.set(position,false);
-                        }else {
-                            validateList.set(position,true);
-                            place_order_quantity_editText.set(position,holder.requiredQuantity_editText.getText().toString());
+                            validateList.set(position, false);
+                        } else {
+                            validateList.set(position, true);
+                            place_order_quantity_editText.set(position, holder.requiredQuantity_editText.getText().toString());
                         }
 
                     }
@@ -126,14 +121,13 @@ public class Adapter_RBS_Vendor_placeorder_RecyclerView extends RecyclerView.Ada
         return placeorder_item_name_textView.size();
     }
 
-    public List<Boolean> getValidateList(){
+    public List<Boolean> getValidateList() {
         return validateList;
     }
 
 
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        
         ImageView placeorder_item_pic_imageView;
         TextView placeorder_item_name_textView, placeorder_item_category_textView, placeorder_item_currency_textview, place_order_price_textview, place_order_quantity_textView;
         EditText requiredQuantity_editText;
@@ -141,15 +135,15 @@ public class Adapter_RBS_Vendor_placeorder_RecyclerView extends RecyclerView.Ada
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            placeorder_item_name_textView = (TextView) itemView.findViewById(R.id.placeorder_item_name_textView);
-            placeorder_item_category_textView = (TextView) itemView.findViewById(R.id.placeorder_item_category_textView);
-            placeorder_item_currency_textview = (TextView) itemView.findViewById(R.id.placeorder_item_currency_textview);
-            place_order_price_textview = (TextView) itemView.findViewById(R.id.place_order_price_textview);
-            place_order_quantity_textView = (TextView) itemView.findViewById(R.id.place_order_quantity_textView);
+            placeorder_item_name_textView = itemView.findViewById(R.id.placeorder_item_name_textView);
+            placeorder_item_category_textView = itemView.findViewById(R.id.placeorder_item_category_textView);
+            placeorder_item_currency_textview = itemView.findViewById(R.id.placeorder_item_currency_textview);
+            place_order_price_textview = itemView.findViewById(R.id.place_order_price_textview);
+            place_order_quantity_textView = itemView.findViewById(R.id.place_order_quantity_textView);
 
-            requiredQuantity_editText = (EditText) itemView.findViewById(R.id.requiredQuantity_editText);
+            requiredQuantity_editText = itemView.findViewById(R.id.requiredQuantity_editText);
 
-            placeorder_item_pic_imageView = (ImageView) itemView.findViewById(R.id.placeorder_item_pic_imageView);
+            placeorder_item_pic_imageView = itemView.findViewById(R.id.placeorder_item_pic_imageView);
 
         }
 

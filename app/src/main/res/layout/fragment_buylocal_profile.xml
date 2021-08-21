@@ -30,6 +30,7 @@
                     android:layout_height="120dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
                     app:civ_border_color="#4A4A4A"
                     app:civ_border_width="7dp"
 
@@ -43,12 +44,12 @@
 
                     <TextView
                         android:id="@+id/name"
+                        style="@style/TextViews_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="User Name"
-                        android:textColor="#FFFFFF"
-                        android:textSize="22sp" />
+                        android:text="@string/fake_customer_name"
+                        android:textColor="#FFFFFF" />
 
                     <LinearLayout
                         android:id="@+id/phone_no_area"
@@ -67,13 +68,13 @@
 
                         <TextView
                             android:id="@+id/phno"
+                            style="@style/TextViews"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="20dp"
                             android:layout_gravity="center_vertical"
-                            android:text="03234235"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="16sp" />
+                            android:paddingStart="20dp"
+                            android:text="@string/Fake_phone_no"
+                            android:textColor="@color/colorWhite" />
 
                     </LinearLayout>
 
@@ -81,7 +82,6 @@
                         android:id="@+id/email_area"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/phone_no_area"
                         android:layout_gravity="start"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
@@ -97,13 +97,12 @@
 
                         <TextView
                             android:id="@+id/email"
+                            style="@style/TextViews"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:paddingLeft="20dp"
-                            android:text="shahzaib.mehfooz"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="16sp" />
+                            android:paddingStart="20dp"
+                            android:text="@string/Fake_email"
+                            android:textColor="@color/colorWhite" />
 
                     </LinearLayout>
 
@@ -111,7 +110,6 @@
                         android:id="@+id/location_area"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/email_area"
                         android:layout_gravity="start"
                         android:gravity="center"
                         android:orientation="horizontal">
@@ -124,12 +122,12 @@
 
                         <TextView
                             android:id="@+id/address"
+                            style="@style/TextViews"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="20dp"
-                            android:text="Peshawar city"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="16sp" />
+                            android:paddingStart="20dp"
+                            android:text="@string/fake_city"
+                            android:textColor="@color/colorWhite" />
 
                     </LinearLayout>
 
@@ -138,8 +136,8 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="end"
-                        android:backgroundTint="@color/colorWhite"
-                        android:background="@drawable/edit" />
+                        android:background="@drawable/edit"
+                        android:backgroundTint="@color/colorWhite" />
 
 
                 </LinearLayout>
@@ -148,14 +146,10 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/profile_des_area"
+                style="@style/CardView_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/header_profile"
-                android:background="@drawable/ripple_effect_cardview"
-                app:cardBackgroundColor="#F1F1F1"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
+                android:layout_below="@+id/header_profile">
 
                 <RelativeLayout
                     android:id="@+id/profile_data_area"
@@ -165,34 +159,31 @@
 
                     <TextView
                         android:id="@+id/purchase_area"
+                        style="@style/TextViews_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:padding="5dp"
-                        android:text="0 purchases"
-                        android:textColor="@color/textGrey" />
+                        android:padding="2dp"
+                        android:text="0 purchases" />
 
                     <LinearLayout
-                        android:layout_below="@+id/purchase_area"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/purchase_area"
                         android:orientation="horizontal"
                         android:padding="5dp">
 
                         <TextView
+                            style="@style/TextViews"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:text="Since "
-                            android:textColor="@color/textGrey" />
+                            android:text="Since " />
 
                         <TextView
                             android:id="@+id/creationDate_textView"
+                            style="@style/TextViews"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/segoe_ui_bold"
                             android:text="23/may/2021"
-                            android:textColor="@color/textGrey"
 
                             />
 

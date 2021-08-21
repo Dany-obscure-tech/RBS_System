@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/blue_btn"
-    android:singleLine="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:ellipsize="marquee"
-    android:textColor="@android:color/white"
     android:background="@drawable/abc_spinner_mtrl_am_alpha"
+    android:backgroundTint="@android:color/white"
+    android:ellipsize="marquee"
+    android:singleLine="true"
     android:textAlignment="center"
-    android:backgroundTint="@android:color/white"/>
+    android:textColor="@android:color/white" />

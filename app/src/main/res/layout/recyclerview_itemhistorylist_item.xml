@@ -7,34 +7,30 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/searchForItem_cardView"
+        style="@style/CardView_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ripple_effect_cardview"
-        app:cardBackgroundColor="@color/colorWhite"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="4dp"
-        app:cardUseCompatPadding="true">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/shopkeeper_area_linearlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:layout_marginBottom="5dp">
+                android:orientation="horizontal">
 
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/shopkeeperImage_imageView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:src="@drawable/profile_icon"
                     app:civ_border_color="#4A4A4A"
                     app:civ_border_width="0dp" />
@@ -42,7 +38,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -51,33 +47,28 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            style="@style/TextViews_Regular_small"
+                            style="@style/TextViews"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Shopkeeper "
-                            android:textColor="@color/textGrey"
-                            android:textSize="@dimen/Regular_Small" />
+                            android:text="Shopkeeper " />
 
                         <TextView
                             android:id="@+id/shopkeeper_status"
-                            style="@style/TextViews_Regular_small"
+                            style="@style/TextViews_Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Buyer/Seller"
-                            android:textColor="@color/gradientDarkBlue"
-                            android:textSize="@dimen/Bold_Small" />
+                            android:textColor="@color/gradientDarkBlue" />
 
 
                     </LinearLayout>
 
                     <TextView
                         android:id="@+id/shopkeeper_name_textview"
-                        style="@style/TextViews_Bold_small"
+                        style="@style/TextViews_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Shopkeeper name"
-                        android:textColor="@color/textGrey"
-                        android:textSize="@dimen/Regular_Small" />
+                        android:text="@string/shopkeeper_name" />
 
                 </LinearLayout>
 
@@ -87,6 +78,7 @@
                 android:id="@+id/customer_area_linearlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -95,7 +87,7 @@
                     android:id="@+id/customerImage_imageView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:src="@drawable/profile_icon"
                     app:civ_border_color="#4A4A4A"
                     app:civ_border_width="0dp" />
@@ -103,7 +95,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -112,62 +104,54 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            style="@style/TextViews_Regular_small"
+                            style="@style/TextViews"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Customer "
-                            android:textColor="@color/textGrey"
-                            android:textSize="@dimen/Regular_Small" />
+                            android:text="Customer " />
 
                         <TextView
                             android:id="@+id/customer_status"
-                            style="@style/TextViews_Regular_small"
+                            style="@style/TextViews_Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Buyer/Seller"
-                            android:textColor="@color/gradientDarkBlue"
-                            android:textSize="@dimen/Bold_Small" />
+                            android:textColor="@color/gradientDarkBlue" />
 
 
                     </LinearLayout>
 
                     <TextView
                         android:id="@+id/customer_name_textview"
-                        style="@style/TextViews_Bold_small"
+                        style="@style/TextViews_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Customer name"
-                        android:textColor="@color/textGrey"
-                        android:textSize="@dimen/Regular_Small" />
+                        android:text="@string/fake_customer_name" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
             <RelativeLayout
-                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp">
 
                 <TextView
                     android:id="@+id/status_textView"
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Status"
-                    android:textColor="@color/gradientDarkBlue"
-                    android:textSize="@dimen/Bold_Small" />
+                    android:textColor="@color/gradientDarkBlue" />
 
                 <TextView
                     android:id="@+id/date_textView"
-                    style="@style/TextViews_Regular_small"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_gravity="end"
-                    android:text="--/--/--"
-                    android:textColor="@color/textGrey"
-                    android:textSize="@dimen/Regular_Small" />
+                    android:text="--/--/--" />
 
             </RelativeLayout>
 

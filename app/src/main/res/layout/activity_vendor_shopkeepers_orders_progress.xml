@@ -1,35 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Vendor_shopkeepers_orders_progress"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".Vendor_shopkeepers_orders_progress">
 
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@drawable/profile_screen_header">
+        android:background="@drawable/screen_header_rectangle">
 
         <TextView
+            style="@style/TextViews_Header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:fontFamily="@font/segoe_ui_bold"
+            android:layout_toEndOf="@+id/back_btn"
             android:text="Invoice Details"
-            android:textColor="#ffffff"
-            android:textSize="22sp" />
+            android:textColor="#ffffff" />
 
         <ImageButton
             android:id="@+id/back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="0dp"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:adjustViewBounds="true"
             android:background="#00000000"
@@ -41,166 +39,81 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/shop_name_textView"
+                style="@style/TextViews_Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/shop_name"
+                android:textColor="@color/textBlue" />
+
+            <TextView
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Phone"
+                android:textColor="@color/gradientDarkBlue" />
+
+            <TextView
+                android:id="@+id/phone_no_textview"
+                style="@style/TextViews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="Itech Computers"
-                android:textColor="@color/textBlue"
-                android:textSize="25sp" />
-
-
+                android:layout_marginBottom="10dp"
+                android:text="@string/Fake_phone_no" />
 
             <TextView
-                android:id="@+id/company_registration_number"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:text="Phone" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/searchForItem_cardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ripple_effect_cardview"
-                app:cardBackgroundColor="@color/colorWhite"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
-
-                <LinearLayout
-                    android:id="@+id/shopkeeper_phone_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/phone_no_textview"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:text="09125678893"
-                            android:textColor="@color/textGrey"
-                            android:textSize="18sp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
+                android:layout_marginTop="10dp"
+                android:text="Email"
+                android:textColor="@color/gradientDarkBlue" />
 
             <TextView
-                android:id="@+id/post_code"
+                android:id="@+id/email_textView"
+                style="@style/TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:text="Email" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/shopkeeper_email_cardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ripple_effect_cardview"
-                app:cardBackgroundColor="@color/colorWhite"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
-
-                <LinearLayout
-                    android:id="@+id/shopkeeper_email_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/email_textView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:text="mrkhan@gmail.com"
-                            android:textColor="@color/textGrey"
-                            android:textSize="18sp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/Fake_email" />
 
             <TextView
-                android:id="@+id/vendor_address"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:text="Address" />
+                android:layout_marginTop="10dp"
+                android:text="Address"
+                android:textColor="@color/gradientDarkBlue" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/vendor_address_cardView"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/address_textView"
+                style="@style/TextViews"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ripple_effect_cardview"
-                app:cardBackgroundColor="@color/colorWhite"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
-
-                <LinearLayout
-                    android:id="@+id/shopkeeper_address_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/address_textView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:text="House#24563 Pakistan"
-                            android:textColor="@color/textGrey"
-                            android:textSize="18sp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/fake_city" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/order_invoice_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
 
                 />
 
@@ -208,70 +121,82 @@
                 android:id="@+id/total_linear_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:gravity="center_horizontal">
 
-                <TextView
+                <androidx.cardview.widget.CardView
+                    style="@style/CardView_style"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Total : " />
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/_currency"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="$"
-                    android:textColor="@color/textBlue"
-                    android:textSize="18sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/suggest_price_TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="NA"
-                    android:textColor="@color/textBlue"
-                    android:textSize="18sp" />
+                        <TextView
+                            style="@style/TextViews_Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Total : "
+                            android:textColor="@color/textBlue" />
 
+                        <TextView
+                            android:id="@+id/_currency"
+                            style="@style/TextViews_Title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text=""
+                            android:textColor="@color/textBlue" />
+
+                        <TextView
+                            android:id="@+id/suggest_price_TextView"
+                            style="@style/TextViews_Alert"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/na"
+                            android:textColor="@color/textBlue" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
-
 
             <LinearLayout
                 android:id="@+id/entry_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <TextView
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Paid" />
 
                 <EditText
                     android:id="@+id/paid_editText"
+                    style="@style/EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary"
                     android:hint="Enter paid amount"
-                    android:inputType="phone"
-                    android:maxLength="32" />
+                    android:inputType="number" />
 
                 <TextView
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Discount" />
 
                 <EditText
                     android:id="@+id/discount_editText"
+                    style="@style/EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary"
                     android:hint="Enter discount amount"
-                    android:inputType="phone"
-                    android:maxLength="32" />
+                    android:inputType="number" />
 
             </LinearLayout>
 
@@ -279,12 +204,13 @@
                 android:id="@+id/balance_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
                 <TextView
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -292,20 +218,20 @@
 
                 <TextView
                     android:id="@+id/balance_currency"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$"
-                    android:textColor="@color/textBlue"
-                    android:textSize="18sp" />
+                    android:textColor="@color/textBlue" />
 
                 <TextView
                     android:id="@+id/balance_price_TextView"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="NA"
-                    android:textColor="@color/textBlue"
-                    android:textSize="18sp" />
+                    android:text="@string/na"
+                    android:textColor="@color/textBlue" />
 
             </LinearLayout>
 
@@ -314,60 +240,35 @@
                 android:id="@+id/progress_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:padding="20dp">
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    style="@style/blue_btn"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:layout_weight="0.1"
-                    android:background="@drawable/profile_screen_header"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="Ready"
-                    android:textAlignment="center"
-                    android:textColor="#ffff"
-                    android:textSize="15sp" />
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:text="Ready" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    style="@style/blue_btn"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="2dp"
-                    android:layout_weight="0.1"
-                    android:background="@drawable/profile_screen_header"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="Communicate"
-                    android:textAlignment="center"
-                    android:textColor="#ffff"
-                    android:textSize="15sp" />
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_weight="1"
+                    android:text="Messages" />
 
             </LinearLayout>
 
             <TextView
                 android:id="@+id/confirm_order_btn"
+                style="@style/blue_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="2dp"
-                android:background="@drawable/profile_screen_header"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="10dp"
-                android:text="Confirm Order"
-                android:textAlignment="center"
-                android:textColor="#ffff"
-                android:textSize="15sp" />
+                android:layout_marginBottom="20dp"
+                android:text="Confirm Order" />
 
         </LinearLayout>
     </ScrollView>

@@ -58,16 +58,15 @@ public class Vendor_stock_entry extends AppCompatActivity {
 
     Uri fileUri = null;
 
-    EditText vendor_item_name_editText, vendor_item_price_editText, vendor_item_qty_editText,vendor_sno_editText;
-    TextView item_category_textView, add_btn, invoiceDate_textView,date_textView,uploadImage_textView;
+    EditText vendor_item_name_editText, vendor_item_price_editText, vendor_item_qty_editText, vendor_sno_editText;
+    TextView item_category_textView, add_btn, invoiceDate_textView, date_textView, uploadImage_textView;
 
     DatePickerDialog.OnDateSetListener onDateSetListener;
     List<String> Vendor_category_data_list;
-    String vendor_stock_entry_id,vendorStockCategory;
+    String vendor_stock_entry_id, vendorStockCategory;
     String currentDateString;
     String firebaseAuthUID;
     Date date = Calendar.getInstance().getTime();
-
 
 
     private ArrayList<SampleSearchModel> getting_vendor_categories_data() {
@@ -94,28 +93,28 @@ public class Vendor_stock_entry extends AppCompatActivity {
     private void Initialization() {
         stockImageStorageReference = FirebaseStorage.getInstance().getReference().child("Vendor_Stock_Images");
 
-        back_btn = (ImageButton) findViewById(R.id.back_btn);
+        back_btn = findViewById(R.id.back_btn);
         confirmation_alert = new Dialog(this);
         confirmation_alert.setContentView(R.layout.exit_confirmation_alert);
-        yes_btn_textview = (TextView) confirmation_alert.findViewById(R.id.yes_btn_textview);
-        cancel_btn_textview = (TextView) confirmation_alert.findViewById(R.id.cancel_btn_textview);
+        yes_btn_textview = confirmation_alert.findViewById(R.id.yes_btn_textview);
+        cancel_btn_textview = confirmation_alert.findViewById(R.id.cancel_btn_textview);
 
-        image_imageView = (ImageView) findViewById(R.id.image_imageView);
+        image_imageView = findViewById(R.id.image_imageView);
 
-        item_category_textView = (TextView) findViewById(R.id.item_category_textView);
-        add_btn = (TextView) findViewById(R.id.add_btn);
-        date_textView = (TextView) findViewById(R.id.date_textView);
-        invoiceDate_textView = (TextView) findViewById(R.id.invoiceDate_textView);
-        uploadImage_textView = (TextView) findViewById(R.id.uploadImage_textView);
+        item_category_textView = findViewById(R.id.item_category_textView);
+        add_btn = findViewById(R.id.add_btn);
+        date_textView = findViewById(R.id.date_textView);
+        invoiceDate_textView = findViewById(R.id.invoiceDate_textView);
+        uploadImage_textView = findViewById(R.id.uploadImage_textView);
         currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(date);
         invoiceDate_textView.setText(currentDateString);
 
-        vendor_item_name_editText = (EditText) findViewById(R.id.vendor_item_name_editText);
-        vendor_item_price_editText = (EditText) findViewById(R.id.vendor_item_price_editText);
-        vendor_item_qty_editText = (EditText) findViewById(R.id.vendor_item_qty_editText);
-        vendor_sno_editText = (EditText) findViewById(R.id.vendor_sno_editText);
+        vendor_item_name_editText = findViewById(R.id.vendor_item_name_editText);
+        vendor_item_price_editText = findViewById(R.id.vendor_item_price_editText);
+        vendor_item_qty_editText = findViewById(R.id.vendor_item_qty_editText);
+        vendor_sno_editText = findViewById(R.id.vendor_sno_editText);
 
-        searchForCategories = (LinearLayout) findViewById(R.id.searchForCategories);
+        searchForCategories = findViewById(R.id.searchForCategories);
 
 
         Vendor_category_data_list = new ArrayList<>();
@@ -124,10 +123,12 @@ public class Vendor_stock_entry extends AppCompatActivity {
         Vendor_category_data_list.add("Mobile");
         Vendor_category_data_list.add("PC");
 
-        reference = FirebaseDatabase.getInstance().getReference();
-        vendor_stock_entry_id = reference.push().getKey().toString();
+        //TODO kisi  item ki value float ma ho sakti ha "vendor_item_price_editText" is id ko check karna ha
 
-        firebaseAuthUID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        reference = FirebaseDatabase.getInstance().getReference();
+        vendor_stock_entry_id = reference.push().getKey();
+
+        firebaseAuthUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -173,22 +174,22 @@ public class Vendor_stock_entry extends AppCompatActivity {
         date_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar calendar=Calendar.getInstance();
-                int year= (calendar.get(Calendar.YEAR))-18;
-                int month= 0;
-                int day= 1;
+                Calendar calendar = Calendar.getInstance();
+                int year = (calendar.get(Calendar.YEAR)) - 18;
+                int month = 0;
+                int day = 1;
 
-                DatePickerDialog dialog = new DatePickerDialog(Vendor_stock_entry.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,onDateSetListener,year,month,day);
+                DatePickerDialog dialog = new DatePickerDialog(Vendor_stock_entry.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, onDateSetListener, year, month, day);
                 currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
         });
-        onDateSetListener=new DatePickerDialog.OnDateSetListener() {
+        onDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month=month+1;
-                String date = dayOfMonth+"/"+ month + "/"+ year;
+                month = month + 1;
+                String date = dayOfMonth + "/" + month + "/" + year;
 
                 SimpleDateFormat input = new SimpleDateFormat("d/M/yyyy");
                 SimpleDateFormat output = new SimpleDateFormat("EEEE, d MMMM yyyy");
@@ -206,7 +207,7 @@ public class Vendor_stock_entry extends AppCompatActivity {
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validatefields() == true) {
+                if (validatefields()) {
                     stock_entry_data();
                 }
             }
@@ -261,7 +262,7 @@ public class Vendor_stock_entry extends AppCompatActivity {
             reference.child("Vendor_stock").child(firebaseAuthUID).child(item_category_textView.getText().toString()).child(key).child("Sno").setValue(vendor_sno_editText.getText().toString());
             reference.child("Vendor_stock").child(firebaseAuthUID).child(item_category_textView.getText().toString()).child(key).child("Date").setValue(date_textView.getText().toString());
             reference.child("Vendor_stock").child(firebaseAuthUID).child(item_category_textView.getText().toString()).child(key).child("Added_by").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
-            vendorStockCategory =item_category_textView.getText().toString();
+            vendorStockCategory = item_category_textView.getText().toString();
 
             stockImageStorageReference.child(firebaseAuthUID).child(vendorStockCategory).child(key).child("image").putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -274,7 +275,7 @@ public class Vendor_stock_entry extends AppCompatActivity {
                             reference.child("Vendor_stock").child(firebaseAuthUID).child(vendorStockCategory).child(key).child("Image_url").setValue(String.valueOf(uri.toString()));
                             Toast.makeText(Vendor_stock_entry.this, "Stock entered!", Toast.LENGTH_SHORT).show();
 
-                            setResult(111,new Intent());
+                            setResult(111, new Intent());
                             finish();
                         }
                     });
@@ -288,18 +289,17 @@ public class Vendor_stock_entry extends AppCompatActivity {
             });
 
 
-
         } else {
             Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
         }
         connected = false;
     }
 
-    private void takePicture(){
+    private void takePicture() {
         ImagePicker.Companion.with(Vendor_stock_entry.this)
-                .crop()	    			//Crop image(Optional), Check Customization for more option
-                .compress(1024)			//Final image size will be less than 1 MB(Optional)
-                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                .crop()                    //Crop image(Optional), Check Customization for more option
+                .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
                 .start();
     }
 
@@ -336,7 +336,7 @@ public class Vendor_stock_entry extends AppCompatActivity {
             vendor_item_qty_editText.setError("Please enter item quantity");
             valid = false;
         }
-        if (fileUri==null) {
+        if (fileUri == null) {
             Toast.makeText(this, "Please upload an image", Toast.LENGTH_SHORT).show();
             valid = false;
         }
@@ -373,11 +373,10 @@ public class Vendor_stock_entry extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            switch (event.getAction()) {
-                case KeyEvent.ACTION_DOWN:
-                    confirmation_alert.show();
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                confirmation_alert.show();
 
-                    return true;
+                return true;
             }
         }
         return false;

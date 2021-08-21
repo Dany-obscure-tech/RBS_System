@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BuyLocal_offers_option">
 
+
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@drawable/profile_screen_header">
+        android:background="@drawable/screen_header_rectangle">
 
         <TextView
+            style="@style/TextViews_Header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/back_btn"
-            android:fontFamily="@font/segoe_ui_bold"
             android:text="Offers"
-            android:textColor="#ffffff"
-            android:textSize="22sp" />
+            android:textColor="#ffffff" />
 
         <ImageButton
             android:id="@+id/back_btn"
@@ -41,11 +40,11 @@
     <LinearLayout
         android:id="@+id/search_view_bar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/header"
-        android:layout_centerVertical="true"
         android:layout_margin="10dp"
-        android:background="#F1F1F1"
+        android:background="@drawable/search_view_style"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
         android:orientation="horizontal">
 
         <EditText
@@ -56,7 +55,7 @@
             android:layout_weight="8"
             android:background="@drawable/search_view_style"
             android:fontFamily="@font/segoe_ui"
-            android:hint="Search here..."
+            android:hint="@string/search_here"
             android:inputType="text"
             android:maxLines="1"
             android:textColor="#707070" />
@@ -67,11 +66,12 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:background="#00FFFFFF"
-            android:backgroundTint="@color/textBlue"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:padding="15dp"
             android:src="@drawable/search" />
 
     </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/offers"

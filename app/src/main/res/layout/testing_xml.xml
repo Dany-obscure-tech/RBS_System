@@ -1,138 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/shop_items_cardView"
-        style="@style/CardView_style"
+        android:id="@+id/searchForItem_cardView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
 
-            <ImageView
-                android:id="@+id/stockImage_imageView"
-                style="@style/Search_views_Image_views"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/laptop" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/stockImage_imageView">
-
-                <LinearLayout
-                    android:id="@+id/offers_area"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:gravity="end"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/edit_stock_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/edit"
-                        android:backgroundTint="@color/textGrey"
-
-                        />
-
-                </LinearLayout>
-
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <TextView
-                    android:id="@+id/stockName_textView"
-                    style="@style/TextViews_Bold_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="Dress Shirts"
-                    android:textColor="@color/gradientDarkBlue" />
-
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="5dp"
+                    android:text="Invoice.NO" />
 
                 <TextView
-                    android:id="@+id/stockCategory_textView"
-                    style="@style/TextViews_Regular_small"
+                    android:id="@+id/order_no_vendor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/stockName_textView"
-                    android:layout_marginTop="10dp"
-                    android:text="Category"
-                    android:textColor="@color/textGreen" />
+                    android:layout_gravity="center"
+                    android:text="00012333" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1.7"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/shop_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/profile_screen_header"
+                    android:padding="8dp"
+                    android:text="ITech Computers"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
 
                 <LinearLayout
-                    android:id="@+id/customerID_linearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/stockCategory_textView"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
+                    android:orientation="horizontal"
                     android:weightSum="2">
 
-                    <LinearLayout
-                        android:layout_weight="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/currency_textView"
-                            style="@style/TextViews_Regular_big"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$"
-                            android:textColor="@color/textGreen" />
-
-                        <TextView
-                            android:id="@+id/stockPrice_textView"
-                            style="@style/TextViews_Regular_big"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="5dp"
-                            android:text="5000"
-                            android:textColor="@color/textGreen" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_weight="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
                     <TextView
-                        style="@style/TextViews_Regular_big"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
-                        android:text=" Qty : "
-                        android:textColor="@color/textGrey" />
 
-                    <TextView
-                        style="@style/TextViews_Regular_big"
-                        android:id="@+id/stockQuantity_textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="Date"
                         android:textColor="@color/textGrey"
-                        android:text="100" />
-                    </LinearLayout>
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="10000"
+                        android:textColor="@color/textGreen"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
 
-            </RelativeLayout>
+            </LinearLayout>
 
-        </RelativeLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="2dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Amount"
+                    android:textColor="@color/textBlue" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/balance_currency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$"
+                        android:textColor="@color/textGreen"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/totalBalance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10000"
+                        android:textColor="@color/textGreen"
+                        android:textSize="18sp" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Status"
+                    android:textColor="@color/textBlue" />
+
+                <TextView
+                    android:id="@+id/vendor_order_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pending"
+                    android:textColor="@color/textGreen"
+                    android:textSize="18sp" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

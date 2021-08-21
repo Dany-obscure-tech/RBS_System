@@ -51,7 +51,7 @@ public class RBS_mainscreen extends AppCompatActivity {
 
     NavigationView nv;
     ImageView shopLogo_imageView;
-    TextView shopName_textView,shopEmail_textView;
+    TextView shopName_textView, shopEmail_textView;
 
     private DrawerLayout vendor_drawer_layout;
     private ActionBarDrawerToggle t;
@@ -69,7 +69,7 @@ public class RBS_mainscreen extends AppCompatActivity {
     }
 
     private void Initialize() {
-        reference = FirebaseDatabase.getInstance().getReference("Users_data/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Shopkeeper_details");
+        reference = FirebaseDatabase.getInstance().getReference("Users_data/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/Shopkeeper_details");
         storageReference = FirebaseStorage.getInstance().getReference().child("Users_data");
 
         actionBar = this.getSupportActionBar();
@@ -88,15 +88,15 @@ public class RBS_mainscreen extends AppCompatActivity {
 
         confirmation_alert = new Dialog(this);
         confirmation_alert.setContentView(R.layout.exit_confirmation_alert);
-        yes_btn_textview = (TextView) confirmation_alert.findViewById(R.id.yes_btn_textview);
-        cancel_btn_textview = (TextView) confirmation_alert.findViewById(R.id.cancel_btn_textview);
+        yes_btn_textview = confirmation_alert.findViewById(R.id.yes_btn_textview);
+        cancel_btn_textview = confirmation_alert.findViewById(R.id.cancel_btn_textview);
 
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setCustomView(actionBarTitle);
 
         ActionBarTitle.getInstance().setTextView(actionBarTitle);
 
-        vendor_drawer_layout = (DrawerLayout) findViewById(R.id.rbs_drawer_layout);
+        vendor_drawer_layout = findViewById(R.id.rbs_drawer_layout);
 
         t = new ActionBarDrawerToggle(this, vendor_drawer_layout, R.string.Open, R.string.Close);
 
@@ -106,7 +106,7 @@ public class RBS_mainscreen extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        nv = (NavigationView) findViewById(R.id.nv);
+        nv = findViewById(R.id.nv);
         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, rbs_home).commit();
         nv.getMenu().findItem(R.id.nav_home).setChecked(true);
 
@@ -131,7 +131,7 @@ public class RBS_mainscreen extends AppCompatActivity {
                         break;
 
                     case R.id.nav_settings:
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, rbs_setting,"RBS Settings").commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, rbs_setting, "RBS Settings").commit();
                         closeDrawer();
                         break;
 
@@ -150,14 +150,14 @@ public class RBS_mainscreen extends AppCompatActivity {
             }
         });
 
-        View navheader =  nv.getHeaderView(0);
-        shopLogo_imageView = (ImageView)navheader.findViewById(R.id.shopLogo_imageView);
+        View navheader = nv.getHeaderView(0);
+        shopLogo_imageView = navheader.findViewById(R.id.shopLogo_imageView);
         Picasso.get().load(UserDetails.getInstance().getShopLogo()).into(shopLogo_imageView);
 
-        shopName_textView = (TextView) navheader.findViewById(R.id.shopName_textView);
+        shopName_textView = navheader.findViewById(R.id.shopName_textView);
         shopName_textView.setText(UserDetails.getInstance().getShopName());
 
-        shopEmail_textView = (TextView) navheader.findViewById(R.id.shopEmail_textView);
+        shopEmail_textView = navheader.findViewById(R.id.shopEmail_textView);
         shopEmail_textView.setText(UserDetails.getInstance().getShopEmail());
 
 
@@ -201,11 +201,10 @@ public class RBS_mainscreen extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            switch (event.getAction()) {
-                case KeyEvent.ACTION_DOWN:
-                    confirmation_alert.show();
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                confirmation_alert.show();
 
-                    return true;
+                return true;
             }
         }
         return false;
@@ -214,8 +213,8 @@ public class RBS_mainscreen extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==RESULT_OK){
-            if (requestCode==LOGO_READ_REQUEST_CODE){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == LOGO_READ_REQUEST_CODE) {
                 storageReference.child("shopkeeper_logos").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("logo").putFile(data.getData()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -238,7 +237,7 @@ public class RBS_mainscreen extends AppCompatActivity {
                     }
                 });
 
-            }else if (requestCode==BANNER_READ_REQUEST_CODE){
+            } else if (requestCode == BANNER_READ_REQUEST_CODE) {
                 storageReference.child("shopkeeper_banner").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("banner").putFile(data.getData()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Edit Item Details"
+            android:text="Edit Details"
             android:textColor="#ffffff" />
 
     </RelativeLayout>
@@ -36,141 +36,107 @@
             android:orientation="vertical">
 
             <TextView
-                style="@style/TextViews_Bold_small"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Post Code"
-                android:textColor="@color/textGrey" />
+                android:text="Post Code" />
 
             <EditText
                 android:id="@+id/edit_pastcode_editText"
-                style="@style/TextViews_Regular_small"
+                style="@style/EditTexts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/address_textview"
-                android:layout_marginTop="5dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:hint="Enter passcode"
-                android:textColor="@color/textGrey" />
+                android:hint="Enter passcode" />
 
 
             <TextView
-                style="@style/TextViews_Bold_small"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Address"
-                android:textColor="@color/textGrey" />
+                android:text="Address" />
 
             <EditText
                 android:id="@+id/edit_address_editText"
-                style="@style/TextViews_Regular_small"
+                style="@style/EditTexts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/address_textview"
-                android:layout_marginTop="5dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:hint="Enter address"
-                android:textColor="@color/textGrey" />
+                android:hint="Enter address" />
 
             <TextView
-                style="@style/TextViews_Bold_small"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Phone number"
-
-                android:textColor="@color/textGrey" />
+                android:text="Phone number" />
 
             <EditText
                 android:id="@+id/edit_phone_number_editText"
-                style="@style/TextViews_Regular_small"
+                style="@style/EditTexts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/address_textview"
-                android:layout_marginTop="5dp"
-                android:backgroundTint="@color/colorPrimary"
                 android:hint="Enter phone number"
-                android:inputType="number"
-                android:textColor="@color/textGrey" />
+                android:inputType="number" />
 
             <TextView
-                style="@style/TextViews_Bold_small"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Mobile number"
-                android:textColor="@color/textGrey" />
+                android:text="Mobile number" />
 
             <EditText
                 android:id="@+id/edit_mobile_number_editText"
-                style="@style/TextViews_Regular_small"
+                style="@style/EditTexts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/address_textview"
-                android:layout_marginTop="5dp"
-                android:backgroundTint="@color/colorPrimary"
                 android:hint="Enter mobile number"
-                android:inputType="number"
-                android:textColor="@color/textGrey" />
+                android:inputType="number" />
 
             <TextView
-                style="@style/TextViews_Bold_small"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Email"
-                android:textColor="@color/textGrey" />
+                android:text="Email" />
 
             <EditText
                 android:id="@+id/edit_email_address_editText"
-                style="@style/TextViews_Regular_small"
+                style="@style/EditTexts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/address_textview"
-                android:layout_marginTop="5dp"
-                android:backgroundTint="@color/colorPrimary"
                 android:hint="Enter email address"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/textGrey" />
+                android:inputType="textEmailAddress" />
 
             <TextView
-                style="@style/TextViews_Bold_small"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="URL"
-                android:textColor="@color/textGrey" />
+                android:text="URL" />
 
             <EditText
                 android:id="@+id/edit_url_address_editText"
-                style="@style/TextViews_Regular_small"
+                style="@style/EditTexts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/address_textview"
-                android:layout_marginTop="5dp"
-                android:backgroundTint="@color/colorPrimary"
                 android:hint="Enter website URL"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/textGrey" />
-
+                android:inputType="textEmailAddress" />
 
             <TextView
                 android:id="@+id/change_passcode_btn"
-                style="@style/blue_btn"
+                style="@style/green_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/profile_screen_header"
                 android:text="Change Passcode" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -178,20 +144,22 @@
 
                 <TextView
                     android:id="@+id/edit_vendor_details_save_btn"
+                    style="@style/green_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:text="Save"
+                    android:text="@string/save_btn_string"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/edit_vendor_details_cancel_btn"
+                    style="@style/gray_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
-                    android:text="Cancel" />
+                    android:text="@string/cancel_string" />
 
 
             </LinearLayout>

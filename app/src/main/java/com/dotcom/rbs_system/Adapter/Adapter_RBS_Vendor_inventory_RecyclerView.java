@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.Classes.Currency;
-import com.dotcom.rbs_system.Classes.RBSVendorSelectedStock;
 import com.dotcom.rbs_system.R;
 import com.squareup.picasso.Picasso;
 
@@ -63,14 +62,14 @@ public class Adapter_RBS_Vendor_inventory_RecyclerView extends RecyclerView.Adap
         holder.vendor_stock_selection_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (compoundButton.isChecked()){
+                if (compoundButton.isChecked()) {
                     vendor_stock_selection_checkbox.add(position);
                     Toast.makeText(context, String.valueOf(vendor_stock_selection_checkbox.size()), Toast.LENGTH_SHORT).show();
                 }
-                if (!compoundButton.isChecked()){
+                if (!compoundButton.isChecked()) {
 
-                    for (int i = 0;i<vendor_stock_selection_checkbox.size();i++){
-                        if (vendor_stock_selection_checkbox.get(i)==position){
+                    for (int i = 0; i < vendor_stock_selection_checkbox.size(); i++) {
+                        if (vendor_stock_selection_checkbox.get(i) == position) {
                             vendor_stock_selection_checkbox.remove(i);
                         }
                     }
@@ -86,7 +85,7 @@ public class Adapter_RBS_Vendor_inventory_RecyclerView extends RecyclerView.Adap
         return vendor_stockName_textView.size();
     }
 
-    public List<Integer> getSelectedItemPositions(){
+    public List<Integer> getSelectedItemPositions() {
         return vendor_stock_selection_checkbox;
     }
 
@@ -105,6 +104,8 @@ public class Adapter_RBS_Vendor_inventory_RecyclerView extends RecyclerView.Adap
             vendor_stock_quantity_textView = (TextView) itemView.findViewById(R.id.vendor_stock_quantity_textView);
             vendor_stock_imageView = (ImageView) itemView.findViewById(R.id.vendor_stock_imageView);
             vendor_stock_selection_checkbox = (CheckBox) itemView.findViewById(R.id.vendor_stock_selection_checkbox);
+
+            //TODO is ma next activity ma data pass ho raha jub back awo wapis is activity pa aur again jawo to data double ho jata picli list clear nhi ho rahe
 
         }
     }

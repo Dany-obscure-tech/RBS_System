@@ -10,203 +10,188 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/registration_fields"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:padding="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/buy_local"
-            android:layout_above="@+id/registration_fields"
-            android:layout_centerHorizontal="true"
-            />
-
-        <EditText
-            android:id="@+id/editText_fullName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Full name"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/editText_contactNo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Enter contact no"
-            android:inputType="phone" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:text="DOB"
-            android:textSize="16sp" />
-
         <LinearLayout
-            android:weightSum="2"
-            android:orientation="horizontal"
+            android:id="@+id/registration_fields"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/buy_local" />
+
+            <EditText
+                android:id="@+id/editText_fullName"
+                style="@style/EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="Full name"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/editText_contactNo"
+                style="@style/EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="Enter contact no"
+                android:inputType="phone" />
 
             <TextView
-                android:id="@+id/date_of_birth_text"
-                android:layout_weight="1.9"
-                android:textColor="#9F9F9F"
-                android:fontFamily="@font/segoe_ui"
-                android:backgroundTint="#6E76E3"
-                android:textSize="16sp"
-                android:text="Select date"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <Button
-                android:textSize="15sp"
-                android:background="@drawable/main_button"
-                android:textColor="#0075B5"
-                android:id="@+id/date_textview"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="Date"
-                android:layout_weight="0.1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="DOB" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/date_of_birth_text"
+                    style="@style/TextViews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1.9"
+                    android:text="Select date" />
+
+                <TextView
+                    android:id="@+id/date_textview"
+                    style="@style/green_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:text="@string/date" />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/editText_email"
+                style="@style/EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="Enter email"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/editText_address"
+                style="@style/EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="Enter address" />
+
+            <EditText
+                android:id="@+id/editText_password"
+                style="@style/EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="Enter Password...."
+                android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/editText_confirmPassword"
+                style="@style/EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="Confirm Password"
+                android:inputType="textPassword" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+
+                <ImageView
+                    android:id="@+id/id_front"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1.9"
+                    android:adjustViewBounds="true" />
+
+                <TextView
+                    android:id="@+id/uploadId_profile_textview"
+                    style="@style/green_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:text="Upload Profile image " />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+
+                <ImageView
+                    android:id="@+id/id_imageView"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1.9"
+                    android:adjustViewBounds="true" />
+
+                <TextView
+                    android:id="@+id/uploadId_id_textview"
+                    style="@style/green_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:text="Upload ID image " />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/button_register_textview"
+                style="@style/blue_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Register" />
+
+            <TextView
+                android:id="@+id/button_google_textview"
+                style="@style/blue_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Continue With Google" />
+
+            <TextView
+                android:id="@+id/button_facebook_textview"
+                style="@style/blue_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Continue With Facebook" />
+
 
         </LinearLayout>
-
-        <EditText
-            android:id="@+id/editText_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Enter email"
-            android:inputType="textEmailAddress" />
-
-        <EditText
-            android:id="@+id/editText_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Enter address" />
-
-        <EditText
-            android:id="@+id/editText_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Enter Password...."
-            android:inputType="textPassword" />
-
-        <EditText
-            android:id="@+id/editText_confirmPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Confirm Password"
-            android:inputType="textPassword" />
-
-        <LinearLayout
-            android:layout_margin="10dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <ImageView
-                android:id="@+id/id_front"
-                android:layout_weight="1.9"
-                android:adjustViewBounds="true"
-                android:layout_width="80dp"
-                android:layout_height="80dp"/>
-
-            <Button
-                android:id="@+id/uploadId_profile_image"
-                android:textSize="15sp"
-                android:background="@drawable/main_button"
-                android:textColor="#0075B5"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="Upload Profile image "
-                android:padding="4dp"
-                android:layout_weight="0.1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_margin="10dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <ImageView
-                android:id="@+id/id_imageView"
-                android:layout_weight="1.9"
-                android:adjustViewBounds="true"
-                android:layout_width="80dp"
-                android:layout_height="80dp"/>
-
-            <Button
-                android:id="@+id/uploadId_id_image"
-                android:textSize="15sp"
-                android:background="@drawable/main_button"
-                android:textColor="#0075B5"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="Upload ID image "
-                android:padding="4dp"
-                android:layout_weight="0.1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <Button
-            android:layout_marginTop="20dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/profile_screen_header"
-            android:textColor="#ffff"
-            android:id="@+id/button_register"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="REGISTER" />
-
-        <Button
-            android:layout_marginTop="20dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/profile_screen_header"
-            android:textColor="#ffff"
-            android:id="@+id/button_google"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CONTINUE WITH GOOGLE" />
-
-        <Button
-            android:layout_marginTop="20dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/profile_screen_header"
-            android:textColor="#ffff"
-            android:id="@+id/button_facebook"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CONTINUE WITH FACEBOOK" />
-
-
-    </LinearLayout>
 
     </ScrollView>
 </RelativeLayout>

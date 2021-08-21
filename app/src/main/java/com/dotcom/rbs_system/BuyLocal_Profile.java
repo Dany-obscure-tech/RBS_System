@@ -1,12 +1,8 @@
 package com.dotcom.rbs_system;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -15,24 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.dotcom.rbs_system.Classes.Customer_history_class;
-import com.dotcom.rbs_system.Classes.RBSItemDetails;
-import com.dotcom.rbs_system.Classes.UniquePushID;
 import com.dotcom.rbs_system.Classes.UserDetails;
 import com.github.dhaval2404.imagepicker.ImagePicker;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -44,11 +26,9 @@ public class BuyLocal_Profile extends Fragment {
 
     RelativeLayout alert_background_relativelayout;
 
-    Uri fileUri;
+    TextView name, phno, email, address, creationDate_textView, edit_textView, edit_image_textView;
 
-    TextView name,phno,email,address,creationDate_textView,edit_textView,edit_image_textView;
-
-    ImageView profileImage_imageView,edit_image_image_view;
+    ImageView profileImage_imageView, edit_image_image_view;
 
     List<String> price, itemImage;
     List<String> offer_status;
@@ -92,30 +72,28 @@ public class BuyLocal_Profile extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_buylocal_profile, container, false);
 
-        profileImage_imageView=(ImageView)view.findViewById(R.id.profileImage_imageView);
-        edit_image_textView=(TextView) view.findViewById(R.id.edit_image_textView);
-        alert_background_relativelayout=(RelativeLayout) view.findViewById(R.id.alert_background_relativelayout);
-        edit_image_image_view=(ImageView)view.findViewById(R.id.edit_image_image_view);
-        name=(TextView)view.findViewById(R.id.name);
-        phno=(TextView)view.findViewById(R.id.phno);
-        address=(TextView)view.findViewById(R.id.address);
-        creationDate_textView=(TextView)view.findViewById(R.id.creationDate_textView);
-        email=(TextView)view.findViewById(R.id.email);
-        edit_textView=(TextView) view.findViewById(R.id.edit_textView);
-        price = new ArrayList<String>();
-        itemImage = new ArrayList<String>();
-        offer_status = new ArrayList<String>();
-        offer_product_price = new ArrayList<String>();
-        product_offer_msg = new ArrayList<String>();
+        profileImage_imageView = view.findViewById(R.id.profileImage_imageView);
+        edit_image_textView = view.findViewById(R.id.edit_image_textView);
+        alert_background_relativelayout = view.findViewById(R.id.alert_background_relativelayout);
+        edit_image_image_view = view.findViewById(R.id.edit_image_image_view);
+        name = view.findViewById(R.id.name);
+        phno = view.findViewById(R.id.phno);
+        address = view.findViewById(R.id.address);
+        creationDate_textView = view.findViewById(R.id.creationDate_textView);
+        email = view.findViewById(R.id.email);
+        edit_textView = view.findViewById(R.id.edit_textView);
+        price = new ArrayList<>();
+        itemImage = new ArrayList<>();
+        offer_status = new ArrayList<>();
+        offer_product_price = new ArrayList<>();
+        product_offer_msg = new ArrayList<>();
 
         edit_image_image_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+
             }
         });
-
-
 
 
         onclicklistners();
@@ -155,7 +133,7 @@ public class BuyLocal_Profile extends Fragment {
         });
     }
 
-    private void edit_image_textView_listener(){
+    private void edit_image_textView_listener() {
         edit_image_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,8 +151,8 @@ public class BuyLocal_Profile extends Fragment {
         edit_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),BuyLocal_profile_edit.class);
-                startActivityForResult(intent,2);
+                Intent intent = new Intent(getActivity(), BuyLocal_profile_edit.class);
+                startActivityForResult(intent, 2);
             }
         });
     }
@@ -187,7 +165,7 @@ public class BuyLocal_Profile extends Fragment {
         email.setText(UserDetails.getInstance().getEmail());
 
         SimpleDateFormat sfd = new SimpleDateFormat("dd-MMMM-yyyy ");
-        creationDate_textView.setText(String.valueOf(sfd.format(new Date(FirebaseAuth.getInstance().getCurrentUser().getMetadata().getCreationTimestamp()))));
+        creationDate_textView.setText(sfd.format(new Date(FirebaseAuth.getInstance().getCurrentUser().getMetadata().getCreationTimestamp())));
 
         Picasso.get().load(UserDetails.getInstance().getProfileImageUrl()).into(profileImage_imageView);
         Picasso.get().load(UserDetails.getInstance().getProfileImageUrl()).into(edit_image_image_view);

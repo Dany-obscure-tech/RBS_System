@@ -6,151 +6,167 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/searchForItem_cardView"
+        style="@style/CardView_style"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ripple_effect_cardview"
-        app:cardBackgroundColor="@color/colorWhite"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="4dp"
-        app:cardUseCompatPadding="true">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:orientation="vertical">
 
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.5"
-                android:orientation="vertical"
-                android:padding="5dp">
+                android:orientation="horizontal"
+                android:weightSum="3">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginVertical="5dp"
-                    android:text="Invoice.NO" />
 
-                <TextView
-                    android:id="@+id/order_no_vendor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="00012333" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1.7"
-                android:orientation="vertical"
-                android:padding="5dp">
-
-                <TextView
-                    android:id="@+id/shop_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="ITech Computers"
-                    android:padding="8dp"
-                    android:textColor="#ffffff"
-                    android:background="@drawable/profile_screen_header"
-                    android:textSize="20sp" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profileImage_imageView"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/laptop"
+                    app:civ_border_color="#4A4A4A"
+                    app:civ_border_width="7dp" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/left_linearlayout"
+                    android:layout_width="170dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/profileImage_imageView"
+                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/shop_name"
+                        style="@style/TextViews_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="ITech Computers"
+                        android:textColor="@color/textBlue" />
 
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="1"
-                        android:gravity="left"
-                        android:text="Date"
-                        android:textColor="@color/textGrey"
-                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/date"
+                        style="@style/TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="1"
-                        android:gravity="left"
-                        android:text="10000"
-                        android:textColor="@color/textGreen"
-                        android:textSize="18sp" />
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="8dp"
+                        android:text="22/09/2021" />
+
 
                 </LinearLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="2dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Balance"
-                    android:textColor="@color/textBlue" />
 
                 <LinearLayout
+                    android:id="@+id/invoice_linearlayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/left_linearlayout"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/balance_currency"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="$"
-                        android:textColor="@color/textGreen"
-                        android:textSize="18sp" />
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/totalBalance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="10000"
-                        android:textColor="@color/textGreen"
-                        android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/invoice_title"
+                            style="@style/TextViews_Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:text="Invoice" />
+
+                        <TextView
+                            android:id="@+id/order_no_vendor"
+                            style="@style/TextViews"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/invoice_title"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="5dp"
+                            android:text="124535"
+                            android:textColor="@color/textBlue" />
+
+                    </RelativeLayout>
 
 
                 </LinearLayout>
 
-                <TextView
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Status"
-                    android:textColor="@color/textBlue" />
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViews_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Total Amount :" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/balance_currency"
+                            style="@style/TextViews_Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="$"
+                            android:textColor="@color/textGreen" />
+
+                        <TextView
+                            android:id="@+id/totalBalance"
+                            style="@style/TextViews_Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:gravity="center"
+                            android:text="@string/Fake_rupees"
+                            android:textColor="@color/textGreen" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/vendor_order_status"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_vertical"
                     android:text="Pending"
-                    android:textColor="@color/textGreen"
-                    android:textSize="18sp" />
+                    android:textColor="@color/textGreen" />
 
-
-            </LinearLayout>
-
+            </RelativeLayout>
 
         </LinearLayout>
+
 
     </androidx.cardview.widget.CardView>
 

@@ -46,20 +46,18 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             <LinearLayout
                 android:id="@+id/products_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/TextViews_Bold_big"
+                    style="@style/TextViews_Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_gravity="center"
                     android:text="Shop Inventory"
                     android:textColor="@color/textGrey" />
 
@@ -67,7 +65,7 @@
                     android:id="@+id/vendor_inventory_RecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/products_textview"
+                    android:layout_marginTop="10dp"
                     android:orientation="vertical"
                     android:paddingBottom="40dp" />
 
@@ -82,10 +80,9 @@
         style="@style/blue_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
-        android:background="@drawable/profile_screen_header"
         android:text="Add" />
 
 </RelativeLayout>

@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -35,7 +34,7 @@ public class AdapterCategoryRecyclerView extends RecyclerView.Adapter<AdapterCat
 
         View v;
         v = LayoutInflater.from(context).inflate(R.layout.recyclerview_category_items, parent, false);
-        AdapterCategoryRecyclerView.MyViewHolder myViewHolder = new AdapterCategoryRecyclerView.MyViewHolder(v);
+        AdapterCategoryRecyclerView.MyViewHolder myViewHolder = new MyViewHolder(v);
         return myViewHolder;
     }
 
@@ -46,7 +45,7 @@ public class AdapterCategoryRecyclerView extends RecyclerView.Adapter<AdapterCat
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, Buylocal_category_products.class);
-                intent.putExtra("CATEGORY_NAME",category_name.get(position));
+                intent.putExtra("CATEGORY_NAME", category_name.get(position));
                 context.startActivity(intent);
             }
         });
@@ -57,7 +56,7 @@ public class AdapterCategoryRecyclerView extends RecyclerView.Adapter<AdapterCat
         return category_name.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         ImageButton category_item_Icon;
         TextView category_Item_Textview;
@@ -68,8 +67,6 @@ public class AdapterCategoryRecyclerView extends RecyclerView.Adapter<AdapterCat
             category_item_Icon = (ImageButton) itemView.findViewById(R.id.category_item_Icon);
             category_Item_Textview = (TextView) itemView.findViewById(R.id.category_Item_Textview);
             button = (CardView) itemView.findViewById(R.id.button);
-
-
 
 
         }

@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,8 +63,6 @@ public class RBS_setting extends Fragment {
     private static final int LOGO_READ_REQUEST_CODE = 42;
     private static final int BANNER_READ_REQUEST_CODE = 43;
 
-    LinearLayout logoButtons_linearLayout, bannerButtons_linearLayout;
-
     RelativeLayout banner_background_relativelayout, logo_background_relativelayout;
 
     ImageView logo_imageView, banner_imageView, banner_image_view, logo_image_view;
@@ -86,8 +83,8 @@ public class RBS_setting extends Fragment {
 
     List<String> faultNameList, faultPriceList, faultKeyIDList;
 
-    TextView shop_name_textView,shop_email_textView, shop_phno_textView, shop_address_textView;
-    TextView rbsMessage_textView, conditions_textView;
+    TextView shop_name_textView, shop_email_textView, shop_phno_textView, shop_address_textView;
+    TextView rbsMessage_textView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -149,31 +146,31 @@ public class RBS_setting extends Fragment {
     private void initialize() {
         storageReference = FirebaseStorage.getInstance().getReference();
         reference = FirebaseDatabase.getInstance().getReference();
-        shopKeeperDataRef = FirebaseDatabase.getInstance().getReference("Users_data/" + FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Shopkeeper_details");
-        faultListRef = FirebaseDatabase.getInstance().getReference("Listed_faults/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        shopKeeperDataRef = FirebaseDatabase.getInstance().getReference("Users_data/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/Shopkeeper_details");
+        faultListRef = FirebaseDatabase.getInstance().getReference("Listed_faults/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
         rbsMessageRef = FirebaseDatabase.getInstance().getReference("Admin");
 
 
-        banner_background_relativelayout = (RelativeLayout) view.findViewById(R.id.banner_background_relativelayout);
-        logo_background_relativelayout = (RelativeLayout) view.findViewById(R.id.logo_background_relativelayout);
+        banner_background_relativelayout = view.findViewById(R.id.banner_background_relativelayout);
+        logo_background_relativelayout = view.findViewById(R.id.logo_background_relativelayout);
 
-        logo_imageView = (ImageView) view.findViewById(R.id.logo_imageView);
-        banner_imageView = (ImageView) view.findViewById(R.id.banner_imageView);
-        banner_image_view = (ImageView) view.findViewById(R.id.banner_image_view);
-        logo_image_view = (ImageView) view.findViewById(R.id.logo_image_view);
+        logo_imageView = view.findViewById(R.id.logo_imageView);
+        banner_imageView = view.findViewById(R.id.banner_imageView);
+        banner_image_view = view.findViewById(R.id.banner_image_view);
+        logo_image_view = view.findViewById(R.id.logo_image_view);
 
-        add_faults_textview = (TextView) view.findViewById(R.id.add_faults_textview);
-        edit_logo_image_textView = (TextView) view.findViewById(R.id.edit_logo_image_textView);
-        edit_banner_textview = (TextView) view.findViewById(R.id.edit_banner_textview);
-        printer_setting_textview = (TextView) view.findViewById(R.id.printer_setting_textview);
-        terms_conditions_textview = (TextView) view.findViewById(R.id.terms_conditions_textview);
+        add_faults_textview = view.findViewById(R.id.add_faults_textview);
+        edit_logo_image_textView = view.findViewById(R.id.edit_logo_image_textView);
+        edit_banner_textview = view.findViewById(R.id.edit_banner_textview);
+        printer_setting_textview = view.findViewById(R.id.printer_setting_textview);
+        terms_conditions_textview = view.findViewById(R.id.terms_conditions_textview);
 
 
         faultNameList = new ArrayList<>();
         faultPriceList = new ArrayList<>();
         faultKeyIDList = new ArrayList<>();
 
-        faultList_recyclerView = (RecyclerView) view.findViewById(R.id.faultList_recyclerView);
+        faultList_recyclerView = view.findViewById(R.id.faultList_recyclerView);
 
         addFaultDialog = new Dialog(getActivity());
         edit_printer_settings_Dialog = new Dialog(getActivity());
@@ -183,7 +180,7 @@ public class RBS_setting extends Fragment {
         editTermsConditionsDialog.setContentView(R.layout.edit_terms_conditions_alert);
         alertFaultName_editText = addFaultDialog.findViewById(R.id.alertFaultName_editText);
         alertFaultPrice_editText = addFaultDialog.findViewById(R.id.alertFaultPrice_editText);
-        port_number_edittext = (EditText) view.findViewById(R.id.port_number_edittext);
+        port_number_edittext = view.findViewById(R.id.port_number_edittext);
         addFaultsave_textview = addFaultDialog.findViewById(R.id.addFaultsave_textview);
         addFaultsCancel_textview = addFaultDialog.findViewById(R.id.addFaultsCancel_textview);
         port_number_edittext = edit_printer_settings_Dialog.findViewById(R.id.port_number_edittext);
@@ -193,9 +190,9 @@ public class RBS_setting extends Fragment {
         cancel_printer_settings_textview = edit_printer_settings_Dialog.findViewById(R.id.cancel_printer_settings_textview);
         cancel_terms_conditions_textview = editTermsConditionsDialog.findViewById(R.id.cancel_terms_conditions_textview);
         save_terms_conditions_textview = editTermsConditionsDialog.findViewById(R.id.save_terms_conditions_textview);
-        port_number_textview = (TextView) view.findViewById(R.id.port_number_textview);
-        ip_address_textview = (TextView) view.findViewById(R.id.ip_address_textview);
-        edit_terms_conditions_textview = (TextView) view.findViewById(R.id.edit_terms_conditions_textview);
+        port_number_textview = view.findViewById(R.id.port_number_textview);
+        ip_address_textview = view.findViewById(R.id.ip_address_textview);
+        edit_terms_conditions_textview = view.findViewById(R.id.edit_terms_conditions_textview);
 
         SharedPreferences preferences = getActivity().getSharedPreferences(RBS_setting.PRINTER_SETTINGS, MODE_PRIVATE);
         port_value = preferences.getString(RBS_setting.Printer_Port_Number, "");
@@ -207,10 +204,10 @@ public class RBS_setting extends Fragment {
 
         editProfileDialog = new Dialog(getActivity());
 
-        shop_name_textView = (TextView) view.findViewById(R.id.shop_name_textView);
-        shop_email_textView = (TextView) view.findViewById(R.id.shop_email_textView);
-        shop_phno_textView = (TextView) view.findViewById(R.id.shop_phno_textView);
-        shop_address_textView = (TextView) view.findViewById(R.id.shop_address_textView);
+        shop_name_textView = view.findViewById(R.id.shop_name_textView);
+        shop_email_textView = view.findViewById(R.id.shop_email_textView);
+        shop_phno_textView = view.findViewById(R.id.shop_phno_textView);
+        shop_address_textView = view.findViewById(R.id.shop_address_textView);
 
 
     }
@@ -259,15 +256,15 @@ public class RBS_setting extends Fragment {
         faultListRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        faultNameList.add(String.valueOf(dataSnapshot1.child("Fault_name").getValue()));
-                        faultPriceList.add(String.valueOf(dataSnapshot1.child("Fault_price").getValue()));
-                        faultKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
-                    }
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    faultNameList.add(String.valueOf(dataSnapshot1.child("Fault_name").getValue()));
+                    faultPriceList.add(String.valueOf(dataSnapshot1.child("Fault_price").getValue()));
+                    faultKeyIDList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
+                }
 
-                    adapterSettingsFaultListRecyclerView = new AdapterSettingsFaultListRecyclerView(getActivity(), faultNameList, faultPriceList, faultKeyIDList);
-                    faultList_recyclerView.setAdapter(adapterSettingsFaultListRecyclerView);
-                    faultList_recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+                adapterSettingsFaultListRecyclerView = new AdapterSettingsFaultListRecyclerView(getActivity(), faultNameList, faultPriceList, faultKeyIDList);
+                faultList_recyclerView.setAdapter(adapterSettingsFaultListRecyclerView);
+                faultList_recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
             }
 
             @Override
@@ -405,7 +402,7 @@ public class RBS_setting extends Fragment {
         addFaultsave_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validateAlertAddFault() == true) {
+                if (validateAlertAddFault()) {
                     detailsSubmitAlertAddFault();
                 }
 
@@ -447,9 +444,9 @@ public class RBS_setting extends Fragment {
     }
 
     private void updateTermsAndConditions() {
-        if (terms_conditions_textview.getText().toString().equals(term_conditions_edittext.getText().toString())){
+        if (terms_conditions_textview.getText().toString().equals(term_conditions_edittext.getText().toString())) {
             term_conditions_edittext.setError("Edit to save!");
-        }else {
+        } else {
             shopKeeperDataRef.child("shop_termsandconditions").setValue(term_conditions_edittext.getText().toString());
             UserDetails.getInstance().setShopTermsAndConditions(term_conditions_edittext.getText().toString());
             terms_conditions_textview.setText(term_conditions_edittext.getText().toString());
@@ -459,7 +456,7 @@ public class RBS_setting extends Fragment {
     }
 
     private boolean validateAlertAddFault() {
-        Boolean valid = true;
+        boolean valid = true;
 
         if (alertFaultName_editText.getText().toString().isEmpty()) {
             alertFaultName_editText.setError("enter fault name");
@@ -478,7 +475,7 @@ public class RBS_setting extends Fragment {
 
         faultListRef.child(key).child("Fault_name").setValue(alertFaultName_editText.getText().toString());
         faultListRef.child(key).child("Fault_price").setValue(alertFaultPrice_editText.getText().toString());
-        faultListRef.child(key).child("added_by").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+        faultListRef.child(key).child("added_by").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
         faultListRef.child(key).child("key_id").setValue(key);
 
         faultNameList.add(alertFaultName_editText.getText().toString());
@@ -489,11 +486,12 @@ public class RBS_setting extends Fragment {
         addFaultDialog.dismiss();
     }
 
-    private void refreshFragment(){
+    //TODO refresshFragment use nhi howa
+    private void refreshFragment() {
         // Reload current fragment
         Fragment frg = null;
-        frg = getParentFragmentManager ().findFragmentByTag("RBS Settings");
-        final FragmentTransaction ft = getParentFragmentManager ().beginTransaction();
+        frg = getParentFragmentManager().findFragmentByTag("RBS Settings");
+        final FragmentTransaction ft = getParentFragmentManager().beginTransaction();
         ft.detach(frg);
         ft.attach(frg);
         ft.commit();

@@ -10,25 +10,24 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@drawable/profile_screen_header">
+        android:background="@drawable/screen_header_rectangle">
 
         <TextView
+            style="@style/TextViews_Header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/Back_btn"
             android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/back_btn"
             android:text="Repair Ticket"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:textColor="#ffffff"
-            android:textSize="22sp"/>
+            android:textColor="#ffffff" />
 
         <ImageButton
-            android:id="@+id/Back_btn"
-            android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
+            android:id="@+id/back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:adjustViewBounds="true"
             android:background="#00000000"
@@ -39,9 +38,9 @@
     </RelativeLayout>
 
     <ScrollView
-        android:layout_below="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,13 +50,14 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:orientation="horizontal"
-                android:weightSum="2"
-                android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <TextView
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -65,21 +65,21 @@
 
                 <TextView
                     android:id="@+id/repairTicketAdd_textView"
-                    android:layout_weight="1"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:text="Add Ticket +"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/gradientDarkBlue"
-                    android:textSize="18sp" />
+                    android:textColor="@color/gradientDarkBlue" />
 
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/searchForTicket_cardview"
+                style="@style/CardView_style"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/CardView_style">
+                android:layout_height="wrap_content">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -90,12 +90,14 @@
                         android:layout_height="wrap_content">
 
                         <TextView
+                            android:id="@+id/customerName_textView"
+                            style="@style/TextViews_Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/customerName_textView"
-                            android:text="Search for ticket..."
-                            android:textColor="@color/textGrey"
-                            android:layout_margin="5dp"/>
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="Search for ticket..." />
 
 
                     </RelativeLayout>
@@ -105,16 +107,17 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:layout_marginTop="30dp"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="Ticket List" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/repairTicketList_recyclerView"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"/>
+                android:layout_height="fill_parent"
+                android:layout_marginTop="10dp" />
 
         </LinearLayout>
 

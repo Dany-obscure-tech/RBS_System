@@ -1,6 +1,5 @@
 package com.dotcom.rbs_system.Adapter;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -63,7 +61,7 @@ public class Adapter_itemList_alert_dialog extends RecyclerView.Adapter<Adapter_
     @NonNull
     @Override
     public Adapter_itemList_alert_dialog.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new Adapter_itemList_alert_dialog.ViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_itemlist_alert_item, parent, false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_itemlist_alert_item, parent, false));
     }
 
     @Override
@@ -149,7 +147,7 @@ public class Adapter_itemList_alert_dialog extends RecyclerView.Adapter<Adapter_
         return exisitngItemsNamesList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView itemName_textView, itemSerialNo_textView, itemPrice_textView, itemLastActive_textView, itemPriceCurrency_textView;
         ImageView itemImage_imageView;
         CardView searchForItem_cardView;

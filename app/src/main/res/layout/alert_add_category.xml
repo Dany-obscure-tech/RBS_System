@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="10dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/title"
-        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/segoe_ui_bold"
         android:text="Add Category"
@@ -17,10 +16,10 @@
 
     <LinearLayout
         android:id="@+id/midLayout"
-        android:layout_below="@+id/title"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -45,36 +44,36 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_below="@+id/midLayout"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/midLayout"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/alertAddCategoryEnter_btn"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
-            android:textColor = "@color/textBlue"
+            android:layout_weight="1"
             android:background="@drawable/main_button"
             android:fontFamily="@font/segoe_ui"
-            android:textSize="15sp"
             android:text="Enter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:textColor="@color/textBlue"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/alertAddCategoryCancel_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:fontFamily="@font/segoe_ui"
-            android:textColor = "@color/textGrey"
             android:background="@drawable/main_button_grey"
-            android:textSize="15sp"
+            android:fontFamily="@font/segoe_ui"
             android:text="Cancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:textColor="@color/textGrey"
+            android:textSize="15sp" />
 
     </LinearLayout>
 

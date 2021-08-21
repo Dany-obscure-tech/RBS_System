@@ -29,6 +29,7 @@
         <item name="android:textColor">#ffff</item>
         <item name="android:background">@drawable/profile_screen_header</item>
         <item name="android:textAlignment">center</item>
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
     </style>
 
 
@@ -42,6 +43,7 @@
         <item name="android:textColor">#ffff</item>
         <item name="android:background">@drawable/buylocal_green_button</item>
         <item name="android:textAlignment">center</item>
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
     </style>
 
 
@@ -55,6 +57,7 @@
         <item name="android:textColor">#ffff</item>
         <item name="android:background">@drawable/gray_button_rectangle</item>
         <item name="android:textAlignment">center</item>
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
     </style>
 
     <style name="red_btn">
@@ -107,6 +110,7 @@
     <style name="TextViews_Bold">
         <item name="android:textSize">@dimen/Bold_Small</item>
         <item name="android:fontFamily">@font/segoe_ui_bold</item>
+        <item name="android:textColor">@color/textGrey</item>
     </style>
 
     <style name="TextViews">

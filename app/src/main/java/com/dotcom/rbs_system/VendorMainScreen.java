@@ -38,14 +38,11 @@ import com.google.firebase.storage.UploadTask;
 
 public class VendorMainScreen extends AppCompatActivity {
 
-    private long lastPressedTime;
     ActionBar actionBar;
     TextView actionBarTitle;
 
     Dialog confirmation_alert;
     TextView yes_btn_textview, cancel_btn_textview;
-
-    private static final int PERIOD = 2000;
 
     private DrawerLayout vendor_drawer_layout;
     private ActionBarDrawerToggle t;
@@ -84,12 +81,12 @@ public class VendorMainScreen extends AppCompatActivity {
         vendorStockRef = FirebaseDatabase.getInstance().getReference("Vendor_stock/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
         vendorStockImageReference = FirebaseStorage.getInstance().getReference().child("Vendor_Stock_Images/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-        vendor_drawer_layout = (DrawerLayout) findViewById(R.id.vendor_drawer_layout);
+        vendor_drawer_layout = findViewById(R.id.vendor_drawer_layout);
 
         confirmation_alert = new Dialog(this);
         confirmation_alert.setContentView(R.layout.exit_confirmation_alert);
-        yes_btn_textview = (TextView) confirmation_alert.findViewById(R.id.yes_btn_textview);
-        cancel_btn_textview = (TextView) confirmation_alert.findViewById(R.id.cancel_btn_textview);
+        yes_btn_textview = confirmation_alert.findViewById(R.id.yes_btn_textview);
+        cancel_btn_textview = confirmation_alert.findViewById(R.id.cancel_btn_textview);
 
 
         t = new ActionBarDrawerToggle(this, vendor_drawer_layout, R.string.Open, R.string.Close);
@@ -100,7 +97,7 @@ public class VendorMainScreen extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        nv = (NavigationView) findViewById(R.id.nv);
+        nv = findViewById(R.id.nv);
 
         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, fragment_vendor_home).commit();
         nv.setCheckedItem(R.id.nav_shop);
@@ -230,6 +227,7 @@ public class VendorMainScreen extends AppCompatActivity {
             //You can also get File Path from intent
 //                    val filePath:String = ImagePicker.getFilePath(data)!!
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            //TODO yaha pa kuch commented ha
 //            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
         } else if (resultCode == 111) {
             recreate();
@@ -239,11 +237,10 @@ public class VendorMainScreen extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            switch (event.getAction()) {
-                case KeyEvent.ACTION_DOWN:
-                    confirmation_alert.show();
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                confirmation_alert.show();
 
-                    return true;
+                return true;
             }
         }
         return false;

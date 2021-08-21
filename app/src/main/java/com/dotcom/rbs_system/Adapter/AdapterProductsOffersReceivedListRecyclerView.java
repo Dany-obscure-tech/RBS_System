@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,9 +19,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class AdapterProductsOffersReceivedListRecyclerView extends  RecyclerView.Adapter<AdapterProductsOffersReceivedListRecyclerView.MyViewHolder> {
+public class AdapterProductsOffersReceivedListRecyclerView extends RecyclerView.Adapter<AdapterProductsOffersReceivedListRecyclerView.MyViewHolder> {
 
-    DatabaseReference offerlistRef,customerOfferStatusRef;
+    DatabaseReference offerlistRef, customerOfferStatusRef;
     String category;
     Context context;
     String item_keyid;
@@ -35,7 +34,7 @@ public class AdapterProductsOffersReceivedListRecyclerView extends  RecyclerView
 
     Activity activity;
 
-    public AdapterProductsOffersReceivedListRecyclerView(Context context,String category,String item_keyid, List<String> customer_keyid, List<String> customer_name, List<String> product_offer_msg, List<String> offered_price, List<String> profileImage,List<String> date_list) {
+    public AdapterProductsOffersReceivedListRecyclerView(Context context, String category, String item_keyid, List<String> customer_keyid, List<String> customer_name, List<String> product_offer_msg, List<String> offered_price, List<String> profileImage, List<String> date_list) {
 
         this.context = context;
         this.category = category;
@@ -47,7 +46,7 @@ public class AdapterProductsOffersReceivedListRecyclerView extends  RecyclerView
         this.item_keyid = item_keyid;
         this.customer_keyid = customer_keyid;
 
-        activity = (Activity)context;
+        activity = (Activity) context;
 
     }
 
@@ -73,9 +72,9 @@ public class AdapterProductsOffersReceivedListRecyclerView extends  RecyclerView
         holder.accept_offer_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                offerlistRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/"+ FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+ category + "/" + item_keyid+"/");
+                offerlistRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/" + category + "/" + item_keyid + "/");
                 offerlistRef.child("Accepted_Offer").setValue(customer_keyid.get(position));
-                customerOfferStatusRef = FirebaseDatabase.getInstance().getReference("Customer_offers/"+ customer_keyid.get(position)+"/"+ item_keyid+"/offer_status");
+                customerOfferStatusRef = FirebaseDatabase.getInstance().getReference("Customer_offers/" + customer_keyid.get(position) + "/" + item_keyid + "/offer_status");
                 customerOfferStatusRef.setValue("offer accepted");
                 activity.recreate();
             }
@@ -102,15 +101,15 @@ public class AdapterProductsOffersReceivedListRecyclerView extends  RecyclerView
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            customer_name = (TextView) itemView.findViewById(R.id.customer_name);
-            msg_offer_textview = (TextView) itemView.findViewById(R.id.msg_offer_textview);
-            currency = (TextView) itemView.findViewById(R.id.currency);
-            offered_price = (TextView) itemView.findViewById(R.id.offered_price);
-            accept_offer_textview = (TextView) itemView.findViewById(R.id.accept_offer_textview);
-            date_textView = (TextView) itemView.findViewById(R.id.date_textView);
-            product_offer_msg = (TextView) itemView.findViewById(R.id.product_offer_msg);
-            profileImage = (ImageView) itemView.findViewById(R.id.profileImage_imageView);
-            profileImage = (ImageView) itemView.findViewById(R.id.profileImage_imageView);
+            customer_name = itemView.findViewById(R.id.customer_name);
+            msg_offer_textview = itemView.findViewById(R.id.msg_offer_textview);
+            currency = itemView.findViewById(R.id.currency);
+            offered_price = itemView.findViewById(R.id.offered_price);
+            accept_offer_textview = itemView.findViewById(R.id.accept_offer_textview);
+            date_textView = itemView.findViewById(R.id.date_textView);
+            product_offer_msg = itemView.findViewById(R.id.product_offer_msg);
+            profileImage = itemView.findViewById(R.id.profileImage_imageView);
+            profileImage = itemView.findViewById(R.id.profileImage_imageView);
         }
     }
 }

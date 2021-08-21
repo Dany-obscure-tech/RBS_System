@@ -6,138 +6,16 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/searchForItem_cardView"
+        style="@style/CardView_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ripple_effect_cardview"
-        app:cardBackgroundColor="@color/colorWhite"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="4dp"
-        app:cardUseCompatPadding="true">
+        android:foreground="?attr/selectableItemBackgroundBorderless">
 
         <LinearLayout
             android:id="@+id/detail_area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
             android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1.7"
-                android:orientation="vertical"
-                android:padding="5dp">
-
-                <TextView
-                    android:id="@+id/placeorder_item_name_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Samsung C7 Screens"
-                    android:textColor="@color/textBlue" />
-
-                <TextView
-                    android:id="@+id/placeorder_item_category_textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:text="Laptop"
-                    android:textColor="@color/textGreen" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/searchForItem_cardView"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
-
-
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="5dp"
-                                android:text="Unit Price: " />
-
-                            <TextView
-                                android:id="@+id/placeorder_item_currency_textview"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="5dp"
-                                android:text="$" />
-
-                            <TextView
-                                android:id="@+id/place_order_price_textview"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="1000000" />
-                        </LinearLayout>
-
-
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/searchForItem_cardView"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="5dp"
-                                android:text="Total Quantity: " />
-
-                            <TextView
-                                android:id="@+id/place_order_quantity_textView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="100" />
-                        </LinearLayout>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_gravity="center_vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Required Quantity: " />
-
-                    <EditText
-                        android:id="@+id/requiredQuantity_editText"
-                        android:layout_gravity="center"
-                        android:textSize="14sp"
-                        android:inputType="number"
-                        android:textAlignment="center"
-                        android:layout_height="wrap_content"
-                        android:layout_width="60dp"
-                        />
-                </LinearLayout>
-
-
-
-
-            </LinearLayout>
 
             <ImageView
                 android:id="@+id/placeorder_item_pic_imageView"
@@ -145,6 +23,105 @@
                 android:layout_height="300px"
                 android:layout_gravity="center"
                 android:src="@drawable/laptop" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/placeorder_item_name_textView"
+                    style="@style/TextViews_Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fake_item_name"
+                    android:textColor="@color/textBlue" />
+
+                <TextView
+                    android:id="@+id/placeorder_item_category_textView"
+                    style="@style/TextViews_Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Category"
+                    android:textColor="@color/textGreen" />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViews_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Unit Price: " />
+
+                    <TextView
+                        android:id="@+id/placeorder_item_currency_textview"
+                        style="@style/TextViews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Fake_currency" />
+
+                    <TextView
+                        android:id="@+id/place_order_price_textview"
+                        style="@style/TextViews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:text="@string/Fake_rupees" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViews_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total Qty: " />
+
+                    <TextView
+                        android:id="@+id/place_order_quantity_textView"
+                        style="@style/TextViews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Fake_rupees" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViews_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="Required Qty: " />
+
+                    <EditText
+                        android:id="@+id/requiredQuantity_editText"
+                        style="@style/EditTexts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:inputType="number" />
+                </LinearLayout>
+
+
+            </LinearLayout>
 
 
         </LinearLayout>

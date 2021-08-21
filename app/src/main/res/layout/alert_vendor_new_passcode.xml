@@ -26,93 +26,59 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/header"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:orientation="vertical">
 
 
         <TextView
-            style="@style/TextViews_Bold_small"
+            style="@style/TextViews_Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="User Name"
-            android:textColor="@color/textGrey" />
-
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/searchForItem_cardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/colorWhite"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="4dp"
-            app:cardUseCompatPadding="true">
-
-            <LinearLayout
-                android:id="@+id/select_user_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp">
-
-
-                <TextView
-                    android:id="@+id/username_textview"
-                    style="@style/TextViews_Bold_small"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="Amjad Ali"
-                    android:textColor="@color/gradientDarkBlue" />
-
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
+            android:text="User Name" />
 
         <TextView
+            android:id="@+id/username_textview"
             style="@style/TextViews_Bold_small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Amjad Ali"
+            android:textColor="@color/gradientDarkBlue" />
+
+        <TextView
+            style="@style/TextViews_Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="New Passcode"
-            android:textColor="@color/textGrey" />
+            android:text="New Passcode" />
 
         <EditText
             android:id="@+id/new_passcode_editText"
-            style="@style/TextViews_Regular_small"
+            style="@style/EditTexts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/address_textview"
-            android:layout_marginTop="5dp"
-            android:backgroundTint="@color/colorPrimary"
             android:hint="********"
-            android:inputType="textPassword"
-            android:maxLength="32"
-            android:textColor="@color/textGrey" />
+            android:inputType="textPassword" />
 
 
         <TextView
-            style="@style/TextViews_Bold_small"
+            style="@style/TextViews_Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="New Passcode Again"
-            android:textColor="@color/textGrey" />
+            android:text="New Passcode Again" />
 
         <EditText
             android:id="@+id/new_passcode_again_editText"
-            style="@style/TextViews_Regular_small"
+            style="@style/EditTexts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/address_textview"
             android:layout_marginTop="5dp"
-            android:backgroundTint="@color/colorPrimary"
             android:hint="********"
-            android:inputType="textPassword"
-            android:maxLength="32"
-            android:textColor="@color/textGrey" />
+            android:inputType="textPassword" />
 
 
         <LinearLayout
@@ -126,20 +92,21 @@
 
             <TextView
                 android:id="@+id/save_passcode_submit_btn"
+                style="@style/green_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:text="Save"
-                android:textAlignment="center" />
+                android:text="@string/save_btn_string" />
 
             <TextView
                 android:id="@+id/change_new_passcode_cancel_btn"
+                style="@style/gray_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:text="Cancel" />
+                android:text="@string/cancel_string" />
 
 
         </LinearLayout>

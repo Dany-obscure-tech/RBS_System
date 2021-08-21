@@ -17,7 +17,7 @@ import java.util.List;
  * Created by Mahadi on 3/11/2018.
  */
 
-public class AdapterShopProductsRecyclerView extends  RecyclerView.Adapter<AdapterShopProductsRecyclerView.MyViewHolder> {
+public class AdapterShopProductsRecyclerView extends RecyclerView.Adapter<AdapterShopProductsRecyclerView.MyViewHolder> {
 
     Context context;
     List<String> itemname;
@@ -43,16 +43,6 @@ public class AdapterShopProductsRecyclerView extends  RecyclerView.Adapter<Adapt
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         holder.name.setText(itemname.get(position));
-//        holder.priceTV.setText(Currency.getInstance().getCurrency() + " " + price.get(position));
-//        Picasso.get().load(itemImage.get(position)).into(holder.image);
-
-//        holder.image.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(context, BuyLocal_productdetails.class);
-//                context.startActivity(intent);
-//            }
-//        });
     }
 
     @Override
@@ -70,9 +60,9 @@ public class AdapterShopProductsRecyclerView extends  RecyclerView.Adapter<Adapt
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            name = (TextView) itemView.findViewById(R.id.name_contact);
-            priceTV = (TextView) itemView.findViewById(R.id.ph_number);
-            image = (ImageView) itemView.findViewById(R.id.image);
+            name = itemView.findViewById(R.id.name_contact);
+            priceTV = itemView.findViewById(R.id.ph_number);
+            image = itemView.findViewById(R.id.image);
         }
     }
 }

@@ -39,6 +39,22 @@
     <string name="products">Products</string>
     <string name="offers">Offers</string>
     <string name="back_button">back_button</string>
+    <string name="fake_customer_name">fake_customer_Name</string>
+    <string name="fake_item_name">Fake_Item_Name</string>
+    <string name="serial_no">Serial No:</string>
+    <string name="item_price">Item Price:</string>
+    <string name="last_active">Last Active:</string>
+    <string name="phno">Phno:</string>
+    <string name="id">ID:</string>
+    <string name="email">Email:</string>
+    <string name="select_category">Select Category</string>
+    <string name="lorem_ipsum">Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.</string>
+    <string name="fake_city">Peshawar city</string>
+    <string name="shop_name">HP Store</string>
+    <string name="shopkeeper_name">Shopkeeper Name</string>
+    <string name="address">Address</string>
+    <string name="phone_no">Phone No</string>
+    <string name="Email">Email</string>
 
     <string-array name="list">
         <item>Please select item condition</item>

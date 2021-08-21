@@ -38,24 +38,24 @@ public class Repair_Ticket extends AppCompatActivity {
     TextView repairTicketAdd_textView;
     CardView searchForTicket_cardview;
 
-    ImageButton Back_btn;
+    ImageButton back_btn;
 
-    List<String> customerNameList,customerIdList,itemNameList,itemSerialNoList,ticketNoList,dateList;
-    List<String> customerKeyIDList,itemKeyIDList,repairKeyIDList;
+    List<String> customerNameList, customerIdList, itemNameList, itemSerialNoList, ticketNoList, dateList;
+    List<String> customerKeyIDList, itemKeyIDList, repairKeyIDList;
     List<String> pendingStatusList;
 
-    String firebaseUID = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+    String firebaseUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     Progress_dialoge pd;
 
-    private ArrayList<SampleSearchModel> createTicketNoData(){
+    private ArrayList<SampleSearchModel> createTicketNoData() {
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         Collections.reverse(ticketNoList);
-        for (int i=0;i<ticketNoList.size();i++){
-            if (pendingStatusList.get(i).equals("clear")){
-                items.add(new SampleSearchModel(ticketNoList.get(i),repairKeyIDList.get(i),null,pendingStatusList.get(i),null,null,null,null));
-            }else {
-                items.add(new SampleSearchModel(ticketNoList.get(i)+"\n"+pendingStatusList.get(i),repairKeyIDList.get(i),null,pendingStatusList.get(i),null,null,null,null));
+        for (int i = 0; i < ticketNoList.size(); i++) {
+            if (pendingStatusList.get(i).equals("clear")) {
+                items.add(new SampleSearchModel(ticketNoList.get(i), repairKeyIDList.get(i), null, pendingStatusList.get(i), null, null, null, null));
+            } else {
+                items.add(new SampleSearchModel(ticketNoList.get(i) + "\n" + pendingStatusList.get(i), repairKeyIDList.get(i), null, pendingStatusList.get(i), null, null, null, null));
             }
 
         }
@@ -74,15 +74,15 @@ public class Repair_Ticket extends AppCompatActivity {
     }
 
     private void Initialize() {
-        repairTicketRef = FirebaseDatabase.getInstance().getReference("Repairs_ticket_list/"+firebaseUID);
+        repairTicketRef = FirebaseDatabase.getInstance().getReference("Repairs_ticket_list/" + firebaseUID);
 
-        repairTicketAdd_textView =(TextView) findViewById(R.id.repairTicketAdd_textView);
-        searchForTicket_cardview =(CardView) findViewById(R.id.searchForTicket_cardview);
+        repairTicketAdd_textView = findViewById(R.id.repairTicketAdd_textView);
+        searchForTicket_cardview = findViewById(R.id.searchForTicket_cardview);
 
-        repairTicketList_recyclerView = (RecyclerView)findViewById(R.id.repairTicketList_recyclerView);
-        repairTicketList_recyclerView.setLayoutManager(new GridLayoutManager(Repair_Ticket.this,1));
+        repairTicketList_recyclerView = findViewById(R.id.repairTicketList_recyclerView);
+        repairTicketList_recyclerView.setLayoutManager(new GridLayoutManager(Repair_Ticket.this, 1));
 
-        Back_btn=(ImageButton)findViewById(R.id.Back_btn);
+        back_btn = findViewById(R.id.back_btn);
 
         customerNameList = new ArrayList<>();
         customerIdList = new ArrayList<>();
@@ -112,8 +112,8 @@ public class Repair_Ticket extends AppCompatActivity {
         repairTicketRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
 
                         customerNameList.add(dataSnapshot1.child("Customer_name").getValue().toString());
                         customerIdList.add(dataSnapshot1.child("Customer_id").getValue().toString());
@@ -128,10 +128,10 @@ public class Repair_Ticket extends AppCompatActivity {
                         repairKeyIDList.add(dataSnapshot1.child("Repair_key_id").getValue().toString());
                     }
 
-                    adapterRepairTicketListRecyclerView = new AdapterRepairTicketListRecyclerView(Repair_Ticket.this,customerNameList,customerIdList,itemNameList,itemSerialNoList,ticketNoList,dateList,pendingStatusList);
+                    adapterRepairTicketListRecyclerView = new AdapterRepairTicketListRecyclerView(Repair_Ticket.this, customerNameList, customerIdList, itemNameList, itemSerialNoList, ticketNoList, dateList, pendingStatusList);
                     repairTicketList_recyclerView.setAdapter(adapterRepairTicketListRecyclerView);
                     pd.dismissProgressBar(Repair_Ticket.this);
-                }else {
+                } else {
                     pd.dismissProgressBar(Repair_Ticket.this);
                 }
 
@@ -175,9 +175,9 @@ public class Repair_Ticket extends AppCompatActivity {
                             public void onSelected(BaseSearchDialogCompat dialog,
                                                    SampleSearchModel item, int position) {
                                 dialog.dismiss();
-                                Intent intent = new Intent(Repair_Ticket.this,Repair_details.class);
-                                intent.putExtra("REPAIR_ID",item.getId());
-                                intent.putExtra("STATUS",item.getVal1());
+                                Intent intent = new Intent(Repair_Ticket.this, Repair_ticket_details.class);
+                                intent.putExtra("REPAIR_ID", item.getId());
+                                intent.putExtra("STATUS", item.getVal1());
                                 startActivity(intent);
                             }
                         }).show();
@@ -191,14 +191,14 @@ public class Repair_Ticket extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Repair_Ticket.this, AddRepairTicket.class);
-                intent.putExtra("EDIT_CHECK",false);
+                intent.putExtra("EDIT_CHECK", false);
                 startActivity(intent);
             }
         });
     }
 
     private void backButton() {
-        Back_btn.setOnClickListener(new View.OnClickListener() {
+        back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

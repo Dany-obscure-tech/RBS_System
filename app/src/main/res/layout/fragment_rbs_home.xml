@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Rbs_home">
 
     <!-- TODO: Update blank fragment layout -->
@@ -28,8 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/store_banner_imageView"
                 android:background="#F3F3F3"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -38,32 +37,22 @@
 
                     <TextView
                         android:id="@+id/products_textview"
-                        android:layout_margin="15dp"
+                        style="@style/TextViews_Title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Your Products"
-                        android:textColor="#707070"
-                        android:textSize="26sp"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        />
+                        android:layout_margin="15dp"
+                        android:text="Your Products" />
 
                     <TextView
                         android:id="@+id/addItem_textView"
+                        style="@style/blue_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:background="@drawable/profile_screen_header"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="10dp"
-                        android:text="Add item"
-                        android:textAlignment="center"
-                        android:textColor="#ffff"
-                        android:textSize="15sp" />
+                        android:layout_marginEnd="15dp"
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        android:text="Add item" />
 
                 </RelativeLayout>
 
@@ -71,12 +60,10 @@
                     android:id="@+id/your_products_RecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/products_textview"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp" />
 
             </LinearLayout>
-
 
 
         </RelativeLayout>

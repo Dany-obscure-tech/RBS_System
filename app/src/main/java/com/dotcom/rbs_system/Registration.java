@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -46,7 +45,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class Registration extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+public class Registration extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     DatePickerDialog.OnDateSetListener onDateSetListener;
 
     private FirebaseAuth mAuth;
@@ -57,14 +56,14 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
 
     StorageReference profileImageStorageReference;
     private GoogleSignInClient mGoogleSignInClient;
-    Uri fileUri,idUri;
-    ImageView id_front,id_imageView;
+    Uri fileUri, idUri;
+    ImageView id_front, id_imageView;
     String currentDateString;
     TextView date_of_birth_text;
     FirebaseAuth fAuth;
     DatabaseReference userRef;
-    Button button_register,date_btn,uploadId_profile_image,uploadId_id_image,button_google,button_facebook;
-    EditText editText_fullName,editText_contactNo,editText_address,editText_email,editText_password,editText_confirmPassword;
+    TextView date_textview, uploadId_profile_textview, uploadId_id_textview, button_register_textview, button_google_textview, button_facebook_textview;
+    EditText editText_fullName, editText_contactNo, editText_address, editText_email, editText_password, editText_confirmPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +75,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         Processes();
     }
 
+    //TODO ye activity connect nhi ha
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -84,51 +84,51 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
 
         profileImageStorageReference = FirebaseStorage.getInstance().getReference();
 
-        id_front = (ImageView) findViewById(R.id.id_front);
-        id_imageView = (ImageView) findViewById(R.id.id_imageView);
+        id_front = findViewById(R.id.id_front);
+        id_imageView = findViewById(R.id.id_imageView);
 
-        date_of_birth_text = (TextView) findViewById(R.id.date_of_birth_text);
+        date_of_birth_text = findViewById(R.id.date_of_birth_text);
 
         userRef = FirebaseDatabase.getInstance().getReference("Users_data");
 
         fAuth = FirebaseAuth.getInstance();
 
-        uploadId_profile_image = (Button) findViewById(R.id.uploadId_profile_image);
-        uploadId_id_image = (Button) findViewById(R.id.uploadId_id_image);
-        button_google = (Button) findViewById(R.id.button_google);
-        button_facebook = (Button) findViewById(R.id.button_facebook);
-        date_btn = (Button) findViewById(R.id.date_textview);
-        button_register = (Button) findViewById(R.id.button_register);
+        uploadId_profile_textview = findViewById(R.id.uploadId_profile_textview);
+        uploadId_id_textview = findViewById(R.id.uploadId_id_textview);
+        button_google_textview = findViewById(R.id.button_google_textview);
+        button_facebook_textview = findViewById(R.id.button_facebook_textview);
+        date_textview = findViewById(R.id.date_textview);
+        button_register_textview = findViewById(R.id.button_register_textview);
 
-        editText_fullName = (EditText)findViewById(R.id.editText_fullName);
-        editText_contactNo = (EditText)findViewById(R.id.editText_contactNo);
-        editText_email = (EditText)findViewById(R.id.editText_email);
-        editText_password = (EditText)findViewById(R.id.editText_password);
-        editText_address = (EditText)findViewById(R.id.editText_address);
-        editText_confirmPassword = (EditText)findViewById(R.id.editText_confirmPassword);
+        editText_fullName = findViewById(R.id.editText_fullName);
+        editText_contactNo = findViewById(R.id.editText_contactNo);
+        editText_email = findViewById(R.id.editText_email);
+        editText_password = findViewById(R.id.editText_password);
+        editText_address = findViewById(R.id.editText_address);
+        editText_confirmPassword = findViewById(R.id.editText_confirmPassword);
     }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void ClickListeners() {
         googleSign_in_button_listner();
         button_facebook_listner();
         registerButtonClick();
-        date_btnClisckListner();
+        date_textviewClisckListner();
         takeProfileImage();
         takeIdImage();
     }
 
     private void button_facebook_listner() {
-        button_facebook.setOnClickListener(new View.OnClickListener() {
+        button_facebook_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+//TODO facebook connect nhi ha yaha pa
             }
         });
     }
 
     private void googleSign_in_button_listner() {
-        button_google.setOnClickListener(new View.OnClickListener() {
+        button_google_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -139,35 +139,35 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
     }
 
     private void takeProfileImage() {
-        uploadId_profile_image.setOnClickListener(new View.OnClickListener() {
+        uploadId_profile_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 profileImagOrCnic = 1;
                 ImagePicker.Companion.with(Registration.this)
-                        .crop()	    			//Crop image(Optional), Check Customization for more option
-                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
-                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                        .crop()                    //Crop image(Optional), Check Customization for more option
+                        .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
                         .start();
             }
         });
     }
 
     private void takeIdImage() {
-        uploadId_id_image.setOnClickListener(new View.OnClickListener() {
+        uploadId_id_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 profileImagOrCnic = 2;
                 ImagePicker.Companion.with(Registration.this)
-                        .crop()	    			//Crop image(Optional), Check Customization for more option
-                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
-                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                        .crop()                    //Crop image(Optional), Check Customization for more option
+                        .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
                         .start();
             }
         });
     }
 
     private void registerButtonClick() {
-        button_register.setOnClickListener(new View.OnClickListener() {
+        button_register_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (validate()) {
@@ -182,11 +182,11 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                 final String address = editText_address.getText().toString();
                 final String email = editText_email.getText().toString();
                 String password = editText_password.getText().toString();
-                fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            final String userID = String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        if (task.isSuccessful()) {
+                            final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             Toast.makeText(Registration.this, "Registered!", Toast.LENGTH_SHORT).show();
                             userRef.child(userID).child("type").setValue("customer");
                             userRef.child(userID).child("fullname").setValue(fullname);
@@ -241,7 +241,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                         }
                     }
                 });
-                fAuth.createUserWithEmailAndPassword(email,password).addOnFailureListener(new OnFailureListener() {
+                fAuth.createUserWithEmailAndPassword(email, password).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(Registration.this, String.valueOf(e.getMessage()), Toast.LENGTH_SHORT).show();
@@ -251,16 +251,16 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         });
     }
 
-    private void date_btnClisckListner() {
-        date_btn.setOnClickListener(new View.OnClickListener() {
+    private void date_textviewClisckListner() {
+        date_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar calendar=Calendar.getInstance();
-                int year= (calendar.get(Calendar.YEAR))-18;
-                int month= 0;
-                int day= 1;
+                Calendar calendar = Calendar.getInstance();
+                int year = (calendar.get(Calendar.YEAR)) - 18;
+                int month = 0;
+                int day = 1;
 
-                DatePickerDialog dialog = new DatePickerDialog(Registration.this,android.R.style.Theme_Holo_Light_Dialog_MinWidth,onDateSetListener,year,month,day);
+                DatePickerDialog dialog = new DatePickerDialog(Registration.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, onDateSetListener, year, month, day);
                 currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
@@ -284,15 +284,15 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                 .build();
         //
         //Google Api Client
-        mGoogleSignInClient= GoogleSignIn.getClient(this,gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
     private void onDatesetListner() {
-        onDateSetListener=new DatePickerDialog.OnDateSetListener() {
+        onDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month=month+1;
-                String date = dayOfMonth+"/"+ month + "/"+ year;
+                month = month + 1;
+                String date = dayOfMonth + "/" + month + "/" + year;
 
                 SimpleDateFormat input = new SimpleDateFormat("d/M/yyyy");
                 SimpleDateFormat output = new SimpleDateFormat("EEEE, d MMMM yyyy");
@@ -306,7 +306,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         };
     }
 
-    private boolean validate(){
+    private boolean validate() {
         boolean valid = true;
         if (editText_fullName.getText().toString().isEmpty()) {
             editText_fullName.setError("Please enter name");
@@ -326,7 +326,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         }
         if (editText_email.getText().toString().isEmpty()) {
             editText_email.setError("Please enter correct email");
-            valid= false;
+            valid = false;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(String.valueOf(editText_email.getText())).matches()) {
             editText_email.setError("Please enter a valid email");
@@ -334,26 +334,27 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         }
         if (editText_password.getText().toString().isEmpty()) {
             editText_password.setError("Please enter password");
-            valid=false;
+            valid = false;
         }
         if (!editText_confirmPassword.getText().toString().equals(editText_password.getText().toString())) {
             editText_confirmPassword.setError("confirm password not match");
             valid = false;
         }
-        if (fileUri==null) {
+        if (fileUri == null) {
             Toast.makeText(this, "Select profile picture", Toast.LENGTH_SHORT).show();
             valid = false;
         }
-        if (idUri==null) {
+        if (idUri == null) {
             Toast.makeText(this, "Select id card picture", Toast.LENGTH_SHORT).show();
             valid = false;
         }
 
         return valid;
     }
-    private boolean validateGoogleSigninFields(){
-        boolean valid = true;
 
+    private boolean validateGoogleSigninFields() {
+        boolean valid = true;
+//TODO ye function use nhi howa
         return valid;
     }
 
@@ -387,15 +388,14 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 // ...
             }
-        }
-        else if (resultCode == Activity.RESULT_OK) {
+        } else if (resultCode == Activity.RESULT_OK) {
             //Image Uri will not be null for RESULT_OK
-            if(profileImagOrCnic == 1){
+            if (profileImagOrCnic == 1) {
                 fileUri = data.getData();
                 id_front.setImageURI(fileUri);
                 fileUri = data.getData();
                 profileImagOrCnic = 0;
-            }else {
+            } else {
                 idUri = data.getData();
                 id_imageView.setImageURI(idUri);
                 idUri = data.getData();
@@ -406,7 +406,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
             //You can get File object from intent
 //            val file:File = ImagePicker.getFile(data)!!
 
-                    //You can also get File Path from intent
+            //You can also get File Path from intent
 //                    val filePath:String = ImagePicker.getFilePath(data)!!
         }
 
@@ -421,7 +421,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            GoogleSignInAccount signInAccount= GoogleSignIn.getLastSignedInAccount(Registration.this);
+                            GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(Registration.this);
 
                             final String fullname = signInAccount.getDisplayName();
                             final String contactno = editText_contactNo.getText().toString();

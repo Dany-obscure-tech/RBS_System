@@ -145,11 +145,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/add_user_data_fields_area"
-        android:orientation="horizontal"
         android:gravity="center_horizontal"
-        android:weightSum="2"
+        android:orientation="horizontal"
         android:paddingBottom="20dp"
-        >
+        android:weightSum="2">
 
         <TextView
             android:id="@+id/save_btn"
@@ -167,8 +166,6 @@
             android:layout_marginLeft="30dp"
             android:layout_weight="0.6"
             android:text="Cancel" />
-
-
 
 
     </LinearLayout>

@@ -35,7 +35,7 @@ public class Adapter_Rbs_Vendor_order_receipt_RecyclerView extends RecyclerView.
 
         View v;
         v = LayoutInflater.from(context).inflate(R.layout.rbs_vendor_order_receipt_item, parent, false);
-        Adapter_Rbs_Vendor_order_receipt_RecyclerView.MyViewHolder myViewHolder = new Adapter_Rbs_Vendor_order_receipt_RecyclerView.MyViewHolder(v);
+        Adapter_Rbs_Vendor_order_receipt_RecyclerView.MyViewHolder myViewHolder = new MyViewHolder(v);
         return myViewHolder;
     }
 
@@ -51,18 +51,19 @@ public class Adapter_Rbs_Vendor_order_receipt_RecyclerView extends RecyclerView.
         return placeorder_item_name_textView.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView placeorder_item_name_textView, placeorder_item_category_textView, placeorder_item_currency_textview, place_order_price_textview, place_order_quantity_textView;
         EditText requiredQuantity_editText;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            placeorder_item_name_textView = (TextView) itemView.findViewById(R.id.placeorder_item_name_textView);
-            placeorder_item_category_textView = (TextView) itemView.findViewById(R.id.placeorder_item_category_textView);
-            placeorder_item_currency_textview = (TextView) itemView.findViewById(R.id.placeorder_item_currency_textview);
-            place_order_price_textview = (TextView) itemView.findViewById(R.id.place_order_price_textview);
-            place_order_quantity_textView = (TextView) itemView.findViewById(R.id.place_order_quantity_textView);
-            requiredQuantity_editText = (EditText) itemView.findViewById(R.id.requiredQuantity_editText);
+            placeorder_item_name_textView = itemView.findViewById(R.id.placeorder_item_name_textView);
+            placeorder_item_category_textView = itemView.findViewById(R.id.placeorder_item_category_textView);
+            placeorder_item_currency_textview = itemView.findViewById(R.id.placeorder_item_currency_textview);
+            place_order_price_textview = itemView.findViewById(R.id.place_order_price_textview);
+            place_order_quantity_textView = itemView.findViewById(R.id.place_order_quantity_textView);
+            requiredQuantity_editText = itemView.findViewById(R.id.requiredQuantity_editText);
 
         }
     }

@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -30,23 +29,25 @@ public class BuyLocal_offers_option extends AppCompatActivity {
 
     }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void initialization() {
-        offers = (RecyclerView)findViewById(R.id.offers);
-        back_btn = (ImageButton)findViewById(R.id.back_btn);
-        itemname = new ArrayList<String>();
+        offers = findViewById(R.id.offers);
+        back_btn = findViewById(R.id.back_btn);
+        itemname = new ArrayList<>();
         itemname.add("Shirts");
-        AdapterOffersItemListRecyclerView adapterOffersItemListRecyclerView=new AdapterOffersItemListRecyclerView(BuyLocal_offers_option.this,itemname,null,null,null,null,null);
+        AdapterOffersItemListRecyclerView adapterOffersItemListRecyclerView = new AdapterOffersItemListRecyclerView(BuyLocal_offers_option.this, itemname, null, null, null, null, null);
 
-        offers.setLayoutManager(new LinearLayoutManager(BuyLocal_offers_option.this,RecyclerView.HORIZONTAL,true));
+        offers.setLayoutManager(new LinearLayoutManager(BuyLocal_offers_option.this, RecyclerView.HORIZONTAL, true));
         offers.setAdapter(adapterOffersItemListRecyclerView);
-        offers.setLayoutManager(new GridLayoutManager(BuyLocal_offers_option.this,1));
+        offers.setLayoutManager(new GridLayoutManager(BuyLocal_offers_option.this, 1));
         offers.setAdapter(adapterOffersItemListRecyclerView);
     }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void onclicklistners() {
         back_btn_listner();
     }
+
     private void back_btn_listner() {
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override

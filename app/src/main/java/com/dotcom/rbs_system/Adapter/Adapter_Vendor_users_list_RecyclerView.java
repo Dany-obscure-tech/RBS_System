@@ -1,7 +1,6 @@
 package com.dotcom.rbs_system.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.R;
-import com.dotcom.rbs_system.VendorShopkeepersShopReceipts;
-import com.dotcom.rbs_system.Vendor_shopkeepers_orders_progress;
 
 import java.util.List;
 
@@ -59,7 +56,7 @@ public class Adapter_Vendor_users_list_RecyclerView extends RecyclerView.Adapter
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            user_category = (TextView) itemView.findViewById(R.id.user_category);
+            user_category = itemView.findViewById(R.id.user_category);
             user_name = (TextView) itemView.findViewById(R.id.user_name);
             user_phone_number = (TextView) itemView.findViewById(R.id.user_phone_number);
             user_email = (TextView) itemView.findViewById(R.id.user_email);

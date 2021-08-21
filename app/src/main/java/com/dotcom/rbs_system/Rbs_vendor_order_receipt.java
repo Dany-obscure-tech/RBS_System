@@ -33,18 +33,18 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
     RecyclerView shopkeeper_invoice_details_recyclerview;
 
     TextView date_textView;
-    TextView totalBalance_textView,balance_currency_textView;
+    TextView totalBalance_textView, balance_currency_textView;
     TextView confirm_order_btn;
 
     ImageButton back_btn;
-    List<String> placeorder_item_name_list,placeorder_item_category_list,place_order_price_list,place_order_quantity_list,placeorder_item_pic_list;
+    List<String> placeorder_item_name_list, placeorder_item_category_list, place_order_price_list, place_order_quantity_list, placeorder_item_pic_list;
 
     Boolean validate;
-    DatabaseReference vendorOrderRef,shopkeeperVendorOrderRef, accessoriesOrdersList;
+    DatabaseReference vendorOrderRef, shopkeeperVendorOrderRef, accessoriesOrdersList;
 
     String selectedVendorID;
 
-    TextView vendor_name_textView, vendor_phno_textView,vendor_email_textView,vendor_address_textView;
+    TextView vendor_name_textView, vendor_phno_textView, vendor_email_textView, vendor_address_textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,24 +54,25 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
         Onclicklistners();
 
     }
-///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
     private void Initialization() {
 
-        date_textView = (TextView) findViewById(R.id.date_textView);
+        date_textView = findViewById(R.id.date_textView);
         date = Calendar.getInstance().getTime();
         String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(date);
         date_textView.setText(currentDateString);
         DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         try {
-            date = (Date) formatter.parse(date.getDay() + "-" + date.getMonth() + "-" + date.getYear());
+            date = formatter.parse(date.getDay() + "-" + date.getMonth() + "-" + date.getYear());
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        vendor_name_textView = (TextView)findViewById(R.id.vendor_name_textView);
-        vendor_phno_textView = (TextView)findViewById(R.id.vendor_phno_textView);
-        vendor_email_textView = (TextView)findViewById(R.id.vendor_email_textView);
-        vendor_address_textView = (TextView)findViewById(R.id.vendor_address_textView);
+        vendor_name_textView = findViewById(R.id.vendor_name_textView);
+        vendor_phno_textView = findViewById(R.id.vendor_phno_textView);
+        vendor_email_textView = findViewById(R.id.vendor_email_textView);
+        vendor_address_textView = findViewById(R.id.vendor_address_textView);
 
         vendor_name_textView.setText(getIntent().getStringExtra("VENDOR_NAME"));
         vendor_email_textView.setText(getIntent().getStringExtra("VENDOR_EMAIL"));
@@ -79,15 +80,15 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
         vendor_phno_textView.setText(getIntent().getStringExtra("VENDOR_PHNO"));
         selectedVendorID = getIntent().getStringExtra("VENDOR_keyID");
 
-        vendorOrderRef = FirebaseDatabase.getInstance().getReference("Vendor_order/"+selectedVendorID);
-        shopkeeperVendorOrderRef = FirebaseDatabase.getInstance().getReference("Shopkeeper_vendor_order/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        vendorOrderRef = FirebaseDatabase.getInstance().getReference("Vendor_order/" + selectedVendorID);
+        shopkeeperVendorOrderRef = FirebaseDatabase.getInstance().getReference("Shopkeeper_vendor_order/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
         accessoriesOrdersList = FirebaseDatabase.getInstance().getReference("Accessories_orders");
 
 
-        totalBalance_textView = (TextView)findViewById(R.id.totalBalance_textView);
-        balance_currency_textView = (TextView)findViewById(R.id.balance_currency_textView);
+        totalBalance_textView = findViewById(R.id.totalBalance_textView);
+        balance_currency_textView = findViewById(R.id.balance_currency_textView);
 
-        confirm_order_btn = (TextView)findViewById(R.id.confirm_order_btn);
+        confirm_order_btn = findViewById(R.id.confirm_order_btn);
 
         rbsVendorSelectedStock = RBSVendorSelectedStock.getInstance();
 
@@ -97,15 +98,16 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
         place_order_quantity_list = rbsVendorSelectedStock.getVendor_stock_quantity_textView();
         placeorder_item_pic_list = rbsVendorSelectedStock.getVendor_stock_imageView();
 
-        back_btn = (ImageButton) findViewById(R.id.back_btn);
+        back_btn = findViewById(R.id.back_btn);
 
-        adapter_rbs_vendor_placeorder_recyclerView = new Adapter_RBS_Vendor_placeorder_RecyclerView(Rbs_vendor_order_receipt.this, placeorder_item_name_list, placeorder_item_category_list, place_order_price_list, place_order_quantity_list, placeorder_item_pic_list,totalBalance_textView);
+        adapter_rbs_vendor_placeorder_recyclerView = new Adapter_RBS_Vendor_placeorder_RecyclerView(Rbs_vendor_order_receipt.this, placeorder_item_name_list, placeorder_item_category_list, place_order_price_list, place_order_quantity_list, placeorder_item_pic_list, totalBalance_textView);
 
-        shopkeeper_invoice_details_recyclerview = (RecyclerView) findViewById(R.id.order_invoice_recyclerview);
+        shopkeeper_invoice_details_recyclerview = findViewById(R.id.order_invoice_recyclerview);
         shopkeeper_invoice_details_recyclerview.setLayoutManager(new GridLayoutManager(Rbs_vendor_order_receipt.this, 1));
         shopkeeper_invoice_details_recyclerview.setAdapter(adapter_rbs_vendor_placeorder_recyclerView);
     }
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
     private void Onclicklistners() {
         back_btn_listner();
         confirmButtonListener();
@@ -116,15 +118,15 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 validate = true;
-                for (int i = 0;i<adapter_rbs_vendor_placeorder_recyclerView.getValidateList().size();i++){
-                    if (!adapter_rbs_vendor_placeorder_recyclerView.getValidateList().get(i)){
+                for (int i = 0; i < adapter_rbs_vendor_placeorder_recyclerView.getValidateList().size(); i++) {
+                    if (!adapter_rbs_vendor_placeorder_recyclerView.getValidateList().get(i)) {
                         validate = false;
                     }
                 }
-                if (!validate){
+                if (!validate) {
                     Toast.makeText(Rbs_vendor_order_receipt.this, "Please provide valid quantities", Toast.LENGTH_SHORT).show();
-                }else {
-                    String key = accessoriesOrdersList.push().getKey().toString();
+                } else {
+                    String key = accessoriesOrdersList.push().getKey();
 
                     accessoriesOrdersList.child(key).child("vendor_name").setValue(vendor_name_textView.getText().toString());
                     accessoriesOrdersList.child(key).child("vendor_phoneno").setValue(vendor_phno_textView.getText().toString());
@@ -136,7 +138,7 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
                     accessoriesOrdersList.child(key).child("shopkeeper_phoneno").setValue(UserDetails.getInstance().getShopPhno());
                     accessoriesOrdersList.child(key).child("shopkeeper_email").setValue(UserDetails.getInstance().getShopEmail());
                     accessoriesOrdersList.child(key).child("shopkeeper_address").setValue(UserDetails.getInstance().getAddress());
-                    accessoriesOrdersList.child(key).child("shopkeeper_keyID").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+                    accessoriesOrdersList.child(key).child("shopkeeper_keyID").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
                     accessoriesOrdersList.child(key).child("invoice_no").setValue(key);
                     accessoriesOrdersList.child(key).child("status").setValue("Pending");
@@ -145,12 +147,12 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
                     accessoriesOrdersList.child(key).child("totalBalance").setValue(totalBalance_textView.getText().toString());
 
 
-                    for (int i = 0; i<placeorder_item_name_list.size();i++){
-                        accessoriesOrdersList.child(key).child("items_list").child("item_"+(i+1)).child("item_name").setValue(placeorder_item_name_list.get(i));
-                        accessoriesOrdersList.child(key).child("items_list").child("item_"+(i+1)).child("item_category").setValue(placeorder_item_category_list.get(i));
-                        accessoriesOrdersList.child(key).child("items_list").child("item_"+(i+1)).child("item_unitPrice").setValue(place_order_price_list.get(i));
-                        accessoriesOrdersList.child(key).child("items_list").child("item_"+(i+1)).child("item_quantity").setValue(place_order_quantity_list.get(i));
-                        accessoriesOrdersList.child(key).child("items_list").child("item_"+(i+1)).child("item_imageUrl").setValue(placeorder_item_pic_list.get(i));
+                    for (int i = 0; i < placeorder_item_name_list.size(); i++) {
+                        accessoriesOrdersList.child(key).child("items_list").child("item_" + (i + 1)).child("item_name").setValue(placeorder_item_name_list.get(i));
+                        accessoriesOrdersList.child(key).child("items_list").child("item_" + (i + 1)).child("item_category").setValue(placeorder_item_category_list.get(i));
+                        accessoriesOrdersList.child(key).child("items_list").child("item_" + (i + 1)).child("item_unitPrice").setValue(place_order_price_list.get(i));
+                        accessoriesOrdersList.child(key).child("items_list").child("item_" + (i + 1)).child("item_quantity").setValue(place_order_quantity_list.get(i));
+                        accessoriesOrdersList.child(key).child("items_list").child("item_" + (i + 1)).child("item_imageUrl").setValue(placeorder_item_pic_list.get(i));
 
                     }
 
@@ -173,7 +175,7 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
                     vendorOrderRef.child(key).child("date").setValue(date_textView.getText().toString());
                     vendorOrderRef.child(key).child("status").setValue("Pending");
                     vendorOrderRef.child(key).child("invoice_keyId").setValue(key);
-                    vendorOrderRef.child(key).child("shopkeeper_keyID").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+                    vendorOrderRef.child(key).child("shopkeeper_keyID").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
                 }
             }

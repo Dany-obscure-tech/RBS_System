@@ -3,13 +3,9 @@ package com.dotcom.rbs_system;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-
-import com.dotcom.rbs_system.Adapter.AdapterCategoryProductsItemRecyclerView;
 import com.dotcom.rbs_system.Adapter.AdapterShopProductsRecyclerView;
 
 import java.util.ArrayList;
@@ -27,9 +23,9 @@ public class BuyLocal_shopkeeper_shop extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_local_shopkeeper_shop);
 
-        shop_products_RecyclerView=(RecyclerView)findViewById(R.id.shop_products_RecyclerView);
-        back_btn=(ImageButton)findViewById(R.id.back_btn);
-        itemname = new ArrayList<String>();
+        shop_products_RecyclerView = findViewById(R.id.shop_products_RecyclerView);
+        back_btn =  findViewById(R.id.back_btn);
+        itemname = new ArrayList<>();
         itemname.add("Laptop");
         itemname.add("Desktop");
         itemname.add("Mobiles");
@@ -37,7 +33,7 @@ public class BuyLocal_shopkeeper_shop extends AppCompatActivity {
         onclicklistners();
 
         AdapterShopProductsRecyclerView adapterShopProductsRecyclerView = new AdapterShopProductsRecyclerView(BuyLocal_shopkeeper_shop.this, itemname, null, null);
-        shop_products_RecyclerView.setLayoutManager(new GridLayoutManager(BuyLocal_shopkeeper_shop.this,2));
+        shop_products_RecyclerView.setLayoutManager(new GridLayoutManager(BuyLocal_shopkeeper_shop.this, 2));
         shop_products_RecyclerView.setAdapter(adapterShopProductsRecyclerView);
 
     }

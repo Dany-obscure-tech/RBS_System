@@ -45,7 +45,7 @@ public class Adapter_Vendor_order_list_RecyclerView extends RecyclerView.Adapter
 
         View v;
         v = LayoutInflater.from(context).inflate(R.layout.vendor_orders_list_item, parent, false);
-        Adapter_Vendor_order_list_RecyclerView.MyViewHolder myViewHolder = new Adapter_Vendor_order_list_RecyclerView.MyViewHolder(v);
+        Adapter_Vendor_order_list_RecyclerView.MyViewHolder myViewHolder = new MyViewHolder(v);
         return myViewHolder;
     }
 
@@ -64,8 +64,8 @@ public class Adapter_Vendor_order_list_RecyclerView extends RecyclerView.Adapter
             public void onClick(View v) {
                 Intent intent = new Intent(context, Vendor_shopkeepers_orders_progress.class);
 
-                intent.putExtra("Shopkeeper_ID",shopKeeper_keyID.get(position));
-                intent.putExtra("Invoice_keyID",invoiceKeyID.get(position));
+                intent.putExtra("Shopkeeper_ID", shopKeeper_keyID.get(position));
+                intent.putExtra("Invoice_keyID", invoiceKeyID.get(position));
                 context.startActivity(intent);
             }
         });
@@ -73,7 +73,7 @@ public class Adapter_Vendor_order_list_RecyclerView extends RecyclerView.Adapter
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, VendorShopkeepersShopReceipts.class);
-                intent.putExtra("Shop_Name",shop_name.get(position));
+                intent.putExtra("Shop_Name", shop_name.get(position));
                 context.startActivity(intent);
             }
         });
@@ -85,18 +85,18 @@ public class Adapter_Vendor_order_list_RecyclerView extends RecyclerView.Adapter
         return shop_name.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView order_no_vendor,shop_name,date,balance_currency,vendor_order_status,totalBalance;
+        TextView order_no_vendor, shop_name, date, balance_currency, vendor_order_status, totalBalance;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            order_no_vendor = (TextView) itemView.findViewById(R.id.order_no_vendor);
-            shop_name = (TextView) itemView.findViewById(R.id.shop_name);
-            date = (TextView) itemView.findViewById(R.id.date);
-            totalBalance = (TextView) itemView.findViewById(R.id.totalBalance);
-            balance_currency = (TextView) itemView.findViewById(R.id.balance_currency);
-            vendor_order_status = (TextView) itemView.findViewById(R.id.vendor_order_status);
+            order_no_vendor = itemView.findViewById(R.id.order_no_vendor);
+            shop_name = itemView.findViewById(R.id.shop_name);
+            date = itemView.findViewById(R.id.date);
+            totalBalance = itemView.findViewById(R.id.totalBalance);
+            balance_currency = itemView.findViewById(R.id.balance_currency);
+            vendor_order_status = itemView.findViewById(R.id.vendor_order_status);
 
         }
     }

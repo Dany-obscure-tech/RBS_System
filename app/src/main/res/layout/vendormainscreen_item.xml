@@ -18,7 +18,7 @@
                 style="@style/Search_views_Image_views"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:background="@color/textGrey"
                 android:src="@drawable/laptop" />
@@ -26,8 +26,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/stockImage_imageView">
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/stockImage_imageView">
 
                 <LinearLayout
                     android:id="@+id/offers_area"
@@ -42,7 +42,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit"
-                        android:backgroundTint="@color/textGrey"
+                        android:backgroundTint="@color/textGreen"
 
                         />
 
@@ -51,17 +51,16 @@
 
                 <TextView
                     android:id="@+id/stockName_textView"
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:text="Dress Shirts"
                     android:textColor="@color/gradientDarkBlue" />
 
 
                 <TextView
                     android:id="@+id/stockCategory_textView"
-                    style="@style/TextViews_Regular_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/stockName_textView"
@@ -80,14 +79,14 @@
                     android:weightSum="2">
 
                     <LinearLayout
-                        android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/currency_textView"
-                            style="@style/TextViews_Regular_big"
+                            style="@style/TextViews_Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="$"
@@ -95,36 +94,36 @@
 
                         <TextView
                             android:id="@+id/stockPrice_textView"
-                            style="@style/TextViews_Regular_big"
+                            style="@style/TextViews_Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="5dp"
+                            android:layout_marginStart="5dp"
                             android:text="5000"
                             android:textColor="@color/textGreen" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:orientation="horizontal">
 
                         <TextView
-                            style="@style/TextViews_Regular_big"
+                            style="@style/TextViews_Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=" Qty : "
+                            android:layout_gravity="center"
+                            android:text=" Qty :"
                             android:textColor="@color/textGrey" />
 
                         <TextView
-                            style="@style/TextViews_Regular_big"
                             android:id="@+id/stockQuantity_textView"
+                            style="@style/TextViews_Title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/textGrey"
-                            android:text="100" />
+                            android:text="100"
+                            android:textColor="@color/textGrey" />
                     </LinearLayout>
 
                 </LinearLayout>

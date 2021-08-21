@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,20 +64,20 @@
 
             <TextView
                 android:id="@+id/spot_light_text"
+                style="@style/TextViews_Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imageSlider"
-                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginBottom="15dp"
-                android:text="Spotlight"
-                android:textSize="26sp" />
+                android:text="Spotlight" />
 
             <Button
                 android:id="@+id/test_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/spot_light_text"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:text="test"
                 android:visibility="visible" />
 
@@ -98,25 +97,27 @@
 
                 <TextView
                     android:id="@+id/Category"
+                    style="@style/TextViews_Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginStart="30dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="15dp"
-                    android:text="Category"
-                    android:textSize="26sp" />
+                    android:text="Category" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/category_recyclerview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/Category"
-                    android:layout_margin="12dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="12dp"
+
+                    android:layout_marginBottom="12dp"
                     android:orientation="horizontal"
                     android:paddingBottom="40dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-
-                    />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             </RelativeLayout>
 
@@ -136,7 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_toStartOf="@+id/menu_btn"
             android:background="@drawable/search_view_style"
             android:orientation="horizontal">
@@ -149,7 +150,7 @@
                 android:layout_weight="8"
                 android:background="@drawable/search_view_style"
                 android:fontFamily="@font/segoe_ui"
-                android:hint="Search here..."
+                android:hint="@string/search_here"
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColor="#707070" />
@@ -183,82 +184,74 @@
         android:id="@+id/side_option_menu_bg_relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#00000000"
-        android:visibility="gone" />
+        android:background="#00000000" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/conversationItem_cardView"
+        android:id="@+id/side_menu_cardview"
+        style="@style/CardView_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/main_button"
-        app:cardBackgroundColor="#FFFFFF"
-        app:cardCornerRadius="0dp"
-        app:cardElevation="4dp"
-        app:cardUseCompatPadding="true">
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:visibility="gone"
+        app:cardCornerRadius="5dp">
 
         <RelativeLayout
-            android:id="@+id/side_option_menu"
-            android:layout_width="160dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/topbar"
-            android:background="#FFFF"
-            android:visibility="gone">
+            android:background="#FFFF">
 
             <TextView
                 android:id="@+id/rbs_option"
+                style="@style/TextViews_Bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/segoe_ui_bold"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:padding="20dp"
-                android:text="RBS"
-                android:textColor="@color/textGrey"
-                android:textSize="16sp" />
+                android:text="RBS" />
 
             <TextView
                 android:id="@+id/vendor_option"
+                style="@style/TextViews_Bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rbs_option"
-                android:fontFamily="@font/segoe_ui_bold"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:padding="20dp"
-                android:text="Vendor"
-                android:textColor="@color/textGrey"
-                android:textSize="16sp" />
+                android:text="Vendor" />
 
             <TextView
                 android:id="@+id/offers_option"
-                android:layout_width="wrap_content"
+                style="@style/TextViews_Bold"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/vendor_option"
-                android:fontFamily="@font/segoe_ui_bold"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:padding="20dp"
-                android:text="Offers"
-                android:textColor="@color/textGrey"
-                android:textSize="16sp" />
+                android:text="Offers" />
 
             <TextView
                 android:id="@+id/communication_option"
+                style="@style/TextViews_Bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/offers_option"
-                android:fontFamily="@font/segoe_ui_bold"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:padding="20dp"
-                android:text="Communication"
-                android:textColor="@color/textGrey"
-                android:textSize="16sp" />
+                android:text="Messages" />
 
             <TextView
                 android:id="@+id/logout"
+                style="@style/TextViews_Bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/communication_option"
-                android:fontFamily="@font/segoe_ui_bold"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:padding="20dp"
-                android:text="Logout"
-                android:textColor="@color/textGrey"
-                android:textSize="16sp" />
+                android:text="Logout" />
 
         </RelativeLayout>
 

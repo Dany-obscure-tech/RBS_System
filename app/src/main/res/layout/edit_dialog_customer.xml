@@ -33,73 +33,84 @@
 
         <TextView
             android:id="@+id/phone_no_textview"
-            style="@style/TextViews_Bold_small"
+            style="@style/TextViews_Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Phone.no"
-            android:textColor="@color/textGrey" />
+            android:text="@string/phone_no" />
 
-        <EditText
-            android:id="@+id/ac_phoneno"
-            style="@style/TextViews_Regular_small"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/phone_no_textview"
-            android:backgroundTint="@color/colorPrimary"
-            android:hint="Enter your phone number"
-            android:inputType="number"
-            android:maxLength="11"
-            android:textColor="@color/textGrey" />
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/ccp"
+                style="@style/TextViews_Regular_big"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:onClick="onCountryPickerClick"
+                app:ccpDialog_backgroundColor="@color/colorWhite"
+                app:ccpDialog_fastScroller_handleColor="@color/textGrey"
+                app:ccpDialog_searchEditTextTint="@color/colorAccent"
+                app:ccpDialog_textColor="@color/textGrey"
+                app:ccp_autoDetectCountry="true"
+                app:ccp_contentColor="@color/textBlue"
+                app:ccp_countryAutoDetectionPref="SIM_NETWORK"
+                app:ccp_defaultPhoneCode="92"
+                app:ccp_flagBorderColor="@color/textGrey"
+                app:ccp_rememberLastSelection="true" />
+
+            <EditText
+                android:id="@+id/editText_carrierNumber"
+                style="@style/EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter phone no"
+                android:inputType="phone"
+                android:singleLine="true"
+                app:ccp_autoFormatNumber="true" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/address_textview"
-            style="@style/TextViews_Bold_small"
+            style="@style/TextViews_Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ac_phoneno"
             android:layout_marginTop="10dp"
-            android:padding="5dp"
-            android:text="Address"
-            android:textColor="@color/textGrey" />
+            android:text="@string/address" />
 
         <EditText
             android:id="@+id/ac_address"
-            style="@style/TextViews_Regular_small"
+            style="@style/EditTexts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/address_textview"
-            android:backgroundTint="@color/colorPrimary"
-            android:hint="Enter your address"
-            android:textColor="@color/textGrey" />
+            android:hint="Enter your address" />
 
         <TextView
             android:id="@+id/email_textview"
-            style="@style/TextViews_Bold_small"
+            style="@style/TextViews_Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ac_address"
             android:layout_marginTop="10dp"
-            android:padding="5dp"
-            android:text="Email"
-            android:textColor="@color/textGrey" />
+            android:text="@string/Email" />
 
         <EditText
             android:id="@+id/ac_email"
-            style="@style/TextViews_Regular_small"
+            style="@style/EditTexts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/email_textview"
-            android:backgroundTint="@color/colorPrimary"
             android:hint="Enter your email"
-            android:inputType="textEmailAddress"
-            android:textColor="@color/textGrey" />
+            android:inputType="textEmailAddress" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ac_email"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:gravity="center"
@@ -108,21 +119,26 @@
 
             <TextView
                 android:id="@+id/save_btn_textview"
+                style="@style/green_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:text="Save"
-                android:textAlignment="center" />
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="@string/save_btn_string" />
 
 
             <TextView
                 android:id="@+id/cancel_btn_textview"
+                style="@style/gray_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:text="Cancel" />
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="@string/cancel_string" />
 
 
         </LinearLayout>

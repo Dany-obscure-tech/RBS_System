@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,83 +8,84 @@
 
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/buy_local"
         android:layout_above="@+id/text_view_area"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"
-        />
+        android:layout_marginTop="164dp"
+        android:src="@drawable/buy_local"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/text_view_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_marginTop="100dp"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
+            style="@style/TextViews_Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enter username"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:textSize="16sp"
             android:layout_gravity="left"
-            />
+            android:text="Enter username" />
 
         <EditText
             android:id="@+id/editText_email"
+            style="@style/EditTexts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint=""
+            android:hint="Enter username.."
             android:inputType="textPersonName" />
 
         <TextView
+            style="@style/TextViews_Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enter password"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:textSize="16sp"
             android:layout_gravity="left"
-            />
+            android:layout_marginTop="10dp"
+            android:text="Enter password" />
 
         <EditText
             android:id="@+id/editText_password"
+            style="@style/EditTexts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint=""
+            android:hint="Enter password.."
             android:inputType="textPassword" />
 
-        <Button
-            android:layout_marginTop="20dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/profile_screen_header"
-            android:textColor="#ffff"
-            android:id="@+id/button_signin"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:layout_alignParentBottom="true"
+        <TextView
+            android:id="@+id/signin_textview"
+            style="@style/blue_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign in" />
+            android:layout_marginTop="20dp"
+            android:text="Sign In" />
 
-        <Button
-            android:layout_marginTop="20dp"
-            android:visibility="gone"
-            android:layout_centerHorizontal="true"
-            android:background="#00C884"
-            android:textColor="#ffff"
-            android:id="@+id/button_register"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:layout_alignParentBottom="true"
+        <TextView
+            android:id="@+id/register_textview"
+            style="@style/green_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Register" />
+            android:layout_marginTop="20dp"
+            android:text="Register"
+            android:visibility="gone" />
 
 
     </LinearLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

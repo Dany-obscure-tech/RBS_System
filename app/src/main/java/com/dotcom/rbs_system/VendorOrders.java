@@ -86,7 +86,7 @@ public class VendorOrders extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view= inflater.inflate(R.layout.fragment_vendor_orders, container, false);
+        view = inflater.inflate(R.layout.fragment_vendor_orders, container, false);
         ActionBarTitle.getInstance().getTextView().setText("Vendor Orders");
         initialization();
         initialProcess();
@@ -100,9 +100,9 @@ public class VendorOrders extends Fragment {
 
     private void initialization() {
 
-        Vendor_orderRef = FirebaseDatabase.getInstance().getReference("Vendor_order/"+ FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+        Vendor_orderRef = FirebaseDatabase.getInstance().getReference("Vendor_order/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-        orders_list_recyclerview = (RecyclerView) view.findViewById(R.id.orders_list_recyclerview);
+        orders_list_recyclerview = view.findViewById(R.id.orders_list_recyclerview);
         order_no_vendor = new ArrayList<>();
         shop_name = new ArrayList<>();
         date = new ArrayList<>();
@@ -123,7 +123,7 @@ public class VendorOrders extends Fragment {
         Vendor_orderRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot snapshot1:snapshot.getChildren()){
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     shop_name.add(snapshot1.child("shopkeeper_name").getValue().toString());
                     order_no_vendor.add(snapshot1.child("invoice_no").getValue().toString());
                     date.add(snapshot1.child("date").getValue().toString());
@@ -133,8 +133,8 @@ public class VendorOrders extends Fragment {
                     invoiceKeyID.add(snapshot1.child("invoice_keyId").getValue().toString());
                 }
 
-                Adapter_Vendor_order_list_RecyclerView adapter_vendor_order_list_recyclerView=new Adapter_Vendor_order_list_RecyclerView(getActivity(),order_no_vendor,shop_name,date, totalAmount,vendor_order_status,shopKeeper_keyID,invoiceKeyID);
-                orders_list_recyclerview.setLayoutManager(new GridLayoutManager(getActivity(),1));
+                Adapter_Vendor_order_list_RecyclerView adapter_vendor_order_list_recyclerView = new Adapter_Vendor_order_list_RecyclerView(getActivity(), order_no_vendor, shop_name, date, totalAmount, vendor_order_status, shopKeeper_keyID, invoiceKeyID);
+                orders_list_recyclerview.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                 orders_list_recyclerview.setAdapter(adapter_vendor_order_list_recyclerView);
             }
 

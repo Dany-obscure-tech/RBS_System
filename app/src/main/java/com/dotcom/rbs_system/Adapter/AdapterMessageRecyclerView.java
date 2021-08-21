@@ -20,11 +20,11 @@ public class AdapterMessageRecyclerView extends RecyclerView.Adapter<AdapterMess
     public static final int MSG_TYPE_LEFT = 0;
     public static final int MSG_TYPE_RIGHT = 1;
 
-    private Context context;
-    private List<Data_model_chat> chat;
+    private final Context context;
+    private final List<Data_model_chat> chat;
 
 
-    public AdapterMessageRecyclerView(Context context, List<Data_model_chat> chat){
+    public AdapterMessageRecyclerView(Context context, List<Data_model_chat> chat) {
         this.context = context;
         this.chat = chat;
     }
@@ -32,12 +32,12 @@ public class AdapterMessageRecyclerView extends RecyclerView.Adapter<AdapterMess
     @NonNull
     @Override
     public AdapterMessageRecyclerView.VieHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == MSG_TYPE_RIGHT){
-            View view = LayoutInflater.from(context).inflate(R.layout.layout_chat_right,parent,false);
-            return new AdapterMessageRecyclerView.VieHolder(view);
-        }else {
-            View view = LayoutInflater.from(context).inflate(R.layout.layout_chat_left,parent,false);
-            return new AdapterMessageRecyclerView.VieHolder(view);
+        if (viewType == MSG_TYPE_RIGHT) {
+            View view = LayoutInflater.from(context).inflate(R.layout.layout_chat_right, parent, false);
+            return new VieHolder(view);
+        } else {
+            View view = LayoutInflater.from(context).inflate(R.layout.layout_chat_left, parent, false);
+            return new VieHolder(view);
         }
     }
 
@@ -52,7 +52,7 @@ public class AdapterMessageRecyclerView extends RecyclerView.Adapter<AdapterMess
         return chat.size();
     }
 
-    public class VieHolder extends RecyclerView.ViewHolder {
+    public static class VieHolder extends RecyclerView.ViewHolder {
         TextView show_message;
 
         public VieHolder(@NonNull View itemView) {
@@ -65,9 +65,9 @@ public class AdapterMessageRecyclerView extends RecyclerView.Adapter<AdapterMess
 
     @Override
     public int getItemViewType(int position) {
-        if (chat.get(position).getSender().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+        if (chat.get(position).getSender().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
             return MSG_TYPE_RIGHT;
-        }else {
+        } else {
             return MSG_TYPE_LEFT;
         }
     }

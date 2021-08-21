@@ -8,7 +8,6 @@
         android:id="@+id/searchForItem_cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ripple_effect_cardview"
         app:cardBackgroundColor="@color/colorWhite"
         app:cardCornerRadius="10dp"
         app:cardElevation="4dp"
@@ -61,8 +60,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:padding="8dp"
                     android:background="@color/textGreen"
+                    android:padding="8dp"
                     android:text="Ali Mehmood"
                     android:textColor="#ffffff"
                     android:textSize="20sp" />
@@ -70,8 +69,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -97,8 +95,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -129,13 +126,13 @@
                 android:id="@+id/user_passcodebtn_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:background="@drawable/profile_screen_header"
                 android:fontFamily="@font/segoe_ui_bold"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="10dp"
-                android:layout_marginLeft="5dp"
                 android:text="Send&#10;Passcode"
                 android:textAlignment="center"
                 android:textColor="#ffff"

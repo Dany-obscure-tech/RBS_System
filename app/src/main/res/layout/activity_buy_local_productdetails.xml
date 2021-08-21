@@ -46,8 +46,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imageSlider"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:visibility="gone">
 
                 <RelativeLayout
@@ -57,48 +57,51 @@
 
                     <TextView
                         android:id="@+id/offerStatus_textView"
+                        style="@style/TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
+                        android:inputType="textCapWords"
                         android:text="Offer Status"
-                        android:textColor="#FFFF"
-                        android:textSize="20sp" />
+                        android:textColor="@color/colorWhite" />
 
                     <LinearLayout
                         android:id="@+id/amount_linearlayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/offerStatus_textView"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
                         android:gravity="center_horizontal">
 
                         <TextView
                             android:id="@+id/offerAmountCurrency_textView"
+                            style="@style/TextViews_Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="$"
-                            android:textColor="#FFFF" />
+                            android:text="@string/Fake_currency"
+                            android:textColor="@color/colorWhite" />
 
                         <TextView
                             android:id="@+id/offerAmount_textView"
+                            style="@style/TextViews_Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toRightOf="@+id/offerAmountCurrency_textView"
                             android:text="00.00"
-                            android:textColor="#FFFF" />
+                            android:textColor="@color/colorWhite" />
 
                     </LinearLayout>
 
 
                     <TextView
                         android:id="@+id/offerMessage_textView"
+                        style="@style/TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/amount_linearlayout"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:text="This is a message"
-                        android:textColor="#FFFF" />
+                        android:textColor="@color/colorWhite" />
 
                 </RelativeLayout>
 
@@ -116,30 +119,29 @@
 
                 <TextView
                     android:id="@+id/product_name_textview"
+                    style="@style/TextViews_Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Hp omen Laptop"
-                    android:textColor="@color/gradientDarkBlue"
-                    android:textSize="@dimen/Bold_Big" />
+                    android:text="@string/fake_item_name"
+                    android:textColor="@color/gradientDarkBlue" />
 
                 <LinearLayout
                     android:id="@+id/categories_area"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/product_name_textview"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/category_textView"
-                        android:layout_width="wrap_content"
+                        style="@style/TextViews_Bold"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/segoe_ui_bold"
                         android:text="Laptop"
-                        android:textColor="@color/textGreen"
-                        android:textSize="@dimen/Bold_Small" />
+                        android:textColor="@color/textGreen" />
 
                     <LinearLayout
                         android:id="@+id/price_area"
@@ -151,23 +153,21 @@
 
                         <TextView
                             android:id="@+id/currency_textView"
+                            style="@style/TextViews_Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/report_btn"
-                            android:fontFamily="@font/segoe_ui"
-                            android:text="$"
-                            android:textColor="@color/textGreen"
-                            android:textSize="@dimen/Regular_Big" />
+                            android:text="@string/Fake_currency"
+                            android:textColor="@color/textGreen" />
 
                         <TextView
                             android:id="@+id/itemPrice_textView"
+                            style="@style/TextViews_Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/report_btn"
-                            android:fontFamily="@font/segoe_ui"
-                            android:text="1000"
-                            android:textColor="@color/textGreen"
-                            android:textSize="@dimen/Regular_Big" />
+                            android:text="@string/Fake_rupees"
+                            android:textColor="@color/textGreen" />
 
                     </LinearLayout>
 
@@ -182,47 +182,40 @@
                     android:layout_marginTop="10dp">
 
                     <TextView
+                        style="@style/TextViews_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:text="Condition "
-                        android:textColor="@color/textGrey"
-                        android:textSize="@dimen/Bold_Small" />
+                        android:text="Condition " />
 
                     <TextView
+                        style="@style/TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:fontFamily="@font/segoe_ui"
-                        android:text="N.A"
-                        android:textColor="@color/gradientDarkBlue"
-                        android:textSize="@dimen/Regular_Small" />
+                        android:text="@string/na"
+                        android:textColor="@color/gradientDarkBlue" />
 
 
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/description_textview"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/item_condition_area"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Description"
-                    android:textColor="@color/textGrey"
-                    android:textSize="@dimen/Bold_Small" />
+                    android:text="Description" />
 
                 <TextView
                     android:id="@+id/item_description_textview"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/description_textview"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:fontFamily="@font/segoe_ui"
-                    android:text="this is the First line of the text,second line of the text,third line of the description"
-                    android:textColor="@color/textGrey"
-                    android:textSize="@dimen/Regular_Small" />
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/lorem_ipsum"/>
 
                 <ImageButton
                     android:id="@+id/share_imageButton"
@@ -240,7 +233,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/share_imageButton"
                     android:layout_marginEnd="30dp"
-                    android:layout_toLeftOf="@+id/share_imageButton"
+                    android:layout_toStartOf="@+id/share_imageButton"
                     android:background="@color/transparent"
                     android:scaleType="fitCenter"
                     android:src="@drawable/report_icon" />
@@ -256,13 +249,14 @@
                     android:src="@drawable/point" />
 
                 <LinearLayout
-                    android:id="@+id/shop_status"
+                    android:id="@+id/shop_details_linearlayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/share_imageButton"
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="15dp"
-                    android:layout_toLeftOf="@+id/location_imageButton"
+                    android:layout_toStartOf="@+id/location_imageButton"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:orientation="horizontal"
                     android:weightSum="5">
 
@@ -271,7 +265,7 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_weight="0.5"
                         android:src="@drawable/profile_icon"
                         app:civ_border_color="#4A4A4A"
@@ -288,12 +282,10 @@
 
                         <TextView
                             android:id="@+id/shopKeeperName_textView"
+                            style="@style/TextViews_Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/segoe_ui_bold"
-                            android:text="HP Store "
-                            android:textColor="@color/textGrey"
-                            android:textSize="@dimen/Bold_Small" />
+                            android:text="@string/shop_name" />
 
                         <LinearLayout
                             android:id="@+id/distance_textview"
@@ -304,21 +296,18 @@
 
                             <TextView
                                 android:id="@+id/distance_textView"
+                                style="@style/TextViews"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/segoe_ui"
                                 android:text="0000"
-                                android:textColor="@color/gradientDarkBlue"
-                                android:textSize="@dimen/Regular_Small" />
+                                android:textColor="@color/gradientDarkBlue" />
 
                             <TextView
+                                style="@style/TextViews"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:fontFamily="@font/segoe_ui"
-                                android:text="away from you"
-                                android:textColor="@color/textGrey"
-                                android:textSize="@dimen/Regular_Small" />
+                                android:layout_marginStart="5dp"
+                                android:text="away from you" />
 
                         </LinearLayout>
 
@@ -331,39 +320,31 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/shop_status"
-                    android:layout_marginTop="30dp"
+                    android:layout_below="@+id/shop_details_linearlayout"
+                    android:layout_marginTop="20dp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/make_offer_textView"
+                        style="@style/blue_btn"
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
                         android:layout_weight="1"
-                        android:background="@drawable/profile_screen_header"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:text="Offer"
-                        android:textAlignment="center"
-                        android:textColor="#ffff"
-                        android:textSize="14sp" />
+                        android:text="Offer" />
 
                     <TextView
                         android:id="@+id/communicate_textView"
+                        style="@style/blue_btn"
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
+                        android:layout_marginEnd="10dp"
                         android:layout_weight="1"
-                        android:background="@drawable/profile_screen_header"
-                        android:fontFamily="@font/segoe_ui_bold"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:text="Inbox"
-                        android:textAlignment="center"
-                        android:textColor="#ffff"
-                        android:textSize="14sp" />
+                        android:text="Inbox" />
 
                 </LinearLayout>
 
@@ -389,9 +370,9 @@
             android:id="@+id/back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="0dp"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:adjustViewBounds="true"
             android:background="#00000000"

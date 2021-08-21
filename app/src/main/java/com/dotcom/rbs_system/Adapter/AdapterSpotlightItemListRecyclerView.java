@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.BuyLocal_productdetails;
@@ -22,7 +22,7 @@ import java.util.List;
  * Created by Mahadi on 3/11/2018.
  */
 
-public class AdapterSpotlightItemListRecyclerView extends  RecyclerView.Adapter<AdapterSpotlightItemListRecyclerView.MyViewHolder> {
+public class AdapterSpotlightItemListRecyclerView extends RecyclerView.Adapter<AdapterSpotlightItemListRecyclerView.MyViewHolder> {
 
     Context context;
     List<String> itemname;
@@ -32,7 +32,7 @@ public class AdapterSpotlightItemListRecyclerView extends  RecyclerView.Adapter<
     List<String> categoryList;
     List<String> shopkeeperList;
 
-    public AdapterSpotlightItemListRecyclerView(Context context, List<String> itemname, List<String> price, List<String> itemImage,List<String> key_idList,List<String> categoryList,List<String> shopkeeperList) {
+    public AdapterSpotlightItemListRecyclerView(Context context, List<String> itemname, List<String> price, List<String> itemImage, List<String> key_idList, List<String> categoryList, List<String> shopkeeperList) {
         this.context = context;
         this.itemname = itemname;
         this.price = price;
@@ -40,7 +40,6 @@ public class AdapterSpotlightItemListRecyclerView extends  RecyclerView.Adapter<
         this.key_idList = key_idList;
         this.categoryList = categoryList;
         this.shopkeeperList = shopkeeperList;
-//        Toast.makeText(context, String.valueOf(itemname.size()), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -58,13 +57,13 @@ public class AdapterSpotlightItemListRecyclerView extends  RecyclerView.Adapter<
         holder.priceTV.setText(Currency.getInstance().getCurrency() + " " + price.get(position));
         Picasso.get().load(itemImage.get(position)).into(holder.image);
 
-        holder.image.setOnClickListener(new View.OnClickListener() {
+        holder.spotlight_cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, BuyLocal_productdetails.class);
-                intent.putExtra("PRODUCT_ID",key_idList.get(position));
-                intent.putExtra("CATEGORY",categoryList.get(position));
-                intent.putExtra("SHOPKEEPER_ID",shopkeeperList.get(position));
+                intent.putExtra("PRODUCT_ID", key_idList.get(position));
+                intent.putExtra("CATEGORY", categoryList.get(position));
+                intent.putExtra("SHOPKEEPER_ID", shopkeeperList.get(position));
                 context.startActivity(intent);
             }
         });
@@ -80,6 +79,7 @@ public class AdapterSpotlightItemListRecyclerView extends  RecyclerView.Adapter<
         TextView name;
         TextView priceTV;
         ImageView image;
+        CardView spotlight_cardView;
 
 
         public MyViewHolder(View itemView) {
@@ -88,6 +88,7 @@ public class AdapterSpotlightItemListRecyclerView extends  RecyclerView.Adapter<
             name = (TextView) itemView.findViewById(R.id.name_contact);
             priceTV = (TextView) itemView.findViewById(R.id.ph_number);
             image = (ImageView) itemView.findViewById(R.id.image);
+            spotlight_cardView = (CardView) itemView.findViewById(R.id.spotlight_cardView);
         }
     }
 }

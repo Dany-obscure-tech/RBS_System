@@ -7,7 +7,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,11 +32,9 @@ public class Invoice_preview extends AppCompatActivity {
 
     TextView exit_textview;
 
-    ImageButton print_image_btn, email_image_btn,whatsapp_image_btn;
+    ImageButton print_image_btn, email_image_btn, whatsapp_image_btn;
 
     AsyncTask asyncTask = null;
-
-    final String num = "+8801521329977";
 
     AsyncEscPosPrinter printer;
 
@@ -52,7 +49,7 @@ public class Invoice_preview extends AppCompatActivity {
 
         initialization();
         onclicklistners();
-
+//Todo print ma shop ki details show karwani rehti hay aur whatsapp ma bhi
 
     }
 
@@ -69,14 +66,11 @@ public class Invoice_preview extends AppCompatActivity {
             public void onClick(View view) {
                 boolean installed = isAppInstalled("com.whatsapp");
 
-                if (installed)
-                {
+                if (installed) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("http://api.whatsapp.com/send?phone="+customer_ph_no+"&text="+ email_message));
+                    intent.setData(Uri.parse("http://api.whatsapp.com/send?phone=" + customer_ph_no + "&text=" + email_message));
                     startActivity(intent);
-                }
-                else
-                {
+                } else {
                     Toast.makeText(Invoice_preview.this, "Whatsapp is not installed!", Toast.LENGTH_SHORT).show();
                 }
 
@@ -114,11 +108,6 @@ public class Invoice_preview extends AppCompatActivity {
                 email.setType("message/rfc822");
 
                 startActivity(Intent.createChooser(email, "Choose an Email client :"));
-//
-//
-//                Intent it = new Intent(Intent.ACTION_SEND);
-//                it.setType("message/rfc822");
-//                startActivity(Intent.createChooser(it, "Choose Mail App"));
             }
         });
     }
@@ -204,7 +193,7 @@ public class Invoice_preview extends AppCompatActivity {
                 "Item Name: " + item_name + "\n" +
                 "Item Id: " + item_id + "\n" +
                 "============================" + "\n" +
-                "Paid Amount: "+item_price_currency+" " + paid_amount + "\n" +
+                "Paid Amount: " + item_price_currency + " " + paid_amount + "\n" +
                 "Buy Date: " + date + "\n" +
                 "----------------------------" + "\n" +
                 "Terms And Conditions" + "\n" +
@@ -212,22 +201,22 @@ public class Invoice_preview extends AppCompatActivity {
                 "Shopkeeper Condition 1" + "Shopkeeper Condition 2" + "Shopkeeper Condition 3" + "Shopkeeper Condition 4" + "Shopkeeper Condition 5" + "\n";
 
 
-        date_textView = (TextView) findViewById(R.id.date_textView);
-        customerName_textView = (TextView) findViewById(R.id.customerName_textView);
-        customerEmail_textView = (TextView) findViewById(R.id.customerEmail_textView);
-        customerID_textView = (TextView) findViewById(R.id.customerID_textView);
-        customerPhno_textView = (TextView) findViewById(R.id.customerPhno_textView);
-        itemName_textView = (TextView) findViewById(R.id.itemName_textView);
-        itemID_textView = (TextView) findViewById(R.id.itemID_textView);
-        itemPriceCurrency_textView = (TextView) findViewById(R.id.itemPriceCurrency_textView);
-        itemPrice_textView = (TextView) findViewById(R.id.itemPrice_textView);
-        paid_currency_textView = (TextView) findViewById(R.id.paid_currency_textView);
-        paid_amount_textView = (TextView) findViewById(R.id.paid_amount_textView);
-        exit_textview = (TextView) findViewById(R.id.exit_textview);
+        date_textView = findViewById(R.id.date_textView);
+        customerName_textView = findViewById(R.id.customerName_textView);
+        customerEmail_textView = findViewById(R.id.customerEmail_textView);
+        customerID_textView = findViewById(R.id.customerID_textView);
+        customerPhno_textView = findViewById(R.id.customerPhno_textView);
+        itemName_textView = findViewById(R.id.itemName_textView);
+        itemID_textView = findViewById(R.id.itemID_textView);
+        itemPriceCurrency_textView = findViewById(R.id.itemPriceCurrency_textView);
+        itemPrice_textView = findViewById(R.id.itemPrice_textView);
+        paid_currency_textView = findViewById(R.id.paid_currency_textView);
+        paid_amount_textView = findViewById(R.id.paid_amount_textView);
+        exit_textview = findViewById(R.id.exit_textview);
 
-        email_image_btn = (ImageButton) findViewById(R.id.email_image_btn);
-        print_image_btn = (ImageButton) findViewById(R.id.print_image_btn);
-        whatsapp_image_btn = (ImageButton) findViewById(R.id.whatsapp_image_btn);
+        email_image_btn = findViewById(R.id.email_image_btn);
+        print_image_btn = findViewById(R.id.print_image_btn);
+        whatsapp_image_btn = findViewById(R.id.whatsapp_image_btn);
 
 
         date_textView.setText(date);
@@ -248,6 +237,8 @@ public class Invoice_preview extends AppCompatActivity {
     /**
      * Asynchronous printing
      */
+
+    //Todo format ka variable use nhi howa check it
     @SuppressLint("SimpleDateFormat")
     public AsyncEscPosPrinter getAsyncEscPosPrinter(DeviceConnection printerConnection) {
         SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
@@ -256,6 +247,7 @@ public class Invoice_preview extends AppCompatActivity {
                 printingData()
         );
     }
+    //Todo format ka variable use nhi howa check it
 
     @SuppressLint("SimpleDateFormat")
     public AsyncEscPosPrinter getAsyncEscPosPrinter2(AsyncEscPosPrinter printer) {
@@ -267,39 +259,6 @@ public class Invoice_preview extends AppCompatActivity {
 
     public String printingData() {
         SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
-//        return "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, this.getApplicationContext().getResources().getDrawableForDensity(R.drawable.logo, DisplayMetrics.DENSITY_MEDIUM)) + "</img>\n" +
-//                "[L]\n" +
-//                "[C]<u type='double'>" + format.format(new Date()) + "</u>\n" +
-//                "[C]\n" +
-//                "[C]================================\n" +
-//                "[L]\n" +
-//                "[L]<b>"+"</b>\n" +
-//                "[C]--------------------------------\n" +
-//                "[R]TOTAL PRICE :[R]"+purchase_price_editText.getText().toString()+Currency.getInstance().getCurrency()+ "\n" +
-//                "[L]\n" +
-//                "[C]================================\n" +
-//                "[L]\n" +
-//                "[L]<u><font color='bg-black' size='tall'>Customer :</font></u>\n" +
-//                "[L]"+"\n" +
-//                "[L]Phno : "+"\n" +
-//                "\n" +
-//                "[L]\n";
-
-//        Target target = new Target() {
-//            @Override
-//            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-//                imageView.setImageBitmap(bitmap);
-//                Drawable image = imageView.getDrawable();
-//            }
-//
-//            @Override
-//            public void onBitmapFailed(Drawable errorDrawable) {}
-//
-//            @Override
-//            public void onPrepareLoad(Drawable placeHolderDrawable) {}
-//        };
-//
-//        Picasso.with(this).load("url").into(target);
 
         return "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, this.getApplicationContext().getResources().getDrawableForDensity(R.drawable.logo, DisplayMetrics.DENSITY_MEDIUM)) + "</img>\n" +
                 "[L]\n" +

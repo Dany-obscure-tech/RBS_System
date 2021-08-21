@@ -1,12 +1,9 @@
 package com.dotcom.rbs_system;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,9 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dotcom.rbs_system.Adapter.AdapterShopProductsShowcaseListRecyclerView;
@@ -46,8 +41,6 @@ public class Rbs_home extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    RBS_mainscreen rbs_mainscreen;
-
     DatabaseReference stockRef;
     RecyclerView your_products_RecyclerView;
     List<String> product_name;
@@ -56,7 +49,6 @@ public class Rbs_home extends Fragment {
     List<String> product_no_of_offers;
     List<String> image;
     List<String> key_idList;
-    RelativeLayout side_option_menu;
     TextView addItem_textView;
 
     ImageView store_banner_imageView;
@@ -111,19 +103,18 @@ public class Rbs_home extends Fragment {
     }
 
     private void Initialize(View view) {
-        stockRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
+        stockRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-        your_products_RecyclerView=(RecyclerView)view.findViewById(R.id.your_products_RecyclerView);
-        side_option_menu=(RelativeLayout)view.findViewById(R.id.side_option_menu);
-        addItem_textView=(TextView) view.findViewById(R.id.addItem_textView);
-        product_name = new ArrayList<String>();
-        category = new ArrayList<String>();
-        product_price = new ArrayList<String>();
-        product_no_of_offers = new ArrayList<String>();
-        image = new ArrayList<String>();
-        key_idList = new ArrayList<String>();
+        your_products_RecyclerView = view.findViewById(R.id.your_products_RecyclerView);
+        addItem_textView = view.findViewById(R.id.addItem_textView);
+        product_name = new ArrayList<>();
+        category = new ArrayList<>();
+        product_price = new ArrayList<>();
+        product_no_of_offers = new ArrayList<>();
+        image = new ArrayList<>();
+        key_idList = new ArrayList<>();
 
-        store_banner_imageView=(ImageView) view.findViewById(R.id.store_banner_imageView);
+        store_banner_imageView = view.findViewById(R.id.store_banner_imageView);
         Picasso.get().load(UserDetails.getInstance().getShopBanner()).into(store_banner_imageView);
     }
 
@@ -138,8 +129,8 @@ public class Rbs_home extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for (DataSnapshot snapshot1:snapshot.getChildren()){
-                    for (DataSnapshot snapshot2:snapshot1.getChildren()){
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    for (DataSnapshot snapshot2 : snapshot1.getChildren()) {
                         category.add(snapshot2.child("Category").getValue().toString());
                         product_name.add(snapshot2.child("Item_name").getValue().toString());
                         product_price.add(snapshot2.child("Price").getValue().toString());
@@ -150,8 +141,8 @@ public class Rbs_home extends Fragment {
                     }
                 }
 
-                AdapterShopProductsShowcaseListRecyclerView adapterShopProductsShowcaseListRecyclerView = new AdapterShopProductsShowcaseListRecyclerView(getActivity(), product_name, category, image,product_price,product_no_of_offers,key_idList);
-                your_products_RecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),1));
+                AdapterShopProductsShowcaseListRecyclerView adapterShopProductsShowcaseListRecyclerView = new AdapterShopProductsShowcaseListRecyclerView(getActivity(), product_name, category, image, product_price, product_no_of_offers, key_idList);
+                your_products_RecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                 your_products_RecyclerView.setAdapter(adapterShopProductsShowcaseListRecyclerView);
 
             }
@@ -173,10 +164,10 @@ public class Rbs_home extends Fragment {
         addItem_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),Item_detail.class);
-                intent.putExtra("ADD_ITEM","TRUE");
+                Intent intent = new Intent(getActivity(), Add_item.class);
+                intent.putExtra("ADD_ITEM", "TRUE");
                 RBSItemDetails.getInstance().clearData();
-                getActivity().startActivityForResult(intent,1);
+                getActivity().startActivityForResult(intent, 1);
             }
         });
     }

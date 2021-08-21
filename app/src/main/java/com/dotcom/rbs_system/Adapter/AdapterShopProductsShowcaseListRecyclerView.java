@@ -6,21 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dotcom.rbs_system.BuyLocal_shopkeeperProductDetails;
+import com.dotcom.rbs_system.RBS_Shopkeeper_Inventory_Details;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class AdapterShopProductsShowcaseListRecyclerView extends  RecyclerView.Adapter<AdapterShopProductsShowcaseListRecyclerView.MyViewHolder> {
+public class AdapterShopProductsShowcaseListRecyclerView extends RecyclerView.Adapter<AdapterShopProductsShowcaseListRecyclerView.MyViewHolder> {
 
     Context context;
     List<String> product_name;
@@ -31,7 +29,7 @@ public class AdapterShopProductsShowcaseListRecyclerView extends  RecyclerView.A
     List<String> key_idList;
 
 
-    public AdapterShopProductsShowcaseListRecyclerView(Context context, List<String> product_name, List<String> category, List<String> image, List<String> product_price, List<String> product_no_of_offers,List<String> key_idList) {
+    public AdapterShopProductsShowcaseListRecyclerView(Context context, List<String> product_name, List<String> category, List<String> image, List<String> product_price, List<String> product_no_of_offers, List<String> key_idList) {
         this.context = context;
         this.product_name = product_name;
         this.category = category;
@@ -63,9 +61,9 @@ public class AdapterShopProductsShowcaseListRecyclerView extends  RecyclerView.A
         holder.shop_items_cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, BuyLocal_shopkeeperProductDetails.class);
-                intent.putExtra("PRODUCT_ID",key_idList.get(position));
-                intent.putExtra("CATEGORY",category.get(position));
+                Intent intent = new Intent(context, RBS_Shopkeeper_Inventory_Details.class);
+                intent.putExtra("PRODUCT_ID", key_idList.get(position));
+                intent.putExtra("CATEGORY", category.get(position));
                 context.startActivity(intent);
             }
         });
@@ -92,13 +90,13 @@ public class AdapterShopProductsShowcaseListRecyclerView extends  RecyclerView.A
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            product_name = (TextView) itemView.findViewById(R.id.product_name);
-            category = (TextView) itemView.findViewById(R.id.category);
-            product_price = (TextView) itemView.findViewById(R.id.product_price);
-            currency_textView = (TextView) itemView.findViewById(R.id.currency_textView);
-            product_no_of_offers = (TextView) itemView.findViewById(R.id.product_no_of_offers);
-            image = (ImageView) itemView.findViewById(R.id.image);
-            shop_items_cardView = (CardView) itemView.findViewById(R.id.shop_items_cardView);
+            product_name = itemView.findViewById(R.id.product_name);
+            category = itemView.findViewById(R.id.category);
+            product_price = itemView.findViewById(R.id.product_price);
+            currency_textView = itemView.findViewById(R.id.currency_textView);
+            product_no_of_offers = itemView.findViewById(R.id.product_no_of_offers);
+            image = itemView.findViewById(R.id.image);
+            shop_items_cardView = itemView.findViewById(R.id.shop_items_cardView);
         }
     }
 }

@@ -6,8 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -43,17 +42,14 @@ public class BuyLocal_main extends AppCompatActivity {
     final BuyLocal_Profile fragment_BuyLocal_profile = new BuyLocal_Profile();
     final BuyLocal_About fragment_BuyLocal_about = new BuyLocal_About();
 
-    private long lastPressedTime;
-
-    private static final int PERIOD = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_local_main);
 
-        customerProfileImageStorageReference = FirebaseStorage.getInstance().getReference().child("Customer_Profile_image/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
-        customerProfileImageRef = FirebaseDatabase.getInstance().getReference("Users_data/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        customerProfileImageStorageReference = FirebaseStorage.getInstance().getReference().child("Customer_Profile_image/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+        customerProfileImageRef = FirebaseDatabase.getInstance().getReference("Users_data/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         confirmation_alert = new Dialog(this);
@@ -78,7 +74,7 @@ public class BuyLocal_main extends AppCompatActivity {
                         break;
                     case R.id.profile:
                         // Switch to page two
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, fragment_BuyLocal_profile,"FRAGMENT_PROFILE").commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, fragment_BuyLocal_profile, "FRAGMENT_PROFILE").commit();
                         break;
                     case R.id.about:
                         // Switch to page two
@@ -165,11 +161,10 @@ public class BuyLocal_main extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            switch (event.getAction()) {
-                case KeyEvent.ACTION_DOWN:
-                    confirmation_alert.show();
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                confirmation_alert.show();
 
-                    return true;
+                return true;
             }
         }
         return false;
@@ -181,8 +176,8 @@ public class BuyLocal_main extends AppCompatActivity {
 
 
         if (resultCode == 2) {
-                getSupportFragmentManager().beginTransaction().detach(getSupportFragmentManager().findFragmentByTag("FRAGMENT_PROFILE")).attach(getSupportFragmentManager().findFragmentByTag("FRAGMENT_PROFILE")).commit();
-        }else {
+            getSupportFragmentManager().beginTransaction().detach(getSupportFragmentManager().findFragmentByTag("FRAGMENT_PROFILE")).attach(getSupportFragmentManager().findFragmentByTag("FRAGMENT_PROFILE")).commit();
+        } else {
             if (resultCode == Activity.RESULT_OK) {
                 //Image Uri will not be null for RESULT_OK
                 Uri fileUri = data.getData();
@@ -222,7 +217,6 @@ public class BuyLocal_main extends AppCompatActivity {
                 Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show();
             }
         }
-
 
 
     }

@@ -11,13 +11,14 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@drawable/profile_screen_header">
+        android:background="@drawable/screen_header_rectangle">
 
         <TextView
+            style="@style/TextViews_Header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/back_btn"
+            android:layout_toEndOf="@+id/back_btn"
             android:text="Sale Item"
             android:textColor="#ffffff" />
 
@@ -25,9 +26,9 @@
             android:id="@+id/back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="0dp"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:adjustViewBounds="true"
             android:background="#00000000"
@@ -55,12 +56,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -68,7 +70,7 @@
 
                 <TextView
                     android:id="@+id/customer_add_textView"
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -82,7 +84,8 @@
                 android:id="@+id/searchForCustomer_cardView"
                 style="@style/CardView_style"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:foreground="?attr/selectableItemBackgroundBorderless">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -93,53 +96,54 @@
                         style="@style/Search_views_Image_views"
                         android:layout_width="200px"
                         android:layout_height="200px"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
+                        android:layout_marginEnd="15dp"
                         android:src="@drawable/laptop"
                         android:visibility="gone" />
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/customerImage_imageView">
+                        android:layout_toEndOf="@+id/customerImage_imageView"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/customerName_textView"
-                            style="@style/TextViews_Bold_small"
+                            style="@style/TextViews_Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:text="Search for customer..."
-                            android:textColor="@color/textGrey" />
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="Search for customer..." />
 
                         <LinearLayout
                             android:id="@+id/email_area"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/customerName_textView"
                             android:gravity="center"
                             android:orientation="horizontal">
 
 
                             <TextView
                                 android:id="@+id/email_title_textview"
-                                style="@style/TextViews_Regular_small"
+                                style="@style/TextViews_Bold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Email:"
-                                android:textColor="@color/gradientDarkBlue"
                                 android:visibility="gone" />
 
                             <TextView
                                 android:id="@+id/customerEmail_textView"
-                                style="@style/TextViews_Regular_small"
+                                style="@style/TextViews"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
+                                android:layout_marginStart="5dp"
                                 android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp"
-                                android:text="Shahzaib@gmail.com"
+                                android:text="@string/fake_customer_name"
+                                android:textColor="@color/textBlue"
                                 android:visibility="gone" />
 
 
@@ -149,28 +153,27 @@
                             android:id="@+id/customerID_linearLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/email_area"
                             android:gravity="center"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/id_title_textview"
-                                style="@style/TextViews_Regular_small"
+                                style="@style/TextViews_Bold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="ID:"
-                                android:textColor="@color/gradientDarkBlue"
                                 android:visibility="gone" />
 
                             <TextView
                                 android:id="@+id/customerID_textView"
-                                style="@style/TextViews_Regular_small"
+                                style="@style/TextViews"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
+                                android:layout_marginStart="5dp"
                                 android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp"
-                                android:text="1573470"
+                                android:text="@string/Fake_id"
+                                android:textColor="@color/textBlue"
                                 android:visibility="gone" />
 
 
@@ -180,42 +183,41 @@
                             android:id="@+id/quantity_area"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/customerID_linearLayout"
                             android:gravity="center"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/phone_no_title_textview"
-                                style="@style/TextViews_Regular_small"
+                                style="@style/TextViews_Bold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Phone no:"
-                                android:textColor="@color/gradientDarkBlue"
                                 android:visibility="gone" />
 
                             <TextView
                                 android:id="@+id/customerPhno_textView"
-                                style="@style/TextViews_Regular_small"
+                                style="@style/TextViews"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
+                                android:layout_marginStart="5dp"
                                 android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp"
-                                android:text="100"
+                                android:text="@string/Fake_phone_no"
+                                android:textColor="@color/textBlue"
                                 android:visibility="gone" />
 
                         </LinearLayout>
 
-                    </RelativeLayout>
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/viewCustomerDetails_textView"
-                        style="@style/TextViews_Bold_big"
+                        style="@style/TextViews_Title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        android:padding="5dp"
+                        android:padding="10dp"
                         android:text="\?"
                         android:textColor="@color/gradientDarkBlue"
                         android:visibility="gone" />
@@ -227,12 +229,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -240,7 +243,7 @@
 
                 <TextView
                     android:id="@+id/item_add_textView"
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -254,7 +257,8 @@
                 android:id="@+id/searchForItem_cardView"
                 style="@style/CardView_style"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:foreground="?attr/selectableItemBackgroundBorderless">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -265,66 +269,92 @@
                         style="@style/Search_views_Image_views"
                         android:layout_width="200px"
                         android:layout_height="200px"
-                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
+                        android:layout_marginEnd="15dp"
                         android:src="@drawable/laptop"
                         android:visibility="gone" />
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/itemImage_imageView">
+                        android:layout_toEndOf="@+id/itemImage_imageView"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/itemName_textView"
-                            style="@style/TextViews_Bold_small"
+                            style="@style/TextViews_Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:text="Search for item..."
-                            android:textColor="@color/textGrey" />
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="Search for item..." />
 
-                        <TextView
-                            android:id="@+id/itemID_textView"
-                            style="@style/TextViews_Regular_small"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/itemName_textView"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginTop="2dp"
-                            android:layout_marginBottom="2dp"
-                            android:text="IMEI/Serial no"
-                            android:textColor="@color/textGrey"
-                            android:visibility="gone" />
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                style="@style/TextViews_Bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="Serial No:"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/itemID_textView"
+                                style="@style/TextViews"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="2dp"
+                                android:text="@string/Fake_item_id"
+                                android:textColor="@color/textBlue"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/item_price_linearLayout"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/itemID_textView">
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                style="@style/TextViews_Bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="Item Price:"
+                                android:visibility="gone" />
 
                             <TextView
                                 android:id="@+id/itemPriceCurrency_textView"
-                                style="@style/TextViews_Regular_small"
+                                style="@style/TextViews_Bold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
+                                android:layout_marginStart="5dp"
                                 android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp"
-                                android:text="$"
+                                android:text="@string/Fake_currency"
                                 android:textColor="@color/textGreen"
                                 android:visibility="gone" />
 
                             <TextView
                                 android:id="@+id/itemPrice_textView"
-                                style="@style/TextViews_Regular_small"
+                                style="@style/TextViews_Bold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
+                                android:layout_marginStart="5dp"
                                 android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp"
-                                android:text="157"
+                                android:text="@string/Fake_rupees"
                                 android:textColor="@color/textGreen"
                                 android:visibility="gone" />
 
@@ -334,35 +364,41 @@
                         <LinearLayout
                             android:id="@+id/itemLastActive_linearLayout"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/item_price_linearLayout">
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                style="@style/TextViews_Bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="Last Active:"
+                                android:visibility="gone" />
 
                             <TextView
                                 android:id="@+id/itemLastActive_textView"
+                                style="@style/TextViews"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="5dp"
+                                android:layout_marginStart="5dp"
                                 android:layout_marginTop="2dp"
                                 android:layout_marginBottom="2dp"
-                                android:fontFamily="@font/segoe_ui"
-                                android:text=""
-                                android:textColor="@color/textGrey"
-                                android:textSize="15sp"
+                                android:text="@string/na"
+                                android:textColor="@color/textBlue"
                                 android:visibility="gone" />
 
                         </LinearLayout>
 
-                    </RelativeLayout>
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/viewItemDetails_textView"
-                        style="@style/TextViews_Bold_big"
+                        style="@style/TextViews_Title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
-                        android:padding="5dp"
+                        android:padding="10dp"
                         android:text="\?"
                         android:textColor="@color/gradientDarkBlue"
                         android:visibility="gone" />
@@ -408,19 +444,18 @@
                 </LinearLayout>
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:text="Sale Price" />
 
                 <EditText
                     android:id="@+id/sale_price_editText"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary"
                     android:hint="Enter your sale price"
                     android:inputType="numberDecimal"
                     android:maxLength="32" />
@@ -430,8 +465,8 @@
                     style="@style/TextViews_Bold_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:text="Date" />
+                    android:layout_marginTop="20dp"
+                    android:text="@string/date" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -441,32 +476,29 @@
 
                     <TextView
                         android:id="@+id/date_textView"
-                        style="@style/TextViews_Regular_big"
+                        style="@style/TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1.9"
-                        android:text="-- -- --"
-                        android:textColor="#9F9F9F" />
+                        android:text="-- -- --" />
 
                     <TextView
                         android:id="@+id/datebtn_textView"
-                        style="@style/blue_btn"
+                        style="@style/green_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/profile_screen_header"
-                        android:text="Select date"
-                        android:textAlignment="center" />
+                        android:layout_weight="0.1"
+                        android:text="@string/select_date_btn_string" />
 
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/transaction_textview"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:text="Transaction"
                     android:visibility="gone" />
 
@@ -482,9 +514,9 @@
 
                 <EditText
                     android:id="@+id/cash_editText"
+                    style="@style/EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary"
                     android:hint="Enter cash amount"
                     android:inputType="number"
                     android:maxLength="32"
@@ -503,46 +535,37 @@
 
                 <TextView
                     android:id="@+id/searchForVoucher_textView"
+                    style="@style/green_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/profile_screen_header"
-                    android:fontFamily="@font/segoe_ui"
-                    android:gravity="center"
-                    android:padding="13dp"
-                    android:text="SEARCH FOR VOUCHER"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="15sp"
+                    android:text="Search For Voucher"
                     android:visibility="gone" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:text="Paid Amount" />
 
                 <EditText
                     android:id="@+id/paid_editText"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary"
                     android:hint="Enter paid amount"
                     android:inputType="numberDecimal"
                     android:maxLength="32" />
 
                 <TextView
                     android:id="@+id/submit_textView"
-                    style="@style/green_btn"
+                    style="@style/blue_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
-                    android:text="Save"
-                    android:textAlignment="center" />
+                    android:text="@string/save_btn_string" />
 
             </LinearLayout>
         </LinearLayout>

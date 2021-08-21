@@ -1,84 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="10dp"
-    android:background="#00000000"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/top_black_rectangle">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/gradientDarkBlue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="Report Item"
-        android:textSize="20sp" />
-
-    <LinearLayout
-        android:id="@+id/midLayout"
-        android:layout_below="@+id/title"
-        android:orientation="vertical"
+    <RelativeLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="45dp"
+        android:background="@drawable/screen_header_rectangle">
 
         <TextView
+            android:id="@+id/title"
+            style="@style/TextViews_Bold_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Report description"/>
+            android:layout_centerInParent="true"
+            android:text="Report Item"
+            android:textColor="#ffffff" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextViews_Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Report description" />
 
         <EditText
             android:id="@+id/alertReportDescription_editText"
+            style="@style/EditTexts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
-            android:fontFamily="@font/segoe_ui"
-            android:textColor="@color/textGrey"
-            android:textColorHint="#9F9F9F"
-            android:textSize="16sp" />
+            android:hint="Enter report description..." />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_below="@+id/midLayout"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/alertReportSubmit_textview"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/buylocal_main_button"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="Report"
-            android:textAlignment="center"
-            android:textColor="#ffff"
-            android:textSize="14sp" />
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/alertReportCancel_textview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/grey_border"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="Cancel"
-            android:textAlignment="center"
-            android:textColor="@color/textGrey"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/alertReportSubmit_textview"
+                style="@style/green_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="Report" />
+
+            <TextView
+                android:id="@+id/alertReportCancel_textview"
+                style="@style/gray_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="@string/cancel_string" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

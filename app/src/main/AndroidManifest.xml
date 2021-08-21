@@ -23,68 +23,68 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".Invoice_preview"
+            android:name="com.dotcom.rbs_system.Invoice_preview"
             android:theme="@style/AppTheme.no"
             android:exported="true" />
         <activity
-            android:name=".Shopkeeper_details"
+            android:name="com.dotcom.rbs_system.Shopkeeper_details"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".BuyLocal_offers_option"
+            android:name="com.dotcom.rbs_system.BuyLocal_offers_option"
             android:theme="@style/AppTheme.no"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".PasscodeActivity"
+            android:name="com.dotcom.rbs_system.PasscodeActivity"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".Rbs_vendor_specific_order"
+            android:name="com.dotcom.rbs_system.Rbs_vendor_specific_order"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".RBS_Vendors"
+            android:name="com.dotcom.rbs_system.RBS_Vendors"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".Rbs_vendor_order_receipt"
+            android:name="com.dotcom.rbs_system.Rbs_vendor_order_receipt"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".Vendor_Users_list"
+            android:name="com.dotcom.rbs_system.Vendor_Users_list"
             android:theme="@style/AppTheme.no" />
-        <activity android:name=".RBS_mainscreen" />
+        <activity android:name="com.dotcom.rbs_system.RBS_mainscreen" />
         <activity
-            android:name=".Vendor_shopkeepers_orders_progress"
-            android:theme="@style/AppTheme.no" />
-        <activity
-            android:name=".VendorShopkeepersShopReceipts"
+            android:name="com.dotcom.rbs_system.Vendor_shopkeepers_orders_progress"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".Vendor_stock_entry"
+            android:name="com.dotcom.rbs_system.VendorShopkeepersShopReceipts"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".VendorMainScreen"
+            android:name="com.dotcom.rbs_system.Vendor_stock_entry"
+            android:theme="@style/AppTheme.no" />
+        <activity
+            android:name="com.dotcom.rbs_system.VendorMainScreen"
             android:label="Vendor System" />
         <activity
-            android:name=".BuyLocal_conversations"
+            android:name="com.dotcom.rbs_system.BuyLocal_conversations"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".SearchResult"
+            android:name="com.dotcom.rbs_system.SearchResult"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".BuyLocal_messaging"
+            android:name="com.dotcom.rbs_system.BuyLocal_messaging"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".BuyLocal_shopkeeperProductDetails"
+            android:name="com.dotcom.rbs_system.RBS_Shopkeeper_Inventory_Details"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".BuyLocal_shopkeeper_shop"
+            android:name="com.dotcom.rbs_system.BuyLocal_shopkeeper_shop"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".BuyLocal_profile_edit"
+            android:name="com.dotcom.rbs_system.BuyLocal_profile_edit"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".Buylocal_category_products"
+            android:name="com.dotcom.rbs_system.Buylocal_category_products"
             android:theme="@style/AppTheme.no"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".BuyLocal_productdetails"
+            android:name="com.dotcom.rbs_system.BuyLocal_productdetails"
             android:theme="@style/AppTheme.no">
             <tools:validation testUrl="http://buylocalrbstest.com/productdetails" />
 
@@ -101,50 +101,47 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Registration"
+            android:name="com.dotcom.rbs_system.Registration"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".BuyLocal_main"
+            android:name="com.dotcom.rbs_system.BuyLocal_main"
             android:theme="@style/AppTheme.no"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Accessory_sale"
+            android:name="com.dotcom.rbs_system.Accessory_sale"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".Vendor_detail"
+            android:name="com.dotcom.rbs_system.RBS_accesories_vendor_detail"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".Accessory_add"
+            android:name="com.dotcom.rbs_system.Accessory_add"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".Customer_history"
+            android:name="com.dotcom.rbs_system.Customer_history"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".Item_history"
+            android:name="com.dotcom.rbs_system.Item_history"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".Repair_details"
+            android:name="com.dotcom.rbs_system.Repair_ticket_details"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".Repair_Ticket"
+            android:name="com.dotcom.rbs_system.Repair_Ticket"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".Accessories"
+            android:name="com.dotcom.rbs_system.Add_Customer"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".Customer_details"
+            android:name="com.dotcom.rbs_system.Add_item"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".Item_detail"
+            android:name="com.dotcom.rbs_system.AddRepairTicket"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".AddRepairTicket"
+            android:name="com.dotcom.rbs_system.Sale"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".Sale"
-            android:theme="@style/AppTheme.no" />
-        <activity
-            android:name=".SplashActivity"
+            android:name="com.dotcom.rbs_system.SplashActivity"
             android:theme="@style/AppTheme.no">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -153,10 +150,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SignInActivity"
+            android:name="com.dotcom.rbs_system.SignInActivity"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".Buy"
+            android:name="com.dotcom.rbs_system.Buy"
             android:theme="@style/AppTheme.no" />
     </application>
 

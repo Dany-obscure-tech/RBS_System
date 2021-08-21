@@ -2,27 +2,27 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vendor_drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".VendorMainScreen"
-    android:id="@+id/vendor_drawer_layout"
     tools:openDrawer="end">
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".BuyLocal_home">
+
+        <FrameLayout
+            android:id="@+id/screenContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".BuyLocal_home">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <FrameLayout
-                android:id="@+id/screenContainer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </RelativeLayout>
+    </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nv"
@@ -30,7 +30,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/rbs_vendorsystem_navigation_header"
-        app:menu="@menu/vendor_nav_menu"
-        />
+        app:menu="@menu/vendor_nav_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

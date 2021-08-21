@@ -42,7 +42,7 @@ public class Adapter_Vendor_inventory_RecyclerView extends RecyclerView.Adapter<
 
     DatabaseReference vendorStockRef;
 
-    public Adapter_Vendor_inventory_RecyclerView(Context context,List<String> stockName_list, List<String> stockCategory_list, List<String> stockPrice_list, List<String> quantity_vendor_inventory, List<String> stockImageUrl_list, List<String> stockkeyId_list, List<String> edit_stock_textview_list) {
+    public Adapter_Vendor_inventory_RecyclerView(Context context, List<String> stockName_list, List<String> stockCategory_list, List<String> stockPrice_list, List<String> quantity_vendor_inventory, List<String> stockImageUrl_list, List<String> stockkeyId_list, List<String> edit_stock_textview_list) {
         this.context = context;
         this.stockName_list = stockName_list;
         this.stockCategory_list = stockCategory_list;
@@ -81,16 +81,16 @@ public class Adapter_Vendor_inventory_RecyclerView extends RecyclerView.Adapter<
                 dialog_box = new Dialog(context);
                 dialog_box.setContentView(R.layout.alert_vendor_stock_edit);
 
-                holder.sno_textview = (TextView) dialog_box.findViewById(R.id.sno_textview);
-                holder.item_name_textview = (TextView) dialog_box.findViewById(R.id.item_name_textview);
-                holder.category_editText = (TextView) dialog_box.findViewById(R.id.category_editText);
-                holder.change_picture_btn = (TextView) dialog_box.findViewById(R.id.change_picture_btn);
-                holder.remove_btn = (TextView) dialog_box.findViewById(R.id.remove_btn);
-                holder.save_btn = (TextView) dialog_box.findViewById(R.id.save_btn);
-                holder.cancel_btn = (TextView) dialog_box.findViewById(R.id.cancel_btn);
-                holder.item_price_editText = (EditText) dialog_box.findViewById(R.id.item_price_editText);
-                holder.item_quantity_edittext = (EditText) dialog_box.findViewById(R.id.item_quantity_edittext);
-                holder.stock_pic = (ImageView) dialog_box.findViewById(R.id.stock_pic);
+                holder.sno_textview = dialog_box.findViewById(R.id.sno_textview);
+                holder.item_name_textview = dialog_box.findViewById(R.id.item_name_textview);
+                holder.category_editText = dialog_box.findViewById(R.id.category_editText);
+                holder.change_picture_btn = dialog_box.findViewById(R.id.change_picture_btn);
+                holder.remove_btn = dialog_box.findViewById(R.id.remove_btn);
+                holder.save_btn = dialog_box.findViewById(R.id.save_btn);
+                holder.cancel_btn = dialog_box.findViewById(R.id.cancel_btn);
+                holder.item_price_editText = dialog_box.findViewById(R.id.item_price_editText);
+                holder.item_quantity_edittext = dialog_box.findViewById(R.id.item_quantity_edittext);
+                holder.stock_pic = dialog_box.findViewById(R.id.stock_pic);
                 holder.stock_pic.setImageDrawable(holder.stockImage_imageView.getDrawable());
 
                 holder.item_name_textview.setText(stockName_list.get(position));
@@ -224,13 +224,13 @@ public class Adapter_Vendor_inventory_RecyclerView extends RecyclerView.Adapter<
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            stockName_textView = (TextView) itemView.findViewById(R.id.stockName_textView);
-            stockCategory_textView = (TextView) itemView.findViewById(R.id.stockCategory_textView);
-            stockPrice_textView = (TextView) itemView.findViewById(R.id.stockPrice_textView);
-            stockQuantity_textView = (TextView) itemView.findViewById(R.id.stockQuantity_textView);
-            currency_textView = (TextView) itemView.findViewById(R.id.currency_textView);
-            stockImage_imageView = (ImageView) itemView.findViewById(R.id.stockImage_imageView);
-            edit_stock_textview = (TextView) itemView.findViewById(R.id.edit_stock_textview);
+            stockName_textView = itemView.findViewById(R.id.stockName_textView);
+            stockCategory_textView = itemView.findViewById(R.id.stockCategory_textView);
+            stockPrice_textView = itemView.findViewById(R.id.stockPrice_textView);
+            stockQuantity_textView = itemView.findViewById(R.id.stockQuantity_textView);
+            currency_textView = itemView.findViewById(R.id.currency_textView);
+            stockImage_imageView = itemView.findViewById(R.id.stockImage_imageView);
+            edit_stock_textview = itemView.findViewById(R.id.edit_stock_textview);
 
             vendorStockRef = FirebaseDatabase.getInstance().getReference("Vendor_stock/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
         }

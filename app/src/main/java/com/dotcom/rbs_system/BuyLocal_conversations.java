@@ -5,13 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterConversationListRecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,7 +32,7 @@ public class BuyLocal_conversations extends AppCompatActivity {
 
     RelativeLayout action_bar;
 
-    List<String> itemIdList, convoIdList, user2List,user2NameList;
+    List<String> itemIdList, convoIdList, user2List, user2NameList;
     List<String> imageUrl, nameList, messageList, itemCategory;
 
     @Override
@@ -50,12 +47,12 @@ public class BuyLocal_conversations extends AppCompatActivity {
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private void Initialize()  {
+    private void Initialize() {
 
-        imageUrl= new ArrayList<>();
+        imageUrl = new ArrayList<>();
         nameList = new ArrayList<>();
-        messageList= new ArrayList<>();
-        itemCategory= new ArrayList<>();
+        messageList = new ArrayList<>();
+        itemCategory = new ArrayList<>();
 
         itemIdList = new ArrayList<>();
         convoIdList = new ArrayList<>();
@@ -64,15 +61,16 @@ public class BuyLocal_conversations extends AppCompatActivity {
 
         back_btn = (ImageButton) findViewById(R.id.back_btn);
 
-        conversation_list_recyclerView = (RecyclerView)findViewById(R.id.conversation_list_recyclerView);
-        conversation_list_recyclerView.setLayoutManager(new GridLayoutManager(BuyLocal_conversations.this,1));
+        conversation_list_recyclerView = (RecyclerView) findViewById(R.id.conversation_list_recyclerView);
+        conversation_list_recyclerView.setLayoutManager(new GridLayoutManager(BuyLocal_conversations.this, 1));
 
-        action_bar = (RelativeLayout)findViewById(R.id.action_bar);
+        action_bar = (RelativeLayout) findViewById(R.id.action_bar);
 
-        userConversationRef = FirebaseDatabase.getInstance().getReference("User_conversation/"+ FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+        userConversationRef = FirebaseDatabase.getInstance().getReference("User_conversation/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     private void InitialProcesses() {
         fetchingConvoList();
     }
@@ -82,7 +80,7 @@ public class BuyLocal_conversations extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for (DataSnapshot snapshot1: snapshot.getChildren()){
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
 
                     itemIdList.add(snapshot1.child("item_id").getValue().toString());
                     nameList.add(snapshot1.child("item_name").getValue().toString());
@@ -95,7 +93,7 @@ public class BuyLocal_conversations extends AppCompatActivity {
 
 
                 }
-                adapterConversationListRecyclerView = new AdapterConversationListRecyclerView(BuyLocal_conversations.this,imageUrl,nameList,messageList,itemCategory,itemIdList,convoIdList,user2List,user2NameList);
+                adapterConversationListRecyclerView = new AdapterConversationListRecyclerView(BuyLocal_conversations.this, imageUrl, nameList, messageList, itemCategory, itemIdList, convoIdList, user2List, user2NameList);
                 conversation_list_recyclerView.setAdapter(adapterConversationListRecyclerView);
             }
 

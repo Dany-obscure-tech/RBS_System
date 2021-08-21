@@ -65,7 +65,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginEnd="20dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -74,7 +74,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edit"
-                            android:backgroundTint="@color/colorWhite"
+                            android:backgroundTint="@color/textGreen"
 
                             />
 
@@ -91,13 +91,12 @@
 
                 <TextView
                     android:id="@+id/edit_logo_btn_textiew"
-                    style="@style/blue_btn"
+                    style="@style/green_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
-                    android:background="@drawable/profile_screen_header"
                     android:text="Edit Logo" />
 
             </LinearLayout>
@@ -106,21 +105,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/TextViews_Bold_big"
+                    style="@style/TextViews_Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Vendor Details"
-                    android:textColor="@color/textGrey" />
+                    android:text="Vendor Details" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -129,185 +126,169 @@
 
                 <TextView
                     android:id="@+id/appRegNo_textView"
-                        style="@style/TextViews_Regular_big"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="15dp"
-                    android:text="ID12345"
-                    android:textColor="@color/textGrey" />
+                    android:text="@string/Fake_id" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="User Name"
                     android:textColor="@color/gradientDarkBlue" />
 
                 <TextView
                     android:id="@+id/name_textView"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="15dp"
-                    android:text="Shahzaib Mehfooz"
-                    android:textColor="@color/textGrey" />
+                    android:text="@string/fake_customer_name" />
 
                 <TextView
                     style="@style/TextViews_Bold_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="Company Name"
                     android:textColor="@color/gradientDarkBlue" />
 
                 <TextView
                     android:id="@+id/company_name_textView"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="15dp"
-                    android:text="Itech Computers"
-                    android:textColor="@color/textGrey" />
+                    android:text="@string/shop_name" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Company Registeration #"
+                    android:layout_marginTop="10dp"
+                    android:text="Company Registeration no"
                     android:textColor="@color/gradientDarkBlue" />
 
                 <TextView
                     android:id="@+id/company_reg_no_textView"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="15dp"
-                    android:text="09125678893"
-                    android:textColor="@color/textGrey" />
+                    android:text="09125678893" />
 
                 <TextView
                     style="@style/TextViews_Bold_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="Post Code"
                     android:textColor="@color/gradientDarkBlue" />
 
                 <TextView
                     android:id="@+id/post_code_textView"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="15dp"
-                    android:text="E15UWE"
-                    android:textColor="@color/textGrey" />
+                    android:text="E15UWE" />
 
                 <TextView
                     style="@style/TextViews_Bold_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="Address"
                     android:textColor="@color/gradientDarkBlue" />
 
                 <TextView
-                    android:id="@+id/vendor_address_textView"
-                    style="@style/TextViews_Regular_big"
+                    android:id="@+id/customer_address_textView"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="15dp"
-                    android:text="House#24563 Pakistan"
-                    android:textColor="@color/textGrey" />
+                    android:text="@string/fake_city" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="Phone Number"
                     android:textColor="@color/gradientDarkBlue" />
 
                 <TextView
                     android:id="@+id/vendor_phone_textView"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="15dp"
-                    android:text="092433456"
+                    android:text="@string/Fake_phone_no"
                     android:textColor="@color/textGrey" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="Mobile Number"
                     android:textColor="@color/gradientDarkBlue" />
 
                 <TextView
                     android:id="@+id/vendor_mobile_textView"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="15dp"
-                    android:text="03232442358"
-                    android:textColor="@color/textGrey" />
+                    android:text="@string/Fake_phone_no" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="Email"
                     android:textColor="@color/gradientDarkBlue" />
 
                 <TextView
                     android:id="@+id/vendor_email_textView"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="15dp"
-                    android:text="itechcomputers@gmail.com"
-                    android:textColor="@color/textGrey" />
+                    android:text="@string/Fake_email" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="URL"
                     android:textColor="@color/gradientDarkBlue" />
 
                 <TextView
                     android:id="@+id/vendor_url_textView"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="www.phihorizon.com"
-                    android:textColor="@color/textGrey" />
+                    android:text="www.phihorizon.com" />
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+
+            <TextView
+                android:id="@+id/edit_vendor_details_btn_textView"
+                style="@style/green_btn"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_gravity="right"
+                android:layout_marginEnd="20dp"
+                android:text="Edit Details" />
 
-                <TextView
-                    android:id="@+id/edit_vendor_details_btn_textView"
-                    style="@style/blue_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/profile_screen_header"
-                    android:text="Edit Details" />
-
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/view_users_btn"
@@ -317,9 +298,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/profile_screen_header"
-                android:text="View Users"
-                android:textAlignment="center" />
+                android:text="View Users" />
 
 
         </LinearLayout>

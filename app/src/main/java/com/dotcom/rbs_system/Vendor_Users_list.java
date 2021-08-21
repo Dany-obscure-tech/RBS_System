@@ -5,15 +5,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.dotcom.rbs_system.Adapter.Adapter_Vendor_shopkeeper_invoices_RecyclerView;
 import com.dotcom.rbs_system.Adapter.Adapter_Vendor_users_list_RecyclerView;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 
@@ -54,6 +51,8 @@ public class Vendor_Users_list extends AppCompatActivity {
         initialization();
         onclicklistners();
 
+        //TODO "users_activity" ka button invisible ha
+        //TODo xml pa kam karna ha
         Adapter_Vendor_users_list_RecyclerView adapter_vendor_users_list_recyclerView = new Adapter_Vendor_users_list_RecyclerView(Vendor_Users_list.this, null, user_name, null, null);
 
         users_list_recyclerview.setLayoutManager(new GridLayoutManager(Vendor_Users_list.this, 1));
@@ -82,6 +81,7 @@ public class Vendor_Users_list extends AppCompatActivity {
         user_category_list.add("Data Entry");
         user_category_list.add("Salesman");
     }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     private void onclicklistners() {
         back_btn_listner();
@@ -132,6 +132,7 @@ public class Vendor_Users_list extends AppCompatActivity {
             }
         });
     }
+
     private void back_btn_listner() {
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override

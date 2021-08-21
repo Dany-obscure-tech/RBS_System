@@ -10,7 +10,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.dotcom.rbs_system.Adapter.AdapterCategoryProductsItemRecyclerView;
-import com.dotcom.rbs_system.Adapter.AdapterSpotlightItemListRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,26 +28,22 @@ public class Buylocal_category_products extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buylocal_category_products);
 
-        back_btn=(ImageButton)findViewById(R.id.back_btn);
-        categoryRecyclerView=(RecyclerView)findViewById(R.id.categoryRecyclerView);
-        category_textview=(TextView)findViewById(R.id.category_textview);
+        back_btn = (ImageButton) findViewById(R.id.back_btn);
+        categoryRecyclerView = (RecyclerView) findViewById(R.id.categoryRecyclerView);
+        category_textview = (TextView) findViewById(R.id.category_textview);
         category_text = getIntent().getStringExtra("CATEGORY_NAME");
         category_textview.setText(category_text);
 
-        itemname = new ArrayList<String>();
-        price = new ArrayList<String>();
-        itemImage = new ArrayList<String>();
+        itemname = new ArrayList<>();
+        price = new ArrayList<>();
+        itemImage = new ArrayList<>();
 
         itemname.add("PC");
         itemname.add("Laptop");
 
-
-
         AdapterCategoryProductsItemRecyclerView viewAdapter = new AdapterCategoryProductsItemRecyclerView(Buylocal_category_products.this, itemname, null, null);
-        categoryRecyclerView.setLayoutManager(new GridLayoutManager(Buylocal_category_products.this,2));
+        categoryRecyclerView.setLayoutManager(new GridLayoutManager(Buylocal_category_products.this, 2));
         categoryRecyclerView.setAdapter(viewAdapter);
-
-
 
         onclicklistners();
 

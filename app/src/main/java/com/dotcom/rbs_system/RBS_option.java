@@ -34,10 +34,10 @@ public class RBS_option extends Fragment {
 
     DatabaseReference bannerRef;
 
-    CardView BUY,Sale,repair,Exchange,Accessories;
+    CardView BUY, Sale, repair, Accessories;
 
-    ImageButton icon1,icon2,icon3,icon4,icon8;
-    Button alert_addAccessory_btn,alert_saleAccessory_btn;
+    ImageButton icon1, icon2, icon3, icon4, icon8;
+    Button alert_addAccessory_btn, alert_saleAccessory_btn;
 
     ImageView mainBanner_imageView;
 
@@ -87,7 +87,7 @@ public class RBS_option extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view= inflater.inflate(R.layout.fragment_rbs_option, container, false);
+        view = inflater.inflate(R.layout.fragment_rbs_option, container, false);
 
         ActionBarTitle.getInstance().getTextView().setText("POS");
 
@@ -96,23 +96,22 @@ public class RBS_option extends Fragment {
         selectAccessory_dialog = new Dialog(getActivity());
         selectAccessory_dialog.setContentView(R.layout.alert_select_accessory_screen);
 
-        alert_addAccessory_btn = (Button) selectAccessory_dialog.findViewById(R.id.alert_addAccessory_btn);
-        alert_saleAccessory_btn = (Button) selectAccessory_dialog.findViewById(R.id.alert_saleAccessory_btn);
+        alert_addAccessory_btn = selectAccessory_dialog.findViewById(R.id.alert_addAccessory_btn);
+        alert_saleAccessory_btn = selectAccessory_dialog.findViewById(R.id.alert_saleAccessory_btn);
 
-        BUY=(CardView)view.findViewById(R.id.BUY);
+        BUY = view.findViewById(R.id.BUY);
 
-        Sale=(CardView)view.findViewById(R.id.Sale);
-        repair=(CardView)view.findViewById(R.id.repair);
-        Exchange=(CardView)view.findViewById(R.id.Exchange);
-        Accessories=(CardView)view.findViewById(R.id.Accessories);
+        Sale = view.findViewById(R.id.Sale);
+        repair = view.findViewById(R.id.repair);
+        Accessories = view.findViewById(R.id.Accessories);
 
-        icon2=(ImageButton)view.findViewById(R.id.icon2);
-        icon4=(ImageButton)view.findViewById(R.id.icon4);
-        icon1=(ImageButton)view.findViewById(R.id.icon1);
-        icon3=(ImageButton)view.findViewById(R.id.icon3);
-        icon8=(ImageButton)view.findViewById(R.id.icon8);
+        icon2 = view.findViewById(R.id.icon2);
+        icon4 = view.findViewById(R.id.icon4);
+        icon1 = view.findViewById(R.id.icon1);
+        icon3 = view.findViewById(R.id.icon3);
+        icon8 = view.findViewById(R.id.icon8);
 
-        mainBanner_imageView = (ImageView)view.findViewById(R.id.mainBanner_imageView);
+        mainBanner_imageView = view.findViewById(R.id.mainBanner_imageView);
         getBannerImage();
 
         Accessories.setOnClickListener(new View.OnClickListener() {
@@ -125,8 +124,8 @@ public class RBS_option extends Fragment {
         Sale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),Sale.class);
-                intent.putExtra("ITEM_SELL_CHECK","FALSE");
+                Intent intent = new Intent(getActivity(), Sale.class);
+                intent.putExtra("ITEM_SELL_CHECK", "FALSE");
                 startActivity(intent);
             }
         });
@@ -141,7 +140,7 @@ public class RBS_option extends Fragment {
         icon1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),Repair_Ticket.class);
+                Intent intent = new Intent(getActivity(), Repair_Ticket.class);
                 startActivity(intent);
             }
         });
@@ -149,37 +148,37 @@ public class RBS_option extends Fragment {
         BUY.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),Buy.class);
+                Intent intent = new Intent(getActivity(), Buy.class);
                 startActivity(intent);
             }
         });
         icon2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),Buy.class);
+                Intent intent = new Intent(getActivity(), Buy.class);
                 startActivity(intent);
             }
         });
         Sale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),Sale.class);
-                intent.putExtra("ITEM_SELL_CHECK","FALSE");
+                Intent intent = new Intent(getActivity(), Sale.class);
+                intent.putExtra("ITEM_SELL_CHECK", "FALSE");
                 startActivity(intent);
             }
         });
         icon3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),Sale.class);
-                intent.putExtra("ITEM_SELL_CHECK","FALSE");
+                Intent intent = new Intent(getActivity(), Sale.class);
+                intent.putExtra("ITEM_SELL_CHECK", "FALSE");
                 startActivity(intent);
             }
         });
         repair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),Repair_Ticket.class);
+                Intent intent = new Intent(getActivity(), Repair_Ticket.class);
                 startActivity(intent);
             }
         });
@@ -187,7 +186,7 @@ public class RBS_option extends Fragment {
         alert_addAccessory_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),Accessory_add.class);
+                Intent intent = new Intent(getActivity(), Accessory_add.class);
                 startActivity(intent);
                 selectAccessory_dialog.dismiss();
             }
@@ -195,7 +194,7 @@ public class RBS_option extends Fragment {
         alert_saleAccessory_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),Accessory_sale.class);
+                Intent intent = new Intent(getActivity(), Accessory_sale.class);
                 startActivity(intent);
                 selectAccessory_dialog.dismiss();
             }
@@ -204,7 +203,7 @@ public class RBS_option extends Fragment {
         icon8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),RBS_Vendors.class);
+                Intent intent = new Intent(getActivity(), RBS_Vendors.class);
                 startActivity(intent);
             }
         });
@@ -216,7 +215,7 @@ public class RBS_option extends Fragment {
         bannerRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     Picasso.get().load(dataSnapshot.getValue().toString()).into(mainBanner_imageView);
                 }
             }

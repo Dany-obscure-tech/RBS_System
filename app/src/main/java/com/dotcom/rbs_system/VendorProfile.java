@@ -45,15 +45,15 @@ public class VendorProfile extends Fragment {
 
     DatabaseReference userDataRef;
     View view;
-    TextView view_users_btn,edit_vendor_details_cancel_btn, edit_vendor_details_save_btn,change_passcode_btn,change_passcode_cancel_btn,change_passcode_submit_btn,change_new_passcode_cancel_btn, edit_vendor_details_btn_textView;
-    Dialog change_passcode_alert_dialog,new_passcode_alert_dialog,edit_vendor_info_alert_dialog;
+    TextView view_users_btn, edit_vendor_details_cancel_btn, edit_vendor_details_save_btn, change_passcode_btn, change_passcode_cancel_btn, change_passcode_submit_btn, change_new_passcode_cancel_btn, edit_vendor_details_btn_textView;
+    Dialog change_passcode_alert_dialog, new_passcode_alert_dialog, edit_vendor_info_alert_dialog;
 
     TextView edit_banner_btn_textiew, edit_logo_btn_textiew;
 
-    TextView appRegNo_textView, name_textView, company_name_textView,company_reg_no_textView,post_code_textView,vendor_address_textView,vendor_phone_textView,vendor_mobile_textView,vendor_email_textView,vendor_url_textView;
-    ImageView logo_imageView,store_banner_imageView;
+    TextView appRegNo_textView, name_textView, company_name_textView, company_reg_no_textView, post_code_textView, vendor_address_textView, vendor_phone_textView, vendor_mobile_textView, vendor_email_textView, vendor_url_textView;
+    ImageView logo_imageView, store_banner_imageView;
 
-    EditText edit_pastcode_editText,edit_address_editText,edit_phone_number_editText,edit_mobile_number_editText,edit_email_address_editText,edit_url_address_editText;
+    EditText edit_pastcode_editText, edit_address_editText, edit_phone_number_editText, edit_mobile_number_editText, edit_email_address_editText, edit_url_address_editText;
 
     String buttonPressCheck;
 
@@ -102,7 +102,7 @@ public class VendorProfile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view=inflater.inflate(R.layout.fragment_vendor_profile, container, false);
+        view = inflater.inflate(R.layout.fragment_vendor_profile, container, false);
         ActionBarTitle.getInstance().getTextView().setText("Vendor Profile");
 
         initialization();
@@ -114,50 +114,50 @@ public class VendorProfile extends Fragment {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void initialization() {
-        vendorBannerStorageReference = FirebaseStorage.getInstance().getReference().child("Users_data/vendors_banners/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
-        vendorLogoStorageReference = FirebaseStorage.getInstance().getReference().child("Users_data/vendors_logos/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        vendorBannerStorageReference = FirebaseStorage.getInstance().getReference().child("Users_data/vendors_banners/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+        vendorLogoStorageReference = FirebaseStorage.getInstance().getReference().child("Users_data/vendors_logos/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-        userDataRef = FirebaseDatabase.getInstance().getReference("Users_data/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        userDataRef = FirebaseDatabase.getInstance().getReference("Users_data/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-        appRegNo_textView = (TextView)view.findViewById(R.id.appRegNo_textView);
-        name_textView = (TextView)view.findViewById(R.id.name_textView);
-        company_name_textView = (TextView)view.findViewById(R.id.company_name_textView);
-        company_reg_no_textView = (TextView)view.findViewById(R.id.company_reg_no_textView);
-        post_code_textView = (TextView)view.findViewById(R.id.post_code_textView);
-        vendor_address_textView = (TextView)view.findViewById(R.id.vendor_address_textView);
-        vendor_phone_textView = (TextView)view.findViewById(R.id.vendor_phone_textView);
-        vendor_mobile_textView = (TextView)view.findViewById(R.id.vendor_mobile_textView);
-        vendor_email_textView = (TextView)view.findViewById(R.id.vendor_email_textView);
-        vendor_url_textView = (TextView)view.findViewById(R.id.vendor_url_textView);
+        appRegNo_textView = view.findViewById(R.id.appRegNo_textView);
+        name_textView = view.findViewById(R.id.name_textView);
+        company_name_textView = view.findViewById(R.id.company_name_textView);
+        company_reg_no_textView = view.findViewById(R.id.company_reg_no_textView);
+        post_code_textView = view.findViewById(R.id.post_code_textView);
+        vendor_address_textView = view.findViewById(R.id.customer_address_textView);
+        vendor_phone_textView = view.findViewById(R.id.vendor_phone_textView);
+        vendor_mobile_textView = view.findViewById(R.id.vendor_mobile_textView);
+        vendor_email_textView = view.findViewById(R.id.vendor_email_textView);
+        vendor_url_textView = view.findViewById(R.id.vendor_url_textView);
 
-        logo_imageView = (ImageView) view.findViewById(R.id.logo_imageView);
-        store_banner_imageView = (ImageView)view.findViewById(R.id.store_banner_imageView);
+        logo_imageView = view.findViewById(R.id.logo_imageView);
+        store_banner_imageView = view.findViewById(R.id.store_banner_imageView);
 
-        view_users_btn=(TextView)view.findViewById(R.id.view_users_btn);
-        edit_vendor_details_btn_textView =(TextView)view.findViewById(R.id.edit_vendor_details_btn_textView);
+        view_users_btn = view.findViewById(R.id.view_users_btn);
+        edit_vendor_details_btn_textView = view.findViewById(R.id.edit_vendor_details_btn_textView);
         change_passcode_alert_dialog = new Dialog(getActivity());
         change_passcode_alert_dialog.setContentView(R.layout.alert_vendor_change_passcode);
-        change_passcode_cancel_btn = (TextView) change_passcode_alert_dialog.findViewById(R.id.change_passcode_cancel_btn);
-        change_passcode_submit_btn = (TextView) change_passcode_alert_dialog.findViewById(R.id.change_passcode_submit_btn);
+        change_passcode_cancel_btn = change_passcode_alert_dialog.findViewById(R.id.change_passcode_cancel_btn);
+        change_passcode_submit_btn = change_passcode_alert_dialog.findViewById(R.id.change_passcode_submit_btn);
         new_passcode_alert_dialog = new Dialog(getActivity());
         new_passcode_alert_dialog.setContentView(R.layout.alert_vendor_new_passcode);
         edit_vendor_info_alert_dialog = new Dialog(getActivity());
         edit_vendor_info_alert_dialog.setContentView(R.layout.alert_vendor_details_edit);
-        edit_pastcode_editText=(EditText)edit_vendor_info_alert_dialog.findViewById(R.id.edit_pastcode_editText);
-        edit_address_editText=(EditText)edit_vendor_info_alert_dialog.findViewById(R.id.edit_address_editText);
-        edit_phone_number_editText=(EditText)edit_vendor_info_alert_dialog.findViewById(R.id.edit_phone_number_editText);
-        edit_mobile_number_editText=(EditText)edit_vendor_info_alert_dialog.findViewById(R.id.edit_mobile_number_editText);
-        edit_email_address_editText=(EditText)edit_vendor_info_alert_dialog.findViewById(R.id.edit_email_address_editText);
-        edit_url_address_editText=(EditText)edit_vendor_info_alert_dialog.findViewById(R.id.edit_url_address_editText);
-        change_passcode_btn=(TextView) edit_vendor_info_alert_dialog.findViewById(R.id.change_passcode_btn);
+        edit_pastcode_editText = edit_vendor_info_alert_dialog.findViewById(R.id.edit_pastcode_editText);
+        edit_address_editText = edit_vendor_info_alert_dialog.findViewById(R.id.edit_address_editText);
+        edit_phone_number_editText = edit_vendor_info_alert_dialog.findViewById(R.id.edit_phone_number_editText);
+        edit_mobile_number_editText = edit_vendor_info_alert_dialog.findViewById(R.id.edit_mobile_number_editText);
+        edit_email_address_editText = edit_vendor_info_alert_dialog.findViewById(R.id.edit_email_address_editText);
+        edit_url_address_editText = edit_vendor_info_alert_dialog.findViewById(R.id.edit_url_address_editText);
+        change_passcode_btn = edit_vendor_info_alert_dialog.findViewById(R.id.change_passcode_btn);
 
-        edit_vendor_details_cancel_btn=(TextView) edit_vendor_info_alert_dialog.findViewById(R.id.edit_vendor_details_cancel_btn);
-        edit_vendor_details_save_btn =(TextView) edit_vendor_info_alert_dialog.findViewById(R.id.edit_vendor_details_save_btn);
+        edit_vendor_details_cancel_btn = edit_vendor_info_alert_dialog.findViewById(R.id.edit_vendor_details_cancel_btn);
+        edit_vendor_details_save_btn = edit_vendor_info_alert_dialog.findViewById(R.id.edit_vendor_details_save_btn);
 
-        change_new_passcode_cancel_btn = (TextView) new_passcode_alert_dialog.findViewById(R.id.change_new_passcode_cancel_btn);
+        change_new_passcode_cancel_btn = new_passcode_alert_dialog.findViewById(R.id.change_new_passcode_cancel_btn);
 
-        edit_banner_btn_textiew =(TextView)view.findViewById(R.id.edit_banner_btn_textiew);
-        edit_logo_btn_textiew =(TextView)view.findViewById(R.id.edit_logo_btn_textiew);
+        edit_banner_btn_textiew = view.findViewById(R.id.edit_banner_btn_textiew);
+        edit_logo_btn_textiew = view.findViewById(R.id.edit_logo_btn_textiew);
 
     }
 
@@ -167,7 +167,7 @@ public class VendorProfile extends Fragment {
         userDataRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     name_textView.setText(dataSnapshot.child("fullname").getValue().toString());
                     vendor_address_textView.setText(dataSnapshot.child("address").getValue().toString());
                     vendor_phone_textView.setText(dataSnapshot.child("phno").getValue().toString());
@@ -220,9 +220,9 @@ public class VendorProfile extends Fragment {
             public void onClick(View view) {
                 buttonPressCheck = "profile";
                 ImagePicker.Companion.with(VendorProfile.this)
-                        .crop()	    			//Crop image(Optional), Check Customization for more option
-                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
-                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                        .crop()                    //Crop image(Optional), Check Customization for more option
+                        .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
                         .start();
             }
         });
@@ -234,9 +234,9 @@ public class VendorProfile extends Fragment {
             public void onClick(View view) {
                 buttonPressCheck = "banner";
                 ImagePicker.Companion.with(VendorProfile.this)
-                        .crop()	    			//Crop image(Optional), Check Customization for more option
-                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
-                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                        .crop()                    //Crop image(Optional), Check Customization for more option
+                        .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
                         .start();
             }
         });
@@ -316,13 +316,13 @@ public class VendorProfile extends Fragment {
         view_users_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),Vendor_Users_list.class);
+                Intent intent = new Intent(getActivity(), Vendor_Users_list.class);
                 startActivity(intent);
             }
         });
     }
 
-    private void reloadingFragment(){
+    private void reloadingFragment() {
         Fragment currentFragment = getParentFragmentManager().findFragmentByTag("VENDOR_PROFILE_FRAGMENT");
         androidx.fragment.app.FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
         fragmentTransaction.detach(currentFragment);
@@ -336,13 +336,13 @@ public class VendorProfile extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            if (buttonPressCheck=="banner"){
+            if (buttonPressCheck.equals("banner")) {
                 //Image Uri will not be null for RESULT_OK
                 fileUri = data.getData();
 
                 boolean connected = false;
-                ConnectivityManager connectivityManager = (ConnectivityManager)getActivity().getSystemService(getActivity().CONNECTIVITY_SERVICE);
-                if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(getActivity().CONNECTIVITY_SERVICE);
+                if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                         connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
                     //we are connected to a network
                     connected = true;
@@ -368,19 +368,19 @@ public class VendorProfile extends Fragment {
                     });
 
 
-                }else {
+                } else {
                     Toast.makeText(getActivity(), "Internet is not Connected", Toast.LENGTH_SHORT).show();
                     connected = false;
                 }
             }
 
-            if (buttonPressCheck=="profile"){
+            if (buttonPressCheck.equals("profile")) {
                 //Image Uri will not be null for RESULT_OK
                 fileUri = data.getData();
 
                 boolean connected = false;
-                ConnectivityManager connectivityManager = (ConnectivityManager)getActivity().getSystemService(getActivity().CONNECTIVITY_SERVICE);
-                if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(getActivity().CONNECTIVITY_SERVICE);
+                if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                         connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
                     //we are connected to a network
                     connected = true;
@@ -406,7 +406,7 @@ public class VendorProfile extends Fragment {
                     });
 
 
-                }else {
+                } else {
                     Toast.makeText(getActivity(), "Internet is not Connected", Toast.LENGTH_SHORT).show();
                     connected = false;
                 }

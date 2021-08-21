@@ -12,7 +12,7 @@
         <item
             android:id="@+id/nav_rbs"
             android:icon="@drawable/rbs_options_icons"
-            android:title="POS"/>
+            android:title="POS" />
 
         <item
             android:id="@+id/nav_rbs_vendor_orders"

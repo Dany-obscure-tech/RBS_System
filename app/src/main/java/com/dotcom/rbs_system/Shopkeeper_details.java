@@ -17,10 +17,12 @@ public class Shopkeeper_details extends AppCompatActivity {
 
         initialization();
         onclicklistners();
+
+        //TODO is activity ko online karna ha, ye activity customer history ma ja kar shopkeeper pa click kar kay ati ha
     }
 
     private void initialization() {
-        back_btn=findViewById(R.id.back_btn);
+        back_btn = findViewById(R.id.back_btn);
     }
 
     private void onclicklistners() {

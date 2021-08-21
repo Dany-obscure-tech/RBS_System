@@ -14,21 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.Progreess_dialog;
 import com.dotcom.rbs_system.R;
-import com.dotcom.rbs_system.Repair_details;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.dotcom.rbs_system.Repair_ticket_details;
 
 import java.util.Collections;
 import java.util.List;
 
 public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<AdapterRepairTicketListRecyclerView.ViewHolder> {
     Context context;
-    List<String> customerNameList, customerIdList,itemNameList, itemSerialNoList,ticketNoList,dateList,pendingStatusList;
+    List<String> customerNameList, customerIdList, itemNameList, itemSerialNoList, ticketNoList, dateList, pendingStatusList;
     Activity activity;
-    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Repairs_ticket_list/"+ FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
 
-    public AdapterRepairTicketListRecyclerView(Context context, List<String> customerNameList, List<String> customerIdList, List<String> itemNameList, List<String> itemSerialNoList, List<String> ticketNoList, List<String> dateList,List<String> pendingStatusList) {
+    public AdapterRepairTicketListRecyclerView(Context context, List<String> customerNameList, List<String> customerIdList, List<String> itemNameList, List<String> itemSerialNoList, List<String> ticketNoList, List<String> dateList, List<String> pendingStatusList) {
 
         this.context = context;
 
@@ -47,14 +43,14 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
         this.pendingStatusList = pendingStatusList;
         Collections.reverse(this.pendingStatusList);
 
-        activity = (Activity)context;
+        activity = (Activity) context;
 
     }
 
     @NonNull
     @Override
     public AdapterRepairTicketListRecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_repairticket_repairticketlist_item,parent,false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.recyclerview_repairticket_repairticketlist_item, parent, false));
     }
 
     @Override
@@ -65,17 +61,22 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
         holder.item_serialNo_textView.setText(itemSerialNoList.get(position));
         holder.date_textView.setText(dateList.get(position));
 
-        if (pendingStatusList!=null){
-            if (pendingStatusList.get(position).equals("Pending Changes")){
-                holder.ticketNo_textView.setText(ticketNoList.get(position)+"\n(Pending Changes)");
-            }else if (pendingStatusList.get(position).equals("Confirmed")){
-                holder.ticketNo_textView.setText(ticketNoList.get(position)+"\n(Confirmed)");
-            }else if (pendingStatusList.get(position).equals("Canceled")){
-                holder.ticketNo_textView.setText(ticketNoList.get(position)+"\n(Canceled)");
-            }else if (pendingStatusList.get(position).equals("clear")){
-                holder.ticketNo_textView.setText(ticketNoList.get(position));
+        if (pendingStatusList != null) {
+            switch (pendingStatusList.get(position)) {
+                case "Pending Changes":
+                    holder.ticketNo_textView.setText(ticketNoList.get(position) + "\n(Pending Changes)");
+                    break;
+                case "Confirmed":
+                    holder.ticketNo_textView.setText(ticketNoList.get(position) + "\n(Confirmed)");
+                    break;
+                case "Canceled":
+                    holder.ticketNo_textView.setText(ticketNoList.get(position) + "\n(Canceled)");
+                    break;
+                case "clear":
+                    holder.ticketNo_textView.setText(ticketNoList.get(position));
+                    break;
             }
-        }else {
+        } else {
             holder.ticketNo_textView.setText(ticketNoList.get(position));
         }
 
@@ -83,9 +84,9 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
         holder.leftLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, Repair_details.class);
-                intent.putExtra("REPAIR_ID",ticketNoList.get(position));
-                intent.putExtra("STATUS",pendingStatusList.get(position));
+                Intent intent = new Intent(context, Repair_ticket_details.class);
+                intent.putExtra("REPAIR_ID", ticketNoList.get(position));
+                intent.putExtra("STATUS", pendingStatusList.get(position));
                 context.startActivity(intent);
             }
         });
@@ -97,12 +98,12 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
         return ticketNoList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         Progreess_dialog pd;
 
-        TextView ticketNo_textView,customerName_textView,itemName_textView;
-        TextView customerID_textView,item_serialNo_textView,date_textView;
+        TextView ticketNo_textView, customerName_textView, itemName_textView;
+        TextView customerID_textView, item_serialNo_textView, date_textView;
         LinearLayout leftLayout;
 
         public ViewHolder(@NonNull View itemView) {
@@ -110,14 +111,14 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
 
             pd = new Progreess_dialog();
 
-            ticketNo_textView = (TextView)itemView.findViewById(R.id.ticketNo_textView);
-            customerName_textView = (TextView)itemView.findViewById(R.id.customerName_textView);
-            customerID_textView = (TextView)itemView.findViewById(R.id.customerID_textView);
-            itemName_textView = (TextView)itemView.findViewById(R.id.item_category_textView);
-            item_serialNo_textView = (TextView)itemView.findViewById(R.id.item_serialNo_textView);
-            date_textView = (TextView)itemView.findViewById(R.id.date_textView);
+            ticketNo_textView = itemView.findViewById(R.id.ticketNo_textView);
+            customerName_textView = itemView.findViewById(R.id.customerName_textView);
+            customerID_textView = itemView.findViewById(R.id.customerID_textView);
+            itemName_textView = itemView.findViewById(R.id.item_category_textView);
+            item_serialNo_textView = itemView.findViewById(R.id.item_serialNo_textView);
+            date_textView = itemView.findViewById(R.id.date_textView);
 
-            leftLayout = (LinearLayout) itemView.findViewById(R.id.leftLayout);
+            leftLayout = itemView.findViewById(R.id.leftLayout);
 
         }
     }

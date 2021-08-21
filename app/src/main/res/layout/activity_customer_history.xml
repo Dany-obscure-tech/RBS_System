@@ -6,29 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".Customer_history">
 
+
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@drawable/profile_screen_header">
+        android:background="@drawable/screen_header_rectangle">
 
         <TextView
-            style="@style/TextViews_Regular_big"
+            style="@style/TextViews_Header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/Back_btn"
-            android:fontFamily="@font/segoe_ui_bold"
+            android:layout_toEndOf="@+id/back_btn"
             android:text="Customer Details"
             android:textColor="#ffffff" />
 
         <ImageButton
-            android:id="@+id/Back_btn"
+            android:id="@+id/back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="0dp"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:adjustViewBounds="true"
             android:background="#00000000"
@@ -69,11 +69,10 @@
 
                     <TextView
                         android:id="@+id/customerName_textView"
-                        style="@style/TextViews_Bold_big"
+                        style="@style/TextViews_Alert"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="5dp"
-                        android:text="User Name"
+                        android:text="@string/fake_customer_name"
                         android:textColor="@color/gradientDarkBlue" />
 
                     <LinearLayout
@@ -93,13 +92,12 @@
 
                         <TextView
                             android:id="@+id/phno_textView"
-                            style="@style/TextViews_Regular_small"
+                            style="@style/TextViews"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:paddingLeft="10dp"
-                            android:text=""
-                            android:textColor="@color/textGrey" />
+                            android:paddingStart="10dp"
+                            android:text="@string/Fake_phone_no" />
 
 
                     </LinearLayout>
@@ -123,14 +121,13 @@
 
 
                         <TextView
-                            android:id="@+id/post_code_textView"
-                            style="@style/TextViews_Regular_small"
+                            android:id="@+id/customer_email_textView"
+                            style="@style/TextViews"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:paddingLeft="10dp"
-                            android:text=""
-                            android:textColor="@color/textGrey" />
+                            android:paddingStart="10dp"
+                            android:text="@string/Fake_email" />
 
 
                     </LinearLayout>
@@ -151,14 +148,13 @@
 
 
                         <TextView
-                            android:id="@+id/vendor_address_textView"
-                            style="@style/TextViews_Regular_small"
+                            android:id="@+id/customer_address_textView"
+                            style="@style/TextViews"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:paddingLeft="10dp"
-                            android:text=""
-                            android:textColor="@color/textGrey" />
+                            android:paddingStart="10dp"
+                            android:text="@string/fake_city" />
 
                     </LinearLayout>
 
@@ -177,13 +173,12 @@
 
                         <TextView
                             android:id="@+id/customerID_textView"
-                            style="@style/TextViews_Regular_small"
+                            style="@style/TextViews"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:paddingLeft="10dp"
-                            android:text=""
-                            android:textColor="@color/textGrey" />
+                            android:paddingStart="10dp"
+                            android:text="@string/Fake_id" />
 
                     </LinearLayout>
 
@@ -196,7 +191,8 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/edit"
-                        android:backgroundTint="@color/textGreen" />
+                        android:backgroundTint="@color/textGreen"
+                        android:foreground="?attr/selectableItemBackgroundBorderless" />
 
 
                 </LinearLayout>
@@ -204,12 +200,11 @@
             </LinearLayout>
 
             <TextView
-                style="@style/TextViews_Bold_small"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="Customer ID Images"
-                android:textColor="@color/textGrey" />
+                android:text="Customer ID Images" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/customer_ID_Image_recyclerView"
@@ -229,19 +224,13 @@
 
             <TextView
                 android:id="@+id/customerDetailsToggle_textView"
+                style="@style/green_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/profile_screen_header"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:paddingStart="10dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="10dp"
-                android:paddingBottom="10dp"
-                android:text="Hide Details"
-                android:textColor="#ffff" />
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Hide Details" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
