@@ -63,15 +63,6 @@ public class PasscodeActivity extends AppCompatActivity {
 
     }
 
-    //Todo passcodeQuantity wala function empty ha
-    public void passcodeQuantitycheck() {
-//        if (passcodestring.size() == 4) {
-//            submit_imagebutton.setEnabled(true);
-//        } else {
-//            submit_imagebutton.setEnabled(false);
-//        }
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -116,7 +107,7 @@ public class PasscodeActivity extends AppCompatActivity {
 //                            break;
                     }
 
-                    passcodeQuantitycheck();
+
                 } else {
                     passcodestring.clear();
                     pincode_circle_1_imageview.setImageDrawable(getResources().getDrawable(R.drawable.pincode_circle));
@@ -190,7 +181,7 @@ public class PasscodeActivity extends AppCompatActivity {
 //                        default:
 //                            break;
                     }
-                    passcodeQuantitycheck();
+
                 } else {
                     passcodestring.clear();
                     pincode_circle_1_imageview.setImageDrawable(getResources().getDrawable(R.drawable.pincode_circle));
@@ -263,7 +254,7 @@ public class PasscodeActivity extends AppCompatActivity {
 //                        default:
 //                            break;
                     }
-                    passcodeQuantitycheck();
+
                 } else {
                     passcodestring.clear();
                     pincode_circle_1_imageview.setImageDrawable(getResources().getDrawable(R.drawable.pincode_circle));
@@ -336,7 +327,7 @@ public class PasscodeActivity extends AppCompatActivity {
 //                        default:
 //                            break;
                     }
-                    passcodeQuantitycheck();
+
                 } else {
                     passcodestring.clear();
                     pincode_circle_1_imageview.setImageDrawable(getResources().getDrawable(R.drawable.pincode_circle));
@@ -409,7 +400,7 @@ public class PasscodeActivity extends AppCompatActivity {
 //                        default:
 //                            break;
                     }
-                    passcodeQuantitycheck();
+
                 } else {
                     passcodestring.clear();
                     pincode_circle_1_imageview.setImageDrawable(getResources().getDrawable(R.drawable.pincode_circle));
@@ -482,7 +473,7 @@ public class PasscodeActivity extends AppCompatActivity {
 //                        default:
 //                            break;
                     }
-                    passcodeQuantitycheck();
+
                 } else {
                     passcodestring.clear();
                     pincode_circle_1_imageview.setImageDrawable(getResources().getDrawable(R.drawable.pincode_circle));
@@ -555,7 +546,6 @@ public class PasscodeActivity extends AppCompatActivity {
 //                        default:
 //                            break;
                     }
-                    passcodeQuantitycheck();
                 } else {
                     passcodestring.clear();
                     pincode_circle_1_imageview.setImageDrawable(getResources().getDrawable(R.drawable.pincode_circle));
@@ -628,7 +618,7 @@ public class PasscodeActivity extends AppCompatActivity {
 //                        default:
 //                            break;
                     }
-                    passcodeQuantitycheck();
+
                 } else {
                     passcodestring.clear();
                     pincode_circle_1_imageview.setImageDrawable(getResources().getDrawable(R.drawable.pincode_circle));
@@ -701,7 +691,7 @@ public class PasscodeActivity extends AppCompatActivity {
 //                        default:
 //                            break;
                     }
-                    passcodeQuantitycheck();
+
                 } else {
                     passcodestring.clear();
                     pincode_circle_1_imageview.setImageDrawable(getResources().getDrawable(R.drawable.pincode_circle));
@@ -774,7 +764,7 @@ public class PasscodeActivity extends AppCompatActivity {
 //                        default:
 //                            break;
                     }
-                    passcodeQuantitycheck();
+
                 } else {
                     passcodestring.clear();
                     pincode_circle_1_imageview.setImageDrawable(getResources().getDrawable(R.drawable.pincode_circle));

@@ -53,17 +53,18 @@
                 <TextView
                     android:id="@+id/products_textview"
                     style="@style/TextViews_Title"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
                     android:text="Products" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/shop_products_RecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:paddingBottom="40dp" />
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 

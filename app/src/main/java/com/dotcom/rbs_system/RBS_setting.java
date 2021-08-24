@@ -86,12 +86,10 @@ public class RBS_setting extends Fragment {
     TextView shop_name_textView, shop_email_textView, shop_phno_textView, shop_address_textView;
     TextView rbsMessage_textView;
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -107,7 +105,6 @@ public class RBS_setting extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment RBS_setting.
      */
-    // TODO: Rename and change types and number of parameters
     public static RBS_setting newInstance(String param1, String param2) {
         RBS_setting fragment = new RBS_setting();
         Bundle args = new Bundle();
@@ -404,6 +401,7 @@ public class RBS_setting extends Fragment {
             public void onClick(View v) {
                 if (validateAlertAddFault()) {
                     detailsSubmitAlertAddFault();
+                    //TODO zero value error
                 }
 
             }

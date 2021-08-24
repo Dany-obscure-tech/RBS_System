@@ -85,8 +85,8 @@ public class Customer_history extends AppCompatActivity {
 
         Initialization();
         InitialDataFetch();
+        //TOdo Post code replace karna ha address ki jaga
         ClickListeners();
-        //TODO validatefields ka function nahi laga howa yaha pa
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -307,29 +307,39 @@ public class Customer_history extends AppCompatActivity {
 
     private boolean validatefields() {
         boolean valid = true;
-        //TODO yaha par validations sahi sa nhi lage howi email ki aur address ki
-        if (!ccp.isValidFullNumber()) {
+        if (editTextCarrierNumber.getText().toString().equals(phno_textView.getText().toString())) {
+        } else if (!ccp.isValidFullNumber()) {
             editTextCarrierNumber.setError("Please enter valid number");
             valid = false;
         }
+
+
         return valid;
     }
 
     private void edit_data() {
+        boolean check = false;
 
-
-        if (ccp.isValidFullNumber()) {
+        if (!editTextCarrierNumber.getText().toString().equals(phno_textView.getText().toString())) {
             customerRef.child(customerKeyID).child("Phone_no").setValue(ccp.getFullNumberWithPlus());
+            check = true;
         }
-        if (!ac_address.getText().toString().equals("")) {
+        if (!ac_address.getText().toString().equals("") && !customer_address_textView.getText().toString().equals(ac_address.getText().toString())) {
             customerRef.child(customerKeyID).child("Address").setValue(ac_address.getText().toString());
+            check = true;
         }
-        if (!ac_email.getText().toString().equals("")) {
+        if (!ac_email.getText().toString().equals("") && !customer_email_textView.getText().toString().equals(ac_email.getText().toString())) {
             customerRef.child(customerKeyID).child("Email").setValue(ac_email.getText().toString());
+            check = true;
         }
-        Toast.makeText(this, "Data save Successfully", Toast.LENGTH_SHORT).show();
+        if (check == true) {
+            Toast.makeText(this, "Data save Successfully", Toast.LENGTH_SHORT).show();
+            recreate();
+        } else {
+            Toast.makeText(Customer_history.this, "Not Edit", Toast.LENGTH_SHORT).show();
+        }
+
         edit_dialog.dismiss();
-        recreate();
 
     }
 

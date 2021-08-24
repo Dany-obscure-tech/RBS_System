@@ -26,12 +26,10 @@ public class RBS_Vendor_Orders extends Fragment {
     View view;
     List<String> invoice_no_list, vendor_name_list, amount_currency_list, amount_list, paid_currency_list, paid_list, date_list, balance_currency_list, balance_list, order_status_list;
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -47,7 +45,6 @@ public class RBS_Vendor_Orders extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment RBS_Vendor_Orders.
      */
-    // TODO: Rename and change types and number of parameters
     public static RBS_Vendor_Orders newInstance(String param1, String param2) {
         RBS_Vendor_Orders fragment = new RBS_Vendor_Orders();
         Bundle args = new Bundle();
@@ -70,7 +67,7 @@ public class RBS_Vendor_Orders extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_r_b_s__vendor__orders, container, false);
+        view = inflater.inflate(R.layout.fragment_rbs_vendor_orders, container, false);
         ActionBarTitle.getInstance().getTextView().setText("Vendor Orders");
         initialization();
         return view;

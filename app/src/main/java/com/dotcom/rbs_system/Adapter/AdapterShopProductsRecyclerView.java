@@ -56,6 +56,8 @@ public class AdapterShopProductsRecyclerView extends RecyclerView.Adapter<Adapte
         TextView priceTV;
         ImageView image;
 
+        //TODO is kay item ko center karna ha
+
 
         public MyViewHolder(View itemView) {
             super(itemView);

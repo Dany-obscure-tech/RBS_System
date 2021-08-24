@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.dotcom.rbs_system.Adapter.AdapterBuylocalCustomerHistoryListRecyclerView;
+import com.dotcom.rbs_system.Adapter.AdapterCustomerHistoryListRecyclerView;
+import com.dotcom.rbs_system.Adapter.AdapterCustomerIDImagesRecyclerView;
 import com.dotcom.rbs_system.Classes.UserDetails;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,9 +31,16 @@ public class BuyLocal_Profile extends Fragment {
 
     RelativeLayout alert_background_relativelayout;
 
+    List<String> shopkeeper_name_textview, item_name_textview, item_category_textview, shopkeeperImage_imageView_list, dateList, itemKeyId, itemImageView, shopkeeper_key_id, serial_no_textview;
+
+
     TextView name, phno, email, address, creationDate_textView, edit_textView, edit_image_textView;
 
     ImageView profileImage_imageView, edit_image_image_view;
+
+    RecyclerView customer_history_recyclerview;
+
+    AdapterBuylocalCustomerHistoryListRecyclerView adapterBuylocalCustomerHistoryListRecyclerView;
 
     List<String> price, itemImage;
     List<String> offer_status;
@@ -72,6 +84,9 @@ public class BuyLocal_Profile extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_buylocal_profile, container, false);
 
+        customer_history_recyclerview = view.findViewById(R.id.customer_history_recyclerview);
+        customer_history_recyclerview.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+
         profileImage_imageView = view.findViewById(R.id.profileImage_imageView);
         edit_image_textView = view.findViewById(R.id.edit_image_textView);
         alert_background_relativelayout = view.findViewById(R.id.alert_background_relativelayout);
@@ -79,6 +94,18 @@ public class BuyLocal_Profile extends Fragment {
         name = view.findViewById(R.id.name);
         phno = view.findViewById(R.id.phno);
         address = view.findViewById(R.id.address);
+
+        dateList = new ArrayList<>();
+        itemImageView = new ArrayList<>();
+        itemKeyId = new ArrayList<>();
+        item_name_textview = new ArrayList<>();
+        item_category_textview = new ArrayList<>();
+        serial_no_textview = new ArrayList<>();
+        shopkeeperImage_imageView_list = new ArrayList<>();
+        shopkeeper_key_id = new ArrayList<>();
+        shopkeeper_name_textview = new ArrayList<>();
+        item_name_textview.add("Asus Rog Strix");
+
         creationDate_textView = view.findViewById(R.id.creationDate_textView);
         email = view.findViewById(R.id.email);
         edit_textView = view.findViewById(R.id.edit_textView);
@@ -87,6 +114,9 @@ public class BuyLocal_Profile extends Fragment {
         offer_status = new ArrayList<>();
         offer_product_price = new ArrayList<>();
         product_offer_msg = new ArrayList<>();
+
+        adapterBuylocalCustomerHistoryListRecyclerView = new AdapterBuylocalCustomerHistoryListRecyclerView(getActivity(), dateList, item_category_textview, itemImageView, itemKeyId, item_name_textview, serial_no_textview, shopkeeperImage_imageView_list, shopkeeper_key_id, shopkeeper_name_textview);
+        customer_history_recyclerview.setAdapter(adapterBuylocalCustomerHistoryListRecyclerView);
 
         edit_image_image_view.setOnClickListener(new View.OnClickListener() {
             @Override

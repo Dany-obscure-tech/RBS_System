@@ -1001,13 +1001,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             }
         });
 
-        print_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                printTcp();
-                Toast.makeText(Sale.this, "YEs working", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         submit_textView.setOnClickListener(new View.OnClickListener() {
             @Override

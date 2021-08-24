@@ -33,18 +33,6 @@
                     app:civ_border_color="#4A4A4A"
                     app:civ_border_width="0dp" />
 
-                <TextView
-                    android:id="@+id/date_textView"
-                    style="@style/TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/profileImage_imageView"
-                    android:layout_centerInParent="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginRight="10dp"
-                    android:text="@string/date" />
-
 
             </RelativeLayout>
 
@@ -86,7 +74,7 @@
 
                     <TextView
                         android:id="@+id/currency"
-                        style="@style/TextViews_Bold"
+                        style="@style/TextViews_Title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -95,7 +83,7 @@
 
                     <TextView
                         android:id="@+id/offered_price"
-                        style="@style/TextViews_Bold"
+                        style="@style/TextViews_Title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -119,7 +107,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginEnd="5dp"
                         android:layout_weight="1"
                         android:foreground="?attr/selectableItemBackgroundBorderless"
                         android:text="Accept" />
@@ -129,13 +117,23 @@
                         style="@style/blue_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="5dp"
                         android:layout_marginEnd="10dp"
                         android:layout_weight="1"
                         android:foreground="?attr/selectableItemBackgroundBorderless"
                         android:text="Message" />
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/date_textView"
+                    style="@style/TextViews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/date" />
 
             </LinearLayout>
 

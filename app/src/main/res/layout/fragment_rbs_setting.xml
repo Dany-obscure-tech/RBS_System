@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".RBS_setting">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -75,7 +73,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edit"
-                            android:backgroundTint="@color/textGreen"
+                            android:backgroundTint="@color/colorWhite"
 
                             />
 
@@ -84,24 +82,6 @@
                 </RelativeLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/add_logo_textview"
-                    style="@style/blue_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:foreground="?attr/selectableItemBackgroundBorderless"
-                    android:text="Edit Logo" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -360,7 +340,7 @@
             android:paddingTop="10dp"
             android:paddingRight="20dp"
             android:paddingBottom="10dp"
-            android:text="Edit"
+            android:text="Edit logo"
             android:textAlignment="center"
             android:textColor="@color/colorWhite"
             android:visibility="gone" />

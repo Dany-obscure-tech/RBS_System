@@ -73,7 +73,7 @@ public class RBS_mainscreen extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference().child("Users_data");
 
         actionBar = this.getSupportActionBar();
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.profile_screen_header));
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.screen_header_rectangle));
 
         ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
                 ActionBar.LayoutParams.MATCH_PARENT, // Width of TextView

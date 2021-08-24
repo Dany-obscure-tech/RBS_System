@@ -509,7 +509,6 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
                 if (validCheck != 3) {
                     recreate();
                 } else {
-                    Toast.makeText(RBS_Shopkeeper_Inventory_Details.this, String.valueOf(imageUrlList.size()), Toast.LENGTH_SHORT).show();
                     Toast.makeText(RBS_Shopkeeper_Inventory_Details.this, "Please edit values!", Toast.LENGTH_SHORT).show();
                 }
 

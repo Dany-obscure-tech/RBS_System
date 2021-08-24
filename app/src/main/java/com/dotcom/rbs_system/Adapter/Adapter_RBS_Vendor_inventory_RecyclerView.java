@@ -64,7 +64,6 @@ public class Adapter_RBS_Vendor_inventory_RecyclerView extends RecyclerView.Adap
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (compoundButton.isChecked()) {
                     vendor_stock_selection_checkbox.add(position);
-                    Toast.makeText(context, String.valueOf(vendor_stock_selection_checkbox.size()), Toast.LENGTH_SHORT).show();
                 }
                 if (!compoundButton.isChecked()) {
 
@@ -73,7 +72,6 @@ public class Adapter_RBS_Vendor_inventory_RecyclerView extends RecyclerView.Adap
                             vendor_stock_selection_checkbox.remove(i);
                         }
                     }
-                    Toast.makeText(context, String.valueOf(vendor_stock_selection_checkbox.size()), Toast.LENGTH_SHORT).show();
                 }
             }
         });

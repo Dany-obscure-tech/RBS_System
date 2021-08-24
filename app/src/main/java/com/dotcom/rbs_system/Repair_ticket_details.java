@@ -70,7 +70,7 @@ public class Repair_ticket_details extends AppCompatActivity {
         InitialDataFetch();
         OnClickListeners();
 
-        //TODO edit ticket ma jo already faults list a rahe, usko bbhi hm delete kar sakey, but ye is ma nhi ha
+        //TODO edit ticket ma jo already faults list a rahe, usko bhi hm delete kar sakey, but ye is ma nhi ha
 
     }
 

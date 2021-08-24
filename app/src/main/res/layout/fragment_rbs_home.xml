@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Rbs_home">
 
-    <!-- TODO: Update blank fragment layout -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -61,6 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:layout_marginBottom="40dp"
                     android:layout_marginEnd="10dp" />
 
             </LinearLayout>

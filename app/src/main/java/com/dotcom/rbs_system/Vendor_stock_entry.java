@@ -86,6 +86,7 @@ public class Vendor_stock_entry extends AppCompatActivity {
         setContentView(R.layout.activity_vendor_stock_entry);
         Initialization();
         Onclicklistners();
+        //TODO zero entry error
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

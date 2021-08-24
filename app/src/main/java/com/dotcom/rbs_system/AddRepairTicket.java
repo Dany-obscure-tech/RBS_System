@@ -32,6 +32,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hbb20.CountryCodePicker;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -54,6 +55,10 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
 
     String key;
 
+    CountryCodePicker ccp;
+    EditText editTextCarrierNumber;
+
+    String selected_country_code;
 
     ImageView customerImage_imageView;
 
@@ -80,7 +85,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
     EditText amount_editText, special_condition_editText;
     EditText pendingAmount_editText;
 
-    EditText customerName_editText, customerId_editText, customerPhno_editText, customerEmail_editText;
+    EditText customerName_editText, customerId_editText, customerEmail_editText;
     EditText itemName_editText, itemSerialNo_editText;
 
     RecyclerView faultList_recyclerView;
@@ -142,6 +147,10 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         pd3 = new Progress_dialoge();
         pd4 = new Progress_dialoge();
 
+        ccp = findViewById(R.id.ccp);
+        editTextCarrierNumber = findViewById(R.id.editText_carrierNumber);
+        ccp.registerCarrierNumberEditText(editTextCarrierNumber);
+
         faultNameList = new ArrayList<>();
         faultPriceList = new ArrayList<>();
         faultKeyIDList = new ArrayList<>();
@@ -171,7 +180,6 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
 
         customerName_editText = (EditText) findViewById(R.id.customerName_editText);
         customerId_editText = (EditText) findViewById(R.id.customerId_editText);
-        customerPhno_editText = (EditText) findViewById(R.id.customerPhno_editText);
         customerEmail_editText = (EditText) findViewById(R.id.customerEmail_editText);
 
         itemName_editText = (EditText) findViewById(R.id.itemName_editText);
@@ -390,6 +398,11 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
     private boolean validateFields() {
         boolean valid = true;
 
+        if (!ccp.isValidFullNumber()) {
+            editTextCarrierNumber.setError("Please enter valid number");
+            valid = false;
+        }
+
         if (amount_editText.getText().toString().isEmpty()) {
             amount_editText.setError("Please enter agreed price");
             valid = false;
@@ -422,7 +435,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Customer_email").setValue(customerEmail_editText.getText().toString());
             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Customer_id").setValue(customerId_editText.getText().toString());
             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Customer_name").setValue(customerName_editText.getText().toString());
-            reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Customer_phno").setValue(customerPhno_editText.getText().toString());
+            reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Customer_phno").setValue(String.valueOf(ccp.getFullNumberWithPlus()));
             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Date").setValue(date_textView.getText().toString());
             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Item_name").setValue(itemName_editText.getText().toString());
             reference.child("Repairs_ticket_list").child(firebaseAuthUID).child(key).child("Item_serial_no").setValue(itemSerialNo_editText.getText().toString());
@@ -434,7 +447,8 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Customer_email").setValue(customerEmail_editText.getText().toString());
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Customer_id").setValue(customerId_editText.getText().toString());
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Customer_name").setValue(customerName_editText.getText().toString());
-            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Customer_phno").setValue(customerPhno_editText.getText().toString());
+            reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Customer_phno").setValue(String.valueOf(ccp.getFullNumberWithPlus()));
+            Toast.makeText(AddRepairTicket.this, String.valueOf(ccp.getFullNumberWithPlus()), Toast.LENGTH_SHORT).show();
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Date").setValue(date_textView.getText().toString());
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("Faults").removeValue();
             for (int i = 0; i < tempFaultNameList.size(); i++) {
@@ -450,6 +464,21 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             reference.child("Repairs_list").child(firebaseAuthUID).child(key).child("key_id").setValue(key);
 
             Toast.makeText(this, "Submit Successfully", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(AddRepairTicket.this, Invoice_preview_repair_ticket.class);
+            intent.putExtra("Date", String.valueOf(date_textView.getText().toString()));
+            intent.putExtra("Customer_Name", String.valueOf(customerName_editText.getText().toString()));
+            intent.putExtra("Customer_Email", String.valueOf(customerEmail_editText.getText().toString()));
+            intent.putExtra("Customer_ID", String.valueOf(customerId_editText.getText().toString()));
+            intent.putExtra("Customer_Ph_No", String.valueOf(ccp.getFullNumberWithPlus()));
+            intent.putExtra("Item_Name", String.valueOf(itemName_editText.getText().toString()));
+            intent.putExtra("Item_ID", String.valueOf(itemSerialNo_editText.getText().toString()));
+            intent.putExtra("Ticket_No", String.valueOf(ticketNo_TextView.getText().toString()));
+            intent.putExtra("Amount", String.valueOf(amount_editText.getText().toString()));
+            intent.putExtra("Special_condition", String.valueOf(special_condition_editText.getText().toString()));
+            finish();
+            startActivity(intent);
+
 
             //TODO yaha dialog box lgana ha
 
@@ -589,4 +618,13 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         amount_editText.setText(String.valueOf(incremantalAmount));
     }
 
+    public void onCountryPickerClick(View view) {
+        ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                //Alert.showMessage(RegistrationActivity.this, ccp.getSelectedCountryCodeWithPlus());
+                selected_country_code = ccp.getFullNumberWithPlus();
+            }
+        });
+    }
 }

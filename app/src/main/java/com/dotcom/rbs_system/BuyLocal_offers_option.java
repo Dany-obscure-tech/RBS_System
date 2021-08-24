@@ -35,6 +35,7 @@ public class BuyLocal_offers_option extends AppCompatActivity {
         back_btn = findViewById(R.id.back_btn);
         itemname = new ArrayList<>();
         itemname.add("Shirts");
+        //TOdo make it live and search view also
         AdapterOffersItemListRecyclerView adapterOffersItemListRecyclerView = new AdapterOffersItemListRecyclerView(BuyLocal_offers_option.this, itemname, null, null, null, null, null);
 
         offers.setLayoutManager(new LinearLayoutManager(BuyLocal_offers_option.this, RecyclerView.HORIZONTAL, true));

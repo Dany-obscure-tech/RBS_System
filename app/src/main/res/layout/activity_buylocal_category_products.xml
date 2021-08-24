@@ -80,7 +80,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/search_view_bar"
         android:background="#F3F3F3"
-
         android:orientation="vertical">
 
         <TextView
@@ -95,9 +94,10 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/categoryRecyclerView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp" />

@@ -134,7 +134,7 @@ public class Adapter_RBS_Vendor_placeorder_RecyclerView extends RecyclerView.Ada
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
+//TODO zero value error
             placeorder_item_name_textView = itemView.findViewById(R.id.placeorder_item_name_textView);
             placeorder_item_category_textView = itemView.findViewById(R.id.placeorder_item_category_textView);
             placeorder_item_currency_textview = itemView.findViewById(R.id.placeorder_item_currency_textview);

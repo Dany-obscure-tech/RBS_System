@@ -6,8 +6,6 @@
     android:orientation="vertical"
     tools:context=".RBS_Vendor_Orders">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rbs_vendor_orders_recyclerview"
         android:layout_width="match_parent"

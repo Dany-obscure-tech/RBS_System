@@ -60,7 +60,7 @@ public class VendorMainScreen extends AppCompatActivity {
         setContentView(R.layout.activity_vendor_main_screen);
 
         actionBar = this.getSupportActionBar();
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.profile_screen_header));
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.screen_header_rectangle));
 
         ActionBar.LayoutParams lp = new ActionBar.LayoutParams(
                 ActionBar.LayoutParams.MATCH_PARENT, // Width of TextView

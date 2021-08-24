@@ -44,7 +44,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class BuyLocal_home extends Fragment {
-    Button test_btn;
+    Button test_btn,test1_btn;
     EditText search_editText;
 
     BuylocalSlider buylocalSliderlistObj;
@@ -145,10 +145,17 @@ public class BuyLocal_home extends Fragment {
         search_imageBtn = view.findViewById(R.id.search_imageBtn);
 
         test_btn = view.findViewById(R.id.test_btn);
+        test1_btn = view.findViewById(R.id.test1_btn);
         test_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), RBS_mainscreen.class));
+            }
+        });
+        test1_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), VendorMainScreen.class));
             }
         });
 

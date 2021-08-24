@@ -61,13 +61,13 @@ public class AdapterItemHistoryListRecyclerView extends RecyclerView.Adapter<Ada
         holder.shopkeeper_area_linearlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Yes working 1", Toast.LENGTH_SHORT).show();
+                //TODO need to online
             }
         });
         holder.customer_area_linearlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Yes working 2", Toast.LENGTH_SHORT).show();
+                //TODO need to online
             }
         });
 

@@ -95,7 +95,6 @@ public class Item_history extends AppCompatActivity {
         itemID = getIntent().getStringExtra("ITEM_ID");
         itemCategory = getIntent().getStringExtra("ITEM_CATEGORY");
 
-        Toast.makeText(this, itemID + itemCategory, Toast.LENGTH_SHORT).show();
 
 
         dateList = new ArrayList<>();

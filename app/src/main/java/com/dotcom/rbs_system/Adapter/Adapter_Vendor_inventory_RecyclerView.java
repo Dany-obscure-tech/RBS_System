@@ -83,7 +83,7 @@ public class Adapter_Vendor_inventory_RecyclerView extends RecyclerView.Adapter<
 
                 holder.sno_textview = dialog_box.findViewById(R.id.sno_textview);
                 holder.item_name_textview = dialog_box.findViewById(R.id.item_name_textview);
-                holder.category_editText = dialog_box.findViewById(R.id.category_editText);
+                holder.category_editText = dialog_box.findViewById(R.id.username_editText);
                 holder.change_picture_btn = dialog_box.findViewById(R.id.change_picture_btn);
                 holder.remove_btn = dialog_box.findViewById(R.id.remove_btn);
                 holder.save_btn = dialog_box.findViewById(R.id.save_btn);

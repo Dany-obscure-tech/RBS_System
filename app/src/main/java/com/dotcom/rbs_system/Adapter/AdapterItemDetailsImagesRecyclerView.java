@@ -24,7 +24,6 @@ public class AdapterItemDetailsImagesRecyclerView extends RecyclerView.Adapter<A
     public AdapterItemDetailsImagesRecyclerView(Context context, List<Uri> imageUrlList) {
         this.context = context;
         this.imageUrlList = imageUrlList;
-        Toast.makeText(context, String.valueOf(context), Toast.LENGTH_SHORT).show();
     }
 
     @NonNull

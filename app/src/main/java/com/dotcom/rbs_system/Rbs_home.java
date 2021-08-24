@@ -36,7 +36,6 @@ import java.util.List;
  */
 public class Rbs_home extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -53,7 +52,6 @@ public class Rbs_home extends Fragment {
 
     ImageView store_banner_imageView;
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -69,7 +67,6 @@ public class Rbs_home extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment Rbs_home.
      */
-    // TODO: Rename and change types and number of parameters
     public static Rbs_home newInstance(String param1, String param2) {
         Rbs_home fragment = new Rbs_home();
         Bundle args = new Bundle();

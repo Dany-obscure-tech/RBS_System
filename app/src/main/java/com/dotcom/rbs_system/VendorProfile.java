@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.hbb20.CountryCodePicker;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -44,6 +46,15 @@ public class VendorProfile extends Fragment {
     StorageReference vendorBannerStorageReference, vendorLogoStorageReference;
 
     DatabaseReference userDataRef;
+
+    String selected_country_code;
+
+    EditText editTextCarrierNumber;
+
+    CountryCodePicker ccp;
+
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
     View view;
     TextView view_users_btn, edit_vendor_details_cancel_btn, edit_vendor_details_save_btn, change_passcode_btn, change_passcode_cancel_btn, change_passcode_submit_btn, change_new_passcode_cancel_btn, edit_vendor_details_btn_textView;
     Dialog change_passcode_alert_dialog, new_passcode_alert_dialog, edit_vendor_info_alert_dialog;
@@ -53,16 +64,14 @@ public class VendorProfile extends Fragment {
     TextView appRegNo_textView, name_textView, company_name_textView, company_reg_no_textView, post_code_textView, vendor_address_textView, vendor_phone_textView, vendor_mobile_textView, vendor_email_textView, vendor_url_textView;
     ImageView logo_imageView, store_banner_imageView;
 
-    EditText edit_pastcode_editText, edit_address_editText, edit_phone_number_editText, edit_mobile_number_editText, edit_email_address_editText, edit_url_address_editText;
+    EditText edit_pastcode_editText, edit_address_editText, edit_mobile_number_editText, edit_email_address_editText, edit_url_address_editText;
 
     String buttonPressCheck;
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private Uri fileUri;
@@ -79,7 +88,6 @@ public class VendorProfile extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment VendorProfile.
      */
-    // TODO: Rename and change types and number of parameters
     public static VendorProfile newInstance(String param1, String param2) {
         VendorProfile fragment = new VendorProfile();
         Bundle args = new Bundle();
@@ -114,6 +122,8 @@ public class VendorProfile extends Fragment {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void initialization() {
+
+
         vendorBannerStorageReference = FirebaseStorage.getInstance().getReference().child("Users_data/vendors_banners/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
         vendorLogoStorageReference = FirebaseStorage.getInstance().getReference().child("Users_data/vendors_logos/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
@@ -143,9 +153,11 @@ public class VendorProfile extends Fragment {
         new_passcode_alert_dialog.setContentView(R.layout.alert_vendor_new_passcode);
         edit_vendor_info_alert_dialog = new Dialog(getActivity());
         edit_vendor_info_alert_dialog.setContentView(R.layout.alert_vendor_details_edit);
+        ccp = edit_vendor_info_alert_dialog.findViewById(R.id.ccp);
+        editTextCarrierNumber = edit_vendor_info_alert_dialog.findViewById(R.id.editText_carrierNumber);
+        ccp.registerCarrierNumberEditText(editTextCarrierNumber);
         edit_pastcode_editText = edit_vendor_info_alert_dialog.findViewById(R.id.edit_pastcode_editText);
         edit_address_editText = edit_vendor_info_alert_dialog.findViewById(R.id.edit_address_editText);
-        edit_phone_number_editText = edit_vendor_info_alert_dialog.findViewById(R.id.edit_phone_number_editText);
         edit_mobile_number_editText = edit_vendor_info_alert_dialog.findViewById(R.id.edit_mobile_number_editText);
         edit_email_address_editText = edit_vendor_info_alert_dialog.findViewById(R.id.edit_email_address_editText);
         edit_url_address_editText = edit_vendor_info_alert_dialog.findViewById(R.id.edit_url_address_editText);
@@ -183,12 +195,7 @@ public class VendorProfile extends Fragment {
                     Picasso.get().load(String.valueOf(dataSnapshot.child("logo").getValue().toString())).into(logo_imageView);
                     Picasso.get().load(String.valueOf(dataSnapshot.child("banner").getValue().toString())).into(store_banner_imageView);
 
-                    edit_pastcode_editText.setText(post_code_textView.getText().toString());
-                    edit_address_editText.setText(vendor_address_textView.getText().toString());
-                    edit_phone_number_editText.setText(vendor_phone_textView.getText().toString());
-                    edit_mobile_number_editText.setText(vendor_mobile_textView.getText().toString());
-                    edit_email_address_editText.setText(vendor_email_textView.getText().toString());
-                    edit_url_address_editText.setText(vendor_url_textView.getText().toString());
+
                 }
             }
 
@@ -246,15 +253,83 @@ public class VendorProfile extends Fragment {
         edit_vendor_details_save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // todo Shahzaib : Validation
-                userDataRef.child("post_code").setValue(edit_pastcode_editText.getText().toString());
-                userDataRef.child("address").setValue(edit_address_editText.getText().toString());
-                userDataRef.child("phno").setValue(edit_phone_number_editText.getText().toString());
-                userDataRef.child("mobno").setValue(edit_mobile_number_editText.getText().toString());
-                userDataRef.child("email").setValue(edit_email_address_editText.getText().toString());
-                userDataRef.child("url").setValue(edit_url_address_editText.getText().toString());
+                //Todo is ma country code picker bhi dalna ha
+                if (validate_fields()) {
+
+                    getFragmentManager().beginTransaction().replace(R.id.screenContainer, new VendorProfile()).commit();
+
+                    edit_vendor_info_alert_dialog.dismiss();
+                }
             }
         });
+    }
+
+
+    private boolean validate_fields() {
+        boolean valid = true;
+
+        String email = edit_address_editText.getText().toString().trim();
+
+        if (edit_pastcode_editText.getText().toString().equals(post_code_textView.getText().toString())) {
+
+        } else if (edit_pastcode_editText.getText().toString().equals("")) {
+            edit_pastcode_editText.setError("Enter postcode");
+            valid = false;
+        } else {
+            userDataRef.child("post_code").setValue(edit_pastcode_editText.getText().toString());
+            Toast.makeText(getActivity(), "Yes post code edit complete", Toast.LENGTH_SHORT).show();
+        }
+
+        if (editTextCarrierNumber.getText().toString().equals(vendor_phone_textView.getText().toString())) {
+        } else if (!ccp.isValidFullNumber()) {
+            editTextCarrierNumber.setError("Please enter valid number");
+            valid = false;
+        } else {
+            userDataRef.child("phno").setValue(String.valueOf(ccp.getFullNumberWithPlus()));
+        }
+
+        if (edit_address_editText.getText().toString().equals(vendor_address_textView.getText().toString())) {
+
+        } else if (edit_address_editText.getText().toString().equals("")) {
+            edit_address_editText.setError("Enter address");
+            valid = false;
+        } else {
+            userDataRef.child("address").setValue(edit_address_editText.getText().toString());
+        }
+        if (edit_mobile_number_editText.getText().toString().equals(vendor_mobile_textView.getText().toString())) {
+
+        } else if (edit_mobile_number_editText.getText().toString().equals("")) {
+            edit_mobile_number_editText.setError("Enter mobile number");
+            valid = false;
+        } else {
+            userDataRef.child("mobno").setValue(edit_mobile_number_editText.getText().toString());
+        }
+        if (edit_email_address_editText.getText().toString().equals(vendor_email_textView.getText().toString())) {
+
+        } else if (edit_email_address_editText.getText().toString().equals("")) {
+            edit_email_address_editText.setError("Enter email address");
+            valid = false;
+        } else if (email.matches(emailPattern)) {
+            userDataRef.child("email").setValue(edit_email_address_editText.getText().toString());
+        } else {
+            edit_email_address_editText.setError("Enter valid email address");
+            valid = false;
+        }
+
+        if (edit_url_address_editText.getText().toString().equals(vendor_url_textView.getText().toString())) {
+
+        } else if (edit_url_address_editText.getText().toString().equals("")) {
+            edit_url_address_editText.setError("Enter Website URL");
+            valid = false;
+        } else if (URLUtil.isValidUrl(edit_url_address_editText.getText().toString())) {
+            userDataRef.child("url").setValue(edit_url_address_editText.getText().toString());
+        } else {
+            edit_url_address_editText.setError("Enter valid URL");
+            valid = false;
+        }
+
+
+        return valid;
     }
 
     private void edit_vendor_details_cancel_btn_listner() {
@@ -271,6 +346,12 @@ public class VendorProfile extends Fragment {
             @Override
             public void onClick(View v) {
                 edit_vendor_info_alert_dialog.show();
+                edit_pastcode_editText.setText(post_code_textView.getText().toString());
+                edit_address_editText.setText(vendor_address_textView.getText().toString());
+                editTextCarrierNumber.setText(vendor_phone_textView.getText().toString());
+                edit_mobile_number_editText.setText(vendor_mobile_textView.getText().toString());
+                edit_email_address_editText.setText(vendor_email_textView.getText().toString());
+                edit_url_address_editText.setText(vendor_url_textView.getText().toString());
             }
         });
     }
@@ -423,6 +504,16 @@ public class VendorProfile extends Fragment {
         } else {
             Toast.makeText(getActivity(), "Task Cancelled", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void onCountryPickerClick(View view) {
+        ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                //Alert.showMessage(RegistrationActivity.this, ccp.getSelectedCountryCodeWithPlus());
+                selected_country_code = ccp.getFullNumberWithPlus();
+            }
+        });
     }
 
 }
