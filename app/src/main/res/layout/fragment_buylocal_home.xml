@@ -166,7 +166,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/main_button"
         android:foreground="?attr/selectableItemBackgroundBorderless"
         android:visibility="gone"
         app:cardCornerRadius="5dp">

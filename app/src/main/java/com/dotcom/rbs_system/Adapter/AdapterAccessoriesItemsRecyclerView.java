@@ -61,20 +61,19 @@ public class AdapterAccessoriesItemsRecyclerView extends RecyclerView.Adapter<Ad
         return accessoryNameList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView accessoryName_textView, unitPrice_textView, totalPrice_textView, quantity_textView, remove_textView, serialNo_textView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            accessoryName_textView = (TextView) itemView.findViewById(R.id.accessoryName_textView);
-            unitPrice_textView = (TextView) itemView.findViewById(R.id.unitPrice_textView);
-            totalPrice_textView = (TextView) itemView.findViewById(R.id.totalPrice_textView);
-            quantity_textView = (TextView) itemView.findViewById(R.id.quantity_textView);
-            serialNo_textView = (TextView) itemView.findViewById(R.id.serialNo_textView);
-
-            remove_textView = (TextView) itemView.findViewById(R.id.remove_textView);
+            accessoryName_textView = itemView.findViewById(R.id.accessoryName_textView);
+            unitPrice_textView = itemView.findViewById(R.id.unitPrice_textView);
+            totalPrice_textView = itemView.findViewById(R.id.totalPrice_textView);
+            quantity_textView = itemView.findViewById(R.id.quantity_textView);
+            serialNo_textView = itemView.findViewById(R.id.serialNo_textView);
+            remove_textView = itemView.findViewById(R.id.remove_textView);
         }
     }
 }

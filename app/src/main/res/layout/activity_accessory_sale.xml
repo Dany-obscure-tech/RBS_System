@@ -8,35 +8,38 @@
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#0075B5">
-
-        <ImageButton
-            android:id="@+id/Back_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="#00000000"
-            android:padding="5dp"
-            android:src="@drawable/back_arrow" />
+        android:layout_height="80dp"
+        android:background="@drawable/screen_header_rectangle">
 
         <TextView
+            style="@style/TextViews_Header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/back_btn"
+            android:text="Sale Accessories"
+            android:textColor="#ffffff" />
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
-            android:fontFamily="@font/segoe_ui_bold"
-            android:text="SALE ACCESSORIES"
-            android:textColor="#ffffffff"
-            android:textSize="24sp" />
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:padding="15dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/back_arrow" />
 
     </RelativeLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/header"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp">
+        android:layout_below="@+id/header">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,73 +49,57 @@
             android:orientation="vertical">
 
             <TextView
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="Invoice Number"
-                android:textSize="16sp" />
+                android:text="Invoice Number" />
 
             <TextView
                 android:id="@+id/invoiceNo_TextView"
+                style="@style/TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="NA"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp" />
+                android:text="@string/na"
+                android:textColor="@color/textBlue" />
 
             <TextView
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:inputType="number"
-                android:text="Customer Name"
-                android:textSize="16sp" />
+                android:text="Customer Name" />
 
             <EditText
                 android:id="@+id/customer_name_editText"
+                style="@style/EditTexts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#6E76E3"
-                android:fontFamily="@font/segoe_ui"
                 android:hint="Enter customer name"
-                android:maxLength="32"
-                android:textColor="#9F9F9F"
-                android:textColorHint="#9F9F9F"
-                android:textSize="16sp" />
+                android:inputType="textCapWords" />
 
             <TextView
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:inputType="number"
-                android:text="Customer Phone number"
-                android:textSize="16sp" />
+                android:text="Customer Phone number" />
 
             <EditText
                 android:id="@+id/customer_phone_no_editText"
+                style="@style/EditTexts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#6E76E3"
-                android:fontFamily="@font/segoe_ui"
                 android:hint="Enter customer phone number"
-                android:inputType="number"
-                android:maxLength="11"
-                android:textColor="#9F9F9F"
-                android:textColorHint="#9F9F9F"
-                android:textSize="16sp" />
+                android:inputType="number" />
 
             <TextView
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="Invoice Date"
-                android:textSize="16sp" />
+                android:text="Invoice Date" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -122,38 +109,21 @@
 
                 <TextView
                     android:id="@+id/date_textView"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.7"
-                    android:backgroundTint="#6E76E3"
-                    android:fontFamily="@font/segoe_ui"
-                    android:inputType="date"
-                    android:text="Select date"
-                    android:textColor="#9F9F9F"
-                    android:textSize="16sp" />
+                    android:layout_weight="1.9"
+                    android:text="-- -- --" />
 
-                <Button
+                <TextView
                     android:id="@+id/date_textview"
+                    style="@style/green_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:background="@drawable/main_button"
-                    android:fontFamily="@font/segoe_ui"
-                    android:text="Date"
-                    android:textColor="#0075B5"
-                    android:textSize="15sp" />
+                    android:layout_weight="0.1"
+                    android:text="@string/select_date_btn_string" />
 
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:text="Accessories Items"
-                android:textSize="22sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -163,24 +133,19 @@
                 android:weightSum="2">
 
                 <TextView
+                    style="@style/TextViews_Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.7"
-                    android:backgroundTint="#6E76E3"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Items"
-                    android:textSize="16sp" />
+                    android:layout_weight="1.9"
+                    android:text="Accessories Items" />
 
-                <Button
-                    android:id="@+id/saleAccessory_btn"
+                <TextView
+                    android:id="@+id/saleAccessory_textview"
+                    style="@style/green_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:background="@drawable/main_button"
-                    android:fontFamily="@font/segoe_ui"
-                    android:text="ADD"
-                    android:textColor="#0075B5"
-                    android:textSize="15sp" />
+                    android:layout_weight="0.1"
+                    android:text="Add" />
 
             </LinearLayout>
 
@@ -191,72 +156,57 @@
                 android:nestedScrollingEnabled="false" />
 
             <TextView
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/segoe_ui_bold"
-                android:inputType="number"
-                android:text="Paid"
-                android:textSize="16sp" />
+                android:text="Paid" />
 
             <EditText
                 android:id="@+id/paid_editText"
+                style="@style/EditTexts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#6E76E3"
-                android:fontFamily="@font/segoe_ui"
                 android:hint="Enter paid amount"
-                android:inputType="number"
-                android:maxLength="32"
-                android:textColor="#9F9F9F"
-                android:textColorHint="#9F9F9F"
-                android:textSize="16sp" />
+                android:inputType="number" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:text="Balance"
-                    android:textSize="16sp" />
+                    android:text="Balance" />
 
                 <TextView
                     android:id="@+id/balance_TextView"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="20sp" />
+                    android:textColor="@color/textBlue" />
 
             </LinearLayout>
 
 
-            <Button
+            <TextView
                 android:id="@+id/submit_textview"
-                android:layout_width="wrap_content"
+                style="@style/blue_btn"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/main_button"
-                android:elevation="10dp"
-                android:fontFamily="@font/segoe_ui"
-                android:text="Save"
-                android:textColor="#0075B5"
-                android:textSize="15sp" />
+                android:layout_marginBottom="20dp"
+                android:text="@string/save_btn_string" />
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </RelativeLayout>

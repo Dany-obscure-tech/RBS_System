@@ -2,6 +2,7 @@ package com.dotcom.rbs_system;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,15 +43,16 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Accessory_sale extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-    TextView invoiceNo_TextView;
+    TextView invoiceNo_TextView,date_textview,saleAccessory_textview,submit_textview,alertAddAccessoryEnter_textview,alertSaleAccessoryCancel_textview;
 
     String invoiceNo;
+
+    CardView select_category_cardview,select_itemname_cardview;
 
     DatabaseReference AccessorySaleInvoicesRef;
     String category_name, currency;
     int container = 100;
-    Button saleAccessory_btn, date_btn, alertSaleAccessoryCancel_btn, alertAddAccessoryEnter_btn, submit_btn;
-    ImageButton Back_btn;
+    ImageButton back_btn;
     EditText customer_name_editText, customer_phone_no_editText, alertAccessoryQuantity_editText, alertAccessoryUnitPrice_editText, paid_editText;
     //    Date date;
     TextView date_textView, select_category_textView, select_itemname_textView, alertAccessoryTotalPrice_textView, category_textView, item_name_textView, balance_TextView;
@@ -127,19 +129,21 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
         accessorySaleAlert = new Dialog(this);
         accessorySaleAlert.setContentView(R.layout.alert_sale_accesory_item);
 
-        Back_btn = (ImageButton) findViewById(R.id.Back_btn);
+        back_btn = (ImageButton) findViewById(R.id.back_btn);
         customer_name_editText = (EditText) findViewById(R.id.customer_name_editText);
         customer_phone_no_editText = (EditText) findViewById(R.id.customer_phone_no_editText);
-        date_btn = (Button) findViewById(R.id.date_textview);
-        submit_btn = (Button) findViewById(R.id.submit_textview);
+        date_textview = findViewById(R.id.date_textview);
+        submit_textview = findViewById(R.id.submit_textview);
         alertAccessoryQuantity_editText = (EditText) accessorySaleAlert.findViewById(R.id.alertAccessoryQuantity_editText);
         alertAccessoryUnitPrice_editText = (EditText) accessorySaleAlert.findViewById(R.id.alertAccessoryUnitPrice_editText);
         paid_editText = (EditText) findViewById(R.id.paid_editText);
-        saleAccessory_btn = (Button) findViewById(R.id.saleAccessory_btn);
-        alertSaleAccessoryCancel_btn = (Button) accessorySaleAlert.findViewById(R.id.alertSaleAccessoryCancel_btn);
-        alertAddAccessoryEnter_btn = (Button) accessorySaleAlert.findViewById(R.id.alertAddAccessoryEnter_btn);
+        saleAccessory_textview =  findViewById(R.id.saleAccessory_textview);
+        alertSaleAccessoryCancel_textview = accessorySaleAlert.findViewById(R.id.alertSaleAccessoryCancel_textview);
+        alertAddAccessoryEnter_textview =  accessorySaleAlert.findViewById(R.id.alertAddAccessoryEnter_textview);
         select_category_textView = (TextView) accessorySaleAlert.findViewById(R.id.select_category_textView);
+        select_category_cardview =  accessorySaleAlert.findViewById(R.id.select_category_cardview);
         select_itemname_textView = (TextView) accessorySaleAlert.findViewById(R.id.select_itemname_textView);
+        select_itemname_cardview = accessorySaleAlert.findViewById(R.id.select_itemname_cardview);
         alertAccessoryTotalPrice_textView = (TextView) accessorySaleAlert.findViewById(R.id.alertAccessoryTotalPrice_textView);
         category_textView = (TextView) accessorySaleAlert.findViewById(R.id.category_textView);
         item_name_textView = (TextView) accessorySaleAlert.findViewById(R.id.item_name_textView);
@@ -216,7 +220,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
     }
 
     private void detailsSubmit() {
-        submit_btn.setOnClickListener(new View.OnClickListener() {
+        submit_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validate_fields()) {
@@ -246,7 +250,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
     }
 
     private void selectDate() {
-        date_btn.setOnClickListener(new View.OnClickListener() {
+        date_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment datepicker = new DatePickerFragment();
@@ -257,7 +261,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
     }
 
     private void addAccessoryToList() {
-        alertAddAccessoryEnter_btn.setOnClickListener(new View.OnClickListener() {
+        alertAddAccessoryEnter_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validateSaleAlertFields()) {
@@ -276,7 +280,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
     }
 
     private void enterbtn() {
-        alertAddAccessoryEnter_btn.setOnClickListener(new View.OnClickListener() {
+        alertAddAccessoryEnter_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validateSaleAlertFields()) {
@@ -426,7 +430,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
     }
 
     private void select_item_name() {
-        select_itemname_textView.setOnClickListener(new View.OnClickListener() {
+        select_itemname_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new SimpleSearchDialogCompat(Accessory_sale.this, "Search...",
@@ -436,10 +440,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
                             public void onSelected(BaseSearchDialogCompat dialog,
                                                    SampleSearchModel item, int position) {
                                 select_itemname_textView.setText(item.getTitle());
-//                                vendorName = item.getName();
-//                                vendorPhno = item.getId();
-                                select_itemname_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-                                select_itemname_textView.setTextColor(getResources().getColor(R.color.textGrey));
+                                select_itemname_textView.setTextColor(getResources().getColor(R.color.textBlue));
                                 dialog.dismiss();
                             }
                         }).show();
@@ -448,7 +449,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
     }
 
     private void select_sale_category() {
-        select_category_textView.setOnClickListener(new View.OnClickListener() {
+        select_category_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new SimpleSearchDialogCompat(Accessory_sale.this, "Search...",
@@ -458,10 +459,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
                             public void onSelected(BaseSearchDialogCompat dialog,
                                                    SampleSearchModel item, int position) {
                                 select_category_textView.setText(item.getTitle());
-//                                vendorName = item.getName();
-//                                vendorPhno = item.getId();
-                                select_category_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-                                select_category_textView.setTextColor(getResources().getColor(R.color.textGrey));
+                                select_category_textView.setTextColor(getResources().getColor(R.color.textBlue));
                                 dialog.dismiss();
                                 category_name = item.getTitle();
                                 new_item_name_list.clear();
@@ -483,7 +481,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
     }
 
     private void alertCancel() {
-        alertSaleAccessoryCancel_btn.setOnClickListener(new View.OnClickListener() {
+        alertSaleAccessoryCancel_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 accessorySaleAlert.dismiss();
@@ -492,7 +490,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
     }
 
     private void alertSaleAccessory() {
-        saleAccessory_btn.setOnClickListener(new View.OnClickListener() {
+        saleAccessory_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 accessorySaleAlert.show();
@@ -543,7 +541,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
     }
 
     private void backbtn() {
-        Back_btn.setOnClickListener(new View.OnClickListener() {
+        back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
