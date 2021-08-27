@@ -114,6 +114,8 @@ public class RBS_option extends Fragment {
         Accessories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),Accessory.class);
+                getActivity().startActivity(intent);
                 selectAccessory_dialog.show();
             }
         });
@@ -130,7 +132,9 @@ public class RBS_option extends Fragment {
         icon4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectAccessory_dialog.show();
+                Intent intent = new Intent(getActivity(),Accessory.class);
+                getActivity().startActivity(intent);
+//                selectAccessory_dialog.show();
             }
         });
 

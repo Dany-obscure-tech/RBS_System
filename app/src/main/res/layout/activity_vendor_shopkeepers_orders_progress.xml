@@ -49,6 +49,16 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/status_textView"
+                style="@style/TextViews_Title"
+                android:layout_gravity="right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/Status"
+                android:textColor="@color/textGreen" />
+
+            <TextView
                 android:id="@+id/shop_name_textView"
                 style="@style/TextViews_Title"
                 android:layout_width="wrap_content"
@@ -143,16 +153,15 @@
                             android:textColor="@color/textBlue" />
 
                         <TextView
-                            android:id="@+id/_currency"
-                            style="@style/TextViews_Title"
+                            android:id="@+id/total_price_currency_TextView"
+                            style="@style/TextViews_Alert"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text=""
                             android:textColor="@color/textBlue" />
 
                         <TextView
-                            android:id="@+id/suggest_price_TextView"
+                            android:id="@+id/total_price_TextView"
                             style="@style/TextViews_Alert"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -174,29 +183,14 @@
                     style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Paid" />
-
-                <EditText
-                    android:id="@+id/paid_editText"
-                    style="@style/EditTexts"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter paid amount"
-                    android:inputType="number" />
-
-                <TextView
-                    style="@style/TextViews_Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Discount" />
+                    android:text="Discount %" />
 
                 <EditText
                     android:id="@+id/discount_editText"
                     style="@style/EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter discount amount"
-                    android:inputType="number" />
+                    android:inputType="numberDecimal" />
 
             </LinearLayout>
 
@@ -214,7 +208,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Balance : " />
+                    android:text="Total Balance : " />
 
                 <TextView
                     android:id="@+id/balance_currency"
@@ -244,6 +238,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/readyOrder_textView"
                     style="@style/blue_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -269,6 +264,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:text="Confirm Order" />
+
+            <TextView
+                android:id="@+id/cancel_order_btn"
+                style="@style/blue_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="Cancel Order" />
 
         </LinearLayout>
     </ScrollView>

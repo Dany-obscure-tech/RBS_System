@@ -50,7 +50,7 @@
                 android:gravity="center"
                 android:padding="13dp"
                 android:text="SELECT CATEGORY"
-                android:textColor="#0075B5"
+                android:textColor="@color/colorWhite"
                 android:textSize="15sp" />
 
         </LinearLayout>
@@ -82,7 +82,7 @@
                 android:gravity="center"
                 android:padding="13dp"
                 android:text="SELECT ITEM NAME"
-                android:textColor="#0075B5"
+                android:textColor="@color/colorWhite"
                 android:textSize="15sp" />
 
         </LinearLayout>

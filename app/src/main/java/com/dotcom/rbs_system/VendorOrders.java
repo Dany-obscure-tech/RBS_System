@@ -38,6 +38,7 @@ public class VendorOrders extends Fragment {
     List<String> date;
     List<String> totalAmount;
     List<String> vendor_order_status;
+    List<String> shopkeeper_image;
     List<String> shopKeeper_keyID;
     List<String> invoiceKeyID;
 
@@ -105,6 +106,7 @@ public class VendorOrders extends Fragment {
         date = new ArrayList<>();
         totalAmount = new ArrayList<>();
         vendor_order_status = new ArrayList<>();
+        shopkeeper_image = new ArrayList<>();
         shopKeeper_keyID = new ArrayList<>();
         invoiceKeyID = new ArrayList<>();
 
@@ -126,11 +128,12 @@ public class VendorOrders extends Fragment {
                     date.add(snapshot1.child("date").getValue().toString());
                     totalAmount.add(snapshot1.child("totalBalance").getValue().toString());
                     vendor_order_status.add(snapshot1.child("status").getValue().toString());
+                    shopkeeper_image.add(snapshot1.child("shopkeeper_imageUrl").getValue().toString());
                     shopKeeper_keyID.add(snapshot1.child("shopkeeper_keyID").getValue().toString());
                     invoiceKeyID.add(snapshot1.child("invoice_keyId").getValue().toString());
                 }
 
-                Adapter_Vendor_order_list_RecyclerView adapter_vendor_order_list_recyclerView = new Adapter_Vendor_order_list_RecyclerView(getActivity(), order_no_vendor, shop_name, date, totalAmount, vendor_order_status, shopKeeper_keyID, invoiceKeyID);
+                Adapter_Vendor_order_list_RecyclerView adapter_vendor_order_list_recyclerView = new Adapter_Vendor_order_list_RecyclerView(getActivity(), order_no_vendor, shop_name, date, totalAmount, vendor_order_status, shopkeeper_image,shopKeeper_keyID, invoiceKeyID);
                 orders_list_recyclerview.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                 orders_list_recyclerview.setAdapter(adapter_vendor_order_list_recyclerView);
             }
@@ -146,4 +149,6 @@ public class VendorOrders extends Fragment {
     private void onclicklistners() {
 
     }
+
+
 }

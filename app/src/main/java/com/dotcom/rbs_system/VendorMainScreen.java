@@ -182,6 +182,7 @@ public class VendorMainScreen extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Toast.makeText(VendorMainScreen.this, String.valueOf(resultCode), Toast.LENGTH_SHORT).show();
         if (resultCode == Activity.RESULT_OK) {
             vendorStockDetails = VendorStockDetails.getInstance();
 
@@ -231,6 +232,7 @@ public class VendorMainScreen extends AppCompatActivity {
 //            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
         } else if (resultCode == 111) {
             recreate();
+            nv.setCheckedItem(R.id.nav_shop);
         }
     }
 
@@ -245,4 +247,6 @@ public class VendorMainScreen extends AppCompatActivity {
         }
         return false;
     }
+
+
 }

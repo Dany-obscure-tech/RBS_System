@@ -37,12 +37,12 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
     TextView confirm_order_btn;
 
     ImageButton back_btn;
-    List<String> placeorder_item_name_list, placeorder_item_category_list, place_order_price_list, place_order_quantity_list, placeorder_item_pic_list;
+    List<String> placeorder_item_name_list, placeorder_item_category_list, place_order_price_list, place_order_quantity_list, placeorder_item_pic_list, placeorder_item_keyId_list;
 
     Boolean validate;
     DatabaseReference vendorOrderRef, shopkeeperVendorOrderRef, accessoriesOrdersList;
 
-    String selectedVendorID;
+    String selectedVendorID,profileImage;
 
     TextView vendor_name_textView, vendor_phno_textView, vendor_email_textView, vendor_address_textView;
 
@@ -78,6 +78,7 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
         vendor_email_textView.setText(getIntent().getStringExtra("VENDOR_EMAIL"));
         vendor_address_textView.setText(getIntent().getStringExtra("VENDOR_ADDRESS"));
         vendor_phno_textView.setText(getIntent().getStringExtra("VENDOR_PHNO"));
+        profileImage = getIntent().getStringExtra("VENDOR_IMAGEURL");
         selectedVendorID = getIntent().getStringExtra("VENDOR_keyID");
 
         vendorOrderRef = FirebaseDatabase.getInstance().getReference("Vendor_order/" + selectedVendorID);
@@ -97,10 +98,11 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
         place_order_price_list = rbsVendorSelectedStock.getVendor_stock_price_textview();
         place_order_quantity_list = rbsVendorSelectedStock.getVendor_stock_quantity_textView();
         placeorder_item_pic_list = rbsVendorSelectedStock.getVendor_stock_imageView();
+        placeorder_item_keyId_list = rbsVendorSelectedStock.getVendor_stock_keyID_list();
 
         back_btn = findViewById(R.id.back_btn);
 
-        adapter_rbs_vendor_placeorder_recyclerView = new Adapter_RBS_Vendor_placeorder_RecyclerView(Rbs_vendor_order_receipt.this, placeorder_item_name_list, placeorder_item_category_list, place_order_price_list, place_order_quantity_list, placeorder_item_pic_list, totalBalance_textView);
+        adapter_rbs_vendor_placeorder_recyclerView = new Adapter_RBS_Vendor_placeorder_RecyclerView(Rbs_vendor_order_receipt.this, placeorder_item_name_list, placeorder_item_category_list, place_order_price_list, place_order_quantity_list, placeorder_item_pic_list,placeorder_item_keyId_list, totalBalance_textView);
 
         shopkeeper_invoice_details_recyclerview = findViewById(R.id.order_invoice_recyclerview);
         shopkeeper_invoice_details_recyclerview.setLayoutManager(new GridLayoutManager(Rbs_vendor_order_receipt.this, 1));
@@ -129,12 +131,14 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
                     String key = accessoriesOrdersList.push().getKey();
 
                     accessoriesOrdersList.child(key).child("vendor_name").setValue(vendor_name_textView.getText().toString());
+                    accessoriesOrdersList.child(key).child("vendor_imageUrl").setValue(profileImage);
                     accessoriesOrdersList.child(key).child("vendor_phoneno").setValue(vendor_phno_textView.getText().toString());
                     accessoriesOrdersList.child(key).child("vendor_email").setValue(vendor_email_textView.getText().toString());
                     accessoriesOrdersList.child(key).child("vendor_address").setValue(vendor_address_textView.getText().toString());
                     accessoriesOrdersList.child(key).child("vendor_keyID").setValue(selectedVendorID);
 
                     accessoriesOrdersList.child(key).child("shopkeeper_name").setValue(UserDetails.getInstance().getShopName());
+                    accessoriesOrdersList.child(key).child("shopkeeper_imageUrl").setValue(UserDetails.getInstance().getShopLogo());
                     accessoriesOrdersList.child(key).child("shopkeeper_phoneno").setValue(UserDetails.getInstance().getShopPhno());
                     accessoriesOrdersList.child(key).child("shopkeeper_email").setValue(UserDetails.getInstance().getShopEmail());
                     accessoriesOrdersList.child(key).child("shopkeeper_address").setValue(UserDetails.getInstance().getAddress());
@@ -153,12 +157,14 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
                         accessoriesOrdersList.child(key).child("items_list").child("item_" + (i + 1)).child("item_unitPrice").setValue(place_order_price_list.get(i));
                         accessoriesOrdersList.child(key).child("items_list").child("item_" + (i + 1)).child("item_quantity").setValue(place_order_quantity_list.get(i));
                         accessoriesOrdersList.child(key).child("items_list").child("item_" + (i + 1)).child("item_imageUrl").setValue(placeorder_item_pic_list.get(i));
+                        accessoriesOrdersList.child(key).child("items_list").child("item_" + (i + 1)).child("item_keyId").setValue(placeorder_item_keyId_list.get(i));
 
                     }
 
                     ////////////////////////////////////////////////////////////////////////////////
 
                     shopkeeperVendorOrderRef.child(key).child("vendor_name").setValue(vendor_name_textView.getText().toString());
+                    shopkeeperVendorOrderRef.child(key).child("vendor_imageUrl").setValue(profileImage);
                     shopkeeperVendorOrderRef.child(key).child("invoice_no").setValue(key);
                     shopkeeperVendorOrderRef.child(key).child("totalBalance").setValue(totalBalance_textView.getText().toString());
                     shopkeeperVendorOrderRef.child(key).child("date").setValue(date_textView.getText().toString());
@@ -170,6 +176,7 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
 
 
                     vendorOrderRef.child(key).child("shopkeeper_name").setValue(UserDetails.getInstance().getShopName());
+                    vendorOrderRef.child(key).child("shopkeeper_imageUrl").setValue(UserDetails.getInstance().getShopLogo());
                     vendorOrderRef.child(key).child("invoice_no").setValue(key);
                     vendorOrderRef.child(key).child("totalBalance").setValue(totalBalance_textView.getText().toString());
                     vendorOrderRef.child(key).child("date").setValue(date_textView.getText().toString());

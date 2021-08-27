@@ -45,7 +45,7 @@ public class RBS_Vendors extends AppCompatActivity {
 
     ImageButton back_btn;
 
-    String selectedVendorID;
+    String selectedVendorID,profileImage;
 
     TextView vendor_name_textView, confirm_order_btn;
     TextView vendor_address_textView, vendor_phone_textView, vendor_email_textView;
@@ -163,7 +163,6 @@ public class RBS_Vendors extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(RBS_Vendors.this, Rbs_vendor_order_receipt.class);
 
-                // todo Daniyal: send list to confirm order
                 for (int i = 0; i < adapter_rbs_vendor_inventory_recyclerView.getSelectedItemPositions().size(); i++) {
 
                     rbsVendorSelectedStock.getVendor_stockName_textView().add(vendor_stockName_list.get(adapter_rbs_vendor_inventory_recyclerView.getSelectedItemPositions().get(i)));
@@ -177,6 +176,7 @@ public class RBS_Vendors extends AppCompatActivity {
                     intent.putExtra("VENDOR_NAME",vendor_name_textView.getText().toString());
                     intent.putExtra("VENDOR_EMAIL",vendor_email_textView.getText().toString());
                     intent.putExtra("VENDOR_ADDRESS",vendor_address_textView.getText().toString());
+                    intent.putExtra("VENDOR_IMAGEURL",profileImage);
                     intent.putExtra("VENDOR_PHNO",vendor_phone_textView.getText().toString());
                     intent.putExtra("VENDOR_keyID",selectedVendorID);
                     startActivity(intent);
@@ -204,6 +204,7 @@ public class RBS_Vendors extends AppCompatActivity {
                                 vendor_address_textView.setText(item.getVal2());
                                 vendor_email_textView.setText(item.getVal3());
                                 Picasso.get().load(item.getVal4()).into(profileImage_imageView);
+                                profileImage = item.getVal4();
                                 profileImage_imageView.setVisibility(View.VISIBLE);
                                 Picasso.get().load(item.getVal5()).into(store_banner_imageView);
                                 vendor_details_linearLayout.setVisibility(View.VISIBLE);

@@ -260,6 +260,10 @@ public class RBS_mainscreen extends AppCompatActivity {
                     }
                 });
             }
+        }else if (resultCode == 111) {
+            recreate();
+            nv.setCheckedItem(R.id.nav_home);
+
         }
 
     }

@@ -27,13 +27,14 @@ public class Adapter_RBS_Vendor_placeorder_RecyclerView extends RecyclerView.Ada
     List<String> place_order_price_edittext;
     List<String> place_order_quantity_editText;
     List<String> placeorder_item_pic_imageView;
+    List<String> placeorder_item_keyId_list;
     TextView totalBalance_textView;
 
     List<Boolean> validateList;
 
     float totalBalance = 0.0f, previousValue = 0.0f;
 
-    public Adapter_RBS_Vendor_placeorder_RecyclerView(Context context, List<String> placeorder_item_name_textView, List<String> placeorder_item_category_textView, List<String> place_order_price_edittext, List<String> place_order_quantity_editText, List<String> placeorder_item_pic_imageView, TextView totalBalance_textView) {
+    public Adapter_RBS_Vendor_placeorder_RecyclerView(Context context, List<String> placeorder_item_name_textView, List<String> placeorder_item_category_textView, List<String> place_order_price_edittext, List<String> place_order_quantity_editText, List<String> placeorder_item_pic_imageView, List<String> placeorder_item_keyId_list, TextView totalBalance_textView) {
         this.context = context;
 
         this.placeorder_item_name_textView = placeorder_item_name_textView;
@@ -41,6 +42,7 @@ public class Adapter_RBS_Vendor_placeorder_RecyclerView extends RecyclerView.Ada
         this.place_order_price_edittext = place_order_price_edittext;
         this.place_order_quantity_editText = place_order_quantity_editText;
         this.placeorder_item_pic_imageView = placeorder_item_pic_imageView;
+        this.placeorder_item_keyId_list = placeorder_item_keyId_list;
 
         this.totalBalance_textView = totalBalance_textView;
 

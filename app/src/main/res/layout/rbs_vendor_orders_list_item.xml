@@ -10,208 +10,163 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/order_status_textview"
-                style="@style/TextViews_Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="Pending"
-                android:textColor="@color/textGreen" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profileImage_imageView"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_below="@+id/order_status_textview"
-                android:src="@drawable/laptop"
-                app:civ_border_color="#4A4A4A"
-                app:civ_border_width="7dp" />
-
-            <LinearLayout
-                android:id="@+id/left_linearlayout"
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/order_status_textview"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/profileImage_imageView"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/vendor_name_textview"
-                    style="@style/TextViews_Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="ITech Computers"
-                    android:textColor="@color/textBlue" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <TextView
-                        style="@style/TextViews_Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Amount" />
-
-                    <TextView
-                        android:id="@+id/amount_currency_textview"
-                        style="@style/TextViews_Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.3"
-                        android:gravity="center"
-                        android:text="$"
-                        android:textColor="@color/textGreen" />
-
-                    <TextView
-                        android:id="@+id/amount_textview"
-                        style="@style/TextViews_Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="2dp"
-                        android:layout_weight="0.7"
-                        android:gravity="center"
-                        android:text="@string/Fake_rupees"
-                        android:textColor="@color/textGreen" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <TextView
-                        style="@style/TextViews_Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Balance" />
-
-                    <TextView
-                        android:id="@+id/balance_currency_textview"
-                        style="@style/TextViews_Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.3"
-                        android:gravity="center"
-                        android:text="@string/Fake_currency"
-                        android:textColor="@color/textGreen" />
-
-                    <TextView
-                        android:id="@+id/balance_textview"
-                        style="@style/TextViews_Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.7"
-                        android:gravity="center"
-                        android:text="@string/Fake_rupees"
-                        android:textColor="@color/textGreen" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/invoice_linearlayout"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="5dp"
-                android:layout_toEndOf="@+id/left_linearlayout"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:weightSum="3">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profileImage_imageView"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/laptop"
+                    app:civ_border_color="#4A4A4A"
+                    app:civ_border_width="7dp" />
+
+                <LinearLayout
+                    android:id="@+id/left_linearlayout"
+                    android:layout_width="170dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/profileImage_imageView"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/invoice_title"
+                        android:id="@+id/shop_name"
                         style="@style/TextViews_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:text="Invoice" />
+                        android:layout_gravity="center_horizontal"
+                        android:text="ITech Computers"
+                        android:textColor="@color/textBlue" />
+
 
                     <TextView
-                        android:id="@+id/invoice_no_textview"
+                        android:id="@+id/date"
                         style="@style/TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/invoice_title"
-                        android:layout_centerInParent="true"
-                        android:layout_marginTop="5dp"
-                        android:text="124535"
-                        android:textColor="@color/textBlue" />
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="8dp"
+                        android:text="22/09/2021" />
 
-                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/date_textView"
-                    style="@style/TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="8dp"
-                    android:text="22/09/2021" />
+                </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/invoice_linearlayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center_horizontal"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/left_linearlayout"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/invoice_title"
+                            style="@style/TextViews_Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:text="Invoice" />
+
+                        <TextView
+                            android:id="@+id/order_no_vendor"
+                            style="@style/TextViews"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/invoice_title"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="5dp"
+                            android:text="124535"
+                            android:textColor="@color/textBlue" />
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
                         style="@style/TextViews_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Paid" />
+                        android:layout_gravity="center_horizontal"
+                        android:text="Total Amount :" />
 
-                    <TextView
-                        android:id="@+id/paid_currency_textview"
-                        style="@style/TextViews_Bold"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/Fake_currency"
-                        android:textColor="@color/textGreen" />
+                        android:layout_marginStart="10dp"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/paid_textview"
-                        style="@style/TextViews_Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:text="@string/Fake_rupees"
-                        android:textColor="@color/textGreen" />
+                        <TextView
+                            android:id="@+id/balance_currency"
+                            style="@style/TextViews_Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="$"
+                            android:textColor="@color/textGreen" />
+
+                        <TextView
+                            android:id="@+id/totalBalance"
+                            style="@style/TextViews_Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:gravity="center"
+                            android:text="@string/Fake_rupees"
+                            android:textColor="@color/textGreen" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/vendor_order_status"
+                    style="@style/TextViews_Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_vertical"
+                    android:text="Pending"
+                    android:textColor="@color/textGreen" />
 
-        </RelativeLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
+
 
     </androidx.cardview.widget.CardView>
 

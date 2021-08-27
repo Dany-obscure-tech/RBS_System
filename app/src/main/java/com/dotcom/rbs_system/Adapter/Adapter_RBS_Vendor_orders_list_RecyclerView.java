@@ -1,46 +1,46 @@
 package com.dotcom.rbs_system.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.R;
-import com.dotcom.rbs_system.Rbs_vendor_specific_order;
+import com.dotcom.rbs_system.VendorShopkeepersShopReceipts;
+import com.dotcom.rbs_system.Vendor_shopkeepers_orders_progress;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class Adapter_RBS_Vendor_orders_list_RecyclerView extends RecyclerView.Adapter<Adapter_RBS_Vendor_orders_list_RecyclerView.MyViewHolder> {
     Context context;
-    List<String> invoice_no_textview;
-    List<String> vendor_name_textview;
-    List<String> amount_currency_textview;
-    List<String> amount_textview;
-    List<String> paid_currency_textview;
-    List<String> paid_textview;
-    List<String> date_textView;
-    List<String> balance_currency_textview;
-    List<String> balance_textview;
-    List<String> order_status_textview;
+    List<String> order_no_vendor;
+    List<String> vendor_name;
+    List<String> date;
+    List<String> totalAmount;
+    List<String> vendor_order_status;
+    List<String> vendor_image;
+    List<String> vendor_keyID;
+    List<String> invoiceKeyID;
 
-    public Adapter_RBS_Vendor_orders_list_RecyclerView(Context context, List<String> invoice_no_textview, List<String> vendor_name_textview, List<String> amount_currency_textview, List<String> amount_textview, List<String> paid_currency_textview, List<String> paid_textview, List<String> date_textView, List<String> balance_currency_textview, List<String> balance_textview, List<String> order_status_textview) {
+    public Adapter_RBS_Vendor_orders_list_RecyclerView(Context context, List<String> order_no_vendor, List<String> vendor_name, List<String> date, List<String> totalAmount, List<String> vendor_order_status, List<String> vendor_image, List<String> vendor_keyID, List<String> invoiceKeyID) {
         this.context = context;
-        this.invoice_no_textview = invoice_no_textview;
-        this.vendor_name_textview = vendor_name_textview;
-        this.amount_currency_textview = amount_currency_textview;
-        this.amount_textview = amount_textview;
-        this.paid_currency_textview = paid_currency_textview;
-        this.paid_textview = paid_textview;
-        this.date_textView = date_textView;
-        this.balance_currency_textview = balance_currency_textview;
-        this.balance_textview = balance_textview;
-        this.order_status_textview = order_status_textview;
+        this.order_no_vendor = order_no_vendor;
+        this.vendor_name = vendor_name;
+        this.date = date;
+        this.totalAmount = totalAmount;
+        this.vendor_order_status = vendor_order_status;
+        this.vendor_image = vendor_image;
+        this.vendor_keyID = vendor_keyID;
+        this.invoiceKeyID = invoiceKeyID;
     }
 
     @NonNull
@@ -55,16 +55,31 @@ public class Adapter_RBS_Vendor_orders_list_RecyclerView extends RecyclerView.Ad
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        holder.order_status_textview.setText(order_status_textview.get(position));
-        holder.vendor_name_textview.setText(vendor_name_textview.get(position));
+        holder.date.setText(date.get(position));
+        holder.totalBalance.setText(totalAmount.get(position));
+        holder.balance_currency.setText(Currency.getInstance().getCurrency());
+        holder.vendor_order_status.setText(vendor_order_status.get(position));
 
-        holder.invoice_linearlayout.setOnClickListener(new View.OnClickListener() {
+        holder.shop_name.setText(vendor_name.get(position));
+        holder.order_no_vendor.setText(order_no_vendor.get(position));
+        Picasso.get().load(vendor_image.get(position)).into(holder.profileImage_imageView);
+        holder.order_no_vendor.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, Rbs_vendor_specific_order.class);
-                intent.putExtra("Invoice_no", invoice_no_textview.get(position));
-                intent.putExtra("Vendor_name", vendor_name_textview.get(position));
-                intent.putExtra("Date", date_textView.get(position));
+            public void onClick(View v) {
+                Intent intent = new Intent(context, Vendor_shopkeepers_orders_progress.class);
+
+                intent.putExtra("User_ID", vendor_keyID.get(position));
+                intent.putExtra("Invoice_keyID", invoiceKeyID.get(position));
+                intent.putExtra("status", vendor_order_status.get(position));
+                intent.putExtra("userType", "shopkeeper");
+                ((Activity)context).startActivityForResult(intent,111);
+            }
+        });
+        holder.shop_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, VendorShopkeepersShopReceipts.class);
+                intent.putExtra("Shop_Name", vendor_name.get(position));
                 context.startActivity(intent);
             }
         });
@@ -73,28 +88,24 @@ public class Adapter_RBS_Vendor_orders_list_RecyclerView extends RecyclerView.Ad
     @Override
     public int getItemCount() {
 
-        return vendor_name_textview.size();
+        return vendor_name.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView invoice_no_textview, vendor_name_textview, amount_currency_textview, amount_textview, paid_currency_textview, paid_textview, date_textView, balance_currency_textview, balance_textview, order_status_textview;
-        LinearLayout invoice_linearlayout;
+        TextView order_no_vendor, shop_name, date, balance_currency, vendor_order_status, totalBalance;
+        ImageView profileImage_imageView;
 
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            invoice_no_textview = itemView.findViewById(R.id.invoice_no_textview);
-            vendor_name_textview = itemView.findViewById(R.id.vendor_name_textview);
-            amount_currency_textview = itemView.findViewById(R.id.amount_currency_textview);
-            amount_textview = itemView.findViewById(R.id.amount_textview);
-            paid_currency_textview = itemView.findViewById(R.id.paid_currency_textview);
-            paid_textview = itemView.findViewById(R.id.paid_textview);
-            date_textView = itemView.findViewById(R.id.date_textView);
-            balance_currency_textview = itemView.findViewById(R.id.balance_currency_textview);
-            balance_textview = itemView.findViewById(R.id.balance_textview);
-            order_status_textview = itemView.findViewById(R.id.order_status_textview);
-            invoice_linearlayout = itemView.findViewById(R.id.invoice_linearlayout);
+            order_no_vendor = itemView.findViewById(R.id.order_no_vendor);
+            shop_name = itemView.findViewById(R.id.shop_name);
+            date = itemView.findViewById(R.id.date);
+            totalBalance = itemView.findViewById(R.id.totalBalance);
+            balance_currency = itemView.findViewById(R.id.balance_currency);
+            vendor_order_status = itemView.findViewById(R.id.vendor_order_status);
+            profileImage_imageView = itemView.findViewById(R.id.profileImage_imageView);
 
         }
     }
