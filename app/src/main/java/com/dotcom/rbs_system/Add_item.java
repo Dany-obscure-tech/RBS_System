@@ -335,7 +335,7 @@ public class Add_item extends AppCompatActivity {
     private boolean validateFields() {
         boolean valid = true;
 
-        if (selectCategory_textView.getText().toString().equals("Select Category")) {
+        if (selectCategory_textView.getText().toString().equals("Select category")) {
             Toast.makeText(this, "Please select item category", Toast.LENGTH_LONG).show();
             valid = false;
         }
@@ -362,6 +362,8 @@ public class Add_item extends AppCompatActivity {
         if (price_editText.getText().toString().isEmpty()) {
             price_editText.setError("Please enter price");
             valid = false;
+
+            //TODO item price ma zero problem
         }
         if (spinner.getSelectedItem().toString().equals("Please select item condition")) {
             Toast.makeText(this, "Please select item condition", Toast.LENGTH_SHORT).show();

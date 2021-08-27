@@ -978,12 +978,12 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     private boolean validateFields() {
         boolean valid = true;
 
-        if (customerName_textView.getText().toString().equals("Search for customer ...")) {
+        if (customerName_textView.getText().toString().equals("Search for customer...")) {
             Toast.makeText(this, "Select customer", Toast.LENGTH_LONG).show();
             valid = false;
         }
 
-        if (itemName_textView.getText().toString().equals("Search for item ...")) {
+        if (itemName_textView.getText().toString().equals("Search for item...")) {
             Toast.makeText(this, "Select item", Toast.LENGTH_LONG).show();
             valid = false;
         }
@@ -993,7 +993,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             valid = false;
         }
 
-        if (date_textView.getText().toString().equals("Select date")) {
+        if (date_textView.getText().toString().equals("-- -- --")) {
             Toast.makeText(this, "Select date", Toast.LENGTH_LONG).show();
             valid = false;
         }
@@ -1048,24 +1048,24 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             new Customer_history_class().twelveValues(rbsCustomerDetails.getKey(), key, date_textView.getText().toString(), rbsItemDetails.getItemCategory(), String.valueOf(rbsItemDetails.getFirstImageUri()), rbsItemDetails.getKey(), rbsItemDetails.getItemName(), rbsItemDetails.getItemID(), "Sale", UserDetails.getInstance().getShopLogo(), FirebaseAuth.getInstance().getCurrentUser().getUid(), UserDetails.getInstance().getShopName(), date.getTime());
             pd.dismissProgressBar(Buy.this);
 
+            Intent intent = new Intent(Buy.this, Invoice_preview.class);
+            intent.putExtra("Date", String.valueOf(date_textView.getText().toString()));
+            intent.putExtra("Customer_Name", String.valueOf(customerName_textView.getText().toString()));
+            intent.putExtra("Customer_Email", String.valueOf(customerEmail_textView.getText().toString()));
+            intent.putExtra("Customer_ID", String.valueOf(customerID_textView.getText().toString()));
+            intent.putExtra("Customer_Ph_No", String.valueOf(customerPhno_textView.getText().toString()));
+            intent.putExtra("Item_Name", String.valueOf(itemName_textView.getText().toString()));
+            intent.putExtra("Item_ID", String.valueOf(itemID_textView.getText().toString()));
+            intent.putExtra("Item_Price_Currency", String.valueOf(itemPriceCurrency_textView.getText().toString()));
+            intent.putExtra("Item_Price", String.valueOf(itemPrice_textView.getText().toString()));
+            intent.putExtra("Paid_Amount", String.valueOf(paid_editText.getText().toString()));
+            finish();
+            startActivity(intent);
+
         } else {
             Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
             pd.dismissProgressBar(Buy.this);
         }
-
-        Intent intent = new Intent(Buy.this, Invoice_preview.class);
-        intent.putExtra("Date", String.valueOf(date_textView.getText().toString()));
-        intent.putExtra("Customer_Name", String.valueOf(customerName_textView.getText().toString()));
-        intent.putExtra("Customer_Email", String.valueOf(customerEmail_textView.getText().toString()));
-        intent.putExtra("Customer_ID", String.valueOf(customerID_textView.getText().toString()));
-        intent.putExtra("Customer_Ph_No", String.valueOf(customerPhno_textView.getText().toString()));
-        intent.putExtra("Item_Name", String.valueOf(itemName_textView.getText().toString()));
-        intent.putExtra("Item_ID", String.valueOf(itemID_textView.getText().toString()));
-        intent.putExtra("Item_Price_Currency", String.valueOf(itemPriceCurrency_textView.getText().toString()));
-        intent.putExtra("Item_Price", String.valueOf(itemPrice_textView.getText().toString()));
-        intent.putExtra("Paid_Amount", String.valueOf(paid_editText.getText().toString()));
-        finish();
-        startActivity(intent);
 
     }
 

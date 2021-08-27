@@ -16,10 +16,12 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -82,6 +84,11 @@ public class BuyLocal_productdetails extends AppCompatActivity {
 
         currency = Currency.getInstance().getCurrency();
 
+        String[] arraySpinner = new String[]{
+                "1", "2", "3", "4", "5", "6", "7"
+        };
+
+
         // ATTENTION: This was auto-generated to handle app links.
         Intent appLinkIntent = getIntent();
         String appLinkAction = appLinkIntent.getAction();
@@ -137,6 +144,14 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         alertReportCancel_textview = report_alert_dialog.findViewById(R.id.alertReportCancel_textview);
         alertReportDescription_editText = report_alert_dialog.findViewById(R.id.alertReportDescription_editText);
         alertReportSubmit_textview = report_alert_dialog.findViewById(R.id.alertReportSubmit_textview);
+
+        ////Spinner code
+        Spinner s = report_alert_dialog.findViewById(R.id.Spinner01);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                R.layout.custom_spinner, arraySpinner);
+        adapter.setDropDownViewResource(R.layout.custom_spinner_dropdown);
+        s.setAdapter(adapter);
+        /////Spiner code
         alertMakeOfferCancel_textview = make_offer_alert_dialog.findViewById(R.id.alertMakeOfferCancel_textview);
         alertMakeOfferSubmit_textview = make_offer_alert_dialog.findViewById(R.id.alertMakeOfferSubmit_textview);
         alertMakeOfferAmount_editText = make_offer_alert_dialog.findViewById(R.id.alertMakeOfferAmount_editText);

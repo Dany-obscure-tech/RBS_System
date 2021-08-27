@@ -7,7 +7,7 @@
     android:background="#FFFFFF"
     tools:context=".RBS_Shopkeeper_Inventory_Details">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -182,7 +182,7 @@
 
                         <TextView
                             android:id="@+id/condition_textView"
-                            style="@style/TextViews"
+                            style="@style/TextViews_Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
@@ -382,9 +382,10 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/offers_received"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/buy_local"
+                        android:nestedScrollingEnabled="false"
                         android:orientation="vertical" />
 
 
@@ -395,7 +396,7 @@
 
         </RelativeLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <RelativeLayout
         android:layout_width="match_parent"

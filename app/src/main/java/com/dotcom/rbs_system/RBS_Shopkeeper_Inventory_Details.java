@@ -85,7 +85,7 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
     TextView product_offer_msg, accept_offer_textview, sell_offer_textview;
     TextView date_textView;
     TextView item_personal_notes_textview;
-    TextView yes_btn_textview;
+    TextView yes_btn_textview, cancel_btn_textview;
     EditText description_editText;
     TextView condition_textView;
     TextView uploadId_textView;
@@ -129,6 +129,7 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
 
         uploadId_textView = editItem_alert.findViewById(R.id.uploadId_textView);
         yes_btn_textview = editItem_alert.findViewById(R.id.yes_btn_textview);
+        cancel_btn_textview = editItem_alert.findViewById(R.id.cancel_btn_textview);
         description_editText = editItem_alert.findViewById(R.id.description_editText);
 
         productID = getIntent().getStringExtra("PRODUCT_ID");
@@ -393,8 +394,18 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
         back_btn_listner();
         edit_textView_listener();
         yes_btn_textview_listener();
+        cancel_btn_textview_listener();
         uploadId_textView_listener();
 
+    }
+
+    private void cancel_btn_textview_listener() {
+        cancel_btn_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editItem_alert.dismiss();
+            }
+        });
     }
 
     private void uploadId_textView_listener() {
@@ -420,43 +431,52 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
         yes_btn_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int validCheck = 0;
 
-                if (!spinner.getSelectedItem().toString().equals("Please select item condition") && !spinner.getSelectedItem().toString().equals(condition_textView.getText().toString())) {
-                    itemRef.child("Condition").setValue(spinner.getSelectedItem().toString());
-                } else {
-                    validCheck++;
+                if (validateAlertvalues()) {
+                    recreate();
+                    editItem_alert.dismiss();
+                    Toast.makeText(RBS_Shopkeeper_Inventory_Details.this, "Edit Completed", Toast.LENGTH_SHORT).show();
+
                 }
+            }
+        });
+    }
 
-                if (!description_editText.getText().toString().isEmpty() && !description_editText.getText().toString().equals(item_description_textview.getText().toString())) {
-                    itemRef.child("Description").setValue(description_editText.getText().toString());
-                } else {
-                    validCheck++;
+    private boolean validateAlertvalues() {
+        boolean valid = true;
+
+        if (!spinner.getSelectedItem().toString().equals("Please select item condition") && !spinner.getSelectedItem().toString().equals(condition_textView.getText().toString())) {
+            itemRef.child("Condition").setValue(spinner.getSelectedItem().toString());
+        }
+        if (!description_editText.getText().toString().isEmpty() && !description_editText.getText().toString().equals(item_description_textview.getText().toString())) {
+            itemRef.child("Description").setValue(description_editText.getText().toString());
+        } else {
+            description_editText.setError("Enter description");
+            valid = false;
+        }
+        if (imageUrlList.size() != 0) {
+            int deletedImageNumber = 5 - imageUrlList.size();
+            for (i = 1; i <= 5; i++) {
+                if (deletedImageNumber != 0) {
+                    System.out.println(deletedImageNumber + " - " + (imageUrlList.size() + 1));
+                    idStorageReference.child(key).child("image_" + (imageUrlList.size() + i)).delete();
+                    reference.child("Items").child(itemCategory).child(key).child("Image_urls").child("image_" + (imageUrlList.size() + i)).removeValue();
+                    deletedImageNumber--;
                 }
+            }
+            for (i = 0; i < imageUrlList.size(); i++) {
 
-                if (imageUrlList.size() != 0) {
-                    int deletedImageNumber = 5 - imageUrlList.size();
-                    for (i = 1; i <= 5; i++) {
-                        if (deletedImageNumber != 0) {
-                            System.out.println(deletedImageNumber + " - " + (imageUrlList.size() + 1));
-                            idStorageReference.child(key).child("image_" + (imageUrlList.size() + i)).delete();
-                            reference.child("Items").child(itemCategory).child(key).child("Image_urls").child("image_" + (imageUrlList.size() + i)).removeValue();
-                            deletedImageNumber--;
-                        }
-                    }
-                    for (i = 0; i < imageUrlList.size(); i++) {
-
-                        idStorageReference.child(key).child("image_" + String.valueOf(i + 1)).putFile(imageUrlList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                idStorageReference.child(key).child("image_" + String.valueOf(i + 1)).putFile(imageUrlList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        idStorageReference.child(key).child("image_" + (l + 1)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                idStorageReference.child(key).child("image_" + (l + 1)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        if (k == 0) {
-                                            firstImageUri = uri;
+                            public void onSuccess(Uri uri) {
+                                if (k == 0) {
+                                    firstImageUri = uri;
 
 
-                                            //TODO commented code remove karna ha
+                                    //TODO spotlight ka items add karney ka liya ha
 //                                if (check=="Add new item"){
 //
 //                                    spotLightRef = FirebaseDatabase.getInstance().getReference("Spotlight");
@@ -469,9 +489,9 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
 //                                    spotLightRef.child(key).child("shopkeeper").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
 //                                }
 
-                                        }
-                                        reference.child("Items").child(itemCategory).child(key).child("Image_urls").child("image_" + (k + 1)).setValue(String.valueOf(uri.toString()));
-                                        k++;
+                                }
+                                reference.child("Items").child(itemCategory).child(key).child("Image_urls").child("image_" + (k + 1)).setValue(String.valueOf(uri.toString()));
+                                k++;
 
 //                                        if (k==imageUrlList.size()){
 //                                            if (check=="Sale new item") {
@@ -490,31 +510,21 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
 //                                            }
 //
 //                                        }
-                                    }
-                                });
-                                l++;
-
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(RBS_Shopkeeper_Inventory_Details.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
                             }
                         });
+                        l++;
+
                     }
-                } else {
-                    validCheck++;
-                }
-
-                if (validCheck != 3) {
-                    recreate();
-                } else {
-                    Toast.makeText(RBS_Shopkeeper_Inventory_Details.this, "Please edit values!", Toast.LENGTH_SHORT).show();
-                }
-
-
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(RBS_Shopkeeper_Inventory_Details.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
-        });
+        }
+
+        return valid;
     }
 
     private void edit_textView_listener() {

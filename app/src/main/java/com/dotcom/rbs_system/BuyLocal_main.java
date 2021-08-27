@@ -205,16 +205,6 @@ public class BuyLocal_main extends AppCompatActivity {
                         Toast.makeText(BuyLocal_main.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
                     }
                 });
-
-                //You can get File object from intent
-//            val file:File = ImagePicker.getFile(data)!!
-
-                //You can also get File Path from intent
-//                    val filePath:String = ImagePicker.getFilePath(data)!!
-            } else if (resultCode == ImagePicker.RESULT_ERROR) {
-//            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show();
             }
         }
 

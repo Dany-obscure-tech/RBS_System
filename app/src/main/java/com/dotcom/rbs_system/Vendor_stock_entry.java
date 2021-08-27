@@ -3,6 +3,7 @@ package com.dotcom.rbs_system;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -54,7 +55,7 @@ public class Vendor_stock_entry extends AppCompatActivity {
     StorageReference stockImageStorageReference;
     ImageView image_imageView;
     ImageButton back_btn;
-    LinearLayout searchForCategories;
+    CardView searchForItem_cardView;
 
     Uri fileUri = null;
 
@@ -87,6 +88,7 @@ public class Vendor_stock_entry extends AppCompatActivity {
         Initialization();
         Onclicklistners();
         //TODO zero entry error
+        //TODO yaha pa edit alert ma bug ha
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -115,7 +117,7 @@ public class Vendor_stock_entry extends AppCompatActivity {
         vendor_item_qty_editText = findViewById(R.id.vendor_item_qty_editText);
         vendor_sno_editText = findViewById(R.id.vendor_sno_editText);
 
-        searchForCategories = findViewById(R.id.searchForCategories);
+        searchForItem_cardView = findViewById(R.id.searchForItem_cardView);
 
 
         Vendor_category_data_list = new ArrayList<>();
@@ -125,6 +127,7 @@ public class Vendor_stock_entry extends AppCompatActivity {
         Vendor_category_data_list.add("PC");
 
         //TODO kisi  item ki value float ma ho sakti ha "vendor_item_price_editText" is id ko check karna ha
+        // TODo yaha pa agar activity sa back kar rahey to toast a raha ha
 
         reference = FirebaseDatabase.getInstance().getReference();
         vendor_stock_entry_id = reference.push().getKey();
@@ -216,7 +219,7 @@ public class Vendor_stock_entry extends AppCompatActivity {
     }
 
     private void searchForCategories_listner() {
-        searchForCategories.setOnClickListener(new View.OnClickListener() {
+        searchForItem_cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -249,7 +252,6 @@ public class Vendor_stock_entry extends AppCompatActivity {
 
     private void stock_entry_data() {
         boolean connected = false;
-        Toast.makeText(this, "Started", Toast.LENGTH_SHORT).show();
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Vendor_stock_entry.this.CONNECTIVITY_SERVICE);
         if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
@@ -307,12 +309,8 @@ public class Vendor_stock_entry extends AppCompatActivity {
     private boolean validatefields() {
         boolean valid = true;
 
-        if (item_category_textView.getText().toString().isEmpty()) {
-            item_category_textView.setError("Please select category");
-            valid = false;
-        }
         if (item_category_textView.getText().toString().equals("Search for category ...")) {
-            item_category_textView.setError("Please select category");
+            Toast.makeText(Vendor_stock_entry.this, "Please select category", Toast.LENGTH_SHORT).show();
             valid = false;
         }
 
@@ -324,6 +322,7 @@ public class Vendor_stock_entry extends AppCompatActivity {
         if (vendor_item_price_editText.getText().toString().isEmpty()) {
             vendor_item_price_editText.setError("Please enter item price");
             valid = false;
+            ///TODo yaha pa zero value wali validation lagani ha
         }
         if (vendor_sno_editText.getText().toString().isEmpty()) {
             vendor_sno_editText.setError("Please enter item sno");
@@ -332,6 +331,7 @@ public class Vendor_stock_entry extends AppCompatActivity {
         if (vendor_item_qty_editText.getText().toString().isEmpty()) {
             vendor_item_qty_editText.setError("Please enter item quantity");
             valid = false;
+            //TODO aur quantity bhi zero na ho
         }
         if (vendor_item_qty_editText.getText().toString().equals("0")) {
             vendor_item_qty_editText.setError("Please enter item quantity");
@@ -365,9 +365,6 @@ public class Vendor_stock_entry extends AppCompatActivity {
             //You can also get File Path from intent
 //                    val filePath:String = ImagePicker.getFilePath(data)!!
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
-//            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show();
         }
     }
 

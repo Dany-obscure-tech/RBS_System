@@ -39,14 +39,13 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/header"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="20dp">
+        android:layout_below="@+id/header">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
 
             <LinearLayout
                 android:id="@+id/edit_option_area"
@@ -94,6 +93,7 @@
                                 style="@style/TextViews_Bold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
                                 android:text="@string/fake_customer_name"
                                 android:textColor="@color/textBlue" />
 
@@ -120,7 +120,7 @@
                         style="@style/TextViews_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:text="Change Phone no" />
 
                     <LinearLayout
@@ -149,6 +149,7 @@
                                 style="@style/TextViews_Bold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
                                 android:text="@string/Fake_phone_no"
                                 android:textColor="@color/textBlue" />
 
@@ -175,7 +176,7 @@
                         style="@style/TextViews_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:text="Change Address" />
 
                     <LinearLayout
@@ -204,6 +205,7 @@
                                 style="@style/TextViews_Bold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
                                 android:text="@string/fake_city"
                                 android:textColor="@color/textBlue" />
 
@@ -218,6 +220,91 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextViews_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Change Password" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:scaleType="center"
+                            android:src="@drawable/password" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/TextViews_Bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginTop="10dp"
+                                android:text="@string/old_password"
+                                android:textColor="@color/textBlue" />
+
+                            <EditText
+                                android:id="@+id/old_password_editText"
+                                style="@style/EditTexts"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Enter old password.." />
+
+                            <TextView
+                                style="@style/TextViews_Bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="@string/new_password"
+                                android:textColor="@color/textBlue" />
+
+                            <EditText
+                                android:id="@+id/new_password_editText"
+                                style="@style/EditTexts"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Enter new password.." />
+
+                            <TextView
+                                style="@style/TextViews_Bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="@string/confirm_password"
+                                android:textColor="@color/textBlue" />
+
+                            <EditText
+                                android:id="@+id/confirm_password_editText"
+                                style="@style/EditTexts"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Enter confirm password.." />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
 
             </LinearLayout>
 

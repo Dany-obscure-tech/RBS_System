@@ -1158,12 +1158,12 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
     private boolean validateFields() {
         boolean valid = true;
-        if (customerName_textView.getText().toString().equals("Search for customer ...")) {
+        if (customerName_textView.getText().toString().equals("Search for customer...")) {
             Toast.makeText(this, "Please select Customer!", Toast.LENGTH_SHORT).show();
             valid = false;
         }
 
-        if (itemName_textView.getText().toString().equals("Search for item ...")) {
+        if (itemName_textView.getText().toString().equals("Search for item...")) {
             Toast.makeText(this, "Please select Item!", Toast.LENGTH_SHORT).show();
             valid = false;
         }
@@ -1228,6 +1228,20 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
             new Customer_history_class().twelveValues(rbsCustomerDetails.getKey(), key, date_textView.getText().toString(), rbsItemDetails.getItemCategory(), String.valueOf(rbsItemDetails.getFirstImageUri()), rbsItemDetails.getKey(), rbsItemDetails.getItemName(), rbsItemDetails.getItemID(), "Buy", UserDetails.getInstance().getShopLogo(), FirebaseAuth.getInstance().getCurrentUser().getUid(), UserDetails.getInstance().getShopName(), date.getTime());
             pd1.dismissProgressBar(Sale.this);
+
+            Intent intent = new Intent(Sale.this, Invoice_preview.class);
+            intent.putExtra("Date", String.valueOf(date_textView.getText().toString()));
+            intent.putExtra("Customer_Name", String.valueOf(customerName_textView.getText().toString()));
+            intent.putExtra("Customer_Email", String.valueOf(customerEmail_textView.getText().toString()));
+            intent.putExtra("Customer_ID", String.valueOf(customerID_textView.getText().toString()));
+            intent.putExtra("Customer_Ph_No", String.valueOf(customerPhno_textView.getText().toString()));
+            intent.putExtra("Item_Name", String.valueOf(itemName_textView.getText().toString()));
+            intent.putExtra("Item_ID", String.valueOf(itemID_textView.getText().toString()));
+            intent.putExtra("Item_Price_Currency", String.valueOf(itemPriceCurrency_textView.getText().toString()));
+            intent.putExtra("Item_Price", String.valueOf(itemPrice_textView.getText().toString()));
+            intent.putExtra("Paid_Amount", String.valueOf(paid_editText.getText().toString()));
+            finish();
+            startActivity(intent);
 
         } else {
             Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();

@@ -29,166 +29,92 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
 
             <LinearLayout
                 android:id="@+id/add_user_data_fields_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="S.No " />
 
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/sr.no_cardview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/colorWhite"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="4dp"
-                    app:cardUseCompatPadding="true">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp">
-
-
-                        <TextView
-                            android:id="@+id/sno_textview"
-                            style="@style/TextViews_Bold_small"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:text="12231"
-                            android:textAlignment="center"
-                            android:textColor="@color/gradientDarkBlue" />
-
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
                 <TextView
+                    android:id="@+id/sno_textview"
+                    android:layout_marginTop="5dp"
                     style="@style/TextViews_Bold_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:text="Name" />
-
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/item_name_cardview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/colorWhite"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="4dp"
-                    app:cardUseCompatPadding="true">
-
-                    <LinearLayout
-                        android:id="@+id/item_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp">
-
-
-                        <TextView
-                            android:id="@+id/item_name_textview"
-                            style="@style/TextViews_Bold_small"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:text="Samsung C9 Screens"
-                            android:textAlignment="center"
-                            android:textColor="@color/gradientDarkBlue" />
-
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
+                    android:text="@string/Fake_id"
+                    android:textColor="@color/gradientDarkBlue" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="10dp"
                     android:text="Category" />
 
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/searchForItem_cardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/colorWhite"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="4dp"
-                    app:cardUseCompatPadding="true">
-
-                    <LinearLayout
-                        android:id="@+id/select_user_category"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15dp">
-
-
-                        <TextView
-                            android:id="@+id/username_editText"
-                            style="@style/TextViews_Bold_small"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:text="Mobile"
-                            android:textAlignment="center"
-                            android:textColor="@color/gradientDarkBlue" />
-
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
                 <TextView
+                    android:id="@+id/username_editText"
                     style="@style/TextViews_Bold_small"
+                    android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:text="Price" />
+                    android:text="Category"
+                    android:textColor="@color/gradientDarkBlue" />
+
+                <TextView
+                    style="@style/TextViews_Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Name" />
+
+                <EditText
+                    android:id="@+id/item_name_textview"
+                    style="@style/EditTexts"
+                    android:inputType="textCapWords"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter name" />
+
+                <TextView
+                    style="@style/TextViews_Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Per Unit Price" />
 
                 <EditText
                     android:id="@+id/item_price_editText"
-                    style="@style/TextViews_Regular_big"
+                    style="@style/EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorPrimary"
                     android:hint="Edit price ...."
-                    android:inputType="number"
-                    android:maxLength="32" />
+                    android:inputType="number" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="10dp"
                     android:text="Quantity" />
 
                 <EditText
                     android:id="@+id/item_quantity_edittext"
-                    style="@style/TextViews_Regular_big"
-                    android:layout_width="wrap_content"
+                    style="@style/EditTexts"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:backgroundTint="@color/colorPrimary"
                     android:hint="Edit quantity .."
-                    android:inputType="number"
-                    android:maxLength="32"
-                    android:textAlignment="center" />
+                    android:inputType="number" />
 
             </LinearLayout>
 
@@ -206,7 +132,7 @@
                     android:layout_width="350px"
                     android:layout_height="350px"
                     android:layout_marginBottom="20dp"
-                    android:src="@drawable/pc" />
+                    android:src="@drawable/laptop" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -214,13 +140,13 @@
 
                     <TextView
                         android:id="@+id/remove_btn"
+                        style="@style/gray_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_marginStart="20dp"
                         android:layout_weight="1"
                         android:background="@drawable/red_border"
-                        android:fontFamily="@font/segoe_ui"
                         android:text="Remove"
                         android:textColor="@color/textRed" />
 
@@ -230,9 +156,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_gravity="right"
                         android:layout_marginEnd="20dp"
-                        android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:gravity="end"
                         android:text="Edit" />
@@ -251,21 +175,23 @@
 
                     <TextView
                         android:id="@+id/save_btn"
+                        style="@style/green_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
                         android:layout_weight="1"
-                        android:text="Save"
+                        android:text="@string/save_btn_string"
                         android:textAlignment="center" />
 
 
                     <TextView
                         android:id="@+id/cancel_btn"
+                        style="@style/gray_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:layout_weight="1"
-                        android:text="Cancel" />
+                        android:text="@string/cancel_string" />
 
 
                 </LinearLayout>

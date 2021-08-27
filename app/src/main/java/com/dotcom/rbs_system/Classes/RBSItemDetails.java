@@ -292,7 +292,7 @@ public class RBSItemDetails {
         System.out.println(String.valueOf("Trade"));
         System.out.println(String.valueOf(date.getTime()));
         System.out.println(String.valueOf(currentDateString));
-
+//TODO yaha pa us itemhistory waley ko call kar rahey hay jaha pa crash ho rahe
         new Item_history_class().thirteenValues(key,UniquePushID.getInstance().getUniquePushID(), UserDetails.getInstance().getShopName(),FirebaseAuth.getInstance().getCurrentUser().getUid(),UserDetails.getInstance().getShopLogo(),"Buyer",rbsCustomerDetails.getCustomerName(),rbsCustomerDetails.getKey(),"Seller",rbsCustomerDetails.getFirstImageUrl(),"Trade",date.getTime(),currentDateString);
         new Item_history_class().uploadItemImagetoCustomerHistory(rbsCustomerDetails.getKey(),UniquePushID.getInstance().getUniquePushID(), String.valueOf(firstImageUri));
     }

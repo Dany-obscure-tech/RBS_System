@@ -32,6 +32,8 @@ public class BuyLocal_profile_edit extends AppCompatActivity {
 
         back_btn = findViewById(R.id.back_btn);
 
+        //TODO change password online karna ha
+
         submit_textView = findViewById(R.id.submit_textView);
 
         name_textView = findViewById(R.id.name_textView);

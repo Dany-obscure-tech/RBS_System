@@ -62,6 +62,7 @@
             style="@style/EditTexts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
             android:hint="Write description of the item.."
             android:maxLength="300" />
 
@@ -101,31 +102,27 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:gravity="center"
             android:orientation="horizontal"
             android:weightSum="2">
 
             <TextView
                 android:id="@+id/yes_btn_textview"
-                style="@style/blue_btn"
-                android:layout_width="wrap_content"
+                style="@style/green_btn"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="5dp"
                 android:layout_weight="1"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:text="Yes" />
+                android:text="Save" />
 
 
             <TextView
                 android:id="@+id/cancel_btn_textview"
                 style="@style/gray_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
                 android:text="@string/cancel_string" />
 
         </LinearLayout>

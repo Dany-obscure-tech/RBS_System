@@ -6,101 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".BuyLocal_home">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#F3F3F3">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
-                android:id="@+id/logo"
+                android:id="@+id/categories_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60dp"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="50dp"
-                    android:src="@drawable/buylocallogo" />
-
-            </RelativeLayout>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/imageSlider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/logo"
-                android:visibility="gone"
-                app:cardCornerRadius="6dp">
-
-                <com.smarteist.autoimageslider.SliderView
-                    android:id="@+id/imageSliders"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:layout_marginTop="60dp"
-                    app:sliderAnimationDuration="600"
-                    app:sliderAutoCycleDirection="back_and_forth"
-                    app:sliderAutoCycleEnabled="true"
-                    app:sliderIndicatorAnimationDuration="600"
-                    app:sliderIndicatorGravity="center_horizontal|bottom"
-                    app:sliderIndicatorMargin="15dp"
-                    app:sliderIndicatorOrientation="horizontal"
-                    app:sliderIndicatorPadding="3dp"
-                    app:sliderIndicatorRadius="2dp"
-                    app:sliderIndicatorSelectedColor="#5A5A5A"
-                    app:sliderIndicatorUnselectedColor="#FFF"
-                    app:sliderScrollTimeInSec="1"
-                    app:sliderStartAutoCycle="true" />
-
-            </androidx.cardview.widget.CardView>
-
-
-            <TextView
-                android:id="@+id/spot_light_text"
-                style="@style/TextViews_Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/imageSlider"
-                android:layout_marginStart="30dp"
-                android:layout_marginBottom="15dp"
-                android:text="Spotlight" />
-
-            <Button
-                android:id="@+id/test_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/spot_light_text"
-                android:layout_alignParentEnd="true"
-                android:text="test"
-                android:visibility="visible" />
-
-            <Button
-                android:id="@+id/test1_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/test_btn"
-                android:layout_alignParentEnd="true"
-                android:text="test"
-                android:visibility="visible" />
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/spotlightRecyclerView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/spot_light_text"
-                android:layout_centerHorizontal="true" />
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/spotlightRecyclerView"
                 android:background="#ffffffff">
 
                 <TextView
@@ -108,9 +26,9 @@
                     style="@style/TextViews_Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Category" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -118,27 +36,72 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/Category"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="12dp"
-
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:nestedScrollingEnabled="false"
                     android:orientation="horizontal"
-                    android:paddingBottom="40dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/categories_area"
+                android:background="#F3F3F3">
+
+                <TextView
+                    android:id="@+id/spot_light_text"
+                    style="@style/TextViews_Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Spotlight" />
+
+                <Button
+                    android:id="@+id/test_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/spot_light_text"
+                    android:layout_alignParentEnd="true"
+                    android:text="test"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/test1_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/test_btn"
+                    android:layout_alignParentEnd="true"
+                    android:text="test"
+                    android:visibility="visible" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/spotlightRecyclerView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spot_light_text"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="60dp"
+                    android:nestedScrollingEnabled="false" />
+
+            </RelativeLayout>
+
+
         </RelativeLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <RelativeLayout
         android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="#bbffffff"
-        android:padding="5dp">
+        android:padding="8dp">
 
 
         <LinearLayout
@@ -182,7 +145,9 @@
             android:layout_height="fill_parent"
             android:layout_alignParentEnd="true"
             android:layout_gravity="center"
+            android:layout_marginStart="2dp"
             android:adjustViewBounds="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:scaleType="center"
             android:src="@drawable/menu_btns" />
 

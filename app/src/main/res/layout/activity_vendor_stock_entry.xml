@@ -60,6 +60,8 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/searchForItem_cardView"
                 style="@style/CardView_style"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -102,7 +104,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter item name..."
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:inputType="textCapWords"/>
 
             <TextView
                 style="@style/TextViews_Bold"

@@ -367,34 +367,23 @@
                 android:visibility="gone">
 
                 <TextView
+                    style="@style/blue_btn"
                     android:id="@+id/confirmChanges_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/profile_screen_header"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
                     android:text="Agree Changes"
-                    android:textAlignment="center"
-                    android:textColor="#ffff"
-                    android:textSize="14sp" />
+                  />
 
                 <TextView
+                    style="@style/blue_btn"
                     android:id="@+id/cancleChanges_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/profile_screen_header"
-                    android:fontFamily="@font/segoe_ui_bold"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="Cancel Changes"
-                    android:textAlignment="center"
-                    android:textColor="#ffff"
-                    android:textSize="14sp" />
+                    android:text="Cancel Changes" />
 
             </LinearLayout>
 

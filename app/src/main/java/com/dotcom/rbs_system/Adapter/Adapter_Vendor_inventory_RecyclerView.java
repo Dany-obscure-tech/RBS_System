@@ -107,6 +107,7 @@ public class Adapter_Vendor_inventory_RecyclerView extends RecyclerView.Adapter<
                     @Override
                     public void onClick(View v) {
                         if (validate) {
+                            //TODO Daniyal: yaha pa name bhi edit ho sakey ye bhi check kar aur delete btn bhi connect karna ha, aur s.no aur category bhi connect nhi ha
                             // todo Shahzaib : validation for quantity and price
                             vendorStockRef.child(stockCategory_list.get(position)).child(stockkeyId_list.get(position)).child("Price").setValue(holder.item_price_editText.getText().toString());
                             vendorStockRef.child(stockCategory_list.get(position)).child(stockkeyId_list.get(position)).child("Quantity").setValue(holder.item_quantity_edittext.getText().toString());

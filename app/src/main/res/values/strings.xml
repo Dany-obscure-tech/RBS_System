@@ -56,6 +56,9 @@
     <string name="address">Address</string>
     <string name="phone_no">Phone No</string>
     <string name="Email">Email</string>
+    <string name="new_password">New Password</string>
+    <string name="old_password">Old Password</string>
+    <string name="confirm_password">Confirm Password</string>
 
     <string-array name="list">
         <item>Please select item condition</item>
@@ -65,4 +68,6 @@
         <item>C</item>
         <item>D</item>
     </string-array>
+
+
 </resources>

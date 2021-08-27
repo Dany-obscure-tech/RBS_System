@@ -31,9 +31,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
-import com.smarteist.autoimageslider.SliderAnimations;
-import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,20 +41,18 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class BuyLocal_home extends Fragment {
-    Button test_btn,test1_btn;
+    Button test_btn, test1_btn;
     EditText search_editText;
 
     BuylocalSlider buylocalSliderlistObj;
 
     //TODo ye slider remove karna ha
-    SliderView sliderView;
-
     DatabaseReference spotlightItemsRef;
 
 
     RecyclerView spotlightRecyclerView, category_recyclerview;
 
-    CardView imageSlider, side_menu_cardview;
+    CardView side_menu_cardview;
 
     List<String> slider_link_list, itemname, price, itemImage;
     List<String> imageUrl;
@@ -163,7 +158,6 @@ public class BuyLocal_home extends Fragment {
 
         menu_btn = view.findViewById(R.id.menu_btn);
 
-        imageSlider = view.findViewById(R.id.imageSlider);
         side_menu_cardview = view.findViewById(R.id.side_menu_cardview);
 
         logout = view.findViewById(R.id.logout);
@@ -174,16 +168,6 @@ public class BuyLocal_home extends Fragment {
 
         side_option_menu_bg_relativeLayout = view.findViewById(R.id.side_option_menu_bg_relativeLayout);
         Onclick_listners();
-
-        sliderView = view.findViewById(R.id.imageSliders);
-        sliderView.setSliderAdapter(sliderAdapterExample);
-        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using IndicatorAnimationType. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
-        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-        sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
-        sliderView.setIndicatorSelectedColor(Color.parseColor("#01A0DA"));
-        sliderView.setIndicatorUnselectedColor(Color.parseColor("#F1F1F1"));
-        sliderView.setScrollTimeInSec(4); //set scroll delay in seconds :
-        sliderView.startAutoCycle();
 
         return view;
     }

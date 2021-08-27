@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.webkit.URLUtil;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,14 +50,18 @@ public class VendorProfile extends Fragment {
 
     String selected_country_code;
 
+    ImageView banner_image_view, logo_image_view;
+
     EditText editTextCarrierNumber;
 
     CountryCodePicker ccp;
 
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
+    RelativeLayout banner_background_relativelayout, logo_background_relativelayout;
+
     View view;
-    TextView view_users_btn, edit_vendor_details_cancel_btn, edit_vendor_details_save_btn, change_passcode_btn, change_passcode_cancel_btn, change_passcode_submit_btn, change_new_passcode_cancel_btn, edit_vendor_details_btn_textView;
+    TextView edit_logo_image_textView, view_users_btn, edit_vendor_details_cancel_btn, edit_vendor_details_save_btn, change_passcode_btn, change_passcode_cancel_btn, change_passcode_submit_btn, change_new_passcode_cancel_btn, edit_vendor_details_btn_textView;
     Dialog change_passcode_alert_dialog, new_passcode_alert_dialog, edit_vendor_info_alert_dialog;
 
     TextView edit_banner_btn_textiew, edit_logo_btn_textiew;
@@ -123,6 +128,12 @@ public class VendorProfile extends Fragment {
 
     private void initialization() {
 
+        //TODO "edit_logo_btn_textiew" is id kay button ko remove kar kay edit wala code set karna ha
+
+        banner_background_relativelayout = view.findViewById(R.id.banner_background_relativelayout);
+        logo_background_relativelayout = view.findViewById(R.id.logo_background_relativelayout);
+        logo_image_view = view.findViewById(R.id.logo_image_view);
+        edit_logo_image_textView = view.findViewById(R.id.edit_logo_image_textView);
 
         vendorBannerStorageReference = FirebaseStorage.getInstance().getReference().child("Users_data/vendors_banners/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
         vendorLogoStorageReference = FirebaseStorage.getInstance().getReference().child("Users_data/vendors_logos/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -141,6 +152,7 @@ public class VendorProfile extends Fragment {
         vendor_url_textView = view.findViewById(R.id.vendor_url_textView);
 
         logo_imageView = view.findViewById(R.id.logo_imageView);
+        banner_image_view = view.findViewById(R.id.banner_image_view);
         store_banner_imageView = view.findViewById(R.id.store_banner_imageView);
 
         view_users_btn = view.findViewById(R.id.view_users_btn);
@@ -193,7 +205,9 @@ public class VendorProfile extends Fragment {
                     vendor_url_textView.setText(dataSnapshot.child("url").getValue().toString());
 
                     Picasso.get().load(String.valueOf(dataSnapshot.child("logo").getValue().toString())).into(logo_imageView);
+                    Picasso.get().load(String.valueOf(dataSnapshot.child("logo").getValue().toString())).into(logo_image_view);
                     Picasso.get().load(String.valueOf(dataSnapshot.child("banner").getValue().toString())).into(store_banner_imageView);
+                    Picasso.get().load(String.valueOf(dataSnapshot.child("banner").getValue().toString())).into(banner_image_view);
 
 
                 }
@@ -219,6 +233,55 @@ public class VendorProfile extends Fragment {
         edit_vendor_details_save_btn_listner();
         edit_banner_btn_textiew_listener();
         edit_profilepic_btn_textiew_listener();
+        store_banner_imageView_listner();
+        banner_background_relativelayout_listner();
+        logo_background_relativelayout_listner();
+        logo_imageView_listner();
+
+    }
+
+    private void logo_imageView_listner() {
+        logo_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logo_background_relativelayout.setVisibility(View.VISIBLE);
+                logo_image_view.setVisibility(View.VISIBLE);
+                edit_logo_image_textView.setVisibility(View.VISIBLE);
+
+            }
+        });
+    }
+
+    private void logo_background_relativelayout_listner() {
+        logo_background_relativelayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logo_background_relativelayout.setVisibility(View.GONE);
+                logo_image_view.setVisibility(View.GONE);
+                edit_logo_image_textView.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void banner_background_relativelayout_listner() {
+        banner_background_relativelayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                banner_background_relativelayout.setVisibility(View.GONE);
+                banner_image_view.setVisibility(View.GONE);
+            }
+        });
+    }
+
+
+    private void store_banner_imageView_listner() {
+        store_banner_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                banner_background_relativelayout.setVisibility(View.VISIBLE);
+                banner_image_view.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void edit_profilepic_btn_textiew_listener() {
@@ -226,6 +289,7 @@ public class VendorProfile extends Fragment {
             @Override
             public void onClick(View view) {
                 buttonPressCheck = "profile";
+                ///TODO yaha pa edit logo ka kam check kar laina
                 ImagePicker.Companion.with(VendorProfile.this)
                         .crop()                    //Crop image(Optional), Check Customization for more option
                         .compress(1024)            //Final image size will be less than 1 MB(Optional)
