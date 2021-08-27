@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/shop_items_cardView"
+        style="@style/CardView_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/offers_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/edit_stock_textview"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/edit"
+                    android:backgroundTint="@color/textGrey"
+
+                    />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/accessory_name_textView"
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fake_item_name"
+                android:textColor="@color/textBlue" />
+
+
+            <TextView
+                android:id="@+id/accesory_inventory_Category_textView"
+                style="@style/TextViews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/accessory_name_textView"
+                android:layout_marginTop="10dp"
+                android:text="Category"
+                android:textColor="@color/textGreen" />
+
+
+            <LinearLayout
+                android:id="@+id/customerID_linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/accesory_inventory_Category_textView"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViews_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text=" Qty :" />
+
+                    <TextView
+                        android:id="@+id/accessory_inventory_Quantity_textView"
+                        style="@style/TextViews_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="100" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/currency_textView"
+                        style="@style/TextViews_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Fake_currency"
+                        android:textColor="@color/textGreen" />
+
+                    <TextView
+                        android:id="@+id/stockPrice_textView"
+                        style="@style/TextViews_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/Fake_rupees"
+                        android:textColor="@color/textGreen" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

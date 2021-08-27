@@ -43,30 +43,15 @@
                     style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="S.No " />
-
-                <TextView
-                    android:id="@+id/sno_textview"
-                    android:layout_marginTop="5dp"
-                    style="@style/TextViews_Bold_small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/Fake_id"
-                    android:textColor="@color/gradientDarkBlue" />
-
-                <TextView
-                    style="@style/TextViews_Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="Category" />
 
                 <TextView
                     android:id="@+id/username_editText"
                     style="@style/TextViews_Bold_small"
-                    android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:text="Category"
                     android:textColor="@color/gradientDarkBlue" />
 
@@ -80,10 +65,10 @@
                 <EditText
                     android:id="@+id/item_name_textview"
                     style="@style/EditTexts"
-                    android:inputType="textCapWords"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter name" />
+                    android:hint="Enter name"
+                    android:inputType="textCapWords" />
 
                 <TextView
                     style="@style/TextViews_Bold"
@@ -117,83 +102,47 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/remove_btn"
+                style="@style/gray_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_weight="1"
+                android:background="@drawable/red_border"
+                android:text="Remove"
+                android:textColor="@color/textRed" />
+
             <LinearLayout
-                android:id="@+id/image_view_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/add_user_data_fields_area"
-                android:layout_margin="10dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-                <ImageView
-                    android:id="@+id/stock_pic"
-                    android:layout_width="350px"
-                    android:layout_height="350px"
-                    android:layout_marginBottom="20dp"
-                    android:src="@drawable/laptop" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/remove_btn"
-                        style="@style/gray_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginStart="20dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/red_border"
-                        android:text="Remove"
-                        android:textColor="@color/textRed" />
-
-                    <TextView
-                        android:id="@+id/change_picture_btn"
-                        style="@style/green_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="20dp"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:text="Edit" />
-
-
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/save_btn"
+                    style="@style/green_btn"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <TextView
-                        android:id="@+id/save_btn"
-                        style="@style/green_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:layout_weight="1"
-                        android:text="@string/save_btn_string"
-                        android:textAlignment="center" />
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/save_btn_string"
+                    android:textAlignment="center" />
 
 
-                    <TextView
-                        android:id="@+id/cancel_btn"
-                        style="@style/gray_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:text="@string/cancel_string" />
+                <TextView
+                    android:id="@+id/cancel_btn"
+                    style="@style/gray_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/cancel_string" />
 
-
-                </LinearLayout>
 
             </LinearLayout>
 

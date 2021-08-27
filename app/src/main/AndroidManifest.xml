@@ -24,7 +24,8 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".Accessory"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/AppTheme.no" />
         <activity
             android:name=".Invoice_preview_repair_ticket"
             android:exported="true"
