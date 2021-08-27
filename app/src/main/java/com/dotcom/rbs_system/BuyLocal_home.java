@@ -41,12 +41,14 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class BuyLocal_home extends Fragment {
+    AdapterCategoryRecyclerView adapterCategoryRecyclerView;
+
     Button test_btn, test1_btn;
     EditText search_editText;
 
     BuylocalSlider buylocalSliderlistObj;
 
-    DatabaseReference spotlightItemsRef;
+    DatabaseReference spotlightItemsRef,categoriesRef;
 
 
     RecyclerView spotlightRecyclerView, category_recyclerview;
@@ -55,7 +57,7 @@ public class BuyLocal_home extends Fragment {
 
     List<String> slider_link_list, itemname, price, itemImage;
     List<String> imageUrl;
-    List<String> category_text, key_idList, categoryList, shopkeeperList;
+    List<String> category_text,category_icon, key_idList, categoryList, shopkeeperList;
 
     ImageView menu_btn;
 
@@ -89,21 +91,14 @@ public class BuyLocal_home extends Fragment {
         buylocalSliderlistObj = BuylocalSlider.getInstance();
 
         spotlightItemsRef = FirebaseDatabase.getInstance().getReference("Spotlight");
+        categoriesRef = FirebaseDatabase.getInstance().getReference("Categories");
+
         imageUrl = new ArrayList<>();
         key_idList = new ArrayList<>();
         categoryList = new ArrayList<>();
         shopkeeperList = new ArrayList<>();
         category_text = new ArrayList<>();
-
-        category_text.add("PC");
-        category_text.add("Laptop");
-        category_text.add("Mobile");
-        category_text.add("Tablet");
-        category_text.add("PC");
-        category_text.add("Laptop");
-        category_text.add("Mobile");
-        category_text.add("Tablet");
-
+        category_icon = new ArrayList<>();
 
         imageUrl = buylocalSliderlistObj.getBuylocalSliderList();
 
@@ -124,17 +119,10 @@ public class BuyLocal_home extends Fragment {
         View view = inflater.inflate(R.layout.fragment_buylocal_home, container, false);
         slider_link_list = new ArrayList<>();
 
-        datafetch();
-        categoryfetch();
-
         spotlightRecyclerView = view.findViewById(R.id.spotlightRecyclerView);
         category_recyclerview = view.findViewById(R.id.category_recyclerview);
 
-        AdapterCategoryRecyclerView adapterCategoryRecyclerView = new AdapterCategoryRecyclerView(getActivity(), null, category_text);
-
         category_recyclerview.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
-
-        category_recyclerview.setAdapter(adapterCategoryRecyclerView);
 
         search_imageBtn = view.findViewById(R.id.search_imageBtn);
 
@@ -166,13 +154,31 @@ public class BuyLocal_home extends Fragment {
         offers_option = view.findViewById(R.id.offers_option);
 
         side_option_menu_bg_relativeLayout = view.findViewById(R.id.side_option_menu_bg_relativeLayout);
+        datafetch();
+        categoryfetch();
         Onclick_listners();
 
         return view;
     }
 
     private void categoryfetch() {
+        categoriesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                    category_text.add(snapshot1.child("name").getValue().toString());
+                    category_icon.add(snapshot1.child("image_url").getValue().toString());
+                }
 
+                adapterCategoryRecyclerView = new AdapterCategoryRecyclerView(getActivity(), category_icon, category_text);
+                category_recyclerview.setAdapter(adapterCategoryRecyclerView);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.Buylocal_category_products;
 import com.dotcom.rbs_system.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -41,6 +43,7 @@ public class AdapterCategoryRecyclerView extends RecyclerView.Adapter<AdapterCat
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.category_Item_Textview.setText(category_name.get(position));
+        Picasso.get().load(category_icon.get(position)).into(holder.category_item_Icon);
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,13 +61,13 @@ public class AdapterCategoryRecyclerView extends RecyclerView.Adapter<AdapterCat
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        ImageButton category_item_Icon;
+        ImageView category_item_Icon;
         TextView category_Item_Textview;
         CardView button;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            category_item_Icon = (ImageButton) itemView.findViewById(R.id.category_item_Icon);
+            category_item_Icon = (ImageView) itemView.findViewById(R.id.category_item_Icon);
             category_Item_Textview = (TextView) itemView.findViewById(R.id.category_Item_Textview);
             button = (CardView) itemView.findViewById(R.id.button);
 
