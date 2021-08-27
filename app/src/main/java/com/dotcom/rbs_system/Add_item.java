@@ -109,6 +109,7 @@ public class Add_item extends AppCompatActivity {
         getCategoryList();
         selectCategory();
         onClickListeners();
+        zeroValueEditText();
 
     }
 
@@ -420,6 +421,31 @@ public class Add_item extends AppCompatActivity {
         }
         adapterItemCategoryListRecyclerView.notifyDataSetChanged();
 
+    }
+
+    private void zeroValueEditText() {
+        price_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!price_editText.getText().toString().isEmpty()){
+                    price_editText.removeTextChangedListener(this);
+                    price_editText.setText("");
+                    price_editText.setSelection(price_editText.getText().toString().length());
+                    zeroValueEditText();
+
+                }
+            }
+        });
     }
 
     @Override

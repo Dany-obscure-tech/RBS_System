@@ -46,7 +46,6 @@ public class BuyLocal_home extends Fragment {
 
     BuylocalSlider buylocalSliderlistObj;
 
-    //TODo ye slider remove karna ha
     DatabaseReference spotlightItemsRef;
 
 
