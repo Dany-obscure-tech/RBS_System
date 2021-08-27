@@ -70,7 +70,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     Dialog make_offer_alert_dialog;
     ImageButton back_btn;
     LinearLayout shop_details_linearlayout;
-    String productID, productName, category, shopkeeperID, conversationKey = null;
+    String productID, productName,productImage,productPrice, productCategory, shopkeeperID, conversationKey = null;
     DatabaseReference itemRef, reportRef, userRef, stockRef, customerOfferRef, agreedOfferRef, boughtOfferRef, userConversationRef;
     StorageReference itemImageStorageRef;
     int i, noOfimages;
@@ -96,20 +96,20 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         if (appLinkData != null) {
             //     http://buyLocalrbs_test.com/productdetails/-MUSpP4dkoK4w4f45VaT/Mobile/CfofZGxuR4TC1OEBRMymclpscR73
             productID = appLinkData.getPathSegments().get(1);
-            category = appLinkData.getPathSegments().get(2);
+            productCategory = appLinkData.getPathSegments().get(2);
             shopkeeperID = appLinkData.getPathSegments().get(3);
         } else {
             productID = getIntent().getStringExtra("PRODUCT_ID");
-            category = getIntent().getStringExtra("CATEGORY");
+            productCategory = getIntent().getStringExtra("CATEGORY");
             shopkeeperID = getIntent().getStringExtra("SHOPKEEPER_ID");
         }
 
         imageUrl = new ArrayList<>();
 
-        itemRef = FirebaseDatabase.getInstance().getReference("Items/" + category + "/" + productID);
-        stockRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/" + shopkeeperID + "/" + category + "/" + productID);
-        agreedOfferRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/" + shopkeeperID + "/" + category + "/" + productID + "/Accepted_Offer");
-        boughtOfferRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/" + shopkeeperID + "/" + category + "/" + productID + "/Bought_Offer");
+        itemRef = FirebaseDatabase.getInstance().getReference("Items/" + productCategory + "/" + productID);
+        stockRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/" + shopkeeperID + "/" + productCategory + "/" + productID);
+        agreedOfferRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/" + shopkeeperID + "/" + productCategory + "/" + productID + "/Accepted_Offer");
+        boughtOfferRef = FirebaseDatabase.getInstance().getReference("Stock/Shopkeepers/" + shopkeeperID + "/" + productCategory + "/" + productID + "/Bought_Offer");
         reportRef = FirebaseDatabase.getInstance().getReference();
         customerOfferRef = FirebaseDatabase.getInstance().getReference();
         itemImageStorageRef = FirebaseStorage.getInstance().getReference().child("Item_Images/" + productID);
@@ -213,7 +213,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
                 intent.putExtra("ID", shopkeeperID);
                 intent.putExtra("SHOPKEEPER_NAME", shopKeeperName_textView.getText().toString());
                 intent.putExtra("PRODUCT_ID", productID);
-                intent.putExtra("CATEGORY", category);
+                intent.putExtra("CATEGORY", productCategory);
                 intent.putExtra("CONVERSATION_KEY", conversationKey);
                 intent.putExtra("PRODUCT_NAME", productName);
                 intent.putExtra("PRODUCT_IMAGE", imageUrl.get(0));
@@ -246,7 +246,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
             public void onClick(View v) {
                 Intent myIntent = new Intent(Intent.ACTION_SEND);
                 myIntent.setType("text/plain");
-                String shareBody = "http://buyLocalrbstest.com/productdetails/" + productID + "/" + category + "/" + shopkeeperID;
+                String shareBody = "http://buyLocalrbstest.com/productdetails/" + productID + "/" + productCategory + "/" + shopkeeperID;
                 String shareSub = productName;
                 myIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
                 myIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
@@ -292,6 +292,11 @@ public class BuyLocal_productdetails extends AppCompatActivity {
                     customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(productID).child("shopkeeper").setValue(shopkeeperID);
                     customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(productID).child("offer_status").setValue("Offer Pending");
                     customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(productID).child("timestamp").setValue(timestamp);
+                    customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(productID).child("item_image").setValue(productImage);
+                    customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(productID).child("item_name").setValue(productName);
+                    customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(productID).child("item_price").setValue(productPrice);
+                    customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(productID).child("item_keyId").setValue(productID);
+                    customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(productID).child("item_category").setValue(productCategory);
 
                     make_offer_alert_dialog.dismiss();
                     recreate();
@@ -424,8 +429,17 @@ public class BuyLocal_productdetails extends AppCompatActivity {
                 category_textView.setText(snapshot.child("Category").getValue().toString());
                 item_description_textview.setText(snapshot.child("Description").getValue().toString());
                 itemPrice_textView.setText(snapshot.child("Price").getValue().toString());
+                productPrice = snapshot.child("Price").getValue().toString();
                 currency_textView.setText(currency);
-                fetchingItemImages();
+                productImage = snapshot.child("Image_urls").child("image_1").getValue().toString();
+
+                for (DataSnapshot snapshot1 : snapshot.child("Image_urls").getChildren()){
+                    imageUrl.add(String.valueOf(snapshot1.getValue().toString()));
+                }
+
+                SliderAdapterExample sliderAdapterExample = new SliderAdapterExample(BuyLocal_productdetails.this, imageUrl);
+                sliderView.setSliderAdapter(sliderAdapterExample);
+
                 fetchingShopkeeperLocation();
             }
 
@@ -514,37 +528,6 @@ public class BuyLocal_productdetails extends AppCompatActivity {
 
     private double rad2deg(double rad) {
         return (rad * 180.0 / Math.PI);
-    }
-
-    private void fetchingItemImages() {
-
-
-        for (i = 1; i <= noOfimages; ++i) {
-
-            itemImageStorageRef.child("image_" + i).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    imageUrl.add(String.valueOf(uri));
-
-
-                    System.out.println("called fun i=" + i + " " + imageUrl.size());
-//
-                    if (imageUrl.size() == noOfimages) {
-                        SliderAdapterExample sliderAdapterExample = new SliderAdapterExample(BuyLocal_productdetails.this, imageUrl);
-                        sliderView.setSliderAdapter(sliderAdapterExample);
-                    }
-
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(BuyLocal_productdetails.this, "failed", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-
-        }
-
     }
 
     /////////////////////////////////////////////////////////////////////////////////////

@@ -97,40 +97,11 @@ public class SearchResult extends AppCompatActivity {
                         }
                     }
 
-
                 }
 
                 AdapterSpotlightItemListRecyclerView viewAdapter = new AdapterSpotlightItemListRecyclerView(SearchResult.this, filteredItemname, price, itemImage, key_idList, categoryList, shopkeeperList);
                 recyclerView.setLayoutManager(new GridLayoutManager(SearchResult.this, 2));
                 recyclerView.setAdapter(viewAdapter);
-
-
-//                for (int j = 0; j < searchItemsList.size(); j++) {
-//                    searchMe = searchItemsList.get(j);
-//
-//                    int searchMeLength = searchMe.length();
-//                    int findMeLength = findMe.length();
-//                    for (int i = 0;i <= (searchMeLength - findMeLength); i++) {
-//                        if (searchMe.regionMatches(true, i, findMe, 0, findMeLength)) {
-//                            filteredList.add(searchMe);
-//                            System.out.println(searchMe);
-//                            break;
-//                        }
-//                    }
-//                }
-//
-//                for (DataSnapshot dataSnapshot1 : snapshot.child(filteredList.get(x)).getChildren()) {
-//                    Toast.makeText(SearchResult.this, filteredList.get(x), Toast.LENGTH_SHORT).show();
-//                    filteredItemname.add(String.valueOf(dataSnapshot1.child("item_name").getValue()));
-//                    price.add(String.valueOf(dataSnapshot1.child("Price").getValue()));
-//                    itemImage.add(String.valueOf(dataSnapshot1.child("Image").getValue()));
-//                    key_idList.add(String.valueOf(dataSnapshot1.child("key_id").getValue()));
-//                    categoryList.add(String.valueOf(dataSnapshot1.child("Category").getValue()));
-//                    shopkeeperList.add(String.valueOf(dataSnapshot1.child("shopkeeper").getValue()));
-//                    x++;
-//                }
-
-
 
 
             }

@@ -3,10 +3,42 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_accessory.xml" value="0.25" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_accessory_sale.xml" value="0.25" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_add_item.xml" value="0.25" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_add_repair_ticket.xml" value="0.12411347517730496" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_buy_local_offers_option.xml" value="0.25" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_buy_local_productdetails.xml" value="0.25" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_rbs_vendor_order_receipt.xml" value="0.2001013171225937" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_rbs_vendors.xml" value="0.4114583333333333" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_repair_ticket.xml" value="0.2001013171225937" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_sale.xml" value="0.2001013171225937" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_search_result.xml" value="0.4114583333333333" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_vendor_shopkeepers_orders_progress.xml" value="0.25" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_vendor_shopkeepers_shop_receipts.xml" value="0.425" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/alert_accessory_quantity_edit.xml" value="0.33" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/alert_sale_accesory_item.xml" value="0.33" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/alert_select_accessory_screen.xml" value="0.4114583333333333" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/alert_setting_add_fault.xml" value="0.4114583333333333" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/alert_vendor_add_users.xml" value="0.4114583333333333" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/alert_vendor_change_passcode.xml" value="0.4114583333333333" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/alert_vendor_new_passcode.xml" value="0.4114583333333333" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/alert_vendor_stock_edit.xml" value="0.4114583333333333" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/fragment_buylocal_home.xml" value="0.25" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/fragment_buylocal_profile.xml" value="0.33" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/fragment_r_b_s__vendor__orders.xml" value="0.2001013171225937" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/fragment_rbs_vendor_orders.xml" value="0.4114583333333333" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/fragment_vendor_orders.xml" value="0.33" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/fragment_vendor_profile.xml" value="0.4114583333333333" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/rbs_vendor_orders_list_item.xml" value="0.33" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/recyclerview_accessory_sale_item.xml" value="0.4197916666666667" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/recyclerview_offers_items.xml" value="0.25" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/recyclerview_repairticket_repairticketlist_item.xml" value="0.2001013171225937" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/recyclerview_shop_products_received_offers_item.xml" value="0.2328125" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/recyclerview_spotlight_items.xml" value="0.4114583333333333" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/vendor_orders_list_item.xml" value="0.25" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/vendor_shopkeepers_order_progress_list_item.xml" value="0.2001013171225937" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/menu/vendor_nav_menu.xml" value="0.4197916666666667" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/drawable-mdpi/main_button_grey.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/drawable-v21/ic_menu_camera.xml" value="0.37592592592592594" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/drawable-v21/ripple_effect_cardview.xml" value="0.57421875" />
@@ -30,7 +62,6 @@
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout-v23/activity_buylocal_category_products.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/activity_RBS_accesories_vendor_detail.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/activity_accessories.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/activity_accessory.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/activity_accessory_add.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/activity_accessory_sale.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/activity_add_customer.xml" value="0.275" />
@@ -79,7 +110,6 @@
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/alert_add_category.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/alert_make_offer.xml" value="0.3078125" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/alert_purchase_add_item.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/alert_rbs_accessory_stock_edit.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/alert_rbs_categorylist.xml" value="0.27181467181467184" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/alert_rbs_customerlist.xml" value="0.27181467181467184" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/alert_rbs_itemlist.xml" value="0.25" />
@@ -141,7 +171,6 @@
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/recyclerview_shop_products_items.xml" value="0.3101851851851852" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/recyclerview_shop_products_received_offers_item.xml" value="0.275" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/recyclerview_spotlight_items.xml" value="0.27181467181467184" />
-        <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/shopkeeper_accesory_inventory_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/testing2.xml" value="0.337037037037037" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/testing_xml.xml" value="0.33" />
         <entry key="..\:/Users/Shahzaib Precision/StudioProjects/RBS_System/app/src/main/res/layout/vendor_navigation_header.xml" value="0.36666666666666664" />
