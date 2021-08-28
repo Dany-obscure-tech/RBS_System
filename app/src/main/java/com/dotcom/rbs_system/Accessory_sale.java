@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -29,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hbb20.CountryCodePicker;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -43,17 +43,23 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Accessory_sale extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-    TextView invoiceNo_TextView,date_textview,saleAccessory_textview,submit_textview,alertAddAccessoryEnter_textview,alertSaleAccessoryCancel_textview;
+    TextView invoiceNo_TextView, date_textview, saleAccessory_textview, submit_textview, alertAddAccessoryEnter_textview, alertSaleAccessoryCancel_textview;
 
     String invoiceNo;
 
-    CardView select_category_cardview,select_itemname_cardview;
+    String selected_country_code;
+
+    EditText editTextCarrierNumber;
+
+    CountryCodePicker ccp;
+
+    CardView select_category_cardview, select_itemname_cardview;
 
     DatabaseReference AccessorySaleInvoicesRef;
     String category_name, currency;
     int container = 100;
     ImageButton back_btn;
-    EditText customer_name_editText, customer_phone_no_editText, alertAccessoryQuantity_editText, alertAccessoryUnitPrice_editText, paid_editText;
+    EditText customer_name_editText, alertAccessoryQuantity_editText, alertAccessoryUnitPrice_editText, paid_editText;
     //    Date date;
     TextView date_textView, select_category_textView, select_itemname_textView, alertAccessoryTotalPrice_textView, category_textView, item_name_textView, balance_TextView;
     Dialog accessorySaleAlert;
@@ -103,6 +109,10 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
 
         invoiceNo_TextView = (TextView) findViewById(R.id.invoiceNo_TextView);
 
+        ccp = findViewById(R.id.ccp);
+        editTextCarrierNumber = findViewById(R.id.editText_carrierNumber);
+        ccp.registerCarrierNumberEditText(editTextCarrierNumber);
+
         AccessorySaleInvoicesRef = FirebaseDatabase.getInstance().getReference("Accessories_Sale_invoices/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         Date date;
@@ -131,17 +141,16 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
 
         back_btn = (ImageButton) findViewById(R.id.back_btn);
         customer_name_editText = (EditText) findViewById(R.id.customer_name_editText);
-        customer_phone_no_editText = (EditText) findViewById(R.id.customer_phone_no_editText);
         date_textview = findViewById(R.id.date_textview);
         submit_textview = findViewById(R.id.submit_textview);
         alertAccessoryQuantity_editText = (EditText) accessorySaleAlert.findViewById(R.id.alertAccessoryQuantity_editText);
         alertAccessoryUnitPrice_editText = (EditText) accessorySaleAlert.findViewById(R.id.alertAccessoryUnitPrice_editText);
         paid_editText = (EditText) findViewById(R.id.paid_editText);
-        saleAccessory_textview =  findViewById(R.id.saleAccessory_textview);
+        saleAccessory_textview = findViewById(R.id.saleAccessory_textview);
         alertSaleAccessoryCancel_textview = accessorySaleAlert.findViewById(R.id.alertSaleAccessoryCancel_textview);
-        alertAddAccessoryEnter_textview =  accessorySaleAlert.findViewById(R.id.alertAddAccessoryEnter_textview);
+        alertAddAccessoryEnter_textview = accessorySaleAlert.findViewById(R.id.alertAddAccessoryEnter_textview);
         select_category_textView = (TextView) accessorySaleAlert.findViewById(R.id.select_category_textView);
-        select_category_cardview =  accessorySaleAlert.findViewById(R.id.select_category_cardview);
+        select_category_cardview = accessorySaleAlert.findViewById(R.id.select_category_cardview);
         select_itemname_textView = (TextView) accessorySaleAlert.findViewById(R.id.select_itemname_textView);
         select_itemname_cardview = accessorySaleAlert.findViewById(R.id.select_itemname_cardview);
         alertAccessoryTotalPrice_textView = (TextView) accessorySaleAlert.findViewById(R.id.alertAccessoryTotalPrice_textView);
@@ -167,7 +176,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
     private boolean validate() {
         boolean valid = true;
 
-
+//TODO yaha pa validate khali ha
         return valid;
     }
 
@@ -203,8 +212,8 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
             customer_name_editText.setError("Please enter name");
             valid = false;
         }
-        if (customer_phone_no_editText.getText().toString().isEmpty()) {
-            customer_phone_no_editText.setError("Please enter password");
+        if (!ccp.isValidFullNumber()) {
+            editTextCarrierNumber.setError("Please enter valid number");
             valid = false;
         }
         if (date_textView.getText().toString().equals("Select date")) {
@@ -229,7 +238,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
                         AccessorySaleInvoicesRef.child(invoiceNo).child("Invoice_no").setValue(invoiceNo);
                         AccessorySaleInvoicesRef.child(invoiceNo).child("Invoice_date").setValue(date_textView.getText().toString());
                         AccessorySaleInvoicesRef.child(invoiceNo).child("Customer_name").setValue(customer_name_editText.getText().toString());
-                        AccessorySaleInvoicesRef.child(invoiceNo).child("Customer_phNo").setValue(customer_phone_no_editText.getText().toString());
+                        AccessorySaleInvoicesRef.child(invoiceNo).child("Customer_phNo").setValue(ccp.getFullNumberWithPlus());
                         AccessorySaleInvoicesRef.child(invoiceNo).child("Paid").setValue(paid_editText.getText().toString());
 //                        AccessorySaleInvoicesRef.child(invoiceNo).child("Balance").setValue(balance_TextView.getText().toString());
 
@@ -327,6 +336,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
         return valid;
     }
 
+    //TODO "balancewatcher" wala function use nhi howa
     private void balancewatcher() {
         paid_editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -349,7 +359,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
                         float paid = Float.parseFloat(paid_editText.getText().toString());
 
                         DecimalFormat twoDForm = new DecimalFormat("#.##");
-                        balance_TextView.setText(currency + String.valueOf(Double.valueOf(twoDForm.format(paid - container1))));
+                        balance_TextView.setText(currency + Double.valueOf(twoDForm.format(paid - container1)));
 
                     }
                     if (paid_editText.getText().toString().equals("")) {
@@ -385,7 +395,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
                         float unitPrice = Float.parseFloat(alertAccessoryUnitPrice_editText.getText().toString());
 
                         DecimalFormat twoDForm = new DecimalFormat("#.##");
-                        alertAccessoryTotalPrice_textView.setText(currency + String.valueOf(Double.valueOf(twoDForm.format(quantity * unitPrice))));
+                        alertAccessoryTotalPrice_textView.setText(currency + Double.valueOf(twoDForm.format(quantity * unitPrice)));
                     }
 
                 }
@@ -415,7 +425,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
                         float unitPrice = Float.parseFloat(alertAccessoryUnitPrice_editText.getText().toString());
 
                         DecimalFormat twoDForm = new DecimalFormat("#.##");
-                        alertAccessoryTotalPrice_textView.setText(currency + String.valueOf(Double.valueOf(twoDForm.format(quantity * unitPrice))));
+                        alertAccessoryTotalPrice_textView.setText(currency + Double.valueOf(twoDForm.format(quantity * unitPrice)));
                     }
 
                 }
@@ -508,7 +518,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     accessories_categories_raw_list.add(String.valueOf(dataSnapshot1.child("catagory").getValue()));
                 }
-                accessories_categories_filter_list = new ArrayList<String>(new LinkedHashSet<String>(accessories_categories_raw_list));
+                accessories_categories_filter_list = new ArrayList<>(new LinkedHashSet<>(accessories_categories_raw_list));
 
             }
 
@@ -557,6 +567,16 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
         date_textView.setText(currentDateString);
+    }
+
+    public void onCountryPickerClick(View view) {
+        ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                //Alert.showMessage(RegistrationActivity.this, ccp.getSelectedCountryCodeWithPlus());
+                selected_country_code = ccp.getFullNumberWithPlus();
+            }
+        });
     }
 
 }

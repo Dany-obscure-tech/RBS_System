@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,6 +32,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hbb20.CountryCodePicker;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -46,9 +49,23 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
 
     String currency, invoiceNo, vendorName, vendorPhno;
 
+    EditText alertvendorName_editText;
+
+    String selected_country_code;
+
+    EditText editTextCarrierNumber;
+
+    DatabaseReference reference;
+
+    CountryCodePicker ccp;
+
+    String key;
+
     Date date;
 
-    CardView search_vendor_cardview,search_category_cardview;
+    TextView alertAddVendor_save_textview, alertAddVendorAccessoryCancel_textview, ac_title;
+
+    CardView search_vendor_cardview, search_category_cardview;
 
     TextView date_textview, submit_textview, addaccessory_textview, alertCategoryAdd_textview, vendor_add_textview, alertAddCategoryCancel_textview, alertAddCategoryEnter_textview, alertAddAccessoryCancel_textview, alertAddAccessoryEnter_textview;
 
@@ -62,7 +79,7 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
 
     DatabaseReference existingCustomersRef, existingAccessoryCategories, accessoriesCategoryRef, AccessoryInvoicesRef, AccessoryItemsRef;
 
-    Dialog categoryAddAlert, accessoryAddAlet;
+    Dialog categoryAddAlert, accessoryAddAlert, vendorAddAlert;
 
     RecyclerView accessoryItemList_recyclerView;
 
@@ -94,7 +111,7 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accessory_add);
-
+        //TODO accessory add aur accessory sale ko check karna ha kay data sahi sa ja raha ha kay nhi, aur validation bhi check karna ha
         Initialization();
         InitialProcess();
         Processes();
@@ -106,11 +123,21 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
 
     private void Initialization() {
         currency = Currency.getInstance().getCurrency();
-
+        reference = FirebaseDatabase.getInstance().getReference();
         categoryAddAlert = new Dialog(this);
-        accessoryAddAlet = new Dialog(this);
+        accessoryAddAlert = new Dialog(this);
+        vendorAddAlert = new Dialog(this);
         categoryAddAlert.setContentView(R.layout.alert_add_category);
-        accessoryAddAlet.setContentView(R.layout.alert_add_accesory_item);
+        accessoryAddAlert.setContentView(R.layout.alert_add_accesory_item);
+        vendorAddAlert.setContentView(R.layout.alert_add_vendor_item);
+
+        alertvendorName_editText = vendorAddAlert.findViewById(R.id.alertvendorName_editText);
+        ccp = vendorAddAlert.findViewById(R.id.ccp);
+        editTextCarrierNumber = vendorAddAlert.findViewById(R.id.editTextCarrierNumber);
+        ccp.registerCarrierNumberEditText(editTextCarrierNumber);
+
+        alertAddVendor_save_textview = vendorAddAlert.findViewById(R.id.alertAddVendor_save_textview);
+        alertAddVendorAccessoryCancel_textview = vendorAddAlert.findViewById(R.id.alertAddVendorAccessoryCancel_textview);
 
         existingCustomersRef = FirebaseDatabase.getInstance().getReference("Vendor_list");
         existingAccessoryCategories = FirebaseDatabase.getInstance().getReference("Vendor_list");
@@ -123,16 +150,16 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         alertAddCategoryEnter_textview = categoryAddAlert.findViewById(R.id.alertAddCategoryEnter_textview);
         alertAddCategoryCancel_textview = categoryAddAlert.findViewById(R.id.alertAddCategoryCancel_textview);
         date_textview = findViewById(R.id.date_textview);
-        alertAddAccessoryEnter_textview = accessoryAddAlet.findViewById(R.id.alertAddAccessoryEnter_textview);
-        alertAddAccessoryCancel_textview = accessoryAddAlet.findViewById(R.id.alertAddAccessoryCancel_textview);
+        alertAddAccessoryEnter_textview = accessoryAddAlert.findViewById(R.id.alertAddAccessoryEnter_textview);
+        alertAddAccessoryCancel_textview = accessoryAddAlert.findViewById(R.id.alertAddAccessoryCancel_textview);
         addaccessory_textview = findViewById(R.id.addaccessory_textview);
         submit_textview = findViewById(R.id.submit_textview);
         back_btn = findViewById(R.id.back_btn);
 
         alertAddCategoryName_editText = categoryAddAlert.findViewById(R.id.alertAddCategoryName_editText);
-        alertAccessoryName_editText = accessoryAddAlet.findViewById(R.id.alertAccessoryName_editText);
-        alertAccessoryQuantity_editText = accessoryAddAlet.findViewById(R.id.alertAccessoryQuantity_editText);
-        alertAccessoryUnitPrice_editText = accessoryAddAlet.findViewById(R.id.alertAccessoryUnitPrice_editText);
+        alertAccessoryName_editText = accessoryAddAlert.findViewById(R.id.alertAccessoryName_editText);
+        alertAccessoryQuantity_editText = accessoryAddAlert.findViewById(R.id.alertAccessoryQuantity_editText);
+        alertAccessoryUnitPrice_editText = accessoryAddAlert.findViewById(R.id.alertAccessoryUnitPrice_editText);
         vendorInvoiceRef_editText = findViewById(R.id.vendorInvoiceRef_editText);
 
         alertCategory_textView = findViewById(R.id.alertCategory_textView);
@@ -142,8 +169,8 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         search_vendor_cardview = findViewById(R.id.search_vendor_cardview);
         date_textView = findViewById(R.id.date_textView);
         invoiceNo_TextView = findViewById(R.id.invoiceNo_TextView);
-        alertAccessoryTotalPrice_textView = accessoryAddAlet.findViewById(R.id.alertAccessoryTotalPrice_textView);
-        alertAccessoryTotalPrice_currency_textView = accessoryAddAlet.findViewById(R.id.alertAccessoryTotalPrice_currency_textView);
+        alertAccessoryTotalPrice_textView = accessoryAddAlert.findViewById(R.id.alertAccessoryTotalPrice_textView);
+        alertAccessoryTotalPrice_currency_textView = accessoryAddAlert.findViewById(R.id.alertAccessoryTotalPrice_currency_textView);
 
         date = Calendar.getInstance().getTime();
         String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(date);
@@ -327,23 +354,24 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
     private boolean validate() {
         boolean valid = true;
 
-        if (searchForVendor_textView.getText().toString().equals("SEARCH FOR VENDOR")) {
+        if (searchForVendor_textView.getText().toString().equals("Search vendors...")) {
             Toast.makeText(this, "Select Vendor!", Toast.LENGTH_SHORT).show();
             valid = false;
         }
 
-        if (alertCategory_textView.getText().toString().equals("SELECT CATEGORY")) {
+        if (alertCategory_textView.getText().toString().equals("Select category...")) {
             Toast.makeText(this, "Select Category!", Toast.LENGTH_SHORT).show();
             valid = false;
         }
 
-        if (vendorInvoiceRef_editText.getText().toString().isEmpty()) {
+
+        if (vendorInvoiceRef_editText.getText().toString().equals("")) {
             vendorInvoiceRef_editText.setError("Enter Invoice Ref");
             valid = false;
         }
 
         if (accessoryNameList.size() == 0) {
-            Toast.makeText(this, "Enter Accessories!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter Accessory Items!", Toast.LENGTH_SHORT).show();
             valid = false;
         }
 
@@ -365,6 +393,70 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         selectVendor();
         addVendor();
         alertAddAccessory();
+        alertAddVendor_save_textview_listner();
+        alertAddVendorAccessoryCancel_textview_listner();
+    }
+
+    private void alertAddVendorAccessoryCancel_textview_listner() {
+        alertAddVendorAccessoryCancel_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                vendorAddAlert.dismiss();
+            }
+        });
+    }
+
+    private void alertAddVendor_save_textview_listner() {
+        alertAddVendor_save_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validateVendorFields()) {
+                    vendordetailsSubmit();
+                }
+            }
+        });
+    }
+
+    private void vendordetailsSubmit() {
+        boolean connected = false;
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Accessory_add.this.CONNECTIVITY_SERVICE);
+        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+
+            key = reference.push().getKey();
+            reference.child("Vendor_list").child(key).child("Name").setValue(alertvendorName_editText.getText().toString());
+            reference.child("Vendor_list").child(key).child("Phone_no").setValue(String.valueOf(ccp.getFullNumberWithPlus()));
+
+            searchForVendor_textView.setText(alertvendorName_editText.getText().toString() + "\n(" + ccp.getFullNumberWithPlus() + ")");
+            searchForVendor_textView.setTextColor(getResources().getColor(R.color.textBlue));
+            vendorAddAlert.dismiss();
+
+        } else {
+            Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
+            connected = false;
+        }
+    }
+
+    private boolean validateVendorFields() {
+        boolean valid = true;
+
+        if (alertvendorName_editText.getText().toString().isEmpty()) {
+            alertvendorName_editText.setError("Please enter your name");
+            valid = false;
+        }
+        if (alertvendorName_editText.length() > 32) {
+            alertvendorName_editText.setError("Name character limit is 32");
+            valid = false;
+        }
+
+        if (!ccp.isValidFullNumber()) {
+            editTextCarrierNumber.setError("Please enter valid number");
+            valid = false;
+        }
+
+        return valid;
     }
 
     private void backbtn() {
@@ -415,7 +507,7 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         alertAddAccessoryCancel_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                accessoryAddAlet.dismiss();
+                accessoryAddAlert.dismiss();
             }
         });
     }
@@ -432,7 +524,7 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
                     accessoryTotalPriceList.add(alertAccessoryTotalPrice_textView.getText().toString());
 
                     adapterAccessoriesItemsRecyclerView.notifyDataSetChanged();
-                    accessoryAddAlet.dismiss();
+                    accessoryAddAlert.dismiss();
                 }
             }
         });
@@ -444,7 +536,7 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         addaccessory_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                accessoryAddAlet.show();
+                accessoryAddAlert.show();
             }
         });
     }
@@ -484,23 +576,36 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         alertAddCategoryEnter_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String s = alertAddCategoryName_editText.getText().toString();
 
-                Boolean valid = true;
-                if (accesoriesCategoriesList.contains(s)) {
-                    alertAddCategoryName_editText.setError("Category already exists");
-                    valid = false;
-                }
-                if (valid) {
+                if (validate_category()) {
+
+                    String s = alertAddCategoryName_editText.getText().toString();
                     alertCategory_textView.setText(s);
                     accesoriesCategoriesList.add(s);
-
-                    alertCategory_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-                    alertCategory_textView.setTextColor(getResources().getColor(R.color.textGrey));
+                    alertCategory_textView.setTextColor(getResources().getColor(R.color.textBlue));
                     categoryAddAlert.dismiss();
                 }
+
             }
         });
+    }
+
+    private boolean validate_category() {
+        boolean valid = true;
+
+        String s = alertAddCategoryName_editText.getText().toString();
+        if (alertAddCategoryName_editText.getText().toString().equals("")) {
+            alertAddCategoryName_editText.setError("Enter category name");
+            valid = false;
+        }
+
+        if (accesoriesCategoriesList.contains(s)) {
+            alertAddCategoryName_editText.setError("Category already exists");
+            valid = false;
+        }
+
+        return valid;
+
     }
 
     private void alertAddCategoryCancel() {
@@ -547,8 +652,9 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         vendor_add_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Accessory_add.this, RBS_accesories_vendor_detail.class);
-                startActivityForResult(intent, VENDOR_ACTIVITY_REQUEST_CODE);
+                vendorAddAlert.show();
+//                Intent intent = new Intent(Accessory_add.this, RBS_accesories_vendor_detail.class);
+//                startActivityForResult(intent, VENDOR_ACTIVITY_REQUEST_CODE);
             }
         });
     }
@@ -574,8 +680,7 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
                 searchForVendor_textView.setText(title_returnString + "\n(" + phone_no_returnString + ")");
 //                customerDetails.setVisibility(View.VISIBLE);
 
-                searchForVendor_textView.setBackground(getResources().getDrawable(R.drawable.main_button_grey));
-                searchForVendor_textView.setTextColor(getResources().getColor(R.color.textGrey));
+                searchForVendor_textView.setTextColor(getResources().getColor(R.color.textBlue));
             }
         }
 
@@ -591,4 +696,14 @@ public class Accessory_add extends AppCompatActivity implements DatePickerDialog
         date_textView.setText(currentDateString);
     }
 
+    public void onCountryPickerClick(View view) {
+        ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                //Alert.showMessage(RegistrationActivity.this, ccp.getSelectedCountryCodeWithPlus());
+                selected_country_code = ccp.getFullNumberWithPlus();
+            }
+        });
+
+    }
 }

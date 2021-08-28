@@ -119,9 +119,6 @@
             android:name=".Accessory_sale"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".RBS_accesories_vendor_detail"
-            android:theme="@style/AppTheme.no" />
-        <activity
             android:name=".Accessory_add"
             android:theme="@style/AppTheme.no" />
         <activity

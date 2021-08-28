@@ -105,13 +105,14 @@
             <TextView
                 android:id="@+id/remove_btn"
                 style="@style/gray_btn"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_weight="1"
-                android:background="@drawable/red_border"
-                android:text="Remove"
-                android:textColor="@color/textRed" />
+                android:backgroundTint="@color/textRed"
+                android:background="@drawable/delete_btn_icon"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

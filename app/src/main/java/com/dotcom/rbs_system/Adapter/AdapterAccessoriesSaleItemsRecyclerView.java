@@ -64,7 +64,7 @@ public class AdapterAccessoriesSaleItemsRecyclerView extends RecyclerView.Adapte
         return accessoryItemNameList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView category_textView, item_name_textView, unitPrice_textView, totalPrice_textView, quantity_textView, remove_textView, serialNo_textView;
 

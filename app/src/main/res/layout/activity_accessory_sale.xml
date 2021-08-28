@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -86,13 +87,43 @@
                 android:layout_marginTop="10dp"
                 android:text="Customer Phone number" />
 
-            <EditText
-                android:id="@+id/customer_phone_no_editText"
-                style="@style/EditTexts"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter customer phone number"
-                android:inputType="number" />
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/ccp"
+                    style="@style/TextViews_Regular_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:onClick="onCountryPickerClick"
+                    app:ccpDialog_backgroundColor="@color/colorWhite"
+                    app:ccpDialog_fastScroller_handleColor="@color/textGrey"
+                    app:ccpDialog_searchEditTextTint="@color/colorAccent"
+                    app:ccpDialog_textColor="@color/textGrey"
+                    app:ccp_autoDetectCountry="true"
+                    app:ccp_contentColor="@color/textBlue"
+                    app:ccp_countryAutoDetectionPref="SIM_NETWORK"
+                    app:ccp_defaultPhoneCode="92"
+                    app:ccp_flagBorderColor="@color/textGrey"
+                    app:ccp_rememberLastSelection="true" />
+
+                <EditText
+                    android:id="@+id/editText_carrierNumber"
+                    style="@style/EditTexts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter customer phone no"
+                    android:inputType="phone"
+                    android:singleLine="true"
+                    app:ccp_autoFormatNumber="true" />
+
+            </LinearLayout>
 
             <TextView
                 style="@style/TextViews_Bold"

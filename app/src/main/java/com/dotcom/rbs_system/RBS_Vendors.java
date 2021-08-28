@@ -45,7 +45,7 @@ public class RBS_Vendors extends AppCompatActivity {
 
     ImageButton back_btn;
 
-    String selectedVendorID,profileImage;
+    String selectedVendorID, profileImage;
 
     TextView vendor_name_textView, confirm_order_btn;
     TextView vendor_address_textView, vendor_phone_textView, vendor_email_textView;
@@ -126,6 +126,7 @@ public class RBS_Vendors extends AppCompatActivity {
                     vendors_name_list.add(snapshot1.child("Name").getValue().toString());
                     vendors_phno_list.add(snapshot1.child("Phone_no").getValue().toString());
                     vendors_address_list.add(snapshot1.child("address").getValue().toString());
+                    ///TODO yaha pa app crash ho rahe ha, RBS options ka 5th button wali activity jo accessory ma a gaye ha
                     vendors_email_list.add(snapshot1.child("email").getValue().toString());
                     vendors_profileImage_list.add(snapshot1.child("profile_image_url").getValue().toString());
                     vendors_banner_list.add(snapshot1.child("banner").getValue().toString());
@@ -172,15 +173,15 @@ public class RBS_Vendors extends AppCompatActivity {
                     rbsVendorSelectedStock.getVendor_stock_imageView().add(vendor_stock_imageView_list.get(adapter_rbs_vendor_inventory_recyclerView.getSelectedItemPositions().get(i)));
                     rbsVendorSelectedStock.getVendor_stock_keyID_list().add(vendor_stock_keyID_list.get(adapter_rbs_vendor_inventory_recyclerView.getSelectedItemPositions().get(i)));
                 }
-                if (rbsVendorSelectedStock.getVendor_stockName_textView().size() != 0){
-                    intent.putExtra("VENDOR_NAME",vendor_name_textView.getText().toString());
-                    intent.putExtra("VENDOR_EMAIL",vendor_email_textView.getText().toString());
-                    intent.putExtra("VENDOR_ADDRESS",vendor_address_textView.getText().toString());
-                    intent.putExtra("VENDOR_IMAGEURL",profileImage);
-                    intent.putExtra("VENDOR_PHNO",vendor_phone_textView.getText().toString());
-                    intent.putExtra("VENDOR_keyID",selectedVendorID);
+                if (rbsVendorSelectedStock.getVendor_stockName_textView().size() != 0) {
+                    intent.putExtra("VENDOR_NAME", vendor_name_textView.getText().toString());
+                    intent.putExtra("VENDOR_EMAIL", vendor_email_textView.getText().toString());
+                    intent.putExtra("VENDOR_ADDRESS", vendor_address_textView.getText().toString());
+                    intent.putExtra("VENDOR_IMAGEURL", profileImage);
+                    intent.putExtra("VENDOR_PHNO", vendor_phone_textView.getText().toString());
+                    intent.putExtra("VENDOR_keyID", selectedVendorID);
                     startActivity(intent);
-                }else {
+                } else {
                     Toast.makeText(RBS_Vendors.this, "Please select items!", Toast.LENGTH_SHORT).show();
                 }
 
