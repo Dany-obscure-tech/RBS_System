@@ -1,156 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    tools:context=".RBS_option">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/searchForItem_cardView"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/colorWhite"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="4dp"
-        app:cardUseCompatPadding="true">
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:weightSum="5">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/textGrid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.5"
-                android:orientation="vertical"
-                android:padding="5dp">
+                android:layout_centerInParent="true"
+                android:text="GRID LAYOUT"
+                android:textColor="@color/textBlue"
+                android:textSize="34sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginVertical="5dp"
-                    android:text="Invoice.NO" />
+        </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/order_no_vendor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="00012333" />
+        <GridLayout
+            android:id="@+id/mainGrid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:background="@color/colorWhite"
+            android:alignmentMode="alignMargins"
+            android:columnCount="2"
+            android:columnOrderPreserved="false"
+            android:padding="5dp"
+            android:rowCount="2">
 
-            </LinearLayout>
+            <!-- Row 1 -->
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1.7"
-                android:orientation="vertical"
-                android:padding="5dp">
-
-                <TextView
-                    android:id="@+id/shop_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/profile_screen_header"
-                    android:padding="8dp"
-                    android:text="ITech Computers"
-                    android:textColor="#ffffff"
-                    android:textSize="20sp" />
+            <!-- Column 1 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/repair"
+                style="@style/CardView_style"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                app:cardElevation="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:src="@drawable/repair" />
 
                     <TextView
+                        style="@style/TextViews_Title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="1"
-                        android:gravity="left"
-                        android:text="Date"
-                        android:textColor="@color/textGrey"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="1"
-                        android:gravity="left"
-                        android:text="10000"
-                        android:textColor="@color/textGreen"
-                        android:textSize="18sp" />
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:text="Repair"
+                        android:textAlignment="center"
+                        android:textColor="@color/textBlue" />
 
                 </LinearLayout>
 
+            </androidx.cardview.widget.CardView>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="2dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Total Amount"
-                    android:textColor="@color/textBlue" />
+            <!-- Column 2 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/BUY"
+                style="@style/CardView_style"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                app:cardElevation="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/balance_currency"
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="$"
-                        android:textColor="@color/textGreen"
-                        android:textSize="18sp" />
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/buy" />
 
                     <TextView
-                        android:id="@+id/totalBalance"
+                        style="@style/TextViews_Title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10000"
-                        android:textColor="@color/textGreen"
-                        android:textSize="18sp" />
-
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:text="Buy"
+                        android:textAlignment="center"
+                        android:textColor="@color/textBlue" />
 
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- Row 2 -->
+
+            <!-- Column 1 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/Sale"
+                style="@style/CardView_style"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Status"
-                    android:textColor="@color/textBlue" />
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/vendor_order_status"
-                    android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/sale" />
+
+                    <TextView
+                        style="@style/TextViews_Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:text="Sale"
+                        android:textAlignment="center"
+                        android:textColor="@color/textBlue" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Column 2 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/Accessories"
+                style="@style/CardView_style"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Pending"
-                    android:textColor="@color/textGreen"
-                    android:textSize="18sp" />
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/accessories" />
 
-            </LinearLayout>
+                    <TextView
+                        style="@style/TextViews_Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:text="Accessories"
+                        android:textAlignment="center"
+                        android:textColor="@color/textBlue" />
 
+                </LinearLayout>
 
-        </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-    </androidx.cardview.widget.CardView>
+        </GridLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

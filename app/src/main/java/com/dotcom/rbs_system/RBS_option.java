@@ -36,12 +36,7 @@ public class RBS_option extends Fragment {
 
     CardView BUY, Sale, repair, Accessories;
 
-    ImageButton icon1, icon2, icon3, icon4, icon8;
-    Button alert_addAccessory_btn, alert_saleAccessory_btn;
-
     ImageView mainBanner_imageView;
-
-    Dialog selectAccessory_dialog;
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -90,11 +85,6 @@ public class RBS_option extends Fragment {
 
         bannerRef = FirebaseDatabase.getInstance().getReference("Admin/banner");
 
-        selectAccessory_dialog = new Dialog(getActivity());
-        selectAccessory_dialog.setContentView(R.layout.alert_select_accessory_screen);
-
-        alert_addAccessory_btn = selectAccessory_dialog.findViewById(R.id.alert_addAccessory_btn);
-        alert_saleAccessory_btn = selectAccessory_dialog.findViewById(R.id.alert_saleAccessory_btn);
 
         BUY = view.findViewById(R.id.BUY);
 
@@ -102,21 +92,14 @@ public class RBS_option extends Fragment {
         repair = view.findViewById(R.id.repair);
         Accessories = view.findViewById(R.id.Accessories);
 
-        icon2 = view.findViewById(R.id.icon2);
-        icon4 = view.findViewById(R.id.icon4);
-        icon1 = view.findViewById(R.id.icon1);
-        icon3 = view.findViewById(R.id.icon3);
-        icon8 = view.findViewById(R.id.icon8);
-
         mainBanner_imageView = view.findViewById(R.id.mainBanner_imageView);
         getBannerImage();
 
         Accessories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),Accessory.class);
+                Intent intent = new Intent(getActivity(), Accessory.class);
                 getActivity().startActivity(intent);
-                selectAccessory_dialog.show();
             }
         });
 
@@ -125,23 +108,6 @@ public class RBS_option extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Sale.class);
                 intent.putExtra("ITEM_SELL_CHECK", "FALSE");
-                startActivity(intent);
-            }
-        });
-
-        icon4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),Accessory.class);
-                getActivity().startActivity(intent);
-//                selectAccessory_dialog.show();
-            }
-        });
-
-        icon1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Repair_Ticket.class);
                 startActivity(intent);
             }
         });
@@ -153,13 +119,7 @@ public class RBS_option extends Fragment {
                 startActivity(intent);
             }
         });
-        icon2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Buy.class);
-                startActivity(intent);
-            }
-        });
+
         Sale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,14 +128,7 @@ public class RBS_option extends Fragment {
                 startActivity(intent);
             }
         });
-        icon3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Sale.class);
-                intent.putExtra("ITEM_SELL_CHECK", "FALSE");
-                startActivity(intent);
-            }
-        });
+
         repair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,30 +137,7 @@ public class RBS_option extends Fragment {
             }
         });
 
-        alert_addAccessory_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Accessory_add.class);
-                startActivity(intent);
-                selectAccessory_dialog.dismiss();
-            }
-        });
-        alert_saleAccessory_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Accessory_sale.class);
-                startActivity(intent);
-                selectAccessory_dialog.dismiss();
-            }
-        });
 
-        icon8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), RBS_Vendors.class);
-                startActivity(intent);
-            }
-        });
 
         return view;
     }
