@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -18,6 +21,7 @@ import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterCustomerHistoryListRecyclerView;
 import com.dotcom.rbs_system.Adapter.AdapterCustomerIDImagesRecyclerView;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +30,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.hbb20.CountryCodePicker;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,12 +38,23 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Customer_history extends AppCompatActivity {
+
+    LatLng latLng;
+
+    Double latitude;
+    Double longitude;
+
+    Geocoder geocoder;
+
+    List<Address> addressList;
 
     String customerKeyID;
     String selected_country_code;
     EditText editTextCarrierNumber;
+    EditText ac_postcode,ac_houseNo;
     List<String> shopkeeper_name_textview, item_name_textview, item_category_textview, status_textView, shopkeeperImage_imageView_list, dateList, itemKeyId, itemImageView, shopkeeper_key_id, serial_no_textview, customerIDimageUrlList;
 
     RecyclerView customer_ID_Image_recyclerView;
@@ -72,7 +88,10 @@ public class Customer_history extends AppCompatActivity {
 
     CountryCodePicker ccp;
 
-    EditText ac_address, ac_email;
+    EditText ac_email;
+
+    TextView ac_address;
+    TextView postcodeCheck_textView;
 
     TextView save_btn_textview, cancel_btn_textview;
 
@@ -85,7 +104,6 @@ public class Customer_history extends AppCompatActivity {
 
         Initialization();
         InitialDataFetch();
-        //TOdo Post code replace karna ha address ki jaga
         ClickListeners();
     }
 
@@ -110,6 +128,10 @@ public class Customer_history extends AppCompatActivity {
         alert_background_relativelayout = findViewById(R.id.alert_background_relativelayout);
         edit_image_image_view = findViewById(R.id.edit_image_image_view);
 
+
+        postcodeCheck_textView = edit_dialog.findViewById(R.id.postcodeCheck_textView);
+        ac_postcode = edit_dialog.findViewById(R.id.ac_postcode);
+        ac_houseNo = edit_dialog.findViewById(R.id.ac_houseNo);
 
         ac_address = edit_dialog.findViewById(R.id.ac_address);
         ac_email = edit_dialog.findViewById(R.id.ac_email);
@@ -154,30 +176,6 @@ public class Customer_history extends AppCompatActivity {
         Date date = Calendar.getInstance().getTime();
         String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(date);
 
-        //TODo ye commented code remove karna ha
-//        String key = customerHistoryRef.push().getKey();
-//        customerHistoryRef.child(key).child("Item_name").setValue("HP Omen");
-//        customerHistoryRef.child(key).child("Item_serialno").setValue("HP/112233");
-//        customerHistoryRef.child(key).child("Shopkeeper_name").setValue("ITech Computers");
-//        customerHistoryRef.child(key).child("RBS").setValue("Buy");
-//        customerHistoryRef.child(key).child("Timestamp").setValue(date.getTime());
-//        customerHistoryRef.child(key).child("Date").setValue(currentDateString);
-//
-//        key = customerHistoryRef.push().getKey();
-//        customerHistoryRef.child(key).child("Item_name").setValue("HP Omen");
-//        customerHistoryRef.child(key).child("Item_serialno").setValue("HP/112233");
-//        customerHistoryRef.child(key).child("Shopkeeper_name").setValue("ITech Computers");
-//        customerHistoryRef.child(key).child("RBS").setValue("Sale");
-//        customerHistoryRef.child(key).child("Timestamp").setValue(date.getTime());
-//        customerHistoryRef.child(key).child("Date").setValue(currentDateString);
-//
-//        key = customerHistoryRef.push().getKey();
-//        customerHistoryRef.child(key).child("Item_name").setValue("HP Omen");
-//        customerHistoryRef.child(key).child("Item_serialno").setValue("HP/112233");
-//        customerHistoryRef.child(key).child("Shopkeeper_name").setValue("ITech Computers");
-//        customerHistoryRef.child(key).child("RBS").setValue("Buy");
-//        customerHistoryRef.child(key).child("Timestamp").setValue(date.getTime());
-//        customerHistoryRef.child(key).child("Date").setValue(currentDateString);
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -278,7 +276,18 @@ public class Customer_history extends AppCompatActivity {
         cancelbtn();
         savebtn();
         backbtn();
+        postcodeCheck_textView_listener();
     }
+
+    private void postcodeCheck_textView_listener() {
+        postcodeCheck_textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkPostcode();
+            }
+        });
+    }
+
 
     private void editbtn() {
         edit_textview.setOnClickListener(new View.OnClickListener() {
@@ -297,24 +306,9 @@ public class Customer_history extends AppCompatActivity {
         save_btn_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (validatefields()) {
-                    edit_data();
-                }
+                edit_data();
             }
         });
-    }
-
-    private boolean validatefields() {
-        boolean valid = true;
-        if (editTextCarrierNumber.getText().toString().equals(phno_textView.getText().toString())) {
-        } else if (!ccp.isValidFullNumber()) {
-            editTextCarrierNumber.setError("Please enter valid number");
-            valid = false;
-        }
-
-
-        return valid;
     }
 
     private void edit_data() {
@@ -324,12 +318,14 @@ public class Customer_history extends AppCompatActivity {
             customerRef.child(customerKeyID).child("Phone_no").setValue(ccp.getFullNumberWithPlus());
             check = true;
         }
-        if (!ac_address.getText().toString().equals("") && !customer_address_textView.getText().toString().equals(ac_address.getText().toString())) {
-            customerRef.child(customerKeyID).child("Address").setValue(ac_address.getText().toString());
-            check = true;
-        }
         if (!ac_email.getText().toString().equals("") && !customer_email_textView.getText().toString().equals(ac_email.getText().toString())) {
             customerRef.child(customerKeyID).child("Email").setValue(ac_email.getText().toString());
+            check = true;
+        }
+        if (!ac_address.getText().toString().equals(customer_address_textView.getText().toString())&&ac_address.getText().toString().equals("----")) {
+            customerRef.child(customerKeyID).child("Postcode").setValue(ac_postcode.getText().toString());
+            customerRef.child(customerKeyID).child("House_door").setValue(ac_houseNo.getText().toString());
+            customerRef.child(customerKeyID).child("Address").setValue(ac_address.getText().toString());
             check = true;
         }
         if (check == true) {
@@ -386,5 +382,105 @@ public class Customer_history extends AppCompatActivity {
                 selected_country_code = ccp.getFullNumberWithPlus();
             }
         });
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void checkPostcode() {
+        // SE13 6AZ
+        String postcode = ac_postcode.getText().toString();
+        latLng = getLocationFromAddress(Customer_history.this, postcode);
+
+        if (latLng == null) {
+            ac_postcode.setError("Enter Valid formatted postcode\n\"XXXX XXX\"");
+            ac_address.setText("----");
+            if (ac_houseNo.getText().toString().isEmpty()) {
+                ac_houseNo.setError("Enter Door no");
+            }
+        } else {
+
+            if (ac_houseNo.getText().toString().isEmpty()) {
+                ac_houseNo.setError("Enter Door no");
+            } else {
+                latitude = latLng.latitude;
+                longitude = latLng.longitude;
+
+                addressList = new ArrayList<>();
+                geocoder = new Geocoder(this, Locale.getDefault());
+
+                try {
+                    addressList = geocoder.getFromLocation(latitude, longitude, 1);
+                    String country = addressList.get(0).getCountryName();
+                    String city = addressList.get(0).getAdminArea();
+                    String subCity = addressList.get(0).getSubAdminArea();
+                    String area = addressList.get(0).getLocality();
+                    String street = addressList.get(0).getThoroughfare();
+
+                    if (street == null) {
+                        street = "";
+                    } else {
+                        street = street + ", ";
+                    }
+
+                    if (area == null) {
+                        area = "";
+                    } else {
+                        area = area + ", ";
+                    }
+
+                    if (subCity == null) {
+                        subCity = "";
+                    } else {
+                        subCity = subCity + ", ";
+                    }
+
+                    if (city == null) {
+                        city = "";
+                    } else {
+                        city = city + ", ";
+                    }
+
+                    if (country == null) {
+                        country = "";
+                    }
+
+                    ac_address.setText(street + area + subCity + city + country + ", Door No: " + ac_houseNo.getText().toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+
+    }
+
+    private LatLng getLocationFromAddress(Context context, String strAddress) {
+
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try {
+            // May throw an IOException
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+
+            try {
+                Address location = address.get(0);
+                p1 = new LatLng(location.getLatitude(), location.getLongitude());
+            } catch (Exception e) {
+
+            }
+
+
+        } catch (IOException ex) {
+
+            ex.printStackTrace();
+        }
+
+        System.out.println(p1);
+        return p1;
     }
 }

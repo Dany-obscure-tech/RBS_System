@@ -377,6 +377,10 @@ public class Add_Customer extends AppCompatActivity {
             ac_postcode.setError("Please enter your postal code");
             valid = false;
         }
+        if (ac_houseNo.getText().toString().isEmpty()) {
+            ac_houseNo.setError("Please enter your Door no");
+            valid = false;
+        }
         if (!Patterns.EMAIL_ADDRESS.matcher(String.valueOf(ac_email.getText())).matches()) {
             ac_email.setError("Please enter a valid email");
             valid = false;

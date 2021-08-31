@@ -53,6 +53,7 @@ public class AdapterBuylocalCustomerHistoryListRecyclerView extends RecyclerView
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, Shopkeeper_details.class);
+                intent.putExtra("SHOPKEEPER_ID",shopkeeper_key_id.get(position));
                 context.startActivity(intent);
             }
         });

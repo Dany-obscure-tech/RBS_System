@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dotcom.rbs_system.Item_history;
 import com.dotcom.rbs_system.R;
 import com.dotcom.rbs_system.Shopkeeper_details;
 import com.squareup.picasso.Picasso;
@@ -55,16 +56,18 @@ public class AdapterCustomerHistoryListRecyclerView extends RecyclerView.Adapter
         holder.shopkeeper_linearlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO need to online
                 Intent intent = new Intent(context, Shopkeeper_details.class);
+                intent.putExtra("SHOPKEEPER_ID",shopkeeper_key_id.get(position));
                 context.startActivity(intent);
             }
         });
         holder.item_detail_linearlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO item pa next activity connect karni ha
-
+                Intent intent = new Intent(context, Item_history.class);
+                intent.putExtra("ITEM_ID",itemKeyId.get(position));
+                intent.putExtra("ITEM_CATEGORY",item_category_textview.get(position));
+                context.startActivity(intent);
             }
         });
 

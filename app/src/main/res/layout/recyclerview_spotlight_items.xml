@@ -43,15 +43,33 @@
                     android:maxLines="1"
                     android:text="Dress Shirt" />
 
-                <TextView
-                    android:id="@+id/ph_number"
-                    style="@style/TextViews_Bold"
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+
                     android:layout_gravity="right"
-                    android:layout_marginBottom="5dp"
-                    android:text="PKR 4000"
-                    android:textColor="@color/textGreen" />
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/currency"
+                        style="@style/TextViews_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PKR"
+                        android:textColor="@color/textGreen" />
+
+                    <TextView
+                        android:id="@+id/ph_number"
+                        style="@style/TextViews_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="4000"
+                        android:textColor="@color/textGreen" />
+
+                </LinearLayout>
+
+
 
             </LinearLayout>
         </RelativeLayout>

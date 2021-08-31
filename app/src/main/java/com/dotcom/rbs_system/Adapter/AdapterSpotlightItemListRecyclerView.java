@@ -54,7 +54,9 @@ public class AdapterSpotlightItemListRecyclerView extends RecyclerView.Adapter<A
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         holder.name.setText(itemname.get(position));
-        holder.priceTV.setText(Currency.getInstance().getCurrency() + " " + price.get(position));
+        holder.priceTV.setText(price.get(position));
+        holder.currency.setText(Currency.getInstance().getCurrency());
+
         Picasso.get().load(itemImage.get(position)).into(holder.image);
 
         holder.spotlight_cardView.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +81,7 @@ public class AdapterSpotlightItemListRecyclerView extends RecyclerView.Adapter<A
         TextView name;
         TextView priceTV;
         ImageView image;
+        TextView currency;
         CardView spotlight_cardView;
 
 
@@ -88,6 +91,7 @@ public class AdapterSpotlightItemListRecyclerView extends RecyclerView.Adapter<A
             name = (TextView) itemView.findViewById(R.id.name_contact);
             priceTV = (TextView) itemView.findViewById(R.id.ph_number);
             image = (ImageView) itemView.findViewById(R.id.image);
+            currency = (TextView) itemView.findViewById(R.id.currency);
             spotlight_cardView = (CardView) itemView.findViewById(R.id.spotlight_cardView);
         }
     }

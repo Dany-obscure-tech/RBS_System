@@ -109,7 +109,6 @@ public class Add_item extends AppCompatActivity {
         getCategoryList();
         selectCategory();
         onClickListeners();
-        zeroValueEditText();
 
     }
 
@@ -364,7 +363,15 @@ public class Add_item extends AppCompatActivity {
             price_editText.setError("Please enter price");
             valid = false;
 
-            //TODO item price ma zero problem
+        }else {
+            if (Float.parseFloat(price_editText.getText().toString())==0){
+                price_editText.setError("Please enter valid price");
+            }else {
+                price_editText.setText(price_editText.getText().toString().replaceFirst("^0+(?!$)",""));
+                if (price_editText.getText().toString().startsWith(".")){
+                    price_editText.setText("0"+price_editText.getText().toString());
+                }
+            }
         }
         if (spinner.getSelectedItem().toString().equals("Please select item condition")) {
             Toast.makeText(this, "Please select item condition", Toast.LENGTH_SHORT).show();
@@ -423,30 +430,6 @@ public class Add_item extends AppCompatActivity {
 
     }
 
-    private void zeroValueEditText() {
-        price_editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (!price_editText.getText().toString().isEmpty()){
-                    price_editText.removeTextChangedListener(this);
-                    price_editText.setText("");
-                    price_editText.setSelection(price_editText.getText().toString().length());
-                    zeroValueEditText();
-
-                }
-            }
-        });
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

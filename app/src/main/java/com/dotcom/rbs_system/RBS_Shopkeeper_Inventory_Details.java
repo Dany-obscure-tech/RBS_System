@@ -475,8 +475,6 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
                                 if (k == 0) {
                                     firstImageUri = uri;
 
-
-                                    //TODO spotlight ka items add karney ka liya ha
 //                                if (check=="Add new item"){
 //
 //                                    spotLightRef = FirebaseDatabase.getInstance().getReference("Spotlight");

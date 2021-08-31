@@ -21,7 +21,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,7 +86,6 @@ public class Vendor_stock_entry extends AppCompatActivity {
         setContentView(R.layout.activity_vendor_stock_entry);
         Initialization();
         Onclicklistners();
-        //TODO zero entry error
         //TODO yaha pa edit alert ma bug ha
     }
 
@@ -125,9 +123,6 @@ public class Vendor_stock_entry extends AppCompatActivity {
         Vendor_category_data_list.add("Tablet");
         Vendor_category_data_list.add("Mobile");
         Vendor_category_data_list.add("PC");
-
-        //TODO kisi  item ki value float ma ho sakti ha "vendor_item_price_editText" is id ko check karna ha
-        // TODo yaha pa agar activity sa back kar rahey to toast a raha ha
 
         reference = FirebaseDatabase.getInstance().getReference();
         vendor_stock_entry_id = reference.push().getKey();
@@ -319,20 +314,27 @@ public class Vendor_stock_entry extends AppCompatActivity {
             valid = false;
         }
 
-        if (vendor_item_price_editText.getText().toString().isEmpty()) {
-            vendor_item_price_editText.setError("Please enter item price");
-            valid = false;
-            ///TODo yaha pa zero value wali validation lagani ha
-        }
         if (vendor_sno_editText.getText().toString().isEmpty()) {
             vendor_sno_editText.setError("Please enter item sno");
             valid = false;
         }
+
         if (vendor_item_qty_editText.getText().toString().isEmpty()) {
-            vendor_item_qty_editText.setError("Please enter item quantity");
+            vendor_item_qty_editText.setError("Please enter price");
             valid = false;
-            //TODO aur quantity bhi zero na ho
+
+        }else {
+            if (Float.parseFloat(vendor_item_qty_editText.getText().toString())==0){
+                vendor_item_qty_editText.setError("Please enter valid price");
+            }else {
+                vendor_item_qty_editText.setText(vendor_item_qty_editText.getText().toString().replaceFirst("^0+(?!$)",""));
+                if (vendor_item_qty_editText.getText().toString().startsWith(".")){
+                    vendor_item_qty_editText.setText("0"+ vendor_item_qty_editText.getText().toString());
+                }
+            }
         }
+
+
         if (vendor_item_qty_editText.getText().toString().equals("0")) {
             vendor_item_qty_editText.setError("Please enter item quantity");
             valid = false;
@@ -340,6 +342,21 @@ public class Vendor_stock_entry extends AppCompatActivity {
         if (fileUri == null) {
             Toast.makeText(this, "Please upload an image", Toast.LENGTH_SHORT).show();
             valid = false;
+        }
+
+        if (vendor_item_price_editText.getText().toString().isEmpty()) {
+            vendor_item_price_editText.setError("Please enter price");
+            valid = false;
+
+        }else {
+            if (Float.parseFloat(vendor_item_price_editText.getText().toString())==0){
+                vendor_item_price_editText.setError("Please enter valid price");
+            }else {
+                vendor_item_price_editText.setText(vendor_item_price_editText.getText().toString().replaceFirst("^0+(?!$)",""));
+                if (vendor_item_price_editText.getText().toString().startsWith(".")){
+                    vendor_item_price_editText.setText("0"+ vendor_item_price_editText.getText().toString());
+                }
+            }
         }
 
 

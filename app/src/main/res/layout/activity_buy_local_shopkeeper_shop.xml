@@ -15,17 +15,17 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/store_banner_imageView"
+                android:id="@+id/shopkeeperBanner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
                 android:src="@drawable/store_image" />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profileImage_imageView"
+                android:id="@+id/shopkeeperLogo"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_below="@+id/store_banner_imageView"
+                android:layout_below="@+id/shopkeeperBanner"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:src="@drawable/profile_icon"
@@ -33,11 +33,11 @@
                 app:civ_border_width="0dp" />
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/shopkeeperName"
                 style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/profileImage_imageView"
+                android:layout_below="@+id/shopkeeperLogo"
                 android:layout_centerHorizontal="true"
                 android:padding="5dp"
                 android:text="@string/shop_name" />
@@ -46,7 +46,7 @@
                 android:id="@+id/products_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
+                android:layout_below="@+id/shopkeeperName"
                 android:background="#F3F3F3"
                 android:orientation="vertical">
 

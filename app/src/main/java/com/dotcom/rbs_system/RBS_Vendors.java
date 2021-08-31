@@ -126,7 +126,6 @@ public class RBS_Vendors extends AppCompatActivity {
                     vendors_name_list.add(snapshot1.child("Name").getValue().toString());
                     vendors_phno_list.add(snapshot1.child("Phone_no").getValue().toString());
                     vendors_address_list.add(snapshot1.child("address").getValue().toString());
-                    ///TODO yaha pa app crash ho rahe ha, RBS options ka 5th button wali activity jo accessory ma a gaye ha
                     vendors_email_list.add(snapshot1.child("email").getValue().toString());
                     vendors_profileImage_list.add(snapshot1.child("profile_image_url").getValue().toString());
                     vendors_banner_list.add(snapshot1.child("banner").getValue().toString());

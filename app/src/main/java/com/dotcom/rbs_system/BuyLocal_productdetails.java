@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -30,8 +31,6 @@ import com.dotcom.rbs_system.Classes.Currency;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -44,6 +43,7 @@ import com.google.firebase.storage.StorageReference;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,6 +54,8 @@ import java.util.Locale;
 public class BuyLocal_productdetails extends AppCompatActivity {
 
     TextView alertReportSubmit_textview, alertReportCancel_textview, alertMakeOfferSubmit_textview, alertMakeOfferCancel_textview;
+    ImageButton location_imageButton;
+    ImageView profileImage_imageView;
     FusedLocationProviderClient fusedLocationProviderClient;
     RelativeLayout offer_relativeLayout;
     String currency, profileImageUrl, customerName;
@@ -71,10 +73,13 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     ImageButton back_btn;
     LinearLayout shop_details_linearlayout;
     String productID, productName,productImage,productPrice, productCategory, shopkeeperID, conversationKey = null;
+    String latitude, longitude;
     DatabaseReference itemRef, reportRef, userRef, stockRef, customerOfferRef, agreedOfferRef, boughtOfferRef, userConversationRef;
     StorageReference itemImageStorageRef;
     int i, noOfimages;
     boolean agreedBoughtCheck = false;
+
+    String shopkeeperName,shopkeeperLogo,shopkeeperBanner;
 
 
     @Override
@@ -118,6 +123,10 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         offer_relativeLayout = findViewById(R.id.offer_relativeLayout);
 
         imageSlider = findViewById(R.id.imageSlider);
+        location_imageButton = findViewById(R.id.location_imageButton);
+
+        profileImage_imageView = findViewById(R.id.profileImage_imageView);
+
         back_btn = findViewById(R.id.back_btn);
         shop_details_linearlayout = findViewById(R.id.shop_details_linearlayout);
         share_imageButton = findViewById(R.id.share_imageButton);
@@ -191,6 +200,19 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         profileImage_listner();
         shop_details_linearlayout_listner();
         communicate_btn_listner();
+        location_imageButton_listener();
+    }
+
+    private void location_imageButton_listener() {
+        location_imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?q=loc:%f,%f", Double.parseDouble(latitude),Double.parseDouble(longitude));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                startActivity(intent);
+            }
+        });
     }
 
     private void shop_details_linearlayout_listner() {
@@ -198,8 +220,10 @@ public class BuyLocal_productdetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(BuyLocal_productdetails.this, BuyLocal_shopkeeper_shop.class);
-                //TODO is ma BuyLocal_shopkeeper_shop ki activity online karni ha
-                //TODO aur distance wala bhi online karna ha
+                intent.putExtra("SHOPKEEPER_NAME",shopkeeperName);
+                intent.putExtra("SHOPKEEPER_LOGO",shopkeeperLogo);
+                intent.putExtra("SHOPKEEPER_BANNER",shopkeeperBanner);
+                intent.putExtra("SHOPKEEPER_ID",shopkeeperID);
                 startActivity(intent);
             }
         });
@@ -339,7 +363,6 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         report_imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO report ko online karna ha
                 report_alert_dialog.show();
             }
         });
@@ -440,7 +463,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
                 SliderAdapterExample sliderAdapterExample = new SliderAdapterExample(BuyLocal_productdetails.this, imageUrl);
                 sliderView.setSliderAdapter(sliderAdapterExample);
 
-                fetchingShopkeeperLocation();
+                fetchingShopkeeperDetails();
             }
 
             @Override
@@ -466,14 +489,23 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         });
     }
 
-    private void fetchingShopkeeperLocation() {
-        userRef = FirebaseDatabase.getInstance().getReference("Users_data/" + shopkeeperID + "/Location");
+    private void fetchingShopkeeperDetails() {
+        userRef = FirebaseDatabase.getInstance().getReference("Users_data/" + shopkeeperID + "/Shopkeeper_details");
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Double shopkeeperlat = Double.valueOf(snapshot.child("lat").getValue().toString());
-                Double shopkeeperlong = Double.valueOf(snapshot.child("long").getValue().toString());
+                Double shopkeeperlat = Double.valueOf(snapshot.child("Location").child("lat").getValue().toString());
+                Double shopkeeperlong = Double.valueOf(snapshot.child("Location").child("long").getValue().toString());
+                latitude=snapshot.child("Location").child("lat").getValue().toString();
+                longitude=snapshot.child("Location").child("long").getValue().toString();
                 calculateDistance(shopkeeperlat, shopkeeperlong);
+
+                shopKeeperName_textView.setText(snapshot.child("shop_name").getValue().toString());
+                Picasso.get().load(snapshot.child("shop_logo").getValue().toString()).into(profileImage_imageView);
+
+                shopkeeperName =snapshot.child("shop_name").getValue().toString();
+                shopkeeperLogo =snapshot.child("shop_logo").getValue().toString();
+                shopkeeperBanner =snapshot.child("shop_banner").getValue().toString();
             }
 
             @Override
@@ -491,11 +523,13 @@ public class BuyLocal_productdetails extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Location> task) {
                     Location location = task.getResult();
                     if (location != null) {
+                        Toast.makeText(BuyLocal_productdetails.this, String.valueOf(String.valueOf("Called")), Toast.LENGTH_SHORT).show();
                         Geocoder geocoder = new Geocoder(BuyLocal_productdetails.this, Locale.getDefault());
                         try {
                             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                             Double totaldistance = distance(shopkeeperlat, shopkeeperong, addresses.get(0).getLatitude(), addresses.get(0).getLongitude()) / 1.609;
                             totaldistance = (double) Math.round(totaldistance * 100) / 100;
+
 
                             distance_textView.setText(String.valueOf(totaldistance) + " Miles");
 

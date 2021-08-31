@@ -354,7 +354,6 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
 
     private boolean validateGoogleSigninFields() {
         boolean valid = true;
-//TODO ye function use nhi howa
         return valid;
     }
 

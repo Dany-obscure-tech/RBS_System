@@ -8,7 +8,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -433,7 +432,6 @@ public class RBS_setting extends Fragment {
             public void onClick(View v) {
                 if (validateAlertAddFault()) {
                     detailsSubmitAlertAddFault();
-                    //TODO zero value error
                 }
 
             }
@@ -516,9 +514,20 @@ public class RBS_setting extends Fragment {
             alertFaultName_editText.setError("enter fault name");
             valid = false;
         }
+
         if (alertFaultPrice_editText.getText().toString().isEmpty()) {
-            alertFaultPrice_editText.setError("enter fault price");
+            alertFaultPrice_editText.setError("Please enter price");
             valid = false;
+
+        }else {
+            if (Float.parseFloat(alertFaultPrice_editText.getText().toString())==0){
+                alertFaultPrice_editText.setError("Please enter valid price");
+            }else {
+                alertFaultPrice_editText.setText(alertFaultPrice_editText.getText().toString().replaceFirst("^0+(?!$)",""));
+                if (alertFaultPrice_editText.getText().toString().startsWith(".")){
+                    alertFaultPrice_editText.setText("0"+ alertFaultPrice_editText.getText().toString());
+                }
+            }
         }
 
         return valid;
@@ -540,14 +549,4 @@ public class RBS_setting extends Fragment {
         addFaultDialog.dismiss();
     }
 
-    //TODO refresshFragment use nhi howa
-    private void refreshFragment() {
-        // Reload current fragment
-        Fragment frg = null;
-        frg = getParentFragmentManager().findFragmentByTag("RBS Settings");
-        final FragmentTransaction ft = getParentFragmentManager().beginTransaction();
-        ft.detach(frg);
-        ft.attach(frg);
-        ft.commit();
-    }
 }

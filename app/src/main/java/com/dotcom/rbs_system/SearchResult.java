@@ -82,7 +82,7 @@ public class SearchResult extends AppCompatActivity {
                             int searchMeLength = searchMe.length();
                             int findMeLength = findMe.length();
                             for (int i = 0;i <= (searchMeLength - findMeLength); i++) {
-                                if (searchMe.regionMatches(true, i, findMe, 0, findMeLength)) {
+                                if (searchMe.regionMatches(true, 0, findMe, 0, findMeLength)) {
                                     filteredList.add(searchMe);
                                     filteredItemname.add(String.valueOf(snapshot3.child("Item_name").getValue()));
                                     price.add(String.valueOf(snapshot3.child("Price").getValue()));

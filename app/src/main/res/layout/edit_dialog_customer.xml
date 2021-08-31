@@ -84,13 +84,62 @@
             android:layout_marginTop="10dp"
             android:text="@string/address" />
 
+        <TextView
+            style="@style/TextViews_Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Customer Postcode" />
+
         <EditText
-            android:id="@+id/ac_address"
+            android:id="@+id/ac_postcode"
             style="@style/EditTexts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapSentences"
-            android:hint="Enter your address" />
+            android:hint="Enter customer postcode"
+            android:maxLength="32" />
+
+        <TextView
+            style="@style/TextViews_Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Customer Door No" />
+
+        <EditText
+            android:id="@+id/ac_houseNo"
+            style="@style/EditTexts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter customer door no"
+            android:maxLength="32" />
+
+
+        <TextView
+            android:id="@+id/postcodeCheck_textView"
+            style="@style/green_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="20dp"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:text="Search Address" />
+
+        <TextView
+            style="@style/TextViews_Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Customer Address" />
+
+        <TextView
+            android:id="@+id/ac_address"
+            style="@style/TextViews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:text="----" />
 
         <TextView
             android:id="@+id/email_textview"

@@ -35,6 +35,7 @@ public class Item_history extends AppCompatActivity {
     String itemID, itemCategory;
     List<String> dateList, status_list, shopkeeper_type_list, shopkeeper_name_list, customer_type_list, customer_name_list, shopkeeperImage_imageView, customerImage_imageView;
     List<String> itemImageUrl_list;
+    List<String> shopkeeper_key_id,customer_key_id;
 
     DatabaseReference itemRef;
     DatabaseReference itemHistoryRef;
@@ -106,6 +107,9 @@ public class Item_history extends AppCompatActivity {
         shopkeeperImage_imageView = new ArrayList<>();
         customerImage_imageView = new ArrayList<>();
 
+        shopkeeper_key_id = new ArrayList<>();
+        customer_key_id = new ArrayList<>();
+
         itemImageUrl_list = new ArrayList<>();
 
         itemHistoryRef = FirebaseDatabase.getInstance().getReference("Item_history/" + itemID);
@@ -146,6 +150,9 @@ public class Item_history extends AppCompatActivity {
                         shopkeeper_name_list.add(dataSnapshot1.child("Shopkeeper_name").getValue().toString());
                         shopkeeperImage_imageView.add(dataSnapshot1.child("Shopkeeper_image").getValue().toString());
 
+                        shopkeeper_key_id.add(dataSnapshot1.child("Shopkeeper_keyId").getValue().toString());
+                        customer_key_id.add(dataSnapshot1.child("Customer_keyId").getValue().toString());
+
                         if (dataSnapshot1.child("Customer_name").exists()) {
                             shopkeeper_type_list.add(dataSnapshot1.child("Shopkeeper_type").getValue().toString());
                             customer_type_list.add(dataSnapshot1.child("Customer_type").getValue().toString());
@@ -167,7 +174,7 @@ public class Item_history extends AppCompatActivity {
                         Collections.reverse(customer_name_list);
                         Collections.reverse(customerImage_imageView);
 
-                        adapterItemHistoryListRecyclerView = new AdapterItemHistoryListRecyclerView(Item_history.this, status_list, shopkeeper_type_list, shopkeeper_name_list, customer_type_list, customer_name_list, shopkeeperImage_imageView, customerImage_imageView, dateList);
+                        adapterItemHistoryListRecyclerView = new AdapterItemHistoryListRecyclerView(Item_history.this, status_list, shopkeeper_type_list, shopkeeper_name_list, customer_type_list, customer_name_list, shopkeeperImage_imageView, customerImage_imageView, dateList,shopkeeper_key_id,customer_key_id);
                         itemHistoryRecyclerView.setAdapter(adapterItemHistoryListRecyclerView);
 
                     }
@@ -223,18 +230,6 @@ public class Item_history extends AppCompatActivity {
     private void ClickListeners() {
         itemDetails_relativelayoutToggle();
         back_btn();
-    }
-
-    //Todo edit_data ka function use nhi howa yaha
-    private void edit_data(String item_category, String item_keyID) {
-        if (!ratingBar.equals("0")) {
-            itemRef.child(item_category).child(item_keyID).child("Condition").setValue(ratingBar.getRating());
-        }
-        if (!notes_editText.getText().toString().equals("")) {
-            itemRef.child(item_category).child(item_keyID).child("Notes").setValue(notes_editText.getText().toString());
-        }
-        recreate();
-
     }
 
     private void back_btn() {

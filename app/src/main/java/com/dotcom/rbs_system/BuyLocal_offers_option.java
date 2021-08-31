@@ -173,7 +173,7 @@ public class BuyLocal_offers_option extends AppCompatActivity {
 
                     for (int i = 0; i<itemname.size();i++){
 
-                        if (itemname.get(i).regionMatches(true, i, search_editText.getText().toString(), 0, search_editText.getText().toString().length())){
+                        if (itemname.get(i).regionMatches(true, 0, search_editText.getText().toString(), 0, search_editText.getText().toString().length())){
                             System.out.println(itemname.get(i));
                             filtereditemname.add(itemname.get(i));
                             filteredprice.add(price.get(i));

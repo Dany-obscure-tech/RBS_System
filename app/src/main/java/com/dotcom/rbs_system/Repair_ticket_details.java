@@ -70,8 +70,6 @@ public class Repair_ticket_details extends AppCompatActivity {
         InitialDataFetch();
         OnClickListeners();
 
-        //TODO edit ticket ma jo already faults list a rahe, usko bhi hm delete kar sakey, but ye is ma nhi ha
-
     }
 
 
@@ -260,7 +258,7 @@ public class Repair_ticket_details extends AppCompatActivity {
                 if (pendingFaultNameList.size() == 0) {
 
                     repairTicketRef.child("Status").setValue("Confirmed");
-                    //TODO yaha pa alert lgana ha print, whatsapp aur email wala
+                    //TODO Shahzaib yaha pa screen lgani ha print, whatsapp aur email wali
 
                 } else {
                     Toast.makeText(Repair_ticket_details.this, "Changes pending!", Toast.LENGTH_SHORT).show();

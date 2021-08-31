@@ -183,8 +183,8 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
                     vendorOrderRef.child(key).child("status").setValue("Pending");
                     vendorOrderRef.child(key).child("invoice_keyId").setValue(key);
                     vendorOrderRef.child(key).child("shopkeeper_keyID").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
-//TODO confirm order kay bad screen finish nahi howi ha
-                }
+
+                    finish();                }
             }
         });
     }

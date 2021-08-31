@@ -97,7 +97,6 @@ public class Adapter_itemList_alert_dialog extends RecyclerView.Adapter<Adapter_
 
                 if (itemImage_imageView != null) {
                     itemImage_imageView.setVisibility(View.VISIBLE);
-                    //TODO Sale activity ma crash ho rahe aur error yaha pa a raha
                     viewItemDetails_textView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

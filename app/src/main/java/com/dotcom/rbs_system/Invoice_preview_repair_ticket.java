@@ -134,21 +134,17 @@ public class Invoice_preview_repair_ticket extends AppCompatActivity {
         });
     }
 
-    //Todo format ka variable use nhi howa check it
     @SuppressLint("SimpleDateFormat")
     public AsyncEscPosPrinter getAsyncEscPosPrinter(DeviceConnection printerConnection) {
-        SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
         printer = new AsyncEscPosPrinter(printerConnection, 203, 48f, 32);
         return printer.setTextToPrint(
                 printingData()
         );
     }
 
-    //Todo format ka variable use nhi howa check it
 
     @SuppressLint("SimpleDateFormat")
     public AsyncEscPosPrinter getAsyncEscPosPrinter2(AsyncEscPosPrinter printer) {
-        SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
         return printer.setTextToPrint(
                 printingData()
         );

@@ -495,9 +495,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             rbsItemDetails.setItemName(itemname_returnString);
             rbsItemDetails.setItemID(itemid_returnString);
             rbsItemDetails.setItemPrice(itemprice_returnString);
-            //todo
-//            rbsItemDetails.setFirstImageUri(Uri.parse(itemlimage_returnString));
-
             itemName_textView.setTextColor(getResources().getColor(R.color.gradientDarkBlue));
             itemID_textView.setVisibility(View.VISIBLE);
             itemPriceCurrency_textView.setVisibility(View.VISIBLE);
@@ -755,6 +752,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void afterTextChanged(Editable editable) {
                 currentItems = 0;
@@ -832,7 +830,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             }
         }
 
-        adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(Sale.this, lessExisitngItemsNamesList, lessExisitngItemsSerialNoList, lessExisitngItemsKeyIDList, lessExistingItemsPriceList, lessExistingItemsCategoryList, lessExistingItemsLastActiveList, lessExistingItemsImageUrlList, itemName_textView, itemID_textView, itemPriceCurrency_textView, itemPrice_textView, itemLastActive_textView, itemImage_imageView, null, itemList_alert_dialog);
+        adapter_itemList_alert_dialog = new Adapter_itemList_alert_dialog(Sale.this, lessExisitngItemsNamesList, lessExisitngItemsSerialNoList, lessExisitngItemsKeyIDList, lessExistingItemsPriceList, lessExistingItemsCategoryList, lessExistingItemsLastActiveList, lessExistingItemsImageUrlList, itemName_textView, itemID_textView, itemPriceCurrency_textView, itemPrice_textView, itemLastActive_textView, itemImage_imageView, viewItemDetails_textView, itemList_alert_dialog);
         itemList_recyclerView.setAdapter(adapter_itemList_alert_dialog);
         onScrollListner(filteredExisitngItemsNamesList, filteredExisitngItemsSerialNoList, filteredExistingItemsLastActiveList, filteredExistingItemsImageUrlList, filteredExistingItemsPriceList, filteredExistingItemsCategoryList, filteredExisitngItemsKeyIDList);
 
@@ -1059,21 +1057,22 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
                 if (isScrolling && (currentItems + scrollOutItems == totalItems)) {
                     isScrolling = false;
-                    fetchDataforRecyclerView(exisitngItemsNamesList, exisitngItemsSerialNoList, existingItemsLastActiveList, existingItemsImageUrlList, existingItemsPriceList, existingItemsCategoryList, exisitngItemsKeyIDList);
+                    fetchDataforRecyclerView();
                 }
             }
         });
     }
 
-    private void fetchDataforRecyclerView(List<String> exisitngItemsNamesList, List<String> exisitngItemsSerialNoList, List<String> existingItemsLastActiveList, List<String> existingItemsImageUrlList, List<String> existingItemsPriceList, List<String> existingItemsCategoryList, List<String> exisitngItemsKeyIDList) {
+    private void fetchDataforRecyclerView() {
         if (itemDatafullyloaded) {
 
         } else {
             alert_rbs_itemlist_progressBar.setVisibility(View.VISIBLE);
-            handler.postDelayed(new Runnable() {
+            new Handler().postDelayed(new Runnable() {
+                @SuppressLint("NotifyDataSetChanged")
                 @Override
                 public void run() {
-                    int size = lessExisitngItemsNamesList.size() + 10;
+                    int size = lessExisitngItemsNamesList.size() + 2;
                     for (int i = lessExisitngItemsNamesList.size(); i < size; i++) {
                         if (i < exisitngItemsNamesList.size()) {
                             lessExisitngItemsNamesList.add(exisitngItemsNamesList.get(i));
@@ -1081,7 +1080,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                             lessExistingItemsLastActiveList.add(existingItemsLastActiveList.get(i));
                             lessExistingItemsImageUrlList.add(existingItemsImageUrlList.get(i));
                             lessExistingItemsPriceList.add(existingItemsPriceList.get(i));
-                            lessExistingItemsCategoryList.add(existingItemsCategoryList.get(i));
                             lessExisitngItemsKeyIDList.add(exisitngItemsKeyIDList.get(i));
                         }
 
@@ -1096,7 +1094,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         }
 
     }
-
     private void onCustomerRecyclerViewScrollListner(List<String> exisitngCustomerList, List<String> exisitngCustomerIDList, List<String> exisitngCustomerKeyIDList, List<String> existingCustomerPhnoList, List<String> existingCustomerDobList, List<String> existingCustomerAddressList, List<String> existingCustomerEmailList, List<String> existingCustomerImageUrlList) {
         customerList_recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

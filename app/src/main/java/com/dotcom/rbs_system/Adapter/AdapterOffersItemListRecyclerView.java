@@ -97,8 +97,6 @@ public class AdapterOffersItemListRecyclerView extends RecyclerView.Adapter<Adap
         TextView product_offer_msg;
         ImageView image;
 
-        //TODo check and remove problems
-        //TODO dany is activity pa kam rehta ha
         public MyViewHolder(View itemView) {
             super(itemView);
 
