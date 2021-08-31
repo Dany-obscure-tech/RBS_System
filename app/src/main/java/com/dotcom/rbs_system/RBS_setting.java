@@ -69,7 +69,7 @@ public class RBS_setting extends Fragment {
 
     TextView edit_banner_textview, add_faults_textview, port_number_textview, ip_address_textview, edit_logo_image_textView;
 
-    TextView addFaultsave_textview, addFaultsCancel_textview, save_printer_settings_textview, cancel_printer_settings_textview, cancel_terms_conditions_textview, save_terms_conditions_textview, edit_terms_conditions_textview;
+    TextView save_passcode_change_textview,cancel_passcode_change_textview,passcode_change_textview, addFaultsave_textview, addFaultsCancel_textview, save_printer_settings_textview, cancel_printer_settings_textview, cancel_terms_conditions_textview, save_terms_conditions_textview, edit_terms_conditions_textview;
 
     TextView printer_setting_textview, terms_conditions_textview;
 
@@ -77,9 +77,9 @@ public class RBS_setting extends Fragment {
 
     AdapterSettingsFaultListRecyclerView adapterSettingsFaultListRecyclerView;
 
-    Dialog addFaultDialog, editProfileDialog, edit_printer_settings_Dialog, editTermsConditionsDialog;
+    Dialog addFaultDialog, editProfileDialog, edit_printer_settings_Dialog, editTermsConditionsDialog,change_passcode_Dialog;
 
-    EditText alertFaultName_editText, alertFaultPrice_editText, port_number_edittext, ip_address_edittext, term_conditions_edittext;
+    EditText alertFaultName_editText, alertFaultPrice_editText, port_number_edittext, ip_address_edittext, term_conditions_edittext,old_passcode_edittext,new_passcode_edittext,new_passcode_again_edittext;
 
     List<String> faultNameList, faultPriceList, faultKeyIDList;
 
@@ -170,15 +170,23 @@ public class RBS_setting extends Fragment {
         faultList_recyclerView = view.findViewById(R.id.faultList_recyclerView);
 
         addFaultDialog = new Dialog(getActivity());
+        change_passcode_Dialog = new Dialog(getActivity());
         edit_printer_settings_Dialog = new Dialog(getActivity());
         editTermsConditionsDialog = new Dialog(getActivity());
         addFaultDialog.setContentView(R.layout.alert_setting_add_fault);
+        change_passcode_Dialog.setContentView(R.layout.change_passcode_alert);
+        old_passcode_edittext=change_passcode_Dialog.findViewById(R.id.old_passcode_edittext);
+        new_passcode_edittext=change_passcode_Dialog.findViewById(R.id.new_passcode_edittext);
+        new_passcode_again_edittext=change_passcode_Dialog.findViewById(R.id.new_passcode_again_edittext);
+        save_passcode_change_textview=change_passcode_Dialog.findViewById(R.id.save_passcode_change_textview);
+        cancel_passcode_change_textview=change_passcode_Dialog.findViewById(R.id.cancel_passcode_change_textview);
         edit_printer_settings_Dialog.setContentView(R.layout.printer_settings_alert);
         editTermsConditionsDialog.setContentView(R.layout.edit_terms_conditions_alert);
         alertFaultName_editText = addFaultDialog.findViewById(R.id.alertFaultName_editText);
         alertFaultPrice_editText = addFaultDialog.findViewById(R.id.alertFaultPrice_editText);
         port_number_edittext = view.findViewById(R.id.port_number_edittext);
         addFaultsave_textview = addFaultDialog.findViewById(R.id.addFaultsave_textview);
+        passcode_change_textview =view.findViewById(R.id.passcode_change_textview);
         addFaultsCancel_textview = addFaultDialog.findViewById(R.id.addFaultsCancel_textview);
         port_number_edittext = edit_printer_settings_Dialog.findViewById(R.id.port_number_edittext);
         term_conditions_edittext = editTermsConditionsDialog.findViewById(R.id.term_conditions_edittext);
@@ -274,6 +282,30 @@ public class RBS_setting extends Fragment {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void onClickListeners() {
+
+        cancel_passcode_change_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_passcode_Dialog.dismiss();
+            }
+        });
+
+        save_passcode_change_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (passcode_validations()){
+                    Toast.makeText(getActivity(), "Passcode Changed", Toast.LENGTH_SHORT).show();
+                    change_passcode_Dialog.dismiss();
+                }
+            }
+        });
+
+        passcode_change_textview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                change_passcode_Dialog.show();
+            }
+        });
 
         save_terms_conditions_textview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -439,6 +471,30 @@ public class RBS_setting extends Fragment {
         });
 
 
+    }
+
+    private boolean passcode_validations() {
+        boolean valid=true;
+        if (old_passcode_edittext.getText().toString().equals("")){
+            old_passcode_edittext.setError("Enter old passcode");
+            valid=false;
+        }
+        //TODo passcode ko online kar kay validate karna ha online kay sath
+        if (new_passcode_edittext.getText().toString().equals("")){
+            new_passcode_edittext.setError("Enter new passcode");
+            valid=false;
+        }
+
+        if (!new_passcode_edittext.getText().toString().equals(new_passcode_again_edittext.getText().toString())){
+            new_passcode_again_edittext.setError("New Passcode not match");
+            valid=false;
+        }
+        if (new_passcode_edittext.getText().toString().length()<4){
+            new_passcode_edittext.setError("Enter complete passcode");
+            valid=false;
+        }
+
+        return valid;
     }
 
     private void updateTermsAndConditions() {

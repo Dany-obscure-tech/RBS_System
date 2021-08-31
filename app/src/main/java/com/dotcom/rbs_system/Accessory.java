@@ -1,6 +1,7 @@
 package com.dotcom.rbs_system;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,8 +20,9 @@ import java.util.List;
 public class Accessory extends AppCompatActivity {
 
     RecyclerView shopkeeper_accessories_stock_recyclerview;
-    TextView order_accessory_textview, sale_accessory_textview, add_accessory_textview;
+    TextView add_accessory_textview;
     ImageButton back_btn;
+    CardView order_accessory_textview,sale_accessory_textview;
     Adapter_RBS_accessories_inventory_RecyclerView adapter_rbs_accessories_inventory_recyclerView;
     List<String> accessory_name_textView, accessory_inventory_Category_textView, stockPrice_list, accessory_inventory_Quantity_textView, stockkeyId_list, edit_stock_textview_list;
 

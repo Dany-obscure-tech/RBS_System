@@ -46,7 +46,9 @@
                 android:id="@+id/searchForItem_cardView"
                 style="@style/CardView_style"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:id="@+id/select_user_category"
@@ -161,8 +163,9 @@
                 style="@style/EditTexts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="********"
-                android:inputType="textPassword" />
+                android:hint="****"
+                android:maxLength="4"
+                android:inputType="numberPassword" />
 
             <LinearLayout
                 android:layout_width="match_parent"

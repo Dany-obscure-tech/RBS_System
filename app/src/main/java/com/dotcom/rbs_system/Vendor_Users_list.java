@@ -142,6 +142,10 @@ public class Vendor_Users_list extends AppCompatActivity {
             random_passcode_editText.setError("Enter passcode");
             valid = false;
         }
+        if (random_passcode_editText.getText().toString().length() <4) {
+            random_passcode_editText.setError("Enter complete passcode");
+            valid = false;
+        }
         if (user_category_textView.getText().toString().equals("Select user category ...")) {
             Toast.makeText(Vendor_Users_list.this, "Select the user category", Toast.LENGTH_SHORT).show();
             valid = false;

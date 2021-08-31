@@ -62,14 +62,14 @@ public class VendorProfile extends Fragment {
 
     View view;
     TextView edit_logo_image_textView, view_users_btn, edit_vendor_details_cancel_btn, edit_vendor_details_save_btn, change_passcode_btn, change_passcode_cancel_btn, change_passcode_submit_btn, change_new_passcode_cancel_btn, edit_vendor_details_btn_textView;
-    Dialog change_passcode_alert_dialog, new_passcode_alert_dialog, edit_vendor_info_alert_dialog;
+    Dialog change_passcode_alert_dialog, edit_vendor_info_alert_dialog;
 
     TextView edit_banner_btn_textiew, edit_logo_btn_textiew;
 
     TextView appRegNo_textView, name_textView, company_name_textView, company_reg_no_textView, post_code_textView, vendor_address_textView, vendor_phone_textView, vendor_mobile_textView, vendor_email_textView, vendor_url_textView;
     ImageView logo_imageView, store_banner_imageView;
 
-    EditText edit_pastcode_editText, edit_address_editText, edit_mobile_number_editText, edit_email_address_editText, edit_url_address_editText;
+    EditText random_passcode_editText, new_passcode_edittext, new_passcode_again_edittext, edit_pastcode_editText, edit_address_editText, edit_mobile_number_editText, edit_email_address_editText, edit_url_address_editText;
 
     String buttonPressCheck;
 
@@ -161,8 +161,9 @@ public class VendorProfile extends Fragment {
         change_passcode_alert_dialog.setContentView(R.layout.alert_vendor_change_passcode);
         change_passcode_cancel_btn = change_passcode_alert_dialog.findViewById(R.id.change_passcode_cancel_btn);
         change_passcode_submit_btn = change_passcode_alert_dialog.findViewById(R.id.change_passcode_submit_btn);
-        new_passcode_alert_dialog = new Dialog(getActivity());
-        new_passcode_alert_dialog.setContentView(R.layout.alert_vendor_new_passcode);
+        random_passcode_editText = change_passcode_alert_dialog.findViewById(R.id.random_passcode_editText);
+        new_passcode_edittext = change_passcode_alert_dialog.findViewById(R.id.new_passcode_edittext);
+        new_passcode_again_edittext = change_passcode_alert_dialog.findViewById(R.id.new_passcode_again_edittext);
         edit_vendor_info_alert_dialog = new Dialog(getActivity());
         edit_vendor_info_alert_dialog.setContentView(R.layout.alert_vendor_details_edit);
         ccp = edit_vendor_info_alert_dialog.findViewById(R.id.ccp);
@@ -177,8 +178,6 @@ public class VendorProfile extends Fragment {
 
         edit_vendor_details_cancel_btn = edit_vendor_info_alert_dialog.findViewById(R.id.edit_vendor_details_cancel_btn);
         edit_vendor_details_save_btn = edit_vendor_info_alert_dialog.findViewById(R.id.edit_vendor_details_save_btn);
-
-        change_new_passcode_cancel_btn = new_passcode_alert_dialog.findViewById(R.id.change_new_passcode_cancel_btn);
 
         edit_banner_btn_textiew = view.findViewById(R.id.edit_banner_btn_textiew);
         edit_logo_btn_textiew = view.findViewById(R.id.edit_logo_btn_textiew);
@@ -228,7 +227,6 @@ public class VendorProfile extends Fragment {
         change_passcode_btn_listner();
         change_passcode_cancel_btn_listner();
         change_passcode_submit_btn_listner();
-        change_new_passcode_cancel_btn_listner();
         edit_vendor_details_cancel_btn_listner();
         edit_vendor_details_save_btn_listner();
         edit_banner_btn_textiew_listener();
@@ -420,15 +418,6 @@ public class VendorProfile extends Fragment {
         });
     }
 
-    private void change_new_passcode_cancel_btn_listner() {
-        change_new_passcode_cancel_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new_passcode_alert_dialog.dismiss();
-            }
-        });
-    }
-
     private void change_passcode_btn_listner() {
         change_passcode_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -451,10 +440,36 @@ public class VendorProfile extends Fragment {
         change_passcode_submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new_passcode_alert_dialog.show();
-                change_passcode_alert_dialog.dismiss();
+
+                if (validate_change_passcode()) {
+                    edit_vendor_info_alert_dialog.dismiss();
+                    change_passcode_alert_dialog.dismiss();
+                }
             }
         });
+    }
+
+    private boolean validate_change_passcode() {
+        boolean valid = true;
+        if (random_passcode_editText.getText().toString().equals("")) {
+            random_passcode_editText.setError("Enter old passcode");
+            valid = false;
+        }
+        //TODo passcode ko online kar kay validate karna ha online kay sath
+        if (new_passcode_edittext.getText().toString().equals("")) {
+            new_passcode_edittext.setError("Enter new passcode");
+            valid = false;
+        }
+
+        if (!new_passcode_edittext.getText().toString().equals(new_passcode_again_edittext.getText().toString())) {
+            new_passcode_again_edittext.setError("New Passcode not match");
+            valid = false;
+        }
+        if (new_passcode_edittext.getText().toString().length() < 4) {
+            new_passcode_edittext.setError("Enter complete passcode");
+            valid = false;
+        }
+        return valid;
     }
 
     private void view_users_btn_listner() {

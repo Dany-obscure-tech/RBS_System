@@ -49,44 +49,119 @@
             android:layout_marginEnd="20dp"
             android:orientation="vertical">
 
-            <TextView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/order_accessory_textview"
-                style="@style/green_btn"
+                style="@style/CardView_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Order Accesory" />
+                android:foreground="?attr/selectableItemBackgroundBorderless">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/vendor_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/marketstore" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:layout_toRightOf="@+id/vendor_icon">
+
+                        <TextView
+                            style="@style/TextViews_Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="Order Accessories"
+                            android:textAlignment="center"
+                            android:textColor="@color/textBlue" />
 
 
-            <TextView
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:id="@+id/sale_accessory_textview"
-                style="@style/green_btn"
+                style="@style/CardView_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Sale Accessory" />
+                android:foreground="?attr/selectableItemBackgroundBorderless">
 
-            <TextView
-                style="@style/TextViews_Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Accessories" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/add_accessory_textview"
-                style="@style/green_btn"
+                    <ImageView
+                        android:id="@+id/sale_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/sale" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:layout_toRightOf="@+id/sale_icon">
+
+                        <TextView
+                            style="@style/TextViews_Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="Sale Accessories"
+                            android:textAlignment="center"
+                            android:textColor="@color/textBlue" />
+
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Add Accessories" />
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    style="@style/TextViews_Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Accessories" />
+
+                <TextView
+                    android:id="@+id/add_accessory_textview"
+                    style="@style/TextViews_Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Add Accessories +"
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/gradientDarkBlue" />
+
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/shopkeeper_accessories_stock_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:nestedScrollingEnabled="false"/>
+                android:nestedScrollingEnabled="false"
+                android:orientation="vertical" />
 
 
         </LinearLayout>

@@ -289,6 +289,40 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextViews_Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Passcode" />
+
+
+                    <TextView
+                        android:id="@+id/passcode_textview"
+                        style="@style/TextViews"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="****" />
+
+                    <TextView
+                        android:id="@+id/passcode_change_textview"
+                        style="@style/blue_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        android:text="Passcode Change" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
