@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dotcom.rbs_system.Progreess_dialog;
+import com.dotcom.rbs_system.Progress_dialog;
 import com.dotcom.rbs_system.R;
 import com.dotcom.rbs_system.Repair_ticket_details;
 
@@ -21,10 +21,10 @@ import java.util.List;
 
 public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<AdapterRepairTicketListRecyclerView.ViewHolder> {
     Context context;
-    List<String> customerNameList, customerIdList, itemNameList, itemSerialNoList, ticketNoList, dateList, pendingStatusList;
+    List<String> customerNameList, customerIdList, itemNameList, itemSerialNoList, repairKeyIDList, dateList, pendingStatusList,ticketNoList;
     Activity activity;
 
-    public AdapterRepairTicketListRecyclerView(Context context, List<String> customerNameList, List<String> customerIdList, List<String> itemNameList, List<String> itemSerialNoList, List<String> ticketNoList, List<String> dateList, List<String> pendingStatusList) {
+    public AdapterRepairTicketListRecyclerView(Context context, List<String> customerNameList, List<String> customerIdList, List<String> itemNameList, List<String> itemSerialNoList, List<String> repairKeyIDList, List<String> dateList, List<String> pendingStatusList, List<String> ticketNoList) {
 
         this.context = context;
 
@@ -36,12 +36,14 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
         Collections.reverse(this.itemNameList);
         this.itemSerialNoList = itemSerialNoList;
         Collections.reverse(this.itemSerialNoList);
-        this.ticketNoList = ticketNoList;
-        Collections.reverse(this.ticketNoList);
+        this.repairKeyIDList = repairKeyIDList;
+        Collections.reverse(this.repairKeyIDList);
         this.dateList = dateList;
         Collections.reverse(this.dateList);
         this.pendingStatusList = pendingStatusList;
         Collections.reverse(this.pendingStatusList);
+        this.ticketNoList = ticketNoList;
+        Collections.reverse(this.ticketNoList);
 
         activity = (Activity) context;
 
@@ -85,7 +87,7 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, Repair_ticket_details.class);
-                intent.putExtra("REPAIR_ID", ticketNoList.get(position));
+                intent.putExtra("REPAIR_ID", repairKeyIDList.get(position));
                 intent.putExtra("STATUS", pendingStatusList.get(position));
                 context.startActivity(intent);
             }
@@ -95,12 +97,12 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
 
     @Override
     public int getItemCount() {
-        return ticketNoList.size();
+        return repairKeyIDList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        Progreess_dialog pd;
+        Progress_dialog pd;
 
         TextView ticketNo_textView, customerName_textView, itemName_textView;
         TextView customerID_textView, item_serialNo_textView, date_textView;
@@ -109,7 +111,7 @@ public class AdapterRepairTicketListRecyclerView extends RecyclerView.Adapter<Ad
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            pd = new Progreess_dialog();
+            pd = new Progress_dialog();
 
             ticketNo_textView = itemView.findViewById(R.id.ticketNo_textView);
             customerName_textView = itemView.findViewById(R.id.customerName_textView);

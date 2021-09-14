@@ -37,6 +37,7 @@ import com.dotcom.rbs_system.Adapter.Adapter_customerList_alert_dialog;
 import com.dotcom.rbs_system.Adapter.Adapter_itemList_alert_dialog;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Classes.Customer_history_class;
+import com.dotcom.rbs_system.Classes.InvoiceNumberGenerator;
 import com.dotcom.rbs_system.Classes.RBSCustomerDetails;
 import com.dotcom.rbs_system.Classes.RBSItemDetails;
 import com.dotcom.rbs_system.Classes.UniquePushID;
@@ -66,6 +67,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     Dialog confirmation_alert;
     TextView yes_btn_textview, cancel_btn_textview;
+    TextView invoiceNo_TextView;
 
     Handler handler = new Handler();
 
@@ -99,13 +101,10 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     private static final int CUSTOMER_ACTIVITY_REQUEST_CODE = 0;
 
-    TextView voucher_number, voucher_number_textview;
     TextView customerName_textView, customerEmail_textView, customerPhno_textView, customerID_textView;
     TextView viewCustomerDetails_textView;
 
-    String voucher_key;
-
-    Progress_dialoge pd, pd2, pd3;
+    Progress_dialog pd, pd2, pd3;
 
     LinearLayout toggling_linear, itemLastActive_linearLayout;
 
@@ -119,9 +118,9 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     ImageButton back_btn;
 
-    TextView itemLastActive_textView, customer_add_textView, datebtn_textView, submit_textView;
+    TextView itemLastActive_textView, customer_add_textView, submit_textView;
 
-    TextView date_textView, forExchange_textView;
+    TextView date_textView;
 
     TextView category_textView, condition_textView, address_textView, suggest_price_TextView;
 
@@ -135,7 +134,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     String customerKeyID, itemKeyID, itemCategory;
 
-    String voucherNo;
     List<String> filteredExisitngItemsNamesList, filteredExisitngItemsSerialNoList, filteredExisitngItemsKeyIDList, filteredExistingItemsPriceList, filteredExistingItemsCategoryList, filteredExistingItemsLastActiveList, filteredExistingItemsImageUrlList;
 
     List<String> exisitngCustomerList, exisitngCustomerIDList, exisitngCustomerKeyIDList, existingCustomerPhnoList, existingCustomerDobList, existingCustomerAddressList, existingCustomerEmailList, existingCustomerImageUrlList;
@@ -151,7 +149,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
     LinearLayout customerID_linearLayout;
 
-    EditText purchase_price_editText, paid_editText, search_editText;
+    EditText paid_editText, search_editText;
 
 
     Date date;
@@ -171,6 +169,11 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         setContentView(R.layout.activity_buy);
 
         initialize();
+        try {
+            generateInvoiceNo();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         fetchingExisitingCustomers();
         fetchingExisitingItems();
         searchItem();
@@ -180,6 +183,9 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
     }
 
     private void initialize() {
+
+        reference = FirebaseDatabase.getInstance().getReference();
+
         rbsItemDetails = RBSItemDetails.getInstance();
         rbsCustomerDetails = RBSCustomerDetails.getInstance();
 
@@ -194,20 +200,14 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         yes_btn_textview = confirmation_alert.findViewById(R.id.yes_btn_textview);
         cancel_btn_textview = confirmation_alert.findViewById(R.id.cancel_btn_textview);
 
-
-        reference = FirebaseDatabase.getInstance().getReference();
-        voucher_key = reference.push().getKey();
+        invoiceNo_TextView = (TextView) findViewById(R.id.invoiceNo_TextView);
 
         item_btn = false;
         customer = false;
 
-        pd = new Progress_dialoge();
-        pd2 = new Progress_dialoge();
-        pd3 = new Progress_dialoge();
-
-
-        reference = FirebaseDatabase.getInstance().getReference();
-        voucherNo = reference.push().getKey();
+        pd = new Progress_dialog();
+        pd2 = new Progress_dialog();
+        pd3 = new Progress_dialog();
 
         exisitngItemsNamesList = new ArrayList<>();
         exisitngItemsSerialNoList = new ArrayList<>();
@@ -293,9 +293,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         appendedItemImageUrlList = new ArrayList<>();
 
         category_textView = findViewById(R.id.category_textView);
-        voucher_number = findViewById(R.id.voucher_number);
-        voucher_number_textview = findViewById(R.id.voucher_number_textview);
-        voucher_number.setText(voucher_key);
 
         customerName_textView = findViewById(R.id.customerName_textView);
         customerEmail_textView = findViewById(R.id.customerEmail_textView);
@@ -306,7 +303,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         condition_textView = findViewById(R.id.condition_textView);
         address_textView = findViewById(R.id.customer_address_textView);
         date_textView = findViewById(R.id.date_textView);
-        forExchange_textView = findViewById(R.id.forExchange_textView);
         suggest_price_TextView = findViewById(R.id.suggest_price_TextView);
 
         itemName_textView = findViewById(R.id.itemName_textView);
@@ -320,7 +316,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         itemImage_imageView = findViewById(R.id.itemImage_imageView);
         customerImage_imageView = findViewById(R.id.customerImage_imageView);
 
-        purchase_price_editText = findViewById(R.id.purchase_price_editText);
         paid_editText = findViewById(R.id.paid_editText);
 
         itemLastActive_textView = findViewById(R.id.itemLastActive_textView);
@@ -336,7 +331,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         back_btn = findViewById(R.id.back_btn);
         item_add_textView = findViewById(R.id.item_add_textView);
         viewItemDetails_textView = findViewById(R.id.viewItemDetails_textView);
-        datebtn_textView = findViewById(R.id.datebtn_textView);
 
         customerID_linearLayout = findViewById(R.id.customerID_linearLayout);
 
@@ -375,6 +369,10 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
         searchCustomer_editText = customerList_alert_dialog.findViewById(R.id.searchCustomer_editText);
 
 
+    }
+
+    private void generateInvoiceNo() throws ParseException {
+        invoiceNo_TextView.setText(new InvoiceNumberGenerator().generateNumber());
     }
 
     private void searchCustomers() {
@@ -919,6 +917,11 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             @Override
             public void onClick(View view) {
                 itemList_alert_dialog.show();
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                int height = displayMetrics.heightPixels;
+                int width = displayMetrics.widthPixels;
+                itemList_alert_dialog.getWindow().setLayout(width-10, height-800); //Controlling width and height.
             }
         });
 
@@ -926,6 +929,11 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             @Override
             public void onClick(View view) {
                 customerList_alert_dialog.show();
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                int height = displayMetrics.heightPixels;
+                int width = displayMetrics.widthPixels;
+                customerList_alert_dialog.getWindow().setLayout(width-10, height-800); //Controlling width and height.
             }
         });
 
@@ -938,7 +946,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
         // Firebase config
 
-        datebtn_textView.setOnClickListener(new View.OnClickListener() {
+        date_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment datepicker = new DatePickerFragment();
@@ -988,11 +996,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             valid = false;
         }
 
-        if (purchase_price_editText.getText().toString().isEmpty()) {
-            purchase_price_editText.setError("Please enter suggested price");
-            valid = false;
-        }
-
         if (date_textView.getText().toString().equals("-- -- --")) {
             Toast.makeText(this, "Select date", Toast.LENGTH_LONG).show();
             valid = false;
@@ -1022,13 +1025,13 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
 
             customerKeyID = rbsCustomerDetails.getKey();
 
-            reference.child("Buy_list").child(key).child("Customer_keyID").setValue(customerKeyID);
-            reference.child("Buy_list").child(key).child("Date").setValue(date_textView.getText().toString());
-            reference.child("Buy_list").child(key).child("Paid").setValue(paid_editText.getText().toString());
-            reference.child("Buy_list").child(key).child("Purchase_price").setValue(purchase_price_editText.getText().toString());
-            reference.child("Buy_list").child(key).child("added_by").setValue(firebaseAuthUID);
-            reference.child("Buy_list").child(key).child("Item_keyID").setValue(itemKeyID);
-            reference.child("Buy_list").child(key).child("key_id").setValue(key);
+            reference.child("Buy_list").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(key).child("Customer_keyID").setValue(customerKeyID);
+            reference.child("Buy_list").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(key).child("Date").setValue(date_textView.getText().toString());
+            reference.child("Buy_list").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(key).child("Paid").setValue(paid_editText.getText().toString());
+            reference.child("Buy_list").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(key).child("invoice_no").setValue(invoiceNo_TextView.getText().toString());
+            reference.child("Buy_list").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(key).child("added_by").setValue(firebaseAuthUID);
+            reference.child("Buy_list").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(key).child("Item_keyID").setValue(itemKeyID);
+            reference.child("Buy_list").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(key).child("key_id").setValue(key);
 
 
             if (rbsItemDetails.getCheck().equals("Buy existing item")) {
@@ -1046,6 +1049,7 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             }
 
             new Customer_history_class().twelveValues(rbsCustomerDetails.getKey(), key, date_textView.getText().toString(), rbsItemDetails.getItemCategory(), String.valueOf(rbsItemDetails.getFirstImageUri()), rbsItemDetails.getKey(), rbsItemDetails.getItemName(), rbsItemDetails.getItemID(), "Sale", UserDetails.getInstance().getShopLogo(), FirebaseAuth.getInstance().getCurrentUser().getUid(), UserDetails.getInstance().getShopName(), date.getTime());
+            new Customer_history_class().uploadCustomerImagetoItemHistory(RBSItemDetails.getInstance().getKey(), UniquePushID.getInstance().getUniquePushID(),rbsCustomerDetails.getFirstImageUrl());
             pd.dismissProgressBar(Buy.this);
 
             Intent intent = new Intent(Buy.this, Invoice_preview.class);
@@ -1091,8 +1095,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                 "[L]\n" +
                 "[L]<b>" + "</b>\n" +
                 "[C]--------------------------------\n" +
-                "[R]TOTAL PRICE :[R]" + purchase_price_editText.getText().toString() + Currency.getInstance().getCurrency() + "\n" +
-                "[L]\n" +
                 "[C]================================\n" +
                 "[L]\n" +
                 "[L]<font color='bg-black' size='normal'>normal :</font>\n" +

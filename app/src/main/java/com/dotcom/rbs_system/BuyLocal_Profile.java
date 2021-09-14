@@ -29,6 +29,8 @@ import java.util.List;
 
 public class BuyLocal_Profile extends Fragment {
 
+    // TODO: 9/14/2021 purchases or history on krni he 
+
     RelativeLayout alert_background_relativelayout;
 
     List<String> shopkeeper_name_textview, item_name_textview, item_category_textview, shopkeeperImage_imageView_list, dateList, itemKeyId, itemImageView, shopkeeper_key_id, serial_no_textview;

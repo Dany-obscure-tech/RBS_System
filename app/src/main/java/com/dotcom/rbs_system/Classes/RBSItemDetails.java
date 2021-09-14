@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.dotcom.rbs_system.Progress_dialoge;
+import com.dotcom.rbs_system.Progress_dialog;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 public class RBSItemDetails {
+    Progress_dialog pd;
     RBSCustomerDetails rbsCustomerDetails = RBSCustomerDetails.getInstance();
     Activity activity;
     String check;
@@ -36,7 +37,7 @@ public class RBSItemDetails {
     StorageReference idStorageReference;
     DatabaseReference reference,spotLightRef;
 
-    Progress_dialoge pd;
+
 
     private static RBSItemDetails rbsItemDetails = new RBSItemDetails();
 
@@ -165,9 +166,11 @@ public class RBSItemDetails {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public void uploadNewItemDetails(Context contextt){
+        pd = new Progress_dialog();
         context = contextt;
+        pd.showProgressBar(context);
         idStorageReference = FirebaseStorage.getInstance().getReference().child("Item_Images");
-        pd = new Progress_dialoge();
+        pd = new Progress_dialog();
 
         pd.showProgressBar(context);
         reference = FirebaseDatabase.getInstance().getReference();
@@ -218,17 +221,26 @@ public class RBSItemDetails {
                             if(k==0){
                                 firstImageUri=uri;
 
-//                                if (check=="Add new item"){
-//
-//                                    spotLightRef = FirebaseDatabase.getInstance().getReference("Spotlight");
-//
-//                                    spotLightRef.child(key).child("key_id").setValue(key);
-//                                    spotLightRef.child(key).child("Category").setValue(itemCategory);
-//                                    spotLightRef.child(key).child("Item_name").setValue(itemName);
-//                                    spotLightRef.child(key).child("Price").setValue(itemPrice);
-//                                    spotLightRef.child(key).child("id_image_url").setValue(uri.toString());
-//                                    spotLightRef.child(key).child("shopkeeper").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
-//                                }
+                                if (check=="Add new item"){
+
+                                    spotLightRef = FirebaseDatabase.getInstance().getReference("Spotlight");
+
+                                    spotLightRef.child(key).child("key_id").setValue(key);
+                                    spotLightRef.child(key).child("Category").setValue(itemCategory);
+                                    spotLightRef.child(key).child("Item_name").setValue(itemName);
+                                    spotLightRef.child(key).child("Price").setValue(itemPrice);
+                                    spotLightRef.child(key).child("Item_image").setValue(uri.toString());
+                                    spotLightRef.child(key).child("shopkeeper").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//                                    if (check=="Add new item"){
+//                                        uploadToStock();
+//                                    }
+                                    reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Category").setValue(itemCategory);
+                                    reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Image").setValue(firstImageUri.toString());
+                                    reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Item_id").setValue(key);
+                                    reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Serial_no").setValue(itemID);
+                                    reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Item_name").setValue(itemName);
+                                    reference.child("Stock").child("Shopkeepers").child(addedBy).child(itemCategory).child(key).child("Price").setValue(itemPrice);
+                                }
 
                             }
                             reference.child("Items").child(itemCategory).child(key).child("Image_urls").child("image_"+(k+1)).setValue(String.valueOf(uri.toString()));
@@ -238,17 +250,16 @@ public class RBSItemDetails {
                                 if (check=="Sale new item") {
                                     rbsItemDetails.switchStockSale(rbsCustomerDetails.getKey(), FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-                                }
-                                if (check=="Buy new item"){
+                                }else if (check=="Buy new item"){
                                     uploadToStock();
                                     uploadToRbsInvoiceList(rbsCustomerDetails.getKey(),addedBy);
                                     updateStockOwner(addedBy);
 
+                                }else {
+                                    pd.dismissProgressBar(context);
                                 }
-                                if (check=="Add new item"){
-                                    uploadToStock();
 
-                                }
+
 
                             }
                         }

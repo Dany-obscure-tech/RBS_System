@@ -58,8 +58,7 @@ public class Add_item extends AppCompatActivity {
     RecyclerView categoryList_recyclerView;
     Dialog categoryList_alert_dialog;
 
-    // Progress dialog
-    Progress_dialoge pd;
+    Progress_dialog pd;
 
     LinearLayout selectCategory_linearLayout;
 
@@ -70,7 +69,7 @@ public class Add_item extends AppCompatActivity {
     TextView submit_textView;
     TextView selectCategory_textView, uploadId_textView;
 
-    DatabaseReference categoryRef, reference;
+    DatabaseReference categoryRef, reference,spotlight;
 
     ImageView id_imageView, categoryIcon_imageView;
 
@@ -115,7 +114,7 @@ public class Add_item extends AppCompatActivity {
     private void initialize() {
         rbsItemDetails = RBSItemDetails.getInstance();
 
-        pd = new Progress_dialoge();
+        pd = new Progress_dialog();
 
         confirmation_alert = new Dialog(this);
         confirmation_alert.setContentView(R.layout.exit_confirmation_alert);
@@ -244,10 +243,11 @@ public class Add_item extends AppCompatActivity {
 //                rbsItemDetails.clearData();
                 pd.dismissProgressBar(Add_item.this);
 
-                System.out.println("called");
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("result", "1");
                 setResult(Activity.RESULT_OK, returnIntent);
+
+
                 finish();
             } else {
                 pass_back_data();

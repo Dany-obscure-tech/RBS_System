@@ -36,7 +36,7 @@
 
     </RelativeLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/header">
@@ -53,69 +53,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Invoice Number" />
-
-            <TextView
-                android:id="@+id/invoiceNo_TextView"
-                style="@style/TextViews"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="NA"
-                android:textColor="@color/textBlue" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    style="@style/TextViews_Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Vendor" />
-
-                <TextView
-                    android:id="@+id/vendor_add_textview"
-                    style="@style/TextViews_Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Add Vendor +"
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/gradientDarkBlue" />
-
-            </LinearLayout>
+                android:text="Category" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/search_vendor_cardview"
+                android:id="@+id/searchForItem_cardView"
                 style="@style/CardView_style"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:foreground="?attr/selectableItemBackgroundBorderless">
+                android:layout_height="match_parent">
 
                 <LinearLayout
+                    android:id="@+id/searchForCategories"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/searchForVendor_textView"
-                        style="@style/TextViews_Bold"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:text="Search vendors..." />
+                        android:layout_marginBottom="5dp">
+
+                        <TextView
+                            android:id="@+id/item_category_textView"
+                            style="@style/TextViews_Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="Search for category ..." />
+
+                    </LinearLayout>
 
                 </LinearLayout>
-
 
             </androidx.cardview.widget.CardView>
 
@@ -124,77 +94,54 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Vendor Invoice Ref" />
+                android:text="Name" />
 
             <EditText
-                android:id="@+id/vendorInvoiceRef_editText"
+                android:id="@+id/shopKeeper_item_name_editText"
                 style="@style/EditTexts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:hint="Enter Vendor Invoice Ref" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    style="@style/TextViews_Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Category" />
-
-                <TextView
-                    android:id="@+id/alertCategoryAdd_textview"
-                    style="@style/TextViews_Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Add Category +"
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/gradientDarkBlue" />
-
-            </LinearLayout>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/search_category_cardview"
-                style="@style/CardView_style"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:foreground="?attr/selectableItemBackgroundBorderless">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/alertCategory_textView"
-                        style="@style/TextViews_Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:text="Select category..." />
-
-                </LinearLayout>
-
-
-            </androidx.cardview.widget.CardView>
+                android:hint="Enter item name..."
+                android:maxLines="1"
+                android:inputType="textCapWords"/>
 
             <TextView
                 style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/date" />
+                android:text="Price" />
+
+            <EditText
+                android:id="@+id/shopKeeper_item_price_editText"
+                style="@style/EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter item price..."
+                android:inputType="numberDecimal" />
+
+            <TextView
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Quantity" />
+
+
+            <EditText
+                android:id="@+id/shopKeeper_item_qty_editText"
+                style="@style/EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter quantity..."
+                android:inputType="number" />
+
+            <TextView
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Date" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -203,65 +150,27 @@
                 android:weightSum="2">
 
                 <TextView
-                    android:id="@+id/date_textView"
+                    android:id="@+id/invoiceDate_textView"
                     style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.9"
                     android:text="-- -- --" />
 
-                <TextView
-                    android:id="@+id/date_textview"
-                    style="@style/green_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
-                    android:text="@string/select_date_btn_string" />
-
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    style="@style/TextViews_Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.7"
-                    android:text="Accesory Items" />
-
-                <TextView
-                    android:id="@+id/addaccessory_textview"
-                    style="@style/green_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:text="Add" />
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/accessoryItemList_recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:nestedScrollingEnabled="false" />
 
             <TextView
-                android:id="@+id/submit_textview"
+                android:id="@+id/add_btn"
                 style="@style/blue_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:text="@string/save_btn_string" />
+                android:text="Add" />
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
 
 </RelativeLayout>

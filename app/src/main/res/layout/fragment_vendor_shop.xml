@@ -31,18 +31,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/logo_imageView"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/profile_icon"
-                    app:civ_border_color="@color/colorWhite"
-                    app:civ_border_width="10dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/store_banner_imageView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/store_banner_imageView" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout

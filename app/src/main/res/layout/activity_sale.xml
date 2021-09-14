@@ -50,6 +50,35 @@
             android:layout_marginEnd="20dp"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    style="@style/TextViews_Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="Invoice Number" />
+
+                <TextView
+                    android:id="@+id/invoiceNo_TextView"
+                    style="@style/TextViews_Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="NA"
+                    android:textColor="@color/gradientDarkBlue" />
+
+            </LinearLayout>
+
             <!-- ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
 
 
@@ -444,24 +473,6 @@
                 </LinearLayout>
 
                 <TextView
-                    style="@style/TextViews_Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="1"
-                    android:text="Sale Price" />
-
-                <EditText
-                    android:id="@+id/sale_price_editText"
-                    style="@style/EditTexts"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter your sale price"
-                    android:inputType="numberDecimal"
-                    android:maxLength="32" />
-
-
-                <TextView
                     style="@style/TextViews_Bold_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -483,63 +494,8 @@
                         android:layout_weight="1.9"
                         android:text="-- -- --" />
 
-                    <TextView
-                        android:id="@+id/datebtn_textView"
-                        style="@style/green_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.1"
-                        android:text="@string/select_date_btn_string" />
-
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/transaction_textview"
-                    style="@style/TextViews_Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="Transaction"
-                    android:visibility="gone" />
-
-                <CheckBox
-                    android:id="@+id/cash_checkbox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/segoe_ui"
-                    android:text="By Cash"
-                    android:textColor="@color/textGrey"
-                    android:textSize="18sp"
-                    android:visibility="gone" />
-
-                <EditText
-                    android:id="@+id/cash_editText"
-                    style="@style/EditTexts"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter cash amount"
-                    android:inputType="number"
-                    android:maxLength="32"
-                    android:visibility="gone" />
-
-                <CheckBox
-                    android:id="@+id/voucher_checkbox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/segoe_ui"
-                    android:text="By Voucher"
-                    android:textColor="@color/textGrey"
-                    android:textSize="18sp"
-                    android:visibility="gone" />
-
-
-                <TextView
-                    android:id="@+id/searchForVoucher_textView"
-                    style="@style/green_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Search For Voucher"
-                    android:visibility="gone" />
 
                 <TextView
                     style="@style/TextViews_Bold"

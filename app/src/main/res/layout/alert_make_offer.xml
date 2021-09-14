@@ -92,7 +92,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:text="Send offer" />
+                android:text="Send" />
 
             <TextView
                 android:id="@+id/alertMakeOfferCancel_textview"

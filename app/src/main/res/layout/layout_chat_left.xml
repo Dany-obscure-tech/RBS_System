@@ -2,15 +2,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="8dp">
 
-    <TextView
-        android:id="@+id/show_message"
-        style="@style/TextViews"
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="10dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="10dp"
-        android:text="@string/lorem_ipsum" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/show_message"
+            style="@style/TextViews_Regular_small"
+            android:textColor="@color/colorWhite"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            android:background="@drawable/screen_header_rectangle"
+            android:text="@string/lorem_ipsum" />
+
+
+    </androidx.cardview.widget.CardView>
+
 
 </RelativeLayout>

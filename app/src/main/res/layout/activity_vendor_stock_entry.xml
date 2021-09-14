@@ -60,10 +60,10 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/searchForItem_cardView"
                 style="@style/CardView_style"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless">
 
                 <LinearLayout
                     android:id="@+id/searchForCategories"
@@ -104,22 +104,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter item name..."
-                android:maxLines="1"
-                android:inputType="textCapWords"/>
-
-            <TextView
-                style="@style/TextViews_Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Serial No" />
-
-            <EditText
-                android:id="@+id/vendor_sno_editText"
-                style="@style/EditTexts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter item serial no..." />
+                android:inputType="textCapWords"
+                android:maxLines="1" />
 
             <TextView
                 style="@style/TextViews_Bold"
@@ -172,14 +158,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.9"
                     android:text="-- -- --" />
-
-                <TextView
-                    android:id="@+id/date_textView"
-                    style="@style/green_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
-                    android:text="@string/select_date_btn_string" />
 
             </LinearLayout>
 

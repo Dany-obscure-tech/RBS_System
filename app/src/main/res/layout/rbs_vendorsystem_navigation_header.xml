@@ -19,28 +19,28 @@
             android:src="@drawable/top_black_rectangle" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/shopLogo_imageView"
+            android:id="@+id/vendorLogo_imageView"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_above="@+id/shopName_textView"
+            android:layout_above="@+id/VendorName_textView"
             android:layout_marginStart="15dp"
             android:layout_marginBottom="10dp"
             android:src="@drawable/profile_icon" />
 
         <TextView
-            android:id="@+id/shopName_textView"
+            android:id="@+id/VendorName_textView"
             style="@style/TextViews_Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/shopEmail_textView"
+            android:layout_above="@+id/vendorEmail_textView"
             android:layout_marginStart="15dp"
             android:gravity="bottom"
             android:text="@string/fake_customer_name"
             android:textColor="@color/colorWhite" />
 
         <TextView
-            android:id="@+id/shopEmail_textView"
             style="@style/TextViews"
+            android:id="@+id/vendorEmail_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

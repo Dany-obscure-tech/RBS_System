@@ -13,7 +13,6 @@ import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterItemHistoryListRecyclerView;
 import com.dotcom.rbs_system.Adapter.SliderAdapterExample;
@@ -49,7 +48,7 @@ public class Item_history extends AppCompatActivity {
 
     RelativeLayout itemDetails_relativelayout;
 
-    Progreess_dialog pd1, pd2;
+    Progress_dialog pd1, pd2;
 
     Boolean toggleCheck = true;
 
@@ -125,8 +124,8 @@ public class Item_history extends AppCompatActivity {
 
         itemRef = FirebaseDatabase.getInstance().getReference("Items");
 
-        pd1 = new Progreess_dialog();
-        pd2 = new Progreess_dialog();
+        pd1 = new Progress_dialog();
+        pd2 = new Progress_dialog();
 
     }
 

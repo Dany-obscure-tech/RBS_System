@@ -55,7 +55,7 @@ public class Repair_ticket_details extends AppCompatActivity {
 
     long timestamp;
 
-    Progreess_dialog pd1, pd2, pd3, pd4;
+    Progress_dialog pd1, pd2, pd3, pd4;
 
 
     RecyclerView faultList_recyclerView, pendingFaultList_recyclerView;
@@ -106,10 +106,10 @@ public class Repair_ticket_details extends AppCompatActivity {
         pendingFaultList_recyclerView = findViewById(R.id.pendingFaultList_recyclerView);
         pendingFaultList_recyclerView.setLayoutManager(new GridLayoutManager(Repair_ticket_details.this, 1));
 
-        pd1 = new Progreess_dialog();
-        pd2 = new Progreess_dialog();
-        pd3 = new Progreess_dialog();
-        pd4 = new Progreess_dialog();
+        pd1 = new Progress_dialog();
+        pd2 = new Progress_dialog();
+        pd3 = new Progress_dialog();
+        pd4 = new Progress_dialog();
 
         repairID = getIntent().getStringExtra("REPAIR_ID");
         repairTicketStatus = getIntent().getStringExtra("STATUS");
@@ -258,7 +258,10 @@ public class Repair_ticket_details extends AppCompatActivity {
                 if (pendingFaultNameList.size() == 0) {
 
                     repairTicketRef.child("Status").setValue("Confirmed");
-                    //TODO Shahzaib yaha pa screen lgani ha print, whatsapp aur email wali
+
+                    Intent intent = new Intent(Repair_ticket_details.this,Invoice_preview_repair_ticket.class);
+                    finish();
+                    startActivity(intent);
 
                 } else {
                     Toast.makeText(Repair_ticket_details.this, "Changes pending!", Toast.LENGTH_SHORT).show();

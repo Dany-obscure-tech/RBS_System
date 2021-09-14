@@ -131,7 +131,7 @@ public class BuyLocal_home extends Fragment {
         test_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), RBS_mainscreen.class));
+                startActivity(new Intent(getActivity(), Repair_Ticket.class));
             }
         });
         test1_btn.setOnClickListener(new View.OnClickListener() {
@@ -281,7 +281,7 @@ public class BuyLocal_home extends Fragment {
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         itemname.add(String.valueOf(dataSnapshot1.child("Item_name").getValue()));
                         price.add(String.valueOf(dataSnapshot1.child("Price").getValue()));
-                        itemImage.add(String.valueOf(dataSnapshot1.child("id_image_url").getValue()));
+                        itemImage.add(String.valueOf(dataSnapshot1.child("Item_image").getValue()));
                         key_idList.add(dataSnapshot1.getKey());
                         categoryList.add(String.valueOf(dataSnapshot1.child("Category").getValue()));
                         shopkeeperList.add(String.valueOf(dataSnapshot1.child("shopkeeper").getValue()));

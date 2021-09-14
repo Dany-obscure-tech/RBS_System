@@ -76,7 +76,7 @@ public class Add_Customer extends AppCompatActivity {
     String key;
 
     StorageReference storageReference;
-    Progress_dialoge pd;
+    Progress_dialog pd;
 
     StorageReference idStorageReference;
 
@@ -92,7 +92,7 @@ public class Add_Customer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_customer);
-        pd = new Progress_dialoge();
+        pd = new Progress_dialog();
 
 
         initialize();

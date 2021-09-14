@@ -34,7 +34,7 @@ public class Invoice_preview_repair_ticket extends AppCompatActivity {
     AsyncEscPosPrinter printer;
     Dialog confirmation_alert;
     TextView yes_btn_textview, cancel_btn_textview;
-    String date, customer_name, customer_email, customer_ID, customer_ph_no, item_name, item_id, ticket_no, amount, special_condition;
+    String date, customer_name, customer_email, customer_ID, customer_ph_no, item_name, item_id, keyId, amount, special_condition,ticketNo;
     TextView date_textView, customerName_textView, customerEmail_textView, customerID_textView, customerPhno_textView, itemName_textView, itemID_textView, amount_Currency_textView, amount_textView;
     TextView exit_textview, special_condition_textView;
     ImageButton print_image_btn, email_image_btn, whatsapp_image_btn;
@@ -257,7 +257,8 @@ public class Invoice_preview_repair_ticket extends AppCompatActivity {
         customer_ph_no = getIntent().getStringExtra("Customer_Ph_No");
         item_name = getIntent().getStringExtra("Item_Name");
         item_id = getIntent().getStringExtra("Item_ID");
-        ticket_no = getIntent().getStringExtra("Ticket_No");
+        keyId = getIntent().getStringExtra("KeyID");
+        ticketNo = getIntent().getStringExtra("Ticket_No");
         amount = getIntent().getStringExtra("Amount");
         special_condition = getIntent().getStringExtra("Special_condition");
 
@@ -288,7 +289,7 @@ public class Invoice_preview_repair_ticket extends AppCompatActivity {
         itemID_textView.setText(item_id);
         amount_textView.setText(amount);
         special_condition_textView.setText(special_condition);
-        ticket_no_textview.setText(ticket_no);
+        ticket_no_textview.setText(keyId);
         amount_Currency_textView.setText(String.valueOf(Currency.getInstance().getCurrency()));
 
         inoice_no = "12345";

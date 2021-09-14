@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterRepairsFaultListRecyclerView;
+import com.dotcom.rbs_system.Classes.InvoiceNumberGenerator;
 import com.dotcom.rbs_system.Classes.Repair_details_edit;
 import com.dotcom.rbs_system.Classes.UniquePushID;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
@@ -48,7 +49,6 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class AddRepairTicket extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    //TODO is activity ka save button pa print wala alert lagana ha
     long timestamp;
 
     TextView viewCustomerDetails_textView;
@@ -68,16 +68,16 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
     DatabaseReference faultListRef;
     DatabaseReference repairRef, repairTicketRef;
 
-    Progress_dialoge pd1, pd2, pd3, pd4;
+    Progress_dialog pd1, pd2, pd3, pd4;
 
     LinearLayout toggling_linear, hideToggle_linearLayout;
     LinearLayout changesConfirmation_linearLayout, customerID_linearLayout;
 
     ImageButton back_btn;
-    TextView addFaults_textview, date_textview, submit_textview;
+    TextView addFaults_textview, submit_textview;
 
-    TextView date_text;
     TextView date_textView;
+    TextView date_text;
     TextView ticketNo_TextView;
     TextView pendingAmount_textView;
     TextView confirmChanges_textView, cancleChanges_textView;
@@ -124,13 +124,17 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         setContentView(R.layout.activity_add_repair_ticket);
 
         initialize();
+        try {
+            generateInvoiceNo();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         getFaultsList();
         onClickListeners();
         editCheckAndProcess();
         item_btn = false;
         customer = false;
 
-//TODO customer phone number ko country code picker ka sath connect karna ha
     }
 
     private void initialize() {
@@ -142,10 +146,10 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         reference = FirebaseDatabase.getInstance().getReference();
         key = reference.push().getKey();
 
-        pd1 = new Progress_dialoge();
-        pd2 = new Progress_dialoge();
-        pd3 = new Progress_dialoge();
-        pd4 = new Progress_dialoge();
+        pd1 = new Progress_dialog();
+        pd2 = new Progress_dialog();
+        pd3 = new Progress_dialog();
+        pd4 = new Progress_dialog();
 
         ccp = findViewById(R.id.ccp);
         editTextCarrierNumber = findViewById(R.id.editText_carrierNumber);
@@ -195,7 +199,6 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         changesConfirmation_linearLayout = (LinearLayout) findViewById(R.id.changesConfirmation_linearLayout);
 
         submit_textview = (TextView) findViewById(R.id.submit_textview);
-        date_textview = (TextView) findViewById(R.id.date_textview);
         back_btn = (ImageButton) findViewById(R.id.back_btn);
         date_text = (TextView) findViewById(R.id.date_of_birth_text);
         viewCustomerDetails_textView = (TextView) findViewById(R.id.viewCustomerDetails_textView);
@@ -228,6 +231,10 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
         }
 
 
+    }
+
+    private void generateInvoiceNo() throws ParseException {
+        ticketNo_TextView.setText(new InvoiceNumberGenerator().generateNumber());
     }
 
     private void getFaultsList() {
@@ -290,7 +297,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             }
         });
 
-        date_textview.setOnClickListener(new View.OnClickListener() {
+        date_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment datepicker = new DatePickerFragment();
@@ -330,9 +337,13 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
 
                             Toast.makeText(AddRepairTicket.this, "Submit Successfully123", Toast.LENGTH_SHORT).show();
 
-                            //TODO yaha dialog box lgana ha
                             pd1.dismissProgressBar(AddRepairTicket.this);
                             repair_details_edit_obj.clear();
+
+                            Intent intent = new Intent(AddRepairTicket.this,Invoice_preview_repair_ticket.class);
+                            finish();
+                            startActivity(intent);
+
 
                         } else {
                             Toast.makeText(AddRepairTicket.this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
@@ -358,9 +369,9 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
                 if (pendingFaultNameList.size() != 0) {
                     repairRef.child("Pending_Faults").removeValue();
                     for (int i = 0; i < pendingFaultNameList.size(); i++) {
-                        repairRef.child("Faults").child("Fault_" + (faultNameList.size() + 1)).child("Fault_name").setValue(pendingFaultNameList.get(i));
-                        repairRef.child("Faults").child("Fault_" + (faultNameList.size() + 1)).child("Fault_price").setValue(pendingFaultPriceList.get(i));
-                        repairRef.child("Faults").child("Fault_" + (faultNameList.size() + 1)).child("Fault_key").setValue(pendingFaultKeyIDList.get(i));
+                        repairRef.child("Faults").child("Fault_" + (repair_details_edit_obj.getFaultNameList().size())).child("Fault_name").setValue(pendingFaultNameList.get(i));
+                        repairRef.child("Faults").child("Fault_" + (repair_details_edit_obj.getFaultNameList().size())).child("Fault_price").setValue(pendingFaultPriceList.get(i));
+                        repairRef.child("Faults").child("Fault_" + (repair_details_edit_obj.getFaultNameList().size())).child("Fault_key").setValue(pendingFaultKeyIDList.get(i));
                     }
 
                     repairRef.child("Pending_Amount").removeValue();
@@ -368,7 +379,9 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
 
                     repairTicketRef.child("Status").setValue("clear");
 
-                    //ToDO yaha pa dialog box lgana ha
+                    Intent intent = new Intent(AddRepairTicket.this,Invoice_preview_repair_ticket.class);
+                    finish();
+                    startActivity(intent);
 
                 } else {
                     Toast.makeText(AddRepairTicket.this, "No changes", Toast.LENGTH_SHORT).show();
@@ -383,14 +396,15 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             @Override
             public void onClick(View v) {
 
-                repairRef.child("Pending_Faults").removeValue();
-                repairRef.child("Pending_Amount").removeValue();
-                repairTicketRef.child("Status").setValue("clear");
+                if (pendingFaultNameList.size() != 0) {
+                    repairRef.child("Pending_Faults").removeValue();
+                    repairRef.child("Pending_Amount").removeValue();
+                    repairTicketRef.child("Status").setValue("clear");
+                    finish();
+                } else {
+                    Toast.makeText(AddRepairTicket.this, "No changes", Toast.LENGTH_SHORT).show();
+                }
 
-                Intent intent = new Intent(AddRepairTicket.this, Repair_ticket_details.class);
-                intent.putExtra("REPAIR_ID", repair_details_edit_obj.getTicketNo_TextView());
-                finish();
-                startActivity(intent);
             }
         });
     }
@@ -473,14 +487,13 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             intent.putExtra("Customer_Ph_No", String.valueOf(ccp.getFullNumberWithPlus()));
             intent.putExtra("Item_Name", String.valueOf(itemName_editText.getText().toString()));
             intent.putExtra("Item_ID", String.valueOf(itemSerialNo_editText.getText().toString()));
-            intent.putExtra("Ticket_No", String.valueOf(ticketNo_TextView.getText().toString()));
+            intent.putExtra("KeyID", String.valueOf(key));
+            intent.putExtra("Ticket_No", String.valueOf(ticketNo_TextView.getText()));
             intent.putExtra("Amount", String.valueOf(amount_editText.getText().toString()));
             intent.putExtra("Special_condition", String.valueOf(special_condition_editText.getText().toString()));
+
             finish();
             startActivity(intent);
-
-
-            //TODO yaha dialog box lgana ha
 
         } else {
             Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
@@ -515,7 +528,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             disableEditTexts(amount_editText);
             disableEditTexts(special_condition_editText);
 
-            date_textview.setVisibility(View.GONE);
+            date_textView.setOnClickListener(null);
 
             tempFaultNameList = repair_details_edit_obj.getFaultNameList();
             tempFaultPriceList = repair_details_edit_obj.getFaultPriceList();

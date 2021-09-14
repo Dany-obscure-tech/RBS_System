@@ -5,7 +5,9 @@ public class UserDetails {
 
     String name,address,phno,email,profileImageUrl;
     Boolean isShopkeeper;
+    Boolean isVendor;
     String shopName,shopLogo,shopBanner,shopAddress,shopEmail,shopPhno,shopTermsAndConditions;
+    String vendorName,vendorLogo,vendorAppRegNo,vendorBanner,vendorAddress,vendorEmail,vendorPostCode,vendorRegNo,vendorUrl,vendorPhno,vendorTermsAndConditions;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -58,6 +60,14 @@ public class UserDetails {
 
     public void setShopkeeper(Boolean shopkeeper) {
         isShopkeeper = shopkeeper;
+    }
+
+    public Boolean getVendor() {
+        return isVendor;
+    }
+
+    public void setVendor(Boolean vendor) {
+        isVendor = vendor;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -117,6 +127,97 @@ public class UserDetails {
     public void setShopTermsAndConditions(String shopTermsAndConditions) {
         this.shopTermsAndConditions = shopTermsAndConditions;
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public String getVendorName() {
+        return vendorName;
+    }
+
+    public void setVendorName(String vendorName) {
+        this.vendorName = vendorName;
+    }
+
+    public String getVendorLogo() {
+        return vendorLogo;
+    }
+
+    public void setVendorLogo(String vendorLogo) {
+        this.vendorLogo = vendorLogo;
+    }
+
+    public String getVendorAppRegNo() {
+        return vendorAppRegNo;
+    }
+
+    public void setVendorAppRegNo(String vendorAppRegNo) {
+        this.vendorAppRegNo = vendorAppRegNo;
+    }
+
+    public String getVendorBanner() {
+        return vendorBanner;
+    }
+
+    public void setVendorBanner(String vendorBanner) {
+        this.vendorBanner = vendorBanner;
+    }
+
+    public String getVendorAddress() {
+        return vendorAddress;
+    }
+
+    public void setVendorAddress(String vendorAddress) {
+        this.vendorAddress = vendorAddress;
+    }
+
+    public String getVendorEmail() {
+        return vendorEmail;
+    }
+
+    public void setVendorEmail(String vendorEmail) {
+        this.vendorEmail = vendorEmail;
+    }
+
+    public String getVendorPostCode() {
+        return vendorPostCode;
+    }
+
+    public void setVendorPostCode(String vendorPostCode) {
+        this.vendorPostCode = vendorPostCode;
+    }
+
+    public String getVendorRegNo() {
+        return vendorRegNo;
+    }
+
+    public void setVendorRegNo(String vendorRegNo) {
+        this.vendorRegNo = vendorRegNo;
+    }
+
+    public String getVendorUrl() {
+        return vendorUrl;
+    }
+
+    public void setVendorUrl(String vendorUrl) {
+        this.vendorUrl = vendorUrl;
+    }
+
+    public String getVendorPhno() {
+        return vendorPhno;
+    }
+
+    public void setVendorPhno(String vendorPhno) {
+        this.vendorPhno = vendorPhno;
+    }
+
+    public String getVendorTermsAndConditions() {
+        return vendorTermsAndConditions;
+    }
+
+    public void setVendorTermsAndConditions(String vendorTermsAndConditions) {
+        this.vendorTermsAndConditions = vendorTermsAndConditions;
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 

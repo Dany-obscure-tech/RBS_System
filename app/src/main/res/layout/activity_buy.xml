@@ -52,6 +52,35 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    style="@style/TextViews_Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="Invoice Number" />
+
+                <TextView
+                    android:id="@+id/invoiceNo_TextView"
+                    style="@style/TextViews_Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="NA"
+                    android:textColor="@color/gradientDarkBlue" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="5dp"
                 android:orientation="horizontal"
@@ -440,23 +469,6 @@
                     style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:layout_weight="1"
-                    android:text="Purchase Price" />
-
-                <EditText
-                    android:id="@+id/purchase_price_editText"
-                    style="@style/EditTexts"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter your purchase price"
-                    android:inputType="numberDecimal"
-                    android:maxLength="32" />
-
-                <TextView
-                    style="@style/TextViews_Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="@string/date" />
 
@@ -475,52 +487,8 @@
                         android:layout_weight="1.9"
                         android:text="-- -- --" />
 
-                    <TextView
-                        android:id="@+id/datebtn_textView"
-                        style="@style/green_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.1"
-                        android:text="@string/select_date_btn_string" />
-
 
                 </LinearLayout>
-                <!--ye code voucher ka tha-->
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/voucher_number_textview"
-                        style="@style/TextViews_Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="Voucher Number"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:id="@+id/voucher_number"
-                        style="@style/TextViews"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text=""
-                        android:visibility="gone" />
-
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/voucher_editText"
-                    style="@style/EditTexts"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter voucher amount"
-                    android:inputType="number"
-                    android:maxLength="32"
-                    android:visibility="gone" />
-                <!--yaha voucher ka code khatam ho raha ha-->
 
                 <TextView
                     style="@style/TextViews_Bold"
@@ -538,16 +506,6 @@
                     android:hint="Enter paid amount"
                     android:inputType="numberDecimal"
                     android:maxLines="1" />
-
-                <TextView
-                    android:id="@+id/forExchange_textView"
-                    style="@style/TextViews_Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="20dp"
-                    android:text="FOR EXCHANGE"
-                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/submit_textView"

@@ -29,8 +29,11 @@ import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -49,6 +52,7 @@ import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Vendor_stock_entry extends AppCompatActivity {
     DatabaseReference reference;
+    Progress_dialog pd;
     Dialog confirmation_alert;
     TextView yes_btn_textview, cancel_btn_textview;
     StorageReference stockImageStorageReference;
@@ -58,8 +62,8 @@ public class Vendor_stock_entry extends AppCompatActivity {
 
     Uri fileUri = null;
 
-    EditText vendor_item_name_editText, vendor_item_price_editText, vendor_item_qty_editText, vendor_sno_editText;
-    TextView item_category_textView, add_btn, invoiceDate_textView, date_textView, uploadImage_textView;
+    EditText vendor_item_name_editText, vendor_item_price_editText, vendor_item_qty_editText;
+    TextView item_category_textView, add_btn, invoiceDate_textView, uploadImage_textView;
 
     DatePickerDialog.OnDateSetListener onDateSetListener;
     List<String> Vendor_category_data_list;
@@ -86,12 +90,14 @@ public class Vendor_stock_entry extends AppCompatActivity {
         setContentView(R.layout.activity_vendor_stock_entry);
         Initialization();
         Onclicklistners();
-        //TODO yaha pa edit alert ma bug ha
+        getAccessoriesCategory();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Initialization() {
+        pd = new Progress_dialog();
+
         stockImageStorageReference = FirebaseStorage.getInstance().getReference().child("Vendor_Stock_Images");
 
         back_btn = findViewById(R.id.back_btn);
@@ -104,7 +110,6 @@ public class Vendor_stock_entry extends AppCompatActivity {
 
         item_category_textView = findViewById(R.id.item_category_textView);
         add_btn = findViewById(R.id.add_btn);
-        date_textView = findViewById(R.id.date_textView);
         invoiceDate_textView = findViewById(R.id.invoiceDate_textView);
         uploadImage_textView = findViewById(R.id.uploadImage_textView);
         currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(date);
@@ -113,16 +118,11 @@ public class Vendor_stock_entry extends AppCompatActivity {
         vendor_item_name_editText = findViewById(R.id.vendor_item_name_editText);
         vendor_item_price_editText = findViewById(R.id.vendor_item_price_editText);
         vendor_item_qty_editText = findViewById(R.id.vendor_item_qty_editText);
-        vendor_sno_editText = findViewById(R.id.vendor_sno_editText);
 
         searchForItem_cardView = findViewById(R.id.searchForItem_cardView);
 
 
         Vendor_category_data_list = new ArrayList<>();
-        Vendor_category_data_list.add("Laptop");
-        Vendor_category_data_list.add("Tablet");
-        Vendor_category_data_list.add("Mobile");
-        Vendor_category_data_list.add("PC");
 
         reference = FirebaseDatabase.getInstance().getReference();
         vendor_stock_entry_id = reference.push().getKey();
@@ -170,7 +170,7 @@ public class Vendor_stock_entry extends AppCompatActivity {
     }
 
     private void date_textView_listner() {
-        date_textView.setOnClickListener(new View.OnClickListener() {
+        invoiceDate_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
@@ -243,13 +243,30 @@ public class Vendor_stock_entry extends AppCompatActivity {
         });
     }
 
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
+    private void getAccessoriesCategory() {
+        reference.child("AccessoriesCategories").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshot1:snapshot.getChildren()){
+                    Vendor_category_data_list.add(snapshot1.child("name").getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     private void stock_entry_data() {
         boolean connected = false;
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Vendor_stock_entry.this.CONNECTIVITY_SERVICE);
         if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            pd.showProgressBar(Vendor_stock_entry.this);
             //we are connected to a network
             connected = true;
             final String key = reference.push().getKey();
@@ -257,8 +274,7 @@ public class Vendor_stock_entry extends AppCompatActivity {
             reference.child("Vendor_stock").child(firebaseAuthUID).child(item_category_textView.getText().toString()).child(key).child("Name").setValue(vendor_item_name_editText.getText().toString());
             reference.child("Vendor_stock").child(firebaseAuthUID).child(item_category_textView.getText().toString()).child(key).child("Price").setValue(vendor_item_price_editText.getText().toString());
             reference.child("Vendor_stock").child(firebaseAuthUID).child(item_category_textView.getText().toString()).child(key).child("Quantity").setValue(vendor_item_qty_editText.getText().toString());
-            reference.child("Vendor_stock").child(firebaseAuthUID).child(item_category_textView.getText().toString()).child(key).child("Sno").setValue(vendor_sno_editText.getText().toString());
-            reference.child("Vendor_stock").child(firebaseAuthUID).child(item_category_textView.getText().toString()).child(key).child("Date").setValue(date_textView.getText().toString());
+            reference.child("Vendor_stock").child(firebaseAuthUID).child(item_category_textView.getText().toString()).child(key).child("Date").setValue(invoiceDate_textView.getText().toString());
             reference.child("Vendor_stock").child(firebaseAuthUID).child(item_category_textView.getText().toString()).child(key).child("Added_by").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
             vendorStockCategory = item_category_textView.getText().toString();
 
@@ -274,6 +290,7 @@ public class Vendor_stock_entry extends AppCompatActivity {
                             Toast.makeText(Vendor_stock_entry.this, "Stock entered!", Toast.LENGTH_SHORT).show();
 
                             setResult(111, new Intent());
+                            pd.dismissProgressBar(Vendor_stock_entry.this);
                             finish();
                         }
                     });
@@ -314,8 +331,8 @@ public class Vendor_stock_entry extends AppCompatActivity {
             valid = false;
         }
 
-        if (vendor_sno_editText.getText().toString().isEmpty()) {
-            vendor_sno_editText.setError("Please enter item sno");
+        if (fileUri == null) {
+            Toast.makeText(this, "Please upload an image", Toast.LENGTH_SHORT).show();
             valid = false;
         }
 
@@ -334,13 +351,8 @@ public class Vendor_stock_entry extends AppCompatActivity {
             }
         }
 
-
         if (vendor_item_qty_editText.getText().toString().equals("0")) {
             vendor_item_qty_editText.setError("Please enter item quantity");
-            valid = false;
-        }
-        if (fileUri == null) {
-            Toast.makeText(this, "Please upload an image", Toast.LENGTH_SHORT).show();
             valid = false;
         }
 

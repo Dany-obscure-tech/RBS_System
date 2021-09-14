@@ -40,18 +40,19 @@ public class Repair_Ticket extends AppCompatActivity {
 
     ImageButton back_btn;
 
-    List<String> customerNameList, customerIdList, itemNameList, itemSerialNoList, ticketNoList, dateList;
-    List<String> customerKeyIDList, itemKeyIDList, repairKeyIDList;
+    List<String> customerNameList, customerIdList, itemNameList, itemSerialNoList, repairKeyIDList, dateList,ticketNoList;
+    List<String> customerKeyIDList, itemKeyIDList;
     List<String> pendingStatusList;
 
     String firebaseUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-    Progress_dialoge pd;
+    Progress_dialog pd;
 
     private ArrayList<SampleSearchModel> createTicketNoData() {
         ArrayList<SampleSearchModel> items = new ArrayList<>();
+        Collections.reverse(repairKeyIDList);
         Collections.reverse(ticketNoList);
-        for (int i = 0; i < ticketNoList.size(); i++) {
+        for (int i = 0; i < repairKeyIDList.size(); i++) {
             if (pendingStatusList.get(i).equals("clear")) {
                 items.add(new SampleSearchModel(ticketNoList.get(i), repairKeyIDList.get(i), null, pendingStatusList.get(i), null, null, null, null));
             } else {
@@ -88,14 +89,14 @@ public class Repair_Ticket extends AppCompatActivity {
         customerIdList = new ArrayList<>();
         itemNameList = new ArrayList<>();
         itemSerialNoList = new ArrayList<>();
+        repairKeyIDList = new ArrayList<>();
         ticketNoList = new ArrayList<>();
         dateList = new ArrayList<>();
         customerKeyIDList = new ArrayList<>();
         itemKeyIDList = new ArrayList<>();
-        repairKeyIDList = new ArrayList<>();
         pendingStatusList = new ArrayList<>();
 
-        pd = new Progress_dialoge();
+        pd = new Progress_dialog();
 
     }
 
@@ -119,16 +120,16 @@ public class Repair_Ticket extends AppCompatActivity {
                         customerIdList.add(dataSnapshot1.child("Customer_id").getValue().toString());
                         itemNameList.add(dataSnapshot1.child("Item_name").getValue().toString());
                         itemSerialNoList.add(dataSnapshot1.child("Item_serial_no").getValue().toString());
+                        repairKeyIDList.add(dataSnapshot1.getKey());
                         ticketNoList.add(dataSnapshot1.child("Ticket_no").getValue().toString());
                         dateList.add(dataSnapshot1.child("Date").getValue().toString());
                         pendingStatusList.add(dataSnapshot1.child("Status").getValue().toString());
 
                         customerKeyIDList.add(dataSnapshot1.child("Customer_id").getValue().toString());
                         itemKeyIDList.add("to be removed");
-                        repairKeyIDList.add(dataSnapshot1.child("Repair_key_id").getValue().toString());
                     }
 
-                    adapterRepairTicketListRecyclerView = new AdapterRepairTicketListRecyclerView(Repair_Ticket.this, customerNameList, customerIdList, itemNameList, itemSerialNoList, ticketNoList, dateList, pendingStatusList);
+                    adapterRepairTicketListRecyclerView = new AdapterRepairTicketListRecyclerView(Repair_Ticket.this, customerNameList, customerIdList, itemNameList, itemSerialNoList, repairKeyIDList, dateList, pendingStatusList,ticketNoList);
                     repairTicketList_recyclerView.setAdapter(adapterRepairTicketListRecyclerView);
                     pd.dismissProgressBar(Repair_Ticket.this);
                 } else {

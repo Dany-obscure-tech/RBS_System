@@ -160,6 +160,23 @@ public class SplashActivity extends AppCompatActivity {
                     UserDetails.getInstance().setShopkeeper(false);
                 }
 
+                if (dataSnapshot.child("Vendor_details").exists()) {
+                    UserDetails.getInstance().setVendor(true);
+                    UserDetails.getInstance().setVendorAddress(dataSnapshot.child("Vendor_details").child("vendor_address").getValue().toString());
+                    UserDetails.getInstance().setVendorBanner(dataSnapshot.child("Vendor_details").child("vendor_banner").getValue().toString());
+                    UserDetails.getInstance().setVendorEmail(dataSnapshot.child("Vendor_details").child("vendor_email").getValue().toString());
+                    UserDetails.getInstance().setVendorLogo(dataSnapshot.child("Vendor_details").child("vendor_logo").getValue().toString());
+                    UserDetails.getInstance().setVendorName(dataSnapshot.child("Vendor_details").child("vendor_name").getValue().toString());
+                    UserDetails.getInstance().setVendorPhno(dataSnapshot.child("Vendor_details").child("vendor_phno").getValue().toString());
+                    UserDetails.getInstance().setVendorTermsAndConditions(dataSnapshot.child("Vendor_details").child("vendor_termsandconditions").getValue().toString());
+                    UserDetails.getInstance().setVendorPostCode(dataSnapshot.child("Vendor_details").child("vendor_postcode").getValue().toString());
+                    UserDetails.getInstance().setVendorAppRegNo(dataSnapshot.child("Vendor_details").child("vendor_appregno").getValue().toString());
+                    UserDetails.getInstance().setVendorRegNo(dataSnapshot.child("Vendor_details").child("vendor_regno").getValue().toString());
+                    UserDetails.getInstance().setVendorUrl(dataSnapshot.child("Vendor_details").child("vendor_url").getValue().toString());
+                } else {
+                    UserDetails.getInstance().setVendor(false);
+                }
+
                 InitialDataFetch();
             }
 

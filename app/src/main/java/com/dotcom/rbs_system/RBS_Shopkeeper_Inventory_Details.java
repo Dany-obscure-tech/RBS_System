@@ -78,6 +78,7 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
 
     List<Uri> imageUrlList;
 
+    String customer_email;
     TextView customer_name, offersTextView;
     TextView currency;
     TextView edit_textView;
@@ -275,6 +276,7 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                             customer_name.setText(snapshot.child("customer_name").getValue().toString());
+                            customer_email = snapshot.child("customer_email").getValue().toString();
                             currency = findViewById(R.id.currency);
                             offered_price.setText(snapshot.child("amount").getValue().toString());
                             product_offer_msg.setText(snapshot.child("message").getValue().toString());
@@ -562,7 +564,9 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
 //                boughtOfferRef.setValue(activeCustomerID);
 //                customerOfferStatusRef.setValue("bought");
 //                recreate();
-                startActivity(intent);
+                intent.putExtra("Customer_email", customer_email.replace(".",","));
+                intent.putExtra("Paid_amount", offered_price.getText().toString());
+                startActivityForResult(intent,11);
             }
         });
     }
@@ -589,6 +593,9 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
 //                    val filePath:String = ImagePicker.getFilePath(data)!!
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
 //            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+        } else if (resultCode == 1212) {
+            setResult(1212);
+            finish();
         } else {
             Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show();
         }

@@ -57,6 +57,35 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        style="@style/TextViews_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:text="Ticket Number" />
+
+                    <TextView
+                        android:id="@+id/ticketNo_TextView"
+                        style="@style/TextViews_Bold"
+                        android:gravity="right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:text="NA"
+                        android:textColor="@color/gradientDarkBlue" />
+
+                </LinearLayout>
+
 
                 <TextView
                     style="@style/TextViews_Title"
@@ -207,33 +236,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
 
-                    <TextView
-                        style="@style/TextViews_Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:text="Ticket Number" />
-
-                    <TextView
-                        android:id="@+id/ticketNo_TextView"
-                        style="@style/TextViews_Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:text="NA"
-                        android:textColor="@color/gradientDarkBlue" />
-
-                </LinearLayout>
 
                 <TextView
                     style="@style/TextViews_Bold"
@@ -318,15 +321,6 @@
                         android:text="-- -- --"
                         android:textColor="#9F9F9F"
                         android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/date_textview"
-                        style="@style/green_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.1"
-                        android:foreground="?attr/selectableItemBackgroundBorderless"
-                        android:text="Select date" />
 
                 </LinearLayout>
 

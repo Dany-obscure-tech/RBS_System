@@ -16,6 +16,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,7 +26,6 @@ import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -42,6 +42,7 @@ import com.dotcom.rbs_system.Adapter.Adapter_customerList_alert_dialog;
 import com.dotcom.rbs_system.Adapter.Adapter_itemList_alert_dialog;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Classes.Customer_history_class;
+import com.dotcom.rbs_system.Classes.InvoiceNumberGenerator;
 import com.dotcom.rbs_system.Classes.RBSCustomerDetails;
 import com.dotcom.rbs_system.Classes.RBSItemDetails;
 import com.dotcom.rbs_system.Classes.UniquePushID;
@@ -66,10 +67,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-
-import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
-import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
-import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     RBSItemDetails rbsItemDetails;
@@ -106,17 +103,17 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     private static final int ITEM_ACTIVITY_REQUEST_CODE = 0;
     private static final int CUSTOMER_ACTIVITY_REQUEST_CODE = 0;
 
-    TextView searchForVoucher_textView, transaction_textview;
     TextView customerName_textView, customerEmail_textView, customerPhno_textView, customerID_textView;
     TextView viewCustomerDetails_textView;
+    TextView invoiceNo_TextView;
 
     TextView email_title_textview, id_title_textview, phone_no_title_textview;
 
-    Progress_dialoge pd;
+    Progress_dialog pd;
+    String customerEmail_returnString,customerPushID;
 
-    DatabaseReference reference, itemHistoryRef;
+    DatabaseReference reference, itemHistoryRef,emailToIDRef;
     DatabaseReference existingCustomersRef, existingItemsRef, existingVoucherRef;
-    CheckBox cash_checkbox, voucher_checkbox;
     Query orderQuery;
 
     TextView itemLastActive_textView, submit_textView;
@@ -135,7 +132,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     TextView viewItemDetails_textView;
 
     TextView suggest_price_TextView;
-    TextView date_textView, datebtn_textView;
+    TextView date_textView;
 
     String firebaseAuthUID;
     String customerKeyID, itemKeyID, itemCategory;
@@ -149,11 +146,11 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     List<String> voucher_number_list, Voucher_amount_list;
     List<String> dateList, lastActiveDatelist;
 
-    EditText sale_price_editText, cash_editText, paid_editText;
+    EditText paid_editText;
 
     Date date;
 
-    Progress_dialoge pd1, pd2, pd3;
+    Progress_dialog pd1, pd2, pd3;
 
     private ArrayList<SampleSearchModel> getting_voucher_data() {
         ArrayList<SampleSearchModel> items = new ArrayList<>();
@@ -170,6 +167,11 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         setContentView(R.layout.activity_sale);
 
         initialize();
+        try {
+            generateInvoiceNo();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         checkForItemSell();
         fetchingExisitingCustomers();
         fetchingExisitingItems();
@@ -191,13 +193,13 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         rbsItemDetails.clearData();
         rbsCustomerDetails.clearData();
 
-        pd = new Progress_dialoge();
+        pd = new Progress_dialog();
         item_btn = false;
         customer = false;
 
-        pd1 = new Progress_dialoge();
-        pd2 = new Progress_dialoge();
-        pd3 = new Progress_dialoge();
+        pd1 = new Progress_dialog();
+        pd2 = new Progress_dialog();
+        pd3 = new Progress_dialog();
 
         ////
 
@@ -215,11 +217,9 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         searchForCustomer_cardView = findViewById(R.id.searchForCustomer_cardView);
 
         reference = FirebaseDatabase.getInstance().getReference();
+        emailToIDRef = FirebaseDatabase.getInstance().getReference("email_to_id");
 
         toggling_linear = findViewById(R.id.toggling_linear);
-
-        cash_checkbox = findViewById(R.id.cash_checkbox);
-        voucher_checkbox = findViewById(R.id.voucher_checkbox);
 
         exisitngItemsNamesList = new ArrayList<>();
         exisitngItemsSerialNoList = new ArrayList<>();
@@ -276,8 +276,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         voucher_number_list = new ArrayList<>();
         Voucher_amount_list = new ArrayList<>();
 
-        sale_price_editText = findViewById(R.id.sale_price_editText);
-        cash_editText = findViewById(R.id.cash_editText);
         paid_editText = findViewById(R.id.paid_editText);
 
         itemLastActive_linearLayout = findViewById(R.id.itemLastActive_linearLayout);
@@ -296,6 +294,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         customerID_textView = findViewById(R.id.customerID_textView);
         customerPhno_textView = findViewById(R.id.customerPhno_textView);
         viewCustomerDetails_textView = findViewById(R.id.viewCustomerDetails_textView);
+
+        invoiceNo_TextView = (TextView) findViewById(R.id.invoiceNo_TextView);
 
         itemLastActive_textView = findViewById(R.id.itemLastActive_textView);
 
@@ -322,8 +322,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
         ////////////////////////
         suggest_price_TextView = findViewById(R.id.suggest_price_TextView);
-        searchForVoucher_textView = findViewById(R.id.searchForVoucher_textView);
-        transaction_textview = findViewById(R.id.transaction_textview);
         item_add_textView = findViewById(R.id.item_add_textView);
 
         email_title_textview = findViewById(R.id.email_title_textview);
@@ -332,7 +330,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
 
         submit_textView = findViewById(R.id.submit_textView);
-        datebtn_textView = findViewById(R.id.datebtn_textView);
         date_textView = findViewById(R.id.date_textView);
 
 
@@ -363,6 +360,10 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             e.printStackTrace();
         }
 
+    }
+
+    private void generateInvoiceNo() throws ParseException {
+        invoiceNo_TextView.setText(new InvoiceNumberGenerator().generateNumber());
     }
 
     public void printTcp() {
@@ -449,8 +450,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                 "[L]\n" +
                 "[C]================================\n" +
                 "[L]\n" +
-                "[L]Sale Price: [R]" + Currency.getInstance().getCurrency() + sale_price_editText.getText().toString() + "\n" +
-                "[L]\n" +
                 "[L]Paid Amount: [R]" + Currency.getInstance().getCurrency() + paid_editText.getText().toString() + "\n" +
                 "[L]\n" +
                 "[L]Sale Date: [R]" + date_textView.getText().toString() + "\n" +
@@ -480,7 +479,11 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             String itemprice_returnString = getIntent().getStringExtra("Item_price");
             String itemlstactive_returnString = getIntent().getStringExtra("Last_Active");
             String itemlimage_returnString = getIntent().getStringExtra("Item_image");
+            customerEmail_returnString = getIntent().getStringExtra("Customer_email");
             // set text view with string
+
+            String paidAmount_returnString = getIntent().getStringExtra("Paid_amount");
+            paid_editText.setText(paidAmount_returnString);
 
             itemKeyID = itemkeyid_returnString;
             itemCategory = itemcategory_returnString;
@@ -503,6 +506,82 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             itemLastActive_linearLayout.setVisibility(View.VISIBLE);
             itemLastActive_textView.setVisibility(View.VISIBLE);
             viewItemDetails_textView.setVisibility(View.VISIBLE);
+
+            rbsItemDetails.setFirstImageUri(Uri.parse(itemlimage_returnString));
+
+
+            itemImage_imageView.setVisibility(View.VISIBLE);
+                    viewItemDetails_textView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(Sale.this, Item_history.class);
+                            intent.putExtra("ITEM_ID", itemkeyid_returnString);
+                            intent.putExtra("ITEM_CATEGORY", itemcategory_returnString);
+                            startActivity(intent);
+                        }
+                    });
+
+            if (!customerEmail_returnString.equals("false")){
+
+
+                emailToIDRef.child(customerEmail_returnString).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        customerPushID = snapshot.getValue().toString();
+                        existingCustomersRef.child(customerPushID).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                customerName_textView.setText(snapshot.child("Name").getValue().toString());
+                                customerEmail_textView.setText(snapshot.child("Email").getValue().toString());
+                                customerID_textView.setText(snapshot.child("ID").getValue().toString());
+                                customerPhno_textView.setText(snapshot.child("Phone_no").getValue().toString());
+
+                                Picasso.get().load(snapshot.child("ID_Image_urls").child("image_1").getValue().toString()).into(customerImage_imageView);
+
+                                //////
+
+                                customerName_textView.setVisibility(View.VISIBLE);
+                                customerName_textView.setTextColor(getResources().getColor(R.color.gradientDarkBlue));
+
+                                customerEmail_textView.setVisibility(View.VISIBLE);
+                                customerID_textView.setVisibility(View.VISIBLE);
+                                customerPhno_textView.setVisibility(View.VISIBLE);
+                                customerImage_imageView.setVisibility(View.VISIBLE);
+
+                                customerID_linearLayout.setVisibility(View.VISIBLE);
+
+                                customerKeyID = customerPushID;
+                                rbsCustomerDetails.setCheck("Existing customer");
+                                rbsCustomerDetails.setKey(customerKeyID);
+                                rbsCustomerDetails.setCustomerName(snapshot.child("Name").getValue().toString());
+                                rbsCustomerDetails.setFirstImageUrl(snapshot.child("ID_Image_urls").child("image_1").getValue().toString());
+
+                                viewCustomerDetails_textView.setVisibility(View.VISIBLE);
+                                viewCustomerDetails_textView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Intent intent = new Intent(Sale.this, Customer_history.class);
+                                        intent.putExtra("CUSTOMER_ID", customerKeyID);
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+            }
 
             rbsItemDetails.setCheck("Sale existing item");
         }
@@ -912,6 +991,11 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             @Override
             public void onClick(View view) {
                 itemList_alert_dialog.show();
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                int height = displayMetrics.heightPixels;
+                int width = displayMetrics.widthPixels;
+                itemList_alert_dialog.getWindow().setLayout(width-10, height-800); //Controlling width and height.
             }
         });
 
@@ -919,6 +1003,11 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             @Override
             public void onClick(View view) {
                 customerList_alert_dialog.show();
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                int height = displayMetrics.heightPixels;
+                int width = displayMetrics.widthPixels;
+                customerList_alert_dialog.getWindow().setLayout(width-10, height-800); //Controlling width and height.
             }
         });
 
@@ -940,51 +1029,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             }
         });
 
-        cash_checkbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (cash_checkbox.isChecked()) {
-                    cash_editText.setVisibility(View.VISIBLE);
 
-                }
-                if (!cash_checkbox.isChecked()) {
-                    cash_editText.setVisibility(View.GONE);
-
-                }
-            }
-        });
-
-        voucher_checkbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (voucher_checkbox.isChecked()) {
-                    searchForVoucher_textView.setVisibility(View.VISIBLE);
-
-                }
-                if (!voucher_checkbox.isChecked()) {
-                    searchForVoucher_textView.setVisibility(View.GONE);
-                }
-            }
-        });
-
-
-        searchForVoucher_textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new SimpleSearchDialogCompat(Sale.this, "Search results...",
-                        "Search for voucher number.", null, getting_voucher_data(),
-                        new SearchResultListener<SampleSearchModel>() {
-                            @Override
-                            public void onSelected(BaseSearchDialogCompat dialog,
-                                                   SampleSearchModel item, int position) {
-                                searchForVoucher_textView.setText(item.getTitle());
-                                dialog.dismiss();
-                            }
-                        }).show();
-            }
-        });
-
-        datebtn_textView.setOnClickListener(new View.OnClickListener() {
+        date_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment datepicker = new DatePickerFragment();
@@ -1165,10 +1211,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             valid = false;
         }
 
-        if (sale_price_editText.getText().toString().isEmpty()) {
-            sale_price_editText.setError("Please enter sale price");
-            valid = false;
-        }
+
 
         if (date_textView.getText().toString().equals("Select date")) {
             Toast.makeText(this, "Select date", Toast.LENGTH_LONG).show();
@@ -1200,14 +1243,13 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
             customerKeyID = rbsCustomerDetails.getKey();
 
-            reference.child("Sale_list").child(key).child("Customer_keyID").setValue(customerKeyID);
-            reference.child("Sale_list").child(key).child("Date").setValue(date_textView.getText().toString());
-            reference.child("Sale_list").child(key).child("Item_keyID").setValue(itemKeyID);
-            reference.child("Sale_list").child(key).child("Paid").setValue(paid_editText.getText().toString());
-            reference.child("Sale_list").child(key).child("Sale_price").setValue(sale_price_editText.getText().toString());
-
-            reference.child("Sale_list").child(key).child("added_by").setValue(firebaseAuthUID);
-            reference.child("Sale_list").child(key).child("key_id").setValue(key);
+            reference.child("Sale_list").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(key).child("Customer_keyID").setValue(customerKeyID);
+            reference.child("Sale_list").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(key).child("Date").setValue(date_textView.getText().toString());
+            reference.child("Sale_list").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(key).child("Item_keyID").setValue(itemKeyID);
+            reference.child("Sale_list").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(key).child("invoice_no").setValue(invoiceNo_TextView.getText().toString());
+            reference.child("Sale_list").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(key).child("Paid").setValue(paid_editText.getText().toString());
+            reference.child("Sale_list").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(key).child("added_by").setValue(firebaseAuthUID);
+            reference.child("Sale_list").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(key).child("key_id").setValue(key);
 
             if (rbsItemDetails.getCheck().equals("Sale existing item")) {
                 if (rbsCustomerDetails.getCheck().equals("New customer")) {
@@ -1224,6 +1266,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
 
             new Customer_history_class().twelveValues(rbsCustomerDetails.getKey(), key, date_textView.getText().toString(), rbsItemDetails.getItemCategory(), String.valueOf(rbsItemDetails.getFirstImageUri()), rbsItemDetails.getKey(), rbsItemDetails.getItemName(), rbsItemDetails.getItemID(), "Buy", UserDetails.getInstance().getShopLogo(), FirebaseAuth.getInstance().getCurrentUser().getUid(), UserDetails.getInstance().getShopName(), date.getTime());
+            new Customer_history_class().uploadCustomerImagetoItemHistory(RBSItemDetails.getInstance().getKey(), UniquePushID.getInstance().getUniquePushID(),rbsCustomerDetails.getFirstImageUrl());
             pd1.dismissProgressBar(Sale.this);
 
             Intent intent = new Intent(Sale.this, Invoice_preview.class);
@@ -1237,8 +1280,14 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             intent.putExtra("Item_Price_Currency", String.valueOf(itemPriceCurrency_textView.getText().toString()));
             intent.putExtra("Item_Price", String.valueOf(itemPrice_textView.getText().toString()));
             intent.putExtra("Paid_Amount", String.valueOf(paid_editText.getText().toString()));
-            finish();
-            startActivity(intent);
+
+            if (getIntent().getStringExtra("ITEM_SELL_CHECK").equals("TRUE")) {
+                setResult(1212);
+                finish();
+            }else {
+                finish();
+                startActivity(intent);
+            }
 
         } else {
             Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();

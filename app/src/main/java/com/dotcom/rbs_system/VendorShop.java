@@ -11,16 +11,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dotcom.rbs_system.Adapter.Adapter_Vendor_inventory_RecyclerView;
 import com.dotcom.rbs_system.Classes.ActionBarTitle;
+import com.dotcom.rbs_system.Classes.UserDetails;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,7 @@ public class VendorShop extends Fragment {
     Adapter_Vendor_inventory_RecyclerView adapter_vendor_inventory_recyclerView;
 
     View view;
+    ImageView store_banner_imageView;
 
     RecyclerView vendor_inventory_RecyclerView;
 
@@ -104,6 +108,8 @@ public class VendorShop extends Fragment {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void Initialize() {
+        store_banner_imageView=view.findViewById(R.id.store_banner_imageView);
+        Picasso.get().load(UserDetails.getInstance().getVendorBanner()).into(store_banner_imageView);
         vendorStockRef = FirebaseDatabase.getInstance().getReference("Vendor_stock/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         vendor_inventory_RecyclerView = view.findViewById(R.id.vendor_inventory_RecyclerView);

@@ -189,6 +189,7 @@
                         android:text="Condition " />
 
                     <TextView
+                        android:id="@+id/product_condition_textview"
                         style="@style/TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

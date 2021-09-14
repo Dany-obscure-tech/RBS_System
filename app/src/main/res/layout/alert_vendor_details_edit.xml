@@ -115,21 +115,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Mobile number" />
-
-            <EditText
-                android:id="@+id/edit_mobile_number_editText"
-                style="@style/EditTexts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter mobile number"
-                android:inputType="number" />
-
-            <TextView
-                style="@style/TextViews_Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:text="Email" />
 
             <EditText

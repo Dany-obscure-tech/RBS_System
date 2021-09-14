@@ -82,22 +82,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/edit_logo_btn_textiew"
-                    style="@style/green_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:text="Edit Logo" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -220,22 +205,6 @@
 
                 <TextView
                     android:id="@+id/vendor_phone_textView"
-                    style="@style/TextViews"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/Fake_phone_no" />
-
-                <TextView
-                    style="@style/TextViews_Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Mobile Number"
-                    android:textColor="@color/gradientDarkBlue" />
-
-                <TextView
-                    android:id="@+id/vendor_mobile_textView"
                     style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

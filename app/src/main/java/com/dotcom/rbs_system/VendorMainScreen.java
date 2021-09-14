@@ -20,10 +20,12 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dotcom.rbs_system.Classes.ActionBarTitle;
+import com.dotcom.rbs_system.Classes.UserDetails;
 import com.dotcom.rbs_system.Classes.VendorStockDetails;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,8 +37,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 public class VendorMainScreen extends AppCompatActivity {
+
+    private static final int LOGO_READ_REQUEST_CODE = 42;
+    private static final int BANNER_READ_REQUEST_CODE = 43;
+
+    StorageReference storageReference;
+    DatabaseReference reference;
+    ImageView vendorLogo_imageView;
+    TextView VendorName_textView,vendorEmail_textView;
 
     ActionBar actionBar;
     TextView actionBarTitle;
@@ -48,6 +59,7 @@ public class VendorMainScreen extends AppCompatActivity {
     private ActionBarDrawerToggle t;
     private NavigationView nv;
     final VendorShop fragment_vendor_home = new VendorShop();
+    final VendorProfile fragment_vendor_profile = new VendorProfile();
     private Uri fileUri;
     VendorStockDetails vendorStockDetails;
 
@@ -58,6 +70,9 @@ public class VendorMainScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_main_screen);
+
+        reference = FirebaseDatabase.getInstance().getReference("Users_data/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/Vendor_details");
+        storageReference = FirebaseStorage.getInstance().getReference().child("Users_data");
 
         actionBar = this.getSupportActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.screen_header_rectangle));
@@ -98,6 +113,15 @@ public class VendorMainScreen extends AppCompatActivity {
 
 
         nv = findViewById(R.id.nv);
+        View navheader = nv.getHeaderView(0);
+        vendorLogo_imageView = navheader.findViewById(R.id.vendorLogo_imageView);
+        Picasso.get().load(UserDetails.getInstance().getVendorLogo()).into(vendorLogo_imageView);
+
+        VendorName_textView = navheader.findViewById(R.id.VendorName_textView);
+        VendorName_textView.setText(UserDetails.getInstance().getVendorName());
+
+        vendorEmail_textView = navheader.findViewById(R.id.vendorEmail_textView);
+        vendorEmail_textView.setText(UserDetails.getInstance().getVendorEmail());
 
         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, fragment_vendor_home).commit();
         nv.setCheckedItem(R.id.nav_shop);
@@ -117,10 +141,6 @@ public class VendorMainScreen extends AppCompatActivity {
                         break;
                     case R.id.nav_profile:
                         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, new VendorProfile(), "VENDOR_PROFILE_FRAGMENT").commit();
-                        closeDrawer();
-                        break;
-                    case R.id.nav_inbox:
-//                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.screenContainer,new VendorProfile()).commit();
                         closeDrawer();
                         break;
 
@@ -183,27 +203,17 @@ public class VendorMainScreen extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            vendorStockDetails = VendorStockDetails.getInstance();
-
-            //Image Uri will not be null for RESULT_OK
-            fileUri = data.getData();
-
-            boolean connected = false;
-            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(VendorMainScreen.this.CONNECTIVITY_SERVICE);
-            if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                    connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-                //we are connected to a network
-                connected = true;
-
-                vendorStockImageReference.child(vendorStockDetails.getCategory()).child(vendorStockDetails.getKeyId()).child("stock_image").putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            if (requestCode == LOGO_READ_REQUEST_CODE) {
+                storageReference.child("vendors_logos").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("logo").putFile(data.getData()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        vendorStockImageReference.child(vendorStockDetails.getCategory()).child(vendorStockDetails.getKeyId()).child("stock_image").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        storageReference.child("vendors_logos").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("logo").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
 
-                                vendorStockRef.child(vendorStockDetails.getCategory()).child(vendorStockDetails.getKeyId()).child("Image_url").setValue(String.valueOf(uri.toString()));
-                                recreate();
+                                reference.child("vendor_logo").setValue(String.valueOf(uri.toString()));
+                                UserDetails.getInstance().setVendorLogo(String.valueOf(uri.toString()));
+                                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, fragment_vendor_profile).commit();
                             }
                         });
 
@@ -215,11 +225,70 @@ public class VendorMainScreen extends AppCompatActivity {
                     }
                 });
 
-            } else {
-                Toast.makeText(VendorMainScreen.this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
-                connected = false;
-            }
+            } else if (requestCode == BANNER_READ_REQUEST_CODE) {
+                storageReference.child("vendors_banners").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("banner").putFile(data.getData()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        storageReference.child("vendors_banners").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("banner").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
 
+                                reference.child("vendor_banner").setValue(String.valueOf(uri.toString()));
+                                UserDetails.getInstance().setVendorBanner(String.valueOf(uri.toString()));
+                                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, fragment_vendor_profile).commit();
+
+                            }
+                        });
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(VendorMainScreen.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }else{
+                vendorStockDetails = VendorStockDetails.getInstance();
+
+                //Image Uri will not be null for RESULT_OK
+                fileUri = data.getData();
+
+                boolean connected = false;
+                ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(VendorMainScreen.this.CONNECTIVITY_SERVICE);
+                if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                        connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+                    //we are connected to a network
+                    connected = true;
+
+                    System.out.println("called");
+                    System.out.println(vendorStockDetails.getCategory());
+                    System.out.println(vendorStockDetails.getKeyId());
+
+                    vendorStockImageReference.child(vendorStockDetails.getCategory()).child(vendorStockDetails.getKeyId()).child("stock_image").putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            vendorStockImageReference.child(vendorStockDetails.getCategory()).child(vendorStockDetails.getKeyId()).child("stock_image").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+
+                                    vendorStockRef.child(vendorStockDetails.getCategory()).child(vendorStockDetails.getKeyId()).child("Image_url").setValue(String.valueOf(uri.toString()));
+                                    recreate();
+                                }
+                            });
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(VendorMainScreen.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                } else {
+                    Toast.makeText(VendorMainScreen.this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
+                    connected = false;
+                }
+            }
 
             //You can get File object from intent
 //            val file:File = ImagePicker.getFile(data)!!

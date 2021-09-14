@@ -1,5 +1,6 @@
 package com.dotcom.rbs_system.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -64,7 +65,7 @@ public class AdapterShopProductsShowcaseListRecyclerView extends RecyclerView.Ad
                 Intent intent = new Intent(context, RBS_Shopkeeper_Inventory_Details.class);
                 intent.putExtra("PRODUCT_ID", key_idList.get(position));
                 intent.putExtra("CATEGORY", category.get(position));
-                context.startActivity(intent);
+                ((Activity)context).startActivityForResult(intent,1212);
             }
         });
 

@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.dotcom.rbs_system.Progress_dialoge;
+import com.dotcom.rbs_system.Progress_dialog;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,7 +29,7 @@ public class RBSCustomerDetails {
     StorageReference idStorageReference;
     DatabaseReference reference;
 
-    Progress_dialoge pd;
+    Progress_dialog pd;
 
     private static RBSCustomerDetails rbsCustomerDetails = new RBSCustomerDetails();
 
@@ -151,7 +151,7 @@ public class RBSCustomerDetails {
     public void uploadCustomerDetails(Context contextt){
         context = contextt;
         idStorageReference = FirebaseStorage.getInstance().getReference().child("Customer_IDs");
-        pd = new Progress_dialoge();
+        pd = new Progress_dialog();
 
         pd.showProgressBar(context);
         reference = FirebaseDatabase.getInstance().getReference();

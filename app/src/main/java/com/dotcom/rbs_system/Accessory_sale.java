@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterAccessoriesSaleItemsRecyclerView;
 import com.dotcom.rbs_system.Classes.Currency;
+import com.dotcom.rbs_system.Classes.InvoiceNumberGenerator;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -32,10 +33,10 @@ import com.hbb20.CountryCodePicker;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
@@ -43,9 +44,9 @@ import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 
 public class Accessory_sale extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-    TextView invoiceNo_TextView, date_textview, saleAccessory_textview, submit_textview, alertAddAccessoryEnter_textview, alertSaleAccessoryCancel_textview;
+    TextView invoiceNo_TextView, invoice_date_textView, saleAccessory_textview, submit_textview, alertAddAccessoryEnter_textview, alertSaleAccessoryCancel_textview;
 
-    String invoiceNo;
+    String keyID,invoiceNo;
 
     String selected_country_code;
 
@@ -61,21 +62,35 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
     ImageButton back_btn;
     EditText customer_name_editText, alertAccessoryQuantity_editText, alertAccessoryUnitPrice_editText, paid_editText;
     //    Date date;
-    TextView date_textView, select_category_textView, select_itemname_textView, alertAccessoryTotalPrice_textView, category_textView, item_name_textView, balance_TextView;
+    TextView select_category_textView, select_itemname_textView, alertAccessoryTotalPrice_textView, category_textView, item_name_textView;
+    String select_itemKeyid;
+    String select_oldItemQuantity;
     Dialog accessorySaleAlert;
     RecyclerView accessoryItemList_recyclerView1;
-    DatabaseReference existing_categories;
-    List<String> accessories_categories_raw_list, accessories_categories_filter_list;
-    List<String> accessories_item_name_list, category_data, accessories_item_quantity_list, accessories_item_total_price_list, accessories_item_unit_price_list;
+    DatabaseReference shopkeeperAccessoriesRef;
+
+    List<String> accessories_categories_raw_list;
+    List<String> accessories_item_name_raw_list;
+    List<String> accessories_item_quantity_raw_list;
+    List<String> accessories_item_unit_price_raw_list;
+    List<String> accessories_item_keyID_raw_list;
+
+
+    List<String> accessories_item_name_list, accessories_item_quantity_list, accessories_item_total_price_list, accessories_item_unit_price_list;
     List<String> accessories_category_list;
-    List<String> accessorySrNoList, accessoryCategoryList, accessoryItemNameList, accessoryQtyList, accessoryUnitPriceList, accessoryTotalPriceList;
+    List<String> accessorykeyIdList, accessoryCategoryList, accessoryItemNameList, accessoryQtyList, accessoryUnitPriceList, accessoryTotalPriceList;
+    List<String> accessoryOldUnitPriceList;
+
     List<String> new_item_name_list;
+    List<String> new_item_price_list;
+    List<String> new_item_qty_list;
+    List<String> new_item_keyID_list;
     AdapterAccessoriesSaleItemsRecyclerView adapterAccessoriesSaleItemsRecyclerView;
 
     private ArrayList<SampleSearchModel> selectCategoryData() {
         ArrayList<SampleSearchModel> items = new ArrayList<>();
-        for (int i = 0; i < accessories_categories_filter_list.size(); i++) {
-            items.add(new SampleSearchModel(accessories_categories_filter_list.get(i), null, null, null, null, null, null, null));
+        for (int i = 0; i < accessories_categories_raw_list.size(); i++) {
+            items.add(new SampleSearchModel(accessories_categories_raw_list.get(i), null, null, null, null, null, null, null));
         }
 
         return items;
@@ -84,9 +99,8 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
     private ArrayList<SampleSearchModel> selectItemNameData() {
         ArrayList<SampleSearchModel> items = new ArrayList<>();
         for (int i = 0; i < new_item_name_list.size(); i++) {
-            items.add(new SampleSearchModel(new_item_name_list.get(i), null, null, null, null, null, null, null));
+            items.add(new SampleSearchModel(new_item_name_list.get(i) + "\n" + "Unit price: " + new_item_price_list.get(i) + "\n" + "Quantity: " + new_item_qty_list.get(i), new_item_keyID_list.get(i), new_item_name_list.get(i), new_item_price_list.get(i), new_item_qty_list.get(i), null, null, null));
         }
-
         return items;
     }
 
@@ -99,6 +113,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
         setContentView(R.layout.activity_accessory_sale);
         Initialization();
         ClickListeners();
+        fetching_categories();
         fetching_item_name();
 
     }
@@ -117,20 +132,28 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
 
         Date date;
 
-        date_textView = (TextView) findViewById(R.id.date_textView);
-
         currency = Currency.getInstance().getCurrency();
-        existing_categories = FirebaseDatabase.getInstance().getReference("Accessories_invoices/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+        shopkeeperAccessoriesRef = FirebaseDatabase.getInstance().getReference("ShopKeeper_accessories/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+
         accessories_categories_raw_list = new ArrayList<>();
-        accessories_categories_filter_list = new ArrayList<>();
+        accessories_item_name_raw_list = new ArrayList<>();
+        accessories_item_quantity_raw_list = new ArrayList<>();
+        accessories_item_unit_price_raw_list = new ArrayList<>();
+        accessories_item_keyID_raw_list = new ArrayList<>();
+
         accessories_item_name_list = new ArrayList<>();
-        category_data = new ArrayList<>();
         accessories_item_quantity_list = new ArrayList<>();
         accessories_item_total_price_list = new ArrayList<>();
         accessories_item_unit_price_list = new ArrayList<>();
         accessories_category_list = new ArrayList<>();
+
         new_item_name_list = new ArrayList<>();
-        accessorySrNoList = new ArrayList<>();
+        new_item_price_list = new ArrayList<>();
+        new_item_qty_list = new ArrayList<>();
+        new_item_keyID_list = new ArrayList<>();
+
+        accessorykeyIdList = new ArrayList<>();
+        accessoryOldUnitPriceList = new ArrayList<>();
         accessoryCategoryList = new ArrayList<>();
         accessoryItemNameList = new ArrayList<>();
         accessoryQtyList = new ArrayList<>();
@@ -141,7 +164,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
 
         back_btn = (ImageButton) findViewById(R.id.back_btn);
         customer_name_editText = (EditText) findViewById(R.id.customer_name_editText);
-        date_textview = findViewById(R.id.date_textview);
+        invoice_date_textView = findViewById(R.id.invoice_date_textView);
         submit_textview = findViewById(R.id.submit_textview);
         alertAccessoryQuantity_editText = (EditText) accessorySaleAlert.findViewById(R.id.alertAccessoryQuantity_editText);
         alertAccessoryUnitPrice_editText = (EditText) accessorySaleAlert.findViewById(R.id.alertAccessoryUnitPrice_editText);
@@ -156,32 +179,28 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
         alertAccessoryTotalPrice_textView = (TextView) accessorySaleAlert.findViewById(R.id.alertAccessoryTotalPrice_textView);
         category_textView = (TextView) accessorySaleAlert.findViewById(R.id.category_textView);
         item_name_textView = (TextView) accessorySaleAlert.findViewById(R.id.item_name_textView);
-        balance_TextView = (TextView) findViewById(R.id.balance_TextView);
-        adapterAccessoriesSaleItemsRecyclerView = new AdapterAccessoriesSaleItemsRecyclerView(Accessory_sale.this, accessorySrNoList, accessoryCategoryList, accessoryItemNameList, accessoryQtyList, accessoryUnitPriceList, accessoryTotalPriceList);
+
+        adapterAccessoriesSaleItemsRecyclerView = new AdapterAccessoriesSaleItemsRecyclerView(Accessory_sale.this, accessorykeyIdList, accessoryCategoryList, accessoryItemNameList, accessoryQtyList, accessoryUnitPriceList, accessoryTotalPriceList, accessoryOldUnitPriceList);
         accessoryItemList_recyclerView1 = (RecyclerView) findViewById(R.id.accessoryItemList_recyclerView1);
         accessoryItemList_recyclerView1.setLayoutManager(new GridLayoutManager(Accessory_sale.this, 1));
         accessoryItemList_recyclerView1.setAdapter(adapterAccessoriesSaleItemsRecyclerView);
 
         date = Calendar.getInstance().getTime();
         String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(date);
-        date_textView.setText(currentDateString);
-        date_textView.setText(currentDateString);
+        invoice_date_textView.setText(currentDateString);
 
-
-        generatingInvoiceNo();
+        try {
+            generatingInvoiceNo();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
 /////////////////////////////////////////////////////
 
-    private boolean validate() {
-        boolean valid = true;
-
-//TODO yaha pa validate khali ha
-        return valid;
-    }
-
-    private void generatingInvoiceNo() {
-        invoiceNo = AccessorySaleInvoicesRef.push().getKey();
+    private void generatingInvoiceNo() throws ParseException {
+        keyID = AccessorySaleInvoicesRef.push().getKey();
+        invoiceNo = new InvoiceNumberGenerator().generateNumber();
         invoiceNo_TextView.setText(invoiceNo);
     }
 
@@ -198,11 +217,9 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
         select_sale_category();
         select_item_name();
         AccessoryTotalPriceCalculation();
-//        balancewatcher();
         addAccessoryToList();
         selectDate();
         detailsSubmit();
-
 
     }
 
@@ -216,15 +233,25 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
             editTextCarrierNumber.setError("Please enter valid number");
             valid = false;
         }
-        if (date_textView.getText().toString().equals("Select date")) {
-            date_textView.setError("Please enter date");
-            valid = false;
-        }
-        if (paid_editText.getText().toString().isEmpty()) {
-            paid_editText.setError("Please enter paid amount");
+        if (invoice_date_textView.getText().toString().equals("Select date")) {
+            invoice_date_textView.setError("Please enter date");
             valid = false;
         }
 
+        if (paid_editText.getText().toString().isEmpty()) {
+            paid_editText.setError("Please enter price");
+            valid = false;
+
+        } else {
+            if (Float.parseFloat(paid_editText.getText().toString()) == 0) {
+                paid_editText.setError("Please enter valid price");
+            } else {
+                paid_editText.setText(paid_editText.getText().toString().replaceFirst("^0+(?!$)", ""));
+                if (paid_editText.getText().toString().startsWith(".")) {
+                    paid_editText.setText("0" + paid_editText.getText().toString());
+                }
+            }
+        }
         return valid;
     }
 
@@ -233,33 +260,36 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
             @Override
             public void onClick(View v) {
                 if (validate_fields()) {
-                    if (validate()) {
 
-                        AccessorySaleInvoicesRef.child(invoiceNo).child("Invoice_no").setValue(invoiceNo);
-                        AccessorySaleInvoicesRef.child(invoiceNo).child("Invoice_date").setValue(date_textView.getText().toString());
-                        AccessorySaleInvoicesRef.child(invoiceNo).child("Customer_name").setValue(customer_name_editText.getText().toString());
-                        AccessorySaleInvoicesRef.child(invoiceNo).child("Customer_phNo").setValue(ccp.getFullNumberWithPlus());
-                        AccessorySaleInvoicesRef.child(invoiceNo).child("Paid").setValue(paid_editText.getText().toString());
-//                        AccessorySaleInvoicesRef.child(invoiceNo).child("Balance").setValue(balance_TextView.getText().toString());
+                    AccessorySaleInvoicesRef.child(keyID).child("Invoice_no").setValue(invoiceNo);
+                    AccessorySaleInvoicesRef.child(keyID).child("Invoice_date").setValue(invoice_date_textView.getText().toString());
+                    AccessorySaleInvoicesRef.child(keyID).child("Customer_name").setValue(customer_name_editText.getText().toString());
+                    AccessorySaleInvoicesRef.child(keyID).child("Customer_phNo").setValue(ccp.getFullNumberWithPlus());
+                    AccessorySaleInvoicesRef.child(keyID).child("Paid Amount").setValue(paid_editText.getText().toString());
 
-                        for (int i = 0; i < accessoryItemNameList.size(); i++) {
-                            AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_" + (i + 1)).child("name").setValue(accessoryItemNameList.get(i));
-                            AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_" + (i + 1)).child("category").setValue(accessoryCategoryList.get(i));
-                            AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_" + (i + 1)).child("quantity").setValue(accessoryQtyList.get(i));
-                            AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_" + (i + 1)).child("unit_price").setValue(accessoryUnitPriceList.get(i).replace("£", ""));
-                            AccessorySaleInvoicesRef.child(invoiceNo).child("Accessory_items").child("Item_" + (i + 1)).child("total_price").setValue(accessoryTotalPriceList.get(i).replace("£", ""));
+                    for (int i = 0; i < accessoryItemNameList.size(); i++) {
+                        AccessorySaleInvoicesRef.child(keyID).child("Accessory_items").child("Item_" + (i + 1)).child("name").setValue(accessoryItemNameList.get(i));
+                        AccessorySaleInvoicesRef.child(keyID).child("Accessory_items").child("Item_" + (i + 1)).child("category").setValue(accessoryCategoryList.get(i));
+                        AccessorySaleInvoicesRef.child(keyID).child("Accessory_items").child("Item_" + (i + 1)).child("quantity").setValue(accessoryQtyList.get(i));
+                        AccessorySaleInvoicesRef.child(keyID).child("Accessory_items").child("Item_" + (i + 1)).child("unit_price").setValue(accessoryUnitPriceList.get(i).replace("£", ""));
+                        AccessorySaleInvoicesRef.child(keyID).child("Accessory_items").child("Item_" + (i + 1)).child("total_price").setValue(accessoryTotalPriceList.get(i).replace("£", ""));
 
+                        if (Integer.parseInt(accessoryOldUnitPriceList.get(i)) - Integer.parseInt(accessoryQtyList.get(i)) <= 0) {
+                            shopkeeperAccessoriesRef.child(accessoryCategoryList.get(i)).child(accessorykeyIdList.get(i)).child("Quantity").setValue("0");
+                        } else {
+                            shopkeeperAccessoriesRef.child(accessoryCategoryList.get(i)).child(accessorykeyIdList.get(i)).child("Quantity").setValue(Integer.parseInt(accessoryOldUnitPriceList.get(i)) - Integer.parseInt(accessoryQtyList.get(i)));
                         }
 
-                        finish();
                     }
+
+                    finish();
                 }
             }
         });
     }
 
     private void selectDate() {
-        date_textview.setOnClickListener(new View.OnClickListener() {
+        invoice_date_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment datepicker = new DatePickerFragment();
@@ -274,7 +304,8 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
             @Override
             public void onClick(View v) {
                 if (validateSaleAlertFields()) {
-                    accessorySrNoList.add(String.valueOf(accessorySrNoList.size() + 1));
+                    accessorykeyIdList.add(select_itemKeyid);
+                    accessoryOldUnitPriceList.add(select_oldItemQuantity);
                     accessoryCategoryList.add(select_category_textView.getText().toString());
                     accessoryItemNameList.add(select_itemname_textView.getText().toString());
                     accessoryQtyList.add(alertAccessoryQuantity_editText.getText().toString());
@@ -302,78 +333,52 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
     private boolean validateSaleAlertFields() {
         boolean valid = true;
 
-        if (select_category_textView.getText().toString().equals("SELECT CATEGORY")) {
+        if (select_category_textView.getText().toString().equals("Select category")) {
             Toast.makeText(this, "Select category", Toast.LENGTH_SHORT).show();
             valid = false;
         }
-        if (select_itemname_textView.getText().toString().equals("SELECT ITEM NAME")) {
+        if (select_itemname_textView.getText().toString().equals("Select item name")) {
             Toast.makeText(this, "Select item", Toast.LENGTH_SHORT).show();
             valid = false;
         }
 
-        if (alertAccessoryQuantity_editText.getText().toString().equals("")) {
-            alertAccessoryQuantity_editText.setError("Enter valid quantity");
+        if (alertAccessoryQuantity_editText.getText().toString().isEmpty()) {
+            alertAccessoryQuantity_editText.setError("Please enter price");
             valid = false;
 
         } else {
-            if (Integer.parseInt(alertAccessoryQuantity_editText.getText().toString()) == 0) {
-                alertAccessoryQuantity_editText.setError("Enter valid quantity");
-                valid = false;
+            if (Float.parseFloat(alertAccessoryQuantity_editText.getText().toString()) == 0) {
+                alertAccessoryQuantity_editText.setError("Please enter valid price");
+            } else {
+                alertAccessoryQuantity_editText.setText(alertAccessoryQuantity_editText.getText().toString().replaceFirst("^0+(?!$)", ""));
+                if (alertAccessoryQuantity_editText.getText().toString().startsWith(".")) {
+                    alertAccessoryQuantity_editText.setText("0" + alertAccessoryQuantity_editText.getText().toString());
+                }
             }
         }
 
-        if (alertAccessoryUnitPrice_editText.getText().toString().equals("")) {
-            alertAccessoryUnitPrice_editText.setError("Enter valid quantity");
+        if (alertAccessoryQuantity_editText.getText().toString().equals("0")) {
+            alertAccessoryQuantity_editText.setError("Please enter item quantity");
             valid = false;
+        }
+
+        if (alertAccessoryUnitPrice_editText.getText().toString().isEmpty()) {
+            alertAccessoryUnitPrice_editText.setError("Please enter price");
+            valid = false;
+
         } else {
             if (Float.parseFloat(alertAccessoryUnitPrice_editText.getText().toString()) == 0) {
-                alertAccessoryUnitPrice_editText.setError("Enter valid unit price");
-                valid = false;
+                alertAccessoryUnitPrice_editText.setError("Please enter valid price");
+            } else {
+                alertAccessoryUnitPrice_editText.setText(alertAccessoryUnitPrice_editText.getText().toString().replaceFirst("^0+(?!$)", ""));
+                if (alertAccessoryUnitPrice_editText.getText().toString().startsWith(".")) {
+                    alertAccessoryUnitPrice_editText.setText("0" + alertAccessoryUnitPrice_editText.getText().toString());
+                }
             }
         }
 
 
         return valid;
-    }
-
-    //TODO "balancewatcher" wala function use nhi howa
-    private void balancewatcher() {
-        paid_editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (paid_editText.getText().toString().equals("Enter paid amount")) {
-                    balance_TextView.setText("NA");
-                } else {
-                    if (!paid_editText.getText().toString().equals("Enter paid amount")) {
-                        //TODO
-                        for (int i = 0; i < accessoryTotalPriceList.size(); i++) {
-                            Toast.makeText(Accessory_sale.this, "YEs", Toast.LENGTH_SHORT).show();
-//                            container= container+(Integer.parseInt(accessoryTotalPriceList.get(i)));
-                        }
-                        float container1 = container;
-                        float paid = Float.parseFloat(paid_editText.getText().toString());
-
-                        DecimalFormat twoDForm = new DecimalFormat("#.##");
-                        balance_TextView.setText(currency + Double.valueOf(twoDForm.format(paid - container1)));
-
-                    }
-                    if (paid_editText.getText().toString().equals("")) {
-
-                    }
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
     }
 
     private void AccessoryTotalPriceCalculation() {
@@ -449,7 +454,10 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
                             @Override
                             public void onSelected(BaseSearchDialogCompat dialog,
                                                    SampleSearchModel item, int position) {
-                                select_itemname_textView.setText(item.getTitle());
+                                select_itemKeyid = String.valueOf(item.getId());
+                                select_oldItemQuantity = String.valueOf(item.getVal2());
+
+                                select_itemname_textView.setText(item.getName());
                                 select_itemname_textView.setTextColor(getResources().getColor(R.color.textBlue));
                                 dialog.dismiss();
                             }
@@ -471,8 +479,14 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
                                 select_category_textView.setText(item.getTitle());
                                 select_category_textView.setTextColor(getResources().getColor(R.color.textBlue));
                                 dialog.dismiss();
+                                select_itemname_textView.setText("Select item name");
+                                select_itemname_textView.setTextColor(getResources().getColor(R.color.textGrey));
                                 category_name = item.getTitle();
                                 new_item_name_list.clear();
+                                new_item_price_list.clear();
+                                new_item_qty_list.clear();
+                                new_item_keyID_list.clear();
+
                                 set_item_name();
                             }
                         }).show();
@@ -483,9 +497,12 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
 
     private void set_item_name() {
 
-        for (int i = 0; i < accessories_category_list.size(); i++) {
-            if (String.valueOf(accessories_category_list.get(i)).equals(category_name)) {
-                new_item_name_list.add(accessories_item_name_list.get(i));
+        for (int i = 0; i < accessories_categories_raw_list.size(); i++) {
+            if (String.valueOf(accessories_categories_raw_list.get(i)).equals(category_name)) {
+                new_item_name_list.add(accessories_item_name_raw_list.get(i));
+                new_item_price_list.add(accessories_item_unit_price_raw_list.get(i));
+                new_item_qty_list.add(accessories_item_quantity_raw_list.get(i));
+                new_item_keyID_list.add(accessories_item_keyID_raw_list.get(i));
             }
         }
     }
@@ -504,7 +521,6 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
             @Override
             public void onClick(View v) {
                 accessorySaleAlert.show();
-                fetching_categories();
 
             }
         });
@@ -512,13 +528,24 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
     }
 
     private void fetching_categories() {
-        existing_categories.addListenerForSingleValueEvent(new ValueEventListener() {
+        System.out.println("called");
+
+        shopkeeperAccessoriesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    accessories_categories_raw_list.add(String.valueOf(dataSnapshot1.child("catagory").getValue()));
+                    for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
+
+                        accessories_categories_raw_list.add(dataSnapshot2.child("Category").getValue().toString());
+                        accessories_item_name_raw_list.add(dataSnapshot2.child("Name").getValue().toString());
+                        accessories_item_quantity_raw_list.add(dataSnapshot2.child("Quantity").getValue().toString());
+                        accessories_item_unit_price_raw_list.add(dataSnapshot2.child("Price").getValue().toString());
+                        accessories_item_keyID_raw_list.add(dataSnapshot2.getKey().toString());
+                    }
+
                 }
-                accessories_categories_filter_list = new ArrayList<>(new LinkedHashSet<>(accessories_categories_raw_list));
 
             }
 
@@ -530,7 +557,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
     }
 
     private void fetching_item_name() {
-        existing_categories.addListenerForSingleValueEvent(new ValueEventListener() {
+        shopkeeperAccessoriesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -566,7 +593,7 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
-        date_textView.setText(currentDateString);
+        invoice_date_textView.setText(currentDateString);
     }
 
     public void onCountryPickerClick(View view) {

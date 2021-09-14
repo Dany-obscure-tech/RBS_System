@@ -80,7 +80,7 @@ public class Customer_history extends AppCompatActivity {
 
     AdapterCustomerIDImagesRecyclerView adapterCustomerIDImagesRecyclerView;
 
-    Progreess_dialog pd1, pd2;
+    Progress_dialog pd1, pd2;
 
     Boolean toggleCheck = true;
 
@@ -170,8 +170,8 @@ public class Customer_history extends AppCompatActivity {
         customer_ID_Image_recyclerView.setLayoutManager(new GridLayoutManager(Customer_history.this, 2));
 
 
-        pd1 = new Progreess_dialog();
-        pd2 = new Progreess_dialog();
+        pd1 = new Progress_dialog();
+        pd2 = new Progress_dialog();
 
         Date date = Calendar.getInstance().getTime();
         String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(date);

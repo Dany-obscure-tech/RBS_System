@@ -39,6 +39,7 @@ public class RBS_mainscreen extends AppCompatActivity {
     private static final int LOGO_READ_REQUEST_CODE = 42;
     private static final int BANNER_READ_REQUEST_CODE = 43;
 
+    final RBS_setting fragment_rbs_settings = new RBS_setting();
 
     ActionBar actionBar;
     StorageReference storageReference;
@@ -224,7 +225,7 @@ public class RBS_mainscreen extends AppCompatActivity {
 
                                 reference.child("shop_logo").setValue(String.valueOf(uri.toString()));
                                 UserDetails.getInstance().setShopLogo(String.valueOf(uri.toString()));
-                                getSupportFragmentManager().beginTransaction().detach(getSupportFragmentManager().findFragmentByTag("RBS Settings")).attach(getSupportFragmentManager().findFragmentByTag("RBS Settings")).commit();
+                                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, fragment_rbs_settings).commit();
 
                             }
                         });
@@ -247,7 +248,7 @@ public class RBS_mainscreen extends AppCompatActivity {
 
                                 reference.child("shop_banner").setValue(String.valueOf(uri.toString()));
                                 UserDetails.getInstance().setShopBanner(String.valueOf(uri.toString()));
-                                getSupportFragmentManager().beginTransaction().detach(getSupportFragmentManager().findFragmentByTag("RBS Settings")).attach(getSupportFragmentManager().findFragmentByTag("RBS Settings")).commit();
+                                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, fragment_rbs_settings).commit();
 
                             }
                         });
@@ -261,6 +262,10 @@ public class RBS_mainscreen extends AppCompatActivity {
                 });
             }
         }else if (resultCode == 111) {
+            recreate();
+            nv.setCheckedItem(R.id.nav_home);
+
+        }else if (resultCode == 1212) {
             recreate();
             nv.setCheckedItem(R.id.nav_home);
 

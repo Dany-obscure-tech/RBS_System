@@ -273,19 +273,6 @@
                                     app:civ_border_color="#4A4A4A"
                                     app:civ_border_width="0dp" />
 
-                                <TextView
-                                    android:id="@+id/date_textView"
-                                    style="@style/TextViews"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentBottom="true"
-                                    android:layout_centerInParent="true"
-                                    android:layout_gravity="bottom"
-                                    android:layout_margin="10dp"
-                                    android:layout_marginTop="2dp"
-                                    android:text="@string/date" />
-
-
                             </RelativeLayout>
 
                             <LinearLayout
@@ -372,6 +359,16 @@
 
 
                                 </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/date_textView"
+                                    style="@style/TextViews"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="right"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginRight="10dp"
+                                    android:text="@string/date" />
 
 
                             </LinearLayout>

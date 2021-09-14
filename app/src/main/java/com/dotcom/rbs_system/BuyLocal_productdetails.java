@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.SliderAdapterExample;
 import com.dotcom.rbs_system.Classes.Currency;
+import com.dotcom.rbs_system.Classes.UserDetails;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -58,13 +59,13 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     ImageView profileImage_imageView;
     FusedLocationProviderClient fusedLocationProviderClient;
     RelativeLayout offer_relativeLayout;
-    String currency, profileImageUrl, customerName;
+    String currency;
     CardView imageSlider;
     SliderView sliderView;
     List<String> imageUrl;
     EditText alertReportDescription_editText, alertMakeOfferAmount_editText, alertMakeOfferMessage_editText;
     TextView distance_textView, shopKeeperName_textView;
-    TextView product_name_textview, category_textView, item_description_textview, itemPrice_textView, currency_textView;
+    TextView product_name_textview, category_textView, item_description_textview, itemPrice_textView, currency_textView,product_condition_textview;
     TextView offerStatus_textView, offerAmountCurrency_textView, offerAmount_textView, offerMessage_textView;
     TextView make_offer_textView, communicate_textView;
     ImageButton share_imageButton, report_imageButton;
@@ -74,7 +75,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     LinearLayout shop_details_linearlayout;
     String productID, productName,productImage,productPrice, productCategory, shopkeeperID, conversationKey = null;
     String latitude, longitude;
-    DatabaseReference itemRef, reportRef, userRef, stockRef, customerOfferRef, agreedOfferRef, boughtOfferRef, userConversationRef;
+    DatabaseReference itemRef, reportRef, stockRef, shopkeeperRef,customerOfferRef, agreedOfferRef, boughtOfferRef, userConversationRef;
     StorageReference itemImageStorageRef;
     int i, noOfimages;
     boolean agreedBoughtCheck = false;
@@ -135,6 +136,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         shopKeeperName_textView = findViewById(R.id.shopKeeperName_textView);
 
         product_name_textview = findViewById(R.id.product_name_textview);
+        product_condition_textview = findViewById(R.id.product_condition_textview);
         category_textView = findViewById(R.id.category_textView);
         item_description_textview = findViewById(R.id.item_description_textview);
         itemPrice_textView = findViewById(R.id.itemPrice_textView);
@@ -307,8 +309,9 @@ public class BuyLocal_productdetails extends AppCompatActivity {
                     stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("message").setValue(alertMakeOfferMessage_editText.getText().toString());
                     stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("amount").setValue(alertMakeOfferAmount_editText.getText().toString());
                     stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("customer").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                    stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("customer_image").setValue(profileImageUrl);
-                    stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("customer_name").setValue(customerName);
+                    stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("customer_image").setValue(UserDetails.getInstance().getProfileImageUrl());
+                    stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("customer_name").setValue(UserDetails.getInstance().getName());
+                    stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("customer_email").setValue(UserDetails.getInstance().getEmail());
                     stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("timestamp").setValue(timestamp);
 
                     customerOfferRef.child("Customer_offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(productID).child("message").setValue(alertMakeOfferMessage_editText.getText().toString());
@@ -372,7 +375,6 @@ public class BuyLocal_productdetails extends AppCompatActivity {
 
     private void InitialProcess() {
         checkingForExistingConversation();
-        fetchingImageUrl();
         checkingOffer();
         fetchingItemDetails();
 
@@ -448,6 +450,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 noOfimages = Integer.parseInt(snapshot.child("No_of_images").getValue().toString());
                 product_name_textview.setText(snapshot.child("Item_name").getValue().toString());
+                product_condition_textview.setText(snapshot.child("Condition").getValue().toString());
                 productName = snapshot.child("Item_name").getValue().toString();
                 category_textView.setText(snapshot.child("Category").getValue().toString());
                 item_description_textview.setText(snapshot.child("Description").getValue().toString());
@@ -473,25 +476,9 @@ public class BuyLocal_productdetails extends AppCompatActivity {
         });
     }
 
-    private void fetchingImageUrl() {
-        userRef = FirebaseDatabase.getInstance().getReference("Users_data/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                profileImageUrl = snapshot.child("profile_image_url").getValue().toString();
-                customerName = snapshot.child("fullname").getValue().toString();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
     private void fetchingShopkeeperDetails() {
-        userRef = FirebaseDatabase.getInstance().getReference("Users_data/" + shopkeeperID + "/Shopkeeper_details");
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        shopkeeperRef = FirebaseDatabase.getInstance().getReference("Users_data/" + shopkeeperID + "/Shopkeeper_details");
+        shopkeeperRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Double shopkeeperlat = Double.valueOf(snapshot.child("Location").child("lat").getValue().toString());
@@ -523,7 +510,6 @@ public class BuyLocal_productdetails extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Location> task) {
                     Location location = task.getResult();
                     if (location != null) {
-                        Toast.makeText(BuyLocal_productdetails.this, String.valueOf(String.valueOf("Called")), Toast.LENGTH_SHORT).show();
                         Geocoder geocoder = new Geocoder(BuyLocal_productdetails.this, Locale.getDefault());
                         try {
                             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
