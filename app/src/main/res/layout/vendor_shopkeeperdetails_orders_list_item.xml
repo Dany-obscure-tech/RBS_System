@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/searchForItem_cardView"
+        style="@style/CardView_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/vendor_order_status"
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_vertical"
+                android:layout_gravity="right"
+                android:text="Pending"
+                android:textColor="@color/textGreen" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:id="@+id/left_linearlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/date"
+                        style="@style/TextViews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="5dp"
+                        android:text="22/09/2021" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/invoice_linearlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/left_linearlayout"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/invoice_title"
+                            style="@style/TextViews_Regular_small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Invoice: " />
+
+                        <TextView
+                            android:id="@+id/order_no_vendor"
+                            style="@style/TextViews_Bold_small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_toRightOf="@+id/invoice_title"
+                            android:text="124535"
+                            android:textColor="@color/textBlue" />
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViews_Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Total Amount :" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/balance_currency"
+                            style="@style/TextViews_Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="$"
+                            android:textColor="@color/textGreen" />
+
+                        <TextView
+                            android:id="@+id/totalBalance"
+                            style="@style/TextViews_Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:gravity="center"
+                            android:text="@string/Fake_rupees"
+                            android:textColor="@color/textGreen" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

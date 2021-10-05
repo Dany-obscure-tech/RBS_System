@@ -34,6 +34,7 @@
             android:background="@drawable/search_view_style"
             android:fontFamily="@font/segoe_ui"
             android:hint="@string/search_here"
+            android:textSize="@dimen/Regular_Big"
             android:inputType="text"
             android:maxLines="1"
             android:textColor="#707070" />

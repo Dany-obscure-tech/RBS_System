@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,8 +22,12 @@ import com.dantsu.escposprinter.connection.DeviceConnection;
 import com.dantsu.escposprinter.connection.tcp.TcpConnection;
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
 import com.dotcom.rbs_system.Classes.Currency;
+import com.dotcom.rbs_system.Classes.RepairTicketFaults;
+import com.dotcom.rbs_system.Classes.TermsAndConditions;
+import com.dotcom.rbs_system.Classes.UserDetails;
 import com.dotcom.rbs_system.async.AsyncEscPosPrinter;
 import com.dotcom.rbs_system.async.AsyncTcpEscPosPrint;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,11 +40,15 @@ public class Invoice_preview_repair_ticket extends AppCompatActivity {
     Dialog confirmation_alert;
     TextView yes_btn_textview, cancel_btn_textview;
     String date, customer_name, customer_email, customer_ID, customer_ph_no, item_name, item_id, keyId, amount, special_condition,ticketNo;
+    String shopTermsAndConditions, rbsTermsAndConditions;
     TextView date_textView, customerName_textView, customerEmail_textView, customerID_textView, customerPhno_textView, itemName_textView, itemID_textView, amount_Currency_textView, amount_textView;
     TextView exit_textview, special_condition_textView;
     ImageButton print_image_btn, email_image_btn, whatsapp_image_btn;
-    String email_message, inoice_no;
+    String ticketType,email_message;
+    String faultString = "FAULT LIST \n\n";
+    String pendingFaultString = "PENDING FAULT LIST \n\n";
 
+    ImageView placeholderLogo_imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,14 +162,20 @@ public class Invoice_preview_repair_ticket extends AppCompatActivity {
     private String printingData() {
         SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
 
-        return "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, this.getApplicationContext().getResources().getDrawableForDensity(R.drawable.logo, DisplayMetrics.DENSITY_MEDIUM)) + "</img>\n" +
+        return "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, placeholderLogo_imageView.getDrawable()) + "</img>\n" +
                 "[L]\n" +
-                "[L]Invoice Printed" +
-                "[C]<u type='double'>" + format.format(new Date()) + "</u>\n" +
+                "[L]" + UserDetails.getInstance().getShopName() + "\n" +
+                "[L]\n" +
+                "[L]Phone: " + UserDetails.getInstance().getShopPhno() + "\n" +
+                "[L]\n" +
+                "[L]Email: " + UserDetails.getInstance().getShopEmail() + "\n" +
+                "[L]\n" +
+                "[L]Address: " + UserDetails.getInstance().getShopAddress() + "\n" +
+                "[L]\n" +
+                "[L]Invoice Printed" + "[C]<u type='double'>" + format.format(new Date()) + "</u>\n" +
                 "[C]\n" +
-                "[L]Invoice no: 12345\n" +
-                "[L]\n" +
                 "[L]Ticket no:" + ticket_no_textview.getText().toString() + "\n" +
+                "[L]" + ticketType + "\n" +
                 "[L]\n" +
                 "[C]<font color='bg-black'>================================</font>\n" +
                 "[L]\n" +
@@ -185,19 +200,16 @@ public class Invoice_preview_repair_ticket extends AppCompatActivity {
                 "[L]\n" +
                 "[L]Amount: [R]" + amount_Currency_textView.getText().toString() + amount_textView.getText().toString() + "\n" +
                 "[L]\n" +
-                "[L]Special Condition: [R]" + special_condition_textView.getText().toString() + "\n" +
+                "[L]Special Condition:" + "\n" +
+                "[L]" + special_condition_textView.getText().toString() + "\n" +
                 "[C]\n" +
                 "[C]<font color='bg-black'> -------------------------------- </font>\n" +
                 "[C]\n" +
-                "[L]<font color='black' size='tall'> Shopkeeper Terms & Conditions </font>\n" +
+                rbsTermsAndConditions + "\n" +
+                shopTermsAndConditions + "\n" +
                 "[C]\n" +
-                "[L]1.This is the first condition. 2. This is the second condition\n" +
                 "[C]\n" +
-                "[L]<font color='black' size='tall'> Buy Local Terms & Conditions </font>\n" +
                 "[C]\n" +
-                "[L]1.This is the first condition. 2. This is the second condition\n" +
-                "[L]\n" +
-                "[L]\n" +
                 "[L]\n";
     }
 
@@ -251,6 +263,7 @@ public class Invoice_preview_repair_ticket extends AppCompatActivity {
         cancel_btn_textview = confirmation_alert.findViewById(R.id.cancel_btn_textview);
 
         date = getIntent().getStringExtra("Date");
+        ticketType = getIntent().getStringExtra("TICKET_TYPE");
         customer_name = getIntent().getStringExtra("Customer_Name");
         customer_email = getIntent().getStringExtra("Customer_Email");
         customer_ID = getIntent().getStringExtra("Customer_ID");
@@ -289,30 +302,66 @@ public class Invoice_preview_repair_ticket extends AppCompatActivity {
         itemID_textView.setText(item_id);
         amount_textView.setText(amount);
         special_condition_textView.setText(special_condition);
-        ticket_no_textview.setText(keyId);
+        ticket_no_textview.setText(ticketNo);
         amount_Currency_textView.setText(String.valueOf(Currency.getInstance().getCurrency()));
 
-        inoice_no = "12345";
+        placeholderLogo_imageView = (ImageView) findViewById(R.id.placeholderLogo_imageView);
+        Picasso.get().load(UserDetails.getInstance().getShopLogo()).into(placeholderLogo_imageView);
+
+        shopTermsAndConditions = UserDetails.getInstance().getShopTermsAndConditions();
+        rbsTermsAndConditions = TermsAndConditions.getInstance().getTermsAndConditions();
+
+
+        for (int i = 0;i<RepairTicketFaults.getInstance().getFaultNameList().size();i++){
+            faultString = faultString+"Fault: "+String.valueOf(i+1)+": "+RepairTicketFaults.getInstance().getFaultNameList().get(i)+"\n"+
+                    "Price: "+Currency.getInstance().getCurrency()+RepairTicketFaults.getInstance().getFaultPriceList().get(i)+"\n\n";
+        }
+
+        if (RepairTicketFaults.getInstance().getPendingFaults()){
+
+            for (int i = 0;i<RepairTicketFaults.getInstance().getPendingFaultNameList().size();i++){
+                pendingFaultString = pendingFaultString+"Fault: "+String.valueOf(i+1)+": "+RepairTicketFaults.getInstance().getPendingFaultNameList().get(i)+"\n"+
+                        "Price: "+Currency.getInstance().getCurrency()+RepairTicketFaults.getInstance().getPendingFaultPriceList().get(i)+"\n\n";
+            }
+        }else {
+            pendingFaultString="";
+        }
+
+
+
         SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
 
-        email_message = "Invoice Printed  " + format.format(new Date()) + "\n" +
-                "Invoice No: " + inoice_no + "\n" +
+        email_message = UserDetails.getInstance().getShopName() + "\n" +
+                "Phone  " + UserDetails.getInstance().getShopPhno() + "\n" +
+                "Email  " + UserDetails.getInstance().getShopEmail() + "\n" +
+                "Address  " + UserDetails.getInstance().getAddress() + "\n" +
+                "Invoice Printed  " + format.format(new Date()) + "\n" +
+                "Ticket no: " + ticketNo + "\n" +
+                ticketType + "\n" +
                 "============================" + "\n" +
                 "CUSTOMER" + "\n" +
-                "Customer Name: " + customer_name + "\n" +
-                "Customer Email: " + customer_email + "\n" +
-                "Customer Id: " + customer_ID + "\n" +
-                "Customer Phone number: " + customer_ph_no + "\n" +
+                "Name: " + customer_name + "\n" +
+                "Email: " + customer_email + "\n" +
+                "Id: " + customer_ID + "\n" +
+                "Phone number: " + customer_ph_no + "\n" +
                 "----------------------------" + "\n" +
                 "ITEM" + "\n" +
-                "Item Name: " + item_name + "\n" +
-                "Item Id: " + item_id + "\n" +
+                "Name: " + item_name + "\n" +
+                "Id: " + item_id + "\n" +
+                faultString + "\n" +
+                pendingFaultString + "\n" +
                 "============================" + "\n" +
                 "Amount: " + amount_Currency_textView.getText().toString() + " " + amount + "\n" +
                 "Special Condition: " + special_condition + "\n" +
                 "----------------------------" + "\n" +
-                "Terms And Conditions" + "\n" +
-                "RBS Condition 1, " + "RBS Condition 2, " + "RBS Condition 3, " + "RBS Condition 4, " + "RBS Condition 5, " + "\n" +
-                "Shopkeeper Condition 1" + "Shopkeeper Condition 2" + "Shopkeeper Condition 3" + "Shopkeeper Condition 4" + "Shopkeeper Condition 5" + "\n";
+                "[C]\n" +
+                "[L]<font color='black' size='tall'> Terms & Conditions </font>\n" +
+                "[C]\n" +
+                rbsTermsAndConditions + "\n" +
+                shopTermsAndConditions + "\n" +
+                "[C]\n" +
+                "[L]\n" +
+                "[L]\n" +
+                "[L]\n";
     }
 }

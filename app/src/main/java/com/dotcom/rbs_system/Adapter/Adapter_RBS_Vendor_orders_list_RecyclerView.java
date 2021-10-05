@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.Classes.Currency;
@@ -63,7 +64,7 @@ public class Adapter_RBS_Vendor_orders_list_RecyclerView extends RecyclerView.Ad
         holder.shop_name.setText(vendor_name.get(position));
         holder.order_no_vendor.setText(order_no_vendor.get(position));
         Picasso.get().load(vendor_image.get(position)).into(holder.profileImage_imageView);
-        holder.order_no_vendor.setOnClickListener(new View.OnClickListener() {
+        holder.searchForItem_cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, Vendor_shopkeepers_orders_progress.class);
@@ -73,14 +74,6 @@ public class Adapter_RBS_Vendor_orders_list_RecyclerView extends RecyclerView.Ad
                 intent.putExtra("status", vendor_order_status.get(position));
                 intent.putExtra("userType", "shopkeeper");
                 ((Activity)context).startActivityForResult(intent,111);
-            }
-        });
-        holder.shop_name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, VendorShopkeepersShopReceipts.class);
-                intent.putExtra("Shop_Name", vendor_name.get(position));
-                context.startActivity(intent);
             }
         });
     }
@@ -93,12 +86,14 @@ public class Adapter_RBS_Vendor_orders_list_RecyclerView extends RecyclerView.Ad
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
+        CardView searchForItem_cardView;
         TextView order_no_vendor, shop_name, date, balance_currency, vendor_order_status, totalBalance;
         ImageView profileImage_imageView;
 
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            searchForItem_cardView = itemView.findViewById(R.id.searchForItem_cardView);
             order_no_vendor = itemView.findViewById(R.id.order_no_vendor);
             shop_name = itemView.findViewById(R.id.shop_name);
             date = itemView.findViewById(R.id.date);

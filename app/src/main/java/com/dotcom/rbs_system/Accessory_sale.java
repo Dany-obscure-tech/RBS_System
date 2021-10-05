@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterAccessoriesSaleItemsRecyclerView;
+import com.dotcom.rbs_system.Classes.AccessoryList;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.Classes.InvoiceNumberGenerator;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
@@ -282,7 +284,18 @@ public class Accessory_sale extends AppCompatActivity implements DatePickerDialo
 
                     }
 
+                    Intent intent = new Intent(Accessory_sale.this,Invoice_preview_accessory_sale.class);
+                    intent.putExtra("Date",invoice_date_textView.getText().toString());
+                    intent.putExtra("Invoice_Type","ACCESSORIES_SOLD");
+                    intent.putExtra("Customer_Name",customer_name_editText.getText().toString());
+                    intent.putExtra("Customer_Ph_No",ccp.getFullNumberWithPlus());
+                    intent.putExtra("Invoice_No",invoiceNo);
+                    intent.putExtra("Amount",paid_editText.getText().toString());
+                    AccessoryList.getInstance().setAccessoryNameList(accessoryItemNameList);
+                    AccessoryList.getInstance().setAccessoryQuantityList(accessoryQtyList);
+                    startActivity(intent);
                     finish();
+
                 }
             }
         });

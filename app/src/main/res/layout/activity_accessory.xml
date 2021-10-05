@@ -51,35 +51,42 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/order_accessory_textview"
-                style="@style/CardView_style"
+                style="@style/RBS_Options_CardView_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:foreground="?attr/selectableItemBackgroundBorderless">
+                android:layout_marginTop="10dp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                app:cardCornerRadius="10dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="@drawable/screen_header_rectangle">
 
                     <ImageView
                         android:id="@+id/vendor_icon"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/marketstore" />
+                        android:layout_height="35dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/marketstore"
+                        app:tint="@color/colorWhite" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:layout_toRightOf="@+id/vendor_icon">
+                        android:layout_centerInParent="true">
 
                         <TextView
                             style="@style/TextViews_Bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:text="Order Accessories"
+                            android:text="Order Online"
                             android:textAlignment="center"
-                            android:textColor="@color/textBlue" />
+                            android:textColor="@color/colorWhite" />
 
 
                     </RelativeLayout>
@@ -91,26 +98,30 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/sale_accessory_textview"
-                style="@style/CardView_style"
+                style="@style/RBS_Options_CardView_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="10dp"
                 android:foreground="?attr/selectableItemBackgroundBorderless">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="@drawable/screen_header_rectangle">
 
                     <ImageView
                         android:id="@+id/sale_icon"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/sale" />
+                        android:layout_height="35dp"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/sale"
+                        app:tint="@color/colorWhite" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:layout_toRightOf="@+id/sale_icon">
+                        android:layout_centerInParent="true">
 
                         <TextView
                             style="@style/TextViews_Bold"
@@ -119,7 +130,7 @@
                             android:layout_centerInParent="true"
                             android:text="Sale Accessories"
                             android:textAlignment="center"
-                            android:textColor="@color/textBlue" />
+                            android:textColor="@color/colorWhite" />
 
 
                     </RelativeLayout>
@@ -137,12 +148,6 @@
                 android:orientation="horizontal"
                 android:weightSum="2">
 
-                <TextView
-                    style="@style/TextViews_Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Accessories" />
 
                 <TextView
                     android:id="@+id/add_accessory_textview"

@@ -480,7 +480,6 @@ public class Customer_history extends AppCompatActivity {
             ex.printStackTrace();
         }
 
-        System.out.println(p1);
         return p1;
     }
 }

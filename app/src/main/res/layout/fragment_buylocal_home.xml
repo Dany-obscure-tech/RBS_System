@@ -119,6 +119,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="15dp"
                 android:layout_weight="8"
+                android:textSize="@dimen/Regular_Big"
                 android:background="@drawable/search_view_style"
                 android:fontFamily="@font/segoe_ui"
                 android:hint="@string/search_here"
@@ -196,31 +197,31 @@
                 android:text="Vendor" />
 
             <TextView
-                android:id="@+id/offers_option"
+                android:id="@+id/privacy_policies"
                 style="@style/TextViews_Bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/vendor_option"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:padding="20dp"
-                android:text="Offers" />
+                android:text="Privacy Policies" />
 
             <TextView
-                android:id="@+id/communication_option"
+                android:id="@+id/about"
                 style="@style/TextViews_Bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/offers_option"
+                android:layout_below="@+id/privacy_policies"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:padding="20dp"
-                android:text="Messages" />
+                android:text="About" />
 
             <TextView
                 android:id="@+id/logout"
                 style="@style/TextViews_Bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/communication_option"
+                android:layout_below="@+id/about"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:padding="20dp"
                 android:text="Logout" />

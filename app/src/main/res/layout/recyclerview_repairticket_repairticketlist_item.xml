@@ -48,17 +48,6 @@
                         android:text="Ticket No"
                         android:textColor="@color/gradientDarkBlue" />
 
-                    <TextView
-                        android:id="@+id/date_textView"
-                        style="@style/TextViews"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginStart="5dp"
-                        android:gravity="end"
-                        android:text="@string/date"
-                        android:textColor="@color/textBlue" />
-
                 </RelativeLayout>
 
                 <LinearLayout
@@ -165,6 +154,16 @@
                         android:textColor="@color/textBlue" />
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/date_textView"
+                    style="@style/TextViews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="right"
+                    android:text="@string/date"
+                    android:textColor="@color/textBlue" />
 
             </LinearLayout>
 

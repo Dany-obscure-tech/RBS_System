@@ -83,12 +83,18 @@
                     style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
                     android:text="--------" />
 
 
             </LinearLayout>
+            
+            <ImageView
+                android:id="@+id/placeholderLogo_imageView"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
             <TextView
                 style="@style/TextViews_Title"
@@ -98,76 +104,76 @@
                 android:text="Customer" />
 
             <TextView
-                style="@style/TextViews_Bold"
+                style="@style/TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Customer Name"
-                android:textColor="@color/gradientDarkBlue" />
+                android:text="Name" />
 
             <TextView
                 android:id="@+id/customerName_textView"
-                style="@style/TextViews"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
-                android:text="@string/fake_customer_name" />
+                android:text="@string/fake_customer_name"
+                android:textColor="@color/gradientDarkBlue" />
 
             <TextView
-                style="@style/TextViews_Bold"
+                style="@style/TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Customer Email"
-                android:textColor="@color/gradientDarkBlue" />
+                android:text="Email" />
 
             <TextView
                 android:id="@+id/customerEmail_textView"
-                style="@style/TextViews"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
-                android:text="@string/Fake_email" />
+                android:text="@string/Fake_email"
+                android:textColor="@color/gradientDarkBlue" />
 
             <TextView
-                style="@style/TextViews_Bold"
+                style="@style/TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Customer ID"
-                android:textColor="@color/gradientDarkBlue" />
+                android:text="ID" />
 
             <TextView
                 android:id="@+id/customerID_textView"
-                style="@style/TextViews"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:text="@string/Fake_id" />
-
-            <TextView
                 style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Customer Phone Number"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:text="@string/Fake_id"
                 android:textColor="@color/gradientDarkBlue" />
 
             <TextView
-                android:id="@+id/customerPhno_textView"
                 style="@style/TextViews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Phone Number" />
+
+            <TextView
+                android:id="@+id/customerPhno_textView"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
-                android:text="@string/Fake_phone_no" />
+                android:text="@string/Fake_phone_no"
+                android:textColor="@color/gradientDarkBlue" />
 
             <TextView
                 style="@style/TextViews_Title"
@@ -177,16 +183,16 @@
                 android:text="Item" />
 
             <TextView
-                style="@style/TextViews_Bold"
+                style="@style/TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Item Name"
-                android:textColor="@color/gradientDarkBlue" />
+                android:text="Name"/>
 
             <TextView
                 android:id="@+id/itemName_textView"
-                style="@style/TextViews"
+                style="@style/TextViews_Bold"
+                android:textColor="@color/gradientDarkBlue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -195,16 +201,16 @@
                 android:text="@string/fake_item_name" />
 
             <TextView
-                style="@style/TextViews_Bold"
+                style="@style/TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Item ID/Serial No"
-                android:textColor="@color/gradientDarkBlue" />
+                android:text="Item ID/Serial No"/>
 
             <TextView
                 android:id="@+id/itemID_textView"
-                style="@style/TextViews"
+                style="@style/TextViews_Bold"
+                android:textColor="@color/gradientDarkBlue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -213,12 +219,11 @@
                 android:text="@string/Fake_item_id" />
 
             <TextView
-                style="@style/TextViews_Bold"
+                style="@style/TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Amount"
-                android:textColor="@color/gradientDarkBlue" />
+                android:text="Amount"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -228,13 +233,13 @@
                 <TextView
                     android:id="@+id/amount_Currency_textView"
                     style="@style/TextViews_Bold"
+                    android:textColor="@color/gradientDarkBlue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
-                    android:text="@string/Fake_currency"
-                    android:textColor="@color/textGreen" />
+                    android:text="@string/Fake_currency"/>
 
                 <TextView
                     android:id="@+id/amount_textView"
@@ -244,37 +249,28 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
-                    android:text="@string/Fake_rupees"
-                    android:textColor="@color/textGreen" />
+                    android:textColor="@color/gradientDarkBlue"
+                    android:text="@string/Fake_rupees"/>
 
             </LinearLayout>
 
             <TextView
-                style="@style/TextViews_Bold"
+                style="@style/TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Special_Condition"
-                android:textColor="@color/gradientDarkBlue" />
+                android:text="Special_Condition"/>
 
             <TextView
                 android:id="@+id/special_condition_textView"
-                style="@style/TextViews"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
+                android:textColor="@color/gradientDarkBlue"
                 android:text="@string/Fake_item_id" />
-
-            <TextView
-                style="@style/TextViews_Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:text="Do you want to print, email, whatsapp?" />
-
 
             <LinearLayout
                 android:id="@+id/Linear_layout"

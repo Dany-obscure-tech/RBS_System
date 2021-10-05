@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Customer Name" />
+                android:text="Name" />
 
             <EditText
                 android:id="@+id/ac_title"
@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Customer Phone no" />
+                android:text="Phone no" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -117,7 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Customer ID" />
+                android:text="ID" />
 
             <EditText
                 android:id="@+id/ac_id"
@@ -165,7 +165,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Customer DOB" />
+                android:text="DOB" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -199,7 +199,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Customer Postcode" />
+                android:text="Postcode" />
 
             <EditText
                 android:id="@+id/ac_postcode"
@@ -214,7 +214,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Customer Door No" />
+                android:text="Door No" />
 
             <EditText
                 android:id="@+id/ac_houseNo"
@@ -240,7 +240,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Customer Address" />
+                android:text="Address" />
 
             <TextView
                 android:id="@+id/ac_address"
@@ -256,7 +256,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Customer Email" />
+                android:text="Email" />
 
             <EditText
                 android:id="@+id/ac_email"

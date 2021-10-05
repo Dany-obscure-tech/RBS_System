@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterRepairsFaultListRecyclerView;
 import com.dotcom.rbs_system.Classes.Currency;
+import com.dotcom.rbs_system.Classes.RepairTicketFaults;
 import com.dotcom.rbs_system.Classes.Repair_details_edit;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -230,6 +231,7 @@ public class Repair_ticket_details extends AppCompatActivity {
                 repair_details_edit_obj.setEmail_textView(email_textView.getText().toString());
 
                 repair_details_edit_obj.setTicketNo_TextView(ticketNo_textView.getText().toString());
+                repair_details_edit_obj.setTicketkeyId_TextView(repairID);
                 repair_details_edit_obj.setAmount_TextView(agreedAmount_str);
                 repair_details_edit_obj.setDate_TextView(date_TextView.getText().toString());
                 repair_details_edit_obj.setSpecialConditions_TextView(specialConditions_TextView.getText().toString());
@@ -260,6 +262,26 @@ public class Repair_ticket_details extends AppCompatActivity {
                     repairTicketRef.child("Status").setValue("Confirmed");
 
                     Intent intent = new Intent(Repair_ticket_details.this,Invoice_preview_repair_ticket.class);
+                    intent.putExtra("TICKET_TYPE", "REPAIR TICKET CONFIRMED");
+                    intent.putExtra("Date", repair_details_edit_obj.getDate_TextView());
+                    intent.putExtra("Customer_Name", repair_details_edit_obj.getCustomerName_textView());
+                    intent.putExtra("Customer_Email", repair_details_edit_obj.getEmail_textView());
+                    intent.putExtra("Customer_ID", repair_details_edit_obj.getId_textView());
+                    intent.putExtra("Customer_Ph_No", repair_details_edit_obj.getPhno_textView());
+                    intent.putExtra("Item_Name", repair_details_edit_obj.getItemName_textView());
+                    intent.putExtra("Item_ID", repair_details_edit_obj.getSerialNo_textView());
+                    intent.putExtra("KeyID", repair_details_edit_obj.getItemKeyID());
+                    intent.putExtra("Ticket_No", repair_details_edit_obj.getTicketNo_TextView());
+                    intent.putExtra("Amount", String.valueOf(amount_TextView.getText().toString()));
+                    intent.putExtra("Special_condition", String.valueOf(specialConditions_TextView.getText().toString()));
+
+                    System.out.println("called"+repair_details_edit_obj.getDate_TextView());
+
+                    RepairTicketFaults.getInstance().setFaultNameList(repair_details_edit_obj.getFaultNameList());
+                    RepairTicketFaults.getInstance().setFaultPriceList(repair_details_edit_obj.getFaultPriceList());
+                    RepairTicketFaults.getInstance().setPendingFaults(false);
+
+                    repair_details_edit_obj.clear();
                     finish();
                     startActivity(intent);
 

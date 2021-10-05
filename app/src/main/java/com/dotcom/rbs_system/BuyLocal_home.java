@@ -42,6 +42,7 @@ import java.util.List;
  */
 public class BuyLocal_home extends Fragment {
     AdapterCategoryRecyclerView adapterCategoryRecyclerView;
+    Progress_dialog pd = new Progress_dialog();
 
     Button test_btn, test1_btn;
     EditText search_editText;
@@ -61,7 +62,7 @@ public class BuyLocal_home extends Fragment {
 
     ImageView menu_btn;
 
-    TextView logout, communication_option, rbs_option, vendor_option, offers_option;
+    TextView logout, rbs_option, vendor_option;
 
     RelativeLayout side_option_menu_bg_relativeLayout;
 
@@ -148,10 +149,8 @@ public class BuyLocal_home extends Fragment {
         side_menu_cardview = view.findViewById(R.id.side_menu_cardview);
 
         logout = view.findViewById(R.id.logout);
-        communication_option = view.findViewById(R.id.communication_option);
         rbs_option = view.findViewById(R.id.rbs_option);
         vendor_option = view.findViewById(R.id.vendor_option);
-        offers_option = view.findViewById(R.id.offers_option);
 
         side_option_menu_bg_relativeLayout = view.findViewById(R.id.side_option_menu_bg_relativeLayout);
         datafetch();
@@ -201,26 +200,6 @@ public class BuyLocal_home extends Fragment {
                 side_menu_cardview.setVisibility(View.GONE);
                 side_option_menu_bg_relativeLayout.setVisibility(View.GONE);
                 intent.putExtra("ACTIVITY_CHECK", "VENDOR");
-                getActivity().startActivity(intent);
-            }
-        });
-
-        offers_option.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), BuyLocal_offers_option.class);
-                side_menu_cardview.setVisibility(View.GONE);
-                side_option_menu_bg_relativeLayout.setVisibility(View.GONE);
-                getActivity().startActivity(intent);
-            }
-        });
-
-        communication_option.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), BuyLocal_conversations.class);
-                side_menu_cardview.setVisibility(View.GONE);
-                side_option_menu_bg_relativeLayout.setVisibility(View.GONE);
                 getActivity().startActivity(intent);
             }
         });
@@ -277,6 +256,7 @@ public class BuyLocal_home extends Fragment {
         spotlightItemsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                pd.showProgressBar(getActivity());
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         itemname.add(String.valueOf(dataSnapshot1.child("Item_name").getValue()));
@@ -290,6 +270,7 @@ public class BuyLocal_home extends Fragment {
                     AdapterSpotlightItemListRecyclerView viewAdapter = new AdapterSpotlightItemListRecyclerView(getActivity(), itemname, price, itemImage, key_idList, categoryList, shopkeeperList);
                     spotlightRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
                     spotlightRecyclerView.setAdapter(viewAdapter);
+                    pd.dismissProgressBar(getActivity());
                 }
             }
 

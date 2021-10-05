@@ -22,6 +22,7 @@ public class Repair_details_edit {
     String email_textView;
 
     String ticketNo_TextView;
+    String ticketkeyId_TextView;
     String amount_TextView;
     String date_TextView;
     String specialConditions_TextView;
@@ -157,6 +158,14 @@ public class Repair_details_edit {
 
     public void setTicketNo_TextView(String ticketNo_TextView) {
         this.ticketNo_TextView = ticketNo_TextView;
+    }
+
+    public String getTicketkeyId_TextView() {
+        return ticketkeyId_TextView;
+    }
+
+    public void setTicketkeyId_TextView(String ticketkeyId_TextView) {
+        this.ticketkeyId_TextView = ticketkeyId_TextView;
     }
 
     public String getAmount_TextView() {

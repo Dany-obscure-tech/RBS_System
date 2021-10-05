@@ -43,8 +43,6 @@ import java.util.TimeZone;
  */
 public class VendorOrders extends Fragment{
 
-    // TODO: 9/14/2021 sorting krni he 
-
     SimpleDateFormat format;
     String yesterdayDate,currentDate,specificDate;
 
@@ -57,6 +55,7 @@ public class VendorOrders extends Fragment{
     List<String> shop_name;
     List<String> date;
     List<String> totalAmount;
+    List<String> remainingAmount;
     List<String> vendor_order_status;
     List<String> shopkeeper_image;
     List<String> shopKeeper_keyID;
@@ -66,6 +65,7 @@ public class VendorOrders extends Fragment{
     List<String> rawshop_name;
     List<String> rawdate;
     List<String> rawtotalAmount;
+    List<String> rawRemainingAmount;
     List<String> rawvendor_order_status;
     List<String> rawshopkeeper_image;
     List<String> rawshopKeeper_keyID;
@@ -139,6 +139,7 @@ public class VendorOrders extends Fragment{
         shop_name = new ArrayList<>();
         date = new ArrayList<>();
         totalAmount = new ArrayList<>();
+        remainingAmount = new ArrayList<>();
         vendor_order_status = new ArrayList<>();
         shopkeeper_image = new ArrayList<>();
         shopKeeper_keyID = new ArrayList<>();
@@ -148,6 +149,7 @@ public class VendorOrders extends Fragment{
         rawshop_name = new ArrayList<>();
         rawdate = new ArrayList<>();
         rawtotalAmount = new ArrayList<>();
+        rawRemainingAmount = new ArrayList<>();
         rawvendor_order_status = new ArrayList<>();
         rawshopkeeper_image = new ArrayList<>();
         rawshopKeeper_keyID = new ArrayList<>();
@@ -170,24 +172,38 @@ public class VendorOrders extends Fragment{
                     raworder_no_vendor.add(snapshot1.child("invoice_no").getValue().toString());
                     rawdate.add(snapshot1.child("date").getValue().toString());
                     rawtotalAmount.add(snapshot1.child("totalBalance").getValue().toString());
+
                     rawvendor_order_status.add(snapshot1.child("status").getValue().toString());
                     rawshopkeeper_image.add(snapshot1.child("shopkeeper_imageUrl").getValue().toString());
                     rawshopKeeper_keyID.add(snapshot1.child("shopkeeper_keyID").getValue().toString());
-                    rawinvoiceKeyID.add(snapshot1.child("invoice_keyId").getValue().toString());
 
                     shop_name.add(snapshot1.child("shopkeeper_name").getValue().toString());
                     order_no_vendor.add(snapshot1.child("invoice_no").getValue().toString());
                     date.add(snapshot1.child("date").getValue().toString());
                     totalAmount.add(snapshot1.child("totalBalance").getValue().toString());
+
                     vendor_order_status.add(snapshot1.child("status").getValue().toString());
                     shopkeeper_image.add(snapshot1.child("shopkeeper_imageUrl").getValue().toString());
                     shopKeeper_keyID.add(snapshot1.child("shopkeeper_keyID").getValue().toString());
-                    invoiceKeyID.add(snapshot1.child("invoice_keyId").getValue().toString());
 
+                    if(snapshot1.child("remainingBalance").exists()){
+                        rawRemainingAmount.add(snapshot1.child("remainingBalance").getValue().toString());
+                        remainingAmount.add(snapshot1.child("remainingBalance").getValue().toString());
+                    }else {
+                        rawRemainingAmount.add("NA");
+                        remainingAmount.add("NA");
+                    }
+                    if (snapshot1.child("invoice_keyId").exists()){
+                        rawinvoiceKeyID.add(snapshot1.child("invoice_keyId").getValue().toString());
+                        invoiceKeyID.add(snapshot1.child("invoice_keyId").getValue().toString());
+                    }else {
+                        rawinvoiceKeyID.add("NA");
+                        invoiceKeyID.add("NA");
+                    }
 
                 }
 
-                adapter_vendor_order_list_recyclerView = new Adapter_Vendor_order_list_RecyclerView(getActivity(), order_no_vendor, shop_name, date, totalAmount, vendor_order_status, shopkeeper_image,shopKeeper_keyID, invoiceKeyID);
+                adapter_vendor_order_list_recyclerView = new Adapter_Vendor_order_list_RecyclerView(getActivity(), order_no_vendor, shop_name, date, totalAmount,remainingAmount, vendor_order_status, shopkeeper_image,shopKeeper_keyID, invoiceKeyID);
                 orders_list_recyclerview.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                 orders_list_recyclerview.setAdapter(adapter_vendor_order_list_recyclerView);
             }
@@ -238,6 +254,7 @@ public class VendorOrders extends Fragment{
                         order_no_vendor.clear();
                         date.clear();
                         totalAmount.clear();
+                        remainingAmount.clear();
                         vendor_order_status.clear();
                         shopkeeper_image.clear();
                         shopKeeper_keyID.clear();
@@ -254,6 +271,7 @@ public class VendorOrders extends Fragment{
                                 order_no_vendor.add(raworder_no_vendor.get(i));
                                 date.add(rawdate.get(i));
                                 totalAmount.add(rawtotalAmount.get(i));
+                                remainingAmount.add(rawRemainingAmount.get(i));
                                 vendor_order_status.add(rawvendor_order_status.get(i));
                                 shopkeeper_image.add(rawshopkeeper_image.get(i));
                                 shopKeeper_keyID.add(rawshopKeeper_keyID.get(i));
@@ -270,6 +288,7 @@ public class VendorOrders extends Fragment{
                                 order_no_vendor.clear();
                                 date.clear();
                                 totalAmount.clear();
+                                remainingAmount.clear();
                                 vendor_order_status.clear();
                                 shopkeeper_image.clear();
                                 shopKeeper_keyID.clear();
@@ -280,6 +299,7 @@ public class VendorOrders extends Fragment{
                                     order_no_vendor.add(raworder_no_vendor.get(i));
                                     date.add(rawdate.get(i));
                                     totalAmount.add(rawtotalAmount.get(i));
+                                    remainingAmount.add(rawRemainingAmount.get(i));
                                     vendor_order_status.add(rawvendor_order_status.get(i));
                                     shopkeeper_image.add(rawshopkeeper_image.get(i));
                                     shopKeeper_keyID.add(rawshopKeeper_keyID.get(i));
@@ -320,6 +340,7 @@ public class VendorOrders extends Fragment{
                 order_no_vendor.clear();
                 date.clear();
                 totalAmount.clear();
+                remainingAmount.clear();
                 vendor_order_status.clear();
                 shopkeeper_image.clear();
                 shopKeeper_keyID.clear();
@@ -341,6 +362,7 @@ public class VendorOrders extends Fragment{
                         order_no_vendor.add(raworder_no_vendor.get(i));
                         date.add(rawdate.get(i));
                         totalAmount.add(rawtotalAmount.get(i));
+                        remainingAmount.add(rawRemainingAmount.get(i));
                         vendor_order_status.add(rawvendor_order_status.get(i));
                         shopkeeper_image.add(rawshopkeeper_image.get(i));
                         shopKeeper_keyID.add(rawshopKeeper_keyID.get(i));
@@ -357,6 +379,7 @@ public class VendorOrders extends Fragment{
                         order_no_vendor.clear();
                         date.clear();
                         totalAmount.clear();
+                        remainingAmount.clear();
                         vendor_order_status.clear();
                         shopkeeper_image.clear();
                         shopKeeper_keyID.clear();
@@ -367,6 +390,7 @@ public class VendorOrders extends Fragment{
                             order_no_vendor.add(raworder_no_vendor.get(i));
                             date.add(rawdate.get(i));
                             totalAmount.add(rawtotalAmount.get(i));
+                            remainingAmount.add(rawRemainingAmount.get(i));
                             vendor_order_status.add(rawvendor_order_status.get(i));
                             shopkeeper_image.add(rawshopkeeper_image.get(i));
                             shopKeeper_keyID.add(rawshopKeeper_keyID.get(i));
@@ -392,6 +416,7 @@ public class VendorOrders extends Fragment{
                 order_no_vendor.clear();
                 date.clear();
                 totalAmount.clear();
+                remainingAmount.clear();
                 vendor_order_status.clear();
                 shopkeeper_image.clear();
                 shopKeeper_keyID.clear();
@@ -412,6 +437,7 @@ public class VendorOrders extends Fragment{
                         order_no_vendor.add(raworder_no_vendor.get(i));
                         date.add(rawdate.get(i));
                         totalAmount.add(rawtotalAmount.get(i));
+                        remainingAmount.add(rawRemainingAmount.get(i));
                         vendor_order_status.add(rawvendor_order_status.get(i));
                         shopkeeper_image.add(rawshopkeeper_image.get(i));
                         shopKeeper_keyID.add(rawshopKeeper_keyID.get(i));
@@ -428,6 +454,7 @@ public class VendorOrders extends Fragment{
                         order_no_vendor.clear();
                         date.clear();
                         totalAmount.clear();
+                        remainingAmount.clear();
                         vendor_order_status.clear();
                         shopkeeper_image.clear();
                         shopKeeper_keyID.clear();
@@ -438,6 +465,7 @@ public class VendorOrders extends Fragment{
                             order_no_vendor.add(raworder_no_vendor.get(i));
                             date.add(rawdate.get(i));
                             totalAmount.add(rawtotalAmount.get(i));
+                            remainingAmount.add(rawRemainingAmount.get(i));
                             vendor_order_status.add(rawvendor_order_status.get(i));
                             shopkeeper_image.add(rawshopkeeper_image.get(i));
                             shopKeeper_keyID.add(rawshopKeeper_keyID.get(i));

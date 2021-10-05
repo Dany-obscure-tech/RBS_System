@@ -83,6 +83,12 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     String searchItem, findItem;
     String searchCustomer, findCustomer;
 
+    String itemname_returnString;
+    String itemid_returnString;
+    String itemkeyid_returnString;
+    String itemcategory_returnString;
+    String itemlimage_returnString;
+
     AsyncEscPosPrinter printer;
 
     Boolean isScrolling = false, itemDatafullyloaded = false;
@@ -110,9 +116,9 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     TextView email_title_textview, id_title_textview, phone_no_title_textview;
 
     Progress_dialog pd;
-    String customerEmail_returnString,customerPushID;
+    String customerEmail_returnString = "false", customerPushID,customerUID;
 
-    DatabaseReference reference, itemHistoryRef,emailToIDRef;
+    DatabaseReference reference, itemHistoryRef, emailToIDRef,emailToUIDRef,customerPurchaseHistoryRef;
     DatabaseReference existingCustomersRef, existingItemsRef, existingVoucherRef;
     Query orderQuery;
 
@@ -218,6 +224,8 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
         reference = FirebaseDatabase.getInstance().getReference();
         emailToIDRef = FirebaseDatabase.getInstance().getReference("email_to_id");
+        emailToUIDRef = FirebaseDatabase.getInstance().getReference("email_to_uid");
+        customerPurchaseHistoryRef = FirebaseDatabase.getInstance().getReference("Customer_purchase_history");
 
         toggling_linear = findViewById(R.id.toggling_linear);
 
@@ -472,13 +480,13 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
     private void checkForItemSell() {
         if (getIntent().getStringExtra("ITEM_SELL_CHECK").equals("TRUE")) {
 
-            String itemname_returnString = getIntent().getStringExtra("Item_name");
-            String itemid_returnString = getIntent().getStringExtra("Item_id");
-            String itemcategory_returnString = getIntent().getStringExtra("Item_category");
-            String itemkeyid_returnString = getIntent().getStringExtra("Item_keyid");
+            itemname_returnString = getIntent().getStringExtra("Item_name");
+            itemid_returnString = getIntent().getStringExtra("Item_id");
+            itemkeyid_returnString = getIntent().getStringExtra("Item_keyid");
+            itemcategory_returnString = getIntent().getStringExtra("Item_category");
+            itemlimage_returnString = getIntent().getStringExtra("Item_image");
             String itemprice_returnString = getIntent().getStringExtra("Item_price");
             String itemlstactive_returnString = getIntent().getStringExtra("Last_Active");
-            String itemlimage_returnString = getIntent().getStringExtra("Item_image");
             customerEmail_returnString = getIntent().getStringExtra("Customer_email");
             // set text view with string
 
@@ -511,17 +519,17 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
 
             itemImage_imageView.setVisibility(View.VISIBLE);
-                    viewItemDetails_textView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(Sale.this, Item_history.class);
-                            intent.putExtra("ITEM_ID", itemkeyid_returnString);
-                            intent.putExtra("ITEM_CATEGORY", itemcategory_returnString);
-                            startActivity(intent);
-                        }
-                    });
+            viewItemDetails_textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Sale.this, Item_history.class);
+                    intent.putExtra("ITEM_ID", itemkeyid_returnString);
+                    intent.putExtra("ITEM_CATEGORY", itemcategory_returnString);
+                    startActivity(intent);
+                }
+            });
 
-            if (!customerEmail_returnString.equals("false")){
+            if (!customerEmail_returnString.equals("false")) {
 
 
                 emailToIDRef.child(customerEmail_returnString).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -555,6 +563,19 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                                 rbsCustomerDetails.setKey(customerKeyID);
                                 rbsCustomerDetails.setCustomerName(snapshot.child("Name").getValue().toString());
                                 rbsCustomerDetails.setFirstImageUrl(snapshot.child("ID_Image_urls").child("image_1").getValue().toString());
+
+                                emailToUIDRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        customerUID = snapshot.child(customerEmail_returnString).getValue().toString();
+                                        Toast.makeText(Sale.this, customerUID, Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
 
                                 viewCustomerDetails_textView.setVisibility(View.VISIBLE);
                                 viewCustomerDetails_textView.setOnClickListener(new View.OnClickListener() {
@@ -995,7 +1016,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                 getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
                 int height = displayMetrics.heightPixels;
                 int width = displayMetrics.widthPixels;
-                itemList_alert_dialog.getWindow().setLayout(width-10, height-800); //Controlling width and height.
+                itemList_alert_dialog.getWindow().setLayout(width - 10, height - 800); //Controlling width and height.
             }
         });
 
@@ -1007,7 +1028,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
                 getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
                 int height = displayMetrics.heightPixels;
                 int width = displayMetrics.widthPixels;
-                customerList_alert_dialog.getWindow().setLayout(width-10, height-800); //Controlling width and height.
+                customerList_alert_dialog.getWindow().setLayout(width - 10, height - 800); //Controlling width and height.
             }
         });
 
@@ -1140,6 +1161,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         }
 
     }
+
     private void onCustomerRecyclerViewScrollListner(List<String> exisitngCustomerList, List<String> exisitngCustomerIDList, List<String> exisitngCustomerKeyIDList, List<String> existingCustomerPhnoList, List<String> existingCustomerDobList, List<String> existingCustomerAddressList, List<String> existingCustomerEmailList, List<String> existingCustomerImageUrlList) {
         customerList_recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -1212,7 +1234,6 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
         }
 
 
-
         if (date_textView.getText().toString().equals("Select date")) {
             Toast.makeText(this, "Select date", Toast.LENGTH_LONG).show();
             valid = false;
@@ -1251,8 +1272,11 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             reference.child("Sale_list").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(key).child("added_by").setValue(firebaseAuthUID);
             reference.child("Sale_list").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(key).child("key_id").setValue(key);
 
+            System.out.println("called---------");
             if (rbsItemDetails.getCheck().equals("Sale existing item")) {
+                System.out.println("Sale existing item");
                 if (rbsCustomerDetails.getCheck().equals("New customer")) {
+                    System.out.println("New customer");
                     rbsCustomerDetails.uploadCustomerDetails(Sale.this);
                 }
                 rbsItemDetails.switchStockSale(rbsCustomerDetails.getKey(), FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -1266,7 +1290,7 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
 
 
             new Customer_history_class().twelveValues(rbsCustomerDetails.getKey(), key, date_textView.getText().toString(), rbsItemDetails.getItemCategory(), String.valueOf(rbsItemDetails.getFirstImageUri()), rbsItemDetails.getKey(), rbsItemDetails.getItemName(), rbsItemDetails.getItemID(), "Buy", UserDetails.getInstance().getShopLogo(), FirebaseAuth.getInstance().getCurrentUser().getUid(), UserDetails.getInstance().getShopName(), date.getTime());
-            new Customer_history_class().uploadCustomerImagetoItemHistory(RBSItemDetails.getInstance().getKey(), UniquePushID.getInstance().getUniquePushID(),rbsCustomerDetails.getFirstImageUrl());
+            new Customer_history_class().uploadCustomerImagetoItemHistory(RBSItemDetails.getInstance().getKey(), UniquePushID.getInstance().getUniquePushID(), rbsCustomerDetails.getFirstImageUrl());
             pd1.dismissProgressBar(Sale.this);
 
             Intent intent = new Intent(Sale.this, Invoice_preview.class);
@@ -1280,14 +1304,23 @@ public class Sale extends AppCompatActivity implements DatePickerDialog.OnDateSe
             intent.putExtra("Item_Price_Currency", String.valueOf(itemPriceCurrency_textView.getText().toString()));
             intent.putExtra("Item_Price", String.valueOf(itemPrice_textView.getText().toString()));
             intent.putExtra("Paid_Amount", String.valueOf(paid_editText.getText().toString()));
+            intent.putExtra("Invoice_No", String.valueOf(invoiceNo_TextView.getText().toString()));
+            intent.putExtra("Invoice_Type", String.valueOf("Sell to customer"));
 
-            if (getIntent().getStringExtra("ITEM_SELL_CHECK").equals("TRUE")) {
-                setResult(1212);
-                finish();
-            }else {
-                finish();
-                startActivity(intent);
+            if (!customerEmail_returnString.equals("false")) {
+                customerPurchaseHistoryRef.child(customerUID).child(key).child("shopkeeper_name").setValue(UserDetails.getInstance().getShopName());
+                customerPurchaseHistoryRef.child(customerUID).child(key).child("shopkeeper_image").setValue(UserDetails.getInstance().getShopLogo());
+                customerPurchaseHistoryRef.child(customerUID).child(key).child("shopkeeper_keyId").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                customerPurchaseHistoryRef.child(customerUID).child(key).child("item_name").setValue(itemname_returnString);
+                customerPurchaseHistoryRef.child(customerUID).child(key).child("item_image").setValue(itemlimage_returnString);
+                customerPurchaseHistoryRef.child(customerUID).child(key).child("item_category").setValue(itemcategory_returnString);
+                customerPurchaseHistoryRef.child(customerUID).child(key).child("item_keyId").setValue(itemkeyid_returnString);
+                customerPurchaseHistoryRef.child(customerUID).child(key).child("item_serialno").setValue(itemid_returnString);
+                customerPurchaseHistoryRef.child(customerUID).child(key).child("price").setValue(paid_editText.getText().toString());
+                customerPurchaseHistoryRef.child(customerUID).child(key).child("date").setValue(date_textView.getText().toString());
             }
+            finish();
+            startActivity(intent);
 
         } else {
             Toast.makeText(this, "Internet is not Connected", Toast.LENGTH_SHORT).show();

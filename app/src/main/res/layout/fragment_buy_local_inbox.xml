@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BuyLocal_conversations">
+    tools:context=".BuyLocal_inbox">
 
     <RelativeLayout
         android:id="@+id/header"
@@ -12,34 +12,23 @@
         android:background="@drawable/screen_header_rectangle">
 
         <TextView
+            android:id="@+id/category_textview"
             style="@style/TextViews_Header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/back_btn"
+            android:layout_marginLeft="50dp"
             android:text="Conversations"
             android:textColor="#ffffff" />
 
-        <ImageButton
-            android:id="@+id/back_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            android:adjustViewBounds="true"
-            android:background="#00000000"
-            android:padding="15dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/back_arrow" />
 
     </RelativeLayout>
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/conversation_list_recyclerView"
+        android:layout_below="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/header" />
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

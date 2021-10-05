@@ -1,15 +1,17 @@
 package com.dotcom.rbs_system;
 
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterOffersItemListRecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,7 +24,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuyLocal_offers_option extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link BuyLocal_offers#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class BuyLocal_offers extends Fragment {
+    View view;
 
     AdapterOffersItemListRecyclerView adapterOffersItemListRecyclerView;
 
@@ -30,7 +38,6 @@ public class BuyLocal_offers_option extends AppCompatActivity {
     ImageButton search_imageBtn;
     EditText search_editText;
     RecyclerView offers;
-    ImageButton back_btn;
 
     List<String> itemname;
     List<String> price;
@@ -52,25 +59,53 @@ public class BuyLocal_offers_option extends AppCompatActivity {
     List<String> filteredshopkeeperID;
     List<String> filtereditemCategory;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buy_local_offers_option);
-        initialization();
-        initialProcess();
-        onclicklistners();
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
+    private String mParam1;
+    private String mParam2;
+
+    public BuyLocal_offers() {
+        // Required empty public constructor
     }
 
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment BuyLocal_offers.
+     */
+    public static BuyLocal_offers newInstance(String param1, String param2) {
+        BuyLocal_offers fragment = new BuyLocal_offers();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private void initialization() {
-        search_imageBtn = (ImageButton)findViewById(R.id.search_imageBtn);
-        search_editText = (EditText) findViewById(R.id.search_editText);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_buy_local_offers, container, false);
+
+        search_imageBtn = (ImageButton)view.findViewById(R.id.search_imageBtn);
+        search_editText = (EditText) view.findViewById(R.id.search_editText);
         customerOffersRef = FirebaseDatabase.getInstance().getReference("Customer_offers/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
-        offers = findViewById(R.id.offers);
-        back_btn = findViewById(R.id.back_btn);
+        offers = view.findViewById(R.id.offers);
 
         filtereditemname = new ArrayList<>();
         filteredprice = new ArrayList<>();
@@ -92,7 +127,9 @@ public class BuyLocal_offers_option extends AppCompatActivity {
         shopkeeperID = new ArrayList<>();
         itemCategory = new ArrayList<>();
 
+        initialProcess();
 
+        return view;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -127,8 +164,8 @@ public class BuyLocal_offers_option extends AppCompatActivity {
                     filtereditemCategory.add(snapshot1.child("item_category").getValue().toString());
                 }
 
-                adapterOffersItemListRecyclerView = new AdapterOffersItemListRecyclerView(BuyLocal_offers_option.this, filtereditemname, filteredprice, filtereditemImage, filteredoffer_status, filteredoffer_product_price, filteredproduct_offer_msg, filteredproduct_keyId, filteredshopkeeperID, filtereditemCategory);
-                offers.setLayoutManager(new GridLayoutManager(BuyLocal_offers_option.this, 1));
+                adapterOffersItemListRecyclerView = new AdapterOffersItemListRecyclerView(getActivity(), filtereditemname, filteredprice, filtereditemImage, filteredoffer_status, filteredoffer_product_price, filteredproduct_offer_msg, filteredproduct_keyId, filteredshopkeeperID, filtereditemCategory);
+                offers.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                 offers.setAdapter(adapterOffersItemListRecyclerView);
             }
 
@@ -141,18 +178,9 @@ public class BuyLocal_offers_option extends AppCompatActivity {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void onclicklistners() {
-        back_btn_listner();
         search_imageBtn_listener();
     }
 
-    private void back_btn_listner() {
-        back_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-    }
 
     private void search_imageBtn_listener() {
         search_imageBtn.setOnClickListener(new View.OnClickListener() {

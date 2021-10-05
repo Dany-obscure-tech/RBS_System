@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
         android:allowBackup="true"
@@ -22,6 +24,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".Invoice_preview_Vendor_order"
+            android:exported="true" />
+        <activity
+            android:name=".Invoice_preview_accessory_sale"
+            android:exported="true" />
+        <activity
+            android:name=".Vendor_messaging"
+            android:exported="true"
+            android:theme="@style/AppTheme.no" />
         <activity
             android:name=".Accessory"
             android:exported="true"
@@ -37,10 +49,6 @@
         <activity
             android:name=".Shopkeeper_details"
             android:theme="@style/AppTheme.no" />
-        <activity
-            android:name=".BuyLocal_offers_option"
-            android:theme="@style/AppTheme.no"
-            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".PasscodeActivity"
             android:theme="@style/AppTheme.no" />
@@ -70,16 +78,13 @@
             android:name=".VendorMainScreen"
             android:label="Vendor System" />
         <activity
-            android:name=".BuyLocal_conversations"
-            android:theme="@style/AppTheme.no" />
-        <activity
             android:name=".SearchResult"
             android:theme="@style/AppTheme.no" />
         <activity
             android:name=".BuyLocal_messaging"
             android:theme="@style/AppTheme.no" />
         <activity
-            android:name=".RBS_Shopkeeper_Inventory_Details"
+            android:name=".RBS_productdetails"
             android:theme="@style/AppTheme.no" />
         <activity
             android:name=".BuyLocal_shopkeeper_shop"

@@ -824,7 +824,6 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
                     int size = lessExisitngCustomerList.size() + 2;
                     for (int i = lessExisitngCustomerList.size(); i < size; i++) {
                         if (i < exisitngCustomerList.size()) {
-                            System.out.println(i);
                             lessExisitngCustomerList.add(exisitngCustomerList.get(i));
                             lessExisitngCustomerIDList.add(exisitngCustomerIDList.get(i));
                             lessExistingCustomerPhnoList.add(existingCustomerPhnoList.get(i));
@@ -1063,6 +1062,9 @@ public class Buy extends AppCompatActivity implements DatePickerDialog.OnDateSet
             intent.putExtra("Item_Price_Currency", String.valueOf(itemPriceCurrency_textView.getText().toString()));
             intent.putExtra("Item_Price", String.valueOf(itemPrice_textView.getText().toString()));
             intent.putExtra("Paid_Amount", String.valueOf(paid_editText.getText().toString()));
+            intent.putExtra("Invoice_No", String.valueOf(invoiceNo_TextView.getText().toString()));
+            intent.putExtra("Invoice_Type", String.valueOf("Buy from customer"));
+
             finish();
             startActivity(intent);
 

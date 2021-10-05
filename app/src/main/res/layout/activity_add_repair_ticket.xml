@@ -38,7 +38,7 @@
 
     </RelativeLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrool"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Customer name" />
+                    android:text="Name" />
 
                 <EditText
                     android:id="@+id/customerName_editText"
@@ -163,7 +163,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Customer Email" />
+                    android:text="Email" />
 
                 <EditText
                     android:id="@+id/customerEmail_editText"
@@ -179,7 +179,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Customer ID" />
+                    android:text="ID" />
 
                 <EditText
                     android:id="@+id/customerId_editText"
@@ -202,7 +202,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Item Name" />
+                    android:text="Name" />
 
                 <EditText
                     android:id="@+id/itemName_editText"
@@ -217,7 +217,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Item Serial No" />
+                    android:text="Serial No" />
 
                 <EditText
                     android:id="@+id/itemSerialNo_editText"
@@ -258,8 +258,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/faultList_recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     style="@style/TextViews_Bold"
@@ -383,7 +382,7 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </RelativeLayout>

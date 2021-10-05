@@ -3,31 +3,26 @@ package com.dotcom.rbs_system.Adapter;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.Classes.Currency;
-import com.dotcom.rbs_system.Classes.VendorStockDetails;
 import com.dotcom.rbs_system.R;
-import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class Adapter_RBS_accessories_inventory_RecyclerView extends RecyclerView.Adapter<Adapter_RBS_accessories_inventory_RecyclerView.MyViewHolder> {
+    DatabaseReference stockRef = FirebaseDatabase.getInstance().getReference("ShopKeeper_accessories/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+
     Context context;
     List<String> accessory_name_textView;
     List<String> accessory_inventory_Category_textView;
@@ -37,8 +32,6 @@ public class Adapter_RBS_accessories_inventory_RecyclerView extends RecyclerView
     List<String> stockkeyId_list;
 
     Dialog dialog_box;
-
-    Boolean validate = true;
 
     public Adapter_RBS_accessories_inventory_RecyclerView(Context context, List<String> accessory_name_textView, List<String> accessory_inventory_Category_textView, List<String> stockPrice_list, List<String> accessory_inventory_Quantity_textView, List<String> stockkeyId_list, List<String> edit_stock_textview_list) {
         this.context = context;
@@ -76,7 +69,7 @@ public class Adapter_RBS_accessories_inventory_RecyclerView extends RecyclerView
                 dialog_box = new Dialog(context);
                 dialog_box.setContentView(R.layout.alert_rbs_accessory_stock_edit);
 
-                holder.item_name_textview = dialog_box.findViewById(R.id.item_name_textview);
+                holder.item_name_editText = dialog_box.findViewById(R.id.item_name_editText);
                 holder.category_editText = dialog_box.findViewById(R.id.username_editText);
                 holder.remove_btn = dialog_box.findViewById(R.id.remove_btn);
                 holder.save_btn = dialog_box.findViewById(R.id.save_btn);
@@ -86,20 +79,64 @@ public class Adapter_RBS_accessories_inventory_RecyclerView extends RecyclerView
 
                 holder.category_editText.setText(accessory_inventory_Category_textView.get(position));
 
+                holder.item_name_editText.setText(accessory_name_textView.get(position));
                 holder.item_price_editText.setText(stockPrice_list.get(position));
                 holder.item_quantity_edittext.setText(accessory_inventory_Quantity_textView.get(position));
-
-                itemPriceTextWatcher(holder.item_price_editText);
-                ItemQuantityTextWatcher(holder.item_quantity_edittext);
 
 
                 holder.save_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (validate) {
-                            //TODO Daniyal: yaha pa name bhi edit ho sakey ye bhi check kar, aur delete btn bhi connect karna ha, category bhi connect nhi ha
-                            // todo Shahzaib : validation for quantity and price
-//                            ((Activity) context).recreate();
+                        Boolean valid = true;
+
+                        if (holder.item_price_editText.getText().toString().isEmpty()) {
+                            holder.item_price_editText.setError("Please enter price");
+                            valid = false;
+
+                        } else {
+                            if (Float.parseFloat(holder.item_price_editText.getText().toString()) == 0) {
+                                holder.item_price_editText.setError("Please enter valid price");
+                            } else {
+                                holder.item_price_editText.setText(holder.item_price_editText.getText().toString().replaceFirst("^0+(?!$)", ""));
+                                if (holder.item_price_editText.getText().toString().startsWith(".")) {
+                                    holder.item_price_editText.setText("0" + holder.item_price_editText.getText().toString());
+                                }
+                            }
+                        }
+
+                        if (holder.item_quantity_edittext.getText().toString().isEmpty()) {
+                            holder.item_quantity_edittext.setError("Please enter price");
+                            valid = false;
+
+                        } else {
+                            if (Float.parseFloat(holder.item_quantity_edittext.getText().toString()) == 0) {
+                                holder.item_quantity_edittext.setError("Please enter valid price");
+                            } else {
+                                holder.item_quantity_edittext.setText(holder.item_quantity_edittext.getText().toString().replaceFirst("^0+(?!$)", ""));
+                                if (holder.item_quantity_edittext.getText().toString().startsWith(".")) {
+                                    holder.item_quantity_edittext.setText("0" + holder.item_quantity_edittext.getText().toString());
+                                }
+                            }
+                        }
+
+                        if (holder.item_quantity_edittext.getText().toString().equals("0")) {
+                            holder.item_quantity_edittext.setError("Please enter item quantity");
+                            valid = false;
+                        }
+
+                        if (holder.item_name_editText.getText().toString().isEmpty()) {
+                            holder.item_name_editText.setError("Please enter item name");
+                            valid = false;
+                        }
+
+                        if (valid) {
+                            stockRef.child(accessory_inventory_Category_textView.get(position)).child(stockkeyId_list.get(position)).child("Price").setValue(holder.item_price_editText.getText().toString());
+                            stockRef.child(accessory_inventory_Category_textView.get(position)).child(stockkeyId_list.get(position)).child("Quantity").setValue(holder.item_quantity_edittext.getText().toString());
+                            stockRef.child(accessory_inventory_Category_textView.get(position)).child(stockkeyId_list.get(position)).child("Name").setValue(holder.item_name_editText.getText().toString());
+
+
+                            dialog_box.dismiss();
+                            ((Activity) context).recreate();
                         }
 
                     }
@@ -112,68 +149,21 @@ public class Adapter_RBS_accessories_inventory_RecyclerView extends RecyclerView
                     }
                 });
 
+                holder.remove_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        stockRef.child(accessory_inventory_Category_textView.get(position)).child(stockkeyId_list.get(position)).removeValue();
+
+                        dialog_box.dismiss();
+                        ((Activity) context).recreate();
+                    }
+                });
+
+
+
 
                 dialog_box.show();
 
-            }
-
-            private void ItemQuantityTextWatcher(final EditText item_quantity_edittext) {
-                item_quantity_edittext.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (accessory_inventory_Quantity_textView.get(position).equals(item_quantity_edittext.getText().toString())) {
-                            item_quantity_edittext.setError("Please enter new value!");
-                            validate = false;
-                        }
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        if (item_quantity_edittext.getText().toString().isEmpty()) {
-                            item_quantity_edittext.setError("Please enter value!");
-                            validate = false;
-                        }
-                    }
-                });
-            }
-
-            private void itemPriceTextWatcher(final EditText item_price_editText) {
-                item_price_editText.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (stockPrice_list.get(position).equals(item_price_editText.getText().toString())) {
-                            item_price_editText.setError("Please enter new value!");
-                            validate = false;
-                        }
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-
-                        if (item_price_editText.getText().toString().isEmpty()) {
-                            item_price_editText.setError("Please enter value!");
-                            validate = false;
-                        } else {
-                            if (Float.parseFloat(item_price_editText.getText().toString()) == 0.0f) {
-                                item_price_editText.setError("Please enter valid value!");
-                                validate = false;
-                            }
-                        }
-                    }
-                });
             }
 
         });
@@ -191,8 +181,8 @@ public class Adapter_RBS_accessories_inventory_RecyclerView extends RecyclerView
         TextView accessory_name_textView, accesory_inventory_Category_textView, stockPrice_textView, accessory_inventory_Quantity_textView;
         TextView currency_textView;
         TextView edit_stock_textview;
-        TextView item_name_textview, category_editText;
-        EditText item_price_editText, item_quantity_edittext;
+        TextView category_editText;
+        EditText item_price_editText, item_quantity_edittext,item_name_editText;
         TextView save_btn, cancel_btn, remove_btn;
 
 

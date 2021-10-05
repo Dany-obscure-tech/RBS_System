@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.Adapter_RBS_Vendor_placeorder_RecyclerView;
+import com.dotcom.rbs_system.Classes.InvoiceNumberGenerator;
 import com.dotcom.rbs_system.Classes.RBSVendorSelectedStock;
 import com.dotcom.rbs_system.Classes.UserDetails;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +36,8 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
     TextView date_textView;
     TextView totalBalance_textView, balance_currency_textView;
     TextView confirm_order_btn;
+    TextView invoiceNo_TextView;
+
 
     ImageButton back_btn;
     List<String> placeorder_item_name_list, placeorder_item_category_list, place_order_price_list, place_order_quantity_list, placeorder_item_pic_list, placeorder_item_keyId_list;
@@ -51,6 +54,11 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rbs_vendor_order_receipt);
         Initialization();
+        try {
+            generateInvoiceNo();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Onclicklistners();
 
     }
@@ -73,6 +81,7 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
         vendor_phno_textView = findViewById(R.id.vendor_phno_textView);
         vendor_email_textView = findViewById(R.id.vendor_email_textView);
         vendor_address_textView = findViewById(R.id.vendor_address_textView);
+        invoiceNo_TextView = (TextView) findViewById(R.id.invoiceNo_TextView);
 
         vendor_name_textView.setText(getIntent().getStringExtra("VENDOR_NAME"));
         vendor_email_textView.setText(getIntent().getStringExtra("VENDOR_EMAIL"));
@@ -144,7 +153,8 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
                     accessoriesOrdersList.child(key).child("shopkeeper_address").setValue(UserDetails.getInstance().getAddress());
                     accessoriesOrdersList.child(key).child("shopkeeper_keyID").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-                    accessoriesOrdersList.child(key).child("invoice_no").setValue(key);
+                    accessoriesOrdersList.child(key).child("invoice_keyID").setValue(key);
+                    accessoriesOrdersList.child(key).child("invoice_no").setValue(invoiceNo_TextView.getText().toString());
                     accessoriesOrdersList.child(key).child("status").setValue("Pending");
                     accessoriesOrdersList.child(key).child("date").setValue(date_textView.getText().toString());
 
@@ -165,11 +175,12 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
 
                     shopkeeperVendorOrderRef.child(key).child("vendor_name").setValue(vendor_name_textView.getText().toString());
                     shopkeeperVendorOrderRef.child(key).child("vendor_imageUrl").setValue(profileImage);
-                    shopkeeperVendorOrderRef.child(key).child("invoice_no").setValue(key);
+                    shopkeeperVendorOrderRef.child(key).child("invoice_keyID").setValue(key);
                     shopkeeperVendorOrderRef.child(key).child("totalBalance").setValue(totalBalance_textView.getText().toString());
                     shopkeeperVendorOrderRef.child(key).child("date").setValue(date_textView.getText().toString());
                     shopkeeperVendorOrderRef.child(key).child("status").setValue("Pending");
                     shopkeeperVendorOrderRef.child(key).child("invoice_keyId").setValue(key);
+                    shopkeeperVendorOrderRef.child(key).child("invoice_no").setValue(invoiceNo_TextView.getText().toString());
                     shopkeeperVendorOrderRef.child(key).child("vendor_keyID").setValue(selectedVendorID);
 
                     ////////////////////////////////////////////////////////////////////////////////
@@ -177,16 +188,21 @@ public class Rbs_vendor_order_receipt extends AppCompatActivity {
 
                     vendorOrderRef.child(key).child("shopkeeper_name").setValue(UserDetails.getInstance().getShopName());
                     vendorOrderRef.child(key).child("shopkeeper_imageUrl").setValue(UserDetails.getInstance().getShopLogo());
-                    vendorOrderRef.child(key).child("invoice_no").setValue(key);
+                    vendorOrderRef.child(key).child("invoice_keyID").setValue(key);
                     vendorOrderRef.child(key).child("totalBalance").setValue(totalBalance_textView.getText().toString());
                     vendorOrderRef.child(key).child("date").setValue(date_textView.getText().toString());
                     vendorOrderRef.child(key).child("status").setValue("Pending");
                     vendorOrderRef.child(key).child("invoice_keyId").setValue(key);
+                    vendorOrderRef.child(key).child("invoice_no").setValue(invoiceNo_TextView.getText().toString());
                     vendorOrderRef.child(key).child("shopkeeper_keyID").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
                     finish();                }
             }
         });
+    }
+
+    private void generateInvoiceNo() throws ParseException {
+        invoiceNo_TextView.setText(new InvoiceNumberGenerator().generateNumber());
     }
 
     private void back_btn_listner() {

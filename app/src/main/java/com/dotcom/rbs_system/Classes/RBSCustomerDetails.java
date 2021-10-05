@@ -174,8 +174,6 @@ public class RBSCustomerDetails {
             reference.child("Customer_list").child(key).child("key_id").setValue(key);
             reference.child("Customer_list").child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
 
-
-
             for (i = 0; i<imageUrlList.size();i++) {
 
                 idStorageReference.child(key).child("image_"+String.valueOf(i+1)).putFile(imageUrlList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -186,11 +184,14 @@ public class RBSCustomerDetails {
                             public void onSuccess(Uri uri) {
                                 if (k==0){
                                     firstImageUrl= String.valueOf(uri);
-                                    if (RBSItemDetails.getInstance().getCheck().equals("Sale new item")||RBSItemDetails.getInstance().getCheck().equals("Buy new item")) {
-                                        new Customer_history_class().uploadCustomerImagetoItemHistory(RBSItemDetails.getInstance().getKey(), UniquePushID.getInstance().getUniquePushID(),firstImageUrl);
-                                    }
+                                    System.out.println("called before function for image");
+                                    System.out.println(RBSItemDetails.getInstance().getCheck());
+                                    System.out.println("called function for image");
+                                    System.out.println(firstImageUrl);
+                                    new Customer_history_class().uploadCustomerImagetoItemHistory(RBSItemDetails.getInstance().getKey(), UniquePushID.getInstance().getUniquePushID(),firstImageUrl);
+
                                 }
-                                System.out.println("k = "+k+" "+uri);
+
                                 reference.child("Customer_list").child(key).child("ID_Image_urls").child("image_"+(k+1)).setValue(String.valueOf(uri.toString()));
 
                                 k++;

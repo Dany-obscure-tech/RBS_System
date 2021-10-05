@@ -142,10 +142,22 @@
 
     </style>
 
+    <style name="RBS_Options_CardView_style">
+        <item name="cardBackgroundColor">@color/colorWhite</item>
+        <item name="cardElevation">4dp</item>
+        <item name="cardUseCompatPadding">false</item>
+
+    </style>
+
     <style name="Divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">?android:attr/listDivider</item>
+    </style>
+
+    <style name="MenuItems">
+        <item name="android:textSize">@dimen/Regular_Small</item>
+        <item name="android:fontFamily">@font/segoe_ui</item>
     </style>
 
 

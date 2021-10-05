@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.AdapterRepairsFaultListRecyclerView;
 import com.dotcom.rbs_system.Classes.InvoiceNumberGenerator;
+import com.dotcom.rbs_system.Classes.RepairTicketFaults;
 import com.dotcom.rbs_system.Classes.Repair_details_edit;
 import com.dotcom.rbs_system.Classes.UniquePushID;
 import com.dotcom.rbs_system.Model.SampleSearchModel;
@@ -215,8 +216,8 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
 
         /////Firebase config
         firebaseAuthUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        repairRef = FirebaseDatabase.getInstance().getReference("Repairs_list/" + firebaseAuthUID + "/" + repair_details_edit_obj.getTicketNo_TextView());
-        repairTicketRef = FirebaseDatabase.getInstance().getReference("Repairs_ticket_list/" + firebaseAuthUID + "/" + repair_details_edit_obj.getTicketNo_TextView());
+        repairRef = FirebaseDatabase.getInstance().getReference("Repairs_list/" + firebaseAuthUID + "/" + repair_details_edit_obj.getTicketkeyId_TextView());
+        repairTicketRef = FirebaseDatabase.getInstance().getReference("Repairs_ticket_list/" + firebaseAuthUID + "/" + repair_details_edit_obj.getTicketkeyId_TextView());
 
         date = Calendar.getInstance().getTime();
         String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(date);
@@ -338,12 +339,35 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
                             Toast.makeText(AddRepairTicket.this, "Submit Successfully123", Toast.LENGTH_SHORT).show();
 
                             pd1.dismissProgressBar(AddRepairTicket.this);
-                            repair_details_edit_obj.clear();
+
 
                             Intent intent = new Intent(AddRepairTicket.this,Invoice_preview_repair_ticket.class);
+                            intent.putExtra("TICKET_TYPE", "REPIAR TICKET PENDING");
+                            intent.putExtra("Date", repair_details_edit_obj.getDate_TextView());
+                            intent.putExtra("Customer_Name", repair_details_edit_obj.getCustomerName_textView());
+                            intent.putExtra("Customer_Email", repair_details_edit_obj.getEmail_textView());
+                            intent.putExtra("Customer_ID", repair_details_edit_obj.getId_textView());
+                            intent.putExtra("Customer_Ph_No", repair_details_edit_obj.getPhno_textView());
+                            intent.putExtra("Item_Name", repair_details_edit_obj.getItemName_textView());
+                            intent.putExtra("Item_ID", repair_details_edit_obj.getSerialNo_textView());
+                            intent.putExtra("KeyID", repair_details_edit_obj.getItemKeyID());
+                            intent.putExtra("Ticket_No", repair_details_edit_obj.getTicketNo_TextView());
+                            intent.putExtra("Amount", String.valueOf(pendingAmount_editText.getText().toString()));
+                            intent.putExtra("Special_condition", String.valueOf(special_condition_editText.getText().toString()));
+
+                            System.out.println("called"+repair_details_edit_obj.getDate_TextView());
+
+                            RepairTicketFaults.getInstance().setFaultNameList(repair_details_edit_obj.getFaultNameList());
+                            RepairTicketFaults.getInstance().setFaultPriceList(repair_details_edit_obj.getFaultPriceList());
+
+                            RepairTicketFaults.getInstance().setPendingFaults(true);
+                            RepairTicketFaults.getInstance().setPendingFaultNameList(repair_details_edit_obj.getPendingFaultNameList());
+                            RepairTicketFaults.getInstance().setPendingFaultPriceList(repair_details_edit_obj.getPendingFaultPriceList());
+
+                            repair_details_edit_obj.clear();
+
                             finish();
                             startActivity(intent);
-
 
                         } else {
                             Toast.makeText(AddRepairTicket.this, "Internet is not Connected", Toast.LENGTH_SHORT).show();
@@ -379,7 +403,26 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
 
                     repairTicketRef.child("Status").setValue("clear");
 
+
                     Intent intent = new Intent(AddRepairTicket.this,Invoice_preview_repair_ticket.class);
+                    intent.putExtra("TICKET_TYPE", "REPAIR TICKET PENDING");
+                    intent.putExtra("Date", repair_details_edit_obj.getDate_TextView());
+                    intent.putExtra("Customer_Name", repair_details_edit_obj.getCustomerName_textView());
+                    intent.putExtra("Customer_Email", repair_details_edit_obj.getEmail_textView());
+                    intent.putExtra("Customer_ID", repair_details_edit_obj.getId_textView());
+                    intent.putExtra("Customer_Ph_No", repair_details_edit_obj.getPhno_textView());
+                    intent.putExtra("Item_Name", repair_details_edit_obj.getItemName_textView());
+                    intent.putExtra("Item_ID", repair_details_edit_obj.getSerialNo_textView());
+                    intent.putExtra("KeyID", repair_details_edit_obj.getItemKeyID());
+                    intent.putExtra("Ticket_No", repair_details_edit_obj.getTicketNo_TextView());
+                    intent.putExtra("Amount", String.valueOf(pendingAmount_editText.getText().toString()));
+                    intent.putExtra("Special_condition", String.valueOf(special_condition_editText.getText().toString()));
+
+                    System.out.println("called"+repair_details_edit_obj.getDate_TextView());
+
+                    RepairTicketFaults.getInstance().setFaultNameList(repair_details_edit_obj.getFaultNameList());
+                    RepairTicketFaults.getInstance().setFaultPriceList(repair_details_edit_obj.getFaultPriceList());
+
                     finish();
                     startActivity(intent);
 
@@ -480,6 +523,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             Toast.makeText(this, "Submit Successfully", Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(AddRepairTicket.this, Invoice_preview_repair_ticket.class);
+            intent.putExtra("TICKET_TYPE", "REPAIR TICKET PENDING");
             intent.putExtra("Date", String.valueOf(date_textView.getText().toString()));
             intent.putExtra("Customer_Name", String.valueOf(customerName_editText.getText().toString()));
             intent.putExtra("Customer_Email", String.valueOf(customerEmail_editText.getText().toString()));
@@ -492,6 +536,8 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             intent.putExtra("Amount", String.valueOf(amount_editText.getText().toString()));
             intent.putExtra("Special_condition", String.valueOf(special_condition_editText.getText().toString()));
 
+            RepairTicketFaults.getInstance().setFaultNameList(tempFaultNameList);
+            RepairTicketFaults.getInstance().setFaultPriceList(tempFaultPriceList);
             finish();
             startActivity(intent);
 
@@ -519,7 +565,7 @@ public class AddRepairTicket extends AppCompatActivity implements DatePickerDial
             customerName = repair_details_edit_obj.getCustomerName_textView();
             customerID = repair_details_edit_obj.getId_textView();
 
-            key = repair_details_edit_obj.getTicketNo_TextView();
+            key = repair_details_edit_obj.getTicketkeyId_TextView();
             ticketNo_TextView.setText(repair_details_edit_obj.getTicketNo_TextView());
             amount_editText.setText(repair_details_edit_obj.getAmount_TextView());
             date_textView.setText(repair_details_edit_obj.getDate_TextView());

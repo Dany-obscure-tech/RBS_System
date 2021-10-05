@@ -6,199 +6,209 @@
     android:layout_height="match_parent"
     tools:context=".RBS_option">
 
+    <ImageView
+        android:id="@+id/store_banner_imageView"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/slider" />
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/first"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/store_banner_imageView"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/repair"
+            style="@style/RBS_Options_CardView_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/screen_header_rectangle">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:src="@drawable/repair"
+                        app:tint="@color/colorWhite" />
+
+                    <TextView
+                        style="@style/TextViews_Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Repair"
+                        android:textColor="@color/colorWhite" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/BUY"
+            style="@style/RBS_Options_CardView_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/screen_header_rectangle">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:src="@drawable/buy"
+                        app:tint="@color/colorWhite" />
+
+                    <TextView
+                        style="@style/TextViews_Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Buy"
+                        android:textColor="@color/colorWhite" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="5">
+        android:layout_below="@+id/first"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
 
-        <RelativeLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/Sale"
+            style="@style/RBS_Options_CardView_style"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
 
-            <TextView
-                android:id="@+id/textGrid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="GRID LAYOUT"
-                android:textColor="@color/textBlue"
-                android:textSize="34sp" />
-
-        </RelativeLayout>
-
-        <GridLayout
-            android:id="@+id/mainGrid"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:alignmentMode="alignMargins"
-            android:columnCount="2"
-            android:columnOrderPreserved="false"
-            android:padding="5dp"
-            android:rowCount="2">
-
-            <!-- Row 1 -->
-
-            <!-- Column 1 -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/repair"
-                style="@style/CardView_style"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                app:cardElevation="10dp"
-                app:cardCornerRadius="30dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/screen_header_rectangle">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_margin="20dp"
+                    android:gravity="center"
                     android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/repair" />
-
-                    <TextView
-                        style="@style/TextViews_Title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="20dp"
-                        android:text="Repair"
-                        android:textAlignment="center"
-                        android:textColor="@color/textBlue" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <!-- Column 2 -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/BUY"
-                style="@style/CardView_style"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                app:cardElevation="10dp"
-                app:cardCornerRadius="30dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/buy" />
-
-                    <TextView
-                        style="@style/TextViews_Title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="20dp"
-                        android:text="Buy"
-                        android:textAlignment="center"
-                        android:textColor="@color/textBlue" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-
-            <!-- Row 2 -->
-
-            <!-- Column 1 -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/Sale"
-                style="@style/CardView_style"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                app:cardElevation="10dp"
-                app:cardCornerRadius="30dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_height="50dp"
+                        android:tint="@color/colorWhite"
                         android:src="@drawable/sale" />
 
                     <TextView
                         style="@style/TextViews_Title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:text="Sale"
-                        android:textAlignment="center"
-                        android:textColor="@color/textBlue" />
+                        android:textColor="@color/colorWhite" />
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </RelativeLayout>
 
-            <!-- Column 2 -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/Accessories"
-                style="@style/CardView_style"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                app:cardElevation="10dp"
-                app:cardCornerRadius="30dp">
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/Accessories"
+            style="@style/RBS_Options_CardView_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/screen_header_rectangle">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_margin="20dp"
+                    android:gravity="center"
                     android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_height="50dp"
+                        android:tint="@color/colorWhite"
                         android:src="@drawable/accessories" />
 
                     <TextView
                         style="@style/TextViews_Title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:text="Accessories"
-                        android:textAlignment="center"
-                        android:textColor="@color/textBlue" />
+                        android:textColor="@color/colorWhite" />
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </RelativeLayout>
 
-        </GridLayout>
+        </androidx.cardview.widget.CardView>
 
-    </LinearLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
 
 </RelativeLayout>

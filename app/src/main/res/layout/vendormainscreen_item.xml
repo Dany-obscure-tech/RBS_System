@@ -64,19 +64,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/stockName_textView"
-                    android:layout_marginTop="10dp"
-                    android:text="Category"
-                    android:textColor="@color/textGreen" />
+                    android:layout_marginTop="5dp"
+                    android:text="Category" />
 
 
                 <LinearLayout
                     android:id="@+id/customerID_linearLayout"
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/stockCategory_textView"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
+                    android:orientation="vertical"
                     android:weightSum="2">
 
 
@@ -88,11 +87,11 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            style="@style/TextViews_Bold"
+                            style="@style/TextViews_Regular_small"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text=" Qty :"
+                            android:text=" Quantity :"
                             android:textColor="@color/textGrey" />
 
                         <TextView

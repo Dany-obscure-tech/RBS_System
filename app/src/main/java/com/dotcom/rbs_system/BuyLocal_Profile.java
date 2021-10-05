@@ -3,6 +3,7 @@ package com.dotcom.rbs_system;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,11 @@ import com.dotcom.rbs_system.Adapter.AdapterCustomerIDImagesRecyclerView;
 import com.dotcom.rbs_system.Classes.UserDetails;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -29,14 +35,11 @@ import java.util.List;
 
 public class BuyLocal_Profile extends Fragment {
 
-    // TODO: 9/14/2021 purchases or history on krni he 
-
     RelativeLayout alert_background_relativelayout;
 
     List<String> shopkeeper_name_textview, item_name_textview, item_category_textview, shopkeeperImage_imageView_list, dateList, itemKeyId, itemImageView, shopkeeper_key_id, serial_no_textview;
 
-
-    TextView name, phno, email, address, creationDate_textView, edit_textView, edit_image_textView;
+    TextView name, phno, email, address, creationDate_textView, edit_textView, edit_image_textView,numberOfPurchases_textView;
 
     ImageView profileImage_imageView, edit_image_image_view;
 
@@ -44,10 +47,7 @@ public class BuyLocal_Profile extends Fragment {
 
     AdapterBuylocalCustomerHistoryListRecyclerView adapterBuylocalCustomerHistoryListRecyclerView;
 
-    List<String> price, itemImage;
-    List<String> offer_status;
-    List<String> offer_product_price;
-    List<String> product_offer_msg;
+    DatabaseReference Customer_purchase_history_ref;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -91,6 +91,7 @@ public class BuyLocal_Profile extends Fragment {
 
         profileImage_imageView = view.findViewById(R.id.profileImage_imageView);
         edit_image_textView = view.findViewById(R.id.edit_image_textView);
+        numberOfPurchases_textView = view.findViewById(R.id.numberOfPurchases_textView);
         alert_background_relativelayout = view.findViewById(R.id.alert_background_relativelayout);
         edit_image_image_view = view.findViewById(R.id.edit_image_image_view);
         name = view.findViewById(R.id.name);
@@ -106,19 +107,12 @@ public class BuyLocal_Profile extends Fragment {
         shopkeeperImage_imageView_list = new ArrayList<>();
         shopkeeper_key_id = new ArrayList<>();
         shopkeeper_name_textview = new ArrayList<>();
-        item_name_textview.add("Asus Rog Strix");
 
         creationDate_textView = view.findViewById(R.id.creationDate_textView);
         email = view.findViewById(R.id.email);
         edit_textView = view.findViewById(R.id.edit_textView);
-        price = new ArrayList<>();
-        itemImage = new ArrayList<>();
-        offer_status = new ArrayList<>();
-        offer_product_price = new ArrayList<>();
-        product_offer_msg = new ArrayList<>();
 
-        adapterBuylocalCustomerHistoryListRecyclerView = new AdapterBuylocalCustomerHistoryListRecyclerView(getActivity(), dateList, item_category_textview, itemImageView, itemKeyId, item_name_textview, serial_no_textview, shopkeeperImage_imageView_list, shopkeeper_key_id, shopkeeper_name_textview);
-        customer_history_recyclerview.setAdapter(adapterBuylocalCustomerHistoryListRecyclerView);
+        Customer_purchase_history_ref = FirebaseDatabase.getInstance().getReference("Customer_purchase_history/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         edit_image_image_view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +121,7 @@ public class BuyLocal_Profile extends Fragment {
             }
         });
 
+        InitialProcess();
 
         onclicklistners();
 
@@ -134,6 +129,42 @@ public class BuyLocal_Profile extends Fragment {
 
         return view;
     }
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    private void InitialProcess() {
+        getPurchaseHistoryList();
+    }
+
+    private void getPurchaseHistoryList() {
+        Customer_purchase_history_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshot1: snapshot.getChildren()){
+                    dateList.add(snapshot1.child("date").getValue().toString());
+                    itemImageView.add(snapshot1.child("item_image").getValue().toString());
+                    itemKeyId.add(snapshot1.child("item_keyId").getValue().toString());
+                    item_name_textview.add(snapshot1.child("item_name").getValue().toString());
+                    item_category_textview.add(snapshot1.child("item_category").getValue().toString());
+                    serial_no_textview.add(snapshot1.child("item_serialno").getValue().toString());
+                    shopkeeperImage_imageView_list.add(snapshot1.child("shopkeeper_image").getValue().toString());
+                    shopkeeper_key_id.add(snapshot1.child("shopkeeper_keyId").getValue().toString());
+                    shopkeeper_name_textview.add(snapshot1.child("shopkeeper_name").getValue().toString());
+                }
+
+                numberOfPurchases_textView.setText(String.valueOf(item_name_textview.size()));
+                adapterBuylocalCustomerHistoryListRecyclerView = new AdapterBuylocalCustomerHistoryListRecyclerView(getActivity(), dateList, item_category_textview, itemImageView, itemKeyId, item_name_textview, serial_no_textview, shopkeeperImage_imageView_list, shopkeeper_key_id, shopkeeper_name_textview);
+                customer_history_recyclerview.setAdapter(adapterBuylocalCustomerHistoryListRecyclerView);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void onclicklistners() {
         edit_btn_listner();
@@ -173,10 +204,9 @@ public class BuyLocal_Profile extends Fragment {
                         .crop()                    //Crop image(Optional), Check Customization for more option
                         .compress(1024)            //Final image size will be less than 1 MB(Optional)
                         .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
-                        .start();
+                        .start(333);
             }
         });
-
     }
 
     private void edit_btn_listner() {

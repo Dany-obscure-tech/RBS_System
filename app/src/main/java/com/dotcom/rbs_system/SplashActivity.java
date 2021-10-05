@@ -10,6 +10,7 @@ import android.os.Handler;
 
 import com.dotcom.rbs_system.Classes.BuylocalSlider;
 import com.dotcom.rbs_system.Classes.Currency;
+import com.dotcom.rbs_system.Classes.TermsAndConditions;
 import com.dotcom.rbs_system.Classes.UserDetails;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +30,7 @@ import java.util.List;
 public class SplashActivity extends AppCompatActivity {
     DatabaseReference RequiredAdminDataRef;
     Currency currencyObj;
+    TermsAndConditions termsAndConditionsObj;
     List<String> buylocalsliderlist;
     BuylocalSlider buylocalSlider;
     DatabaseReference userRef;
@@ -83,6 +85,7 @@ public class SplashActivity extends AppCompatActivity {
 
         RequiredAdminDataRef = FirebaseDatabase.getInstance().getReference("Initial_load_data/");
         currencyObj = Currency.getInstance();
+        termsAndConditionsObj = TermsAndConditions.getInstance();
         buylocalSlider = BuylocalSlider.getInstance();
     }
 
@@ -110,6 +113,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 currencyObj.setCurrency(dataSnapshot.child("currency").getValue().toString());
+                termsAndConditionsObj.setTermsAndConditions(dataSnapshot.child("rbs_termsandconditions").getValue().toString());
                 if (dataSnapshot.child("buylocal_slider").exists()) {
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         buylocalsliderlist.add(String.valueOf(dataSnapshot1.getValue()));

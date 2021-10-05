@@ -13,6 +13,7 @@
         android:layout_alignParentBottom="true"
         android:background="#bbffffff"
         app:elevation="0.00000005969dp"
+        app:itemTextAppearance="@style/MenuItems"
         app:itemBackground="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

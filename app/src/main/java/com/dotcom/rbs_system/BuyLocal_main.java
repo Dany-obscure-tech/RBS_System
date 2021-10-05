@@ -12,6 +12,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,7 @@ import com.google.firebase.storage.UploadTask;
 import java.text.ParseException;
 
 public class BuyLocal_main extends AppCompatActivity {
+    Progress_dialog pd = new Progress_dialog();
     DatabaseReference customerProfileImageRef;
     StorageReference customerProfileImageStorageReference;
 
@@ -43,7 +45,8 @@ public class BuyLocal_main extends AppCompatActivity {
 
     final BuyLocal_home fragment_buyLocalhome = new BuyLocal_home();
     final BuyLocal_Profile fragment_BuyLocal_profile = new BuyLocal_Profile();
-    final BuyLocal_About fragment_BuyLocal_about = new BuyLocal_About();
+    final BuyLocal_inbox fragment_BuyLocal_inbox = new BuyLocal_inbox();
+    final BuyLocal_offers fragment_BuyLocal_offers = new BuyLocal_offers();
 
 
     @Override
@@ -79,9 +82,14 @@ public class BuyLocal_main extends AppCompatActivity {
                         // Switch to page two
                         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, fragment_BuyLocal_profile, "FRAGMENT_PROFILE").commit();
                         break;
-                    case R.id.about:
+                    case R.id.inbox:
                         // Switch to page two
-                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, fragment_BuyLocal_about).commit();
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, fragment_BuyLocal_inbox).commit();
+                        break;
+
+                    case R.id.offers:
+                        // Switch to page two
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, fragment_BuyLocal_offers).commit();
                         break;
                 }
                 return true;
@@ -181,11 +189,10 @@ public class BuyLocal_main extends AppCompatActivity {
         if (resultCode == 2) {
             getSupportFragmentManager().beginTransaction().detach(getSupportFragmentManager().findFragmentByTag("FRAGMENT_PROFILE")).attach(getSupportFragmentManager().findFragmentByTag("FRAGMENT_PROFILE")).commit();
         } else {
+            pd.showProgressBar(BuyLocal_main.this);
             if (resultCode == Activity.RESULT_OK) {
                 //Image Uri will not be null for RESULT_OK
                 Uri fileUri = data.getData();
-
-                Toast.makeText(this, String.valueOf(fileUri), Toast.LENGTH_SHORT).show();
 
                 customerProfileImageStorageReference.child("Profile_image").putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -195,17 +202,22 @@ public class BuyLocal_main extends AppCompatActivity {
                             public void onSuccess(Uri uri) {
                                 customerProfileImageRef.child("profile_image_url").setValue(String.valueOf(uri.toString()));
                                 UserDetails.getInstance().setProfileImageUrl(String.valueOf(uri.toString()));
+                                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).remove(fragment_BuyLocal_profile).commit();
+                                new Handler().postDelayed(new Runnable(){
+                                    @Override
+                                    public void run() {
+                                        pd.dismissProgressBar(BuyLocal_main.this);
+                                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, fragment_BuyLocal_profile).commit();
 
-                                getSupportFragmentManager().beginTransaction().detach(getSupportFragmentManager().findFragmentByTag("FRAGMENT_PROFILE")).attach(getSupportFragmentManager().findFragmentByTag("FRAGMENT_PROFILE")).commit();
+                                    }
+                                }, 1000);
                             }
                         });
-
-
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(BuyLocal_main.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
+                        pd.dismissProgressBar(BuyLocal_main.this);
                     }
                 });
             }

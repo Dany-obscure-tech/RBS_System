@@ -236,13 +236,8 @@ public class BuyLocal_productdetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(BuyLocal_productdetails.this, BuyLocal_messaging.class);
-                intent.putExtra("ID", shopkeeperID);
-                intent.putExtra("SHOPKEEPER_NAME", shopKeeperName_textView.getText().toString());
-                intent.putExtra("PRODUCT_ID", productID);
-                intent.putExtra("CATEGORY", productCategory);
-                intent.putExtra("CONVERSATION_KEY", conversationKey);
-                intent.putExtra("PRODUCT_NAME", productName);
-                intent.putExtra("PRODUCT_IMAGE", imageUrl.get(0));
+                intent.putExtra("SHOPKEEPER_ID", shopkeeperID);
+                intent.putExtra("CUSTOMER_ID", FirebaseAuth.getInstance().getCurrentUser().getUid());
                 startActivity(intent);
             }
         });

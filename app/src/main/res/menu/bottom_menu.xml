@@ -11,7 +11,12 @@
         android:title="Profile" />
 
     <item
-        android:id="@+id/about"
+        android:id="@+id/inbox"
+        android:icon="@drawable/ic_baseline_message_24"
+        android:title="Inbox" />
+
+    <item
+        android:id="@+id/offers"
         android:icon="@drawable/info"
-        android:title="About" />
+        android:title="Offers" />
 </menu>

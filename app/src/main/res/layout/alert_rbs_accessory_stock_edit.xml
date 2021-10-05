@@ -63,7 +63,7 @@
                     android:text="Name" />
 
                 <EditText
-                    android:id="@+id/item_name_textview"
+                    android:id="@+id/item_name_editText"
                     style="@style/EditTexts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Edit price ...."
-                    android:inputType="number" />
+                    android:inputType="numberDecimal" />
 
                 <TextView
                     style="@style/TextViews_Bold"
@@ -105,14 +105,14 @@
             <TextView
                 android:id="@+id/remove_btn"
                 style="@style/gray_btn"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/textRed"
-                android:background="@drawable/delete_btn_icon"/>
+                android:background="@drawable/delete_btn_icon"
+                android:backgroundTint="@color/textRed" />
 
             <LinearLayout
                 android:layout_width="match_parent"

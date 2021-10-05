@@ -20,8 +20,8 @@
                 android:visibility="visible"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
@@ -39,20 +39,19 @@
                     style="@style/blue_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.1"
                     android:text="Current Date" />
 
-                <TextView
-                    android:id="@+id/specific_date_btn"
-                    style="@style/blue_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
-                    android:text="Specific Date" />
-
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/specific_date_btn"
+                style="@style/blue_btn"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Specific Date" />
 
             <TextView
                 android:id="@+id/orders_list_textview"

@@ -12,8 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dotcom.rbs_system.BuyLocal_messaging;
 import com.dotcom.rbs_system.R;
+import com.dotcom.rbs_system.Vendor_messaging;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -22,20 +23,16 @@ public class AdapterConversationListRecyclerView extends RecyclerView.Adapter<Ad
 
     Context context;
 
-    List<String> imageUrl, nameList, messageList, itemCategory;
-    List<String> itemIdList, convoIdList, user2List;
-    List<String> user2NameList;
+    List<String>  messageList,convoIdList, user2KeyIdList, user2NameList,user2ImageList,dateList;
 
-    public AdapterConversationListRecyclerView(Context context, List<String> imageUrl, List<String> nameList, List<String> messageList, List<String> itemCategory, List<String> itemIdList, List<String> convoIdList, List<String> user2List, List<String> user2NameList) {
+    public AdapterConversationListRecyclerView(Context context, List<String> messageList, List<String> convoIdList, List<String> user2KeyIdList, List<String> user2NameList, List<String> user2ImageList, List<String> dateList) {
         this.context = context;
-        this.nameList = nameList;
-        this.imageUrl = imageUrl;
-        this.itemCategory = itemCategory;
-        this.itemIdList = itemIdList;
         this.messageList = messageList;
         this.convoIdList = convoIdList;
-        this.user2List = user2List;
+        this.user2KeyIdList = user2KeyIdList;
         this.user2NameList = user2NameList;
+        this.user2ImageList = user2ImageList;
+        this.dateList = dateList;
     }
 
     @NonNull
@@ -48,12 +45,16 @@ public class AdapterConversationListRecyclerView extends RecyclerView.Adapter<Ad
     public void onBindViewHolder(@NonNull AdapterConversationListRecyclerView.ViewHolder holder, final int position) {
         holder.user_name_textview.setText(user2NameList.get(position));
         holder.last_msg_textView.setText(messageList.get(position));
-        Picasso.get().load(imageUrl.get(position)).into(holder.product_image);
+        holder.date_textview.setText(dateList.get(position));
+        Picasso.get().load(user2ImageList.get(position)).into(holder.product_image);
 
         holder.conversationItem_cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                communicate_btn_listner(user2List.get(position), itemIdList.get(position), itemCategory.get(position), convoIdList.get(position), nameList.get(position), imageUrl.get(position));
+                Intent intent = new Intent(context, Vendor_messaging.class);
+                intent.putExtra("SHOPKEEPER_ID", user2KeyIdList.get(position));
+                intent.putExtra("VENDOR_ID", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                context.startActivity(intent);
             }
         });
 
@@ -61,12 +62,12 @@ public class AdapterConversationListRecyclerView extends RecyclerView.Adapter<Ad
 
     @Override
     public int getItemCount() {
-        return user2List.size();
+        return user2KeyIdList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         CardView conversationItem_cardView;
-        TextView user_name_textview, last_msg_textView;
+        TextView user_name_textview, last_msg_textView,date_textview;
         ImageView product_image;
 
         public ViewHolder(@NonNull View itemView) {
@@ -74,20 +75,11 @@ public class AdapterConversationListRecyclerView extends RecyclerView.Adapter<Ad
             conversationItem_cardView = (CardView) itemView.findViewById(R.id.conversationItem_cardView);
             user_name_textview = (TextView) itemView.findViewById(R.id.user_name_textview);
             last_msg_textView = (TextView) itemView.findViewById(R.id.last_msg_textView);
+            date_textview = (TextView) itemView.findViewById(R.id.date_textview);
             product_image = (ImageView) itemView.findViewById(R.id.product_image);
         }
     }
 
-    private void communicate_btn_listner(String shopkeeperID, String productID, String category, String conversationKey, String productName, String imageUrl) {
-        Intent intent = new Intent(context, BuyLocal_messaging.class);
-        intent.putExtra("ID", shopkeeperID);
-        intent.putExtra("PRODUCT_ID", productID);
-        intent.putExtra("CATEGORY", category);
-        intent.putExtra("CONVERSATION_KEY", conversationKey);
-        intent.putExtra("PRODUCT_NAME", productName);
-        intent.putExtra("PRODUCT_IMAGE", imageUrl);
-        context.startActivity(intent);
-    }
 }
 
 

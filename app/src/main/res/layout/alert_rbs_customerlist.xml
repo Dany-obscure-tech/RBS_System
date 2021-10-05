@@ -31,6 +31,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="15dp"
             android:layout_weight="8"
+            android:textSize="@dimen/Regular_Big"
             android:background="@drawable/search_view_style"
             android:fontFamily="@font/segoe_ui"
             android:hint="@string/search_here"

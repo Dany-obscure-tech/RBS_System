@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dotcom.rbs_system.RBS_Shopkeeper_Inventory_Details;
+import com.dotcom.rbs_system.RBS_productdetails;
 import com.dotcom.rbs_system.Classes.Currency;
 import com.dotcom.rbs_system.R;
 import com.squareup.picasso.Picasso;
@@ -62,7 +62,7 @@ public class AdapterShopProductsShowcaseListRecyclerView extends RecyclerView.Ad
         holder.shop_items_cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, RBS_Shopkeeper_Inventory_Details.class);
+                Intent intent = new Intent(context, RBS_productdetails.class);
                 intent.putExtra("PRODUCT_ID", key_idList.get(position));
                 intent.putExtra("CATEGORY", category.get(position));
                 ((Activity)context).startActivityForResult(intent,1212);

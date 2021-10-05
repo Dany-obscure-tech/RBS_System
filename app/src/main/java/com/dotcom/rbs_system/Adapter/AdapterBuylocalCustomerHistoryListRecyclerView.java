@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.R;
 import com.dotcom.rbs_system.Shopkeeper_details;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -43,12 +44,12 @@ public class AdapterBuylocalCustomerHistoryListRecyclerView extends RecyclerView
 
     @Override
     public void onBindViewHolder(@NonNull AdapterBuylocalCustomerHistoryListRecyclerView.ViewHolder holder, final int position) {
-//        holder.shopkeeper_name_textview.setText(shopkeeper_name_textview.get(position));
+        holder.shopkeeper_name_textview.setText(shopkeeper_name_textview.get(position));
         holder.item_name_textview.setText(item_name_textview.get(position));
-//        holder.serial_no_textview.setText(serial_no_textview.get(position));
-//        holder.date_textView.setText(dateList.get(position));
-//        Picasso.get().load(shopkeeperImage_imageView_list.get(position)).into(holder.shopkeeperImage_imageView);
-//        Picasso.get().load(itemImageView.get(position)).into(holder.itemImage_imageView);
+        holder.serial_no_textview.setText(serial_no_textview.get(position));
+        holder.date_textView.setText(dateList.get(position));
+        Picasso.get().load(shopkeeperImage_imageView_list.get(position)).into(holder.shopkeeperImage_imageView);
+        Picasso.get().load(itemImageView.get(position)).into(holder.itemImage_imageView);
         holder.shopkeeper_linearlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

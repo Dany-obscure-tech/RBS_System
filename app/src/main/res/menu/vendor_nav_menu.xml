@@ -12,10 +12,26 @@
             android:id="@+id/nav_orders"
             android:icon="@drawable/ic_baseline_shopping_cart_24"
             android:title="Orders" />
+
+        <item
+            android:id="@+id/nav_support"
+            android:icon="@drawable/support_icon"
+            android:title="Support" />
+
+        <item
+            android:id="@+id/nav_report"
+            android:icon="@drawable/reportslist_icon"
+            android:title="Report" />
+
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_baseline_account_circle_24"
             android:title="Profile" />
+
+        <item
+            android:id="@+id/nav_inbox"
+            android:icon="@drawable/ic_baseline_message_24"
+            android:title="Inbox" />
 
     </group>
 </menu>

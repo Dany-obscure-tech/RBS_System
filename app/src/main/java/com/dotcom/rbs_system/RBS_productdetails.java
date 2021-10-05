@@ -49,7 +49,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
+public class RBS_productdetails extends AppCompatActivity {
 
     Dialog editItem_alert;
     StorageReference idStorageReference;
@@ -111,7 +111,7 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rbs_shopkeeper_inventory_details);
+        setContentView(R.layout.activity_rbs_productdetails);
 
         idStorageReference = FirebaseStorage.getInstance().getReference().child("Item_Images");
         reference = FirebaseDatabase.getInstance().getReference();
@@ -125,7 +125,7 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
         id_imageView = editItem_alert.findViewById(R.id.id_imageView);
         itemImage_recyclerView = editItem_alert.findViewById(R.id.itemImage_recyclerView);
         itemImage_recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        adapterItemDetailsImagesRecyclerView = new AdapterItemDetailsImagesRecyclerView(RBS_Shopkeeper_Inventory_Details.this, imageUrlList);
+        adapterItemDetailsImagesRecyclerView = new AdapterItemDetailsImagesRecyclerView(RBS_productdetails.this, imageUrlList);
         itemImage_recyclerView.setAdapter(adapterItemDetailsImagesRecyclerView);
 
         uploadId_textView = editItem_alert.findViewById(R.id.uploadId_textView);
@@ -240,10 +240,10 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
                     imageUrl.add(dataSnapshot.getValue().toString());
                 }
 
-                SliderAdapterExample sliderAdapterExample = new SliderAdapterExample(RBS_Shopkeeper_Inventory_Details.this, imageUrl);
+                SliderAdapterExample sliderAdapterExample = new SliderAdapterExample(RBS_productdetails.this, imageUrl);
                 sliderView.setSliderAdapter(sliderAdapterExample);
 
-                intent = new Intent(RBS_Shopkeeper_Inventory_Details.this, Sale.class);
+                intent = new Intent(RBS_productdetails.this, Sale.class);
                 intent.putExtra("ITEM_SELL_CHECK", "TRUE");
 
                 intent.putExtra("Item_name", itemname_returnString);
@@ -295,7 +295,7 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-                            Toast.makeText(RBS_Shopkeeper_Inventory_Details.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RBS_productdetails.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -332,7 +332,7 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
 
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
-                                        Toast.makeText(RBS_Shopkeeper_Inventory_Details.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RBS_productdetails.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 });
 
@@ -376,14 +376,14 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
                     date_list.add(date);
 
                 }
-                AdapterProductsOffersReceivedListRecyclerView adapterProductsOffersReceivedListRecyclerView = new AdapterProductsOffersReceivedListRecyclerView(RBS_Shopkeeper_Inventory_Details.this, category, productID, customer_keyid, customername, product_offer_msg_list, offered_price_list, profileImageUrl_list, date_list);
-                offers_received.setLayoutManager(new GridLayoutManager(RBS_Shopkeeper_Inventory_Details.this, 1));
+                AdapterProductsOffersReceivedListRecyclerView adapterProductsOffersReceivedListRecyclerView = new AdapterProductsOffersReceivedListRecyclerView(RBS_productdetails.this, category, productID, customer_keyid, customername, product_offer_msg_list, offered_price_list, profileImageUrl_list, date_list);
+                offers_received.setLayoutManager(new GridLayoutManager(RBS_productdetails.this, 1));
                 offers_received.setAdapter(adapterProductsOffersReceivedListRecyclerView);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(RBS_Shopkeeper_Inventory_Details.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RBS_productdetails.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -415,13 +415,13 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (imageUrlList.size() < 5) {
-                    ImagePicker.Companion.with(RBS_Shopkeeper_Inventory_Details.this)
+                    ImagePicker.Companion.with(RBS_productdetails.this)
                             .crop()                    //Crop image(Optional), Check Customization for more option
                             .compress(1024)            //Final image size will be less than 1 MB(Optional)
                             .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
                             .start();
                 } else {
-                    Toast.makeText(RBS_Shopkeeper_Inventory_Details.this, "Maximum 5 images allowed!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RBS_productdetails.this, "Maximum 5 images allowed!", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -437,7 +437,7 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
                 if (validateAlertvalues()) {
                     recreate();
                     editItem_alert.dismiss();
-                    Toast.makeText(RBS_Shopkeeper_Inventory_Details.this, "Edit Completed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RBS_productdetails.this, "Edit Completed", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -518,7 +518,7 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(RBS_Shopkeeper_Inventory_Details.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RBS_productdetails.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -566,7 +566,7 @@ public class RBS_Shopkeeper_Inventory_Details extends AppCompatActivity {
 //                recreate();
                 intent.putExtra("Customer_email", customer_email.replace(".",","));
                 intent.putExtra("Paid_amount", offered_price.getText().toString());
-                startActivityForResult(intent,11);
+                startActivity(intent);
             }
         });
     }

@@ -1,10 +1,9 @@
 package com.dotcom.rbs_system.Adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dotcom.rbs_system.Classes.Currency;
@@ -38,9 +38,8 @@ public class Adapter_Vendor_inventory_RecyclerView extends RecyclerView.Adapter<
 
     Dialog dialog_box;
 
-    Boolean validate = true;
+    DatabaseReference vendorStockRef = FirebaseDatabase.getInstance().getReference("Vendor_stock/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-    DatabaseReference vendorStockRef;
 
     public Adapter_Vendor_inventory_RecyclerView(Context context, List<String> stockName_list, List<String> stockCategory_list, List<String> stockPrice_list, List<String> quantity_vendor_inventory, List<String> stockImageUrl_list, List<String> stockkeyId_list, List<String> edit_stock_textview_list) {
         this.context = context;
@@ -65,7 +64,7 @@ public class Adapter_Vendor_inventory_RecyclerView extends RecyclerView.Adapter<
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         holder.stockName_textView.setText(stockName_list.get(position));
         holder.stockCategory_textView.setText(stockCategory_list.get(position));
         holder.stockPrice_textView.setText(stockPrice_list.get(position));
@@ -75,14 +74,13 @@ public class Adapter_Vendor_inventory_RecyclerView extends RecyclerView.Adapter<
 
         Picasso.get().load(stockImageUrl_list.get(position)).into(holder.stockImage_imageView);
 
-        holder.edit_stock_textview.setOnClickListener(new View.OnClickListener() {
+        holder.shop_items_cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog_box = new Dialog(context);
                 dialog_box.setContentView(R.layout.alert_vendor_stock_edit);
 
-                holder.sno_textview = dialog_box.findViewById(R.id.sno_textview);
-                holder.item_name_textview = dialog_box.findViewById(R.id.item_name_textview);
+                holder.item_name_editText = dialog_box.findViewById(R.id.item_name_editText);
                 holder.category_editText = dialog_box.findViewById(R.id.username_editText);
                 holder.change_picture_btn = dialog_box.findViewById(R.id.change_picture_btn);
                 holder.remove_btn = dialog_box.findViewById(R.id.remove_btn);
@@ -93,24 +91,65 @@ public class Adapter_Vendor_inventory_RecyclerView extends RecyclerView.Adapter<
                 holder.stock_pic = dialog_box.findViewById(R.id.stock_pic);
                 holder.stock_pic.setImageDrawable(holder.stockImage_imageView.getDrawable());
 
-                holder.item_name_textview.setText(stockName_list.get(position));
+                holder.item_name_editText.setText(stockName_list.get(position));
                 holder.category_editText.setText(stockCategory_list.get(position));
 
                 holder.item_price_editText.setText(stockPrice_list.get(position));
                 holder.item_quantity_edittext.setText(stockQuantity_list.get(position));
 
-                itemPriceTextWatcher(holder.item_price_editText);
-                ItemQuantityTextWatcher(holder.item_quantity_edittext);
-
-
                 holder.save_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (validate) {
-                            //TODO Daniyal: yaha pa name bhi edit ho sakey ye bhi check kar aur delete btn bhi connect karna ha, aur s.no aur category bhi connect nhi ha
-                            // todo Shahzaib : validation for quantity and price
+
+                        Boolean valid = true;
+
+                        if (holder.item_price_editText.getText().toString().isEmpty()) {
+                            holder.item_price_editText.setError("Please enter price");
+                            valid = false;
+
+                        } else {
+                            if (Float.parseFloat(holder.item_price_editText.getText().toString()) == 0) {
+                                holder.item_price_editText.setError("Please enter valid price");
+                            } else {
+                                holder.item_price_editText.setText(holder.item_price_editText.getText().toString().replaceFirst("^0+(?!$)", ""));
+                                if (holder.item_price_editText.getText().toString().startsWith(".")) {
+                                    holder.item_price_editText.setText("0" + holder.item_price_editText.getText().toString());
+                                }
+                            }
+                        }
+
+                        if (holder.item_quantity_edittext.getText().toString().isEmpty()) {
+                            holder.item_quantity_edittext.setError("Please enter price");
+                            valid = false;
+
+                        } else {
+                            if (Float.parseFloat(holder.item_quantity_edittext.getText().toString()) == 0) {
+                                holder.item_quantity_edittext.setError("Please enter valid price");
+                            } else {
+                                holder.item_quantity_edittext.setText(holder.item_quantity_edittext.getText().toString().replaceFirst("^0+(?!$)", ""));
+                                if (holder.item_quantity_edittext.getText().toString().startsWith(".")) {
+                                    holder.item_quantity_edittext.setText("0" + holder.item_quantity_edittext.getText().toString());
+                                }
+                            }
+                        }
+
+                        if (holder.item_quantity_edittext.getText().toString().equals("0")) {
+                            holder.item_quantity_edittext.setError("Please enter item quantity");
+                            valid = false;
+                        }
+
+                        if (holder.item_name_editText.getText().toString().isEmpty()) {
+                            holder.item_name_editText.setError("Please enter item name");
+                            valid = false;
+                        }
+
+                        if (valid) {
                             vendorStockRef.child(stockCategory_list.get(position)).child(stockkeyId_list.get(position)).child("Price").setValue(holder.item_price_editText.getText().toString());
                             vendorStockRef.child(stockCategory_list.get(position)).child(stockkeyId_list.get(position)).child("Quantity").setValue(holder.item_quantity_edittext.getText().toString());
+                            vendorStockRef.child(stockCategory_list.get(position)).child(stockkeyId_list.get(position)).child("Name").setValue(holder.item_name_editText.getText().toString());
+
+
+                            dialog_box.dismiss();
                             ((Activity) context).recreate();
                         }
 
@@ -120,13 +159,14 @@ public class Adapter_Vendor_inventory_RecyclerView extends RecyclerView.Adapter<
                 holder.change_picture_btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        dialog_box.dismiss();
                         VendorStockDetails.getInstance().setCategory(stockCategory_list.get(position));
                         VendorStockDetails.getInstance().setKeyId(stockkeyId_list.get(position));
                         ImagePicker.Companion.with((Activity) context)
                                 .crop()                    //Crop image(Optional), Check Customization for more option
                                 .compress(1024)            //Final image size will be less than 1 MB(Optional)
                                 .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
-                                .start();
+                                .start(333);
                     }
                 });
 
@@ -142,65 +182,6 @@ public class Adapter_Vendor_inventory_RecyclerView extends RecyclerView.Adapter<
 
             }
 
-            private void ItemQuantityTextWatcher(final EditText item_quantity_edittext) {
-                item_quantity_edittext.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (stockQuantity_list.get(position).equals(item_quantity_edittext.getText().toString())) {
-                            item_quantity_edittext.setError("Please enter new value!");
-                            validate = false;
-                        }
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        if (item_quantity_edittext.getText().toString().isEmpty()) {
-                            item_quantity_edittext.setError("Please enter value!");
-                            validate = false;
-                        }
-                    }
-                });
-            }
-
-            private void itemPriceTextWatcher(final EditText item_price_editText) {
-                item_price_editText.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (stockPrice_list.get(position).equals(item_price_editText.getText().toString())) {
-                            item_price_editText.setError("Please enter new value!");
-                            validate = false;
-                        }
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-
-                        if (item_price_editText.getText().toString().isEmpty()) {
-                            item_price_editText.setError("Please enter value!");
-                            validate = false;
-                        } else {
-                            if (Float.parseFloat(item_price_editText.getText().toString()) == 0.0f) {
-                                item_price_editText.setError("Please enter valid value!");
-                                validate = false;
-                            }
-                        }
-                    }
-                });
-            }
-
         });
     }
 
@@ -213,12 +194,13 @@ public class Adapter_Vendor_inventory_RecyclerView extends RecyclerView.Adapter<
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
+        CardView shop_items_cardView;
         ImageView stockImage_imageView;
         TextView stockName_textView, stockCategory_textView, stockPrice_textView, stockQuantity_textView;
         TextView currency_textView;
         TextView edit_stock_textview;
-        TextView sno_textview, item_name_textview, category_editText;
-        EditText item_price_editText, item_quantity_edittext;
+        TextView category_editText;
+        EditText item_price_editText, item_quantity_edittext,item_name_editText;
         ImageView stock_pic;
         TextView change_picture_btn, save_btn, cancel_btn, remove_btn;
 
@@ -231,9 +213,9 @@ public class Adapter_Vendor_inventory_RecyclerView extends RecyclerView.Adapter<
             stockQuantity_textView = itemView.findViewById(R.id.stockQuantity_textView);
             currency_textView = itemView.findViewById(R.id.currency_textView);
             stockImage_imageView = itemView.findViewById(R.id.stockImage_imageView);
+            shop_items_cardView = itemView.findViewById(R.id.shop_items_cardView);
             edit_stock_textview = itemView.findViewById(R.id.edit_stock_textview);
 
-            vendorStockRef = FirebaseDatabase.getInstance().getReference("Vendor_stock/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
         }
     }
 }

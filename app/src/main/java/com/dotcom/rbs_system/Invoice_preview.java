@@ -1,7 +1,10 @@
 package com.dotcom.rbs_system;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -12,23 +15,34 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dantsu.escposprinter.EscPosPrinter;
 import com.dantsu.escposprinter.connection.DeviceConnection;
+import com.dantsu.escposprinter.connection.bluetooth.BluetoothPrintersConnections;
 import com.dantsu.escposprinter.connection.tcp.TcpConnection;
+import com.dantsu.escposprinter.exceptions.EscPosBarcodeException;
+import com.dantsu.escposprinter.exceptions.EscPosConnectionException;
+import com.dantsu.escposprinter.exceptions.EscPosEncodingException;
+import com.dantsu.escposprinter.exceptions.EscPosParserException;
 import com.dantsu.escposprinter.textparser.PrinterTextParserImg;
 import com.dotcom.rbs_system.Classes.Currency;
+import com.dotcom.rbs_system.Classes.TermsAndConditions;
+import com.dotcom.rbs_system.Classes.UserDetails;
 import com.dotcom.rbs_system.async.AsyncEscPosPrinter;
 import com.dotcom.rbs_system.async.AsyncTcpEscPosPrint;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Invoice_preview extends AppCompatActivity {
 
-    TextView date_textView, customerName_textView, customerEmail_textView, customerID_textView, customerPhno_textView, itemName_textView, itemID_textView, itemPriceCurrency_textView, itemPrice_textView, paid_currency_textView, paid_amount_textView;
+    TextView date_textView, invoiceType_textView, customerName_textView, customerEmail_textView, customerID_textView, customerPhno_textView, itemName_textView, itemID_textView, itemPriceCurrency_textView, itemPrice_textView, paid_currency_textView, paid_amount_textView;
 
     TextView exit_textview;
 
@@ -40,7 +54,11 @@ public class Invoice_preview extends AppCompatActivity {
 
     String date, customer_name, customer_email, customer_ID, customer_ph_no, item_name, item_id, item_price_currency, item_price, paid_amount;
 
-    String email_message, inoice_no;
+    String email_message, inoice_no, shopTermsAndConditions, rbsTermsAndConditions, invoiceType;
+
+    ImageView placeholderLogo_imageView;
+
+    Button testBT_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +67,6 @@ public class Invoice_preview extends AppCompatActivity {
 
         initialization();
         onclicklistners();
-//Todo print ma shop ki details show karwani rehti hay aur whatsapp ma bhi
 
     }
 
@@ -58,6 +75,7 @@ public class Invoice_preview extends AppCompatActivity {
         print_image_btn_listner();
         email_image_btn_listner();
         whatsapp_image_btn_listner();
+        testBT_btn_listener();
     }
 
     private void whatsapp_image_btn_listner() {
@@ -162,6 +180,73 @@ public class Invoice_preview extends AppCompatActivity {
         });
     }
 
+    private void testBT_btn_listener() {
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH}, 123);
+        } else {
+            testBT_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    EscPosPrinter printer = null;
+                    SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
+                    try {
+                        printer = new EscPosPrinter(BluetoothPrintersConnections.selectFirstPaired(), 203, 48f, 10);
+                    } catch (EscPosConnectionException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        printer
+                                .printFormattedText(
+                                        "[L]\n" +
+                                                "[L]<font color='black' size='wide'>" + UserDetails.getInstance().getShopName() + "</font>\n" +
+                                                "[L]Address: " + UserDetails.getInstance().getShopAddress() + "\n" +
+                                                "[L]\n" +
+                                                "[L]<u>" + UserDetails.getInstance().getShopPhno() + "</u>\n" +
+                                                "[L]" + UserDetails.getInstance().getShopEmail() + "\n" +
+                                                "[L]\n" +
+                                                "[L]Invoice Printed" + "[C]<u type='double'>" + format.format(new Date()) + "</u>\n" +
+                                                "[L]Invoice no: " + inoice_no + "\n" +
+                                                "[L]----- " + invoiceType + " -----\n" +
+                                                "[C]<font color='bg-black'>================================</font>\n" +
+                                                "[L]\n" +
+                                                "[C]<font color='black' size='wide'> CUSTOMER </font>\n" +
+                                                "[L]\n" +
+                                                "[L]" + customerName_textView.getText().toString() + "\n" +
+                                                "[L]<u>" + customerPhno_textView.getText().toString() + "</u>\n" +
+                                                "[C]--------------------------------\n" +
+                                                "[L]\n" +
+                                                "[C]<font color='black' size='wide'> ITEM </font>\n" +
+                                                "[L]\n" +
+                                                "[L]" + itemName_textView.getText().toString() + "\n" +
+                                                "[L]\n" +
+                                                "[L]Serial no:" + itemID_textView.getText().toString() + "\n" +
+                                                "[C]================================\n" +
+                                                "[L]Total Price: [R]" + Currency.getInstance().getCurrency() + paid_amount_textView.getText().toString() + "\n" +
+                                                "[L]Date: [R]" + date_textView.getText().toString() + "\n" +
+                                                "[C]<font color='bg-black'> -------------------------------</font>\n" +
+                                                "[L]<font color='black' size='tall'> Terms & Conditions </font>\n" +
+                                                "[C]\n<font size='small'>"+
+                                                rbsTermsAndConditions + "\n" +
+                                                shopTermsAndConditions + "</font>\n" +
+                                                "[C]\n" +
+                                                "[L]\n"
+                                );
+                    } catch (EscPosConnectionException e) {
+                        e.printStackTrace();
+                    } catch (EscPosParserException e) {
+                        e.printStackTrace();
+                    } catch (EscPosEncodingException e) {
+                        e.printStackTrace();
+                    } catch (EscPosBarcodeException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+
+    }
+
     private void initialization() {
 
         // getting data
@@ -176,32 +261,42 @@ public class Invoice_preview extends AppCompatActivity {
         item_price_currency = getIntent().getStringExtra("Item_Price_Currency");
         item_price = getIntent().getStringExtra("Item_Price");
         paid_amount = getIntent().getStringExtra("Paid_Amount");
+        inoice_no = getIntent().getStringExtra("Invoice_No");
+        invoiceType = getIntent().getStringExtra("Invoice_Type");
+        shopTermsAndConditions = UserDetails.getInstance().getShopTermsAndConditions();
+        rbsTermsAndConditions = TermsAndConditions.getInstance().getTermsAndConditions();
 
-        inoice_no = "12345";
+        placeholderLogo_imageView = (ImageView) findViewById(R.id.placeholderLogo_imageView);
+        Picasso.get().load(UserDetails.getInstance().getShopLogo()).into(placeholderLogo_imageView);
+
         SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
 
-        email_message = "Invoice Printed  " + format.format(new Date()) + "\n" +
+        email_message = UserDetails.getInstance().getShopName() + "\n" +
+                "Phone  " + UserDetails.getInstance().getShopPhno() + "\n" +
+                "Email  " + UserDetails.getInstance().getShopEmail() + "\n" +
+                "Address  " + UserDetails.getInstance().getAddress() + "\n" +
+                "Invoice Printed  " + format.format(new Date()) + "\n" +
                 "Invoice No: " + inoice_no + "\n" +
                 "============================" + "\n" +
                 "CUSTOMER" + "\n" +
-                "Customer Name: " + customer_name + "\n" +
-                "Customer Email: " + customer_email + "\n" +
-                "Customer Id: " + customer_ID + "\n" +
-                "Customer Phone number: " + customer_ph_no + "\n" +
+                "Name: " + customer_name + "\n" +
+                "Email: " + customer_email + "\n" +
+                "ID: " + customer_ID + "\n" +
+                "Phone no: " + customer_ph_no + "\n" +
                 "----------------------------" + "\n" +
                 "ITEM" + "\n" +
-                "Item Name: " + item_name + "\n" +
-                "Item Id: " + item_id + "\n" +
+                "Name: " + item_name + "\n" +
+                "Serial No: " + item_id + "\n" +
                 "============================" + "\n" +
-                "Paid Amount: " + item_price_currency + " " + paid_amount + "\n" +
+                "Total Price: " + item_price_currency + " " + paid_amount + "\n" +
                 "Buy Date: " + date + "\n" +
                 "----------------------------" + "\n" +
-                "Terms And Conditions" + "\n" +
-                "RBS Condition 1, " + "RBS Condition 2, " + "RBS Condition 3, " + "RBS Condition 4, " + "RBS Condition 5, " + "\n" +
-                "Shopkeeper Condition 1" + "Shopkeeper Condition 2" + "Shopkeeper Condition 3" + "Shopkeeper Condition 4" + "Shopkeeper Condition 5" + "\n";
-
+                "TERMS & CONDITIONS" + "\n" +
+                rbsTermsAndConditions + "\n" +
+                shopTermsAndConditions + "\n";
 
         date_textView = findViewById(R.id.date_textView);
+        invoiceType_textView = findViewById(R.id.invoiceType_textView);
         customerName_textView = findViewById(R.id.customerName_textView);
         customerEmail_textView = findViewById(R.id.customerEmail_textView);
         customerID_textView = findViewById(R.id.customerID_textView);
@@ -217,9 +312,11 @@ public class Invoice_preview extends AppCompatActivity {
         email_image_btn = findViewById(R.id.email_image_btn);
         print_image_btn = findViewById(R.id.print_image_btn);
         whatsapp_image_btn = findViewById(R.id.whatsapp_image_btn);
+        testBT_btn = findViewById(R.id.testBT_btn);
 
 
         date_textView.setText(date);
+        invoiceType_textView.setText(invoiceType);
         customerName_textView.setText(customer_name);
         customerEmail_textView.setText(customer_email);
         customerID_textView.setText(customer_ID);
@@ -256,12 +353,21 @@ public class Invoice_preview extends AppCompatActivity {
     public String printingData() {
         SimpleDateFormat format = new SimpleDateFormat("'on' yyyy-MM-dd 'at' HH:mm:ss");
 
-        return "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, this.getApplicationContext().getResources().getDrawableForDensity(R.drawable.logo, DisplayMetrics.DENSITY_MEDIUM)) + "</img>\n" +
+        return "[C]<img>" + PrinterTextParserImg.bitmapToHexadecimalString(printer, placeholderLogo_imageView.getDrawable()) + "</img>\n" +
                 "[L]\n" +
-                "[L]Invoice Printed" +
-                "[C]<u type='double'>" + format.format(new Date()) + "</u>\n" +
+                "[L]" + UserDetails.getInstance().getShopName() + "\n" +
+                "[L]\n" +
+                "[L]Phone: " + UserDetails.getInstance().getShopPhno() + "\n" +
+                "[L]\n" +
+                "[L]Email: " + UserDetails.getInstance().getShopEmail() + "\n" +
+                "[L]\n" +
+                "[L]Address: " + UserDetails.getInstance().getShopAddress() + "\n" +
+                "[L]\n" +
+                "[L]Invoice Printed" + "[C]<u type='double'>" + format.format(new Date()) + "</u>\n" +
                 "[C]\n" +
-                "[L]Invoice no: 12345\n" +
+                "[L]Invoice no: " + inoice_no + "\n" +
+                "[L]\n" +
+                "[L]----- " + invoiceType + " -----\n" +
                 "[L]\n" +
                 "[C]<font color='bg-black'>================================</font>\n" +
                 "[L]\n" +
@@ -284,19 +390,17 @@ public class Invoice_preview extends AppCompatActivity {
                 "[L]\n" +
                 "[C]================================\n" +
                 "[L]\n" +
-                "[L]Paid Amount: [R]" + Currency.getInstance().getCurrency() + paid_amount_textView.getText().toString() + "\n" +
+                "[L]Total Price: [R]" + Currency.getInstance().getCurrency() + paid_amount_textView.getText().toString() + "\n" +
                 "[L]\n" +
                 "[L]Buy Date: [R]" + date_textView.getText().toString() + "\n" +
                 "[C]\n" +
                 "[C]<font color='bg-black'> -------------------------------- </font>\n" +
                 "[C]\n" +
-                "[L]<font color='black' size='tall'> Shopkeeper Terms & Conditions </font>\n" +
+                "[L]<font color='black' size='tall'> Terms & Conditions </font>\n" +
                 "[C]\n" +
-                "[L]1.This is the first condition. 2. This is the second condition\n" +
+                rbsTermsAndConditions + "\n" +
+                shopTermsAndConditions + "\n" +
                 "[C]\n" +
-                "[L]<font color='black' size='tall'> Buy Local Terms & Conditions </font>\n" +
-                "[C]\n" +
-                "[L]1.This is the first condition. 2. This is the second condition\n" +
                 "[L]\n" +
                 "[L]\n" +
                 "[L]\n";

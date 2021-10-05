@@ -51,16 +51,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/vendor_shop_name"
-                style="@style/TextViews_Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="10dp"
-                android:text="Itech Computers"
-                android:textColor="@color/textBlue" />
-
-            <TextView
                 style="@style/TextViews_Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,67 +58,67 @@
                 android:text="Shop Details" />
 
             <TextView
-                style="@style/TextViews_Bold"
+                style="@style/TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Name"
-                android:textColor="@color/gradientDarkBlue" />
+                android:text="Name"/>
 
             <TextView
                 android:id="@+id/shop_name_textView"
-                style="@style/TextViews"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
+                android:textColor="@color/gradientDarkBlue"
                 android:text="@string/shop_name" />
 
             <TextView
-                style="@style/TextViews_Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Phone"
-                android:textColor="@color/gradientDarkBlue" />
-
-            <TextView
-                android:id="@+id/shop_address_textView"
                 style="@style/TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Phone" />
+
+            <TextView
+                android:id="@+id/shop_phno_textView"
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:textColor="@color/gradientDarkBlue"
                 android:layout_marginBottom="10dp"
                 android:text="@string/Fake_phone_no" />
 
             <TextView
-                style="@style/TextViews_Bold"
+                style="@style/TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email"
-                android:textColor="@color/gradientDarkBlue" />
+                android:text="Email"/>
 
             <TextView
                 android:id="@+id/shop_email_textView"
-                style="@style/TextViews"
+                style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
+                android:textColor="@color/gradientDarkBlue"
                 android:text="@string/Fake_email" />
 
             <TextView
-                style="@style/TextViews_Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Address"
-                android:textColor="@color/gradientDarkBlue" />
-
-            <TextView
-                android:id="@+id/shop_phno_textView"
                 style="@style/TextViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Address"/>
+
+            <TextView
+                android:id="@+id/shop_address_textView"
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:textColor="@color/gradientDarkBlue"
                 android:layout_marginBottom="10dp"
                 android:text="@string/fake_city" />
 
@@ -143,11 +133,10 @@
                 android:text="Invoices" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/shopkeeper_invoices_recyclerview"
+                android:id="@+id/orders_list_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-
                 />
 
         </LinearLayout>

@@ -15,6 +15,18 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/vendor_order_status"
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_vertical"
+                android:layout_gravity="right"
+                android:text="Pending"
+                android:textColor="@color/textGreen" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -24,15 +36,16 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profileImage_imageView"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
                     android:src="@drawable/laptop"
+                    android:layout_marginRight="5dp"
                     app:civ_border_color="#4A4A4A"
                     app:civ_border_width="7dp" />
 
                 <LinearLayout
                     android:id="@+id/left_linearlayout"
-                    android:layout_width="170dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
@@ -44,7 +57,7 @@
                         style="@style/TextViews_Bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_gravity="left"
                         android:text="ITech Computers"
                         android:textColor="@color/textBlue" />
 
@@ -54,8 +67,8 @@
                         style="@style/TextViews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="8dp"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="5dp"
                         android:text="22/09/2021" />
 
 
@@ -65,36 +78,32 @@
                     android:id="@+id/invoice_linearlayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginStart="5dp"
-                    android:layout_toEndOf="@+id/left_linearlayout"
+                    android:layout_below="@+id/left_linearlayout"
+                    android:layout_toEndOf="@+id/profileImage_imageView"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
                     android:foreground="?attr/selectableItemBackgroundBorderless"
                     android:orientation="vertical">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="center_horizontal"
                         android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/invoice_title"
-                            style="@style/TextViews_Bold"
+                            style="@style/TextViews_Regular_small"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:text="Invoice" />
+                            android:text="Invoice: " />
 
                         <TextView
                             android:id="@+id/order_no_vendor"
-                            style="@style/TextViews"
+                            style="@style/TextViews_Bold_small"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/invoice_title"
                             android:layout_centerInParent="true"
-                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@+id/invoice_title"
                             android:text="124535"
                             android:textColor="@color/textBlue" />
 
@@ -113,6 +122,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -151,17 +161,6 @@
                     </LinearLayout>
 
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/vendor_order_status"
-                    style="@style/TextViews_Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center_vertical"
-                    android:text="Pending"
-                    android:textColor="@color/textGreen" />
 
             </RelativeLayout>
 

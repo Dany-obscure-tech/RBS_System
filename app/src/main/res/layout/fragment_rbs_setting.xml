@@ -99,67 +99,67 @@
                     android:text="Shop Details" />
 
                 <TextView
-                    style="@style/TextViews_Bold"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Shop Name"
-                    android:textColor="@color/gradientDarkBlue" />
+                    android:text="Name"/>
 
                 <TextView
+                    style="@style/TextViews_Bold"
                     android:id="@+id/shop_name_textView"
-                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
+                    android:textColor="@color/gradientDarkBlue"
                     android:text="@string/shop_name" />
 
                 <TextView
-                    style="@style/TextViews_Bold"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Shop Address"
-                    android:textColor="@color/gradientDarkBlue" />
+                    android:text="Address"/>
 
                 <TextView
                     android:id="@+id/shop_address_textView"
-                    style="@style/TextViews"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
+                    android:textColor="@color/gradientDarkBlue"
                     android:text="@string/fake_city" />
 
                 <TextView
-                    style="@style/TextViews_Bold"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Shop Email"
-                    android:textColor="@color/gradientDarkBlue" />
+                    android:text="Email"/>
 
                 <TextView
                     android:id="@+id/shop_email_textView"
-                    style="@style/TextViews"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
+                    android:textColor="@color/gradientDarkBlue"
                     android:text="@string/Fake_email" />
 
                 <TextView
-                    style="@style/TextViews_Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Shop Phone Number"
-                    android:textColor="@color/gradientDarkBlue" />
-
-                <TextView
-                    android:id="@+id/shop_phno_textView"
                     style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Phone Number"/>
+
+                <TextView
+                    android:id="@+id/shop_phno_textView"
+                    style="@style/TextViews_Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:textColor="@color/gradientDarkBlue"
                     android:layout_marginBottom="10dp"
                     android:text="@string/Fake_phone_no" />
             </LinearLayout>

@@ -58,12 +58,40 @@
                 android:text="@string/Status"
                 android:textColor="@color/textGreen" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    style="@style/TextViews_Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="Invoice Number" />
+
+                <TextView
+                    android:id="@+id/invoiceNo_TextView"
+                    style="@style/TextViews_Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="NA"
+                    android:textColor="@color/gradientDarkBlue" />
+
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/shop_name_textView"
                 style="@style/TextViews_Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/shop_name"
                 android:textColor="@color/textBlue" />
@@ -173,6 +201,36 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/paidEntry_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextViews_Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Paid Amount" />
+
+                <EditText
+                    android:id="@+id/paid_editText"
+                    style="@style/EditTexts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/entry_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -188,6 +246,7 @@
                 <EditText
                     android:id="@+id/discount_editText"
                     style="@style/EditTexts"
+                    android:text="0"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal" />
@@ -207,14 +266,14 @@
                     style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:text="Total Balance : " />
 
                 <TextView
                     android:id="@+id/balance_currency"
                     style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="$"
                     android:textColor="@color/textBlue" />
 
@@ -223,47 +282,71 @@
                     style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:text="@string/na"
+                    android:textColor="@color/textBlue" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/remainingBalance_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    style="@style/TextViews_Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="Remaining Balance : " />
+
+                <TextView
+                    android:id="@+id/remainingBalance_currency"
+                    style="@style/TextViews_Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$"
+                    android:textColor="@color/textBlue" />
+
+                <TextView
+                    android:id="@+id/remainingBalance_price_TextView"
+                    style="@style/TextViews_Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/na"
                     android:textColor="@color/textBlue" />
 
             </LinearLayout>
 
 
-            <LinearLayout
-                android:id="@+id/progress_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/readyOrder_textView"
-                    style="@style/blue_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="1"
-                    android:text="Ready" />
-
-                <TextView
-                    style="@style/blue_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_weight="1"
-                    android:text="Messages" />
-
-            </LinearLayout>
-
             <TextView
-                android:id="@+id/confirm_order_btn"
+                android:id="@+id/readyOrder_textView"
                 style="@style/blue_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_marginBottom="20dp"
-                android:text="Confirm Order" />
+                android:text="Ready" />
+
+            <TextView
+                android:id="@+id/confirm_order_btn"
+                style="@style/green_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="Apply" />
+
+            <TextView
+                style="@style/blue_btn"
+                android:id="@+id/message_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:text="Message" />
 
             <TextView
                 android:id="@+id/cancel_order_btn"

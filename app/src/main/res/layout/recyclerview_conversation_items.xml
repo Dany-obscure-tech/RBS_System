@@ -65,6 +65,16 @@
                     android:maxLines="1"
                     android:text="@string/lorem_ipsum" />
 
+                <TextView
+                    android:id="@+id/date_textview"
+                    style="@style/TextViews_Regular_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/date"
+                    android:textColor="@color/textGrey" />
+
             </LinearLayout>
 
         </LinearLayout>

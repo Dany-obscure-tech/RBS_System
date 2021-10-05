@@ -44,10 +44,13 @@ public class VendorMainScreen extends AppCompatActivity {
     private static final int LOGO_READ_REQUEST_CODE = 42;
     private static final int BANNER_READ_REQUEST_CODE = 43;
 
-    StorageReference storageReference;
+    Progress_dialog pd = new Progress_dialog();
+
+    StorageReference storageReference, Vendor_Stock_Images_ref;
     DatabaseReference reference;
+    DatabaseReference vendorStockRef;
     ImageView vendorLogo_imageView;
-    TextView VendorName_textView,vendorEmail_textView;
+    TextView VendorName_textView, vendorEmail_textView;
 
     ActionBar actionBar;
     TextView actionBarTitle;
@@ -63,7 +66,6 @@ public class VendorMainScreen extends AppCompatActivity {
     private Uri fileUri;
     VendorStockDetails vendorStockDetails;
 
-    DatabaseReference vendorStockRef;
     StorageReference vendorStockImageReference;
 
     @Override
@@ -73,6 +75,7 @@ public class VendorMainScreen extends AppCompatActivity {
 
         reference = FirebaseDatabase.getInstance().getReference("Users_data/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/Vendor_details");
         storageReference = FirebaseStorage.getInstance().getReference().child("Users_data");
+        Vendor_Stock_Images_ref = FirebaseStorage.getInstance().getReference().child("Vendor_Stock_Images_ref/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         actionBar = this.getSupportActionBar();
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.screen_header_rectangle));
@@ -141,6 +144,20 @@ public class VendorMainScreen extends AppCompatActivity {
                         break;
                     case R.id.nav_profile:
                         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, new VendorProfile(), "VENDOR_PROFILE_FRAGMENT").commit();
+                        closeDrawer();
+                        break;
+                    case R.id.nav_inbox:
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, new VendorInbox()).commit();
+                        closeDrawer();
+                        break;
+
+                    case R.id.nav_support:
+                        Toast.makeText(VendorMainScreen.this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+                        closeDrawer();
+                        break;
+
+                    case R.id.nav_report:
+                        Toast.makeText(VendorMainScreen.this, "Coming Soon!", Toast.LENGTH_SHORT).show();
                         closeDrawer();
                         break;
 
@@ -247,7 +264,7 @@ public class VendorMainScreen extends AppCompatActivity {
                         Toast.makeText(VendorMainScreen.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
                     }
                 });
-            }else{
+            } else {
                 vendorStockDetails = VendorStockDetails.getInstance();
 
                 //Image Uri will not be null for RESULT_OK
@@ -296,10 +313,12 @@ public class VendorMainScreen extends AppCompatActivity {
             //You can also get File Path from intent
 //                    val filePath:String = ImagePicker.getFilePath(data)!!
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
+
         } else if (resultCode == 111) {
             recreate();
             nv.setCheckedItem(R.id.nav_shop);
         }
+
     }
 
     @Override

@@ -35,6 +35,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 public class RBS_mainscreen extends AppCompatActivity {
+    Progress_dialog pd = new Progress_dialog();
 
     private static final int LOGO_READ_REQUEST_CODE = 42;
     private static final int BANNER_READ_REQUEST_CODE = 43;
@@ -60,6 +61,7 @@ public class RBS_mainscreen extends AppCompatActivity {
     final RBS_option rbs_option = new RBS_option();
     final RBS_Vendor_Orders rbs_vendor_orders = new RBS_Vendor_Orders();
     final RBS_setting rbs_setting = new RBS_setting();
+    final RBS_inbox rbs_inbox = new RBS_inbox();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +135,21 @@ public class RBS_mainscreen extends AppCompatActivity {
 
                     case R.id.nav_settings:
                         getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, rbs_setting, "RBS Settings").commit();
+                        closeDrawer();
+                        break;
+
+                    case R.id.nav_inbox:
+                        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, rbs_inbox).commit();
+                        closeDrawer();
+                        break;
+
+                    case R.id.nav_support:
+                        Toast.makeText(RBS_mainscreen.this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+                        closeDrawer();
+                        break;
+
+                    case R.id.nav_report:
+                        Toast.makeText(RBS_mainscreen.this, "Coming Soon!", Toast.LENGTH_SHORT).show();
                         closeDrawer();
                         break;
 
@@ -216,6 +233,7 @@ public class RBS_mainscreen extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == LOGO_READ_REQUEST_CODE) {
+                pd.showProgressBar(RBS_mainscreen.this);
                 storageReference.child("shopkeeper_logos").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("logo").putFile(data.getData()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -227,6 +245,7 @@ public class RBS_mainscreen extends AppCompatActivity {
                                 UserDetails.getInstance().setShopLogo(String.valueOf(uri.toString()));
                                 getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, fragment_rbs_settings).commit();
 
+                                pd.dismissProgressBar(RBS_mainscreen.this);
                             }
                         });
 
@@ -235,10 +254,12 @@ public class RBS_mainscreen extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(RBS_mainscreen.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
+                        pd.dismissProgressBar(RBS_mainscreen.this);
                     }
                 });
 
             } else if (requestCode == BANNER_READ_REQUEST_CODE) {
+                pd.showProgressBar(RBS_mainscreen.this);
                 storageReference.child("shopkeeper_banner").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("banner").putFile(data.getData()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -250,6 +271,7 @@ public class RBS_mainscreen extends AppCompatActivity {
                                 UserDetails.getInstance().setShopBanner(String.valueOf(uri.toString()));
                                 getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.screenContainer, fragment_rbs_settings).commit();
 
+                                pd.dismissProgressBar(RBS_mainscreen.this);
                             }
                         });
 
@@ -258,6 +280,7 @@ public class RBS_mainscreen extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(RBS_mainscreen.this, String.valueOf(e), Toast.LENGTH_SHORT).show();
+                        pd.dismissProgressBar(RBS_mainscreen.this);
                     }
                 });
             }

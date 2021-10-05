@@ -22,7 +22,6 @@ public class Item_history_class {
     }
 
     public void thirteenValues(String itemId, String pushId, String shopkeeper_name, String shopkeeper_keyId, String shopkeeper_image, String shopkeeper_type, String customer_name, String customer_keyId, String customer_type, String customer_image, String rbs, Long timestamp, String date) {
-//TODO jub RBS ma add item kartey hay rbs shop screen sa to add kar kay aney kay bad app crash kar jati ha
 
         itemHistoryRef.child(itemId).child(pushId).child("Shopkeeper_name").setValue(shopkeeper_name);
         itemHistoryRef.child(itemId).child(pushId).child("Shopkeeper_keyId").setValue(shopkeeper_keyId);

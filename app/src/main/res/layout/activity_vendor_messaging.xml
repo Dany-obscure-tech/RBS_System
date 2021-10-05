@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Vendor_messaging">
+
+    <RelativeLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/screen_header_rectangle">
+
+
+        <TextView
+            android:id="@+id/user2Name_textView"
+            style="@style/TextViews_Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/profileImage_imageView"
+            android:text="@string/fake_customer_name"
+            android:textColor="#ffffff" />
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:padding="15dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/back_arrow" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImage_imageView"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_toEndOf="@+id/back_btn"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:src="@drawable/profile_icon"
+
+            />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/messaging_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/editTextRecyclerView"
+        android:layout_below="@+id/action_bar" />
+
+    <RelativeLayout
+        android:id="@+id/editTextRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/screen_header_rectangle"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <EditText
+                android:id="@+id/message_editText"
+                style="@style/TextViews_Regular_small"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="4.5"
+                android:backgroundTint="@color/colorWhite"
+                android:hint="Type....."
+                android:inputType="text"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite" />
+
+            <ImageButton
+                android:id="@+id/messageSend_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_weight=".5"
+                android:background="#00000000"
+                android:padding="0dp"
+                android:src="@android:drawable/ic_menu_send"
+                app:tint="@color/colorWhite" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

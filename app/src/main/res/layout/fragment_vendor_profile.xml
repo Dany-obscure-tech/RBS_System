@@ -100,144 +100,146 @@
                     android:text="Vendor Details" />
 
                 <TextView
-                    style="@style/TextViews_Bold"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="App reg no"
-                    android:textColor="@color/gradientDarkBlue" />
+                    />
 
                 <TextView
                     android:id="@+id/appRegNo_textView"
-                    style="@style/TextViews"
+                    style="@style/TextViews_Bold"
+                    android:textColor="@color/gradientDarkBlue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="@string/Fake_id" />
 
                 <TextView
-                    style="@style/TextViews_Bold"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="User Name"
-                    android:textColor="@color/gradientDarkBlue" />
+                    />
 
                 <TextView
                     android:id="@+id/name_textView"
-                    style="@style/TextViews"
+                    style="@style/TextViews_Bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:textColor="@color/gradientDarkBlue"
                     android:text="@string/fake_customer_name" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Company Name"
-                    android:textColor="@color/gradientDarkBlue" />
+                    android:text="Company Name"/>
 
                 <TextView
                     android:id="@+id/company_name_textView"
-                    style="@style/TextViews"
+                    style="@style/TextViews_Bold"
+                    android:textColor="@color/gradientDarkBlue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="@string/shop_name" />
 
                 <TextView
-                    style="@style/TextViews_Bold"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Company Registeration no"
-                    android:textColor="@color/gradientDarkBlue" />
+                    android:text="Company Registeration no"/>
 
                 <TextView
                     android:id="@+id/company_reg_no_textView"
-                    style="@style/TextViews"
+                    style="@style/TextViews_Bold"
+                    android:textColor="@color/gradientDarkBlue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="09125678893" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Post Code"
-                    android:textColor="@color/gradientDarkBlue" />
+                    android:text="Post Code"/>
 
                 <TextView
                     android:id="@+id/post_code_textView"
-                    style="@style/TextViews"
+                    style="@style/TextViews_Bold"
+                    android:textColor="@color/gradientDarkBlue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="E15UWE" />
 
                 <TextView
-                    style="@style/TextViews_Bold_small"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Address"
-                    android:textColor="@color/gradientDarkBlue" />
+                    android:text="Address"/>
 
                 <TextView
                     android:id="@+id/customer_address_textView"
-                    style="@style/TextViews"
+                    style="@style/TextViews_Bold"
+                    android:textColor="@color/gradientDarkBlue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="@string/fake_city" />
 
                 <TextView
-                    style="@style/TextViews_Bold"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Phone Number"
-                    android:textColor="@color/gradientDarkBlue" />
+                    android:text="Phone Number"/>
 
                 <TextView
                     android:id="@+id/vendor_phone_textView"
-                    style="@style/TextViews"
+                    style="@style/TextViews_Bold"
+                    android:textColor="@color/gradientDarkBlue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="@string/Fake_phone_no" />
 
                 <TextView
-                    style="@style/TextViews_Bold"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Email"
-                    android:textColor="@color/gradientDarkBlue" />
+                    android:text="Email"/>
 
                 <TextView
                     android:id="@+id/vendor_email_textView"
-                    style="@style/TextViews"
+                    style="@style/TextViews_Bold"
+                    android:textColor="@color/gradientDarkBlue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="@string/Fake_email" />
 
                 <TextView
-                    style="@style/TextViews_Bold"
+                    style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="URL"
-                    android:textColor="@color/gradientDarkBlue" />
+                    android:text="URL"/>
 
                 <TextView
                     android:id="@+id/vendor_url_textView"
-                    style="@style/TextViews"
+                    style="@style/TextViews_Bold"
+                    android:textColor="@color/gradientDarkBlue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
