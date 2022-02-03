@@ -62,7 +62,7 @@ public class BuyLocal_home extends Fragment {
 
     ImageView menu_btn;
 
-    TextView logout, rbs_option, vendor_option;
+    TextView logout, rbs_option,applyForShopkeeper, vendor_option;
 
     RelativeLayout side_option_menu_bg_relativeLayout;
 
@@ -150,6 +150,7 @@ public class BuyLocal_home extends Fragment {
 
         logout = view.findViewById(R.id.logout);
         rbs_option = view.findViewById(R.id.rbs_option);
+        applyForShopkeeper = view.findViewById(R.id.applyForShopkeeper);
         vendor_option = view.findViewById(R.id.vendor_option);
 
         side_option_menu_bg_relativeLayout = view.findViewById(R.id.side_option_menu_bg_relativeLayout);
@@ -186,6 +187,17 @@ public class BuyLocal_home extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), PasscodeActivity.class);
+                side_menu_cardview.setVisibility(View.GONE);
+                side_option_menu_bg_relativeLayout.setVisibility(View.GONE);
+                intent.putExtra("ACTIVITY_CHECK", "RBS");
+                getActivity().startActivity(intent);
+            }
+        });
+
+        applyForShopkeeper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ApplyForShopkeeper.class);
                 side_menu_cardview.setVisibility(View.GONE);
                 side_option_menu_bg_relativeLayout.setVisibility(View.GONE);
                 intent.putExtra("ACTIVITY_CHECK", "RBS");
