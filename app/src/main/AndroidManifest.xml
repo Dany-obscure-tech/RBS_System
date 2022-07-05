@@ -25,9 +25,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ApplyForShopkeeper"
+            android:name=".RegisterationEmailCheck"
             android:theme="@style/AppTheme.no"
             android:exported="true" />
+        <activity
+            android:name=".ApplyForShopkeeper"
+            android:exported="true"
+            android:theme="@style/AppTheme.no" />
         <activity
             android:name=".Invoice_preview_Vendor_order"
             android:exported="true" />

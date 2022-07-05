@@ -175,13 +175,14 @@ public class RBSCustomerDetails {
             reference.child("Customer_list").child(key).child("added_by").setValue(String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getUid()));
 
             for (i = 0; i<imageUrlList.size();i++) {
-
+                System.out.println(i);
                 idStorageReference.child(key).child("image_"+String.valueOf(i+1)).putFile(imageUrlList.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         idStorageReference.child(key).child("image_"+String.valueOf(l+1)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
+                                System.out.println("called");
                                 if (k==0){
                                     firstImageUrl= String.valueOf(uri);
                                     System.out.println("called before function for image");

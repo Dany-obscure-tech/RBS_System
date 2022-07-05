@@ -35,7 +35,7 @@ public class BuyLocal_inbox extends Fragment {
 
     AdapterConversationListRecyclerView adapterConversationListRecyclerView;
 
-    List<String> convoIdList, user2KeyIdList, user2NameList,user2ImageList,dateList;
+    List<String> convoIdList, user2KeyIdList, user2NameList,user2ImageList,dateList,itemNameList,itemImageList;
     List<String>  messageList;
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,6 +87,8 @@ public class BuyLocal_inbox extends Fragment {
         userConversationRef = FirebaseDatabase.getInstance().getReference("User_conversation/" + FirebaseAuth.getInstance().getCurrentUser().getUid()+"/CustomerInbox");
 
         messageList = new ArrayList<>();
+        itemNameList = new ArrayList<>();
+        itemImageList= new ArrayList<>();
         user2ImageList = new ArrayList<>();
         convoIdList = new ArrayList<>();
         user2KeyIdList = new ArrayList<>();
@@ -115,6 +117,8 @@ public class BuyLocal_inbox extends Fragment {
                     user2KeyIdList.add(snapshot1.getKey());
                     user2NameList.add(snapshot1.child("user_name").getValue().toString());
                     user2ImageList.add(snapshot1.child("user_image").getValue().toString());
+                    itemNameList.add(snapshot1.child("user_image").getValue().toString());
+                    itemImageList.add(snapshot1.child("user_image").getValue().toString());
                     messageList.add(snapshot1.child("last_message").getValue().toString());
                     dateList.add(snapshot1.child("last_message_time").getValue().toString());
 

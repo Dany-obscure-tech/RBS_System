@@ -6,50 +6,164 @@
     android:layout_height="match_parent"
     tools:context=".Registration">
 
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/screen_header_rectangle">
+
+        <TextView
+            style="@style/TextViews_Header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/back_btn"
+            android:text="Enter your details"
+            android:textColor="#ffffff" />
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:padding="15dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/back_arrow" />
+
+    </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header">
 
         <LinearLayout
-            android:id="@+id/registration_fields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/buy_local" />
-
-            <EditText
-                android:id="@+id/editText_fullName"
-                style="@style/EditTexts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="Full name"
-                android:inputType="textPersonName" />
-
-            <EditText
-                android:id="@+id/editText_contactNo"
-                style="@style/EditTexts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="Enter contact no"
-                android:inputType="phone" />
-
             <TextView
                 style="@style/TextViews_Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:text="Name" />
+
+            <EditText
+                android:id="@+id/ac_title"
+                style="@style/EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter customer name"
+                android:maxLength="32"
+                android:maxLines="1" />
+
+            <TextView
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Phone no" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/ccp"
+                    style="@style/TextViews_Regular_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:onClick="onCountryPickerClick"
+                    app:ccpDialog_backgroundColor="@color/colorWhite"
+                    app:ccpDialog_fastScroller_handleColor="@color/textGrey"
+                    app:ccpDialog_searchEditTextTint="@color/colorAccent"
+                    app:ccpDialog_textColor="@color/textGrey"
+                    app:ccp_autoDetectCountry="true"
+                    app:ccp_contentColor="@color/textBlue"
+                    app:ccp_countryAutoDetectionPref="SIM_NETWORK"
+                    app:ccp_defaultPhoneCode="92"
+                    app:ccp_flagBorderColor="@color/textGrey"
+                    app:ccp_rememberLastSelection="true" />
+
+                <EditText
+                    android:id="@+id/editText_carrierNumber"
+                    style="@style/EditTexts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter customer phone no"
+                    android:inputType="phone"
+                    android:singleLine="true"
+                    app:ccp_autoFormatNumber="true" />
+
+            </LinearLayout>
+
+
+            <TextView
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="ID" />
+
+            <EditText
+                android:id="@+id/ac_id"
+                style="@style/EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter customer id"
+                android:maxLength="32" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/itemImage_recyclerView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false" />
+
+
+                <ImageView
+                    android:id="@+id/id_imageView"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1.9"
+                    android:adjustViewBounds="true"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/uploadId_textView"
+                    style="@style/green_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:text="Upload customer id image" />
+
+            </LinearLayout>
+
+
+            <TextView
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="DOB" />
 
             <LinearLayout
@@ -63,132 +177,182 @@
                     style="@style/TextViews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.9"
+                    android:text="-- -- --" />
+
+                <TextView
+                    android:id="@+id/date_textView"
+                    style="@style/green_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:foreground="?attr/selectableItemBackgroundBorderless"
+                    android:text="@string/select_date_btn_string" />
+
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Postcode" />
+
+            <EditText
+                android:id="@+id/ac_postcode"
+                style="@style/EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter customer postcode"
+                android:maxLength="32" />
+
+            <TextView
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Door No" />
+
+            <EditText
+                android:id="@+id/ac_houseNo"
+                style="@style/EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter customer door no"
+                android:maxLength="32" />
+
+
+            <TextView
+                android:id="@+id/postcodeCheck_textView"
+                style="@style/green_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="20dp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="Search Address" />
+
+            <TextView
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Address" />
+
+            <TextView
+                android:id="@+id/ac_address"
+                style="@style/TextViews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:text="----" />
+
+            <TextView
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Email" />
+
+            <TextView
+                android:id="@+id/ac_email"
+                style="@style/EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter customer email"/>
+
+            <TextView
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Password" />
+
+            <EditText
+                android:id="@+id/ac_password"
+                style="@style/EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:maxLines="1"
+                android:maxLength="32"
+                android:hint="Enter password.."
+                android:inputType="textPassword" />
+
+            <TextView
+                style="@style/TextViews_Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Confirm Password" />
+
+            <EditText
+                android:id="@+id/ac_confirmPassword"
+                style="@style/EditTexts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:maxLines="1"
+                android:maxLength="32"
+                android:hint="Renter password.."
+                android:inputType="textPassword" />
+
+            <TextView
+                android:id="@+id/profileImage_textView"
+                style="@style/green_btn"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="Upload customer id image" />
+
+            <LinearLayout
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profileImage_imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:src="@drawable/profile_icon"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
+
+                <TextView
+                    android:id="@+id/removeImage_textView"
+                    android:visibility="gone"
+                    style="@style/TextViews_Bold"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1.9"
-                    android:text="Select date" />
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:paddingBottom="4dp"
+                    android:text="X"
+                    android:textColor="@color/textRed" />
 
-                <TextView
-                    android:id="@+id/date_textview"
-                    style="@style/green_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
-                    android:text="@string/date" />
-
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/editText_email"
-                style="@style/EditTexts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="Enter email"
-                android:inputType="textEmailAddress" />
-
-            <EditText
-                android:id="@+id/editText_address"
-                style="@style/EditTexts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="Enter address" />
-
-            <EditText
-                android:id="@+id/editText_password"
-                style="@style/EditTexts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="Enter Password...."
-                android:inputType="textPassword" />
-
-            <EditText
-                android:id="@+id/editText_confirmPassword"
-                style="@style/EditTexts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:hint="Confirm Password"
-                android:inputType="textPassword" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-
-                <ImageView
-                    android:id="@+id/id_front"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_weight="1.9"
-                    android:adjustViewBounds="true" />
-
-                <TextView
-                    android:id="@+id/uploadId_profile_textview"
-                    style="@style/green_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
-                    android:text="Upload Profile image " />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-
-                <ImageView
-                    android:id="@+id/id_imageView"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_weight="1.9"
-                    android:adjustViewBounds="true" />
-
-                <TextView
-                    android:id="@+id/uploadId_id_textview"
-                    style="@style/green_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.1"
-                    android:text="Upload ID image " />
 
             </LinearLayout>
 
             <TextView
-                android:id="@+id/button_register_textview"
+                android:id="@+id/submit_textView"
                 style="@style/blue_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:text="Register" />
+                android:layout_marginBottom="20dp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="@string/save_btn_string" />
 
-            <TextView
-                android:id="@+id/button_google_textview"
-                style="@style/blue_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Continue With Google" />
-
-            <TextView
-                android:id="@+id/button_facebook_textview"
-                style="@style/blue_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Continue With Facebook" />
 
 
         </LinearLayout>

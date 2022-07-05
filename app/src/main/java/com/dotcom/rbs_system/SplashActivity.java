@@ -33,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
     TermsAndConditions termsAndConditionsObj;
     List<String> buylocalsliderlist;
     BuylocalSlider buylocalSlider;
-    DatabaseReference userRef;
+    DatabaseReference userRef,customerRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +87,8 @@ public class SplashActivity extends AppCompatActivity {
         currencyObj = Currency.getInstance();
         termsAndConditionsObj = TermsAndConditions.getInstance();
         buylocalSlider = BuylocalSlider.getInstance();
+
+        InitialDataFetch();
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -114,12 +116,13 @@ public class SplashActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 currencyObj.setCurrency(dataSnapshot.child("currency").getValue().toString());
                 termsAndConditionsObj.setTermsAndConditions(dataSnapshot.child("rbs_termsandconditions").getValue().toString());
+                UserDetails.getInstance().setDefaultProfileImage(dataSnapshot.child("default_profile_pic").getValue().toString());
                 if (dataSnapshot.child("buylocal_slider").exists()) {
                     for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                         buylocalsliderlist.add(String.valueOf(dataSnapshot1.getValue()));
                     }
                     buylocalSlider.setBuylocalSliderList(buylocalsliderlist);
-                    startMainActivity();
+
                 }
             }
 
@@ -145,11 +148,26 @@ public class SplashActivity extends AppCompatActivity {
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserDetails.getInstance().setName(dataSnapshot.child("fullname").getValue().toString());
-                UserDetails.getInstance().setPhno(dataSnapshot.child("phno").getValue().toString());
-                UserDetails.getInstance().setAddress(dataSnapshot.child("address").getValue().toString());
-                UserDetails.getInstance().setEmail(dataSnapshot.child("email").getValue().toString());
-                UserDetails.getInstance().setProfileImageUrl(dataSnapshot.child("profile_image_url").getValue().toString());
+                UserDetails.getInstance().setCustomerID(dataSnapshot.child("customer_id").getValue().toString());
+
+                customerRef = FirebaseDatabase.getInstance().getReference("Customer_list/"+UserDetails.getInstance().getCustomerID());
+                customerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        UserDetails.getInstance().setName(snapshot.child("Name").getValue().toString());
+                        UserDetails.getInstance().setPhno(snapshot.child("Phone_no").getValue().toString());
+                        UserDetails.getInstance().setAddress(snapshot.child("Address").getValue().toString());
+                        UserDetails.getInstance().setEmail(snapshot.child("Email").getValue().toString());
+                        UserDetails.getInstance().setProfileImageUrl(snapshot.child("profile_image").getValue().toString());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
 
                 if (dataSnapshot.child("Shopkeeper_details").exists()) {
                     UserDetails.getInstance().setShopkeeper(true);
@@ -181,7 +199,8 @@ public class SplashActivity extends AppCompatActivity {
                     UserDetails.getInstance().setVendor(false);
                 }
 
-                InitialDataFetch();
+                startMainActivity();
+
             }
 
             @Override
@@ -191,3 +210,4 @@ public class SplashActivity extends AppCompatActivity {
         });
     }
 }
+

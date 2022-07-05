@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/drawable/green_border.xml" value="0.3416666666666667" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/drawable/main_button.xml" value="0.3416666666666667" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/drawable/profile_screen_header.xml" value="0.3416666666666667" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/drawable/red_border.xml" value="0.3416666666666667" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_accessory.xml" value="0.33" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_accessory_add.xml" value="0.33" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_accessory_sale.xml" value="0.25" />
@@ -16,6 +20,7 @@
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_buy_local_messaging.xml" value="0.25" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_buy_local_offers_option.xml" value="0.25" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_buy_local_productdetails.xml" value="0.22" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_buy_local_profile_edit.xml" value="0.2001013171225937" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_buy_local_shopkeeper_shop.xml" value="0.25" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_buylocal_category_products.xml" value="0.2001013171225937" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_customer_history.xml" value="0.33" />
@@ -32,11 +37,15 @@
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_rbs_vendor_order_receipt.xml" value="0.2001013171225937" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_rbs_vendor_specific_order.xml" value="0.4114583333333333" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_rbs_vendors.xml" value="0.25" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_registeration.xml" value="0.25" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_registeration_email_check.xml" value="0.33" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_repair_ticket.xml" value="0.2001013171225937" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_repair_ticket_details.xml" value="0.33" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_sale.xml" value="0.2001013171225937" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_search_result.xml" value="0.4114583333333333" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_shopkeeper_details.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_sign_in.xml" value="0.33" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_splash.xml" value="0.33" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_vendor__users_list.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_vendor_main_screen.xml" value="0.2001013171225937" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/activity_vendor_messaging.xml" value="0.33" />
@@ -57,6 +66,8 @@
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/alert_vendor_details_edit.xml" value="0.3489583333333333" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/alert_vendor_new_passcode.xml" value="0.4114583333333333" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/alert_vendor_stock_edit.xml" value="0.4114583333333333" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/custom_spinner.xml" value="0.4114583333333333" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/custom_spinner_dropdown.xml" value="0.4114583333333333" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/edit_dialog_customer.xml" value="0.25" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/exit_confirmation_alert.xml" value="0.4114583333333333" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/fragment_buy_local_about.xml" value="0.38858695652173914" />
@@ -84,6 +95,8 @@
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/recyclerview_category_items.xml" value="0.4114583333333333" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/recyclerview_conversation_items.xml" value="0.33" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/recyclerview_customerhistorylist_item.xml" value="0.33" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/recyclerview_file_name_item.xml" value="0.3489583333333333" />
+        <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/recyclerview_itemdetails_image_item.xml" value="0.37182971014492755" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/recyclerview_offers_items.xml" value="0.25" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/recyclerview_repairticket_repairticketlist_item.xml" value="0.25" />
         <entry key="..\:/Users/Danyo/StudioProjects/RBS_System/app/src/main/res/layout/recyclerview_settings_faultlist_item.xml" value="0.40443840579710144" />

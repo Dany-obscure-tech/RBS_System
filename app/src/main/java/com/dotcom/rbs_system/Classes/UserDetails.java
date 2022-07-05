@@ -3,12 +3,13 @@ package com.dotcom.rbs_system.Classes;
 public class UserDetails {
     private static UserDetails userDetailsObj = new UserDetails();
 
-    String name,address,phno,email,profileImageUrl;
+    String name,address,phno,email,profileImageUrl,customerID;
     Boolean isShopkeeper;
     Boolean isVendor;
     String shopName,shopLogo,shopBanner,shopAddress,shopEmail,shopPhno,shopTermsAndConditions;
     String vendorName,vendorLogo,vendorAppRegNo,vendorBanner,vendorAddress,vendorEmail,vendorPostCode,vendorRegNo,vendorUrl,vendorPhno,vendorTermsAndConditions;
 
+    String defaultProfileImage;
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public String getName() {
@@ -51,6 +52,13 @@ public class UserDetails {
         this.profileImageUrl = profileImageUrl;
     }
 
+    public String getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(String customerID) {
+        this.customerID = customerID;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -218,6 +226,13 @@ public class UserDetails {
         this.vendorTermsAndConditions = vendorTermsAndConditions;
     }
 
+    public String getDefaultProfileImage() {
+        return defaultProfileImage;
+    }
+
+    public void setDefaultProfileImage(String defaultProfileImage) {
+        this.defaultProfileImage = defaultProfileImage;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 

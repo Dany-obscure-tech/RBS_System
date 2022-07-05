@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dotcom.rbs_system.Adapter.AdapterMessageRecyclerView;
+import com.dotcom.rbs_system.Adapter.SliderAdapterExample;
 import com.dotcom.rbs_system.Classes.UserDetails;
 import com.dotcom.rbs_system.Model.Data_model_chat;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,12 +31,13 @@ import java.util.HashMap;
 
 public class BuyLocal_messaging extends AppCompatActivity {
 
-    String shopKeeperID, customerID;
+    String shopKeeperID, customerID,productID,productCategory;
     String conversationID;
     String secondUserName,secondUserImage;
     String firstUserName,firstUserImage;
+    String itemImage, itemName;
 
-    DatabaseReference customerInbox,shopkeeperInbox,conversationRef, secondUserDataRef;
+    DatabaseReference customerInbox,shopkeeperInbox,conversationRef, secondUserDataRef,itemRef;
 
     Boolean newConversation;
 
@@ -77,9 +79,12 @@ public class BuyLocal_messaging extends AppCompatActivity {
 
         shopKeeperID= getIntent().getStringExtra("SHOPKEEPER_ID");
         customerID = getIntent().getStringExtra("CUSTOMER_ID");
+        productID = getIntent().getStringExtra("PRODUCT_ID");
+        productCategory = getIntent().getStringExtra("PRODUCT_CATEGORY");
 
-        customerInbox = FirebaseDatabase.getInstance().getReference("User_conversation/"+ customerID +"/CustomerInbox/"+shopKeeperID);
-        shopkeeperInbox = FirebaseDatabase.getInstance().getReference("User_conversation/"+shopKeeperID+"/ShopkeeperInbox/Customer/"+ customerID);
+        customerInbox = FirebaseDatabase.getInstance().getReference("User_conversation/"+ customerID +"/CustomerInbox/"+productID);
+        shopkeeperInbox = FirebaseDatabase.getInstance().getReference("User_conversation/"+shopKeeperID+"/ShopkeeperInbox/Customer/"+ productID);
+        itemRef = FirebaseDatabase.getInstance().getReference("Items/" + productCategory + "/" + productID);
 
         messagingRecyclerView = (RecyclerView) findViewById(R.id.messaging_recyclerView);
         messagingRecyclerView.setHasFixedSize(true);
@@ -93,6 +98,23 @@ public class BuyLocal_messaging extends AppCompatActivity {
     private void InitialProcess() {
         checkForConversation();
         getSecondUserData();
+        fetchingItemDetails();
+    }
+
+    private void fetchingItemDetails() {
+        itemRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                itemName = snapshot.child("Item_name").getValue().toString();
+                itemImage = snapshot.child("Image_urls").child("image_1").getValue().toString();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void getSecondUserData() {
@@ -205,13 +227,23 @@ public class BuyLocal_messaging extends AppCompatActivity {
                         if (customerID.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
                             customerInbox.child("user_name").setValue(secondUserName);
                             customerInbox.child("user_image").setValue(secondUserImage);
+                            customerInbox.child("item_name").setValue(itemName);
+                            customerInbox.child("item_image").setValue(itemImage);
+
                             shopkeeperInbox.child("user_name").setValue(firstUserName);
                             shopkeeperInbox.child("user_image").setValue(firstUserImage);
+                            shopkeeperInbox.child("item_name").setValue(itemName);
+                            shopkeeperInbox.child("item_image").setValue(itemImage);
                         }else{
                             customerInbox.child("user_name").setValue(firstUserName);
                             customerInbox.child("user_image").setValue(firstUserImage);
+                            customerInbox.child("item_name").setValue(itemName);
+                            customerInbox.child("item_image").setValue(itemImage);
+                            
                             shopkeeperInbox.child("user_name").setValue(secondUserName);
                             shopkeeperInbox.child("user_image").setValue(secondUserImage);
+                            shopkeeperInbox.child("item_name").setValue(itemName);
+                            shopkeeperInbox.child("item_image").setValue(itemImage);
                         }
 
                         conversationRef.child("shopkeeper").setValue(shopKeeperID);

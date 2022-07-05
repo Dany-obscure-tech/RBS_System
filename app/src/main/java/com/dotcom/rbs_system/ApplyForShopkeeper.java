@@ -1,22 +1,30 @@
 package com.dotcom.rbs_system;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dotcom.rbs_system.Adapter.AdapterFilesNamesRecyclerView;
 import com.dotcom.rbs_system.Adapter.AdapterItemDetailsImagesRecyclerView;
 import com.dotcom.rbs_system.Classes.RBSCustomerDetails;
 import com.github.dhaval2404.imagepicker.ImagePicker;
@@ -36,7 +44,7 @@ import java.util.Locale;
 
 public class ApplyForShopkeeper extends AppCompatActivity {
 
-    EditText ac_postcode,ac_houseNo;
+    EditText ac_postcode,ac_houseNo,ac_title,editTextCarrierNumber,ac_email;
     TextView uploadId_textView,submit_textView;
     TextView ac_address;
     TextView postcodeCheck_textView;
@@ -45,9 +53,14 @@ public class ApplyForShopkeeper extends AppCompatActivity {
     Double longitude;
     List<Address> addressList;
     Geocoder geocoder;
+    RecyclerView itemImage_recyclerView;
+    AdapterFilesNamesRecyclerView adapterFilesNamesRecyclerView;
 
     String selected_country_code;
     CountryCodePicker ccp;
+
+    List<Uri> documentUriList;
+    List<String> documentNamesList;
 
 
 
@@ -63,8 +76,8 @@ public class ApplyForShopkeeper extends AppCompatActivity {
 
     private void initialize() {
 
-        ccp = findViewById(R.id.ccp);
-//        ccp.registerCarrierNumberEditText(editTextCarrierNumber);
+        documentUriList = new ArrayList<>();
+        documentNamesList = new ArrayList<>();
         postcodeCheck_textView = findViewById(R.id.postcodeCheck_textView);
 
         uploadId_textView = findViewById(R.id.uploadId_textView);
@@ -73,8 +86,20 @@ public class ApplyForShopkeeper extends AppCompatActivity {
         ac_houseNo = findViewById(R.id.ac_houseNo);
         ac_address = findViewById(R.id.ac_address);
         ac_postcode = findViewById(R.id.ac_postcode);
+        ac_title = findViewById(R.id.ac_title);
+        editTextCarrierNumber = findViewById(R.id.editTextCarrierNumber);
+        ccp = findViewById(R.id.ccp);
+        ccp.registerCarrierNumberEditText(editTextCarrierNumber);
+        ac_email = findViewById(R.id.ac_email);
+
+        itemImage_recyclerView = findViewById(R.id.itemImage_recyclerView);
+        itemImage_recyclerView.setLayoutManager(new GridLayoutManager(ApplyForShopkeeper.this, 1));
+        adapterFilesNamesRecyclerView = new AdapterFilesNamesRecyclerView(ApplyForShopkeeper.this,documentNamesList,documentUriList);
+        itemImage_recyclerView.setAdapter(adapterFilesNamesRecyclerView);
 
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////
 
     private void onClickListeners() {
 
@@ -88,22 +113,67 @@ public class ApplyForShopkeeper extends AppCompatActivity {
         uploadId_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-                System.exit(0);
+                Intent filesIntent;
+                filesIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                filesIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                filesIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                filesIntent.setType("*/*");  //use image/* for photos, etc.
+                startActivityForResult(filesIntent, 1);
+
             }
         });
 
         submit_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-                System.exit(0);
+
+                if (validateFields()){
+
+                }
+
             }
         });
 
+    }
 
+    private boolean validateFields() {
+        boolean valid = true;
 
+        if (!ccp.isValidFullNumber()) {
+            editTextCarrierNumber.setError("Please enter valid number");
+            valid = false;
+        }
+        if (ac_title.getText().toString().isEmpty()) {
+            ac_title.setError("Please enter name");
+            valid = false;
+        }
+        if (ac_title.length() > 32) {
+            ac_title.setError("Name character limit is 32");
+            valid = false;
+        }
 
+        if (ac_address.getText().toString().equals("----")) {
+            Toast.makeText(this, "Please enter valid postcode", Toast.LENGTH_SHORT).show();
+            valid = false;
+        }
+        if (ac_postcode.getText().toString().isEmpty()) {
+            ac_postcode.setError("Please enter your postal code");
+            valid = false;
+        }
+        if (ac_houseNo.getText().toString().isEmpty()) {
+            ac_houseNo.setError("Please enter your Door no");
+            valid = false;
+        }
+        if (ac_email.getText().toString().isEmpty()) {
+            ac_email.setError("Please enter correct email");
+            valid = false;
+
+        }else if (!Patterns.EMAIL_ADDRESS.matcher(String.valueOf(ac_email.getText())).matches()) {
+            ac_email.setError("Please enter a valid email");
+            valid = false;
+        }
+
+        return valid;
     }
 
     private void checkPostcode() {
@@ -210,9 +280,65 @@ public class ApplyForShopkeeper extends AppCompatActivity {
             ex.printStackTrace();
         }
 
-        System.out.println(p1);
         return p1;
     }
 
+    public String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            documentUriList.clear();
+            documentNamesList.clear();
+            if(resultCode == RESULT_OK) {
+                if (data.getClipData()==null){
+                    Uri uri = data.getData();
+                    documentUriList.add(uri);
+                    documentNamesList.add(getFileName(uri));
+                    
+                    adapterFilesNamesRecyclerView.notifyDataSetChanged();
+
+                }else if (data.getClipData().getItemCount()>5){
+                    Toast.makeText(ApplyForShopkeeper.this, "Maximum 5 documents!", Toast.LENGTH_SHORT).show();
+                    adapterFilesNamesRecyclerView.notifyDataSetChanged();
+
+                }else {
+                    // also check data.data because if the user select one file the file and uri will be in  data.data and data.getClipData() will be null
+                    if (data.getClipData()!=null){
+                        for(int i = 0; i < data.getClipData().getItemCount(); i++) {
+
+                            Uri uri = data.getClipData().getItemAt(i).getUri();
+                            documentUriList.add(uri);
+                            documentNamesList.add(getFileName(uri));
+
+                        }
+                        adapterFilesNamesRecyclerView.notifyDataSetChanged();
+                    }
+
+                }
+            }
+            System.out.println();
+        }
+    }
 }

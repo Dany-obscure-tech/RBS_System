@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.dotcom.rbs_system.Adapter.SliderAdapterExample;
 import com.dotcom.rbs_system.Classes.Currency;
+import com.dotcom.rbs_system.Classes.InvoiceNumberGenerator;
 import com.dotcom.rbs_system.Classes.UserDetails;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -47,6 +48,7 @@ import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -75,6 +77,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
     LinearLayout shop_details_linearlayout;
     String productID, productName,productImage,productPrice, productCategory, shopkeeperID, conversationKey = null;
     String latitude, longitude;
+    String offerNo;
     DatabaseReference itemRef, reportRef, stockRef, shopkeeperRef,customerOfferRef, agreedOfferRef, boughtOfferRef, userConversationRef;
     StorageReference itemImageStorageRef;
     int i, noOfimages;
@@ -237,6 +240,8 @@ public class BuyLocal_productdetails extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(BuyLocal_productdetails.this, BuyLocal_messaging.class);
                 intent.putExtra("SHOPKEEPER_ID", shopkeeperID);
+                intent.putExtra("PRODUCT_ID", productID);
+                intent.putExtra("PRODUCT_CATEGORY", productCategory);
                 intent.putExtra("CUSTOMER_ID", FirebaseAuth.getInstance().getCurrentUser().getUid());
                 startActivity(intent);
             }
@@ -301,6 +306,7 @@ public class BuyLocal_productdetails extends AppCompatActivity {
             public void onClick(View view) {
                 if (offerSubmitValidation()) {
                     long timestamp = Calendar.getInstance().getTime().getTime();
+
                     stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("message").setValue(alertMakeOfferMessage_editText.getText().toString());
                     stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("amount").setValue(alertMakeOfferAmount_editText.getText().toString());
                     stockRef.child("Offers").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("customer").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());

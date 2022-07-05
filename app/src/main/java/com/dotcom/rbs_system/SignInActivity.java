@@ -109,7 +109,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void register() {
-        Intent intent = new Intent(SignInActivity.this, Registration.class);
+        Intent intent = new Intent(SignInActivity.this, RegisterationEmailCheck.class);
         startActivity(intent);
     }
 

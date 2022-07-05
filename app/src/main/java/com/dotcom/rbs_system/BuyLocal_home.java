@@ -25,6 +25,7 @@ import com.dotcom.rbs_system.Adapter.AdapterCategoryRecyclerView;
 import com.dotcom.rbs_system.Adapter.AdapterSpotlightItemListRecyclerView;
 import com.dotcom.rbs_system.Adapter.SliderAdapterExample;
 import com.dotcom.rbs_system.Classes.BuylocalSlider;
+import com.dotcom.rbs_system.Classes.UserDetails;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -149,9 +150,23 @@ public class BuyLocal_home extends Fragment {
         side_menu_cardview = view.findViewById(R.id.side_menu_cardview);
 
         logout = view.findViewById(R.id.logout);
+
         rbs_option = view.findViewById(R.id.rbs_option);
         applyForShopkeeper = view.findViewById(R.id.applyForShopkeeper);
+        if (!UserDetails.getInstance().getShopkeeper()){
+            rbs_option.setVisibility(View.GONE);
+            applyForShopkeeper.setVisibility(View.VISIBLE);
+        }else {
+            rbs_option.setVisibility(View.VISIBLE);
+            applyForShopkeeper.setVisibility(View.GONE);
+        }
+
         vendor_option = view.findViewById(R.id.vendor_option);
+        if (!UserDetails.getInstance().getVendor()){
+            vendor_option.setVisibility(View.GONE);
+        }else {
+            vendor_option.setVisibility(View.VISIBLE);
+        }
 
         side_option_menu_bg_relativeLayout = view.findViewById(R.id.side_option_menu_bg_relativeLayout);
         datafetch();
